@@ -1,0 +1,76 @@
+.mainDiv {
+  background: url("../public/home/bg3.png") no-repeat center center;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  text-align: "center";
+  background-repeat: no-repeat;
+}
+
+.mainDivOP {
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.7;
+}
+
+.detailsDiv {
+  height: 90%;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.infoRow h1 {
+  color: #fff;
+  background: linear-gradient(
+    to right,
+    hsl(0, 0%, 100%) 0,
+    #e74860 10%,
+    hsl(0, 0%, 100%) 20%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s infinite linear;
+}
+
+.contactUsBtn {
+  min-width: 30%;
+  background-color: #e74860;
+  color: #fff;
+  margin-bottom: 5%;
+}
+
+.servicesBtn {
+  min-width: 30%;
+  margin-left: 2%;
+  background-color: transparent;
+  color: #fff;
+}
+
+.contactUsBtn:hover {
+  min-width: 30%;
+  background-color: #e74860;
+  color: #fff;
+  border-color: #fff;
+}
+
+.servicesBtn:hover {
+  min-width: 30%;
+  margin-left: 2%;
+  background-color: transparent;
+  color: #fff;
+  border-color: #e74860;
+}
+
+.infoRowSystem {
+  display: block;
+}
+
+.infoRowMobile {
+  display: none;
+}

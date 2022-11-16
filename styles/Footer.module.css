@@ -1,0 +1,21 @@
+
+.footerCol {
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    border: none;
+  }
+  
+  .footerColChild {
+    text-align: start;
+  }
+  
+  .footerColChild h1 {
+    color: #FFF;
+    font-weight: bold;
+  }
+  
+  .footerColChild p {
+    line-height: 60%;
+  }
+  
