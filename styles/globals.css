@@ -42,6 +42,47 @@ body {
   width: 4px;
 }
 
+.modernizationWorks .ant-steps-item-description{
+  color : #FFF !important;
+  font-size: 12px;
+}
+
+.modernizationWorks .ant-steps-item-container :hover {
+  transition: all 1s ease;
+  scale: 1.04;
+  cursor: pointer;
+}
+
+.ant-steps-item-content{
+  text-align: center;
+}
+
+.textBoxMain{
+  background-color: #FFF !important;
+  width: 40% !important;
+}
+
+.textBox{
+  background-color: #FFF !important;
+  width: 30% !important;
+}
+
+.react-flow__attribution{
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .textBoxMain{
+    background-color: #FFF !important;
+    width: 100% !important;
+  }
+  
+  .textBox{
+    background-color: #FFF !important;
+    width: 100% !important;
+  }
+}
+
 @media (max-width: 760px) {
   .react-flow__node.circle {
     padding: 0%;
@@ -55,7 +96,3 @@ body {
     padding: 0%;
   }
 }
-
-
-
-/*  */

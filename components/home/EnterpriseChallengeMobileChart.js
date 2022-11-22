@@ -1,8 +1,7 @@
 import { useCallback, useState } from "react";
-import ReactFlow, {
-  applyEdgeChanges,
-  applyNodeChanges,
-} from "react-flow-renderer";
+
+import ReactFlow, {applyEdgeChanges, applyNodeChanges } from 'reactflow';
+
 import { ArrowRightOutlined } from "@ant-design/icons";
 
 function EnterpriseChallengeMobileChart({ HomeCss }) {

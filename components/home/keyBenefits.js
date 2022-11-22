@@ -8,6 +8,7 @@ export default function KeyBenefits({ HomeCss }) {
       <div className={HomeCss.KeyBenefitsParent}>
         <Timeline mode={"alternate"} className={HomeCss.KeyBenefitTimeline} >
           <Timeline.Item
+          className="aaaa"
             color={"#e74860"}
             label="6-10x faster & 100% accurate conversion"
             style={{ height: "15vh" }}

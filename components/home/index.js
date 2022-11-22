@@ -4,6 +4,7 @@ import WhatIsNuoData from './whatIsNuoData';
 import EnterpriseChallenge from './enterpriseChallenge';
 import KeyBenefits from './keyBenefits';
 import Footer from '../common/footer';
+
 export default function Home() {
   return (
     <>
