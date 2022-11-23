@@ -160,7 +160,7 @@
   display: none;
 }
 
-.ModernizationWorksStepsDetails{
+.ModernizationWorksStepsDetails {
   height: 40vh;
   margin-top: 10%;
 }
@@ -183,29 +183,27 @@
   }
 }
 
-.modernizationDesktopView{
+.modernizationDesktopView {
   display: block;
 }
 
-.modernizationMobileiew{
+.modernizationMobileiew {
   display: none;
 }
 
 @media (max-width: 600px) {
-.ModernizationWorksStepsDetails{
-  height: 70vh;
-  margin-top: 10%;
-}
+  .ModernizationWorksStepsDetails {
+    height: 70vh;
+    margin-top: 10%;
+  }
 
-.modernizationDesktopView{
-  display: none;
-}
+  .modernizationDesktopView {
+    display: none;
+  }
 
-.modernizationMobileiew{
-  display: block;
-}
-
-
+  .modernizationMobileiew {
+    display: block;
+  }
 }
 
 @media (max-width: 860px) {
@@ -261,11 +259,11 @@
     text-align: center;
   }
 
-  .stepToDivDesktop{
+  .stepToDivDesktop {
     display: none;
   }
-  
-  .stepToDivMobile{
+
+  .stepToDivMobile {
     display: block;
   }
 }
