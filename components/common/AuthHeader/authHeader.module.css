@@ -1,0 +1,12 @@
+.topMenu{
+    justify-content: flex-end;
+    margin-top: 2%;
+    border-bottom: #FFFFFF;
+    height: 5%;
+}
+
+.tryNowTag{
+    padding: 5px 15px 5px 15px;
+    align-items: center;
+    border-radius: 25px;
+}

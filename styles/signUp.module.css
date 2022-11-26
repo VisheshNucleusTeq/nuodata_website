@@ -1,0 +1,68 @@
+.signUpLeft {
+  background: #e74860;
+  height: 100%;
+}
+
+.logo {
+  width: 40%;
+  height: 10%;
+}
+
+.leftImage {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+}
+
+.flexView {
+  display: flex;
+  height: 92%;
+  justify-content: center;
+  align-items: center;
+}
+
+.signUpForm {
+  margin: 5% 15% 0% 15%;
+}
+
+.signUpBtn {
+  height: 50px;
+  border-radius: 15px;
+  background: #0c3246;
+  width: 70% !important;
+  margin-left: 15%;
+}
+
+.signUpBtn:hover {
+  height: 50px;
+  border-radius: 15px;
+  background: #14394d;
+}
+
+.signup {
+  margin-top: 20px;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.desktopView {
+  display: flex;
+}
+
+.mobileView {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .desktopView {
+    display: none;
+  }
+
+  .mobileView {
+    display: flex;
+  }
+}

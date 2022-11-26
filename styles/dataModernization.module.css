@@ -1,0 +1,26 @@
+.newProjectBtn {
+    height: 8%;
+    margin: 0px 0px 2% 0px;
+    padding: 0% 3% 0% 3%;
+    border-radius: 10px;
+}
+
+.formCenter {
+    display: flex;
+    justify-content: center;
+}
+
+.nextBtn {
+    height: 8%;
+    margin: 0px 0px 2% 0px;
+    padding: 0% 3% 0% 3%;
+    border-radius: 10px;
+}
+
+.exitBtn {
+    height: 8%;
+    margin: 0px 0px 2% 0px;
+    padding: 0% 3% 0% 3%;
+    border-radius: 10px;
+    margin-left: 2%;
+}

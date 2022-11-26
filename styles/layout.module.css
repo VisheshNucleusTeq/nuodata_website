@@ -1,0 +1,55 @@
+.mainLayout {
+  height: 100vh;
+}
+
+.mainLayoutSider {
+  height: 100%;
+  background-color: #0c3246;
+}
+
+.logoImage {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  padding: 10%;
+}
+
+.mainLayoutHeader {
+  background-color: #fff;
+}
+
+.mainLayoutContent {
+  background-color: #f3f3f3;
+  padding: 5%;
+}
+
+.mainMenu {
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.mainMenuCol:hover {
+  color: #fff;
+  cursor: pointer;
+  background-color: #081f2c;
+  border-left: 4px solid #e74860 !important;
+}
+
+.subMainMenu {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  border-left: 1px solid #fff;
+  padding-left: 5%;
+}
+
+.mainMenuCol {
+  border-left: 4px solid #0c3246;
+}
+
+.activeMenu {
+  border-left: 4px solid #e74860 !important;
+  background-color: #081f2c;
+}
