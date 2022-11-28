@@ -20,7 +20,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::555646157689:role/github-actions
+          role-to-assume: arn:aws:iam::555646157689:role/github-actions-website-upload-role
           aws-region: us-west-1
       - name: Build React App
         run: npm install && npm run build
