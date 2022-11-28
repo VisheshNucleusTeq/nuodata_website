@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Link from 'next/link'
+import Link from "next/link";
 import { Col, Row, Menu, Image, Tag } from "antd";
 import { MenuOutlined, PhoneFilled } from "@ant-design/icons";
-import HeaderCss from '../../styles/Header.module.css';
+import HeaderCss from "../../styles/Header.module.css";
 
 export default function Header() {
   const [scrollY, setScrollY] = useState(0);
@@ -10,7 +10,6 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
-
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll);
@@ -19,18 +18,19 @@ export default function Header() {
     };
   }, []);
 
-
   return (
-    <div className={`${HeaderCss.menuDiv} ${scrollY > 500 ? HeaderCss.menuDivScrollY : null}`}>
+    <div
+      className={`${HeaderCss.menuDiv} ${
+        scrollY > 500 ? HeaderCss.menuDivScrollY : null
+      }`}
+    >
       <Row className={HeaderCss.infoRow}>
         <Col offset={2} span={4}>
-        <div className={HeaderCss.infoColImage}>
-
-        <Link href="/">
-            <Image preview={false} src={"./logo.png"} />
-          </Link>
+          <div className={HeaderCss.infoColImage}>
+            <Link href="/">
+              <Image preview={false} src={"./logo.png"} />
+            </Link>
           </div>
-
         </Col>
 
         <Col offset={2} className={HeaderCss.infoColManu} span={16}>
@@ -50,9 +50,6 @@ export default function Header() {
             </Menu.Item>
             <Menu.Item className={HeaderCss.hoverEffect} key="3">
               Data Management
-            </Menu.Item>
-            <Menu.Item className={HeaderCss.hoverEffect} key="4">
-              Get Started
             </Menu.Item>
 
             <Menu.Item key="5" className={HeaderCss.marginLeft}>
