@@ -27,3 +27,9 @@ jobs:
         run: npm install && npm run build
       - name: Deploying  build to S3 bucket
         run: aws s3 sync ./out/ s3://dev.nuodata.io --delete
+      - name: Output Run ID
+        run: echo ${{ github.run_id }}
+      - name: Output Run Number
+        run: echo ${{ github.run_number }}
+      - name: Output Run Attempt
+        run: echo ${{ github.run_attempt }}
