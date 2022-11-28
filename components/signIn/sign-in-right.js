@@ -3,20 +3,27 @@ import { Image, Form, Button, Divider } from "antd";
 
 import Link from "next/link";
 import Input from "../common/Input";
+import { fetch_retry_post } from "../../network/api-manager";
 
 function SignInRight({ loginCss }) {
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
 
+  const onFinish = async (values) => {
+    const data = await fetch_retry_post("https://reqres.in/api/login", {
+      email: "eve.holt@reqres.in",
+      password: "cityslicka",
+    })
+
+    localStorage.setItem('accessToken', data.data.token);
+    console.log(data.data.token)
+  };
+  
   const validatePassword = (rule, value, callback) => {
-    const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    if(value && !re.test(value)){
-      callback("password must be a minimum of 8 characters including number, Upper, Lower And one special character.");
-    }else{
+    const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
+    if (value && !re.test(value)) {
+      callback(
+        "Password must be 8 to 15 characters including number, Upper, Lower And one special character."
+      );
+    } else {
       callback();
     }
   };
@@ -30,7 +37,6 @@ function SignInRight({ loginCss }) {
         <Form
           layout="vertical"
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
           <Input
@@ -54,7 +60,7 @@ function SignInRight({ loginCss }) {
             lable="Password"
             rules={[
               { required: true, message: "Please input your Password!" },
-              { validator: validatePassword }
+              { validator: validatePassword },
             ]}
           />
 

@@ -5,9 +5,9 @@ import FooterCss from '../../styles/Footer.module.css'
 const Footer = () => {
   return (
     <Row style={{ backgroundColor: "#072A3D" }}>
-      <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: "2%" }}>
+      {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: "2%" }}>
         <Image width={"25%"} src={"./logo.png"} style={{ maxWidth: "200px" }} />
-      </Col>
+      </Col> */}
       <Col span={20} offset={3}>
         <Row style={{ backgroundColor: "#072A3D" }}>
           <Col
