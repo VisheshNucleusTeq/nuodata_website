@@ -22,7 +22,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::555646157689:role/github-actions-website-upload-role
           aws-region: us-west-1
-      - name: Build React App
+      - name: Generating Next JS Build
         run: npm install && npm run build
-      - name: Deploy app build to S3 bucket
+      - name: Deploying  build to S3 bucket
         run: aws s3 sync ./out/ s3://dev.nuodata.io --delete
