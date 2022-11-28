@@ -18,8 +18,8 @@
 .mainDivMW {
   width: 100%;
   height: 100%;
-  background-color: #000;
-  opacity: 0.9;
+  /* background-color: #000; */
+  /* opacity: 0.9; */
 }
 
 .detailsDiv {
@@ -41,7 +41,7 @@
 
 .infoRow h2 {
   color: #fff;
-  font-size: 20px;
+  font-size: 22px;
   width: 60% !important;
 }
 
@@ -106,7 +106,7 @@
 .nuoDataInfo p {
   color: #0c3246 !important;
   font-weight: bold;
-  font-size: 10px;
+  font-size: 16px;
   /* line-height: 0px; */
 }
 
@@ -123,7 +123,7 @@
 }
 
 .ModernizationWorks {
-  background: url("../public/home/bg3.png") no-repeat center center;
+  background: url("../public/home/bg3-overlay.png") no-repeat center center;
   width: 100%;
   height: 100%;
   background-size: cover;
@@ -136,7 +136,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 25vh;
+  height: 30vh;
 }
 
 .enterpriseChallengeColTitle h1 {

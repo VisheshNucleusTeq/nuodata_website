@@ -30,11 +30,16 @@
   color: #fff;
 }
 
+.activeMenu {
+  border-left: 4px solid #e74860 !important;
+  background-color: #081f2c;
+}
+
 .mainMenuCol:hover {
   color: #fff;
   cursor: pointer;
   background-color: #081f2c;
-  border-left: 4px solid #e74860 !important;
+  border-left: 4px solid #081f2c;
 }
 
 .subMainMenu {
@@ -47,9 +52,4 @@
 
 .mainMenuCol {
   border-left: 4px solid #0c3246;
-}
-
-.activeMenu {
-  border-left: 4px solid #e74860 !important;
-  background-color: #081f2c;
 }

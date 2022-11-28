@@ -1,5 +1,5 @@
 .mainDiv {
-  background: url("../public/home/info.png") no-repeat center center;
+  background: url("../public/home/info-overlay.png") no-repeat center center;
   width: 100%;
   height: 100vh;
   background-size: cover;
@@ -20,15 +20,18 @@
 
 .infoRow h1 {
   color: #fff;
-  background: linear-gradient(
-    to right,
-    hsl(0, 0%, 100%) 0,
-    #e74860 10%,
-    hsl(0, 0%, 100%) 20%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 3s infinite linear;
+  font-weight: bold;
+  font-size: 3vw;
+}
+
+.menuDiv {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  border: 1px solid red !important;
 }
 
 .contactUsBtn {
@@ -102,6 +105,7 @@
 .nuoDataInfo p {
   color: #0c3246 !important;
   font-weight: bold;
+  font-size: 16px;
 }
 
 .nuoDataInfo div {
@@ -110,7 +114,7 @@
 
 .enterpriseChallengeRow {
   height: 80vh;
-  background: url("../public/home/bg2.webp");
+  background: url("../public/home/bg2-overlay.webp");
   background-size: cover;
   background-position: center;
 }
@@ -159,6 +163,7 @@
   color: #fff;
   font-size: 30px;
   border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 .nuoDataWorkBtn:hover {
@@ -215,9 +220,10 @@
 }
 
 .KeyBenefitImage {
-  border: 4px solid #e74860;
-  border-radius: 20px;
+  border: 0.3vw solid #e74860;
+  border-radius: 50%;
   padding: 5px;
+  width: 7vw;
 }
 
 .KeyBenefits h1 {
@@ -230,24 +236,86 @@
   margin-top: 4%;
 }
 
+.pointsView {
+  background: url("../public/home/bg1.png") no-repeat center center;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  text-align: "center";
+  background-repeat: no-repeat;
+  animation: animatedBackground 5s linear infinite alternate;
+}
+
+.pointDetails {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold !important;
+  margin: 2% 0% 2% 0%;
+}
+
+.pointImageDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pointImage {
+  width: 75%;
+}
+
+.pointText {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.KeyBenefitView {
+  height: 100%;
+  padding: 2%;
+}
+
+.KeyBenefitView h1 {
+  /* font-size: 60px; */
+  font-size: 4vw;
+  text-align: center;
+  color: #e74860 !important;
+  font-weight: bold;
+  margin: 4% 0% 6% 0%;
+}
+
+.KeyBenefitsViewText {
+  display: flex;
+  align-items: center;
+  font-size: 2vw;
+  font-weight: bold;
+}
+
+.enterpriseChallengeView {
+  height: 100vh;
+  background-color: #07293c;
+  padding: 4% 0% 4% 0%;
+}
+
+.enterpriseChallengeTitle {
+  color: #fff;
+  font-size: 3vw;
+  /* display: flex;
+  justify-content: center;
+  text-align: center; */
+}
+
+.enterpriseChallengeDiv {
+  height: 25vh !important;
+  border: 1px solid red;
+}
+
 @keyframes animatedBackground {
   0% {
     background-size: 120% 120%;
   }
   100% {
     background-size: 100% 100%;
-  }
-}
-
-@keyframes shine {
-  0% {
-    background-position: 0;
-  }
-  60% {
-    background-position: 600px;
-  }
-  100% {
-    background-position: 600px;
   }
 }
 
@@ -285,7 +353,8 @@
   }
 
   .mainDiv {
-    background: url("../public/home/info.png") no-repeat center center fixed;
+    background: url("../public/home/info-overlay.png") no-repeat center center
+      fixed;
     width: 100%;
     height: 60vh;
     background-size: cover;
@@ -293,12 +362,50 @@
     text-align: "center";
     background-repeat: no-repeat;
   }
+
+  .infoRow h1 {
+    color: #fff;
+    font-weight: bold;
+    font-size: 30px;
+  }
 }
 
 @media (max-width: 760px) {
+  .KeyBenefitImage {
+    border: 0.3vw solid #e74860;
+    border-radius: 50%;
+    padding: 5px;
+    width: 8vw;
+  }
+
+  .KeyBenefitsViewText {
+    display: flex;
+    align-items: center;
+    font-size: 3.5vw;
+    font-weight: bold;
+    margin-left: 5%;
+  }
+
+  .pointImageDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(90deg);
+  }
+
+  .pointImage {
+    width: 75%;
+  }
+
+  .pointText {
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+  }
+
   .enterpriseChallengeRow {
     height: 200vh;
-    background: url("../public/home/bg2.webp");
+    background: url("../public/home/bg2-overlay.webp");
     background-size: cover;
     background-position: center;
   }
@@ -325,5 +432,6 @@
     justify-content: center !important;
     align-items: center !important;
     font-size: 20px;
-    font-weight: bold;  }
+    font-weight: bold;
+  }
 }
