@@ -1,8 +1,10 @@
 import { InnerLayout } from "./inner-layout";
-
 export const ProtectRoute = ({ children }) => {
-    const fruits = ["Main", "How_it_work", "Sign_in","Sign_up"];
-    if(fruits.includes(children.type.name)){
+
+    
+
+    const authPage = ["Main", "How_it_work", "Sign_in","Sign_up"]; 
+    if(authPage.includes(children.type.name)){
         return children;
     }else{
         return (

@@ -6,12 +6,12 @@ export default function Info({ HomeCss }) {
       <Header />
       <div className={HomeCss.detailsDiv}>
         <Row className={HomeCss.infoRow}>
-          <Col offset={2} span={8} className={HomeCss.infoRowSystem}>
+          <Col offset={2} span={12} className={HomeCss.infoRowSystem}>
             <h1>
               One platform for all enterprise Data Modernization and Management
               needs
             </h1>
-            <Button
+            {/* <Button
               size={"large"}
               className={HomeCss.contactUsBtn}
             >
@@ -22,7 +22,7 @@ export default function Info({ HomeCss }) {
               className={HomeCss.servicesBtn}
             >
               Services
-            </Button>
+            </Button> */}
           </Col>
 
           <Col span={24} className={HomeCss.infoRowMobile}>
@@ -30,7 +30,7 @@ export default function Info({ HomeCss }) {
               One platform for all enterprise Data Modernization and Management
               needs
             </h1>
-            <Button
+            {/* <Button
               size={"large"}
               className={HomeCss.contactUsBtn}
             >
@@ -41,7 +41,7 @@ export default function Info({ HomeCss }) {
               className={HomeCss.servicesBtn}
             >
               Services
-            </Button>
+            </Button> */}
           </Col>
         </Row>
       </div>

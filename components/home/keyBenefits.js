@@ -8,10 +8,10 @@ export default function KeyBenefits({ HomeCss }) {
       <div className={HomeCss.KeyBenefitsParent}>
         <Timeline mode={"alternate"} className={HomeCss.KeyBenefitTimeline} >
           <Timeline.Item
-          className="aaaa"
+            className="aaaa"
             color={"#e74860"}
             label="6-10x faster & 100% accurate conversion"
-            style={{ height: "15vh" }}
+            style={{ height: "15vh", fontSize : "16px" }}
           >
             <div className={HomeCss.KeyBenefitChildMarginLeft}>
               <Image
@@ -24,7 +24,7 @@ export default function KeyBenefits({ HomeCss }) {
           <Timeline.Item
             color={"#e74860"}
             label="Data driven enterprise enabled through modern data lake"
-            style={{ height: "15vh" }}
+            style={{ height: "15vh", fontSize : "16px" }}
           >
             <div className={HomeCss.KeyBenefitChildMarginRight}>
               <Image
@@ -37,7 +37,7 @@ export default function KeyBenefits({ HomeCss }) {
           <Timeline.Item
             color={"#e74860"}
             label="Certified data for enterprise consumption"
-            style={{ height: "15vh" }}
+            style={{ height: "15vh", fontSize : "16px" }}
           >
             <div className={HomeCss.KeyBenefitChildMarginLeft}>
               <Image
@@ -50,7 +50,7 @@ export default function KeyBenefits({ HomeCss }) {
           <Timeline.Item
             color={"#e74860"}
             label="No redundancies or in-efficiencies"
-            style={{ height: "15vh" }}
+            style={{ height: "15vh", fontSize : "16px" }}
           >
             <div className={HomeCss.KeyBenefitChildMarginRight}>
               <Image
@@ -63,7 +63,7 @@ export default function KeyBenefits({ HomeCss }) {
           <Timeline.Item
             color={"#e74860"}
             label="6-10x faster time to market for new reports"
-            style={{ height: "15vh" }}
+            style={{ height: "15vh", fontSize : "16px" }}
           >
             <div className={HomeCss.KeyBenefitChildMarginLeft}>
               <Image
@@ -76,7 +76,7 @@ export default function KeyBenefits({ HomeCss }) {
           <Timeline.Item
             color={"#e74860"}
             label="Enabling federation of data through self services"
-            style={{ height: "15vh" }}
+            style={{ height: "15vh", fontSize : "16px" }}
           >
             <div className={HomeCss.KeyBenefitChildMarginRight}>
               <Image
@@ -89,7 +89,7 @@ export default function KeyBenefits({ HomeCss }) {
           <Timeline.Item
             color={"#e74860"}
             label="Single version of truth"
-            style={{ height: "15vh" }}
+            style={{ height: "15vh", fontSize : "16px" }}
           >
             <div className={HomeCss.KeyBenefitChildMarginLeft}>
               <Image

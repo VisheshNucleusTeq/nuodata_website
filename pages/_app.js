@@ -1,12 +1,42 @@
+import React from "react";
 import "antd/dist/antd.css";
 import "../styles/globals.css";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { ProtectRoute } from "../contexts/auth";
-function MyApp({ Component, pageProps }) {
+
+export default function MyApp({ Component, pageProps }) {
+  const [queryClient] = React.useState(() => new QueryClient());
+
   return (
-    <ProtectRoute>
-      <Component {...pageProps} />
-    </ProtectRoute>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <ProtectRoute>
+          <Component {...pageProps} />
+        </ProtectRoute>
+      </Hydrate>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   );
 }
 
-export default MyApp;
+
+// import { QueryClient, QueryClientProvider } from "react-query";
+
+// import "antd/dist/antd.css";
+// import "../styles/globals.css";
+// import { ProtectRoute } from "../contexts/auth";
+
+// const queryClient = new QueryClient();
+
+// function MyApp({ Component, pageProps }) {
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       <ProtectRoute>
+//         <Component {...pageProps} />
+//       </ProtectRoute>
+//     </QueryClientProvider>
+//   );
+// }
+
+// export default MyApp;

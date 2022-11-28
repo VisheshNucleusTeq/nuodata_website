@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
-
 html,
 body {
   padding: 0;
@@ -22,6 +21,7 @@ body {
   transform: rotateZ(45deg);
   background-color: transparent !important;
   padding: 0%;
+  border: 1px solid transparent;
 }
 
 .ant-timeline-item-left .ant-timeline-item-label{
@@ -76,7 +76,6 @@ body {
 }
 
 .defineTabs .ant-tabs-nav-list{
-  /* border : 1px solid gray; */
   width: 100% !important;
   background-color: #FFF;
   border-radius: 25px;
@@ -116,6 +115,34 @@ body {
   color: #000000;
   font-weight: bold;
 }
+
+.ant-form-item-label label {
+  font-size: 16px !important;
+}
+
+
+.demo .ant-table-thead tr:first-child th:first-child {
+  border-radius: 20px 0px 0px 0px !important;
+}
+.demo .ant-table-thead tr:first-child th:last-child {
+  border-radius:  0px 20px 0px 0px !important;
+}
+.demo .ant-table-tbody > tr:last-child > td:first-child
+{
+  border-radius:  0px 0px  0px 20px !important;
+}
+.demo .ant-table-tbody > tr:last-child > td:last-child
+{
+  border-radius:  0px 0px 20px 0px !important;
+}
+.demo .ant-table-content{
+  padding: 2%;
+  /* border: 1px solid gray; */
+  border-radius:  20px !important;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+
 
 @media (max-width: 600px) {
   .textBoxMain{

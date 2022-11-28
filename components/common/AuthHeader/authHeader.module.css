@@ -5,6 +5,18 @@
     height: 5%;
 }
 
+.menu{
+    font-size: 16px;
+}
+
+.menu:hover{
+    color: black !important;
+    font-size: 16px;
+    scale: 1.02;
+    font-weight: 100;
+    color: #e74860 !important;
+}
+
 .tryNowTag{
     padding: 5px 15px 5px 15px;
     align-items: center;
