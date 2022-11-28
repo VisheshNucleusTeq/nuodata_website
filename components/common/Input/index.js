@@ -18,7 +18,7 @@ export default function Input({
   defaultValue2,
   onChange,
   type,
-  rules
+  rules,
 }) {
   return (
     <>
@@ -42,6 +42,7 @@ export default function Input({
                 defaultValue={defaultValue1 ? defaultValue1 : ""}
                 name={name ? name : ""}
                 id={id ? id : ""}
+                type={type ? type : "text"}
                 onChange={(e) => {
                   onChange ? onChange(e) : null;
                 }}
@@ -56,6 +57,7 @@ export default function Input({
                 defaultValue={defaultValue2 ? defaultValue2 : ""}
                 name={name ? name : ""}
                 id={id ? id : ""}
+                type={type ? type : "text"}
                 onChange={(e) => {
                   onChange ? onChange(e) : null;
                 }}
@@ -92,6 +94,7 @@ export default function Input({
                 defaultValue={defaultValue1 ? defaultValue1 : ""}
                 name={name ? name : ""}
                 id={id ? id : ""}
+                type={type ? type : "text"}
                 onChange={(e) => {
                   onChange ? onChange(e) : null;
                 }}
@@ -105,6 +108,7 @@ export default function Input({
                 placeholder={placeholder2 ? placeholder2 : ""}
                 defaultValue={defaultValue2 ? defaultValue2 : ""}
                 name={name ? name : ""}
+                type={type ? type : "text"}
                 id={id ? id : ""}
                 onChange={(e) => {
                   onChange ? onChange(e) : null;
@@ -120,6 +124,7 @@ export default function Input({
               placeholder={placeholder ? placeholder : ""}
               defaultValue={defaultValue ? defaultValue : ""}
               name={name ? name : ""}
+              type={type ? type : "text"}
               id={id ? id : ""}
               onChange={(e) => {
                 onChange ? onChange(e) : null;

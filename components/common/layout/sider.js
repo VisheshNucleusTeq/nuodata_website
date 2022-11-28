@@ -3,7 +3,6 @@ import { Layout, Row, Col, Image } from "antd";
 const { Sider } = Layout;
 
 const SiderView = ({ layoutCss, height, componentName }) => {
-  console.log("affdf", componentName);
   return (
     <Sider className={layoutCss.mainLayoutSider}>
       <div style={{ height: height + "px" }} className={layoutCss.logoImage}>

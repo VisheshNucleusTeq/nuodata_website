@@ -1,22 +1,21 @@
 import React from "react";
-import { Image, Form, Button, Divider } from "antd";
+import { Image, Form, Button, Divider, message } from "antd";
 
 import Link from "next/link";
 import Input from "../common/Input";
 import { fetch_retry_post } from "../../network/api-manager";
+import { LOGIN } from "../../network/apiConstants";
 
 function SignInRight({ loginCss }) {
-
-  const onFinish = async (values) => {
-    const data = await fetch_retry_post("https://reqres.in/api/login", {
-      email: "eve.holt@reqres.in",
-      password: "cityslicka",
-    })
-
-    localStorage.setItem('accessToken', data.data.token);
-    console.log(data.data.token)
+  const onFinish = async (payload) => {
+    const data = await fetch_retry_post(LOGIN, payload);
+    if (data.success) {
+      //handle success
+    } else {
+      message.error(data?.error?.message);
+    }
   };
-  
+
   const validatePassword = (rule, value, callback) => {
     const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
     if (value && !re.test(value)) {
@@ -34,11 +33,7 @@ function SignInRight({ loginCss }) {
         <h1>
           <b>Hello! Welcome back.</b>
         </h1>
-        <Form
-          layout="vertical"
-          onFinish={onFinish}
-          autoComplete="off"
-        >
+        <Form layout="vertical" onFinish={onFinish} autoComplete="off">
           <Input
             name="email"
             placeholder="example@gmail.com"
@@ -58,6 +53,7 @@ function SignInRight({ loginCss }) {
             name="password"
             placeholder="Enter password"
             lable="Password"
+            type="password"
             rules={[
               { required: true, message: "Please input your Password!" },
               { validator: validatePassword },
