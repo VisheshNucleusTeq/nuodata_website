@@ -17,14 +17,14 @@
 }
 
 .flexView {
-  display: flex;
+  /* display: flex; */
   height: 92%;
   justify-content: center;
   align-items: center;
 }
 
 .signUpForm {
-  margin: 5% 15% 0% 15%;
+  margin: 5% 20% 0% 20%;
 }
 
 .signUpBtn {

@@ -23,7 +23,6 @@ export const fetch_retry_post = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
-    console.error(error);
-    return { success: false, error };
+    return { success: false, error : error?.response?.data?.errorMessages };
   }
 };

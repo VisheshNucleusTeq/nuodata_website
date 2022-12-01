@@ -21,7 +21,7 @@ function ModernizationWorksStepsDetailsLtoR(props) {
         sourcePosition: "left",
         position: { x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 40, y: 0 },
         data: {
-          label: <Image src="./how_it_work/step.png" />,
+          label: <Image src="/how_it_work/step.png" />,
         },
       },
       {

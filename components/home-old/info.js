@@ -11,12 +11,37 @@ export default function Info({ HomeCss }) {
               One platform for all enterprise Data Modernization and Management
               needs
             </h1>
+            {/* <Button
+              size={"large"}
+              className={HomeCss.contactUsBtn}
+            >
+              Contact Us
+            </Button>
+            <Button
+              size={"large"}
+              className={HomeCss.servicesBtn}
+            >
+              Services
+            </Button> */}
           </Col>
+
           <Col span={24} className={HomeCss.infoRowMobile}>
             <h1>
               One platform for all enterprise Data Modernization and Management
               needs
             </h1>
+            {/* <Button
+              size={"large"}
+              className={HomeCss.contactUsBtn}
+            >
+              Contact Us
+            </Button>
+            <Button
+              size={"large"}
+              className={HomeCss.servicesBtn}
+            >
+              Services
+            </Button> */}
           </Col>
         </Row>
       </div>

@@ -1,11 +1,9 @@
+/* INFO */
 .mainDiv {
   background: url("../public/home/info-overlay.png") no-repeat center center;
   width: 100%;
   height: 100vh;
   background-size: cover;
-  background-position: center;
-  text-align: "center";
-  background-repeat: no-repeat;
 }
 
 .detailsDiv {
@@ -24,45 +22,6 @@
   font-size: 3vw;
 }
 
-.menuDiv {
-  position: fixed;
-  width: 100%;
-  left: 0;
-  top: 0;
-  right: 0;
-  z-index: 1000;
-  border: 1px solid red !important;
-}
-
-.contactUsBtn {
-  min-width: 30%;
-  background-color: #e74860;
-  color: #fff;
-  margin-bottom: 5%;
-}
-
-.servicesBtn {
-  min-width: 30%;
-  margin-left: 2%;
-  background-color: transparent;
-  color: #fff;
-}
-
-.contactUsBtn:hover {
-  min-width: 30%;
-  background-color: #e74860;
-  color: #fff;
-  border-color: #fff;
-}
-
-.servicesBtn:hover {
-  min-width: 30%;
-  margin-left: 2%;
-  background-color: transparent;
-  color: #fff;
-  border-color: #e74860;
-}
-
 .infoRowSystem {
   display: block;
 }
@@ -71,367 +30,121 @@
   display: none;
 }
 
-.bgImage {
-  /* border: 1px solid red; */
-  background: url("../public/home/bg1.png");
-  background-size: cover;
-  background-position: center;
-  animation: animatedBackground 5s linear infinite alternate;
-}
-
-.nuoDataInfo {
-  margin-top: -5%;
-  margin-bottom: -5%;
-  border: 1px solid transparent;
-  align-items: center;
-  text-align: center;
-  /* padding: 10%; */
-  border-radius: 25px;
-  background-image: linear-gradient(
-    #fff 20%,
-    transparent,
-    transparent,
-    #fff 80%
-  );
-}
-
-.nuoDataInfo h1 {
-  color: #e74860 !important;
-  font-size: 30px;
-  margin-top: 5%;
-  font-weight: bold;
-}
-
-.nuoDataInfo p {
-  color: #0c3246 !important;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.nuoDataInfo div {
-  padding: 5%;
-}
-
-.enterpriseChallengeRow {
-  height: 80vh;
-  background: url("../public/home/bg2-overlay.webp");
-  background-size: cover;
-  background-position: center;
-}
-
-.enterpriseChallengeColTitle {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  height: 20vh;
-  /* border: 1px solid red !important; */
-}
-
-.enterpriseChallengeCol {
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
-  height: 10vh;
-  /* border: 1px solid #FFF !important; */
-}
-
-.enterpriseChallengeColDesktopChart {
-  height: 50vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  display: block;
-}
-
-.enterpriseChallengeColMobileChart {
-  height: 50vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  display: none;
-}
-
-.enterpriseChallengeColTitle h1 {
-  color: #fff !important;
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.nuoDataWorkBtn {
-  height: 80%;
-  background-color: transparent;
-  color: #fff;
-  font-size: 30px;
-  border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.3) !important;
-}
-
-.nuoDataWorkBtn:hover {
-  height: 80%;
-  background-color: transparent;
-  color: #fff !important;
-  border-color: #fff !important;
-}
-
-.node {
-  height: 80%;
-  width: 80%;
-  transform: rotateZ(45deg);
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  background-color: #fff;
-  border-radius: 20px;
-}
-
-.nodesChild {
-  height: 100%;
-  width: 100%;
-  transform: rotateZ(-45deg);
-  color: black;
-}
-
-.nodesText {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  font-size: 10px;
-  font-weight: bold;
-  padding: 5px;
-}
-
-.KeyBenefitsParent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.KeyBenefitTimeline {
-  margin-top: 5%;
-  width: 60%;
-}
-
-.KeyBenefitChildMarginLeft {
-  margin-left: 100px;
-}
-
-.KeyBenefitChildMarginRight {
-  margin-right: 100px;
-}
-
-.KeyBenefitImage {
-  border: 0.3vw solid #e74860;
-  border-radius: 50%;
-  padding: 5px;
-  width: 7vw;
-}
-
-.KeyBenefits h1 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #e74860 !important;
-  font-size: 30px;
-  font-weight: bold;
-  margin-top: 4%;
-}
-
-.pointsView {
-  background: url("../public/home/bg1.png") no-repeat center center;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  text-align: "center";
-  background-repeat: no-repeat;
-  animation: animatedBackground 5s linear infinite alternate;
-}
-
-.pointDetails {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold !important;
-  margin: 2% 0% 2% 0%;
-}
-
-.pointImageDiv {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pointImage {
-  width: 75%;
-}
-
-.pointText {
-  font-weight: bold;
-  font-size: 24px;
-}
-
-.KeyBenefitView {
-  height: 100%;
-  padding: 2%;
-}
-
-.KeyBenefitView h1 {
-  /* font-size: 60px; */
-  font-size: 4vw;
-  text-align: center;
-  color: #e74860 !important;
-  font-weight: bold;
-  margin: 4% 0% 6% 0%;
-}
-
-.KeyBenefitsViewText {
-  display: flex;
-  align-items: center;
-  font-size: 2vw;
-  font-weight: bold;
-}
-
-.enterpriseChallengeView {
-  height: 100vh;
-  background-color: #07293c;
-  padding: 4% 0% 4% 0%;
-}
-
-.enterpriseChallengeTitle {
-  color: #fff;
-  font-size: 3vw;
-  /* display: flex;
-  justify-content: center;
-  text-align: center; */
-}
-
-.enterpriseChallengeDiv {
-  height: 25vh !important;
-  border: 1px solid red;
-}
-
-@keyframes animatedBackground {
-  0% {
-    background-size: 120% 120%;
+@media (max-width: 760px) {
+  .mainDiv {
+    height: 60vh;
+    background-size: cover;
   }
-  100% {
-    background-size: 100% 100%;
+
+  .infoRowSystem {
+    display: none;
+  }
+
+  .infoRowMobile {
+    display: block;
+  }
+
+  .infoRow h1 {
+    font-size: 5vw;
+    text-align: center;
   }
 }
 
 @media (max-width: 480px) {
-  .KeyBenefitChildMarginLeft {
-    margin-left: 50px;
-  }
-
-  .KeyBenefitChildMarginRight {
-    margin-right: 50px;
-  }
-
-  .KeyBenefitTimeline {
-    margin-top: 10%;
-    width: 100%;
-  }
-  .nuoDataWorkBtn {
-    height: 60%;
-    background-color: transparent;
-    color: #fff;
-    font-size: 18px;
-    border-radius: 20px;
-  }
-  .marginLeft {
-    margin-left: 0%;
-  }
-
-  .infoRowSystem {
-    display: none;
-  }
-
-  .infoRowMobile {
-    display: block;
-    text-align: center;
-  }
-
-  .mainDiv {
-    background: url("../public/home/info-overlay.png") no-repeat center center
-      fixed;
-    width: 100%;
-    height: 60vh;
-    background-size: cover;
-    background-position: center;
-    text-align: "center";
-    background-repeat: no-repeat;
-  }
-
   .infoRow h1 {
-    color: #fff;
-    font-weight: bold;
-    font-size: 30px;
+    font-size: 8vw;
   }
 }
+/* INFO */
 
-@media (max-width: 760px) {
-  .KeyBenefitImage {
-    border: 0.3vw solid #e74860;
-    border-radius: 50%;
-    padding: 5px;
-    width: 8vw;
-  }
-
-  .KeyBenefitsViewText {
-    display: flex;
-    align-items: center;
-    font-size: 3.5vw;
-    font-weight: bold;
-    margin-left: 5%;
-  }
-
-  .pointImageDiv {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: rotate(90deg);
-  }
-
-  .pointImage {
-    width: 75%;
-  }
-
-  .pointText {
-    font-weight: bold;
-    font-size: 24px;
-    text-align: center;
-  }
-
-  .enterpriseChallengeRow {
-    height: 200vh;
-    background: url("../public/home/bg2-overlay.webp");
-    background-size: cover;
-    background-position: center;
-  }
-  .enterpriseChallengeColDesktopChart {
-    display: none;
-  }
-  .enterpriseChallengeColMobileChart {
-    height: 150vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    display: block;
-  }
-  .infoRowSystem {
-    display: none;
-  }
-  .infoRowMobile {
-    display: block;
-    text-align: center;
-    padding: 2%;
-  }
-  .nodesText {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    font-size: 20px;
-    font-weight: bold;
-  }
+.row{
+  margin: 8%;
+  background-color: #0c3246;
+  padding: 5%;
+  border-radius: 20px;
 }
+
+.text{
+  font-size: 20px;
+  font-weight: bold;
+  color: #FFF;
+  margin-top: 12%;
+}
+
+.number{
+  font-size: 120px;
+  line-height: 100px;
+  margin-top: 5%;
+  font-weight: bold;
+  color: #E74860;
+}
+
+.icon{
+  margin-bottom: 5%;
+  align-items: flex-end;
+  display: flex;
+  font-size: 20px;
+  color: #FFF;
+}
+
+/* .div {
+  height: 50vh;
+} */
+
+/* .div1 {
+  height: 70%;
+  margin: 10%;
+  border-radius: 10%;
+  background-color: #0c3246;
+}
+
+.div2 {
+  height: 50%;
+  position: relative;
+}
+
+.div22 {
+  position: absolute;
+  bottom: 0px;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+  margin-left: 10%;
+  width: 80%;
+}
+
+.div3 {
+  height: 50%;
+  display: flex;
+}
+
+.div4 {
+  height: 100%;
+  width: 75%;
+  position: relative;
+}
+
+
+.div44 span {
+  font-size: 120px;
+  color: #E74860;
+  font-weight: bold;
+  margin-left: 10%;
+  line-height: 100px;
+}
+
+.div5 {
+  height: 100%;
+  width: 25%;
+  position: relative;
+}
+
+.div55 {
+  font-size: 30px;
+  color: #fff;
+  font-weight: bold;
+  margin-left: 10%;
+  position: absolute;
+	bottom: 4vh;
+}
+ */
