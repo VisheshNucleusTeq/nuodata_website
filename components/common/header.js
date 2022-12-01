@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Col, Row, Menu, Image, Tag } from "antd";
 import { MenuOutlined, PhoneFilled } from "@ant-design/icons";
 import HeaderCss from "../../styles/Header.module.css";
-
+// import logo from
 export default function Header() {
   const [scrollY, setScrollY] = useState(0);
 
@@ -28,7 +28,7 @@ export default function Header() {
         <Col offset={2} span={4}>
           <div className={HeaderCss.infoColImage}>
             <Link href="/">
-              <Image preview={false} src={"./logo.png"} />
+              <Image preview={false} src={"/logo.png"} />
             </Link>
           </div>
         </Col>

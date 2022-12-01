@@ -5,6 +5,37 @@
     border-radius: 10px;
 }
 
+.defineSteps{
+    background-color: #FFF;
+    border-radius: 20px;
+}
+
+.defineSteps div{
+    padding: 1%;
+    border : 1px solid rgb(196, 196, 196);
+    justify-content: center !important;
+    border-radius: 20px !important;
+
+}
+
+.defineStep{
+    border : 1px solid rgb(232, 232, 232);
+    border-radius: 10px;
+    margin:  3px 3px 3px 3px !important;
+    text-align: center;
+    background-color: #FFF;
+    font-size: large;
+    font-weight: bold;
+    cursor: pointer;
+    color: #0C3246;
+}
+
+.defineStepSelect{
+    background-color: #0C3246;
+    color: #FFF;
+}
+
+/* 
 .formCenter {
     display: flex;
     justify-content: center;
@@ -28,13 +59,8 @@
     border: 1px solid #0C3246 !important;
 }
 
-.inputCenter{
-    /* height: 50px; */
-}
 
 .inputCenterPlusBtn{
-    /* border: 1px solid red; */
     display: flex;
     margin-top: 2%;
-    /* align-items: center; */
-}
+} */

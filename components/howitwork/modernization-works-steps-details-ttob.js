@@ -21,7 +21,7 @@ function ModernizationWorksStepsDetailsTtob(props) {
         sourcePosition: "bottom",
         position: { x: 0, y: 0 },
         data: {
-          label: <Image src="./how_it_work/step.png" />,
+          label: <Image src="/how_it_work/step.png" />,
         },
       },
       {

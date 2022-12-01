@@ -1,5 +1,5 @@
 .mainDiv {
-  background: url("../public/home/bg3.png") no-repeat center center;
+  background: url("/home/bg3.png") no-repeat center center;
   width: 100%;
   height: 100vh;
   background-size: cover;
@@ -123,7 +123,7 @@
 }
 
 .ModernizationWorks {
-  background: url("../public/home/bg3-overlay.png") no-repeat center center;
+  background: url("/home/bg3-overlay.png") no-repeat center center;
   width: 100%;
   height: 100%;
   background-size: cover;
@@ -208,7 +208,7 @@
 
 @media (max-width: 860px) {
   .mainDiv {
-    background: url("../public/home/bg3.png") no-repeat center center;
+    background: url("/home/bg3.png") no-repeat center center;
     width: 100%;
     height: 60vh;
     background-size: cover;
@@ -225,7 +225,7 @@
   }
 
   .ModernizationWorks {
-    background: url("../public/home/bg3.png") no-repeat center center;
+    background: url("/home/bg3.png") no-repeat center center;
     width: 100%;
     height: 100%;
     background-size: cover;

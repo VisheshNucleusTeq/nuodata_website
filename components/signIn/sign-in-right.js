@@ -1,18 +1,23 @@
 import React from "react";
-import { Image, Form, Button, Divider, message } from "antd";
+import { Image, Form, Button, Divider, message, Input } from "antd";
+import { useRouter } from 'next/router'
 
 import Link from "next/link";
-import Input from "../common/Input";
+// import Input from "../common/Input";
 import { fetch_retry_post } from "../../network/api-manager";
 import { LOGIN } from "../../network/apiConstants";
 
 function SignInRight({ loginCss }) {
+  const router = useRouter()
+
+
   const onFinish = async (payload) => {
     const data = await fetch_retry_post(LOGIN, payload);
     if (data.success) {
-      //handle success
+      message.success("Login successfully.");
+      router.push('dashboard')
     } else {
-      message.error(data?.error?.message);
+      message.error([data?.error]);
     }
   };
 
@@ -34,10 +39,10 @@ function SignInRight({ loginCss }) {
           <b>Hello! Welcome back.</b>
         </h1>
         <Form layout="vertical" onFinish={onFinish} autoComplete="off">
-          <Input
-            name="email"
-            placeholder="example@gmail.com"
-            lable="E-mail address"
+          <Form.Item
+            label={"E-mail address"}
+            labelAlign={"left"}
+            name={"email"}
             rules={[
               {
                 type: "email",
@@ -48,17 +53,33 @@ function SignInRight({ loginCss }) {
                 message: "Please input your E-mail!",
               },
             ]}
-          />
-          <Input
-            name="password"
-            placeholder="Enter password"
-            lable="Password"
-            type="password"
+          >
+            <Input
+              key={"input-email"}
+              className={"input"}
+              placeholder={"example@gmail.com"}
+              name={"email"}
+              type={"text"}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label={"Password"}
+            labelAlign={"left"}
+            name={"password"}
             rules={[
               { required: true, message: "Please input your Password!" },
               { validator: validatePassword },
             ]}
-          />
+          >
+            <Input
+              key={"input-password"}
+              className={"input"}
+              placeholder={"Enter password"}
+              name={"password"}
+              type={"password"}
+            />
+          </Form.Item>
 
           <p className={loginCss.forgotPassword}>
             <b>Forget Password?</b>

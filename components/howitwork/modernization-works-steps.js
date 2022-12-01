@@ -16,7 +16,7 @@ export default function ModernizationWorksSteps({ HowItWorkCss, direction }) {
         <Image
           preview={false}
           width={"50%"}
-          src={`./how_it_work/${ImageName}`}
+          src={`/how_it_work/${ImageName}`}
         />
         <p style={{ marginTop: "10%" }}>{title}</p>
       </div>
