@@ -48,11 +48,11 @@ function SignInRight({ loginCss }) {
             rules={[
               {
                 type: "email",
-                message: "The input is not valid E-mail!",
+                message: "Please enter a valid email address.",
               },
               {
                 required: true,
-                message: "Please input your E-mail!",
+                message: "Email address is required.",
               },
             ]}
           >
@@ -71,8 +71,8 @@ function SignInRight({ loginCss }) {
             labelAlign={"left"}
             name={"password"}
             rules={[
-              { required: true, message: "Please input your Password!" },
-              { validator: validatePassword },
+              { required: true, message: "Password is required." },
+              // { validator: validatePassword },
             ]}
           >
             <Input
@@ -86,7 +86,7 @@ function SignInRight({ loginCss }) {
           </Form.Item>
 
           <p className={loginCss.forgotPassword}>
-            <b>Forget Password?</b>
+            <b>Forgot Password?</b>
           </p>
 
           <Button

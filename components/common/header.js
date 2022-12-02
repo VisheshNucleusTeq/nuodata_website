@@ -21,7 +21,7 @@ export default function Header() {
   return (
     <div
       className={`${HeaderCss.menuDiv} ${
-        scrollY > 500 ? HeaderCss.menuDivScrollY : null
+        scrollY > 100 ? HeaderCss.menuDivScrollY : null
       }`}
     >
       <Row className={HeaderCss.infoRow}>
@@ -37,7 +37,7 @@ export default function Header() {
           <Menu
             className={HeaderCss.menu}
             mode="horizontal"
-            defaultSelectedKeys={[""]}
+            // defaultSelectedKeys={[""]}
             overflowedIndicator={
               <MenuOutlined style={{ fontSize: "200%", color: "#f05829" }} />
             }

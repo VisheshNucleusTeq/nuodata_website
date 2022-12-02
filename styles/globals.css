@@ -72,6 +72,18 @@ body {
   width: 40% !important;
 }
 
+.dataFlowNuoData{
+  background-color: transparent !important;
+  width: 20 !important;
+  border: 1px solid transparent !important;
+}
+
+.dataFlow{
+  background-color: transparent !important;
+  width: 18% !important;
+  border: 1px solid transparent !important;
+}
+
 .textBox{
   background-color: #FFF !important;
   width: 30% !important;

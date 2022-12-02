@@ -1,6 +1,10 @@
 import React from "react";
 import "antd/dist/antd.css";
 import "../styles/globals.css";
+import "animate.css/animate.min.css";
+
+// import "../public/assets/js/jquery.min.js"
+// import "../public/assets/js/custom"
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ProtectRoute } from "../contexts/auth";
@@ -19,24 +23,3 @@ export default function MyApp({ Component, pageProps }) {
     </QueryClientProvider>
   );
 }
-
-
-// import { QueryClient, QueryClientProvider } from "react-query";
-
-// import "antd/dist/antd.css";
-// import "../styles/globals.css";
-// import { ProtectRoute } from "../contexts/auth";
-
-// const queryClient = new QueryClient();
-
-// function MyApp({ Component, pageProps }) {
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <ProtectRoute>
-//         <Component {...pageProps} />
-//       </ProtectRoute>
-//     </QueryClientProvider>
-//   );
-// }
-
-// export default MyApp;
