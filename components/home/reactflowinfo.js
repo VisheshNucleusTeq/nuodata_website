@@ -20,8 +20,8 @@ function ReactFlowInfo(props) {
     "/home/logos/ibm.png",
     "/home/logos/informatica.png",
     "/home/logos/sas.png",
-    "/home/logos/hadoop.png"
-  ])
+    "/home/logos/hadoop.png",
+  ]);
 
   const [target, setTarget] = useState([
     "/home/logos/aws.png",
@@ -29,23 +29,25 @@ function ReactFlowInfo(props) {
     "/home/logos/cloud.png",
     "/home/logos/snowflake.png",
     "/home/logos/databricks.png",
-    "/home/logos/spark.png"
-  ])
+    "/home/logos/spark.png",
+  ]);
 
   useEffect(() => {
-   setInterval(() => {
-        setSource(source
-          .map(value => ({ value, sort: Math.random() }))
+    setInterval(() => {
+      setSource(
+        source
+          .map((value) => ({ value, sort: Math.random() }))
           .sort((a, b) => a.sort - b.sort)
-          .map(({ value }) => value))
-          setTarget(target
-            .map(value => ({ value, sort: Math.random() }))
-            .sort((a, b) => a.sort - b.sort)
-            .map(({ value }) => value))
+          .map(({ value }) => value)
+      );
+      setTarget(
+        target
+          .map((value) => ({ value, sort: Math.random() }))
+          .sort((a, b) => a.sort - b.sort)
+          .map(({ value }) => value)
+      );
     }, 1000 * 2);
-  }, [])
-
-  
+  }, []);
 
   useEffect(() => {
     setWidth(ref.current.clientWidth);
@@ -57,9 +59,20 @@ function ReactFlowInfo(props) {
         id: "6",
         sourcePosition: "right",
         targetPosition: "right",
-        position: { x: 0, y: (ref.current.clientHeight / 6) * 1},
+        position: { x: 0, y: (ref.current.clientHeight / 6) * 1 },
         data: {
-          label: <Image preview={false} style={{width : "100%",backgroundColor:"#FFF", borderRadius:"10%", padding:"0px 5px 0px 5px"}} src={source[0]} />,
+          label: (
+            <Image
+              preview={false}
+              style={{
+                width: "100%",
+                backgroundColor: "#FFF",
+                borderRadius: "10%",
+                padding: "0px 5px 0px 5px",
+              }}
+              src={source[0]}
+            />
+          ),
         },
       },
       {
@@ -67,9 +80,20 @@ function ReactFlowInfo(props) {
         id: "7",
         sourcePosition: "right",
         targetPosition: "right",
-        position: { x: 20, y: (ref.current.clientHeight / 6) * 2},
+        position: { x: 20, y: (ref.current.clientHeight / 6) * 2 },
         data: {
-          label: <Image preview={false} style={{width : "100%",backgroundColor:"#FFF", borderRadius:"10%", padding:"0px 5px 0px 5px"}} src={source[1]} />,
+          label: (
+            <Image
+              preview={false}
+              style={{
+                width: "100%",
+                backgroundColor: "#FFF",
+                borderRadius: "10%",
+                padding: "0px 5px 0px 5px",
+              }}
+              src={source[1]}
+            />
+          ),
         },
       },
       {
@@ -77,9 +101,20 @@ function ReactFlowInfo(props) {
         id: "8",
         sourcePosition: "right",
         targetPosition: "right",
-        position: { x: 20, y: (ref.current.clientHeight / 6) * 3},
+        position: { x: 20, y: (ref.current.clientHeight / 6) * 3 },
         data: {
-          label: <Image preview={false} style={{width : "100%",backgroundColor:"#FFF", borderRadius:"10%", padding:"0px 5px 0px 5px"}} src={source[2]} />,
+          label: (
+            <Image
+              preview={false}
+              style={{
+                width: "100%",
+                backgroundColor: "#FFF",
+                borderRadius: "10%",
+                padding: "0px 5px 0px 5px",
+              }}
+              src={source[2]}
+            />
+          ),
         },
       },
       {
@@ -87,9 +122,20 @@ function ReactFlowInfo(props) {
         id: "9",
         sourcePosition: "right",
         targetPosition: "right",
-        position: { x: 0, y: (ref.current.clientHeight / 6) * 4},
+        position: { x: 0, y: (ref.current.clientHeight / 6) * 4 },
         data: {
-          label: <Image preview={false} style={{width : "100%",backgroundColor:"#FFF", borderRadius:"10%", padding:"0px 5px 0px 5px"}} src={source[3]} />,
+          label: (
+            <Image
+              preview={false}
+              style={{
+                width: "100%",
+                backgroundColor: "#FFF",
+                borderRadius: "10%",
+                padding: "0px 5px 0px 5px",
+              }}
+              src={source[3]}
+            />
+          ),
         },
       },
       {
@@ -97,9 +143,18 @@ function ReactFlowInfo(props) {
         id: "1",
         sourcePosition: "right",
         targetPosition: "left",
-        position: { x: (ref.current.clientWidth / 2) - 50, y: (ref.current.clientHeight / 2) - 50 },
+        position: {
+          x: ref.current.clientWidth / 2 - 50,
+          y: ref.current.clientHeight / 2 - 50,
+        },
         data: {
-          label: <Image preview={false} style={{width : "100%",}} src="/assets/images/logo.png" />,
+          label: (
+            <Image
+              preview={false}
+              style={{ width: "100%" }}
+              src="/assets/images/logo.png"
+            />
+          ),
         },
       },
       {
@@ -107,9 +162,24 @@ function ReactFlowInfo(props) {
         id: "2",
         sourcePosition: "left",
         targetPosition: "left",
-        position: { x: (ref.current.clientWidth) - 100, y: (ref.current.clientHeight / 6) * 1 },
+        position: {
+          x: ref.current.clientWidth - 120,
+          y: (ref.current.clientHeight / 6) * 1,
+        },
         data: {
-          label: <Image preview={false} style={{width : "100%",backgroundColor:"#FFF", borderRadius:"10%", padding:"0px 5px 0px 5px"}} src={target[0]} />,
+          label: (
+            <Image
+              preview={false}
+              style={{
+                objectFit: "contain",
+                width: "100%",
+                backgroundColor: "#FFF",
+                borderRadius: "10%",
+                padding: "0px 5px 0px 5px",
+              }}
+              src={target[0]}
+            />
+          ),
         },
       },
       {
@@ -117,9 +187,23 @@ function ReactFlowInfo(props) {
         id: "3",
         sourcePosition: "left",
         targetPosition: "left",
-        position: { x: (ref.current.clientWidth) - 120, y: (ref.current.clientHeight / 6) * 2 },
+        position: {
+          x: ref.current.clientWidth - 140,
+          y: (ref.current.clientHeight / 6) * 2,
+        },
         data: {
-          label: <Image preview={false} style={{width : "100%",backgroundColor:"#FFF", borderRadius:"10%", padding:"0px 5px 0px 5px"}} src={target[1]} />,
+          label: (
+            <Image
+              preview={false}
+              style={{
+                width: "100%",
+                backgroundColor: "#FFF",
+                borderRadius: "10%",
+                padding: "0px 5px 0px 5px",
+              }}
+              src={target[1]}
+            />
+          ),
         },
       },
       {
@@ -127,9 +211,23 @@ function ReactFlowInfo(props) {
         id: "4",
         sourcePosition: "left",
         targetPosition: "left",
-        position: { x: (ref.current.clientWidth) - 120, y: (ref.current.clientHeight / 6) * 3 },
+        position: {
+          x: ref.current.clientWidth - 140,
+          y: (ref.current.clientHeight / 6) * 3,
+        },
         data: {
-          label: <Image preview={false} style={{width : "100%",backgroundColor:"#FFF", borderRadius:"10%", padding:"0px 5px 0px 5px"}} src={target[2]} />,
+          label: (
+            <Image
+              preview={false}
+              style={{
+                width: "100%",
+                backgroundColor: "#FFF",
+                borderRadius: "10%",
+                padding: "0px 5px 0px 5px",
+              }}
+              src={target[2]}
+            />
+          ),
         },
       },
       {
@@ -137,9 +235,23 @@ function ReactFlowInfo(props) {
         id: "5",
         sourcePosition: "left",
         targetPosition: "left",
-        position: { x: (ref.current.clientWidth) - 100, y: (ref.current.clientHeight / 6) * 4 },
+        position: {
+          x: ref.current.clientWidth - 120,
+          y: (ref.current.clientHeight / 6) * 4,
+        },
         data: {
-          label: <Image preview={false} style={{width : "100%",backgroundColor:"#FFF", borderRadius:"10%", padding:"0px 5px 0px 5px"}} src={target[3]} />,
+          label: (
+            <Image
+              preview={false}
+              style={{
+                width: "100%",
+                backgroundColor: "#FFF",
+                borderRadius: "10%",
+                padding: "0px 5px 0px 5px",
+              }}
+              src={target[3]}
+            />
+          ),
         },
       },
     ]);

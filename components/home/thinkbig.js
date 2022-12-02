@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row, Button, Image } from "antd";
-import {  CaretRightOutlined } from "@ant-design/icons";
+import { CaretRightOutlined } from "@ant-design/icons";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 
 export default function ThinkBig({ HomeCss }) {
@@ -10,14 +10,11 @@ export default function ThinkBig({ HomeCss }) {
         <Col span={16} offset={4}>
           <Row className={HomeCss.thinkBigChild}>
             <Col span={24}>
-            <AnimationOnScroll
-                  animateIn="animate__fadeIn"
-                  animateOnce={true}
-                >
-                  <h1>THINK</h1>
-                  <h1>BIG.</h1>
-                </AnimationOnScroll>
-              
+              <AnimationOnScroll animateIn="animate__zoomIn" animateOnce={true}>
+                <h1>THINK</h1>
+                <h1>BIG.</h1>
+              </AnimationOnScroll>
+
               {/* <h1>
                 <AnimationOnScroll
                   initiallyVisible={true}
@@ -40,9 +37,9 @@ export default function ThinkBig({ HomeCss }) {
 
             <Col span={24}>
               <AnimationOnScroll
-                animateIn="animate__fadeInRight"
+                animateIn="animate__fadeInUp"
                 animateOnce={true}
-                              >
+              >
                 <h2>
                   <span className={HomeCss.thinkBigChildIcon}>
                     <CaretRightOutlined />
@@ -54,8 +51,9 @@ export default function ThinkBig({ HomeCss }) {
             </Col>
             <Col span={24}>
               <AnimationOnScroll
-                animateIn="animate__fadeInLeftBig"
-                               animateOnce={true}
+                animateIn="animate__fadeInUp"
+                animateOnce={true}
+                delay={0.3}
               >
                 <h2>
                   <span className={HomeCss.thinkBigChildIcon}>

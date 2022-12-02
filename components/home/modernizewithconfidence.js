@@ -1,10 +1,11 @@
 import { Col, Row } from "antd";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 
 export default function ModernizeWithConfidence({ HomeCss }) {
   return (
     <div className={HomeCss.bgImage}>
       <Row className={HomeCss.modernizeWithConfidenceMain}>
-      <Col offset={4} span={9} className={HomeCss.ModernData}>
+        <Col offset={4} span={9} className={HomeCss.ModernData}>
           6-10x faster & 100% accurate conversion
         </Col>
 
@@ -36,7 +37,7 @@ export default function ModernizeWithConfidence({ HomeCss }) {
         <Col span={12} className={HomeCss.ModernDataDev} />
 
         <Col offset={4} span={9} className={HomeCss.ModernData}>
-        Single version of truth
+          Single version of truth
         </Col>
       </Row>
     </div>

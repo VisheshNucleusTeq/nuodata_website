@@ -6,17 +6,19 @@ export default function EnterpriseChallenge({ HomeCss }) {
   return (
     <Row className={HomeCss.mainEnterpriseChallenge}>
       <h2>
-          <AnimationOnScroll animateIn="animate__fadeIn" animateOnce={true}>
-          <span>
-            Enterprise Challenge
-            </span>
-          </AnimationOnScroll>
+        <AnimationOnScroll
+          animateOut="animate__fadeOut"
+          animateIn="animate__fadeIn"
+          animateOnce={true}
+        >
+          <span>Enterprise Challenges</span>
+        </AnimationOnScroll>
       </h2>
 
       <Col xs={22} sm={22} md={22} lg={20} xl={18} xxl={18}>
         <AnimationOnScroll animateIn="animate__fadeInRight" animateOnce={true}>
           <Row className={HomeCss.childDiv}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14} >
+            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
               <div className={HomeCss.textDiv}>
                 <h1>
                   <span>1</span>
@@ -40,7 +42,7 @@ export default function EnterpriseChallenge({ HomeCss }) {
 
         <AnimationOnScroll animateIn="animate__fadeInLeft" animateOnce={true}>
           <Row className={HomeCss.childDiv}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14} >
+            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
               <div className={HomeCss.textDiv}>
                 <h1>
                   <span>2</span>
@@ -49,7 +51,7 @@ export default function EnterpriseChallenge({ HomeCss }) {
                 </h1>
               </div>
             </Col>
-            <Col  xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
               <div className={HomeCss.imageDiv}>
                 <Image
                   width={"100%"}
@@ -64,7 +66,7 @@ export default function EnterpriseChallenge({ HomeCss }) {
 
         <AnimationOnScroll animateIn="animate__fadeInRight" animateOnce={true}>
           <Row className={HomeCss.childDiv}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14} >
+            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
               <div className={HomeCss.textDiv}>
                 <h1>
                   <span>3</span>
@@ -74,7 +76,7 @@ export default function EnterpriseChallenge({ HomeCss }) {
                 </h1>
               </div>
             </Col>
-            <Col  xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
               <div className={HomeCss.imageDiv}>
                 <Image
                   width={"100%"}
@@ -89,7 +91,7 @@ export default function EnterpriseChallenge({ HomeCss }) {
 
         <AnimationOnScroll animateIn="animate__fadeInLeft" animateOnce={true}>
           <Row className={HomeCss.childDiv}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14} >
+            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
               <div className={HomeCss.textDiv}>
                 <h1>
                   <span>4</span>
@@ -98,7 +100,7 @@ export default function EnterpriseChallenge({ HomeCss }) {
                 </h1>
               </div>
             </Col>
-            <Col  xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
               <div className={HomeCss.imageDiv}>
                 <Image
                   width={"100%"}
@@ -113,7 +115,7 @@ export default function EnterpriseChallenge({ HomeCss }) {
 
         <AnimationOnScroll animateIn="animate__fadeInRight" animateOnce={true}>
           <Row className={HomeCss.childDiv}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14} >
+            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
               <div className={HomeCss.textDiv}>
                 <h1>
                   <span>5</span>
@@ -122,7 +124,7 @@ export default function EnterpriseChallenge({ HomeCss }) {
                 </h1>
               </div>
             </Col>
-            <Col  xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
               <div className={HomeCss.imageDiv}>
                 <Image
                   width={"100%"}
@@ -135,8 +137,18 @@ export default function EnterpriseChallenge({ HomeCss }) {
           </Row>
         </AnimationOnScroll>
       </Col>
-      <Col xs={22} sm={22} md={22} lg={20} xl={18} xxl={18} className={HomeCss.howNuoDataworksBtn}>
-        <Button ghost={true} size="large">“Explore How NuoData works” <RiseOutlined /></Button>
+      <Col
+        xs={22}
+        sm={22}
+        md={22}
+        lg={20}
+        xl={18}
+        xxl={18}
+        className={HomeCss.howNuoDataworksBtn}
+      >
+        <Button ghost={true} size="large">
+          “Explore How NuoData works” <RiseOutlined />
+        </Button>
       </Col>
     </Row>
   );
