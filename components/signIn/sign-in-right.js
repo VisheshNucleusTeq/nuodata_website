@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, Form, Button, Divider, message, Input } from "antd";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 import Link from "next/link";
 // import Input from "../common/Input";
@@ -8,14 +8,16 @@ import { fetch_retry_post } from "../../network/api-manager";
 import { LOGIN } from "../../network/apiConstants";
 
 function SignInRight({ loginCss }) {
-  const router = useRouter()
-
+  const router = useRouter();
+  const [isLoading, setLoading] = useState(false);
 
   const onFinish = async (payload) => {
+    setLoading(true);
     const data = await fetch_retry_post(LOGIN, payload);
+    setLoading(false);
     if (data.success) {
       message.success("Login successfully.");
-      router.push('dashboard')
+      router.push("dashboard");
     } else {
       message.error([data?.error]);
     }
@@ -60,6 +62,7 @@ function SignInRight({ loginCss }) {
               placeholder={"example@gmail.com"}
               name={"email"}
               type={"text"}
+              disabled={isLoading}
             />
           </Form.Item>
 
@@ -78,6 +81,7 @@ function SignInRight({ loginCss }) {
               placeholder={"Enter password"}
               name={"password"}
               type={"password"}
+              disabled={isLoading}
             />
           </Form.Item>
 
@@ -91,6 +95,8 @@ function SignInRight({ loginCss }) {
             type="primary"
             block
             htmlType="submit"
+            loading={isLoading}
+            disabled={isLoading}
           >
             Login
           </Button>
