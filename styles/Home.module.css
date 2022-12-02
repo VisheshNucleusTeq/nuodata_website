@@ -1,6 +1,6 @@
 /* INFO */
 .mainDiv {
-  background: url("../public/home/info-overlay.png") no-repeat center center;
+  background: url("../public/home/sequence.gif") no-repeat center center;
   width: 100%;
   height: 100vh;
   background-size: cover;
@@ -20,6 +20,15 @@
   color: #fff;
   font-weight: bold;
   font-size: 3vw;
+  text-transform: uppercase;
+  /* float: right;
+  text-align: end; */
+  /* animation: zoom-in-zoom-out 3s ease; */
+
+}
+
+.infoRow h1 span {
+  color: #e74860;
 }
 
 .infoRowSystem {
@@ -30,9 +39,9 @@
   display: none;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 1150px) {
   .mainDiv {
-    height: 60vh;
+    height: 70vh;
     background-size: cover;
   }
 
@@ -55,96 +64,294 @@
     font-size: 8vw;
   }
 }
+
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 /* INFO */
 
-.row{
+/* THINK BIG */
+
+.thinkBigMainDiv {
+  margin: 5% 0% 5% 0%;
+}
+
+.thinkBigChild h1:first-child {
+  color: #0c3246 !important;
+  font-size: 5vw;
+  font-weight: bolder;
+}
+
+.thinkBigChild h1:last-child {
+  color: #e74860 !important;
+  font-size: 5vw;
+  font-weight: bolder;
+  line-height: 0px;
+}
+
+.thinkBigChild h2 {
+  color: #0c3246 !important;
+  font-size: 2.5vw !important;
+  margin-top: 2%;
+}
+
+.thinkBigChild h2 span {
+  font-weight: bold;
+}
+
+.thinkBigChildIcon {
+  color: #e74860;
+}
+
+@media (max-width: 760px) {
+  .thinkBigChild h1:first-child {
+    font-size: 8vw;
+  }
+
+  .thinkBigChild h1:last-child {
+    font-size: 8vw;
+  }
+
+  .thinkBigChild h2 {
+    font-size: 4vw !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .thinkBigChild h1:first-child {
+    font-size: 10vw;
+  }
+
+  .thinkBigChild h1:last-child {
+    font-size: 10vw;
+  }
+
+  .thinkBigChild h2 {
+    font-size: 5vw !important;
+  }
+}
+
+/* THINK BIG */
+
+/* ENTERPRISE CHALLENGE */
+
+.mainEnterpriseChallenge{
+  background-color: #0c3246;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mainEnterpriseChallenge h2{
+  width: 100%;
+  text-align: center;
+  font-size: 4vw;
+  margin: 2%;
+  font-weight: bolder;
+  color: #FFF;
+}
+
+.mainEnterpriseChallenge h2 span{
+  background-image: linear-gradient( #0c3246 75%, #FFF 100%);
+}
+
+.childDiv {
+  margin: 2% 0% 3% 0%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.textDiv, .imageDiv {
+  height: 30vh;
+  padding: 4%;
+}
+
+.textDiv h1{
+  color: #fff;
+}
+
+.textDiv h1 span{
+  font-weight: bolder;
+  font-size: 50px !important;
+}
+
+
+.textDiv :hover{
+  color: #e74860 !important;
+  transform: scale(1.02);
+}
+
+.imageDiv :hover{
+  transform: scale(1.02);
+}
+
+.howNuoDataworksBtn{
+  /* margin: 0% 0% 0% 0%; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2%;
+}
+
+.howNuoDataworksBtn button {
+  color :#E74860 !important;
+  font-weight: bolder;
+  font-size: 20px;
+  height: 8vh;
+  border-radius: 15px;
+  border: 1px solid #E74860 !important;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  /* width: 100vh !important; */
+}
+
+.howNuoDataworksBtn button:hover {
+  border: 2px solid #E74860 !important;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+@media (max-width: 760px) {
+  .mainEnterpriseChallenge h2{
+    font-size: 6vw;
+  }
+}
+
+/* @media (max-width: 400px) {
+  .howNuoDataworksBtn button {
+    color :#E74860 !important;
+    font-weight: bold;
+    font-size: 16px;
+    height: 6vh;
+    border-radius: 15px;
+    border: 1px solid #E74860 !important;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 80vh !important;
+  }
+} */
+
+
+/* MODERN */
+
+.bgImage{
+  background: url("../public/home/bg4.png") no-repeat center center;
+  background-size: cover;
+  border: 1px solid #0c3246;
+}
+
+.modernizeWithConfidenceMain{
+  margin-top: 5%;
+  margin-bottom: 5%;
+  
+}
+
+.ModernData{
+  height: 8vh;
+  border: 1px solid #E74860;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 3% !important;
+  color: #0c3246 !important;
+  transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+}
+
+.ModernData:hover{
+  background-color: #E74860;
+  color: #FFF !important;
+  cursor: pointer;
+  transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+}
+
+.ModernDataDev{
+  height: 6vh;
+  border-right: 1px solid #858585 !important;
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+}
+
+/* MODERN */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+.enterpriseChallengeTitle{
+  text-align: center;
+  width: 100%;
+  margin: 1% 0% 2% 0%;
+}
+
+.enterpriseChallengeTitle span{
+  color: #0C3246;
+  font-size: 3vw;
+  border-top : 2px solid #0C3246;
+  border-bottom : 2px solid #0C3246;
+  font-weight: bolder;
+  padding: 1% 1% 1% 1%;
+}
+
+.enterpriseChallengeFirstRow{
+  display: flex;
+  justify-content: center;
+}
+
+.row {
   margin: 8%;
   background-color: #0c3246;
   padding: 5%;
   border-radius: 20px;
 }
 
-.text{
+.text {
   font-size: 20px;
   font-weight: bold;
-  color: #FFF;
+  color: #fff;
   margin-top: 12%;
 }
 
-.number{
+.number {
   font-size: 120px;
   line-height: 100px;
   margin-top: 5%;
   font-weight: bold;
-  color: #E74860;
+  color: #e74860;
 }
 
-.icon{
+.icon {
   margin-bottom: 5%;
   align-items: flex-end;
   display: flex;
   font-size: 20px;
-  color: #FFF;
-}
-
-/* .div {
-  height: 50vh;
+  color: #fff;
 } */
 
-/* .div1 {
-  height: 70%;
-  margin: 10%;
-  border-radius: 10%;
-  background-color: #0c3246;
-}
-
-.div2 {
-  height: 50%;
-  position: relative;
-}
-
-.div22 {
-  position: absolute;
-  bottom: 0px;
-  font-size: 20px;
-  color: #fff;
-  font-weight: bold;
-  margin-left: 10%;
-  width: 80%;
-}
-
-.div3 {
-  height: 50%;
-  display: flex;
-}
-
-.div4 {
-  height: 100%;
-  width: 75%;
-  position: relative;
-}
-
-
-.div44 span {
-  font-size: 120px;
-  color: #E74860;
-  font-weight: bold;
-  margin-left: 10%;
-  line-height: 100px;
-}
-
-.div5 {
-  height: 100%;
-  width: 25%;
-  position: relative;
-}
-
-.div55 {
-  font-size: 30px;
-  color: #fff;
-  font-weight: bold;
-  margin-left: 10%;
-  position: absolute;
-	bottom: 4vh;
-}
- */
+/* ENTERPRISE CHALLENGE */
