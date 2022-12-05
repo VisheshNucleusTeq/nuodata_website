@@ -1,15 +1,35 @@
 import dataModernizationCss from "../../styles/dataModernization.module.css";
-import { Button, Row, Col, Form, Input, Select } from "antd";
+import { Button, Row, Col, Form, Input, Select, message, Upload } from "antd";
 import { useState } from "react";
+import { UploadOutlined } from '@ant-design/icons';
 
 import { fetch_retry_post } from "../../network/api-manager";
+import { DEFINE, UPLOADFILE } from "../../network/apiConstants";
 
 const Define = () => {
   const [step, setStep] = useState("Define");
   const [isLoading, setLoading] = useState(false);
 
-  const onFinish = async (payload) => {
-    console.log(payload);
+  const onFinishDefine = async (payload) => {
+    setLoading(true);
+    const data = await fetch_retry_post(DEFINE, payload);
+    setLoading(false);
+    if (data.success) {
+      message.success("Successfully Created.");
+    } else {
+      message.error([data?.error]);
+    }
+  };
+
+  const onFinishConnect = async (payload) => {
+    setLoading(true);
+    const data = await fetch_retry_post(UPLOADFILE, payload);
+    setLoading(false);
+    if (data.success) {
+      message.success("Successfully Added.");
+    } else {
+      message.error([data?.error]);
+    }
   };
 
   return (
@@ -62,12 +82,12 @@ const Define = () => {
               autoComplete="off"
               labelCol={{ span: 7 }}
               wrapperCol={{ span: 18 }}
-              onFinish={onFinish}
+              onFinish={onFinishDefine}
             >
               <Form.Item
                 label={"Select Business Unit"}
                 labelAlign={"left"}
-                name={"business_unit"}
+                name={"businessUnit"}
                 rules={[
                   {
                     required: true,
@@ -79,7 +99,7 @@ const Define = () => {
                   key={"input-business-unit"}
                   className={"input"}
                   placeholder={""}
-                  name={"business_unit"}
+                  name={"businessUnit"}
                   type={"text"}
                   disabled={isLoading}
                 />
@@ -88,7 +108,7 @@ const Define = () => {
               <Form.Item
                 label={"Project Name"}
                 labelAlign={"left"}
-                name={"project_name"}
+                name={"name"}
                 rules={[
                   {
                     required: true,
@@ -100,7 +120,7 @@ const Define = () => {
                   key={"input-project-name"}
                   className={"input"}
                   placeholder={""}
-                  name={"project_name"}
+                  name={"name"}
                   type={"text"}
                   disabled={isLoading}
                 />
@@ -109,7 +129,7 @@ const Define = () => {
               <Form.Item
                 label={"Select Source File(s)"}
                 labelAlign={"left"}
-                name={"source_file"}
+                name={"sourcePlatform"}
                 rules={[
                   {
                     required: true,
@@ -153,7 +173,7 @@ const Define = () => {
               <Form.Item
                 label={"Select Target Platform"}
                 labelAlign={"left"}
-                name={"target_platform"}
+                name={"targetPlatform"}
                 rules={[
                   {
                     required: true,
@@ -197,7 +217,7 @@ const Define = () => {
               <Form.Item
                 label={"Select Target Language"}
                 labelAlign={"left"}
-                name={"target_language"}
+                name={"targetLang"}
                 rules={[
                   {
                     required: true,
@@ -282,53 +302,24 @@ const Define = () => {
                 />
               </Form.Item>
 
-              <Button
-                size={"large"}
-                type="primary"
-                block
-                htmlType="submit"
-                loading={isLoading}
-                disabled={isLoading}
-              >
-                Login
-              </Button>
+              <div className={dataModernizationCss.nextExitBtn}>
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.nextBtn}
+                  htmlType="submit"
+                >
+                  Next
+                </Button>
 
-              {/* <p className={loginCss.forgotPassword}>
-            <b>Forgot Password?</b>
-          </p>
-
-          <Button
-            size={"large"}
-            className={loginCss.loginBtn}
-            type="primary"
-            block
-            htmlType="submit"
-            loading={isLoading}
-            disabled={isLoading}
-          >
-            Login
-          </Button>
-
-          <Divider plain>Or</Divider>
-          <Button
-            size={"large"}
-            className={loginCss.googleLoginBtn}
-            type=""
-            block
-          >
-            <Image
-              width={"4%"}
-              src="../assets/images/google.png"
-              preview={false}
-            />
-            &nbsp; Login with Google
-          </Button>
-          <p className={loginCss.signup}>
-            Don’t have an account? &nbsp;
-            <Link href="/sign-up">
-              <b className={loginCss.cursorPointer}>Sign up</b>
-            </Link>
-          </p> */}
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.exitBtn}
+                >
+                  Exit
+                </Button>
+              </div>
             </Form>
           </Col>
         </Row>
@@ -342,41 +333,35 @@ const Define = () => {
               autoComplete="off"
               labelCol={{ span: 7 }}
               wrapperCol={{ span: 18 }}
-              onFinish={onFinish}
+              onFinish={onFinishConnect}
             >
-              <Form.Item
-                label={"Select Business Unit"}
-                labelAlign={"left"}
-                name={"business_unit"}
-                rules={[
-                  {
-                    required: true,
-                    message: "Business unit is required.",
-                  },
-                ]}
+              <Upload
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                listType="picture"
+                maxCount={3}
+                multiple
               >
-                <Input
-                  key={"input-business-unit"}
-                  className={"input"}
-                  placeholder={""}
-                  name={"business_unit"}
-                  type={"text"}
-                  disabled={isLoading}
-                />
-              </Form.Item>
+                <Button icon={<UploadOutlined />}>Select File</Button>
+              </Upload>
 
-              <Button
-                size={"large"}
-                type="primary"
-                block
-                htmlType="submit"
-                loading={isLoading}
-                disabled={isLoading}
-              >
-                Login
-              </Button>
+              <div className={dataModernizationCss.nextExitBtn}>
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.nextBtn}
+                  htmlType="submit"
+                >
+                  Next
+                </Button>
 
-             
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.exitBtn}
+                >
+                  Exit
+                </Button>
+              </div>
             </Form>
           </Col>
         </Row>
