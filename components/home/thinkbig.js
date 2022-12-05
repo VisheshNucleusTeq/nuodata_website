@@ -14,25 +14,6 @@ export default function ThinkBig({ HomeCss }) {
                 <h1>THINK</h1>
                 <h1>BIG.</h1>
               </AnimationOnScroll>
-
-              {/* <h1>
-                <AnimationOnScroll
-                  initiallyVisible={true}
-                  animateIn="animate__fadeIn"
-                  animatePreScroll={true}
-                >
-                  THINK
-                </AnimationOnScroll>
-              </h1>
-              <h1>
-                <AnimationOnScroll
-                  initiallyVisible={true}
-                  animateIn="animate__fadeIn"
-                  animatePreScroll={false}
-                >
-                  BIG.
-                </AnimationOnScroll>
-              </h1> */}
             </Col>
 
             <Col span={24}>

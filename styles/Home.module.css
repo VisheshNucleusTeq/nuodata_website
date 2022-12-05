@@ -252,7 +252,27 @@
 .bgImage {
   background: url("../public/home/bg4.png") no-repeat center center;
   background-size: cover;
-  border: 1px solid #0c3246;
+  /* border: 1px solid #0c3246; */
+  text-align: center;
+}
+
+.bgImage h1 {
+  width: 100%;
+  text-align: center;
+  font-size: 4vw;
+  margin: 2% 0% 2% 0%;
+  font-weight: bolder;
+  color: rgb(54, 54, 54);
+}
+
+.bgImage h1 span {
+  background-image: linear-gradient(#fff 75%, gray 100%);
+}
+
+.bgImage p {
+  font-size: 1vw;
+  font-weight: bold;
+  color: rgb(54, 54, 54);
 }
 
 .modernizeWithConfidenceMain {
@@ -289,9 +309,192 @@
   border-right: 1px solid #858585 !important;
   margin-top: 0.5%;
   margin-bottom: 0.5%;
+  font-size: 22px;
+  padding-left: 44%;
 }
 
+
+
+
+
+
+/* .chat {
+  border: 2px solid #e74860;
+  position: relative;
+}
+
+.left {
+  color: white;
+}
+
+.right {
+  text-align: right;
+}
+
+.chat:after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid white;
+  position: absolute;
+  bottom: -15px;
+}
+
+.chat:before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 17px solid transparent;
+  border-right: 17px solid transparent;
+  border-bottom: 17px solid #e74860;
+  position: absolute;
+  bottom: -15px;
+}
+
+.chat.right {
+  border-color: black;
+}
+
+.chat.right:after,
+.chat.right:before {
+  rotate: -45deg;
+}
+
+.chat.right:before {
+  left: calc(25%);
+  border-bottom: 15px solid black;
+}
+
+.chat.right:after {
+  left: calc(25% + 1px);
+}
+
+.chat.left:after,
+.chat.left:before {
+  rotate: 45deg;
+}
+
+.chat.left:before {
+  right: calc(20%);
+}
+
+.chat.left:after {
+  right: calc(20% + 1px);
+  border-bottom: 15px solid #e74860;
+} */
+
+
+.chat:after {
+  content:'';
+  display:block;
+  width: 0; 
+  height: 0; 
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid white;
+  position:absolute;
+  bottom:-12px;
+
+}
+
+.chat:before {
+  content:'';
+  display:block;
+  width: 0; 
+  height: 0; 
+  border-left: 17px solid transparent;
+  border-right: 17px solid transparent;
+  border-bottom: 17px solid #e74860;
+  position:absolute;
+  bottom:-15px
+}
+
+.chat.right:after,.chat.right:before {
+  rotate:45deg
+}
+.chat.right:before {
+  left:calc(75%);
+   border-bottom: 15px solid #e74860;
+}
+.chat.right:after {
+  left:calc(75% + 1px);
+ 
+}
+
+.chat.left:after,.chat.left:before {
+  rotate:-45deg
+}
+.chat.left:before {
+  right:calc(75%);
+}
+.chat.left:after {
+  right:calc(75% + 1px);
+  border-bottom: 15px solid #FFF;
+}
+
+.chat.left:hover:after {
+  right:calc(75% + 1px);
+  border-bottom: 15px solid #e74860;
+  transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+}
+
+.chat.right:hover:after {
+  right:calc(75% + 1px);
+  border-bottom: 15px solid #e74860;
+  transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+}
+
+
 /* MODERN */
+
+.dataModernizationArchitectureTtile {
+  align-items: center;
+  text-align: center;
+  margin-top: 2%;
+}
+
+.dataModernizationArchitectureTtile h1 span {
+  font-size: 4vw;
+  font-weight: bolder;
+  color: #0c3246;
+  background-image: linear-gradient(#fff 75%, gray 100%);
+}
+
+.dataModernizationArchitectureTtile p {
+  font-size: 1vw;
+  font-weight: bold;
+  color: #0c3246;
+}
+
+.infoRowSystemView {
+  background: url("/how_it_work/bg_animation.gif");
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 100vh;
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.infoRowSystemTextView {
+  margin-right: 4%;
+  width: 70vh;
+}
+
+.infoRowSystemView p {
+  font-size: 5vh;
+  text-align: center;
+  font-weight: bolder;
+  color: #0c3246;
+  /* padding-right: 2%; */
+}
 
 /* 
 .enterpriseChallengeTitle{
@@ -345,3 +548,28 @@
 } */
 
 /* ENTERPRISE CHALLENGE */
+
+/* PLATFORMS */
+.platForm {
+  background-color: black;
+}
+.platFormColBg{
+  background: url("../public/home/platform-gif.gif") no-repeat center center; 
+  background-size: 100% 100%;
+  height: 100vh;
+}
+
+.platForm h1 {
+  text-align: center;
+}
+
+.platForm h1 span{
+  text-align: center;
+  font-size: 4vw;
+  margin: 2% 0% 2% 0%;
+  font-weight: bolder;
+  color: #FFF;
+  background-image: linear-gradient(black 75%, gray 100%);
+}
+
+/* PLATFORMS */

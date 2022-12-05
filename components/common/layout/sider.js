@@ -7,7 +7,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
     <Sider className={layoutCss.mainLayoutSider}>
       <div style={{ height: height + "px" }} className={layoutCss.logoImage}>
         <Link href="/">
-          <Image src="../assets/images/logo.png" preview={false} />
+          <Image src="/assets/images/logo.png" preview={false} />
         </Link>
       </div>
 

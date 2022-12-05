@@ -10,7 +10,7 @@
     border-radius: 20px;
 }
 
-.defineSteps div{
+.defineSteps .defineStepsRow{
     padding: 1%;
     border : 1px solid rgb(196, 196, 196);
     justify-content: center !important;
@@ -35,6 +35,33 @@
     color: #FFF;
 }
 
+.defineForm{
+    /* border : 1px solid red; */
+    margin-top: 4%;
+}
+
+.nextExitBtn{
+    justify-content: center;
+    display: flex;
+}
+
+.nextBtn {
+    height: 8%;
+    margin: 0px 0px 2% 0px;
+    padding: 1% 5% 1% 5%;
+    border-radius: 10px;
+}
+
+.exitBtn {
+    height: 8%;
+    margin: 0px 0px 2% 0px;
+    padding: 1% 5% 1% 5%;
+    border-radius: 10px;
+    margin-left: 2%;
+    background-color: #0C3246 !important;
+    border: 1px solid #0C3246 !important;
+}
+
 /* 
 .formCenter {
     display: flex;
@@ -42,22 +69,7 @@
     height: 80vh;
 }
 
-.nextBtn {
-    height: 8%;
-    margin: 0px 0px 2% 0px;
-    padding: 0% 3% 0% 3%;
-    border-radius: 10px;
-}
 
-.exitBtn {
-    height: 8%;
-    margin: 0px 0px 2% 0px;
-    padding: 0% 3% 0% 3%;
-    border-radius: 10px;
-    margin-left: 2%;
-    background-color: #0C3246 !important;
-    border: 1px solid #0C3246 !important;
-}
 
 
 .inputCenterPlusBtn{
