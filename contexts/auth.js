@@ -1,16 +1,15 @@
 import { InnerLayout } from "./inner-layout";
+import { useRouter } from "next/router";
 export const ProtectRoute = ({ children }) => {
-
-    // return children;
-
-    const authPage = ["Main", "How_it_work", "Sign_in","Sign_up"]; 
-    if(authPage.includes(children.type.name)){
-        return children;
-    }else{
-        return (
-            <InnerLayout componentName={children.type.name}>
-                {children}
-            </InnerLayout>
-        )
-    }
+  const router = useRouter();
+  // return children;
+  console.log(router);
+  const authPage = ["/", "/how-it-work", "/sign-in", "Sign_up"];
+  if (authPage.includes(router.pathname)) {
+    return children;
+  } else {
+    return (
+      <InnerLayout componentName={children.type.name}>{children}</InnerLayout>
+    );
+  }
 };

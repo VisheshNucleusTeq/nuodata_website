@@ -5,7 +5,7 @@ function SignInLeft({ loginCss }) {
   return (
     <div className={loginCss.LogInLeft}>
       <div className={loginCss.logo}>
-        <Image src="../assets/images/login-logo.png" preview={false} />
+        <Image src="../assets/images/logo.png" preview={false} />
       </div>
       <div className={loginCss.leftImage}>
         <Image

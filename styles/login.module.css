@@ -1,11 +1,12 @@
 .LogInLeft {
-  background: #e74860;
+  background: #0c3246;
   height: 100%;
 }
 
 .logo {
   width: 40%;
   height: 10%;
+  padding: 10px 10px;
 }
 
 .leftImage {
