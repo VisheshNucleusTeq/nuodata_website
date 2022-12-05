@@ -1,9 +1,16 @@
 import dataModernizationCss from "../../styles/dataModernization.module.css";
-import { Button, Row, Col } from "antd";
+import { Button, Row, Col, Form, Input, Select } from "antd";
 import { useState } from "react";
-const Define = () => {
 
-  const [step, setStep] = useState("Define")
+import { fetch_retry_post } from "../../network/api-manager";
+
+const Define = () => {
+  const [step, setStep] = useState("Define");
+  const [isLoading, setLoading] = useState(false);
+
+  const onFinish = async (payload) => {
+    console.log(payload);
+  };
 
   return (
     <>
@@ -16,31 +23,364 @@ const Define = () => {
       </Button>
 
       <div className={dataModernizationCss.defineSteps}>
-        <Row align="middle">
-          {["Define", "Connect", "Analyze", "Design", "Transform", "Validate" , "Rollout"]
-            .map((data, i) => {
-              return (
-                <Col
-                  onClick={() => {setStep(data)}}
-                  xs={12}
-                  sm={7}
-                  md={7}
-                  lg={3}
-                  xl={3}
-                  xxl={3}
-                  className={`${dataModernizationCss.defineStep} ${step == data && dataModernizationCss.defineStepSelect}`}
-                >
-                  {data}
-                </Col>
-              );
-            })}
+        <Row align="middle" className={dataModernizationCss.defineStepsRow}>
+          {[
+            "Define",
+            "Connect",
+            "Analyze",
+            "Design",
+            "Transform",
+            "Validate",
+            "Rollout",
+          ].map((data, i) => {
+            return (
+              <Col
+                onClick={() => {
+                  setStep(data);
+                }}
+                xs={12}
+                sm={7}
+                md={7}
+                lg={3}
+                xl={3}
+                xxl={3}
+                className={`${dataModernizationCss.defineStep} ${
+                  step == data && dataModernizationCss.defineStepSelect
+                }`}
+              >
+                {data}
+              </Col>
+            );
+          })}
         </Row>
       </div>
+      {step === "Define" && (
+        <Row className={dataModernizationCss.defineForm}>
+          <Col offset={3} span={18}>
+            <Form
+              layout="horizontal"
+              autoComplete="off"
+              labelCol={{ span: 7 }}
+              wrapperCol={{ span: 18 }}
+              onFinish={onFinish}
+            >
+              <Form.Item
+                label={"Select Business Unit"}
+                labelAlign={"left"}
+                name={"business_unit"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Business unit is required.",
+                  },
+                ]}
+              >
+                <Input
+                  key={"input-business-unit"}
+                  className={"input"}
+                  placeholder={""}
+                  name={"business_unit"}
+                  type={"text"}
+                  disabled={isLoading}
+                />
+              </Form.Item>
 
-      <div>
-        {step}
-      </div>
+              <Form.Item
+                label={"Project Name"}
+                labelAlign={"left"}
+                name={"project_name"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Project name is required.",
+                  },
+                ]}
+              >
+                <Input
+                  key={"input-project-name"}
+                  className={"input"}
+                  placeholder={""}
+                  name={"project_name"}
+                  type={"text"}
+                  disabled={isLoading}
+                />
+              </Form.Item>
 
+              <Form.Item
+                label={"Select Source File(s)"}
+                labelAlign={"left"}
+                name={"source_file"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Source File is required.",
+                  },
+                ]}
+              >
+                <Select
+                  className="inputSelect"
+                  showSearch
+                  placeholder="Select a source File"
+                  optionFilterProp="children"
+                  onChange={(e) => {
+                    console.log(e);
+                  }}
+                  onSearch={(e) => {
+                    console.log(e);
+                  }}
+                  filterOption={(input, option) =>
+                    (option?.label ?? "")
+                      .toLowerCase()
+                      .includes(input.toLowerCase())
+                  }
+                  options={[
+                    {
+                      value: "1",
+                      label: "Option 1",
+                    },
+                    {
+                      value: "2",
+                      label: "Option 2",
+                    },
+                    {
+                      value: "3",
+                      label: "Option 3",
+                    },
+                  ]}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={"Select Target Platform"}
+                labelAlign={"left"}
+                name={"target_platform"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Target platform is required.",
+                  },
+                ]}
+              >
+                <Select
+                  className="inputSelect"
+                  showSearch
+                  placeholder="Select a target platform "
+                  optionFilterProp="children"
+                  onChange={(e) => {
+                    console.log(e);
+                  }}
+                  onSearch={(e) => {
+                    console.log(e);
+                  }}
+                  filterOption={(input, option) =>
+                    (option?.label ?? "")
+                      .toLowerCase()
+                      .includes(input.toLowerCase())
+                  }
+                  options={[
+                    {
+                      value: "1",
+                      label: "Option 1",
+                    },
+                    {
+                      value: "2",
+                      label: "Option 2",
+                    },
+                    {
+                      value: "3",
+                      label: "Option 3",
+                    },
+                  ]}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={"Select Target Language"}
+                labelAlign={"left"}
+                name={"target_language"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Target language is required.",
+                  },
+                ]}
+              >
+                <Select
+                  className="inputSelect"
+                  showSearch
+                  placeholder="Select a target language "
+                  optionFilterProp="children"
+                  onChange={(e) => {
+                    console.log(e);
+                  }}
+                  onSearch={(e) => {
+                    console.log(e);
+                  }}
+                  filterOption={(input, option) =>
+                    (option?.label ?? "")
+                      .toLowerCase()
+                      .includes(input.toLowerCase())
+                  }
+                  options={[
+                    {
+                      value: "1",
+                      label: "Option 1",
+                    },
+                    {
+                      value: "2",
+                      label: "Option 2",
+                    },
+                    {
+                      value: "3",
+                      label: "Option 3",
+                    },
+                  ]}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={"Select Target File Location"}
+                labelAlign={"left"}
+                name={"target_file_location"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Target file location is required.",
+                  },
+                ]}
+              >
+                <Select
+                  className="inputSelect"
+                  showSearch
+                  placeholder="Select target file location "
+                  optionFilterProp="children"
+                  onChange={(e) => {
+                    console.log(e);
+                  }}
+                  onSearch={(e) => {
+                    console.log(e);
+                  }}
+                  filterOption={(input, option) =>
+                    (option?.label ?? "")
+                      .toLowerCase()
+                      .includes(input.toLowerCase())
+                  }
+                  options={[
+                    {
+                      value: "1",
+                      label: "Option 1",
+                    },
+                    {
+                      value: "2",
+                      label: "Option 2",
+                    },
+                    {
+                      value: "3",
+                      label: "Option 3",
+                    },
+                  ]}
+                />
+              </Form.Item>
+
+              <Button
+                size={"large"}
+                type="primary"
+                block
+                htmlType="submit"
+                loading={isLoading}
+                disabled={isLoading}
+              >
+                Login
+              </Button>
+
+              {/* <p className={loginCss.forgotPassword}>
+            <b>Forgot Password?</b>
+          </p>
+
+          <Button
+            size={"large"}
+            className={loginCss.loginBtn}
+            type="primary"
+            block
+            htmlType="submit"
+            loading={isLoading}
+            disabled={isLoading}
+          >
+            Login
+          </Button>
+
+          <Divider plain>Or</Divider>
+          <Button
+            size={"large"}
+            className={loginCss.googleLoginBtn}
+            type=""
+            block
+          >
+            <Image
+              width={"4%"}
+              src="../assets/images/google.png"
+              preview={false}
+            />
+            &nbsp; Login with Google
+          </Button>
+          <p className={loginCss.signup}>
+            Don’t have an account? &nbsp;
+            <Link href="/sign-up">
+              <b className={loginCss.cursorPointer}>Sign up</b>
+            </Link>
+          </p> */}
+            </Form>
+          </Col>
+        </Row>
+      )}
+
+      {step === "Connect" && (
+        <Row className={dataModernizationCss.defineForm}>
+          <Col offset={3} span={18}>
+            <Form
+              layout="horizontal"
+              autoComplete="off"
+              labelCol={{ span: 7 }}
+              wrapperCol={{ span: 18 }}
+              onFinish={onFinish}
+            >
+              <Form.Item
+                label={"Select Business Unit"}
+                labelAlign={"left"}
+                name={"business_unit"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Business unit is required.",
+                  },
+                ]}
+              >
+                <Input
+                  key={"input-business-unit"}
+                  className={"input"}
+                  placeholder={""}
+                  name={"business_unit"}
+                  type={"text"}
+                  disabled={isLoading}
+                />
+              </Form.Item>
+
+              <Button
+                size={"large"}
+                type="primary"
+                block
+                htmlType="submit"
+                loading={isLoading}
+                disabled={isLoading}
+              >
+                Login
+              </Button>
+
+             
+            </Form>
+          </Col>
+        </Row>
+      )}
     </>
   );
 };

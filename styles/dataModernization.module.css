@@ -10,7 +10,7 @@
     border-radius: 20px;
 }
 
-.defineSteps div{
+.defineSteps .defineStepsRow{
     padding: 1%;
     border : 1px solid rgb(196, 196, 196);
     justify-content: center !important;
@@ -33,6 +33,11 @@
 .defineStepSelect{
     background-color: #0C3246;
     color: #FFF;
+}
+
+.defineForm{
+    /* border : 1px solid red; */
+    margin-top: 4%;
 }
 
 /* 

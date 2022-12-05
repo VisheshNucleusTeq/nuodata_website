@@ -33,7 +33,7 @@ const HeaderView = ({ layoutCss, ref }) => {
     <Header ref={ref} className={layoutCss.mainLayoutHeader}>
       
       <div style={{ float : "left" }}>
-        <h1>Welcome Amit! {multiplication}</h1>
+        <h1>Welcome Amit! </h1>
       </div>
 
       <div style={{ float : "right" }}>
