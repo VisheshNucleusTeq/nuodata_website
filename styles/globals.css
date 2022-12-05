@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins');
+@import url("https://fonts.googleapis.com/css?family=Poppins");
 
 html,
 body {
@@ -27,7 +27,9 @@ body {
     padding: 0px;
 } */
 
-.ant-menu-horizontal, .ant-menu-item::after, .ant-menu-submenu::after {
+.ant-menu-horizontal,
+.ant-menu-item::after,
+.ant-menu-submenu::after {
   border: none !important;
 }
 
@@ -44,26 +46,26 @@ body {
   border: 1px solid transparent;
 }
 
-.ant-timeline-item-left .ant-timeline-item-label{
+.ant-timeline-item-left .ant-timeline-item-label {
   padding-right: 10% !important;
 }
 
-.ant-timeline-item-right .ant-timeline-item-label{
+.ant-timeline-item-right .ant-timeline-item-label {
   padding-left: 10% !important;
 }
 
-.ant-timeline-item-head{
-  background-color : #e74860 !important;
-  border:7px solid #e74860 !important
+.ant-timeline-item-head {
+  background-color: #e74860 !important;
+  border: 7px solid #e74860 !important;
 }
 
-.ant-timeline-item-tail{
+.ant-timeline-item-tail {
   background-color: #e74860;
   width: 4px;
 }
 
-.modernizationWorks .ant-steps-item-description{
-  color : #FFF !important;
+.modernizationWorks .ant-steps-item-description {
+  color: #fff !important;
   font-size: 12px;
 }
 
@@ -73,69 +75,71 @@ body {
   cursor: pointer;
 }
 
-.ant-steps-item-content{
+.ant-steps-item-content {
   text-align: center;
 }
 
-.textBoxMain{
-  background-color: #FFF !important;
+.textBoxMain {
+  background-color: #fff !important;
   width: 40% !important;
 }
 
-.dataFlowNuoData{
+.dataFlowNuoData {
   background-color: transparent !important;
   width: 20 !important;
   border: 1px solid transparent !important;
 }
 
-.dataFlow{
+.dataFlow {
   background-color: transparent !important;
   width: 18% !important;
   border: 1px solid transparent !important;
 }
 
-.textBox{
-  background-color: #FFF !important;
+.textBox {
+  background-color: #fff !important;
   width: 30% !important;
 }
 
-.react-flow__attribution{
+.react-flow__attribution {
   display: none;
 }
 
-.defineTabs .ant-tabs-nav-wrap{
+.defineTabs .ant-tabs-nav-wrap {
   border-radius: 25px;
 }
 
-.defineTabs .ant-tabs-nav-list{
+.defineTabs .ant-tabs-nav-list {
   width: 100% !important;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 25px;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-.defineTabs .ant-tabs-nav-list .ant-tabs-tab{
-  border : 1px solid #D7D7D7;
+.defineTabs .ant-tabs-nav-list .ant-tabs-tab {
+  border: 1px solid #d7d7d7;
   width: 14% !important;
   display: flex;
   text-align: center;
   justify-content: center;
   margin: 1.5%;
-  padding: .5%;
+  padding: 0.5%;
   border-radius: 10px;
   color: black;
-  font-weight: bold ;
+  font-weight: bold;
 }
 
-
-.defineTabs .ant-tabs-nav-list .ant-tabs-tab-active{
-  background-color: #0C3246;
-  color: #FFF !important;;
+.defineTabs .ant-tabs-nav-list .ant-tabs-tab-active {
+  background-color: #0c3246;
+  color: #fff !important;
 }
 
-.defineTabs .ant-tabs-nav-list .ant-tabs-tab-active .ant-tabs-tab-btn{
-  color: #FFF;
+.defineTabs .ant-tabs-nav-list .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #fff;
 }
 
 .ant-tabs-ink-bar {
@@ -143,7 +147,7 @@ body {
   background: transparent !important;
 }
 
-.defineForm .ant-form-item .ant-form-item-label label{
+.defineForm .ant-form-item .ant-form-item-label label {
   color: #000000;
   font-weight: bold;
 }
@@ -152,38 +156,34 @@ body {
   font-size: 16px !important;
 }
 
-
 .demo .ant-table-thead tr:first-child th:first-child {
   border-radius: 20px 0px 0px 0px !important;
 }
 .demo .ant-table-thead tr:first-child th:last-child {
-  border-radius:  0px 20px 0px 0px !important;
+  border-radius: 0px 20px 0px 0px !important;
 }
-.demo .ant-table-tbody > tr:last-child > td:first-child
-{
-  border-radius:  0px 0px  0px 20px !important;
+.demo .ant-table-tbody > tr:last-child > td:first-child {
+  border-radius: 0px 0px 0px 20px !important;
 }
-.demo .ant-table-tbody > tr:last-child > td:last-child
-{
-  border-radius:  0px 0px 20px 0px !important;
+.demo .ant-table-tbody > tr:last-child > td:last-child {
+  border-radius: 0px 0px 20px 0px !important;
 }
-.demo .ant-table-content{
+.demo .ant-table-content {
   padding: 2%;
   /* border: 1px solid gray; */
-  border-radius:  20px !important;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  border-radius: 20px !important;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
-
-
 @media (max-width: 600px) {
-  .textBoxMain{
-    background-color: #FFF !important;
+  .textBoxMain {
+    background-color: #fff !important;
     width: 100% !important;
   }
-  
-  .textBox{
-    background-color: #FFF !important;
+
+  .textBox {
+    background-color: #fff !important;
     width: 100% !important;
   }
 }

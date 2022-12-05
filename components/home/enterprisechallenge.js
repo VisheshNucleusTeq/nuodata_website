@@ -1,7 +1,7 @@
 import { Col, Row, Button, Image } from "antd";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { RiseOutlined } from "@ant-design/icons";
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function EnterpriseChallenge({ HomeCss }) {
   return (
@@ -147,10 +147,10 @@ export default function EnterpriseChallenge({ HomeCss }) {
         xxl={18}
         className={HomeCss.howNuoDataworksBtn}
       >
-        <Link href="how-it-work">
-        <Button >
-          “Explore How NuoData works” <RiseOutlined />
-        </Button>
+        <Link prefetch href="/how-it-work">
+          <Button>
+            “Explore How NuoData works” <RiseOutlined />
+          </Button>
         </Link>
       </Col>
     </Row>

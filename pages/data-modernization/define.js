@@ -1,7 +1,7 @@
 import dataModernizationCss from "../../styles/dataModernization.module.css";
 import { Button, Row, Col, Form, Input, Select, message, Upload } from "antd";
 import { useState } from "react";
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from "@ant-design/icons";
 
 import { fetch_retry_post } from "../../network/api-manager";
 import { DEFINE, UPLOADFILE } from "../../network/apiConstants";
