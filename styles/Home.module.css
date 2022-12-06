@@ -551,7 +551,7 @@
 
 /* PLATFORMS */
 .platForm {
-  background-color: black;
+  background-color: #052b3b;
 }
 .platFormColBg{
   background: url("../public/home/platform-gif.gif") no-repeat center center; 
@@ -569,7 +569,7 @@
   margin: 2% 0% 2% 0%;
   font-weight: bolder;
   color: #FFF;
-  background-image: linear-gradient(black 75%, gray 100%);
+  background-image: linear-gradient(#052b3b 75%, gray 100%);
 }
 
 /* PLATFORMS */
