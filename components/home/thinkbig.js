@@ -7,7 +7,8 @@ export default function ThinkBig({ HomeCss }) {
   return (
     <div className={HomeCss.thinkBigMainDiv}>
       <Row>
-        <Col span={16} offset={4}>
+        <Col xs={1} sm={1} md={2} lg={3} xl={3} xxl={3} />
+        <Col xs={22} sm={22} md={20} lg={18} xl={18} xxl={18}>
           <Row className={HomeCss.thinkBigChild}>
             <Col span={24}>
               <AnimationOnScroll animateIn="animate__zoomIn" animateOnce={true}>
@@ -16,7 +17,7 @@ export default function ThinkBig({ HomeCss }) {
               </AnimationOnScroll>
             </Col>
 
-            <Col span={24}>
+            <Col xs={24} sm={24} md={20} lg={20} xl={18} xxl={18}>
               <AnimationOnScroll
                 animateIn="animate__fadeInUp"
                 animateOnce={true}
@@ -30,7 +31,19 @@ export default function ThinkBig({ HomeCss }) {
                 </h2>
               </AnimationOnScroll>
             </Col>
-            <Col span={24}>
+            <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} />
+
+
+
+            {/* <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} /> */}
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            <Image src="/home/trans.gif" preview={false} />
+            </Col>
+
+
+
+            <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} />
+            <Col xs={24} sm={24} md={20} lg={20} xl={18} xxl={18}>
               <AnimationOnScroll
                 animateIn="animate__fadeInUp"
                 animateOnce={true}
@@ -45,6 +58,9 @@ export default function ThinkBig({ HomeCss }) {
                 </h2>
               </AnimationOnScroll>
             </Col>
+
+
+
           </Row>
         </Col>
       </Row>

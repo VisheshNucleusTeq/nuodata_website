@@ -9,20 +9,12 @@ export default function Info({ HowItWorkCss }) {
         <Header />
         <div className={HowItWorkCss.detailsDiv}>
           <Row className={HowItWorkCss.infoRow}>
-            <Col span={24} className={HowItWorkCss.infoRowSystem}>
-              <h1>How it Works ?</h1>
-              <h2>
-                NuoData brings intelligence and automation to the modernization
-                process for data warehouses, ETL, and analytics systems,
-                improving speed and accuracy while lowering risks and costs
-              </h2>
-              <div
-                className={HowItWorkCss.servicesBtnView}
-              >
-                <Button size={"large"} className={HowItWorkCss.servicesBtn}>
-                  Launch your free trial <RiseOutlined />
-                </Button>
-              </div>
+            <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10} className={HowItWorkCss.infoRowSystem} >
+              <h1>How it <span>Works ?</span></h1>
+              <p>NuoData brings intelligence and automation to the modernization process for data warehouses, ETL, and analytics systems, improving speed and accuracy while lowering risks and costs</p>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={14} xl={14} xxl={14} >
+              <Image preview={false} src="/home/platform-gif2.gif" />
             </Col>
           </Row>
         </div>

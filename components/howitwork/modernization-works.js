@@ -10,9 +10,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
       <div className={HowItWorkCss.mainDivMW}>
         <Col span={24} className={HowItWorkCss.enterpriseChallengeColTitle}>
           <div>
-            <h1>
-              How our end-to-end <br /> modernization works:
-            </h1>
+            <h1> Industry Leading Modernization </h1>
             <p>Select a step to dive deepe</p>
           </div>
         </Col>
