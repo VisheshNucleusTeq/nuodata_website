@@ -16,16 +16,42 @@ body {
   border-radius: 20px !important;
 }
 
-/* .inputSelect {
-    height: 53px;
-    width: 140px;
-    border: 0px solid #ccc;
-    border-radius: 0px;
-    cursor: pointer;
-    font-size: 18px;
-    margin: 0px;
-    padding: 0px;
+.inputSelect div {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  border-radius: 20px !important;
+  height: 50px !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-select-selection-search {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+
+.ant-select-dropdown-menu-item{
+  line-height: 50px !important;
+}
+
+
+.ant-select-selector{
+/* background-color: red; */
+}
+/* .ant-select-selection-search{
+  background-color: red;
+
+}
+.ant-select-selection-search-input{
+  background-color: red;
+
 } */
+
 
 .ant-menu-horizontal,
 .ant-menu-item::after,

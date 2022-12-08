@@ -16,6 +16,7 @@ function SignInRight({ loginCss }) {
     const data = await fetch_retry_post(LOGIN, payload);
     setLoading(false);
     if (data.success) {
+      localStorage.setItem("authData", JSON.stringify(data.data))
       message.success("Login successfully.");
       router.push("dashboard");
     } else {

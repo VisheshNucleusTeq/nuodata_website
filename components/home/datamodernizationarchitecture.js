@@ -20,13 +20,14 @@ export default function DataModernizationArchitecture({ HomeCss }) {
       </Col>
       <Col offset={1} span={22} className={HomeCss.infoRowSystemView}>
         <div className={HomeCss.infoRowSystemTextView}>
-          <AnimationOnScroll animateIn="animate__zoomIn" animateOnce={true}>
+          {/* <Image src="" /> */}
+          {/* <AnimationOnScroll animateIn="animate__zoomIn" animateOnce={true}>
             <p>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s
             </p>
-          </AnimationOnScroll>
+          </AnimationOnScroll> */}
         </div>
       </Col>
     </Row>

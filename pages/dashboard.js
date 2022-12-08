@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table, Space, Tooltip } from "antd";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 
@@ -8,6 +8,10 @@ const Dashboard = () => {
   const setheader = () => {
     alert('set');
   };
+
+  useEffect(() => {
+    // alert(123)
+  }, [])
 
   return (
     <div className={dashboardCss.main}>

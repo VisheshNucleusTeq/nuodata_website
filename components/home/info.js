@@ -9,6 +9,7 @@ export default function Info({ HomeCss }) {
       <Header />
       <div className={HomeCss.detailsDiv}>
         <Row className={HomeCss.infoRow}>
+          
           <Col offset={2} span={10} className={HomeCss.infoRowSystem}>
             <AnimationOnScroll
               initiallyVisible={true}
@@ -22,8 +23,6 @@ export default function Info({ HomeCss }) {
               </h1>
             </AnimationOnScroll>
           </Col>
-
-          
 
           <Col offset={2} span={20} className={HomeCss.infoRowMobile}>
             <h1>

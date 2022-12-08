@@ -62,17 +62,8 @@
     border: 1px solid #0C3246 !important;
 }
 
-/* 
-.formCenter {
-    display: flex;
-    justify-content: center;
-    height: 80vh;
+.inputFile{
+    width: 100vh;
+    height: 50px;
+    border-radius: 25px;
 }
-
-
-
-
-.inputCenterPlusBtn{
-    display: flex;
-    margin-top: 2%;
-} */

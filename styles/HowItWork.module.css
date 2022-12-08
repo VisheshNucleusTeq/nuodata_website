@@ -18,8 +18,6 @@
 .mainDivMW {
   width: 100%;
   height: 100%;
-  /* background-color: #000; */
-  /* opacity: 0.9; */
 }
 
 .detailsDiv {
@@ -117,6 +115,25 @@
 .infoRowSystemView {
   display: block;
 }
+
+.infoRowSystem{
+  text-align: center;
+}
+
+.infoRowSystem h1{
+  font-size: large;
+  font-size: 4vw;
+}
+
+.infoRowSystem h1 span{
+  color: #e74860;
+}
+
+.infoRowSystem p{
+  font-size: 1.5vw;
+  color: #fff;
+}
+
 
 .infoRowMobileView {
   display: none;

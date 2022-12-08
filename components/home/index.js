@@ -13,7 +13,7 @@ export default function Home() {
       <ThinkBig HomeCss={HomeCss} />
       <EnterpriseChallenge HomeCss={HomeCss} />
       <DataModernizationArchitecture HomeCss={HomeCss} />
-      <Platforms HomeCss={HomeCss} />
+      {/* <Platforms HomeCss={HomeCss} /> */}
       <ModernizeWithConfidence HomeCss={HomeCss} />
       <Footer HomeCss={HomeCss} />
     </>
