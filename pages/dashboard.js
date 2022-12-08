@@ -1,55 +1,70 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Space, Tooltip } from "antd";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 import dashboardCss from "../styles/dashboard.module.css";
+import { fetch_retry_get } from "../network/api-manager";
+import { GETALLPROJECT } from "../network/apiConstants";
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
   const setheader = () => {
-    alert('set');
+    alert("set");
   };
 
+  const getALLProjects = async () => {
+    const data = await fetch_retry_get(GETALLPROJECT);
+    setLoading(false);
+    if (data.success) {
+      console.log("data", data);
+      setData(data.data);
+    } else {
+      message.error([data?.error]);
+    }
+  };
   useEffect(() => {
     // alert(123)
-  }, [])
+    getALLProjects();
+  }, []);
 
   return (
     <div className={dashboardCss.main}>
       <h1 onClick={() => setheader()}>Data Modernization</h1>
-      <p>Company admin view</p>
+      {/* <p>Company admin view</p> */}
       <Table
         className="demo"
         columns={[
           {
             title: "Business Unit",
-            dataIndex: "business_unit",
-            key: "business_unit",
+            dataIndex: "businessUnit",
+            key: "businessUnit",
           },
           {
             title: "Project",
-            dataIndex: "project",
-            key: "project",
+            dataIndex: "name",
+            key: "name",
           },
           {
             title: "Total Files",
-            dataIndex: "total_files",
-            key: "total_files",
+            dataIndex: "totalFiles",
+            key: "totalFiles",
           },
           {
-            title: "Source",
-            dataIndex: "source",
-            key: "source",
+            title: "Source Platform",
+            dataIndex: "sourcePlatform",
+            key: "sourcePlatform",
           },
           {
             title: "Target",
-            dataIndex: "target",
-            key: "target",
+            dataIndex: "targetPlatform",
+            key: "targetPlatform",
           },
-          {
-            title: "Phase",
-            dataIndex: "phase",
-            key: "phase",
-          },
+          // {
+          //   title: "Phase",
+          //   dataIndex: "phase",
+          //   key: "phase",
+          // },
           {
             title: "Action",
             key: "action",
@@ -69,19 +84,7 @@ const Dashboard = () => {
             ),
           },
         ]}
-        dataSource={Array(10)
-          .fill(undefined)
-          .map(() => {
-            return {
-              business_unit: "Marketing",
-              project: "Information Conversion to Databricks1",
-              total_files: "15",
-              source: "Informatica",
-              target: "Delta Lake (PySpark)",
-              phase: "Analyze",
-              action: "",
-            };
-          })}
+        dataSource={data}
       />
     </div>
   );
