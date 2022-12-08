@@ -10,7 +10,7 @@ const Define = ({ dataModernizationCss, changeStep, setProject }) => {
   const onFinishDefine = async (payload) => {
     setLoading(true);
     const authData = JSON.parse(localStorage.getItem("authData"));
-
+    console.log("herere");
     const data = await fetch_retry_post(DEFINE, {
       orgId: authData.orgId,
       name: payload.name,
