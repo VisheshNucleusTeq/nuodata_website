@@ -33,14 +33,10 @@ export default function ThinkBig({ HomeCss }) {
             </Col>
             <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} />
 
-
-
             {/* <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} /> */}
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-            <Image src="/home/trans.gif" preview={false} />
+              {/* <Image src="/home/trans.gif" preview={false} /> */}
             </Col>
-
-
 
             <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} />
             <Col xs={24} sm={24} md={20} lg={20} xl={18} xxl={18}>
@@ -58,9 +54,6 @@ export default function ThinkBig({ HomeCss }) {
                 </h2>
               </AnimationOnScroll>
             </Col>
-
-
-
           </Row>
         </Col>
       </Row>

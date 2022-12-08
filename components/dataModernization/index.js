@@ -14,13 +14,13 @@ export default function DataModernization() {
   };
   return (
     <>
-      <Button
+      {/* <Button
         type="primary"
         danger
         className={dataModernizationCss.newProjectBtn}
       >
         New Project +
-      </Button>
+      </Button> */}
 
       <div className={dataModernizationCss.defineSteps}>
         <Row align="middle" className={dataModernizationCss.defineStepsRow}>

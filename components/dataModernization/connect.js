@@ -1,32 +1,35 @@
 import { Button, Row, Col, Form, Input, Select, message, Upload } from "antd";
 import { useState } from "react";
-import { fetch_retry_post, fetch_retry_post_with_file } from "../../network/api-manager";
+import {
+  fetch_retry_post,
+  fetch_retry_post_with_file,
+} from "../../network/api-manager";
 
 import { UPLOADFILE, ANALYZE } from "../../network/apiConstants";
 
 const Connect = ({ dataModernizationCss, changeStep, project }) => {
   const [isLoading, setLoading] = useState(false);
-  const [fileName, setFileName] = useState('')
-  const [fileData, setFileData] = useState({})
-
+  const [fileName, setFileName] = useState("");
+  const [fileData, setFileData] = useState({});
+  console.log("project", project);
   const avatarUpload = async (file) => {
-    setFileName(file.name)
+    setFileName(file.name);
     setLoading(true);
     const payload = new FormData();
     payload.append("file", file);
     const authData = JSON.parse(localStorage.getItem("authData"));
     const data = await fetch_retry_post_with_file(
-    //   `${UPLOADFILE}/${project.projectId}/${authData.userId}`,
-      `${UPLOADFILE}/38/${authData.userId}`,
+      `${UPLOADFILE}/${project?.data?.projectId}/${authData.userId}`,
+      // `${UPLOADFILE}/38/${authData.userId}`,
       payload
     );
 
     if (data.success) {
-        setFileData(data.data)
-        message.success("Successfully Uploaded.");
-      } else {
-        message.error([data?.error]);
-      }
+      setFileData(data.data);
+      message.success("Successfully Uploaded.");
+    } else {
+      message.error([data?.error]);
+    }
   };
 
   const analyzeCall = async () => {
@@ -40,7 +43,7 @@ const Connect = ({ dataModernizationCss, changeStep, project }) => {
     } else {
       message.error([data?.error]);
     }
-  }
+  };
 
   return (
     <Row className={dataModernizationCss.defineForm}>
@@ -70,7 +73,7 @@ const Connect = ({ dataModernizationCss, changeStep, project }) => {
               style={{ border: "1px solid green !important" }}
               action={avatarUpload}
               beforeUpload={(file) => {
-                setFileName(file.name)
+                setFileName(file.name);
               }}
             >
               <p style={{ width: "100vh" }}></p>
