@@ -3,150 +3,61 @@
   width: 100%;
   height: 100vh;
   background-size: cover;
-  background-position: center;
-  text-align: "center";
-  background-repeat: no-repeat;
 }
 
 .mainDivOP {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: #000;
   opacity: 0.9;
 }
 
-.mainDivMW {
-  width: 100%;
-  height: 100%;
-}
-
-.detailsDiv {
-  height: 90%;
-  padding: 8%;
-}
-
-.infoRow {
+.infoTextImage {
+  height: 90vh;
   display: flex;
   align-items: center;
-  height: 100%;
 }
 
-.infoRow h1 {
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-}
-
-.infoRow h2 {
-  color: #fff;
-  font-size: 22px;
-  width: 60% !important;
-}
-
-.servicesBtnView {
-  text-align: end;
-}
-
-.servicesBtn {
-  border-radius: 10px;
-  color: #fff;
-  font-weight: bold;
-  border: 1px solid #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.servicesBtn:hover {
-  color: #fff;
-  font-weight: bold;
-  border: 1px solid #fff;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-}
-
-.bgImage {
-  /* border: 1px solid red; */
-  background: url("../public/home/bg1.png");
-  background-size: cover;
-  background-position: center;
-  animation: animatedBackground 5s linear infinite alternate;
-}
-
-.nuoDataInfo {
-  margin-top: -5%;
-  margin-bottom: -5%;
-  border: 1px solid transparent;
-  align-items: center;
-  text-align: center;
-  /* padding: 10%; */
-  border-radius: 25px;
-  background-image: linear-gradient(
-    #fff 20%,
-    transparent,
-    transparent,
-    #fff 80%
-  );
-}
-
-.nuoDataInfo h1 {
-  color: #0c3246 !important;
-  font-size: 24px;
-  margin-top: 5%;
-  font-weight: bold;
-}
-
-.nuoDataInfo h1 span {
-  color: #e74860 !important;
-  font-size: 24px;
-  margin-top: 5%;
-  font-weight: bold;
-}
-
-.nuoDataInfo p {
-  color: #0c3246 !important;
-  font-weight: bold;
-  font-size: 16px;
-  /* line-height: 0px; */
-}
-
-.nuoDataInfo div {
-  padding: 5%;
-}
-
-.infoRowSystemView {
-  display: block;
-}
-
-.infoRowSystem{
+.infoText {
   text-align: center;
 }
 
-.infoRowSystem h1{
-  font-size: large;
-  font-size: 4vw;
+.infoText h1 {
+  font-size: 5vw;
+  color: #fff;
+  font-weight: bolder;
 }
 
-.infoRowSystem h1 span{
+.infoText h1 span {
   color: #e74860;
 }
 
-.infoRowSystem p{
-  font-size: 1.5vw;
+.infoText p {
+  font-size: 2vw;
   color: #fff;
+  /* font-weight: bolder; */
+}
+
+@media (max-width: 760px) {
+  .infoText h1 {
+    font-size: 6vw;
+  }
+
+  .infoText p {
+    font-size: 3vw;
+  }
 }
 
 
-.infoRowMobileView {
-  display: none;
-}
-
-.ModernizationWorks {
-  background: url("/home/bg3-overlay.png") no-repeat center center;
+.ModernizationWorks{
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
-  text-align: "center";
-  background-repeat: no-repeat;
+}
+
+
+.mainDivMW {
+  width: 100%;
+  height: 100%;
 }
 
 .enterpriseChallengeColTitle {
@@ -157,16 +68,23 @@
 }
 
 .enterpriseChallengeColTitle h1 {
-  color: #fff !important;
-  font-size: 30px;
+  color: #0c3246 !important;
+  font-size: 3vw;
   font-weight: bold;
   text-align: center;
+  background-image: linear-gradient(#FFF 75%, #0c3246 100%);
 }
 
 .enterpriseChallengeColTitle p {
-  color: #fff !important;
-  font-size: 12px;
+  color: #0c3246 !important;
+  font-size: 1vw;
   text-align: center;
+  font-weight: bolder;
+}
+
+.ModernizationWorksStepsDetails {
+  height: 40vh;
+  margin-top: 10%;
 }
 
 .stepToDivDesktop {
@@ -175,29 +93,6 @@
 
 .stepToDivMobile {
   display: none;
-}
-
-.ModernizationWorksStepsDetails {
-  height: 40vh;
-  margin-top: 10%;
-}
-
-@media (max-width: 480px) {
-  .infoRowSystemView {
-    display: none;
-  }
-
-  .infoRowMobileView {
-    display: block;
-    text-align: center;
-  }
-
-  .enterpriseChallengeColTitle {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    height: 20vh;
-  }
 }
 
 .modernizationDesktopView {
@@ -224,63 +119,31 @@
 }
 
 @media (max-width: 860px) {
-  .mainDiv {
-    background: url("/home/bg3.png") no-repeat center center;
-    width: 100%;
-    height: 60vh;
-    background-size: cover;
-    background-position: center;
-    text-align: "center";
-    background-repeat: no-repeat;
-  }
-
-  .mainDivOP {
-    width: 100%;
-    height: 60vh;
-    background-color: #000;
-    opacity: 0.8;
-  }
-
-  .ModernizationWorks {
-    background: url("/home/bg3.png") no-repeat center center;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    text-align: "center";
-    background-repeat: no-repeat;
-  }
-
-  .mainDivMW {
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    opacity: 0.9;
-  }
-
-  .infoRow h1 {
-    color: #fff;
-    font-size: 40px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .infoRow h2 {
-    color: #fff;
-    font-size: 20px;
-    width: 100% !important;
-    text-align: center;
-  }
-
-  .servicesBtnView {
-    text-align: center;
-  }
-
   .stepToDivDesktop {
     display: none;
   }
-
+  
   .stepToDivMobile {
     display: block;
   }
+  
+}
+
+
+.enterpriseChallengeColFooter{
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 5%;
+  font-size: 1vw;
+  font-weight: bolder !important;
+}
+
+.enterpriseChallengeColFooterButton{
+  width: 40%;
+  font-size: 20px;
+  height: 50px;
+  border-radius: 50px;
+  font-weight: bold;
 }

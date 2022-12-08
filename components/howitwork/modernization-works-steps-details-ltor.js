@@ -32,7 +32,7 @@ function ModernizationWorksStepsDetailsLtoR(props) {
           x: 0,
           y: 0,
         },
-        data: { label: "Analyzes workloads and identifies interdependencies" },
+        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
       },
       {
         className: "textBox",
@@ -42,7 +42,7 @@ function ModernizationWorksStepsDetailsLtoR(props) {
           x: 0,
           y: 90,
         },
-        data: { label: "Analyzes workloads and identifies interdependencies" },
+        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
       },
 
       {
@@ -53,7 +53,7 @@ function ModernizationWorksStepsDetailsLtoR(props) {
           x: 0,
           y: 210,
         },
-        data: { label: "Analyzes workloads and identifies interdependencies" },
+        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
       },
     ]);
 

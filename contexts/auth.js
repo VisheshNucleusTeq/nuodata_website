@@ -4,7 +4,7 @@ export const ProtectRoute = ({ children }) => {
   const router = useRouter();
   // return children;
   console.log(router);
-  const authPage = ["/", "/how-it-work", "/sign-in", "Sign_up"];
+  const authPage = ["/", "/how-it-works", "/sign-in", "Sign_up"];
   if (authPage.includes(router.pathname)) {
     return children;
   } else {

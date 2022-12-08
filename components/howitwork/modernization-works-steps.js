@@ -12,7 +12,7 @@ export default function ModernizationWorksSteps({ HowItWorkCss, direction }) {
   );
   const getContent = (ImageName, title) => {
     return (
-      <div style={{ color: "#FFF", marginTop: "10%" }}>
+      <div style={{ color: "#0c3246", marginTop: "10%" }}>
         <Image
           preview={false}
           width={"50%"}
@@ -32,39 +32,32 @@ export default function ModernizationWorksSteps({ HowItWorkCss, direction }) {
         className="modernizationWorks"
         items={[
           {
-            title: getContent("define.png", "Define"),
-            description:
-              "Complete analysis of workloads, code profiling, and dependencies with actionable recommendations",
+            title: getContent("define-color.png", "Define"),
+            description: <p style={{color : "#0c3246"}}>Complete analysis of workloads, code profiling, and dependencies with actionable recommendations</p>
           },
           {
-            title: getContent("connect.png", "Connect"),
-            description:
-              "Complete analysis of workloads, code profiling, and dependencies with actionable recommendations",
+            title: getContent("connect-color.png", "Connect"),
+            description: <p style={{color : "#0c3246"}}>Complete analysis of workloads, code profiling, and dependencies with actionable recommendations</p>
           },
           {
-            title: getContent("analyze.png", "Analyze"),
-            description:
-              "Complete analysis of workloads, code profiling, and dependencies with actionable recommendations",
+            title: getContent("analyze-color.png", "Analyze"),
+            description: <p style={{color : "#0c3246"}}>Complete analysis of workloads, code profiling, and dependencies with actionable recommendations</p>
           },
           {
-            title: getContent("design.png", "Design"),
-            description:
-              "Complete analysis of workloads, code profiling, and dependencies with actionable recommendations",
+            title: getContent("design-color.png", "Design"),
+            description: <p style={{color : "#0c3246"}}>Complete analysis of workloads, code profiling, and dependencies with actionable recommendations</p>
           },
           {
-            title: getContent("transform.png", "Transform"),
-            description:
-              "Complete analysis of workloads, code profiling, and dependencies with actionable recommendations",
+            title: getContent("transform-color.png", "Transform"),
+            description: <p style={{color : "#0c3246"}}>Complete analysis of workloads, code profiling, and dependencies with actionable recommendations</p>
           },
           {
-            title: getContent("validate.png", "Validate"),
-            description:
-              "Complete analysis of workloads, code profiling, and dependencies with actionable recommendations",
+            title: getContent("validate-color.png", "Validate"),
+            description: <p style={{color : "#0c3246"}}>Complete analysis of workloads, code profiling, and dependencies with actionable recommendations</p>
           },
           {
-            title: getContent("rollout.png", "Rollout"),
-            description:
-              "Complete analysis of workloads, code profiling, and dependencies with actionable recommendations",
+            title: getContent("rollout-color.png", "Rollout"),
+            description: <p style={{color : "#0c3246"}}>Complete analysis of workloads, code profiling, and dependencies with actionable recommendations</p>
           },
         ]}
       />

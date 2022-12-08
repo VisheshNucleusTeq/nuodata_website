@@ -8,7 +8,7 @@ export default function HowItWork() {
   return (
     <>
       <Info HowItWorkCss={HowItWorkCss} />
-      <WhatIsNuoData HowItWorkCss={HowItWorkCss} />
+      {/* <WhatIsNuoData HowItWorkCss={HowItWorkCss} /> */}
       <ModernizationWorks HowItWorkCss={HowItWorkCss} />
       <Footer HowItWorkCss={HowItWorkCss} />
     </>
