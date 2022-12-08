@@ -46,7 +46,9 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             componentName == "Define" ? layoutCss.activeMenu : null
           }`}
         >
-          <Link href="/data-modernization/">
+
+          <Link href="/data-modernization">
+
             <Col
               offset={4}
               span={20}

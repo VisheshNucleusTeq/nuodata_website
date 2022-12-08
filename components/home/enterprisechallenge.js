@@ -147,7 +147,7 @@ export default function EnterpriseChallenge({ HomeCss }) {
         xxl={18}
         className={HomeCss.howNuoDataworksBtn}
       >
-        <Link prefetch href="/how-it-work">
+        <Link prefetch href="/how-it-works">
           <Button>
             “Explore How NuoData works” <RiseOutlined />
           </Button>
