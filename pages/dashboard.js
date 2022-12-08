@@ -14,7 +14,8 @@ const Dashboard = () => {
   };
 
   const getALLProjects = async () => {
-    const data = await fetch_retry_get(GETALLPROJECT);
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    const data = await fetch_retry_get(`${GETALLPROJECT}${authData.orgId}`);
     setLoading(false);
     if (data.success) {
       console.log("data", data);

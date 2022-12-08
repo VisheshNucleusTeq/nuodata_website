@@ -111,16 +111,8 @@ const Define = ({ dataModernizationCss, changeStep, setProject }) => {
               }
               options={[
                 {
-                  value: "1",
-                  label: "Option 1",
-                },
-                {
-                  value: "2",
-                  label: "Option 2",
-                },
-                {
-                  value: "3",
-                  label: "Option 3",
+                  value: "databricks",
+                  label: "Data Bricks",
                 },
               ]}
             />
@@ -149,16 +141,8 @@ const Define = ({ dataModernizationCss, changeStep, setProject }) => {
               }
               options={[
                 {
-                  value: "1",
-                  label: "Option 1",
-                },
-                {
-                  value: "2",
-                  label: "Option 2",
-                },
-                {
-                  value: "3",
-                  label: "Option 3",
+                  value: "informatica",
+                  label: "Informatica",
                 },
               ]}
             />
@@ -187,16 +171,8 @@ const Define = ({ dataModernizationCss, changeStep, setProject }) => {
               }
               options={[
                 {
-                  value: "1",
-                  label: "Option 1",
-                },
-                {
-                  value: "2",
-                  label: "Option 2",
-                },
-                {
-                  value: "3",
-                  label: "Option 3",
+                  value: "xml",
+                  label: "XML",
                 },
               ]}
             />
@@ -225,16 +201,8 @@ const Define = ({ dataModernizationCss, changeStep, setProject }) => {
               }
               options={[
                 {
-                  value: "1",
-                  label: "Option 1",
-                },
-                {
-                  value: "2",
-                  label: "Option 2",
-                },
-                {
-                  value: "3",
-                  label: "Option 3",
+                  value: "Location",
+                  label: "Location",
                 },
               ]}
             />

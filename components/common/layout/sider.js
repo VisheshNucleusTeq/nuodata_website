@@ -39,14 +39,14 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             Data Modernization +
           </Col>
         </Col>
-        
+
         <Col
           span={24}
           className={`${layoutCss.mainMenuCol} ${
             componentName == "Define" ? layoutCss.activeMenu : null
           }`}
         >
-          <Link href="/data-modernization/define">
+          <Link href="/data-modernization/">
             <Col
               offset={4}
               span={20}
@@ -57,7 +57,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             </Col>
           </Link>
         </Col>
-        
+
         <Col span={24} className={layoutCss.mainMenuCol}>
           <Col
             offset={4}
