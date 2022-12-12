@@ -4,14 +4,15 @@ import { useState } from "react";
 
 import Define from "./define";
 import Connect from "./connect";
+import Analyze from "./analyze";
 
 export default function DataModernization() {
   const [step, setStep] = useState("Define");
-  const [project, setProject] = useState(0);
 
   const changeStep = (step) => {
     setStep(step);
   };
+
   return (
     <>
       {/* <Button
@@ -59,14 +60,18 @@ export default function DataModernization() {
         <Define
           dataModernizationCss={dataModernizationCss}
           changeStep={changeStep}
-          setProject={setProject}
         />
       )}
       {step === "Connect" && (
         <Connect
           dataModernizationCss={dataModernizationCss}
           changeStep={changeStep}
-          project={project}
+        />
+      )}
+      {step === "Analyze" && (
+        <Analyze
+          dataModernizationCss={dataModernizationCss}
+          changeStep={changeStep}
         />
       )}
     </>

@@ -21,9 +21,6 @@
   font-weight: bold;
   font-size: 3vw;
   text-transform: uppercase;
-  /* float: right;
-  text-align: end; */
-  /* animation: zoom-in-zoom-out 3s ease; */
 }
 
 .infoRow h1 span {
@@ -168,12 +165,13 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 0.8rem;
 }
+
+
 .childDiv:hover {
-  background-color: #e74860;
   color: #fff;
   scale: 1.05;
-  /* transform: scale(1.02); */
   transition: all 1s ease;
+  border : 5px solid #e74860
 }
 
 .textDiv,
@@ -193,17 +191,7 @@
   font-size: 50px !important;
 }
 
-.textDiv :hover {
-  /* color: #e74860 !important; */
-  /* transform: scale(1.02); */
-}
-
-.imageDiv :hover {
-  /* transform: scale(1.02); */
-}
-
 .howNuoDataworksBtn {
-  /* margin: 0% 0% 0% 0%; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -218,7 +206,6 @@
   border-radius: 15px;
   border: 1px solid #e74860 !important;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  /* width: 100vh !important; */
 }
 
 .howNuoDataworksBtn button:hover {
@@ -234,25 +221,11 @@
   }
 }
 
-/* @media (max-width: 400px) {
-  .howNuoDataworksBtn button {
-    color :#E74860 !important;
-    font-weight: bold;
-    font-size: 16px;
-    height: 6vh;
-    border-radius: 15px;
-    border: 1px solid #E74860 !important;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    width: 80vh !important;
-  }
-} */
-
 /* MODERN */
 
 .bgImage {
   background: url("../public/home/bg4.png") no-repeat center center;
   background-size: cover;
-  /* border: 1px solid #0c3246; */
   text-align: center;
 }
 
@@ -315,77 +288,6 @@
 
 
 
-
-
-
-/* .chat {
-  border: 2px solid #e74860;
-  position: relative;
-}
-
-.left {
-  color: white;
-}
-
-.right {
-  text-align: right;
-}
-
-.chat:after {
-  content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 15px solid white;
-  position: absolute;
-  bottom: -15px;
-}
-
-.chat:before {
-  content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  border-left: 17px solid transparent;
-  border-right: 17px solid transparent;
-  border-bottom: 17px solid #e74860;
-  position: absolute;
-  bottom: -15px;
-}
-
-.chat.right {
-  border-color: black;
-}
-
-.chat.right:after,
-.chat.right:before {
-  rotate: -45deg;
-}
-
-.chat.right:before {
-  left: calc(25%);
-  border-bottom: 15px solid black;
-}
-
-.chat.right:after {
-  left: calc(25% + 1px);
-}
-
-.chat.left:after,
-.chat.left:before {
-  rotate: 45deg;
-}
-
-.chat.left:before {
-  right: calc(20%);
-}
-
-.chat.left:after {
-  right: calc(20% + 1px);
-  border-bottom: 15px solid #e74860;
-} */
 
 
 .chat:after {
@@ -474,11 +376,9 @@
 
 .infoRowSystemView {
   background: url("/home/gif-with-white-bg.gif") no-repeat center center;
-  /* background-repeat: no-repeat; */
   background-size: auto;
   height: 120vh;
   background-size: 80% 100%;
-  /* border: 1px solid red; */
 }
 
 .infoRowSystemTextView {
@@ -491,59 +391,7 @@
   text-align: center;
   font-weight: bolder;
   color: #0c3246;
-  /* padding-right: 2%; */
 }
-
-/* 
-.enterpriseChallengeTitle{
-  text-align: center;
-  width: 100%;
-  margin: 1% 0% 2% 0%;
-}
-
-.enterpriseChallengeTitle span{
-  color: #0C3246;
-  font-size: 3vw;
-  border-top : 2px solid #0C3246;
-  border-bottom : 2px solid #0C3246;
-  font-weight: bolder;
-  padding: 1% 1% 1% 1%;
-}
-
-.enterpriseChallengeFirstRow{
-  display: flex;
-  justify-content: center;
-}
-
-.row {
-  margin: 8%;
-  background-color: #0c3246;
-  padding: 5%;
-  border-radius: 20px;
-}
-
-.text {
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
-  margin-top: 12%;
-}
-
-.number {
-  font-size: 120px;
-  line-height: 100px;
-  margin-top: 5%;
-  font-weight: bold;
-  color: #e74860;
-}
-
-.icon {
-  margin-bottom: 5%;
-  align-items: flex-end;
-  display: flex;
-  font-size: 20px;
-  color: #fff;
-} */
 
 /* ENTERPRISE CHALLENGE */
 

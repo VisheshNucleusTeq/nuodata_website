@@ -39,18 +39,22 @@ body {
   line-height: 50px !important;
 }
 
-
-.ant-select-selector{
-/* background-color: red; */
+.ant-upload-list{
+  display: flex;
 }
-/* .ant-select-selection-search{
-  background-color: red;
+
+.ant-upload-select{
+  border : 1px dashed gray !important;
+  width: 100vw !important;
+  height: 30vh !important;
+  border-radius: 25px !important;
+} 
+
+.ant-upload{
+  background-color: rgb(217, 217, 217);
+  border-radius: 25px !important;
 
 }
-.ant-select-selection-search-input{
-  background-color: red;
-
-} */
 
 
 .ant-menu-horizontal,

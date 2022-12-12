@@ -4,33 +4,43 @@ import { fetch_retry_post } from "../../network/api-manager";
 import { BUSINESSUNITLIST } from "../../network/default-data";
 import { DEFINE } from "../../network/apiConstants";
 
-const Define = ({ dataModernizationCss, changeStep, setProject }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { SetProjectDetailsAction } from "../../Redux/action";
+
+
+const Define = ({ dataModernizationCss, changeStep }) => {
+  const dispatch = useDispatch();
+
   const [isLoading, setLoading] = useState(false);
 
   const onFinishDefine = async (payload) => {
     setLoading(true);
     const authData = JSON.parse(localStorage.getItem("authData"));
-    console.log("herere");
     const data = await fetch_retry_post(DEFINE, {
       orgId: authData.orgId,
+      createdBy: authData.userId,
+
       name: payload.name,
       businessUnit: payload.businessUnit,
+
       sourcePlatform: payload.sourcePlatform,
-      sourceLang: "py",
+      sourceLang:payload.sourceLang,
       targetPlatform: payload.targetPlatform,
       targetLang: payload.targetLang,
-      createdBy: authData.userId,
     });
 
     setLoading(false);
     if (data.success) {
-      setProject(data);
+      dispatch(SetProjectDetailsAction(data.data));
       changeStep("Connect");
-      message.success("Successfully Created.");
     } else {
       message.error([data?.error]);
     }
   };
+  
+  const projectDetails = useSelector(
+    (state) => state.projectDetails.projectDetails
+  );
 
   return (
     <Row className={dataModernizationCss.defineForm}>
@@ -63,6 +73,7 @@ const Define = ({ dataModernizationCss, changeStep, setProject }) => {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
+              defaultValue={(projectDetails && projectDetails.businessUnit) ? projectDetails.businessUnit : ""}
               options={[...BUSINESSUNITLIST]}
             />
           </Form.Item>
@@ -85,30 +96,32 @@ const Define = ({ dataModernizationCss, changeStep, setProject }) => {
               type={"text"}
               disabled={isLoading}
               placeholder={"Project Name"}
+              defaultValue={(projectDetails && projectDetails.name) ? projectDetails.name : ""}
             />
           </Form.Item>
 
           <Form.Item
-            label={"Select Source File(s)"}
+            label={"Source Platform"}
             labelAlign={"left"}
             name={"sourcePlatform"}
             rules={[
               {
                 required: true,
-                message: "Source File is required.",
+                message: "Source platform is required.",
               },
             ]}
           >
             <Select
               className="inputSelect"
               showSearch
-              placeholder="Select a source File"
+              placeholder="Select source platform"
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option?.label ?? "")
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
+              defaultValue={(projectDetails && projectDetails.sourcePlatform) ? projectDetails.sourcePlatform : ""}
               options={[
                 {
                   value: "databricks",
@@ -119,6 +132,100 @@ const Define = ({ dataModernizationCss, changeStep, setProject }) => {
           </Form.Item>
 
           <Form.Item
+            label={"Source Language"}
+            labelAlign={"left"}
+            name={"sourceLang"}
+            rules={[
+              {
+                required: true,
+                message: "Source language is required.",
+              },
+            ]}
+          >
+            <Select
+              className="inputSelect"
+              showSearch
+              placeholder="Select source language"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              defaultValue={(projectDetails && projectDetails.sourceLang) ? projectDetails.sourceLang : ""}
+              options={[
+                {
+                  value: "databricks",
+                  label: "Data Bricks",
+                },
+              ]}
+            />
+          </Form.Item>
+
+
+          <Form.Item
+            label={"Target Platform"}
+            labelAlign={"left"}
+            name={"targetPlatform"}
+            rules={[
+              {
+                required: true,
+                message: "Target platform is required.",
+              },
+            ]}
+          >
+            <Select
+              className="inputSelect"
+              showSearch
+              placeholder="Select target platform"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              defaultValue={(projectDetails && projectDetails.targetPlatform) ? projectDetails.targetPlatform : ""}
+              options={[
+                {
+                  value: "databricks",
+                  label: "Data Bricks",
+                },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label={"Target Language"}
+            labelAlign={"left"}
+            name={"targetLang"}
+            rules={[
+              {
+                required: true,
+                message: "Target language is required.",
+              },
+            ]}
+          >
+            <Select
+              className="inputSelect"
+              showSearch
+              placeholder="Select target language"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              defaultValue={(projectDetails && projectDetails.targetLang) ? projectDetails.targetLang : ""}
+              options={[
+                {
+                  value: "databricks",
+                  label: "Data Bricks",
+                },
+              ]}
+            />
+          </Form.Item>
+
+          {/* <Form.Item
             label={"Select Target Platform"}
             labelAlign={"left"}
             name={"targetPlatform"}
@@ -206,7 +313,7 @@ const Define = ({ dataModernizationCss, changeStep, setProject }) => {
                 },
               ]}
             />
-          </Form.Item>
+          </Form.Item> */}
 
           <div className={dataModernizationCss.nextExitBtn}>
             <Button

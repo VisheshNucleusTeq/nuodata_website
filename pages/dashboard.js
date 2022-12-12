@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Space, Tooltip } from "antd";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
-
 import dashboardCss from "../styles/dashboard.module.css";
 import { fetch_retry_get } from "../network/api-manager";
 import { GETALLPROJECT } from "../network/apiConstants";
@@ -9,29 +8,24 @@ import { GETALLPROJECT } from "../network/apiConstants";
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const setheader = () => {
-    alert("set");
-  };
 
   const getALLProjects = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
     const data = await fetch_retry_get(`${GETALLPROJECT}${authData.orgId}`);
     setLoading(false);
     if (data.success) {
-      console.log("data", data);
       setData(data.data);
     } else {
       message.error([data?.error]);
     }
   };
   useEffect(() => {
-    // alert(123)
     getALLProjects();
   }, []);
 
   return (
     <div className={dashboardCss.main}>
-      <h1 onClick={() => setheader()}>Data Modernization</h1>
+      <h1>Data Modernization</h1>
       {/* <p>Company admin view</p> */}
       <Table
         className="demo"

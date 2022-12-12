@@ -1,25 +1,31 @@
 import React from "react";
 import "antd/dist/antd.css";
-import "../styles/globals.css";
 import "animate.css/animate.min.css";
 
-// import "../public/assets/js/jquery.min.js"
-// import "../public/assets/js/custom"
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { ProtectRoute } from "../contexts/auth";
+import { Provider } from "react-redux";
 
-export default function MyApp({ Component, pageProps }) {
+import { wrapper, store } from "../Redux/store";
+import { ProtectRoute } from "../contexts/auth";
+import "../styles/globals.css";
+
+function MyApp({ Component, pageProps }) {
   const [queryClient] = React.useState(() => new QueryClient());
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <ProtectRoute>
-          <Component {...pageProps} />
-        </ProtectRoute>
-      </Hydrate>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <ProtectRoute>
+            <Component {...pageProps} />
+          </ProtectRoute>
+        </Hydrate>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </Provider>
   );
 }
+
+export default wrapper.withRedux(MyApp);
+// export default MyApp;
