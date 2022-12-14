@@ -1,8 +1,23 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Layout, Row, Col, Image } from "antd";
 const { Sider } = Layout;
 
+import { useDispatch, useSelector } from "react-redux";
+import { SetTabTypeAction } from "../../../Redux/action";
+
 const SiderView = ({ layoutCss, height, componentName }) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const tabType = useSelector((state) => state.tabType.tabType);
+
+  const changePage = async (page, tab) => {
+    router.push(page);
+    if (tab) {
+      dispatch(SetTabTypeAction(tab));
+    }
+  };
+
   return (
     <Sider className={layoutCss.mainLayoutSider}>
       <div style={{ height: height + "px" }} className={layoutCss.logoImage}>
@@ -15,10 +30,14 @@ const SiderView = ({ layoutCss, height, componentName }) => {
         <Col
           span={24}
           className={`${layoutCss.mainMenuCol} ${
-            componentName == "Dashboard" ? layoutCss.activeMenu : null
+            componentName == "/dashboard" ? layoutCss.activeMenu : null
           }`}
         >
-          <Link href="/dashboard">
+          <a
+            onClick={() => {
+              changePage("/dashboard");
+            }}
+          >
             <Col
               offset={2}
               span={20}
@@ -27,7 +46,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             >
               Dashboard
             </Col>
-          </Link>
+          </a>
         </Col>
         <Col span={24} className={layoutCss.mainMenuCol}>
           <Col
@@ -40,15 +59,52 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           </Col>
         </Col>
 
-        <Col
+        {[
+          "Define",
+          "Connect",
+          "Analyze",
+          "Design",
+          "Transform",
+          "Validate",
+          "Rollout",
+        ].map((data, i) => {
+          return (
+            <Col
+              key={(Math.random() + 1).toString(36).substring(7)}
+              span={24}
+              className={`${layoutCss.mainMenuCol} ${
+                tabType === data && componentName == "/data-modernization"
+                  ? layoutCss.activeMenu
+                  : null
+              }`}
+            >
+              <a
+                onClick={() => {
+                  changePage("/data-modernization", data);
+                }}
+              >
+                <Col
+                  offset={4}
+                  span={20}
+                  style={{ height: height / 2 + "px" }}
+                  className={layoutCss.subMainMenu}
+                >
+                  {data}
+                </Col>
+              </a>
+            </Col>
+          );
+        })}
+
+        {/* <Col
           span={24}
           className={`${layoutCss.mainMenuCol} ${
-            componentName == "Define" ? layoutCss.activeMenu : null
+            tabType === "Define" && componentName == "/data-modernization"
+              ? layoutCss.activeMenu
+              : null
           }`}
         >
-
           <Link href="/data-modernization">
-
             <Col
               offset={4}
               span={20}
@@ -60,66 +116,126 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           </Link>
         </Col>
 
-        <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={4}
-            span={20}
-            style={{ height: height / 2 + "px" }}
-            className={layoutCss.subMainMenu}
-          >
-            Connect
-          </Col>
+        <Col
+          span={24}
+          className={`${layoutCss.mainMenuCol} ${
+            tabType === "Connect" && componentName == "/data-modernization"
+              ? layoutCss.activeMenu
+              : null
+          }`}
+        >
+          <Link href="/data-modernization">
+            <Col
+              offset={4}
+              span={20}
+              style={{ height: height / 2 + "px" }}
+              className={layoutCss.subMainMenu}
+            >
+              Connect
+            </Col>
+          </Link>
         </Col>
-        <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={4}
-            span={20}
-            style={{ height: height / 2 + "px" }}
-            className={layoutCss.subMainMenu}
-          >
-            Analyze
-          </Col>
+
+        <Col
+          span={24}
+          className={`${layoutCss.mainMenuCol} ${
+            tabType === "Analyze" && componentName == "/data-modernization"
+              ? layoutCss.activeMenu
+              : null
+          }`}
+        >
+          <Link href="/data-modernization">
+            <Col
+              offset={4}
+              span={20}
+              style={{ height: height / 2 + "px" }}
+              className={layoutCss.subMainMenu}
+            >
+              Analyze
+            </Col>
+          </Link>
         </Col>
-        <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={4}
-            span={20}
-            style={{ height: height / 2 + "px" }}
-            className={layoutCss.subMainMenu}
-          >
-            Design
-          </Col>
+
+        <Col
+          span={24}
+          className={`${layoutCss.mainMenuCol} ${
+            tabType === "Design" && componentName == "/data-modernization"
+              ? layoutCss.activeMenu
+              : null
+          }`}
+        >
+          <Link href="/data-modernization">
+            <Col
+              offset={4}
+              span={20}
+              style={{ height: height / 2 + "px" }}
+              className={layoutCss.subMainMenu}
+            >
+              Design
+            </Col>
+          </Link>
         </Col>
-        <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={4}
-            span={20}
-            style={{ height: height / 2 + "px" }}
-            className={layoutCss.subMainMenu}
-          >
-            Transform
-          </Col>
+
+        <Col
+          span={24}
+          className={`${layoutCss.mainMenuCol} ${
+            tabType === "Transform" && componentName == "/data-modernization"
+              ? layoutCss.activeMenu
+              : null
+          }`}
+        >
+          <Link href="/data-modernization">
+            <Col
+              offset={4}
+              span={20}
+              style={{ height: height / 2 + "px" }}
+              className={layoutCss.subMainMenu}
+            >
+              Transform
+            </Col>
+          </Link>
         </Col>
-        <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={4}
-            span={20}
-            style={{ height: height / 2 + "px" }}
-            className={layoutCss.subMainMenu}
-          >
-            Validate
-          </Col>
+
+        <Col
+          span={24}
+          className={`${layoutCss.mainMenuCol} ${
+            tabType === "Validate" && componentName == "/data-modernization"
+              ? layoutCss.activeMenu
+              : null
+          }`}
+        >
+          <Link href="/data-modernization">
+            <Col
+              offset={4}
+              span={20}
+              style={{ height: height / 2 + "px" }}
+              className={layoutCss.subMainMenu}
+            >
+              Validate
+            </Col>
+          </Link>
         </Col>
-        <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={4}
-            span={20}
-            style={{ height: height / 2 + "px" }}
-            className={layoutCss.subMainMenu}
-          >
-            Rollout
-          </Col>
-        </Col>
+
+        <Col
+          span={24}
+          className={`${layoutCss.mainMenuCol} ${
+            tabType === "Rollout" && componentName == "/data-modernization"
+              ? layoutCss.activeMenu
+              : null
+          }`}
+        >
+          <Link href="/data-modernization">
+            <Col
+              offset={4}
+              span={20}
+              style={{ height: height / 2 + "px" }}
+              className={layoutCss.subMainMenu}
+            >
+              Rollout
+            </Col>
+          </Link>
+        </Col> */}
+
         <Col span={24} className={layoutCss.mainMenuCol}>
           <Col
             offset={2}

@@ -83,14 +83,6 @@ export const BUSINESSUNITLIST = [
     label: "Information Management",
   },
   {
-    value: "Information Management",
-    label: "Information Management",
-  },
-  {
-    value: "Information Manegement",
-    label: "Information Manegement",
-  },
-  {
     value: "IT Business Administration",
     label: "IT Business Administration",
   },
@@ -107,17 +99,5 @@ export const BUSINESSUNITLIST = [
   {
     value: "Service and Solution Deployment",
     label: "Service and Solution Deployment",
-  },
-  {
-    value: "Service and Solution Development",
-    label: "Service and Solution Development",
-  },
-  {
-    value: "Service Delivery and Deployment",
-    label: "Service Delivery and Deployment",
-  },
-  {
-    value: "Service Delivery and Support",
-    label: "Service Delivery and Support",
-  },
+  }
 ];

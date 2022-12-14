@@ -1,69 +1,102 @@
-.newProjectBtn {
-    height: 8%;
-    margin: 0px 0px 2% 0px;
-    padding: 0% 3% 0% 3%;
-    border-radius: 10px;
+.defineSteps {
+  background-color: #fff;
+  border-radius: 20px;
 }
 
-.defineSteps{
-    background-color: #FFF;
-    border-radius: 20px;
+.defineSteps .defineStepsRow {
+  padding: 1%;
+  border: 1px solid rgb(196, 196, 196);
+  justify-content: center !important;
+  border-radius: 20px !important;
 }
 
-.defineSteps .defineStepsRow{
-    padding: 1%;
-    border : 1px solid rgb(196, 196, 196);
-    justify-content: center !important;
-    border-radius: 20px !important;
-
+.defineStep {
+  border: 1px solid rgb(232, 232, 232);
+  border-radius: 10px;
+  margin: 3px 3px 3px 3px !important;
+  text-align: center;
+  background-color: #fff;
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+  color: #0c3246;
 }
 
-.defineStep{
-    border : 1px solid rgb(232, 232, 232);
-    border-radius: 10px;
-    margin:  3px 3px 3px 3px !important;
-    text-align: center;
-    background-color: #FFF;
-    font-size: large;
-    font-weight: bold;
-    cursor: pointer;
-    color: #0C3246;
+.defineStepSelect {
+  background-color: #0c3246;
+  color: #fff;
 }
 
-.defineStepSelect{
-    background-color: #0C3246;
-    color: #FFF;
+.defineForm {
+  margin-top: 4%;
 }
 
-.defineForm{
-    /* border : 1px solid red; */
-    margin-top: 4%;
-}
-
-.nextExitBtn{
-    justify-content: center;
-    display: flex;
+.nextExitBtn {
+  justify-content: center;
+  display: flex;
 }
 
 .nextBtn {
-    height: 8%;
-    margin: 0px 0px 2% 0px;
-    padding: 1% 5% 1% 5%;
-    border-radius: 10px;
+  height: 8%;
+  margin: 0px 0px 2% 0px;
+  padding: 1% 5% 1% 5%;
+  border-radius: 10px;
 }
 
 .exitBtn {
-    height: 8%;
-    margin: 0px 0px 2% 0px;
-    padding: 1% 5% 1% 5%;
-    border-radius: 10px;
-    margin-left: 2%;
-    background-color: #0C3246 !important;
-    border: 1px solid #0C3246 !important;
+  height: 8%;
+  margin: 0px 0px 2% 0px;
+  padding: 1% 5% 1% 5%;
+  border-radius: 10px;
+  margin-left: 2%;
+  background-color: #0c3246 !important;
+  border: 1px solid #0c3246 !important;
 }
 
-.inputFile{
-    width: 100vh;
-    height: 50px;
-    border-radius: 25px;
+.inputFile {
+  width: 100vh;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.cardView {
+  height: 50vh;
+  border-radius: 10px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.cardViewGraph {
+  height: 40vh;
+}
+
+.cardView ul li {
+  padding: 20% 0% 0% 0% !important;
+}
+
+.transform h1 {
+  font-size: 3vw;
+  font-weight: bold;
+  color: #0c3246;
+}
+
+.transform h2 {
+  font-size: 2vw;
+  font-weight: bold;
+  color: #e74860;
+}
+
+.transform h2 span {
+  font-size: 2vw;
+  font-weight: bold;
+  color: #0c3246;
+}
+
+.connectFileInput {
+  justify-content: center;
+  display: flex;
+}
+
+.analyzeMain {
+  margin: 2% 0% 2% 0%;
 }

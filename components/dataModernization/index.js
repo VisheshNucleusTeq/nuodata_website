@@ -1,28 +1,20 @@
 import dataModernizationCss from "../../styles/dataModernization.module.css";
 import { Button, Row, Col } from "antd";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+import { SetTabTypeAction } from "../../Redux/action";
 import Define from "./define";
 import Connect from "./connect";
 import Analyze from "./analyze";
+import Transform from "./transform";
 
 export default function DataModernization() {
-  const [step, setStep] = useState("Define");
-
-  const changeStep = (step) => {
-    setStep(step);
-  };
+  const dispatch = useDispatch();
+  const tabType = useSelector((state) => state.tabType.tabType);
 
   return (
     <>
-      {/* <Button
-        type="primary"
-        danger
-        className={dataModernizationCss.newProjectBtn}
-      >
-        New Project +
-      </Button> */}
-
       <div className={dataModernizationCss.defineSteps}>
         <Row align="middle" className={dataModernizationCss.defineStepsRow}>
           {[
@@ -37,7 +29,7 @@ export default function DataModernization() {
             return (
               <Col
                 onClick={() => {
-                  setStep(data);
+                  dispatch(SetTabTypeAction(data))
                 }}
                 xs={12}
                 sm={7}
@@ -46,7 +38,7 @@ export default function DataModernization() {
                 xl={3}
                 xxl={3}
                 className={`${dataModernizationCss.defineStep} ${
-                  step == data && dataModernizationCss.defineStepSelect
+                  tabType == data && dataModernizationCss.defineStepSelect
                 }`}
               >
                 {data}
@@ -56,22 +48,25 @@ export default function DataModernization() {
         </Row>
       </div>
 
-      {step === "Define" && (
+      {tabType === "Define" && (
         <Define
           dataModernizationCss={dataModernizationCss}
-          changeStep={changeStep}
         />
       )}
-      {step === "Connect" && (
+      {tabType === "Connect" && (
         <Connect
           dataModernizationCss={dataModernizationCss}
-          changeStep={changeStep}
         />
       )}
-      {step === "Analyze" && (
+      {tabType === "Analyze" && (
         <Analyze
           dataModernizationCss={dataModernizationCss}
-          changeStep={changeStep}
+        />
+      )}
+
+      {tabType === "Transform" && (
+        <Transform
+          dataModernizationCss={dataModernizationCss}
         />
       )}
     </>

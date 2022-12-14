@@ -39,13 +39,9 @@ body {
   line-height: 50px !important;
 }
 
-.ant-upload-list{
-  display: flex;
-}
-
 .ant-upload-select{
   border : 1px dashed gray !important;
-  width: 100vw !important;
+  width: 40vw !important;
   height: 30vh !important;
   border-radius: 25px !important;
 } 
