@@ -20,26 +20,15 @@ ChartJS.register(
 );
 
 const BarChart = ({ complexityGraph, dataModernizationCss }) => {
-    console.log(complexityGraph)
-
-
-
-//     Trivial
-// Simple
-// Medium
-// Complex
-// Very Complex
-
-    const labels = ["Very Complex", "Complex", "Medium", "Simple", "Trivial"];
-
+  const labels = ["Very Complex", "Complex", "Medium", "Simple", "Trivial"];
   const [pieChart, setPieChart] = useState({
     labels: labels,
     datasets: [
       {
-        label: "orange",
+        label: "Complexity",
         data: labels.map((e) => {
-            let obj = complexityGraph?.find(o => o.complexityType === e);
-            return (obj && obj.count) ? obj.count : 0
+          let obj = complexityGraph?.find((o) => o.complexityType === e);
+          return obj && obj.count ? obj.count : 0;
         }),
         backgroundColor: [
           "rgba(239, 83, 80, 0.5)",

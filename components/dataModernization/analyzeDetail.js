@@ -3,6 +3,8 @@ import { Row, Col, Table, Space, Card, message, Modal } from "antd";
 
 import { GETANALYZEDATA, DOWNLOADFILE } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
+
+import AnalyzeDetailPopup from "./analyzeDetailPopup";
 import {
   DownloadOutlined,
   EyeOutlined,
@@ -19,6 +21,7 @@ const AnalyzeDetail = ({
   const [analyzeDetails, setAnalyzeDetails] = useState(null);
   const [outputFiles, setOutputFiles] = useState([]);
   const [open, setOpen] = useState(false);
+  const [outputFileId, setOutputFileId] = useState();
 
   const getAnalyzeData = async () => {
     setLoading(true);
@@ -44,14 +47,6 @@ const AnalyzeDetail = ({
 
   return (
     <div className={dataModernizationCss.analyzeMain}>
-      {/* <button
-        onClick={() => {
-          setAnalyze(true);
-        }}
-      >
-        {analyzeDetailsId}
-      </button> */}
-
       <ArrowLeftOutlined
         style={{ fontSize: "1.5vw" }}
         onClick={() => {
@@ -161,18 +156,19 @@ const AnalyzeDetail = ({
             </Row>
           </Card>
         </Col>
+        
+        
         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
           <Modal
-            title="Modal 1000px width"
+            // title="Modal 1000px width"
             centered
             open={open}
             onOk={() => setOpen(false)}
             onCancel={() => setOpen(false)}
             width={"100vw"}
           >
-            <p>some contents...</p>
-            <p>some contents...</p>
-            <p>some contents...</p>
+            {/* <p>{ Date.now() }</p> */}
+            <AnalyzeDetailPopup outputFileId={outputFileId}/>
           </Modal>
         </Col>
 
@@ -203,6 +199,7 @@ const AnalyzeDetail = ({
                         <a
                           onClick={() => {
                             setOpen(true);
+                            setOutputFileId(record.outputFileId)
                           }}
                         >
                           <Space size="middle" style={{ cursor: "pointer" }}>

@@ -9,3 +9,5 @@ export const GETPROJECT = "http://3.109.185.25:8080/core/v1/project/";
 export const UPDATEPROJECT = "http://3.109.185.25:8080/core/v1/project/";
 export const ANALYZESUMMARY = "https://api.dev.nuodata.io/process/v1/analyze/summary/";
 export const DOWNLOADFILE = "http://3.109.185.25:8080/core/v1/download/";
+export const DESIGN = "https://api.dev.nuodata.io/process/v1/design/";
+

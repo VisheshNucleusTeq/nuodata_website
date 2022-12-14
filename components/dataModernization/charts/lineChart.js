@@ -7,12 +7,11 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({ complexityGraph, dataModernizationCss }) => {
     const labels = ["Very Complex", "Complex", "Medium", "Simple", "Trivial"];
-
   const [pieChart, setPieChart] = useState({
     labels,
     datasets: [
       {
-        label: "# of Votes",
+        label: "Complexity",
         data: labels.map((e) => {
             let obj = complexityGraph?.find(o => o.complexityType === e);
             return (obj && obj.count) ? obj.count : 0

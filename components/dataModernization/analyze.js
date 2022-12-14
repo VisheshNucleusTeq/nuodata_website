@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table, Space, Card, message, Carousel } from "antd";
+import { useRouter } from "next/router";
 
-import {  ANALYZESUMMARY } from "../../network/apiConstants";
+import {  GETPROJECT, ANALYZESUMMARY } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
 import BarChart from "./charts/barChart";
 import LineChart from "./charts/lineChart";
 import AnalyzeDetail from "./analyzeDetail";
+import { SetProjectDetailsAction } from "../../Redux/action";
 
 const Analyze = ({ dataModernizationCss }) => {
   const dispatch = useDispatch();
+  const { query } = useRouter();
 
   const [data, setData] = useState([]);
   const [analyzeDetails, setAnalyzeDetails] = useState();
@@ -24,7 +27,7 @@ const Analyze = ({ dataModernizationCss }) => {
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${projectDetails.projectId}`
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
     );
     setLoading(false);
     if (data.success) {
@@ -36,9 +39,18 @@ const Analyze = ({ dataModernizationCss }) => {
     }
   };
 
+  const getProjectData = async (projectId) => {
+    const data = await fetch_retry_get(`${GETPROJECT}${query.id}`);
+    dispatch(SetProjectDetailsAction(data.data));
+  }
+
+
   useEffect(() => {
+    getProjectData(query.id)
     getAnalyzeData();
-  }, []);
+  }, [query.id]);
+
+  
 
   return (
     <div className={dataModernizationCss.analyzeMain}>
