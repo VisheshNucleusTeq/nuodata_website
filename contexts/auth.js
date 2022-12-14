@@ -1,15 +1,23 @@
 import { InnerLayout } from "./inner-layout";
 import { useRouter } from "next/router";
+
+import { useDispatch, useSelector } from "react-redux";
+import { SetProjectDetailsAction,  SetConnectDetailsAction} from "../Redux/action";
+
 export const ProtectRoute = ({ children }) => {
   const router = useRouter();
-  // return children;
-  console.log(router);
+  const dispatch = useDispatch();
+
   const authPage = ["/", "/how-it-works", "/sign-in", "Sign_up"];
   if (authPage.includes(router.pathname)) {
     return children;
   } else {
+    if(router.pathname != "/data-modernization"){
+      dispatch(SetProjectDetailsAction({}));
+      dispatch(SetConnectDetailsAction({}));
+    }
     return (
-      <InnerLayout componentName={children.type.name}>{children}</InnerLayout>
+      <InnerLayout componentName={router.pathname}>{children}</InnerLayout>
     );
   }
 };
