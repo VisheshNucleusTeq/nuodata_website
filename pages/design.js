@@ -9,10 +9,11 @@ import ReactFlow, {
   Background,
 } from "reactflow";
 import dagre from "dagre";
-import NormalNode from "../NormalNode";
-import { DESIGN } from "../../network/apiConstants";
-import { fetch_retry_get } from "../../network/api-manager";
-
+import NormalNode from "../components/NormalNode";
+import * as data from "../public/wf_OMS_SLA_JSON.json";
+const getNodeId = () => `randomnode_${+new Date()}`;
+const initialNodes = data.Nodes;
+const initialEdges = data.Edges;
 const nodeTypes = {
   normalNode: NormalNode,
 };
@@ -20,21 +21,22 @@ const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 400;
 const nodeHeight = 36;
+
 const getLayoutedElements = (nodes, edges, direction = "TB") => {
   const isHorizontal = direction === "LR";
   dagreGraph.setGraph({ rankdir: direction });
 
-  nodes?.forEach((node) => {
+  nodes.forEach((node) => {
     dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
   });
 
-  edges?.forEach((edge) => {
+  edges.forEach((edge) => {
     dagreGraph.setEdge(edge.source, edge.target);
   });
 
   dagre.layout(dagreGraph);
 
-  nodes?.forEach((node) => {
+  nodes.forEach((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
     node.targetPosition = isHorizontal ? "left" : "top";
     node.sourcePosition = isHorizontal ? "right" : "bottom";
@@ -52,12 +54,11 @@ const getLayoutedElements = (nodes, edges, direction = "TB") => {
   return { nodes, edges };
 };
 
-const AnalyzeDetailPopup = ({ outputFileId, data }) => {
-  console.log("data...", data);
-  const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-    data?.Nodes,
-    data?.Edges
-  );
+const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+  initialNodes,
+  initialEdges
+);
+const Design = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
   const [rfInstance, setRfInstance] = useState(null);
@@ -65,6 +66,8 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
   const [jsonNode, setJson] = useState(null);
 
   const [name, SetName] = useState(null);
+  const [isActive, setIsActive] = useState("");
+  const { setViewport } = useReactFlow();
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, animated: true }, eds)),
     [setEdges]
@@ -79,18 +82,12 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
     },
     [nodes, edges]
   );
-  // const getProjectData = async (fileId) => {
-  //   const data = await fetch_retry_get(`${DESIGN}${fileId}`);
-  //   // setData(data);
-  //   // console.log(data);
-  // };
-
-  // useEffect(() => {
-  //   getProjectData(outputFileId);
-  // }, []);
-
   return (
     <>
+      <div className="controls">
+        <button onClick={() => onLayout("TB")}>vertical layout</button>
+        <button onClick={() => onLayout("LR")}>horizontal layout</button>
+      </div>
       <div
         style={{
           display: "flex",
@@ -124,8 +121,8 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
   );
 };
 
-export default ({ data }) => (
+export default () => (
   <ReactFlowProvider>
-    <AnalyzeDetailPopup data={data} />
+    <Design />
   </ReactFlowProvider>
 );

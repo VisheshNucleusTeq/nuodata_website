@@ -36,14 +36,22 @@ const Dashboard = () => {
     router.push(`/data-modernization?id=${projectId}`);
   };
 
-  const showUpdatePageAnalyze= (projectId) => {
+  const showUpdatePageAnalyze = (projectId) => {
     dispatch(SetTabTypeAction("Analyze"));
     router.push(`/data-modernization?id=${projectId}`);
   };
 
   return (
     <div className={dashboardCss.main}>
-      <Button type="primary" danger className={dashboardCss.newProjectBtn}>
+      <Button
+        type="primary"
+        onClick={() => {
+          dispatch(SetTabTypeAction("Define"));
+          router.push(`/data-modernization`);
+        }}
+        danger
+        className={dashboardCss.newProjectBtn}
+      >
         New Project +
       </Button>
 

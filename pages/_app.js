@@ -1,7 +1,7 @@
 import React from "react";
 import "antd/dist/antd.css";
 import "animate.css/animate.min.css";
-
+import "reactflow/dist/style.css";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider } from "react-redux";

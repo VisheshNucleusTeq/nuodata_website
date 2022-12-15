@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Table, Space, Card, message, Modal } from "antd";
 
-import { GETANALYZEDATA, DOWNLOADFILE } from "../../network/apiConstants";
+import {
+  GETANALYZEDATA,
+  DOWNLOADFILE,
+  DESIGN,
+} from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
 
 import AnalyzeDetailPopup from "./analyzeDetailPopup";
@@ -18,6 +22,7 @@ const AnalyzeDetail = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [modalData, setModalData] = useState();
   const [analyzeDetails, setAnalyzeDetails] = useState(null);
   const [outputFiles, setOutputFiles] = useState([]);
   const [open, setOpen] = useState(false);
@@ -40,7 +45,22 @@ const AnalyzeDetail = ({
       message.error([data?.error]);
     }
   };
+  const getProjectData = async (fileId) => {
+    const data = await fetch_retry_get(`${DESIGN}${fileId}`);
+    if (data.success) return data.data;
+    // setData(data);
+    // console.log(data);
+  };
 
+  const getDataCall = async (id) => {
+    let datar = await getProjectData(id);
+    console.log("data from here", datar);
+    setModalData(datar);
+
+    setTimeout(() => {
+      setOpen(true);
+    }, 1000);
+  };
   useEffect(() => {
     getAnalyzeData();
   }, []);
@@ -156,11 +176,11 @@ const AnalyzeDetail = ({
             </Row>
           </Card>
         </Col>
-        
-        
+
         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
           <Modal
             // title="Modal 1000px width"
+            destroyOnClose
             centered
             open={open}
             onOk={() => setOpen(false)}
@@ -168,7 +188,7 @@ const AnalyzeDetail = ({
             width={"100vw"}
           >
             {/* <p>{ Date.now() }</p> */}
-            <AnalyzeDetailPopup outputFileId={outputFileId}/>
+            <AnalyzeDetailPopup outputFileId={outputFileId} data={modalData} />
           </Modal>
         </Col>
 
@@ -197,9 +217,9 @@ const AnalyzeDetail = ({
                     if (record.fileType == "graph_src") {
                       return (
                         <a
-                          onClick={() => {
-                            setOpen(true);
-                            setOutputFileId(record.outputFileId)
+                          onClick={async () => {
+                            setOutputFileId(record.outputFileId);
+                            getDataCall(record.outputFileId);
                           }}
                         >
                           <Space size="middle" style={{ cursor: "pointer" }}>
