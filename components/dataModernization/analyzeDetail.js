@@ -61,6 +61,7 @@ const AnalyzeDetail = ({
       setOpen(true);
     }, 1000);
   };
+  
   useEffect(() => {
     getAnalyzeData();
   }, []);

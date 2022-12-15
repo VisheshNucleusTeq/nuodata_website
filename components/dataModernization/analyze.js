@@ -46,7 +46,9 @@ const Analyze = ({ dataModernizationCss }) => {
 
 
   useEffect(() => {
-    getProjectData(query.id)
+    if(query.id){
+      getProjectData(query.id)
+    }
     getAnalyzeData();
   }, [query.id]);
 

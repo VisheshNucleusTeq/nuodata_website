@@ -323,6 +323,7 @@ const Define = ({ dataModernizationCss }) => {
               type="primary"
               danger
               className={dataModernizationCss.exitBtn}
+              onClick={() => { router.push(`/dashboard`) }}
             >
               Exit
             </Button>
