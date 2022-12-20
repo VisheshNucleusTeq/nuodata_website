@@ -37,9 +37,8 @@ export default function ModernizationWorks({ HowItWorkCss }) {
           }}
         >
           <Row className={HowItWorkCss.modernizationDesktopView}>
-            {Array(3)
-              .fill(undefined)
-              .map(() => {
+            {[{"firstHead" : "Define", "secondHead" : "Connect"}, {"firstHead" : "Analyze", "secondHead" : "Design"}, {"firstHead" : "Transform", "secondHead" : "Validate"}]
+              .map((e) => {
                 return (
                   <>
                     <Col
@@ -47,6 +46,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       span={18}
                       className={HowItWorkCss.ModernizationWorksStepsDetails}
                     >
+                      <h1 style={{color: '#E74860', fontWeight: '600'}}><i>{e.firstHead}</i></h1>
                       <ModernizationWorksStepsDetailsRtol
                         HowItWorkCss={HowItWorkCss}
                       />
@@ -56,6 +56,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       span={18}
                       className={HowItWorkCss.ModernizationWorksStepsDetails}
                     >
+                      <h1 style={{color: '#E74860', fontWeight: '600', textAlign: 'right'}}><i>{e.secondHead}</i></h1>
                       <ModernizationWorksStepsDetailsLtoR
                         HowItWorkCss={HowItWorkCss}
                       />
@@ -66,9 +67,8 @@ export default function ModernizationWorks({ HowItWorkCss }) {
           </Row>
 
           <Row className={HowItWorkCss.modernizationMobileiew}>
-            {Array(6)
-              .fill(undefined)
-              .map(() => {
+            {[{"header": "Define"}, {"header": "Connect"}, {"header": "Analyze"}, {"header": "Design"}, {"header": "Transform"}, {"header": "Validate"}]
+              .map((e) => {
                 return (
                   <>
                     <Col
@@ -76,6 +76,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       span={18}
                       className={HowItWorkCss.ModernizationWorksStepsDetails}
                     >
+                      <h2 style={{color: '#E74860', fontWeight: '600', textAlign:'center'}}><i>{e.header}</i></h2>
                       <ModernizationWorksStepsDetailsTtob
                         HowItWorkCss={HowItWorkCss}
                       />

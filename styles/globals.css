@@ -52,7 +52,6 @@ body {
 
 }
 
-
 .ant-menu-horizontal,
 .ant-menu-item::after,
 .ant-menu-submenu::after {
@@ -200,6 +199,24 @@ body {
   border-radius: 20px !important;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    background-color: #FFF;
+}
+
+.ant-table-thead th{
+  color: #0c3246 !important;
+  font-weight: bold !important;
+}
+
+.ant-collapse-header-text{
+  color: #e74860 !important;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.ant-collapse-expand-icon{
+  color: #e74860 !important;
+  font-weight: bolder;
+  font-size: large;
 }
 
 @media (max-width: 600px) {

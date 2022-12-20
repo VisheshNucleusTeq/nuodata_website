@@ -24,7 +24,7 @@ export default function Info({ HowItWorkCss }) {
                 </div>
               </Col>
               <Col xs={24} sm={24} md={14} lg={14} xl={13} xxl={13} className={HowItWorkCss.infoImage}>
-                <Image preview={false} src="/home/platform-gif2.gif" />
+                <Image preview={false} src="/home/platform gif.gif" />
               </Col>
             </Row>
           </Col>

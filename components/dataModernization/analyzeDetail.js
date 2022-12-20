@@ -1,5 +1,20 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Table, Space, Card, message, Modal } from "antd";
+import {
+  Row,
+  Col,
+  Table,
+  Space,
+  Card,
+  message,
+  Modal,
+  Spin,
+  Skeleton,
+  Collapse,
+  Button,
+  Divider,
+} from "antd";
+const { Panel } = Collapse;
+import { useDispatch } from "react-redux";
 
 import {
   GETANALYZEDATA,
@@ -14,60 +29,175 @@ import {
   EyeOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
+import { SetTabTypeAction, SetAnalyzeDetailAction } from "../../Redux/action";
 
 const AnalyzeDetail = ({
   dataModernizationCss,
   analyzeDetailsId,
   setAnalyze,
 }) => {
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [modalData, setModalData] = useState();
   const [analyzeDetails, setAnalyzeDetails] = useState(null);
   const [outputFiles, setOutputFiles] = useState([]);
+  const [transformationSummary, setTransformationSummary] = useState([]);
   const [open, setOpen] = useState(false);
   const [outputFileId, setOutputFileId] = useState();
+  const [transformSql, setTransformSql] = useState();
+  const [sourceDdl, setSourceDdl] = useState();
+  const [targetDdl, setTargetDdl] = useState();
 
   const getAnalyzeData = async () => {
     setLoading(true);
     const data = await fetch_retry_get(`${GETANALYZEDATA}${analyzeDetailsId}`);
     setLoading(false);
     if (data.success) {
-      setData([
-        {
-          fileName: data?.data?.fileName,
-          ...data?.data?.analysis,
-        },
-      ]);
+      dispatch(SetAnalyzeDetailAction(data?.data));
+      setData({
+        fileName: data?.data?.fileName,
+        ...data?.data?.analysis,
+      });
       setAnalyzeDetails(data?.data?.complexity);
       setOutputFiles(data?.data?.outputFiles);
+      setTransformationSummary(data?.data?.transformationSummary);
     } else {
       message.error([data?.error]);
     }
   };
-  const getProjectData = async (fileId) => {
-    const data = await fetch_retry_get(`${DESIGN}${fileId}`);
-    if (data.success) return data.data;
-    // setData(data);
-    // console.log(data);
+
+  const getGraphSrcDataApi = async (id) => {
+    const data = await fetch_retry_get(`${DESIGN}${id}`);
+    if (data.success) setModalData(data.data);
   };
 
-  const getDataCall = async (id) => {
-    let datar = await getProjectData(id);
-    console.log("data from here", datar);
-    setModalData(datar);
-
-    setTimeout(() => {
-      setOpen(true);
-    }, 1000);
+  const getTransformSqlDataApi = async (id) => {
+    const data = await fetch_retry_get(`${DOWNLOADFILE}${id}`);
+    if (data.success) setTransformSql(data.data);
   };
-  
+
+  const getSourceDdlDataApi = async (id) => {
+    const data = await fetch_retry_get(`${DOWNLOADFILE}${id}`);
+    if (data.success) setSourceDdl(data.data);
+  };
+
+  const getTargetDdlDataApi = async (id) => {
+    const data = await fetch_retry_get(`${DOWNLOADFILE}${id}`);
+    if (data.success) setTargetDdl(data.data);
+  };
+
   useEffect(() => {
     getAnalyzeData();
   }, []);
 
+  useEffect(() => {
+    outputFiles.forEach((e) => {
+      console.log(e);
+      if (e.fileType == "graph_src") {
+        getGraphSrcDataApi(e.outputFileId);
+      }
+
+      if (e.fileType == "transform_sql") {
+        getTransformSqlDataApi(e.outputFileId);
+      }
+
+      if (e.fileType == "source_ddl") {
+        getSourceDdlDataApi(e.outputFileId);
+      }
+
+      if (e.fileType == "target_ddl") {
+        getTargetDdlDataApi(e.outputFileId);
+      }
+    });
+  }, [outputFiles]);
+
+  const getAnalysisData = (data) => {
+    return (
+      <Table
+        pagination={false}
+        dataSource={transformationSummary}
+        columns={[
+          {
+            title: "Transformation Type",
+            dataIndex: "transformationType",
+            key: "transformationType",
+          },
+          {
+            title: "Transformation Count",
+            dataIndex: "transformationCount",
+            key: "transformationCount",
+          },
+          {
+            title: "Manual Effor Hours",
+            dataIndex: "manualEfforHours",
+            key: "manualEfforHours",
+          },
+          {
+            title: "Automated Effort Hours",
+            dataIndex: "automatedEffortHours",
+            key: "automatedEffortHours",
+          },
+          {
+            title: "Manual Rate",
+            dataIndex: "manualRate",
+            key: "manualRate",
+          },
+          {
+            title: "Automated Rate",
+            dataIndex: "automatedRate",
+            key: "automatedRate",
+          },
+          {
+            title: "Manual Cost",
+            dataIndex: "manualCost",
+            key: "manualCost",
+          },
+          {
+            title: "Automated Cost",
+            dataIndex: "automatedCost",
+            key: "automatedCost",
+          },
+        ]}
+      />
+    );
+  };
+
+  const getGraphSrcData = (data) => {
+    return modalData ? (
+      <AnalyzeDetailPopup outputFileId={outputFileId} data={modalData} />
+    ) : (
+      <p>Loading...</p>
+    );
+  };
+
+  const getTransformSqlData = () => {
+    return (
+      <pre>
+        <code>{transformSql}</code>
+      </pre>
+    );
+  };
+
+  const getSourceDdlData = () => {
+    return (
+      <pre>
+        <code>{sourceDdl}</code>
+      </pre>
+    );
+  };
+
+  const getTargetDdlData = () => {
+    return (
+      <pre>
+        <code>{targetDdl}</code>
+      </pre>
+    );
+  };
+
   return (
-    <div className={dataModernizationCss.analyzeMain}>
+    <>
       <ArrowLeftOutlined
         style={{ fontSize: "1.5vw" }}
         onClick={() => {
@@ -75,181 +205,343 @@ const AnalyzeDetail = ({
         }}
       />
 
-      <Row>
-        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-          <div className={dataModernizationCss.analyzeMain}>
-            <Table
-              pagination={false}
-              className="demo"
-              columns={[
-                {
-                  title: "File",
-                  dataIndex: "fileName",
-                  key: "fileName",
-                },
-                {
-                  title: "Workflows",
-                  dataIndex: "workflows",
-                  key: "workflows",
-                },
-                {
-                  title: "Mappings",
-                  dataIndex: "mappings",
-                  key: "mappings",
-                },
-                {
-                  title: "Transformations",
-                  dataIndex: "transformations",
-                  key: "transformations",
-                },
+      {loading ? (
+        <center>
+          <Skeleton active />
+        </center>
+      ) : (
+        <div
+          className={dataModernizationCss.analyzeMain}
+          style={{
+            backgroundColor: "#FFF",
+            padding: "2%",
+            borderRadius: "25px",
+          }}
+        >
+          <Row>
+            {/* <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15}>
+              <div className={dataModernizationCss.analyzeMain}>
+                <Table
+                  pagination={false}
+                  className="demo"
+                  columns={[
+                    {
+                      title: "File",
+                      dataIndex: "fileName",
+                      key: "fileName",
+                    },
+                    {
+                      title: "Workflows",
+                      dataIndex: "workflows",
+                      key: "workflows",
+                    },
+                    {
+                      title: "Mappings",
+                      dataIndex: "mappings",
+                      key: "mappings",
+                    },
+                    {
+                      title: "Transformations",
+                      dataIndex: "transformations",
+                      key: "transformations",
+                    },
+                  ]}
+                  dataSource={data}
+                />
+              </div>
+            </Col> */}
 
-                {
-                  title: "Action",
-                  key: "action",
-                  render: (_, record) => (
-                    <Space size="middle">
-                      <a>Details</a>
-                    </Space>
-                  ),
-                },
-              ]}
-              dataSource={data}
-            />
-          </div>
-        </Col>
+            <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15}>
+              <Card
+                className={dataModernizationCss.cardViewGrid}
+                hoverable={false}
+              >
+                <Card.Grid hoverable={false}>File</Card.Grid>
+                <Card.Grid hoverable={false}>
+                  {data && data.fileName ? data.fileName : "0"}
+                </Card.Grid>
 
-        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-          <Card className={dataModernizationCss.cardView}>
-            <Row>
-              <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                <ul style={{ listStyleType: "none" }}>
-                  <b>
-                    <li>Complexity</li>
-                    <li>Conversion</li>
-                    <li>Manual effort estimate</li>
-                    <li>Effort with x% automation</li>
-                    <li>Hours Saved</li>
-                  </b>
-                </ul>
-              </Col>
-              <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                <ul style={{ listStyleType: "none" }}>
-                  <b>
-                    <li>
-                      {analyzeDetails && analyzeDetails.complexity
-                        ? analyzeDetails.complexity
-                        : "0"}
-                    </li>
-                    <li>
-                      {analyzeDetails && analyzeDetails.conversion
-                        ? analyzeDetails.conversion
-                        : "0"}{" "}
-                      %
-                    </li>
-                    <li>
-                      {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
-                        ? analyzeDetails.manualEffortsEstimateHrs
-                        : "0"}{" "}
-                      hours
-                    </li>
+                <Card.Grid hoverable={false}>Work flows</Card.Grid>
+                <Card.Grid hoverable={false}>
+                  {data && data.workflows ? data.workflows : "0"}
+                </Card.Grid>
 
-                    <li>
-                      {analyzeDetails && analyzeDetails.automationEffortPercent
-                        ? analyzeDetails.automationEffortPercent
-                        : "0"}{" "}
-                      %
-                    </li>
-                    <li>
-                      {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
-                        ? analyzeDetails.manualEffortsEstimateHrs
-                        : "0"}{" "}
-                      hours
-                    </li>
-                    <li>
-                      {analyzeDetails && analyzeDetails.hoursSaved
-                        ? analyzeDetails.hoursSaved
-                        : "0"}{" "}
-                      hours
-                    </li>
-                  </b>
-                </ul>
-              </Col>
-            </Row>
-          </Card>
-        </Col>
+                <Card.Grid hoverable={false}>Mappings</Card.Grid>
+                <Card.Grid hoverable={false}>
+                  {data && data.mappings ? data.mappings : "0"}
+                </Card.Grid>
 
-        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-          <Modal
-            // title="Modal 1000px width"
-            destroyOnClose
-            centered
-            open={open}
-            onOk={() => setOpen(false)}
-            onCancel={() => setOpen(false)}
-            width={"100vw"}
-          >
-            {/* <p>{ Date.now() }</p> */}
-            <AnalyzeDetailPopup outputFileId={outputFileId} data={modalData} />
-          </Modal>
-        </Col>
+                <Card.Grid hoverable={false}>Transformations</Card.Grid>
+                <Card.Grid hoverable={false}>
+                  {data && data.transformations ? data.transformations : "0"}
+                </Card.Grid>
+              </Card>
+            </Col>
 
-        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-          <div className={dataModernizationCss.analyzeMain}>
-            {/* {JSON.stringify(outputFiles)} */}
-            <Table
-              pagination={false}
-              className="demo"
-              columns={[
-                {
-                  title: "",
-                  dataIndex: "fileName",
-                  key: "fileName",
-                },
-                {
-                  title: "",
-                  dataIndex: "description",
-                  key: "description",
-                },
+            <Col
+              xs={1}
+              sm={1}
+              md={1}
+              lg={1}
+              xl={1}
+              xxl={1}
+              style={{ justifyContent: "center", display: "flex" }}
+            >
+              <Divider
+                style={{ height: "100%", backgroundColor: "#f8f8f8" }}
+                type="vertical"
+              />
+            </Col>
 
-                {
-                  title: "",
-                  key: "action",
-                  render: (_, record) => {
-                    if (record.fileType == "graph_src") {
-                      return (
-                        <a
-                          onClick={async () => {
-                            setOutputFileId(record.outputFileId);
-                            getDataCall(record.outputFileId);
-                          }}
-                        >
-                          <Space size="middle" style={{ cursor: "pointer" }}>
-                            <EyeOutlined /> View
-                          </Space>
-                        </a>
-                      );
-                    } else {
-                      return (
-                        //http://3.109.185.25:8080/core/v1/download/155
+            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+              <Card className={dataModernizationCss.cardViewGrid}>
+                <Card.Grid hoverable={false}>Complexity</Card.Grid>
+                <Card.Grid hoverable={false}>
+                  {analyzeDetails && analyzeDetails.complexity
+                    ? analyzeDetails.complexity
+                    : "0"}
+                </Card.Grid>
+
+                <Card.Grid hoverable={false}>Conversion</Card.Grid>
+                <Card.Grid hoverable={false}>
+                  {analyzeDetails && analyzeDetails.conversion
+                    ? analyzeDetails.conversion
+                    : "0"}
+                  %
+                </Card.Grid>
+
+                <Card.Grid hoverable={false}>Manual effort estimate</Card.Grid>
+                <Card.Grid hoverable={false}>
+                  {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
+                    ? analyzeDetails.manualEffortsEstimateHrs
+                    : "0"}
+                  %
+                </Card.Grid>
+
+                <Card.Grid hoverable={false}>
+                  Effort with x% automation
+                </Card.Grid>
+                <Card.Grid hoverable={false}>
+                  {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
+                    ? analyzeDetails.manualEffortsEstimateHrs
+                    : "0"}{" "}
+                  hours
+                </Card.Grid>
+
+                <Card.Grid hoverable={false} bordered={false}>
+                  Hours Saved
+                </Card.Grid>
+                <Card.Grid hoverable={false} bordered={false}>
+                  {analyzeDetails && analyzeDetails.hoursSaved
+                    ? analyzeDetails.hoursSaved
+                    : "0"}{" "}
+                  hours
+                </Card.Grid>
+              </Card>
+            </Col>
+
+            {/* <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+              <Modal
+                destroyOnClose
+                centered
+                open={false}
+                onOk={() => setOpen(false)}
+                onCancel={() => setOpen(false)}
+                width={"100vw"}
+              >
+                <AnalyzeDetailPopup
+                  outputFileId={outputFileId}
+                  data={modalData}
+                />
+              </Modal>
+            </Col> */}
+
+            <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={24}
+              xl={24}
+              xxl={24}
+              className={dataModernizationCss.analyzeMainDetails}
+            >
+              <Collapse ghost accordion>
+                {outputFiles.map((e, i) => {
+                  return (
+                    <Panel
+                    
+                      header={e.description}
+                      key={i}
+                      style={{ margin: "2% 0% 2% 0%" }}
+                      extra={e.fileType != "graph_src" && (
                         <a
                           target={"_blank"}
-                          href={`${DOWNLOADFILE}${record.outputFileId}`}
+                          href={`${DOWNLOADFILE}${e.outputFileId}`}
                         >
-                          <Space size="middle" style={{ cursor: "pointer" }}>
+                          <Space
+                            size="middle"
+                            className={
+                              dataModernizationCss.downloadBtnSpace
+                            }
+                          >
                             <DownloadOutlined /> Download
                           </Space>
                         </a>
-                      );
-                    }
-                  },
-                },
-              ]}
-              dataSource={outputFiles}
-            />
-          </div>
-        </Col>
-      </Row>
-    </div>
+                      )}
+                    >
+                      <Row>
+                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                          {e.fileType != "graph_src" && (
+                            <a
+                              target={"_blank"}
+                              href={`${DOWNLOADFILE}${e.outputFileId}`}
+                            >
+                              <Space
+                                size="middle"
+                                className={
+                                  dataModernizationCss.downloadBtnSpace
+                                }
+                              >
+                                <DownloadOutlined /> Download
+                              </Space>
+                            </a>
+                          )}
+                        </Col> */}
+                        <Col
+                          xs={24}
+                          sm={24}
+                          md={24}
+                          lg={24}
+                          xl={24}
+                          xxl={24}
+                          className={dataModernizationCss.analyzeMainDetails}
+                        >
+                          {e.fileType === "analysis" && getAnalysisData(e)}
+                          {e.fileType === "graph_src" && getGraphSrcData(e)}
+                          {e.fileType === "transform_sql" &&
+                            getTransformSqlData(e)}
+                          {e.fileType === "source_ddl" && getSourceDdlData(e)}
+                          {e.fileType === "target_ddl" && getTargetDdlData(e)}
+                        </Col>
+                      </Row>
+                    </Panel>
+                  );
+                })}
+              </Collapse>
+
+              {/* {outputFiles.map((e) => {
+                  return (
+                    <Row className={dataModernizationCss.dataList}>
+                      <Col
+                        xs={6}
+                        sm={6}
+                        md={6}
+                        lg={6}
+                        xl={6}
+                        xxl={6}
+                        className={dataModernizationCss.transformation}
+                      >
+                        {e.description}
+                      </Col>
+
+                      <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} />
+                      <Col
+                        xs={6}
+                        sm={6}
+                        md={6}
+                        lg={6}
+                        xl={6}
+                        xxl={6}
+                        className={dataModernizationCss.downloadBtn}
+                      >
+                        {e.fileType != "graph_src" && (
+                          <a
+                            target={"_blank"}
+                            href={`${DOWNLOADFILE}${e.outputFileId}`}
+                          >
+                            <Space
+                              size="middle"
+                              className={dataModernizationCss.downloadBtnSpace}
+                            >
+                              <DownloadOutlined /> Download
+                            </Space>
+                          </a>
+                        )}
+                      </Col>
+                      <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        {e.fileType != "graph_src" ? (
+                          <Table
+                            className={`demo ${dataModernizationCss.analyzeMain}`}
+                            pagination={false}
+                            columns={[
+                              {
+                                title: "File",
+                                dataIndex: "fileName",
+                                key: "fileName",
+                              },
+                              {
+                                title: "Workflows",
+                                dataIndex: "workflows",
+                                key: "workflows",
+                              },
+                              {
+                                title: "Mappings",
+                                dataIndex: "mappings",
+                                key: "mappings",
+                              },
+                              {
+                                title: "Transformations",
+                                dataIndex: "transformations",
+                                key: "transformations",
+                              },
+                            ]}
+                            dataSource={data}
+                          />
+                        ) : (
+                          <>
+                          {open && (
+                            <p>dsf</p>
+                            // <AnalyzeDetailPopup
+                            //   outputFileId={outputFileId}
+                            //   data={modalData}
+                            // />
+                            )}
+                          </>
+                        )}
+                      </Col>
+                    </Row>
+                  );
+                })} */}
+
+              <div className={dataModernizationCss.nextExitBtn}>
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.nextBtn}
+                  htmlType="submit"
+                  onClick={() => {
+                    dispatch(SetTabTypeAction("Transform"));
+                  }}
+                >
+                  Transform
+                </Button>
+
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.exitBtn}
+                  onClick={() => {
+                    router.push(`/dashboard`);
+                  }}
+                >
+                  Exit
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      )}
+    </>
   );
 };
 

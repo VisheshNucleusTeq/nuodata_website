@@ -1,4 +1,4 @@
-import { LOGIN, PROJECT, CONNECT, TABTYPE } from './type';
+import { LOGIN, PROJECT, CONNECT, TABTYPE,ANALYZEDETAIL } from './type';
 
 export const UserDetails = data => dispatch => {
   dispatch({
@@ -26,6 +26,13 @@ export const SetConnectDetailsAction = data => dispatch => {
 export const SetTabTypeAction = data => dispatch => {
   dispatch({
     type: TABTYPE,
+    payload: data,
+  });
+}
+
+export const SetAnalyzeDetailAction = data => dispatch => {
+  dispatch({
+    type: ANALYZEDETAIL,
     payload: data,
   });
 }
