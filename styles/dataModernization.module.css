@@ -1,3 +1,10 @@
+.projectName{
+  font-weight: bolder;
+  font-size:2vw;
+  color: #e74860;
+  
+}
+
 .defineSteps {
   background-color: #fff;
   border-radius: 20px;
@@ -29,6 +36,12 @@
 
 .defineForm {
   margin-top: 4%;
+  background-color: #FFF;
+  padding: 2%;
+  border-radius: 10px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    background-color: #FFF;
 }
 
 .nextExitBtn {
@@ -59,11 +72,67 @@
   border-radius: 25px;
 }
 
-.cardView {
-  height: 50vh;
+.cardViewGraphs {
+  height: 100%;
   border-radius: 10px;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
-    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.cardView {
+  border-radius: 10px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.cardView div div {
+  display: flex;
+  align-items: center;
+  border: #fff !important;
+  padding: 2.5vh !important;
+}
+
+.cardView div div:nth-child(odd) {
+  width: 60% !important;
+  color: #0c3246;
+  font-weight: bolder;
+}
+
+.cardView div div:nth-child(even) {
+  width: 40% !important;
+  color: #e74860;
+  font-weight: 600 !important;
+}
+
+.cardView div div:nth-child(even) span {
+  width: 40% !important;
+  color: #e74860;
+  font-weight: 900;
+}
+
+.cardViewGrid div div {
+  display: flex;
+  align-items: center;
+  border: #fff !important;
+  padding: 2.5vh !important;
+}
+
+.cardViewGrid div div:nth-child(odd) {
+  width: 60% !important;
+  color: #0c3246;
+  font-weight: bolder;
+}
+
+.cardViewGrid div div:nth-child(even) {
+  width: 40% !important;
+  color: #e74860;
+  font-weight: 600 !important;
+}
+
+.cardViewGrid div div:nth-child(even) span {
+  width: 40% !important;
+  color: #e74860;
+  font-weight: 900;
 }
 
 .cardViewGraph {
@@ -75,21 +144,41 @@
 }
 
 .transform h1 {
-  font-size: 3vw;
-  font-weight: bold;
+  font-size: 3.2vw;
+  font-weight: bolder;
   color: #0c3246;
+  /* transform: scale(1); */
+  animation-name: text;
+  animation-duration: 4s;
+}
+
+@keyframes text {
+  0% {
+    letter-spacing: 0px;
+    transition: transform 300ms linear;
+
+  }
+  50% {
+    letter-spacing: 1px;
+  }
+  100% {
+    letter-spacing: 0px;
+    	transition: transform 300ms linear;
+
+
+  }
 }
 
 .transform h2 {
-  font-size: 2vw;
+  font-size: 1.8vw;
   font-weight: bold;
   color: #e74860;
 }
 
 .transform h2 span {
-  font-size: 2vw;
-  font-weight: bold;
   color: #0c3246;
+  font-size:2vw !important;
+  padding: .5%;
 }
 
 .connectFileInput {
@@ -98,5 +187,59 @@
 }
 
 .analyzeMain {
+  margin: 1% 0% 1% 0%;
+}
+
+.dataList {
   margin: 2% 0% 2% 0%;
+}
+
+.transformation {
+  font-size: 1.5vw;
+  font-weight: bolder;
+  color: #e74860;
+  padding-left: 1%;
+}
+
+.downloadBtn {
+  justify-content: right;
+  display: flex;
+  align-items: center;
+  padding-right: 1%;
+}
+
+.downloadBtnSpace {
+  float: right;
+  color: #0c3246;
+  font-weight: bold;
+  /* color: #0c3246 !important;
+  font-size: 1.2vw;
+  border: 1px solid #0c3246;
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
+}
+
+.downloadBtnSpace:hover {
+  color: #e74860;
+  font-weight: bolder;
+  scale: 1.1;
+  /* transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  border: 1px solid #e74860;
+  color: #e74860 !important;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
+}
+
+
+.analyzeMainDetails {
+  margin: 1% 0% 1% 0%;
+  background-color: #FFF;
+}
+
+.analyzeMainDetails .ant-collapse-header-text{
+    color: #e74860 !important;
 }

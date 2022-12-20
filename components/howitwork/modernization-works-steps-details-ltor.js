@@ -58,9 +58,9 @@ function ModernizationWorksStepsDetailsLtoR(props) {
     ]);
 
     setEdges([
-      { id: "e1", source: "1", target: "2", animated: true },
-      { id: "e2", source: "1", target: "3", animated: true },
-      { id: "e3", source: "1", target: "4", animated: true },
+      { id: "e1", source: "1", target: "2", animated: true, style: { stroke: '#E74860' }, },
+      { id: "e2", source: "1", target: "3", animated: true, style: { stroke: '#E74860' }, },
+      { id: "e3", source: "1", target: "4", animated: true, style: { stroke: '#E74860' }, },
     ]);
   });
 

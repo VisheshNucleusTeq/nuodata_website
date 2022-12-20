@@ -7,15 +7,21 @@ import { SetProjectDetailsAction,  SetConnectDetailsAction} from "../Redux/actio
 export const ProtectRoute = ({ children }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.userDetails.isLogged);
+  console.log(user)
+
+
 
   const authPage = ["/", "/how-it-works", "/sign-in", "Sign_up"];
   if (authPage.includes(router.pathname)) {
     return children;
   } else {
+
     if(router.pathname != "/data-modernization"){
       dispatch(SetProjectDetailsAction({}));
       dispatch(SetConnectDetailsAction({}));
     }
+
     return (
       <InnerLayout componentName={router.pathname}>{children}</InnerLayout>
     );

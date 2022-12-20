@@ -12,9 +12,15 @@ import Transform from "./transform";
 export default function DataModernization() {
   const dispatch = useDispatch();
   const tabType = useSelector((state) => state.tabType.tabType);
+  const projectDetails = useSelector(
+    (state) => state.projectDetails.projectDetails
+  );
 
   return (
     <>
+      <h1 className={dataModernizationCss.projectName}>
+        {projectDetails && projectDetails?.name ? projectDetails.name : ""}
+      </h1>
       <div className={dataModernizationCss.defineSteps}>
         <Row align="middle" className={dataModernizationCss.defineStepsRow}>
           {[
@@ -29,7 +35,7 @@ export default function DataModernization() {
             return (
               <Col
                 onClick={() => {
-                  dispatch(SetTabTypeAction(data))
+                  dispatch(SetTabTypeAction(data));
                 }}
                 xs={12}
                 sm={7}
@@ -49,25 +55,17 @@ export default function DataModernization() {
       </div>
 
       {tabType === "Define" && (
-        <Define
-          dataModernizationCss={dataModernizationCss}
-        />
+        <Define dataModernizationCss={dataModernizationCss} />
       )}
       {tabType === "Connect" && (
-        <Connect
-          dataModernizationCss={dataModernizationCss}
-        />
+        <Connect dataModernizationCss={dataModernizationCss} />
       )}
       {tabType === "Analyze" && (
-        <Analyze
-          dataModernizationCss={dataModernizationCss}
-        />
+        <Analyze dataModernizationCss={dataModernizationCss} />
       )}
 
       {tabType === "Transform" && (
-        <Transform
-          dataModernizationCss={dataModernizationCss}
-        />
+        <Transform dataModernizationCss={dataModernizationCss} />
       )}
     </>
   );

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table, Space, Card, message, Carousel } from "antd";
 import { useRouter } from "next/router";
 
-import {  GETPROJECT, ANALYZESUMMARY } from "../../network/apiConstants";
+import { GETPROJECT, ANALYZESUMMARY } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
 import BarChart from "./charts/barChart";
 import LineChart from "./charts/lineChart";
@@ -42,17 +42,14 @@ const Analyze = ({ dataModernizationCss }) => {
   const getProjectData = async (projectId) => {
     const data = await fetch_retry_get(`${GETPROJECT}${query.id}`);
     dispatch(SetProjectDetailsAction(data.data));
-  }
-
+  };
 
   useEffect(() => {
-    if(query.id){
-      getProjectData(query.id)
+    if (query.id) {
+      getProjectData(query.id);
     }
     getAnalyzeData();
   }, [query.id]);
-
-  
 
   return (
     <div className={dataModernizationCss.analyzeMain}>
@@ -60,7 +57,53 @@ const Analyze = ({ dataModernizationCss }) => {
         <Row>
           <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
             <Card className={dataModernizationCss.cardView}>
-              <Row>
+              <Card.Grid>Total Files</Card.Grid>
+              <Card.Grid>
+                {analyzeDetails && analyzeDetails.totalFiles
+                  ? analyzeDetails.totalFiles
+                  : "0"}
+              </Card.Grid>
+              <Card.Grid>Transformations</Card.Grid>
+              <Card.Grid>
+                {analyzeDetails && analyzeDetails.transformations
+                  ? analyzeDetails.transformations
+                  : "0"}
+              </Card.Grid>
+              <Card.Grid>Mappings</Card.Grid>
+              <Card.Grid>
+                {analyzeDetails && analyzeDetails.mappings
+                  ? analyzeDetails.mappings
+                  : "0"}
+              </Card.Grid>
+              <Card.Grid>Conversion</Card.Grid>
+              <Card.Grid>
+                {analyzeDetails && analyzeDetails.conversions
+                  ? analyzeDetails.conversions
+                  : "0"}{" "}
+                %
+              </Card.Grid>
+              <Card.Grid>Manual Effort</Card.Grid>
+              <Card.Grid>
+              <span>
+                {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
+                  ? parseFloat(analyzeDetails.manualEffortsEstimateHrs).toFixed(
+                      2
+                    )
+                  : "0"}{" "}
+                hours
+                </span>
+              </Card.Grid>
+              <Card.Grid>Hours Saved</Card.Grid>
+              <Card.Grid>
+                <span>
+                  {analyzeDetails && analyzeDetails.hoursSaved
+                    ? parseFloat(analyzeDetails.hoursSaved).toFixed(2)
+                    : "0"}{" "}
+                  hours
+                </span>
+              </Card.Grid>
+
+              {/* <Row>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                   <ul style={{ listStyleType: "none" }}>
                     <b>
@@ -113,12 +156,12 @@ const Analyze = ({ dataModernizationCss }) => {
                     </b>
                   </ul>
                 </Col>
-              </Row>
+              </Row> */}
             </Card>
           </Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
           <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14} style={{}}>
-            <Card className={dataModernizationCss.cardView}>
+            <Card className={dataModernizationCss.cardViewGraphs}>
               <Carousel autoplay draggable>
                 <div className={dataModernizationCss.cardViewGraph}>
                   {complexityGraph && (

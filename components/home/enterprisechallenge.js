@@ -31,10 +31,9 @@ export default function EnterpriseChallenge({ HomeCss }) {
             <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
               <div className={HomeCss.imageDiv}>
                 <Image
-                  width={"100%"}
                   height={"100%"}
                   preview={false}
-                  src="./home/bg3.png"
+                  src="./home/step1-white.png"
                 />
               </div>
             </Col>
@@ -55,10 +54,10 @@ export default function EnterpriseChallenge({ HomeCss }) {
             <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
               <div className={HomeCss.imageDiv}>
                 <Image
-                  width={"100%"}
+                  // width={"60%"}
                   height={"100%"}
                   preview={false}
-                  src="./home/bg3.png"
+                  src="./home/step2-white.png"
                 />
               </div>
             </Col>
@@ -80,10 +79,10 @@ export default function EnterpriseChallenge({ HomeCss }) {
             <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
               <div className={HomeCss.imageDiv}>
                 <Image
-                  width={"100%"}
+                  // width={"60%"}
                   height={"100%"}
                   preview={false}
-                  src="./home/bg3.png"
+                  src="./home/step3-white.png"
                 />
               </div>
             </Col>
@@ -104,10 +103,10 @@ export default function EnterpriseChallenge({ HomeCss }) {
             <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
               <div className={HomeCss.imageDiv}>
                 <Image
-                  width={"100%"}
+                  // width={"60%"}
                   height={"100%"}
                   preview={false}
-                  src="./home/bg3.png"
+                  src="./home/step4-white.png"
                 />
               </div>
             </Col>
@@ -128,10 +127,10 @@ export default function EnterpriseChallenge({ HomeCss }) {
             <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
               <div className={HomeCss.imageDiv}>
                 <Image
-                  width={"100%"}
+                  // width={"60%"}
                   height={"100%"}
                   preview={false}
-                  src="./home/bg3.png"
+                  src="./home/step5-white.png"
                 />
               </div>
             </Col>

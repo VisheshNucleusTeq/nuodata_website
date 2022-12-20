@@ -20,8 +20,8 @@ const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 400;
 const nodeHeight = 36;
-const getLayoutedElements = (nodes, edges, direction = "TB") => {
-  const isHorizontal = direction === "LR";
+const getLayoutedElements = (nodes, edges, direction = "LR") => {
+  const isHorizontal = (direction === "LR");
   dagreGraph.setGraph({ rankdir: direction });
 
   nodes?.forEach((node) => {
@@ -53,7 +53,6 @@ const getLayoutedElements = (nodes, edges, direction = "TB") => {
 };
 
 const AnalyzeDetailPopup = ({ outputFileId, data }) => {
-  console.log("data...", data);
   const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
     data?.Nodes,
     data?.Edges

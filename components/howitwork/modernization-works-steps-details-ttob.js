@@ -64,6 +64,7 @@ function ModernizationWorksStepsDetailsTtob(props) {
         target: "2",
         animated: true,
         type: "smoothstep",
+        style: { stroke: '#E74860' },
       },
       {
         id: "e2",
@@ -71,6 +72,7 @@ function ModernizationWorksStepsDetailsTtob(props) {
         target: "3",
         animated: true,
         type: "smoothstep",
+        style: { stroke: '#E74860' },
       },
       {
         id: "e3",
@@ -78,6 +80,7 @@ function ModernizationWorksStepsDetailsTtob(props) {
         target: "4",
         animated: true,
         type: "smoothstep",
+        style: { stroke: '#E74860' },
       },
     ]);
   });

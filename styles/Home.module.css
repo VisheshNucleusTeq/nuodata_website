@@ -166,16 +166,17 @@
   border-radius: 0.8rem;
 }
 
-
 .childDiv:hover {
   color: #fff;
   scale: 1.05;
   transition: all 1s ease;
-  border : 5px solid #e74860
+  border: 5px solid #e74860;
 }
 
 .textDiv,
 .imageDiv {
+  display: flex;
+  justify-content: center;
   height: 30vh;
   padding: 4%;
 }
@@ -218,6 +219,13 @@
 @media (max-width: 760px) {
   .mainEnterpriseChallenge h2 {
     font-size: 6vw;
+  }
+  .textDiv,
+  .imageDiv {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    padding: 4%;
   }
 }
 
@@ -286,72 +294,67 @@
   padding-left: 44%;
 }
 
-
-
-
-
 .chat:after {
-  content:'';
-  display:block;
-  width: 0; 
-  height: 0; 
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
   border-bottom: 15px solid white;
-  position:absolute;
-  bottom:-12px;
-
+  position: absolute;
+  bottom: -12px;
 }
 
 .chat:before {
-  content:'';
-  display:block;
-  width: 0; 
-  height: 0; 
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
   border-left: 17px solid transparent;
   border-right: 17px solid transparent;
   border-bottom: 17px solid #e74860;
-  position:absolute;
-  bottom:-15px
+  position: absolute;
+  bottom: -15px;
 }
 
-.chat.right:after,.chat.right:before {
-  rotate:45deg
+.chat.right:after,
+.chat.right:before {
+  rotate: 45deg;
 }
 .chat.right:before {
-  left:calc(75%);
-   border-bottom: 15px solid #e74860;
+  left: calc(75%);
+  border-bottom: 15px solid #e74860;
 }
 .chat.right:after {
-  left:calc(75% + 1px);
- 
+  left: calc(75% + 1px);
 }
 
-.chat.left:after,.chat.left:before {
-  rotate:-45deg
+.chat.left:after,
+.chat.left:before {
+  rotate: -45deg;
 }
 .chat.left:before {
-  right:calc(75%);
+  right: calc(75%);
 }
 .chat.left:after {
-  right:calc(75% + 1px);
-  border-bottom: 15px solid #FFF;
+  right: calc(75% + 1px);
+  border-bottom: 15px solid #fff;
 }
 
 .chat.left:hover:after {
-  right:calc(75% + 1px);
+  right: calc(75% + 1px);
   border-bottom: 15px solid #e74860;
   transition: all 1s ease;
   -webkit-transition: all 1s ease;
 }
 
 .chat.right:hover:after {
-  right:calc(75% + 1px);
+  right: calc(75% + 1px);
   border-bottom: 15px solid #e74860;
   transition: all 1s ease;
   -webkit-transition: all 1s ease;
 }
-
 
 /* MODERN */
 
@@ -399,8 +402,8 @@
 .platForm {
   background-color: #052b3b;
 }
-.platFormColBg{
-  background: url("../public/home/platform-gif.gif") no-repeat center center; 
+.platFormColBg {
+  background: url("../public/home/platform-gif.gif") no-repeat center center;
   background-size: 100% 100%;
   height: 100vh;
 }
@@ -409,12 +412,12 @@
   text-align: center;
 }
 
-.platForm h1 span{
+.platForm h1 span {
   text-align: center;
   font-size: 4vw;
   margin: 2% 0% 2% 0%;
   font-weight: bolder;
-  color: #FFF;
+  color: #fff;
   background-image: linear-gradient(#052b3b 75%, gray 100%);
 }
 
