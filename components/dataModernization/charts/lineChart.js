@@ -5,19 +5,13 @@ import "chart.js/auto";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = ({ complexityGraph, dataModernizationCss }) => {
-  // const labels = ["Very Complex", "Complex", "Medium", "Simple", "Trivial"];
-  const labels = ["Trivial", "Simple", "Medium", "Complex", "Very Complex"];
-
+const PieChart = ({ complexityGraph, dataModernizationCss, labels, data }) => {
   const [pieChart, setPieChart] = useState({
     labels,
     datasets: [
       {
         label: "Complexity",
-        data: labels.map((e) => {
-          let obj = complexityGraph?.find((o) => o.complexityType === e);
-          return obj && obj.count ? obj.count : 0;
-        }),
+        data: data,
         backgroundColor: [
           "rgba(116, 166, 192, 0.8)",
           "rgba(161, 242, 189, 0.6)",

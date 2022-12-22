@@ -6,8 +6,6 @@ import {
   Space,
   Card,
   message,
-  Modal,
-  Spin,
   Skeleton,
   Collapse,
   Button,
@@ -29,7 +27,11 @@ import {
   EyeOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
-import { SetTabTypeAction, SetAnalyzeDetailAction } from "../../Redux/action";
+import {
+  SetTabTypeAction,
+  SetAnalyzeDetailAction,
+  SetProjectTransformDetailsAction,
+} from "../../Redux/action";
 
 const AnalyzeDetail = ({
   dataModernizationCss,
@@ -94,7 +96,6 @@ const AnalyzeDetail = ({
 
   useEffect(() => {
     outputFiles.forEach((e) => {
-      console.log(e);
       if (e.fileType == "graph_src") {
         getGraphSrcDataApi(e.outputFileId);
       }
@@ -123,41 +124,150 @@ const AnalyzeDetail = ({
             title: "Transformation Type",
             dataIndex: "transformationType",
             key: "transformationType",
+            render: (value, row, index) => {
+              if (transformationSummary.length == index + 1) {
+                return (
+                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
+                    <span>{value}</span>
+                  </b>
+                );
+              } else {
+                return <span>{value}</span>;
+              }
+            },
           },
           {
             title: "Transformation Count",
             dataIndex: "transformationCount",
             key: "transformationCount",
+            render: (value, row, index) => {
+              if (transformationSummary.length == index + 1) {
+                return (
+                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
+                    <span>{value}</span>
+                  </b>
+                );
+              } else {
+                return <span>{value}</span>;
+              }
+            },
           },
           {
-            title: "Manual Effor Hours",
+            title: "Manual Effort Hours",
             dataIndex: "manualEfforHours",
             key: "manualEfforHours",
+            render: (value, row, index) => {
+              if (transformationSummary.length == index + 1) {
+                return (
+                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
+                    <span>
+                      {value} {value > 1 ? "Hours" : "Hour"}
+                    </span>
+                  </b>
+                );
+              } else {
+                return (
+                  <span>
+                    {value} {value > 1 ? "Hours" : "Hour"}
+                  </span>
+                );
+              }
+            },
           },
           {
             title: "Automated Effort Hours",
             dataIndex: "automatedEffortHours",
             key: "automatedEffortHours",
+            render: (value, row, index) => {
+              if (transformationSummary.length == index + 1) {
+                return (
+                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
+                    <span>
+                      {value} {value > 1 ? "Hours" : "Hour"}
+                    </span>
+                  </b>
+                );
+              } else {
+                return (
+                  <span>
+                    {value} {value > 1 ? "Hours" : "Hour"}
+                  </span>
+                );
+              }
+            },
           },
+          // {
+          //   title: "Manual Rate",
+          //   dataIndex: "manualRate",
+          //   key: "manualRate",
+          //   render: (value, row, index) => {
+          //     if(transformationSummary.length == (index + 1)){
+          //       return <b style={{color : "#0c3246", fontWeight : "bold"}}>$<span>{value}</span></b>;
+          //     }else{
+          //       return <span>${value}</span>;
+          //     }
+          //   },
+          // },
+          // {
+          //   title: "Automated Rate",
+          //   dataIndex: "automatedRate",
+          //   key: "automatedRate",
+          //   render: (value, row, index) => {
+          //     if(transformationSummary.length == (index + 1)){
+          //       return <b style={{color : "#0c3246", fontWeight : "bold"}}>$<span>{value}</span></b>;
+          //     }else{
+          //       return <span>${value}</span>;
+          //     }
+          //   },
+          // },
+
           {
-            title: "Manual Rate",
-            dataIndex: "manualRate",
-            key: "manualRate",
-          },
-          {
-            title: "Automated Rate",
-            dataIndex: "automatedRate",
-            key: "automatedRate",
+            title: "Hourly Unit Rate",
+            dataIndex: "hourlyUnitRate",
+            key: "hourlyUnitRate",
+            render: (value, row, index) => {
+              if (transformationSummary.length == index + 1) {
+                return (
+                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
+                    $<span>{value}</span>
+                  </b>
+                );
+              } else {
+                return <span>${value}</span>;
+              }
+            },
           },
           {
             title: "Manual Cost",
             dataIndex: "manualCost",
             key: "manualCost",
+            render: (value, row, index) => {
+              if (transformationSummary.length == index + 1) {
+                return (
+                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
+                    $<span>{value}</span>
+                  </b>
+                );
+              } else {
+                return <span>${value}</span>;
+              }
+            },
           },
           {
             title: "Automated Cost",
             dataIndex: "automatedCost",
             key: "automatedCost",
+            render: (value, row, index) => {
+              if (transformationSummary.length == index + 1) {
+                return (
+                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
+                    $<span>{value}</span>
+                  </b>
+                );
+              } else {
+                return <span>${value}</span>;
+              }
+            },
           },
         ]}
       />
@@ -366,31 +476,40 @@ const AnalyzeDetail = ({
               className={dataModernizationCss.analyzeMainDetails}
             >
               <Collapse ghost accordion>
-                {outputFiles.map((e, i) => {
-                  return (
-                    <Panel
-                    
-                      header={e.description}
-                      key={i}
-                      style={{ margin: "2% 0% 2% 0%" }}
-                      extra={e.fileType != "graph_src" && (
-                        <a
-                          target={"_blank"}
-                          href={`${DOWNLOADFILE}${e.outputFileId}`}
-                        >
-                          <Space
-                            size="middle"
-                            className={
-                              dataModernizationCss.downloadBtnSpace
-                            }
-                          >
-                            <DownloadOutlined /> Download
-                          </Space>
-                        </a>
-                      )}
-                    >
-                      <Row>
-                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                {outputFiles
+                  .filter(function (item) {
+                    return item.description !== "Transformation SQL";
+                  })
+                  .map((e, i) => {
+                    return (
+                      <Panel
+                        header={
+                          e.description === "Graph Source"
+                            ? "Source Graph"
+                            : e.description
+                        }
+                        key={i}
+                        style={{ margin: "2% 0% 2% 0%" }}
+                        extra={
+                          e.fileType != "graph_src" && (
+                            <a
+                              target={"_blank"}
+                              href={`${DOWNLOADFILE}${e.outputFileId}`}
+                            >
+                              <Space
+                                size="middle"
+                                className={
+                                  dataModernizationCss.downloadBtnSpace
+                                }
+                              >
+                                <DownloadOutlined /> Download
+                              </Space>
+                            </a>
+                          )
+                        }
+                      >
+                        <Row>
+                          {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                           {e.fileType != "graph_src" && (
                             <a
                               target={"_blank"}
@@ -407,26 +526,26 @@ const AnalyzeDetail = ({
                             </a>
                           )}
                         </Col> */}
-                        <Col
-                          xs={24}
-                          sm={24}
-                          md={24}
-                          lg={24}
-                          xl={24}
-                          xxl={24}
-                          className={dataModernizationCss.analyzeMainDetails}
-                        >
-                          {e.fileType === "analysis" && getAnalysisData(e)}
-                          {e.fileType === "graph_src" && getGraphSrcData(e)}
-                          {e.fileType === "transform_sql" &&
-                            getTransformSqlData(e)}
-                          {e.fileType === "source_ddl" && getSourceDdlData(e)}
-                          {e.fileType === "target_ddl" && getTargetDdlData(e)}
-                        </Col>
-                      </Row>
-                    </Panel>
-                  );
-                })}
+                          <Col
+                            xs={24}
+                            sm={24}
+                            md={24}
+                            lg={24}
+                            xl={24}
+                            xxl={24}
+                            className={dataModernizationCss.analyzeMainDetails}
+                          >
+                            {e.fileType === "analysis" && getAnalysisData(e)}
+                            {e.fileType === "graph_src" && getGraphSrcData(e)}
+                            {e.fileType === "transform_sql" &&
+                              getTransformSqlData(e)}
+                            {e.fileType === "source_ddl" && getSourceDdlData(e)}
+                            {e.fileType === "target_ddl" && getTargetDdlData(e)}
+                          </Col>
+                        </Row>
+                      </Panel>
+                    );
+                  })}
               </Collapse>
 
               {/* {outputFiles.map((e) => {
@@ -520,6 +639,9 @@ const AnalyzeDetail = ({
                   className={dataModernizationCss.nextBtn}
                   htmlType="submit"
                   onClick={() => {
+                    dispatch(
+                      SetProjectTransformDetailsAction({ analyzeDetailsId })
+                    );
                     dispatch(SetTabTypeAction("Transform"));
                   }}
                 >

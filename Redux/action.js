@@ -1,38 +1,50 @@
-import { LOGIN, PROJECT, CONNECT, TABTYPE,ANALYZEDETAIL } from './type';
+import {
+  LOGIN,
+  PROJECT,
+  CONNECT,
+  TABTYPE,
+  ANALYZEDETAIL,
+  PROJECTTRANSFORMDETAILS,
+} from "./type";
 
-export const UserDetails = data => dispatch => {
+export const UserDetails = (data) => (dispatch) => {
   dispatch({
     type: LOGIN,
-    payload: data
+    payload: data,
   });
 };
 
-export const SetProjectDetailsAction = data => dispatch => {
+export const SetProjectDetailsAction = (data) => (dispatch) => {
   dispatch({
     type: PROJECT,
     payload: data,
   });
-}
+};
 
-export const SetConnectDetailsAction = data => dispatch => {
+export const SetConnectDetailsAction = (data) => (dispatch) => {
   dispatch({
     type: CONNECT,
     payload: data,
   });
-}
+};
 
-
-
-export const SetTabTypeAction = data => dispatch => {
+export const SetTabTypeAction = (data) => (dispatch) => {
   dispatch({
     type: TABTYPE,
     payload: data,
   });
-}
+};
 
-export const SetAnalyzeDetailAction = data => dispatch => {
+export const SetAnalyzeDetailAction = (data) => (dispatch) => {
   dispatch({
     type: ANALYZEDETAIL,
     payload: data,
   });
-}
+};
+
+export const SetProjectTransformDetailsAction = (data) => (dispatch) => {
+  dispatch({
+    type: PROJECTTRANSFORMDETAILS,
+    payload: data,
+  });
+};

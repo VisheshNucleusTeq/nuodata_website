@@ -137,6 +137,8 @@
 
 .cardViewGraph {
   height: 40vh;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 .cardView ul li {
