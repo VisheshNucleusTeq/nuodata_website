@@ -1,9 +1,24 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Row, Col, Card, Carousel, Collapse, Space, Table, Modal } from "antd";
+import {
+  Row,
+  Col,
+  Card,
+  Carousel,
+  Collapse,
+  Space,
+  Table,
+  Modal,
+  Tag,
+} from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
-import { EyeOutlined, DownloadOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  DownloadOutlined,
+  CheckCircleOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 
 import { fetch_retry_get } from "../../network/api-manager";
@@ -43,7 +58,7 @@ const Transform = ({ dataModernizationCss }) => {
     setLoading(false);
     if (data.success) {
       setData(data?.data?.fileDetails);
-      setAnalyzeDetails({convertedFilesCount : 2, ...data?.data});
+      setAnalyzeDetails({ convertedFilesCount: 2, ...data?.data });
       setComplexityGraph(data?.data?.complexityGraph);
     } else {
       message.error([data?.error]);
@@ -150,9 +165,11 @@ const Transform = ({ dataModernizationCss }) => {
                       hours
                     </span>
                   </Card.Grid>
-                  <Card.Grid>Hours Saved</Card.Grid>
+                  <Card.Grid style={{ color: "#09bd21" }}>
+                    Hours Saved
+                  </Card.Grid>
                   <Card.Grid>
-                    <span>
+                    <span style={{ color: "#09bd21" }}>
                       {analyzeDetails && analyzeDetails.hoursSaved
                         ? parseFloat(analyzeDetails.hoursSaved).toFixed(2)
                         : "0"}{" "}
@@ -226,13 +243,15 @@ const Transform = ({ dataModernizationCss }) => {
                         <PieChart
                           complexityGraph={complexityGraph}
                           dataModernizationCss={dataModernizationCss}
-                          labels={[
-                            "Not Converted",
-                            "converted",
-                          ]}
+                          labels={["Not Converted", "converted"]}
                           data={[
-                            analyzeDetails.totalFiles - (analyzeDetails?.convertedFilesCount ? analyzeDetails.convertedFilesCount : 0),
-                            (analyzeDetails?.convertedFilesCount ? analyzeDetails.convertedFilesCount : 0),
+                            analyzeDetails.totalFiles -
+                              (analyzeDetails?.convertedFilesCount
+                                ? analyzeDetails.convertedFilesCount
+                                : 0),
+                            analyzeDetails?.convertedFilesCount
+                              ? analyzeDetails.convertedFilesCount
+                              : 0,
                           ]}
                         />
                       )}
@@ -273,6 +292,18 @@ const Transform = ({ dataModernizationCss }) => {
                         >
                           {" "}
                           <EyeOutlined /> View
+                          {i != 1 ? (
+                            <Tag icon={<CheckCircleOutlined />} color="success">
+                              {"Transformed Successfully"}
+                            </Tag>
+                          ) : (
+                            <Tag
+                              icon={<ExclamationCircleOutlined />}
+                              color="warning"
+                            >
+                              {"Transformation Pending"}
+                            </Tag>
+                          )}
                         </Space>
                       }
                     >

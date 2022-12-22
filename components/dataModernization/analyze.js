@@ -108,9 +108,9 @@ const Analyze = ({ dataModernizationCss }) => {
                   hours
                 </span>
               </Card.Grid>
-              <Card.Grid>Hours Saved</Card.Grid>
+              <Card.Grid style={{ color: "#09bd21" }}>Hours Saved</Card.Grid>
               <Card.Grid>
-                <span>
+                <span style={{ color: "#09bd21" }}>
                   {analyzeDetails && analyzeDetails.hoursSaved
                     ? parseFloat(analyzeDetails.hoursSaved).toFixed(2)
                     : "0"}{" "}
@@ -205,7 +205,7 @@ const Analyze = ({ dataModernizationCss }) => {
                     />
                   )}
                 </div>
-                
+
                 <div className={dataModernizationCss.cardViewGraph}>
                   {complexityGraph && (
                     <LineChart
@@ -237,7 +237,6 @@ const Analyze = ({ dataModernizationCss }) => {
                 <div className={dataModernizationCss.cardViewGraph}>
                   {complexityGraph && (
                     <PieChart
-                    
                       complexityGraph={complexityGraph}
                       dataModernizationCss={dataModernizationCss}
                       labels={[

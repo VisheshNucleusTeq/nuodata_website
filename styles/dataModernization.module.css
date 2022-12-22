@@ -1,8 +1,7 @@
-.projectName{
+.projectName {
   font-weight: bolder;
-  font-size:2vw;
+  font-size: 2vw;
   color: #e74860;
-  
 }
 
 .defineSteps {
@@ -36,12 +35,12 @@
 
 .defineForm {
   margin-top: 4%;
-  background-color: #FFF;
+  background-color: #fff;
   padding: 2%;
   border-radius: 10px;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-    background-color: #FFF;
+  background-color: #fff;
 }
 
 .nextExitBtn {
@@ -158,29 +157,26 @@
   0% {
     letter-spacing: 0px;
     transition: transform 300ms linear;
-
   }
   50% {
     letter-spacing: 1px;
   }
   100% {
     letter-spacing: 0px;
-    	transition: transform 300ms linear;
-
-
+    transition: transform 300ms linear;
   }
 }
 
 .transform h2 {
   font-size: 1.8vw;
   font-weight: bold;
-  color: #e74860;
+  color: #0c3246;
 }
 
 .transform h2 span {
-  color: #0c3246;
-  font-size:2vw !important;
-  padding: .5%;
+  color: #e74860;
+  font-size: 2vw !important;
+  padding: 0.5%;
 }
 
 .connectFileInput {
@@ -236,12 +232,11 @@
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
 }
 
-
 .analyzeMainDetails {
   margin: 1% 0% 1% 0%;
-  background-color: #FFF;
+  background-color: #fff;
 }
 
-.analyzeMainDetails .ant-collapse-header-text{
-    color: #e74860 !important;
+.analyzeMainDetails .ant-collapse-header-text {
+  color: #e74860 !important;
 }
