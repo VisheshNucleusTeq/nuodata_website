@@ -1,9 +1,16 @@
 import { combineReducers } from "redux";
-import { LOGIN, PROJECT, CONNECT, TABTYPE, ANALYZEDETAIL } from "./type";
+import {
+  LOGIN,
+  PROJECT,
+  CONNECT,
+  TABTYPE,
+  ANALYZEDETAIL,
+  PROJECTTRANSFORMDETAILS,
+} from "./type";
 // import { Storage } from "../Storage"
 import LocalData from "./LocalData";
 
-const user = LocalData.getData('authData')
+const user = LocalData.getData("authData");
 
 const initialState = user
   ? { isLogged: true, user }
@@ -13,7 +20,9 @@ const initialData = {
   projectDetails: {},
   connectDetails: {},
   tabType: "Define",
-  analyzeDetail : {}
+  analyzeDetail: {},
+  projectTransform: {},
+  projectTransformDetails: {},
 };
 
 export const userDetailReducer = (state = initialState, action) => {
@@ -77,10 +86,23 @@ export const analyzeDetailReducer = (state = initialData, action) => {
   }
 };
 
+export const projectTransformDetailsReducer = (state = initialData, action) => {
+  switch (action.type) {
+    case PROJECTTRANSFORMDETAILS:
+      return {
+        ...state,
+        projectTransformDetails: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   userDetails: userDetailReducer,
   projectDetails: projectDetailsReducer,
   connectDetail: connectDetailsReducer,
   tabType: tabTypeReducer,
   analyzeDetail: analyzeDetailReducer,
+  projectTransformDetails: projectTransformDetailsReducer,
 });

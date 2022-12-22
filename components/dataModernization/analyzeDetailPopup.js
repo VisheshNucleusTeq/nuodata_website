@@ -98,6 +98,8 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
         }}
       >
         <ReactFlow
+        panOnScroll 
+        
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}

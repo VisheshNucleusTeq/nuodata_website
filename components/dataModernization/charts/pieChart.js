@@ -5,13 +5,13 @@ import "chart.js/auto";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = ({ dataModernizationCss }) => {
+const PieChart = ({ complexityGraph, dataModernizationCss, labels, data }) => {
   const [pieChart, setPieChart] = useState({
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    labels: labels,
     datasets: [
       {
         label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
+        data: data,
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
@@ -39,7 +39,7 @@ const PieChart = ({ dataModernizationCss }) => {
         responsive: true,
         plugins: {
             legend: {
-              position: 'left',
+              position: 'top',
             }
           },
       }}

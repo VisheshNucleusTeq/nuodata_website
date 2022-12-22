@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Col, Table, Space, Card, message, Carousel } from "antd";
+import { Row, Col, Table, Space, Card, message, Carousel, Button } from "antd";
 import { useRouter } from "next/router";
 
 import { GETPROJECT, ANALYZESUMMARY } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
 import BarChart from "./charts/barChart";
 import LineChart from "./charts/lineChart";
+import PieChart from "./charts/pieChart";
 import AnalyzeDetail from "./analyzeDetail";
-import { SetProjectDetailsAction } from "../../Redux/action";
+import {
+  SetProjectDetailsAction,
+  SetTabTypeAction,
+  SetProjectTransformDetailsAction,
+} from "../../Redux/action";
 
 const Analyze = ({ dataModernizationCss }) => {
   const dispatch = useDispatch();
@@ -55,6 +60,16 @@ const Analyze = ({ dataModernizationCss }) => {
     <div className={dataModernizationCss.analyzeMain}>
       {analyze ? (
         <Row>
+          {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            <a
+              target={"_blank"}
+              href={`https://api.dev.nuodata.io/core/v1/download/outputfiles/${
+                query.id ? query.id : projectDetails.projectId
+              }`}
+            >
+              <p>Download </p>
+            </a>
+          </Col> */}
           <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
             <Card className={dataModernizationCss.cardView}>
               <Card.Grid>Total Files</Card.Grid>
@@ -75,22 +90,22 @@ const Analyze = ({ dataModernizationCss }) => {
                   ? analyzeDetails.mappings
                   : "0"}
               </Card.Grid>
-              <Card.Grid>Conversion</Card.Grid>
+              {/* <Card.Grid>Conversion</Card.Grid>
               <Card.Grid>
                 {analyzeDetails && analyzeDetails.conversions
                   ? analyzeDetails.conversions
                   : "0"}{" "}
                 %
-              </Card.Grid>
+              </Card.Grid> */}
               <Card.Grid>Manual Effort</Card.Grid>
               <Card.Grid>
-              <span>
-                {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
-                  ? parseFloat(analyzeDetails.manualEffortsEstimateHrs).toFixed(
-                      2
-                    )
-                  : "0"}{" "}
-                hours
+                <span>
+                  {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
+                    ? parseFloat(
+                        analyzeDetails.manualEffortsEstimateHrs
+                      ).toFixed(2)
+                    : "0"}{" "}
+                  hours
                 </span>
               </Card.Grid>
               <Card.Grid>Hours Saved</Card.Grid>
@@ -168,14 +183,82 @@ const Analyze = ({ dataModernizationCss }) => {
                     <BarChart
                       complexityGraph={complexityGraph}
                       dataModernizationCss={dataModernizationCss}
+                      labels={[
+                        "Trivial",
+                        "Simple",
+                        "Medium",
+                        "Complex",
+                        "Very Complex",
+                      ]}
+                      data={[
+                        "Trivial",
+                        "Simple",
+                        "Medium",
+                        "Complex",
+                        "Very Complex",
+                      ].map((e) => {
+                        let obj = complexityGraph?.find(
+                          (o) => o.complexityType === e
+                        );
+                        return obj && obj.count ? obj.count : 0;
+                      })}
                     />
                   )}
                 </div>
+                
                 <div className={dataModernizationCss.cardViewGraph}>
                   {complexityGraph && (
                     <LineChart
                       complexityGraph={complexityGraph}
                       dataModernizationCss={dataModernizationCss}
+                      labels={[
+                        "Trivial",
+                        "Simple",
+                        "Medium",
+                        "Complex",
+                        "Very Complex",
+                      ]}
+                      data={[
+                        "Trivial",
+                        "Simple",
+                        "Medium",
+                        "Complex",
+                        "Very Complex",
+                      ].map((e) => {
+                        let obj = complexityGraph?.find(
+                          (o) => o.complexityType === e
+                        );
+                        return obj && obj.count ? obj.count : 0;
+                      })}
+                    />
+                  )}
+                </div>
+
+                <div className={dataModernizationCss.cardViewGraph}>
+                  {complexityGraph && (
+                    <PieChart
+                    
+                      complexityGraph={complexityGraph}
+                      dataModernizationCss={dataModernizationCss}
+                      labels={[
+                        "Trivial",
+                        "Simple",
+                        "Medium",
+                        "Complex",
+                        "Very Complex",
+                      ]}
+                      data={[
+                        "Trivial",
+                        "Simple",
+                        "Medium",
+                        "Complex",
+                        "Very Complex",
+                      ].map((e) => {
+                        let obj = complexityGraph?.find(
+                          (o) => o.complexityType === e
+                        );
+                        return obj && obj.count ? obj.count : 0;
+                      })}
                     />
                   )}
                 </div>
@@ -227,6 +310,31 @@ const Analyze = ({ dataModernizationCss }) => {
                 ]}
                 dataSource={data}
               />
+            </div>
+            <div className={dataModernizationCss.nextExitBtn}>
+              <Button
+                type="primary"
+                danger
+                className={dataModernizationCss.nextBtn}
+                htmlType="submit"
+                onClick={() => {
+                  dispatch(SetProjectTransformDetailsAction({}));
+                  dispatch(SetTabTypeAction("Transform"));
+                }}
+              >
+                Transform
+              </Button>
+
+              <Button
+                type="primary"
+                danger
+                className={dataModernizationCss.exitBtn}
+                onClick={() => {
+                  router.push(`/dashboard`);
+                }}
+              >
+                Exit
+              </Button>
             </div>
           </Col>
         </Row>
