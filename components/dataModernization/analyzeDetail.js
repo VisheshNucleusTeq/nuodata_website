@@ -12,6 +12,8 @@ import {
   Divider,
 } from "antd";
 const { Panel } = Collapse;
+import { ArrowRightOutlined } from '@ant-design/icons';
+
 import { useDispatch } from "react-redux";
 
 import {
@@ -633,6 +635,19 @@ const AnalyzeDetail = ({
                 })} */}
 
               <div className={dataModernizationCss.nextExitBtn}>
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.nextBtn}
+                  htmlType="submit"
+                  onClick={() => {
+                    // dispatch(SetProjectTransformDetailsAction({ analyzeDetailsId }));
+                    dispatch(SetTabTypeAction("Design"));
+                  }}
+                  style={{ marginRight: "2%" }}
+                >
+                  Design Workflow <ArrowRightOutlined />
+                </Button>
                 <Button
                   type="primary"
                   danger

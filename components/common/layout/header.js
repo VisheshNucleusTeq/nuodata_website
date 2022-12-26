@@ -19,7 +19,7 @@ const items = [
         rel="noopener noreferrer"
         href="https://www.antgroup.com"
       >
-        1st menu item
+        Logout
       </a>
     ),
   },
@@ -52,7 +52,7 @@ const HeaderView = ({ layoutCss, ref }) => {
             <QuestionCircleOutlined style={{ fontSize: "18px" }} />
           </Menu.Item>
           <Menu.Item key="3">
-            <Divider style={{ "background-color": "gray" }} type="vertical" />
+            <Divider style={{ "backgroundColor": "gray" }} type="vertical" />
           </Menu.Item>
           <Menu.Item key="4">
             {userDetails && userDetails?.firstName && (

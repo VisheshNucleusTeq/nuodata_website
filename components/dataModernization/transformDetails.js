@@ -60,7 +60,7 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
     setModalData(datar);
     setTimeout(() => {
       setOpen(true);
-    }, 1000);
+    }, 10);
   };
 
   return (
@@ -81,7 +81,7 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
           <span>{analyzeDetail?.fileName}</span>
         </h2>
         <h2>
-          You saved <span>{analyzeDetail?.complexity?.hoursSaved} {analyzeDetail?.complexity?.hoursSaved > 1 ? "Hours" : "hour"}</span>
+          You saved <span>{parseFloat(analyzeDetail?.complexity?.hoursSaved).toFixed(2)} {parseFloat(analyzeDetail?.complexity?.hoursSaved).toFixed(2) > 1 ? "Hours" : "hour"}</span>
           of manual effort
         </h2>
       </Col>

@@ -48,12 +48,10 @@
   }
 }
 
-
-.ModernizationWorks{
+.ModernizationWorks {
   width: 100%;
   height: 100%;
 }
-
 
 .mainDivMW {
   width: 100%;
@@ -72,7 +70,7 @@
   font-size: 3vw;
   font-weight: bold;
   text-align: center;
-  background-image: linear-gradient(#FFF 75%, #0c3246 100%);
+  background-image: linear-gradient(#fff 75%, #0c3246 100%);
 }
 
 .enterpriseChallengeColTitle p {
@@ -83,7 +81,7 @@
 }
 
 .ModernizationWorksStepsDetails {
-  height: 60vh;
+  height: 40vh;
   margin-top: 10%;
 }
 
@@ -105,7 +103,7 @@
 
 @media (max-width: 600px) {
   .ModernizationWorksStepsDetails {
-    height: 70vh;
+    height: 50vh;
     margin-top: 10%;
   }
 
@@ -122,15 +120,13 @@
   .stepToDivDesktop {
     display: none;
   }
-  
+
   .stepToDivMobile {
     display: block;
   }
-  
 }
 
-
-.enterpriseChallengeColFooter{
+.enterpriseChallengeColFooter {
   display: flex;
   text-align: center;
   align-items: center;
@@ -140,10 +136,54 @@
   font-weight: bolder !important;
 }
 
-.enterpriseChallengeColFooterButton{
+.enterpriseChallengeColFooterButton {
+  transition: all 2s ease;
   width: 40%;
-  font-size: 20px;
   height: 50px;
-  border-radius: 50px;
+  border-radius: 20px;
   font-weight: bold;
+  color: #e74860;
+  font-size: large;
+  border: 1px solid #0c3246;
+}
+
+.enterpriseChallengeColFooterButton:hover {
+  transition: all 2s ease;
+  color: #e74860;
+  border: 1px solid #0c3246;
+  border-radius: 50px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.launchYourFreeTrial {
+  width: 50% !important;
+  height: 7vh;
+  border-radius: 10px;
+  font-size: large;
+  font-weight: bold;
+  color: #e74860 !important;
+  background-color: rgb(255, 255, 255, 0.2);
+}
+
+@media (max-width: 480px) {
+  .launchYourFreeTrial {
+    width: 80% !important;
+  }
+
+  .infoText h1 {
+    font-size: 10vw;
+  }
+
+  .infoText p {
+    font-size: 5vw;
+  }
+
+  .enterpriseChallengeColFooter {
+    font-size: 3vw;
+  }
+
+  .enterpriseChallengeColFooterButton {
+    width: 80%;
+  }
 }

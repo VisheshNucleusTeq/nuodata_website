@@ -240,3 +240,105 @@
 .analyzeMainDetails .ant-collapse-header-text {
   color: #e74860 !important;
 }
+
+.designMain {
+  /* border: 1px solid red; */
+  margin: 2% 0% 2% 0%;
+}
+
+.targetAttributeName {
+  background-color: #0c3246;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.targetAttributeName:hover {
+  background-color: #0c3246;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.validateTab{
+  margin: 2% 0% 2% 0%;
+}
+
+.validateTabFirst, .validateTabSecond{
+  height: 6vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: large;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+}
+
+.validateTabFirst:hover, .validateTabSecond:hover{
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+}
+
+.validateTabFirst{
+  background-color: #e74860;
+  border-right: 5px solid #f3f3f3;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+
+.validateTabSecond{
+  background-color: #0c3246;
+  border-left: 5px solid #f3f3f3;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+}
+
+
+.downloadData{
+  text-align: end;
+}
+
+.downloadData button{
+  height: 5vh;
+  border-radius: 10px;
+}
+
+/* 
+.uploadTestData {
+  width: 49%;
+  margin: 0.5%;
+  margin-top: 3%;
+  border-radius: 0px;
+  
+  transform: skewX(15deg);
+}
+
+.validate {
+    width: 49%;
+    margin: 0.5%;
+    margin-top: 3%;
+    border-radius: 0px;
+    
+    transform: skewX(15deg);
+    background-color: #0C3246 !important;
+    border: 1px solid #0C3246 !important;
+}
+
+.downloadData {
+  height: 70%;
+  margin: 1% 0px 1% 0px;
+  padding: 0.5% 2% 0.5% 2%;
+  border-radius: 10px;
+  border-color: #FAFAFA;
+  background-color: #FAFAFA;
+  color: #000000;
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.17);
+}
+
+
+
+.tab {
+  width: 100%;
+  margin: 2% 0px 2% 0px;
+  border-radius: 14px; 
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.17);
+} */

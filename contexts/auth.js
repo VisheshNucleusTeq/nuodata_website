@@ -8,11 +8,8 @@ export const ProtectRoute = ({ children }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userDetails.isLogged);
-  console.log(user)
 
-
-
-  const authPage = ["/", "/how-it-works", "/sign-in", "Sign_up"];
+  const authPage = ["/", "/how-it-works", "/sign-in", "/sign-up"];
   if (authPage.includes(router.pathname)) {
     return children;
   } else {

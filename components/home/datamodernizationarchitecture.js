@@ -1,5 +1,4 @@
-import { Col, Row, Button } from "antd";
-import { AnimationOnScroll } from "react-animation-on-scroll";
+import { Col, Row } from "antd";
 
 export default function DataModernizationArchitecture({ HomeCss }) {
   return (
@@ -19,16 +18,7 @@ export default function DataModernizationArchitecture({ HomeCss }) {
         </p>
       </Col>
       <Col offset={1} span={22} className={HomeCss.infoRowSystemView}>
-        <div className={HomeCss.infoRowSystemTextView}>
-          {/* <Image src="" /> */}
-          {/* <AnimationOnScroll animateIn="animate__zoomIn" animateOnce={true}>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s
-            </p>
-          </AnimationOnScroll> */}
-        </div>
+        <div className={HomeCss.infoRowSystemTextView} />
       </Col>
     </Row>
   );

@@ -10,6 +10,7 @@ import {
   Table,
   Modal,
   Tag,
+  message,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -23,9 +24,7 @@ import { useDispatch } from "react-redux";
 
 import { fetch_retry_get } from "../../network/api-manager";
 import { ANALYZESUMMARY, DESIGN } from "../../network/apiConstants";
-import BarChart from "./charts/barChart";
 import PieChart from "./charts/pieChart";
-import LineChart from "./charts/lineChart";
 import { DOWNLOADFILE } from "../../network/apiConstants";
 import AnalyzeDetailPopup from "./analyzeDetailPopup";
 import { SetProjectTransformDetailsAction } from "../../Redux/action";
@@ -61,7 +60,7 @@ const Transform = ({ dataModernizationCss }) => {
       setAnalyzeDetails({ convertedFilesCount: 2, ...data?.data });
       setComplexityGraph(data?.data?.complexityGraph);
     } else {
-      message.error([data?.error]);
+      message.error(data?.error ? [data?.error] : "Something went wrong.");
     }
   };
 
@@ -118,8 +117,10 @@ const Transform = ({ dataModernizationCss }) => {
               <h2>
                 You saved{" "}
                 <span>
-                  {analyzeDetails?.hoursSaved}{" "}
-                  {analyzeDetails?.hoursSaved > 1 ? "Hours" : "hour"}
+                  {parseFloat(analyzeDetails?.hoursSaved).toFixed(2)}{" "}
+                  {parseFloat(analyzeDetails?.hoursSaved).toFixed(2) > 1
+                    ? "Hours"
+                    : "hour"}
                 </span>
                 of manual effort
               </h2>
@@ -182,62 +183,6 @@ const Transform = ({ dataModernizationCss }) => {
               <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14} style={{}}>
                 <Card className={dataModernizationCss.cardViewGraphs}>
                   <Carousel autoplay draggable>
-                    {/* <div className={dataModernizationCss.cardViewGraph}>
-                      {complexityGraph && (
-                        <BarChart
-                          complexityGraph={complexityGraph}
-                          dataModernizationCss={dataModernizationCss}
-                          labels={[
-                            "Trivial",
-                            "Simple",
-                            "Medium",
-                            "Complex",
-                            "Very Complex",
-                          ]}
-                          data={[
-                            "Trivial",
-                            "Simple",
-                            "Medium",
-                            "Complex",
-                            "Very Complex",
-                          ].map((e) => {
-                            let obj = complexityGraph?.find(
-                              (o) => o.complexityType === e
-                            );
-                            return obj && obj.count ? obj.count : 0;
-                          })}
-                        />
-                      )}
-                    </div>
-
-                    <div className={dataModernizationCss.cardViewGraph}>
-                      {complexityGraph && (
-                        <LineChart
-                          complexityGraph={complexityGraph}
-                          dataModernizationCss={dataModernizationCss}
-                          labels={[
-                            "Trivial",
-                            "Simple",
-                            "Medium",
-                            "Complex",
-                            "Very Complex",
-                          ]}
-                          data={[
-                            "Trivial",
-                            "Simple",
-                            "Medium",
-                            "Complex",
-                            "Very Complex",
-                          ].map((e) => {
-                            let obj = complexityGraph?.find(
-                              (o) => o.complexityType === e
-                            );
-                            return obj && obj.count ? obj.count : 0;
-                          })}
-                        />
-                      )}
-                    </div> */}
-
                     <div className={dataModernizationCss.cardViewGraph}>
                       {complexityGraph && (
                         <PieChart

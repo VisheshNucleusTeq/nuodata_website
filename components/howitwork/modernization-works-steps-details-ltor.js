@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import ReactFlow, { useNodesState, useEdgesState, addEdge } from "reactflow";
+import ReactFlow from "reactflow";
 import { Image } from "antd";
 import "reactflow/dist/style.css";
 
-function ModernizationWorksStepsDetailsLtoR(props) {
+function ModernizationWorksStepsDetailsLtoR({data}) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [height, setHeight] = useState(0);
@@ -21,7 +21,7 @@ function ModernizationWorksStepsDetailsLtoR(props) {
         sourcePosition: "left",
         position: { x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 40, y: 0 },
         data: {
-          label: <Image src="/how_it_work/step.png" />,
+          label: <Image src={data?.image} />,
         },
       },
       {
@@ -32,35 +32,24 @@ function ModernizationWorksStepsDetailsLtoR(props) {
           x: 0,
           y: 0,
         },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
+        data: { label: <p style={{fontWeight : "bold"}}>{data?.first}</p> },
       },
-      {
-        className: "textBox",
-        id: "3",
-        targetPosition: "right",
-        position: {
-          x: 0,
-          y: 90,
-        },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
-      },
-
       {
         className: "textBox",
         id: "4",
         targetPosition: "right",
         position: {
           x: 0,
-          y: 210,
+          y: 160,
         },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
-      },
+        data: { label: <p style={{fontWeight : "bold"}}>{data?.second}</p> },
+      }
     ]);
 
     setEdges([
       { id: "e1", source: "1", target: "2", animated: true, style: { stroke: '#E74860' }, },
       { id: "e2", source: "1", target: "3", animated: true, style: { stroke: '#E74860' }, },
-      { id: "e3", source: "1", target: "4", animated: true, style: { stroke: '#E74860' }, },
+      { id: "e3", source: "1", target: "4", animated: true, style: { stroke: '#E74860' }, }
     ]);
   });
 

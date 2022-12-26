@@ -11,8 +11,8 @@ export default function Home() {
       <Info HomeCss={HomeCss} />
       <ThinkBig HomeCss={HomeCss} />
       <EnterpriseChallenge HomeCss={HomeCss} />
-      <DataModernizationArchitecture HomeCss={HomeCss} />
       <ModernizeWithConfidence HomeCss={HomeCss} />
+      <DataModernizationArchitecture HomeCss={HomeCss} />
       <Footer HomeCss={HomeCss} />
     </>
   );

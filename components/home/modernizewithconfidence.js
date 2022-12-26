@@ -1,6 +1,4 @@
 import { Col, Row } from "antd";
-import { AnimationOnScroll } from "react-animation-on-scroll";
-import { CaretDownOutlined } from '@ant-design/icons';
 
 export default function ModernizeWithConfidence({ HomeCss }) {
   return (
@@ -88,7 +86,7 @@ export default function ModernizeWithConfidence({ HomeCss }) {
               xxl={9}
               className={`${HomeCss.ModernData} ${HomeCss.chat} ${HomeCss.left}`}
             >
-              No redundancies or in-efficiencies
+              No redundancies
             </Col>
             <Col xs={1} sm={1} md={1} lg={2} xl={2} xxl={4}></Col>
           </Row>
@@ -108,7 +106,7 @@ export default function ModernizeWithConfidence({ HomeCss }) {
               xxl={9}
               className={`${HomeCss.ModernData} ${HomeCss.chat} ${HomeCss.right}`}
             >
-              6-10x faster time to market for new reports
+             Single version of truth
             </Col>
             <Col xs={1} sm={9} md={11} lg={11} xl={11} xxl={11}></Col>
           </Row>

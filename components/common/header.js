@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Col, Row, Menu, Image, Tag } from "antd";
-import { MenuOutlined, PhoneFilled } from "@ant-design/icons";
+import { MenuOutlined } from "@ant-design/icons";
+import Router, { useRouter } from "next/router";
+
 import HeaderCss from "../../styles/Header.module.css";
 
 export default function Header() {
   const [scrollY, setScrollY] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,7 +19,6 @@ export default function Header() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-    
   }, []);
 
   return (
@@ -39,34 +41,47 @@ export default function Header() {
             className={HeaderCss.menu}
             mode="horizontal"
             overflowedIndicator={
-              <MenuOutlined style={{ fontSize: "200%", color: "#f05829" }} />
+              <MenuOutlined style={{ fontSize: "200%", color: "#e74860" }} />
             }
-          >
-            <Menu.Item className={HeaderCss.hoverEffect} key="1">
-              Why NuoData?
-            </Menu.Item>
-            <Menu.Item className={HeaderCss.hoverEffect} key="2">
-              Data Modernization
-            </Menu.Item>
-            <Menu.Item className={HeaderCss.hoverEffect} key="3">
-              Data Management
-            </Menu.Item>
-
-            <Menu.Item key="5" className={HeaderCss.marginLeft}>
-              <Tag className={HeaderCss.tryNowTag} color="#E74860">
-                Try Now
-              </Tag>
-            </Menu.Item>
-            <Menu.Item key="6">
-              {/* <PhoneFilled
-                style={{ fontSize: "1.5em" }}
-                className={HeaderCss.phone}
-              /> */}
-              <Tag className={HeaderCss.tryNowTag} color="#E74860">
-                Contact Us
-              </Tag>
-            </Menu.Item>
-          </Menu>
+            items={[
+              {
+                key: "1",
+                label: "Why NuoData?",
+                className: HeaderCss.hoverEffect,
+                onClick: () => {
+                  Router.push("/sign-up");
+                  router.push("/sign-up");
+                },
+              },
+              {
+                key: "2",
+                label: "Data Modernization",
+                className: HeaderCss.hoverEffect,
+              },
+              {
+                key: "3",
+                label: "Data Management",
+                className: HeaderCss.hoverEffect,
+              },
+              {
+                key: "4",
+                label: (
+                  <Tag className={HeaderCss.tryNowTag} color="#E74860">
+                    Try Now
+                  </Tag>
+                ),
+                className: HeaderCss.marginLeft,
+              },
+              {
+                key: "5",
+                label: (
+                  <Tag className={HeaderCss.tryNowTag} color="#E74860">
+                    Contact Us
+                  </Tag>
+                ),
+              },
+            ]}
+          />
         </Col>
       </Row>
     </div>
