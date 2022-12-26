@@ -13,7 +13,7 @@ import { SetConnectDetailsAction, SetTabTypeAction } from "../../Redux/action";
 
 const Connect = ({ dataModernizationCss }) => {
   const dispatch = useDispatch();
-  const router = useRouter()
+  const router = useRouter();
 
   const [isLoading, setLoading] = useState(false);
   const [fileData, setFileData] = useState({});
@@ -161,7 +161,9 @@ const Connect = ({ dataModernizationCss }) => {
               type="primary"
               danger
               className={dataModernizationCss.exitBtn}
-              onClick={() => { router.push(`/dashboard`) }}
+              onClick={() => {
+                router.push(`/dashboard`);
+              }}
             >
               Exit
             </Button>

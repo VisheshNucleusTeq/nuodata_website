@@ -1,6 +1,4 @@
 import { Col, Row } from "antd";
-import { AnimationOnScroll } from "react-animation-on-scroll";
-import { CaretDownOutlined } from '@ant-design/icons';
 
 export default function ModernizeWithConfidence({ HomeCss }) {
   return (

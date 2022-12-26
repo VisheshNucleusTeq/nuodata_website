@@ -1,11 +1,8 @@
 import { Table, Space, Tooltip, Button } from "antd";
-import { ArrowRightOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 
-import {
-  SetTabTypeAction,
-  SetProjectTransformDetailsAction,
-} from "../../Redux/action";
+import { SetTabTypeAction } from "../../Redux/action";
 
 export default function Design({ dataModernizationCss }) {
   const dispatch = useDispatch();
@@ -88,9 +85,6 @@ export default function Design({ dataModernizationCss }) {
               key: "targetAttributeName",
               render: (_, record) => {
                 return (
-                  // <div className={`${dataModernizationCss.defineStep} ${dataModernizationCss.defineStepSelect}`}>
-                  //   Acct_name
-                  // </div>
                   <Button
                     type="default"
                     className={dataModernizationCss.targetAttributeName}
@@ -127,19 +121,18 @@ export default function Design({ dataModernizationCss }) {
       </div>
 
       <div className={dataModernizationCss.nextExitBtn}>
-        <Button
+        {/* <Button
           type="primary"
           danger
           className={dataModernizationCss.nextBtn}
           htmlType="submit"
           onClick={() => {
-            // dispatch(SetProjectTransformDetailsAction({ analyzeDetailsId }));
             dispatch(SetTabTypeAction("Design"));
           }}
           style={{ marginRight: "2%" }}
         >
           Design Workflow <ArrowRightOutlined />
-        </Button>
+        </Button> */}
 
         <Button
           type="primary"
@@ -147,8 +140,7 @@ export default function Design({ dataModernizationCss }) {
           className={dataModernizationCss.nextBtn}
           htmlType="submit"
           onClick={() => {
-            // dispatch(SetProjectTransformDetailsAction({ analyzeDetailsId }));
-            dispatch(SetTabTypeAction("Design"));
+            dispatch(SetTabTypeAction("Transform"));
           }}
         >
           Transform <ArrowRightOutlined />

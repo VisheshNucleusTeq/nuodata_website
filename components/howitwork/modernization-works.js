@@ -1,5 +1,4 @@
 import { Col, Row, Button, Image } from "antd";
-import ModernizationWorksSteps from "./modernization-works-steps";
 import ModernizationWorksStepsDetailsRtol from "./modernization-works-steps-details-rtol";
 import ModernizationWorksStepsDetailsLtoR from "./modernization-works-steps-details-ltor";
 import ModernizationWorksStepsDetailsTtob from "./modernization-works-steps-details-ttob";
@@ -11,22 +10,8 @@ export default function ModernizationWorks({ HowItWorkCss }) {
         <Col span={24} className={HowItWorkCss.enterpriseChallengeColTitle}>
           <div>
             <h1>Industry Leading Modernization</h1>
-            {/* <p>Select a step to dive deepe</p> */}
           </div>
         </Col>
-
-        {/* <Col offset={1} span={22} className={HowItWorkCss.stepToDivDesktop}>
-          <ModernizationWorksSteps
-            HowItWorkCss={HowItWorkCss}
-            direction={"horizontal"}
-          />
-        </Col>
-        <Col offset={1} span={22} className={HowItWorkCss.stepToDivMobile}>
-          <ModernizationWorksSteps
-            HowItWorkCss={HowItWorkCss}
-            direction={"vertical"}
-          />
-        </Col> */}
 
         <div
           style={{
@@ -44,12 +29,14 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                 firstImage: "define-red.png",
                 secondImage: "connect-red.png",
                 firstData: {
+                  image : "/how_it_work/image (3).png",
                   first:
                     "Create modernization projects at business unit level(s)",
                   second:
                     "Select any source and any target platform for your modernization",
                 },
                 secondData: {
+                  image : "/how_it_work/image (4).png",
                   first: "Connect with source platform(s)",
                   second: "Upload ETLs, & configuration files",
                 },
@@ -60,10 +47,12 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                 firstImage: "analyze-red.png",
                 secondImage: "design-red.png",
                 firstData: {
+                  image : "/how_it_work/image (7).png",
                   first: "Analyze workloads & transformations",
                   second: "Identify cost & effort savings",
                 },
                 secondData: {
+                  image : "/how_it_work/image (8).png",
                   first: "Create single version of truth",
                   second: "Optimize queries & ETLs with self service UI",
                 },
@@ -74,10 +63,12 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                 firstImage: "transform-red.png",
                 secondImage: "validate-red.png",
                 firstData: {
+                  image : "/how_it_work/image 11.png",
                   first: "Transform workloads to your choice of cloud",
                   second: "Optimize queries on target platform(s)",
                 },
                 secondData: {
+                  image : "/how_it_work/image (10).png",
                   first: "Self service validation of transformed workloads",
                   second: "UI driven workflow for QA",
                 },
@@ -86,6 +77,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                 firstHead: "Rollout",
                 firstImage: "rollout-red.png",
                 firstData: {
+                  image : "/how_it_work/step.png",
                   first: "Transform workloads to your choice of cloud",
                   second: "Optimize queries on target platform(s)",
                 },

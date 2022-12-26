@@ -10,7 +10,7 @@ import {
   Table,
   Modal,
   Tag,
-  message
+  message,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -24,9 +24,7 @@ import { useDispatch } from "react-redux";
 
 import { fetch_retry_get } from "../../network/api-manager";
 import { ANALYZESUMMARY, DESIGN } from "../../network/apiConstants";
-import BarChart from "./charts/barChart";
 import PieChart from "./charts/pieChart";
-import LineChart from "./charts/lineChart";
 import { DOWNLOADFILE } from "../../network/apiConstants";
 import AnalyzeDetailPopup from "./analyzeDetailPopup";
 import { SetProjectTransformDetailsAction } from "../../Redux/action";
@@ -119,8 +117,10 @@ const Transform = ({ dataModernizationCss }) => {
               <h2>
                 You saved{" "}
                 <span>
-                  {analyzeDetails?.hoursSaved}{" "}
-                  {analyzeDetails?.hoursSaved > 1 ? "Hours" : "hour"}
+                  {parseFloat(analyzeDetails?.hoursSaved).toFixed(2)}{" "}
+                  {parseFloat(analyzeDetails?.hoursSaved).toFixed(2) > 1
+                    ? "Hours"
+                    : "hour"}
                 </span>
                 of manual effort
               </h2>

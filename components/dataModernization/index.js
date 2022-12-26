@@ -1,15 +1,16 @@
 import dataModernizationCss from "../../styles/dataModernization.module.css";
-import { Button, Row, Col } from "antd";
-import { useState } from "react";
+
+import {  Row, Col } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
-import { SetTabTypeAction, SetProjectTransformDetailsAction } from "../../Redux/action";
 import Define from "./define";
 import Connect from "./connect";
 import Analyze from "./analyze";
 import Transform from "./transform";
-import Design from "./design"
-import Validate from "./validate"
+import Design from "./design";
+import Validate from "./validate";
+import { SetTabTypeAction, SetProjectTransformDetailsAction } from "../../Redux/action";
+
 
 export default function DataModernization() {
   const dispatch = useDispatch();

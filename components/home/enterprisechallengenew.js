@@ -2,7 +2,6 @@ import { Col, Row, Button, Image } from "antd";
 import { useRouter } from "next/router";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { RiseOutlined } from "@ant-design/icons";
-import Link from "next/link";
 import { useState } from "react";
 
 export default function EnterpriseChallenge({ HomeCss }) {

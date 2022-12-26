@@ -61,16 +61,6 @@ const Analyze = ({ dataModernizationCss }) => {
     <div className={dataModernizationCss.analyzeMain}>
       {analyze ? (
         <Row>
-          {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-            <a
-              target={"_blank"}
-              href={`https://api.dev.nuodata.io/core/v1/download/outputfiles/${
-                query.id ? query.id : projectDetails.projectId
-              }`}
-            >
-              <p>Download </p>
-            </a>
-          </Col> */}
           <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
             <Card className={dataModernizationCss.cardView}>
               <Card.Grid>Total Files</Card.Grid>
@@ -91,13 +81,6 @@ const Analyze = ({ dataModernizationCss }) => {
                   ? analyzeDetails.mappings
                   : "0"}
               </Card.Grid>
-              {/* <Card.Grid>Conversion</Card.Grid>
-              <Card.Grid>
-                {analyzeDetails && analyzeDetails.conversions
-                  ? analyzeDetails.conversions
-                  : "0"}{" "}
-                %
-              </Card.Grid> */}
               <Card.Grid>Manual Effort</Card.Grid>
               <Card.Grid>
                 <span>
@@ -118,61 +101,6 @@ const Analyze = ({ dataModernizationCss }) => {
                   hours
                 </span>
               </Card.Grid>
-
-              {/* <Row>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                  <ul style={{ listStyleType: "none" }}>
-                    <b>
-                      <li>Total Files</li>
-                      <li>Transformations</li>
-                      <li>Mappings</li>
-                      <li>Conversion</li>
-                      <li>Manual Effort</li>
-                      <li>Hours Saved</li>
-                    </b>
-                  </ul>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                  <ul style={{ listStyleType: "none" }}>
-                    <b>
-                      <li>
-                        {analyzeDetails && analyzeDetails.totalFiles
-                          ? analyzeDetails.totalFiles
-                          : "0"}
-                      </li>
-                      <li>
-                        {analyzeDetails && analyzeDetails.transformations
-                          ? analyzeDetails.transformations
-                          : "0"}
-                      </li>
-                      <li>
-                        {analyzeDetails && analyzeDetails.mappings
-                          ? analyzeDetails.mappings
-                          : "0"}
-                      </li>
-
-                      <li>
-                        {analyzeDetails && analyzeDetails.conversions
-                          ? analyzeDetails.conversions
-                          : "0"} %
-                      </li>
-                      <li>
-                        {analyzeDetails &&
-                        analyzeDetails.manualEffortsEstimateHrs
-                          ? analyzeDetails.manualEffortsEstimateHrs
-                          : "0"}{" "}
-                        hours
-                      </li>
-                      <li>
-                        {analyzeDetails && analyzeDetails.hoursSaved
-                          ? analyzeDetails.hoursSaved
-                          : "0"}{" "}
-                        hours
-                      </li>
-                    </b>
-                  </ul>
-                </Col>
-              </Row> */}
             </Card>
           </Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
@@ -265,6 +193,19 @@ const Analyze = ({ dataModernizationCss }) => {
               </Carousel>
             </Card>
           </Col>
+
+          <Col
+            xs={24}
+            sm={24}
+            md={24}
+            lg={24}
+            xl={24}
+            xxl={24}
+            className={`${dataModernizationCss.validateTab} ${dataModernizationCss.downloadData}`}
+          >
+            <Button type="default">Download all output .zip file</Button>
+          </Col>
+
           <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
             <div className={dataModernizationCss.analyzeMain}>
               <Table
@@ -318,7 +259,6 @@ const Analyze = ({ dataModernizationCss }) => {
                 className={dataModernizationCss.nextBtn}
                 htmlType="submit"
                 onClick={() => {
-                  // dispatch(SetProjectTransformDetailsAction({ analyzeDetailsId }));
                   dispatch(SetTabTypeAction("Design"));
                 }}
                 style={{ marginRight: "2%" }}

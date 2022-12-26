@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import ReactFlow, { useNodesState, useEdgesState, addEdge } from "reactflow";
+import ReactFlow from "reactflow";
 import { Image } from "antd";
 import "reactflow/dist/style.css";
 
@@ -43,18 +43,7 @@ function ModernizationWorksStepsDetailsTtob({data}) {
           y: width,
         },
         data: { label: <p style={{fontWeight : "bold"}}>{data?.second}</p> },
-      },
-
-      // {
-      //   className: "textBox",
-      //   id: "4",
-      //   targetPosition: "top",
-      //   position: {
-      //     x: 0,
-      //     y: width + 100,
-      //   },
-      //   data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
-      // },
+      }
     ]);
 
     setEdges([
@@ -81,7 +70,7 @@ function ModernizationWorksStepsDetailsTtob({data}) {
         animated: true,
         type: "smoothstep",
         style: { stroke: '#E74860' },
-      },
+      }
     ]);
   });
 

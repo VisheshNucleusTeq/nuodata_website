@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Button, Image } from "antd";
+import { Col, Row, Image } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 
