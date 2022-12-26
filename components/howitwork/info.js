@@ -10,7 +10,15 @@ export default function Info({ HowItWorkCss }) {
         <Row>
           <Col span={22} offset={1}>
             <Row className={HowItWorkCss.infoTextImage}>
-              <Col xs={24} sm={24} md={10} lg={10} xl={11} xxl={11} className={HowItWorkCss.infoText}>
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={24}
+                xl={11}
+                xxl={11}
+                className={HowItWorkCss.infoText}
+              >
                 <div>
                   <h1>
                     How it <span>Works ?</span>
@@ -22,8 +30,19 @@ export default function Info({ HowItWorkCss }) {
                     lowering risks and costs
                   </p>
                 </div>
+                <Button className={HowItWorkCss.launchYourFreeTrial}  block>
+                Launch your free trial
+                </Button>
               </Col>
-              <Col xs={24} sm={24} md={14} lg={14} xl={13} xxl={13} className={HowItWorkCss.infoImage}>
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={24}
+                xl={13}
+                xxl={13}
+                className={HowItWorkCss.infoImage}
+              >
                 <Image preview={false} src="/home/platform gif.gif" />
               </Col>
             </Row>

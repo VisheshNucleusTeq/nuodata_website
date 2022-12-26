@@ -60,7 +60,7 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
     setModalData(datar);
     setTimeout(() => {
       setOpen(true);
-    }, 1000);
+    }, 10);
   };
 
   return (

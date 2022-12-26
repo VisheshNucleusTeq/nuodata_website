@@ -10,6 +10,7 @@ import {
   Table,
   Modal,
   Tag,
+  message
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -61,7 +62,7 @@ const Transform = ({ dataModernizationCss }) => {
       setAnalyzeDetails({ convertedFilesCount: 2, ...data?.data });
       setComplexityGraph(data?.data?.complexityGraph);
     } else {
-      message.error([data?.error]);
+      message.error(data?.error ? [data?.error] : "Something went wrong.");
     }
   };
 
@@ -182,62 +183,6 @@ const Transform = ({ dataModernizationCss }) => {
               <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14} style={{}}>
                 <Card className={dataModernizationCss.cardViewGraphs}>
                   <Carousel autoplay draggable>
-                    {/* <div className={dataModernizationCss.cardViewGraph}>
-                      {complexityGraph && (
-                        <BarChart
-                          complexityGraph={complexityGraph}
-                          dataModernizationCss={dataModernizationCss}
-                          labels={[
-                            "Trivial",
-                            "Simple",
-                            "Medium",
-                            "Complex",
-                            "Very Complex",
-                          ]}
-                          data={[
-                            "Trivial",
-                            "Simple",
-                            "Medium",
-                            "Complex",
-                            "Very Complex",
-                          ].map((e) => {
-                            let obj = complexityGraph?.find(
-                              (o) => o.complexityType === e
-                            );
-                            return obj && obj.count ? obj.count : 0;
-                          })}
-                        />
-                      )}
-                    </div>
-
-                    <div className={dataModernizationCss.cardViewGraph}>
-                      {complexityGraph && (
-                        <LineChart
-                          complexityGraph={complexityGraph}
-                          dataModernizationCss={dataModernizationCss}
-                          labels={[
-                            "Trivial",
-                            "Simple",
-                            "Medium",
-                            "Complex",
-                            "Very Complex",
-                          ]}
-                          data={[
-                            "Trivial",
-                            "Simple",
-                            "Medium",
-                            "Complex",
-                            "Very Complex",
-                          ].map((e) => {
-                            let obj = complexityGraph?.find(
-                              (o) => o.complexityType === e
-                            );
-                            return obj && obj.count ? obj.count : 0;
-                          })}
-                        />
-                      )}
-                    </div> */}
-
                     <div className={dataModernizationCss.cardViewGraph}>
                       {complexityGraph && (
                         <PieChart

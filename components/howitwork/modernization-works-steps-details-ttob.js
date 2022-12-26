@@ -3,7 +3,7 @@ import ReactFlow, { useNodesState, useEdgesState, addEdge } from "reactflow";
 import { Image } from "antd";
 import "reactflow/dist/style.css";
 
-function ModernizationWorksStepsDetailsTtob(props) {
+function ModernizationWorksStepsDetailsTtob({data}) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [height, setHeight] = useState(0);
@@ -32,7 +32,7 @@ function ModernizationWorksStepsDetailsTtob(props) {
           x: 0,
           y: width-100,
         },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
+        data: { label: <p style={{fontWeight : "bold"}}>{data?.first}</p> },
       },
       {
         className: "textBox",
@@ -42,19 +42,19 @@ function ModernizationWorksStepsDetailsTtob(props) {
           x: 0,
           y: width,
         },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
+        data: { label: <p style={{fontWeight : "bold"}}>{data?.second}</p> },
       },
 
-      {
-        className: "textBox",
-        id: "4",
-        targetPosition: "top",
-        position: {
-          x: 0,
-          y: width + 100,
-        },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
-      },
+      // {
+      //   className: "textBox",
+      //   id: "4",
+      //   targetPosition: "top",
+      //   position: {
+      //     x: 0,
+      //     y: width + 100,
+      //   },
+      //   data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
+      // },
     ]);
 
     setEdges([

@@ -3,7 +3,7 @@ import ReactFlow, { useNodesState, useEdgesState, addEdge } from "reactflow";
 import { Image } from "antd";
 import "reactflow/dist/style.css";
 
-function ModernizationWorksStepsDetailsRtol(props) {
+function ModernizationWorksStepsDetailsRtol({data}) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [height, setHeight] = useState(0);
@@ -32,18 +32,18 @@ function ModernizationWorksStepsDetailsRtol(props) {
           x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 30,
           y: 0,
         },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
+        data: { label: <p style={{fontWeight : "bold"}}>{data?.first}</p> },
       },
-      {
-        className: "textBox",
-        id: "3",
-        targetPosition: "left",
-        position: {
-          x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 30,
-          y: 90,
-        },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
-      },
+      // {
+      //   className: "textBox",
+      //   id: "3",
+      //   targetPosition: "left",
+      //   position: {
+      //     x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 30,
+      //     y: 90,
+      //   },
+      //   data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
+      // },
 
       {
         className: "textBox",
@@ -51,9 +51,9 @@ function ModernizationWorksStepsDetailsRtol(props) {
         targetPosition: "left",
         position: {
           x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 30,
-          y: 210,
+          y: 160,
         },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
+        data: { label: <p style={{fontWeight : "bold"}}>{data?.second}</p> },
       },
     ]);
 

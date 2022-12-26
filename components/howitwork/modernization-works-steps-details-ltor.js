@@ -3,7 +3,7 @@ import ReactFlow, { useNodesState, useEdgesState, addEdge } from "reactflow";
 import { Image } from "antd";
 import "reactflow/dist/style.css";
 
-function ModernizationWorksStepsDetailsLtoR(props) {
+function ModernizationWorksStepsDetailsLtoR({data}) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [height, setHeight] = useState(0);
@@ -32,18 +32,18 @@ function ModernizationWorksStepsDetailsLtoR(props) {
           x: 0,
           y: 0,
         },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
+        data: { label: <p style={{fontWeight : "bold"}}>{data?.first}</p> },
       },
-      {
-        className: "textBox",
-        id: "3",
-        targetPosition: "right",
-        position: {
-          x: 0,
-          y: 90,
-        },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
-      },
+      // {
+      //   className: "textBox",
+      //   id: "3",
+      //   targetPosition: "right",
+      //   position: {
+      //     x: 0,
+      //     y: 90,
+      //   },
+      //   data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
+      // },
 
       {
         className: "textBox",
@@ -51,9 +51,9 @@ function ModernizationWorksStepsDetailsLtoR(props) {
         targetPosition: "right",
         position: {
           x: 0,
-          y: 210,
+          y: 160,
         },
-        data: { label: <p style={{fontWeight : "bold"}}>Analyzes workloads and identifies interdependencies</p> },
+        data: { label: <p style={{fontWeight : "bold"}}>{data?.second}</p> },
       },
     ]);
 

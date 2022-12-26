@@ -19,7 +19,7 @@ export default function ThinkBig({ HomeCss }) {
 
             <Col xs={24} sm={24} md={20} lg={20} xl={18} xxl={18}>
               <AnimationOnScroll
-                animateIn="animate__fadeInUp"
+                animateIn="animate__fadeInDown"
                 animateOnce={true}
               >
                 <h2>
@@ -32,10 +32,18 @@ export default function ThinkBig({ HomeCss }) {
               </AnimationOnScroll>
             </Col>
             <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} />
-
-            {/* <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} /> */}
+            
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-              <Image src="/home/ezgif.com-gif-maker (2).gif" preview={false} />
+              <Row style={{ margin: "4%" }}>
+                <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
+                <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
+                  <Image
+                    src="/home/ezgif.com-gif-maker (2).gif"
+                    preview={false}
+                  />
+                </Col>
+                <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
+              </Row>
             </Col>
 
             <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} />
@@ -43,7 +51,6 @@ export default function ThinkBig({ HomeCss }) {
               <AnimationOnScroll
                 animateIn="animate__fadeInUp"
                 animateOnce={true}
-                delay={0.3}
               >
                 <h2>
                   <span className={HomeCss.thinkBigChildIcon}>

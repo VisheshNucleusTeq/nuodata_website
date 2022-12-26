@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table, Space, Card, message, Carousel, Button } from "antd";
 import { useRouter } from "next/router";
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 import { GETPROJECT, ANALYZESUMMARY } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
@@ -317,11 +318,24 @@ const Analyze = ({ dataModernizationCss }) => {
                 className={dataModernizationCss.nextBtn}
                 htmlType="submit"
                 onClick={() => {
+                  // dispatch(SetProjectTransformDetailsAction({ analyzeDetailsId }));
+                  dispatch(SetTabTypeAction("Design"));
+                }}
+                style={{ marginRight: "2%" }}
+              >
+                Design Workflow <ArrowRightOutlined color="red" />
+              </Button>
+              <Button
+                type="primary"
+                danger
+                className={dataModernizationCss.nextBtn}
+                htmlType="submit"
+                onClick={() => {
                   dispatch(SetProjectTransformDetailsAction({}));
                   dispatch(SetTabTypeAction("Transform"));
                 }}
               >
-                Transform
+                Transform <ArrowRightOutlined />
               </Button>
 
               <Button

@@ -3,11 +3,13 @@ import { Button, Row, Col } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { SetTabTypeAction } from "../../Redux/action";
+import { SetTabTypeAction, SetProjectTransformDetailsAction } from "../../Redux/action";
 import Define from "./define";
 import Connect from "./connect";
 import Analyze from "./analyze";
 import Transform from "./transform";
+import Design from "./design"
+import Validate from "./validate"
 
 export default function DataModernization() {
   const dispatch = useDispatch();
@@ -35,6 +37,7 @@ export default function DataModernization() {
             return (
               <Col
                 onClick={() => {
+                  dispatch(SetProjectTransformDetailsAction({}));
                   dispatch(SetTabTypeAction(data));
                 }}
                 xs={12}
@@ -63,9 +66,14 @@ export default function DataModernization() {
       {tabType === "Analyze" && (
         <Analyze dataModernizationCss={dataModernizationCss} />
       )}
-
+      {tabType === "Design" && (
+        <Design dataModernizationCss={dataModernizationCss} />
+      )}
       {tabType === "Transform" && (
         <Transform dataModernizationCss={dataModernizationCss} />
+      )}
+      {tabType === "Validate" && (
+        <Validate dataModernizationCss={dataModernizationCss} />
       )}
     </>
   );
