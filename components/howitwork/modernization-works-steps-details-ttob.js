@@ -3,7 +3,7 @@ import ReactFlow from "reactflow";
 import { Image } from "antd";
 import "reactflow/dist/style.css";
 
-function ModernizationWorksStepsDetailsTtob({data}) {
+function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [height, setHeight] = useState(0);
@@ -32,7 +32,7 @@ function ModernizationWorksStepsDetailsTtob({data}) {
           x: 0,
           y: width-100,
         },
-        data: { label: <p style={{fontWeight : "bold"}}>{data?.first}</p> },
+        data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.first}</p> },
       },
       {
         className: "textBox",
@@ -42,7 +42,7 @@ function ModernizationWorksStepsDetailsTtob({data}) {
           x: 0,
           y: width,
         },
-        data: { label: <p style={{fontWeight : "bold"}}>{data?.second}</p> },
+        data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.second}</p> },
       }
     ]);
 

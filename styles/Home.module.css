@@ -131,11 +131,11 @@
 
 @media (max-width: 480px) {
   .thinkBigChild h1:first-child {
-    font-size: 14vw;
+    font-size: 20vw;
   }
 
   .thinkBigChild h1:last-child {
-    font-size: 14vw;
+    font-size: 20vw;
   }
 
   .thinkBigChild h2 {
@@ -146,6 +146,184 @@
 /* THINK BIG */
 
 /* ENTERPRISE CHALLENGE */
+
+.ECmain {
+  background-color: #000000;
+}
+
+.mainEnterpriseChallengeDiv {
+  background: url("../public/home/enterpriseChallenge/output-onlinepngtools.png")
+    no-repeat center center;
+}
+
+.ECTitle {
+  width: 100%;
+  text-align: center;
+  font-size: 4vw;
+  margin: 2%;
+  font-weight: bolder;
+  color: #fff;
+}
+
+.ECTitle span {
+  background-image: linear-gradient(#000000 60%, #626262 50%);
+}
+
+.ECmainRow {
+  margin: 2% 0% 2% 0%;
+}
+
+.ECimageCol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ECColimage {
+  height: 18vh;
+}
+
+.ECnumberCol h1 {
+  font-size: 6vw;
+  font-weight: bolder;
+  color: #fff;
+  text-decoration: underline;
+  height: 100% !important;
+  display: flex;
+  align-items: center;
+}
+
+.ECtextCol h1 {
+  font-size: 3vw;
+  font-weight: bolder;
+  line-height: 120%;
+  color: #fff;
+}
+
+.mainEnterpriseChallengeDottedLine {
+  height: 15vh;
+  /* margin-top: 2%;
+  margin-bottom: 2%; */
+  background-image: linear-gradient(#514f4f 50%, black 50%);
+  background-position: right;
+  background-size: 2px 15px;
+  background-repeat: repeat-y;
+}
+
+.howNuoDataworksBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3% 0% 3% 0%;
+}
+
+.howNuoDataworksBtn button {
+  color: #e74860 !important;
+  font-weight: bolder;
+  font-size: 18px;
+  height: 8vh;
+  border-radius: 15px;
+  border: 1px solid #e74860 !important;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.howNuoDataworksBtn button:hover {
+  border: 2px solid #e74860 !important;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+
+@media (max-width: 1200px) {
+  .ECTitle {
+    font-size: 6vw;
+  }
+  .ECColimage {
+    height: 20vh;
+    padding-right: 5%;
+  }
+  .ECnumberCol h1 {
+    font-size: 8vw;
+  }
+  .ECtextCol h1 {
+    font-size: 4vw;
+  }
+}
+
+@media (max-width: 992px) {
+  .ECTitle {
+    font-size: 6vw;
+  }
+  .ECColimage {
+    height: 18vh;
+    padding-right: 5%;
+  }
+
+  .ECnumberCol h1 {
+    font-size: 10vw;
+  }
+
+  .ECtextCol h1 {
+    font-size: 5vw;
+  }
+
+  .mainEnterpriseChallengeDottedLine {
+    height: 14vh;
+  }
+}
+@media (max-width: 768px) {
+  .ECTitle {
+    font-size: 8vw;
+  }
+  .ECColimage {
+    height: 14vh;
+    padding-right: 5%;
+  }
+
+  .ECnumberCol h1 {
+    font-size: 14vw;
+  }
+
+  .ECtextCol h1 {
+    font-size: 5vw;
+  }
+  .mainEnterpriseChallengeDottedLine {
+    height: 12vh;
+  }
+  .ECmainRow {
+    margin: 5% 0% 5% 0%;
+  }
+}
+@media (max-width: 576px) {
+  .ECTitle {
+    font-size: 10vw;
+  }
+  .ECColimage {
+    height: 8vh;
+    padding-right: 5%;
+  }
+
+  .ECnumberCol h1 {
+    font-size: 18vw;
+  }
+
+  .ECtextCol h1 {
+    font-size: 8vw;
+    margin-top: 4vh;
+    text-align: center;
+  }
+
+  .ECimageCol {
+    justify-content: center;
+  }
+
+  .ECColimage {
+    height: 15vh !important;
+  }
+
+  .mainEnterpriseChallengeDottedLine {
+    height: 10vh;
+  }
+}
 
 /* .mainEnterpriseChallenge {
   background-color: #0c3246;
@@ -219,27 +397,6 @@
   font-size: 50px !important;
 }
 
-.howNuoDataworksBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2%;
-}
-
-.howNuoDataworksBtn button {
-  color: #e74860 !important;
-  font-weight: bolder;
-  font-size: 18px;
-  height: 8vh;
-  border-radius: 15px;
-  border: 1px solid #e74860 !important;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-.howNuoDataworksBtn button:hover {
-  border: 2px solid #e74860 !important;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-}
 
 @media (max-width: 760px) {
   .mainEnterpriseChallenge h2 {
@@ -254,11 +411,16 @@
   }
 } */
 
-.mainEnterpriseChallenge {
-  background-color: #0c3246;
+/* .mainEnterpriseChallenge {
+  background-color: #000000;
   display: flex;
   align-items: center;
   justify-content: left;
+}
+
+.mainEnterpriseChallengeDiv {
+  background: url("../public/home/enterpriseChallenge/output-onlinepngtools.png")
+    no-repeat center center;
 }
 
 .mainEnterpriseChallenge h2 {
@@ -271,29 +433,31 @@
 }
 
 .mainEnterpriseChallenge h2 span {
-  background-image: linear-gradient(#0c3246 60%, #626262 50%);
+  background-image: linear-gradient(#000000 60%, rgb(98, 98, 98, 0.5) 50%);
 }
 
 .enterpriseChallengeList {
-  margin: 4% 0% 4% 0%;
+  margin: 4vh 0% 4vh 0%;
 }
 
 .mainEnterpriseChallengeImageDiv {
   display: flex;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
 }
 
 .mainEnterpriseChallengeImage {
-  height: 30vh;
+  height: 100%;
 }
 
 .mainEnterpriseChallengeNumber {
-  font-size: 5vw !important;
+  font-size: 6vw !important;
   font-weight: bolder !important;
   margin: 0 !important;
   color: #fff;
   text-decoration: underline;
+  align-items: center;
+  display: flex;
 }
 
 .mainEnterpriseChallengeText {
@@ -301,16 +465,131 @@
   font-weight: bolder;
   margin: 0 !important;
   color: #fff;
-  text-decoration: none !important;
+  line-height: 120%;
 }
 
-.mainEnterpriseChallengeTextDiv :hover {
-  color: #e74860 !important;
+.mainEnterpriseChallengeDottedLine {
+  height: 20vh;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  background-image: linear-gradient(#514f4f 50%, black 50%);
+  background-position: left;
+  background-size: 2px 15px;
+  background-repeat: repeat-y;
 }
+
+.howNuoDataworksBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3% 0% 3% 0%;
+}
+
+.howNuoDataworksBtn button {
+  color: #e74860 !important;
+  font-weight: bolder;
+  font-size: 18px;
+  height: 8vh;
+  border-radius: 15px;
+  border: 1px solid #e74860 !important;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.howNuoDataworksBtn button:hover {
+  border: 2px solid #e74860 !important;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+
+@media (max-width: 1150px) {
+  .mainEnterpriseChallenge h2 {
+    font-size: 7vw;
+  }
+  .mainEnterpriseChallengeNumber {
+    font-size: 6vw !important;
+  }
+
+  .mainEnterpriseChallengeText {
+    font-size: 4vw;
+  }
+
+  .mainEnterpriseChallengeDottedLine {
+    height: 15vh;
+  }
+  .mainEnterpriseChallengeImage {
+    height: 90%;
+  }
+}
+@media (max-width: 760px) {
+  .mainEnterpriseChallenge h2 {
+    font-size: 8vw;
+  }
+  .mainEnterpriseChallengeNumber {
+    font-size: 10vw !important;
+  }
+
+  .mainEnterpriseChallengeText {
+    font-size: 6vw;
+  }
+
+  .mainEnterpriseChallengeDottedLine {
+    height: 12vh;
+  }
+  .mainEnterpriseChallengeImage {
+    height: 80%;
+  }
+}
+@media (max-width: 480px) {
+  .mainEnterpriseChallenge h2 {
+    font-size: 10vw;
+  }
+  .mainEnterpriseChallengeNumber {
+    font-size: 10vw !important;
+  }
+
+  .mainEnterpriseChallengeText {
+    font-size: 8vw;
+    font-weight: 500
+  }
+  .mainEnterpriseChallengeImage {
+    height: 70%;
+  }
+  .mainEnterpriseChallengeDottedLine {
+    height: 10vh;
+  }
+} */
 
 /* MODERN */
 
-.bgImage {
+.MWCText h1 {
+  color: #fff !important;
+  text-align: center;
+  font-size: 5vw;
+  font-weight: bolder;
+  margin-bottom: 20vh;
+  margin-top: 5vh;
+}
+
+.MWCText1 {
+  color: red !important;
+  transition: all 2s ease;
+  background: linear-gradient(135deg, #FFF 0%, #e74860 25%, #e74860 50%, #e74860 75%, #052b3b 100%);
+	background-size: 300%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: animated_text 5s ease-in-out forwards;
+	-moz-animation: animated_text 2s ease-in-out forwards;
+	-webkit-animation: animated_text 2s ease-in-out forwards;
+
+}
+
+@keyframes animated_text {
+	0% { background-position: 0px 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 10px 50%; }
+}
+
+/* .bgImage {
   background: url("../public/home/bg4.png") no-repeat center center;
   background-size: cover;
   text-align: center;
@@ -440,7 +719,7 @@
     height: 8vh;
     font-size: 14px;
   }
-}
+} */
 
 /* MODERN */
 

@@ -81,8 +81,8 @@
 }
 
 .ModernizationWorksStepsDetails {
-  height: 40vh;
-  margin-top: 10%;
+  height: 100%;
+  margin-top: 2%;
 }
 
 .stepToDivDesktop {
@@ -186,4 +186,9 @@
   .enterpriseChallengeColFooterButton {
     width: 80%;
   }
+}
+
+.textBoxText{
+  font-size: 1.5vw;
+  font-weight: bolder;
 }
