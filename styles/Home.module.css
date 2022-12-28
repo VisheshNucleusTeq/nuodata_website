@@ -12,45 +12,30 @@
 
 .infoRow {
   display: flex;
-  align-items: center;
   height: 100%;
+  align-items: center;
 }
 
 .infoRow h1 {
   color: #fff;
   font-weight: bold;
-  font-size: 3vw;
+  font-size: 5vw;
   text-transform: uppercase;
+  text-align: end;
 }
 
 .infoRow h1 span {
   color: #e74860;
 }
 
-.infoRowSystem {
-  display: block;
-}
-
-.infoRowMobile {
-  display: none;
-}
-
 @media (max-width: 1150px) {
   .mainDiv {
-    height: 70vh;
+    height: 60vh;
     background-size: cover;
   }
 
-  .infoRowSystem {
-    display: none;
-  }
-
-  .infoRowMobile {
-    display: block;
-  }
-
   .infoRow h1 {
-    font-size: 5vw;
+    font-size: 8vw;
     text-align: center;
   }
 }
@@ -83,56 +68,78 @@
 
 .thinkBigChild h1:first-child {
   color: #0c3246 !important;
-  font-size: 5vw;
+  font-size: 6vw;
   font-weight: bolder;
 }
 
 .thinkBigChild h1:last-child {
   color: #e74860 !important;
-  font-size: 5vw;
+  font-size: 6vw;
   font-weight: bolder;
   line-height: 0px;
 }
 
 .thinkBigChild h2 {
   color: #0c3246 !important;
-  font-size: 2.5vw !important;
+  font-size: 3vw !important;
   margin-top: 2%;
+  font-weight: bold;
 }
 
 .thinkBigChild h2 span {
-  font-weight: bold;
+  font-weight: bolder;
+  color: #e74860;
 }
 
 .thinkBigChildIcon {
   color: #e74860;
+  margin-right: 20px;
+  font-size: 2.5vw;
+}
+
+@media (max-width: 1150px) {
+  .thinkBigChild h1:first-child {
+    font-size: 10vw;
+  }
+
+  .thinkBigChild h1:last-child {
+    font-size: 10vw;
+  }
+
+  .thinkBigChild h2 {
+    font-size: 6vw !important;
+  }
+
+  .thinkBigMainDiv {
+    margin: 2% 0% 2% 0%;
+  }
 }
 
 @media (max-width: 760px) {
   .thinkBigChild h1:first-child {
-    font-size: 8vw;
+    font-size: 15vw;
   }
 
   .thinkBigChild h1:last-child {
-    font-size: 8vw;
+    font-size: 15vw;
   }
 
   .thinkBigChild h2 {
-    font-size: 4vw !important;
+    font-size: 8vw !important;
   }
 }
 
 @media (max-width: 480px) {
   .thinkBigChild h1:first-child {
-    font-size: 10vw;
+    font-size: 14vw;
   }
 
   .thinkBigChild h1:last-child {
-    font-size: 10vw;
+    font-size: 14vw;
   }
 
   .thinkBigChild h2 {
-    font-size: 5vw !important;
+    font-size: 8vw !important;
   }
 }
 
@@ -140,7 +147,7 @@
 
 /* ENTERPRISE CHALLENGE */
 
-.mainEnterpriseChallenge {
+/* .mainEnterpriseChallenge {
   background-color: #0c3246;
   display: flex;
   align-items: center;
@@ -157,7 +164,7 @@
 }
 
 .mainEnterpriseChallenge h2 span {
-  background-image: linear-gradient(#0c3246 75%, #fff 100%);
+  background-image: linear-gradient(#0c3246 60%, #626262 50%);
 }
 
 .childDiv {
@@ -189,8 +196,6 @@
   display: flex;
   justify-content: center;
   height: 30vh;
-  /* padding: 4%; */
-  /* border: 1px solid red; */
 }
 
 .textDiv {
@@ -247,6 +252,60 @@
     height:100%;
     padding: 4%;
   }
+} */
+
+.mainEnterpriseChallenge {
+  background-color: #0c3246;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.mainEnterpriseChallenge h2 {
+  width: 100%;
+  text-align: center;
+  font-size: 4vw;
+  margin: 2%;
+  font-weight: bolder;
+  color: #fff;
+}
+
+.mainEnterpriseChallenge h2 span {
+  background-image: linear-gradient(#0c3246 60%, #626262 50%);
+}
+
+.enterpriseChallengeList {
+  margin: 4% 0% 4% 0%;
+}
+
+.mainEnterpriseChallengeImageDiv {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.mainEnterpriseChallengeImage {
+  height: 30vh;
+}
+
+.mainEnterpriseChallengeNumber {
+  font-size: 5vw !important;
+  font-weight: bolder !important;
+  margin: 0 !important;
+  color: #fff;
+  text-decoration: underline;
+}
+
+.mainEnterpriseChallengeText {
+  font-size: 4vw;
+  font-weight: bolder;
+  margin: 0 !important;
+  color: #fff;
+  text-decoration: none !important;
+}
+
+.mainEnterpriseChallengeTextDiv :hover {
+  color: #e74860 !important;
 }
 
 /* MODERN */
@@ -382,7 +441,6 @@
     font-size: 14px;
   }
 }
-
 
 /* MODERN */
 

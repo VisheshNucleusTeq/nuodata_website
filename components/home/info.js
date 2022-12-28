@@ -9,8 +9,16 @@ export default function Info({ HomeCss }) {
       <Header />
       <div className={HomeCss.detailsDiv}>
         <Row className={HomeCss.infoRow}>
-          
-          <Col offset={2} span={10} className={HomeCss.infoRowSystem}>
+          <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
+          <Col
+            xs={20}
+            sm={20}
+            md={20}
+            lg={20}
+            xl={20}
+            xxl={20}
+            // className={HomeCss.infoRowSystem}
+          >
             <AnimationOnScroll
               initiallyVisible={true}
               animateIn="animate__fadeInRight"
@@ -18,23 +26,20 @@ export default function Info({ HomeCss }) {
               animateOnce={true}
             >
               <h1>
-                <span className={HomeCss.spanText}>One platform</span> for all
-                enterprise Data Modernization and Management needs
+                <span className={HomeCss.spanText}>ONE PLATFORM</span> FOR ALL
+                ENTERPRISE DATA <br />
+                <span className={HomeCss.spanText}>MODERNIZATION</span> &{" "}
+                <span className={HomeCss.spanText}>MANAGEMENT</span> NEEDS.
               </h1>
             </AnimationOnScroll>
           </Col>
+          <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
 
-          <Col offset={2} span={20} className={HomeCss.infoRowMobile}>
+          {/* <Col offset={2} span={20} className={HomeCss.infoRowMobile}>
             <h1>
-              <span>One platform</span> for all enterprise Data Modernization
-              and Management needs
+            <span className={HomeCss.spanText}>ONE PLATFORM</span> FOR ALL ENTERPRISE DATA <span className={HomeCss.spanText}>MODERNIZATION</span> & <span className={HomeCss.spanText}>MANAGEMENT</span> NEEDS.
             </h1>
-          </Col>
-
-          <Col offset={1} span={10} style={{ height: "100%" }} className={HomeCss.infoRowSystem}>
-            <ReactFlowInfo HomeCss={HomeCss} />
-          </Col>
-
+          </Col> */}
         </Row>
       </div>
     </div>

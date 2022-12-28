@@ -1,9 +1,30 @@
 import { Col, Row, Button, Image } from "antd";
+import { useState } from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
-import { RiseOutlined } from "@ant-design/icons";
-import Link from "next/link";
 
 export default function EnterpriseChallenge({ HomeCss }) {
+  const [EnterpriseChallenge] = useState([
+    {
+      image: "./home/enterpriseChallenge/image5.png",
+      text : "No SME knowledge to bridge source & target tech-stack"
+    },
+    {
+      image: "./home/enterpriseChallenge/image2.png",
+      text : "Time consuming & manual effort"
+    },
+    {
+      image: "./home/enterpriseChallenge/image3.png",
+      text : "Majority of the data & queries are redundant"
+    },
+    {
+      image: "./home/enterpriseChallenge/image4.png",
+      text : "Dumping everything on cloud is expensive"
+    },
+    {
+      image: "./home/enterpriseChallenge/image5.png",
+      text : "Maintainability in the target environment"
+    },
+  ]);
   return (
     <Row className={HomeCss.mainEnterpriseChallenge}>
       <h2>
@@ -15,273 +36,50 @@ export default function EnterpriseChallenge({ HomeCss }) {
           <span>Enterprise Challenges</span>
         </AnimationOnScroll>
       </h2>
+      {EnterpriseChallenge.map((e, i) => {
+        return (
+          <Col span={24} className={HomeCss.enterpriseChallengeList}>
+            <Row>
+              <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
 
-      <Col xs={22} sm={22} md={22} lg={20} xl={18} xxl={18}>
-        <AnimationOnScroll animateIn="animate__fadeInRight" animateOnce={true}>
-          <Row className={HomeCss.childDiv}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
-              <div className={HomeCss.textDiv}>
-                <h1>
-                  <span>1</span>
-                  <br />
-                  No SME knowledge to bridge source & target tech-stack
-                </h1>
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
-              <div className={HomeCss.imageDiv}>
+              <Col
+                xs={1}
+                sm={1}
+                md={1}
+                lg={6}
+                xl={6}
+                xxl={6}
+                className={HomeCss.mainEnterpriseChallengeImageDiv}
+              >
                 <Image
-                  height={"100%"}
+                  className={HomeCss.mainEnterpriseChallengeImage}
                   preview={false}
-                  src="./home/step1-white.png"
+                  src={e.image}
                 />
-              </div>
-            </Col>
-          </Row>
-        </AnimationOnScroll>
+              </Col>
 
-        <AnimationOnScroll animateIn="animate__fadeInLeft" animateOnce={true}>
-          <Row className={HomeCss.childDiv}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
-              <div className={HomeCss.textDiv}>
-                <h1>
-                  <span>2</span>
-                  <br />
-                  Time consuming, manual & error prone
+              <Col
+                xs={1}
+                sm={1}
+                md={1}
+                lg={14}
+                xl={14}
+                xxl={14}
+                className={HomeCss.mainEnterpriseChallengeTextDiv}
+              >
+                <h1 className={HomeCss.mainEnterpriseChallengeNumber}>
+                  {i + 1} &nbsp; &nbsp;
                 </h1>
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
-              <div className={HomeCss.imageDiv}>
-                <Image
-                  // width={"60%"}
-                  height={"100%"}
-                  preview={false}
-                  src="./home/step2-white.png"
-                />
-              </div>
-            </Col>
-          </Row>
-        </AnimationOnScroll>
+                <h1 className={HomeCss.mainEnterpriseChallengeText}>
+                  {e.text}
+                </h1>
+              </Col>
 
-        <AnimationOnScroll animateIn="animate__fadeInRight" animateOnce={true}>
-          <Row className={HomeCss.childDiv}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
-              <div className={HomeCss.textDiv}>
-                <h1>
-                  <span>3</span>
-                  <br />
-                  Majority of the data, ETL & queries are not used, redundant or
-                  duplicate
-                </h1>
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
-              <div className={HomeCss.imageDiv}>
-                <Image
-                  // width={"60%"}
-                  height={"100%"}
-                  preview={false}
-                  src="./home/step3-white.png"
-                />
-              </div>
-            </Col>
-          </Row>
-        </AnimationOnScroll>
-
-        <AnimationOnScroll animateIn="animate__fadeInLeft" animateOnce={true}>
-          <Row className={HomeCss.childDiv}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
-              <div className={HomeCss.textDiv}>
-                <h1>
-                  <span>4</span>
-                  <br />
-                  There is no merit in simply dumping the data to cloud
-                </h1>
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
-              <div className={HomeCss.imageDiv}>
-                <Image
-                  // width={"60%"}
-                  height={"100%"}
-                  preview={false}
-                  src="./home/step4-white.png"
-                />
-              </div>
-            </Col>
-          </Row>
-        </AnimationOnScroll>
-
-        <AnimationOnScroll animateIn="animate__fadeInRight" animateOnce={true}>
-          <Row className={HomeCss.childDiv}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
-              <div className={HomeCss.textDiv}>
-                <h1>
-                  <span>5</span>
-                  <br />
-                  Maintainability in the target environment
-                </h1>
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={12} xl={10} xxl={10}>
-              <div className={HomeCss.imageDiv}>
-                <Image
-                  // width={"60%"}
-                  height={"100%"}
-                  preview={false}
-                  src="./home/step5-white.png"
-                />
-              </div>
-            </Col>
-          </Row>
-        </AnimationOnScroll>
-      </Col>
-      <Col
-        xs={22}
-        sm={22}
-        md={22}
-        lg={20}
-        xl={18}
-        xxl={18}
-        className={HomeCss.howNuoDataworksBtn}
-      >
-        <Link prefetch href="/how-it-works">
-          <Button>
-            “Explore How NuoData works” <RiseOutlined />
-          </Button>
-        </Link>
-      </Col>
+              <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
+            </Row>
+          </Col>
+        );
+      })}
     </Row>
   );
 }
-
-// import { Col, Row, Button, Image } from "antd";
-// import { ArrowRightOutlined, CaretRightOutlined } from "@ant-design/icons";
-
-// export default function EnterpriseChallenge({ HomeCss }) {
-//   return (
-//     <Row style={{ height: "100%", backgroundColor : "#e74860" }}>
-//       <div className={HomeCss.enterpriseChallengeTitle}>
-//         <span>Enterprise Challenge</span>
-//       </div>
-
-//       <Col offset={2} span={20}>
-//         <Row className={HomeCss.enterpriseChallengeFirstRow}>
-//           <Col
-//             xs={24}
-//             sm={12}
-//             md={12}
-//             lg={8}
-//             xl={8}
-//             xxl={8}
-//             className={HomeCss.div}
-//           >
-//             <Row className={HomeCss.row}>
-//               <Col offset={1} span={16} className={HomeCss.number}>
-//                 1
-//               </Col>
-//               <Col offset={1} span={18} className={HomeCss.text}>
-//                 There is no merit in simply dumping the data to cloud
-//               </Col>
-
-//               <Col offset={2} span={2} className={HomeCss.icon}>
-//                 <ArrowRightOutlined />
-//               </Col>
-//             </Row>
-//           </Col>
-//           <Col
-//             xs={24}
-//             sm={12}
-//             md={12}
-//             lg={8}
-//             xl={8}
-//             xxl={8}
-//             className={HomeCss.div}
-//           >
-//             <Row className={HomeCss.row}>
-//               <Col offset={1} span={16} className={HomeCss.number}>
-//                 2
-//               </Col>
-//               <Col offset={1} span={18} className={HomeCss.text}>
-//                 There is no merit in simply dumping the data to cloud
-//               </Col>
-
-//               <Col offset={2} span={2} className={HomeCss.icon}>
-//                 <ArrowRightOutlined />
-//               </Col>
-//             </Row>
-//           </Col>
-//         </Row>
-//         <Row>
-//           <Col
-//             xs={24}
-//             sm={12}
-//             md={12}
-//             lg={8}
-//             xl={8}
-//             xxl={8}
-//             className={HomeCss.div}
-//           >
-//             <Row className={HomeCss.row}>
-//               <Col offset={1} span={16} className={HomeCss.number}>
-//                 3
-//               </Col>
-//               <Col offset={1} span={18} className={HomeCss.text}>
-//                 There is no merit in simply dumping the data to cloud
-//               </Col>
-
-//               <Col offset={2} span={2} className={HomeCss.icon}>
-//                 <ArrowRightOutlined />
-//               </Col>
-//             </Row>
-//           </Col>
-//           <Col
-//             xs={24}
-//             sm={12}
-//             md={12}
-//             lg={8}
-//             xl={8}
-//             xxl={8}
-//             className={HomeCss.div}
-//           >
-//             <Row className={HomeCss.row}>
-//               <Col offset={1} span={16} className={HomeCss.number}>
-//                 4
-//               </Col>
-//               <Col offset={1} span={18} className={HomeCss.text}>
-//                 There is no merit in simply dumping the data to cloud
-//               </Col>
-
-//               <Col offset={2} span={2} className={HomeCss.icon}>
-//                 <ArrowRightOutlined />
-//               </Col>
-//             </Row>
-//           </Col>
-//           <Col
-//             xs={24}
-//             sm={12}
-//             md={12}
-//             lg={8}
-//             xl={8}
-//             xxl={8}
-//             className={HomeCss.div}
-//           >
-//             <Row className={HomeCss.row}>
-//               <Col offset={1} span={16} className={HomeCss.number}>
-//                 5
-//               </Col>
-//               <Col offset={1} span={18} className={HomeCss.text}>
-//                 There is no merit in simply dumping the data to cloud
-//               </Col>
-
-//               <Col offset={2} span={2} className={HomeCss.icon}>
-//                 <ArrowRightOutlined />
-//               </Col>
-//             </Row>
-//           </Col>
-//         </Row>
-//       </Col>
-//     </Row>
-//   );
-// }
