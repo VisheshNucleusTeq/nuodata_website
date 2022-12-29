@@ -19,7 +19,7 @@ function ModernizationWorksStepsDetailsLtoR({data, HowItWorkCss}) {
         className: "textBoxMain",
         id: "1",
         sourcePosition: "left",
-        position: { x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 40, y: 0 },
+        position: { x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 45, y: 0 },
         data: {
           label: <Image src={data?.image} />,
         },
@@ -29,7 +29,7 @@ function ModernizationWorksStepsDetailsLtoR({data, HowItWorkCss}) {
         id: "2",
         targetPosition: "right",
         position: {
-          x: 0,
+          x: 50,
           y: 0,
         },
         data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.first}</p> },
@@ -40,7 +40,7 @@ function ModernizationWorksStepsDetailsLtoR({data, HowItWorkCss}) {
         targetPosition: "right",
         position: {
           x: 0,
-          y: 160,
+          y: 170,
         },
         data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.second}</p> },
       }

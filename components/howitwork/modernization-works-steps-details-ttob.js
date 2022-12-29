@@ -30,7 +30,7 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
         targetPosition: "top",
         position: {
           x: 0,
-          y: width-100,
+          y: width-80,
         },
         data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.first}</p> },
       },
@@ -40,7 +40,7 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
         targetPosition: "top",
         position: {
           x: 0,
-          y: width,
+          y: width + 40,
         },
         data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.second}</p> },
       }
@@ -75,7 +75,7 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
   });
 
   return (
-    <div ref={ref} style={{ height: "70vh" }}>
+    <div ref={ref} style={{ height: "100vh" }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
