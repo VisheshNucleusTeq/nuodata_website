@@ -88,7 +88,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                   {e.firstData && (
                     <Col
                       key={(Math.random() + 1).toString(36).substring(7)}
-                      offset={3}
+                      offset={1}
                       span={18}
                       className={HowItWorkCss.ModernizationWorksStepsDetails}
                     >
@@ -110,8 +110,8 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                   {e.secondHead && (
                     <Col
                       key={(Math.random() + 1).toString(36).substring(7)}
-                      offset={3}
-                      span={18}
+                      offset={1}
+                      span={22}
                       className={HowItWorkCss.ModernizationWorksStepsDetails}
                     >
                       <h1
@@ -197,8 +197,8 @@ export default function ModernizationWorks({ HowItWorkCss }) {
               return (
                 <>
                   <Col
-                    offset={3}
-                    span={18}
+                    offset={1}
+                    span={22}
                     className={HowItWorkCss.ModernizationWorksStepsDetails}
                   >
                     <h2

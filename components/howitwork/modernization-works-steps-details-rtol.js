@@ -29,7 +29,7 @@ function ModernizationWorksStepsDetailsRtol({data, HowItWorkCss}) {
         id: "2",
         targetPosition: "left",
         position: {
-          x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 30,
+          x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 40,
           y: 0,
         },
         data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.first}</p> },
@@ -39,7 +39,7 @@ function ModernizationWorksStepsDetailsRtol({data, HowItWorkCss}) {
         id: "4",
         targetPosition: "left",
         position: {
-          x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 30,
+          x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 35,
           y: 160,
         },
         data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.second}</p> },
