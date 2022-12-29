@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row, Image } from "antd";
-import { CaretRightOutlined } from "@ant-design/icons";
+import { StarFilled } from "@ant-design/icons";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 
 export default function ThinkBig({ HomeCss }) {
@@ -17,45 +17,45 @@ export default function ThinkBig({ HomeCss }) {
               </AnimationOnScroll>
             </Col>
 
-            <Col xs={24} sm={24} md={20} lg={20} xl={18} xxl={18}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={20} xxl={20}>
               <AnimationOnScroll
                 animateIn="animate__fadeInDown"
                 animateOnce={true}
               >
                 <h2>
-                  <span className={HomeCss.thinkBigChildIcon}>
-                    <CaretRightOutlined />
-                  </span>
+                  {/* <span className={HomeCss.thinkBigChildIcon}>
+                    <StarFilled />
+                  </span> */}
                   Modernize your enterprise data from <span>ANY</span> source to{" "}
                   <span>ANY</span> cloud platform.
                 </h2>
               </AnimationOnScroll>
             </Col>
-            <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} />
-            
+            <Col xs={0} sm={0} md={0} lg={0} xl={4} xxl={4} />
+
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
               <Row style={{ margin: "4%" }}>
-                <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
-                <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
+                <Col xs={0} sm={0} md={0} lg={0} xl={2} xxl={2} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={20} xxl={20}>
                   <Image
                     src="/home/ezgif.com-gif-maker (2).gif"
                     preview={false}
                   />
                 </Col>
-                <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
+                <Col xs={0} sm={0} md={0} lg={0} xl={2} xxl={2} />
               </Row>
             </Col>
 
-            <Col xs={0} sm={0} md={4} lg={4} xl={6} xxl={6} />
-            <Col xs={24} sm={24} md={20} lg={20} xl={18} xxl={18}>
+            <Col xs={0} sm={0} md={0} lg={0} xl={4} xxl={4} />
+            <Col xs={24} sm={24} md={24} lg={24} xl={20} xxl={20}>
               <AnimationOnScroll
                 animateIn="animate__fadeInUp"
                 animateOnce={true}
               >
                 <h2>
-                  <span className={HomeCss.thinkBigChildIcon}>
-                    <CaretRightOutlined />
-                  </span>
+                  {/* <span className={HomeCss.thinkBigChildIcon}>
+                    <StarFilled />
+                  </span> */}
                   <span>Data Management</span> platform for all data
                   engineering, analytics & operations needs.
                 </h2>
