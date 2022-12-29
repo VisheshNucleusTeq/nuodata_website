@@ -571,22 +571,26 @@
 }
 
 .MWCText1 {
-  color: red !important;
+  /* color: red !important;
   transition: all 2s ease;
-  background: linear-gradient(135deg, #FFF 0%, #e74860 25%, #e74860 50%, #e74860 75%, #052b3b 100%);
+  background: linear-gradient(135deg, #FFF 0%, #FFF 25%, #e74860 50%, #e74860 75%, #052b3b 100%);
 	background-size: 300%;
 	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	-webkit-text-fill-color: transparent; */
 	animation: animated_text 5s ease-in-out forwards;
-	-moz-animation: animated_text 2s ease-in-out forwards;
-	-webkit-animation: animated_text 2s ease-in-out forwards;
+	-moz-animation: animated_text 5s ease-in-out forwards;
+	-webkit-animation: animated_text 5s ease-in-out forwards;
 
 }
 
 @keyframes animated_text {
 	0% { background-position: 0px 50%; }
 	50% { background-position: 100% 50%; }
-	100% { background-position: 10px 50%; }
+	100% { 
+  background: linear-gradient(135deg, #FFF 0%, #FFF 25%, #e74860 50%, #e74860 75%, #052b3b 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+   }
 }
 
 /* .bgImage {

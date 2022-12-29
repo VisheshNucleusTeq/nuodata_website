@@ -14,27 +14,27 @@ export default function ModernizeWithConfidence({ HomeCss }) {
 
   const [visibleData, setVisibleData] = useState(0);
 
-  const useIsInViewport = (ref) => {
-    const [isIntersecting, setIsIntersecting] = useState(false);
+  // const useIsInViewport = (ref) => {
+  //   const [isIntersecting, setIsIntersecting] = useState(false);
 
-    const observer = useMemo(
-      () =>
-        new IntersectionObserver(([entry]) =>
-          setIsIntersecting(entry.isIntersecting)
-        ),
-      []
-    );
+  //   const observer = useMemo(
+  //     () =>
+  //       new IntersectionObserver(([entry]) =>
+  //         setIsIntersecting(entry.isIntersecting)
+  //       ),
+  //     []
+  //   );
 
-    useEffect(() => {
-      observer.observe(ref.current);
+  //   useEffect(() => {
+  //     observer.observe(ref.current);
 
-      return () => {
-        observer.disconnect();
-      };
-    }, [ref, observer]);
-    console.log(isIntersecting)
-    return isIntersecting;
-  }
+  //     return () => {
+  //       observer.disconnect();
+  //     };
+  //   }, [ref, observer]);
+  //   console.log(isIntersecting)
+  //   return isIntersecting;
+  // }
 
   return (
     <div className={HomeCss.ECmain} style={{ marginTop: "2vh" }}>
@@ -56,12 +56,18 @@ export default function ModernizeWithConfidence({ HomeCss }) {
         {modernizeData.map((e, i) => {
           return (
             <AnimationOnScroll
-              animateIn="animate__fadeInUp"
+              // animateIn="animate__fadeInUp"
+              animateIn={
+                i % 2 ? "animate__fadeInUp" : "animate__fadeInUp"
+              }
+              animateOut={
+                i % 2 ? "animate__zoomOut" : "animate__zoomOut"
+              }
               animateOnce={false}
               style={{ width: "100%" }}
               afterAnimatedIn={() => {
-                // useIsInViewport(e.ref);
               }}
+              offset={400}
             >
               <Row ref={e.ref} style={{ width: "100%" }}>
                 <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
@@ -72,7 +78,7 @@ export default function ModernizeWithConfidence({ HomeCss }) {
                   lg={20}
                   xl={20}
                   xxl={20}
-                  className={`${HomeCss.MWCText} ${useIsInViewport(e.ref) ? HomeCss.MWCText1 : null}`}
+                  className={`${HomeCss.MWCText}`}
                 >
                   <h1>{e.text}</h1>
                 </Col>

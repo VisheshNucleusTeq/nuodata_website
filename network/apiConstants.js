@@ -12,3 +12,4 @@ export const ANALYZESUMMARY =
   "https://api.dev.nuodata.io/process/v1/analyze/summary/";
 export const DOWNLOADFILE = "https://api.dev.nuodata.io/core/v1/download/";
 export const DESIGN = "https://api.dev.nuodata.io/process/v1/design/";
+export const TARGET = "https://api.dev.nuodata.io/process/v1/target/";
