@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,900');
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,700,900");
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Poppins', sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .input {
@@ -34,22 +34,20 @@ body {
   display: flex;
 }
 
-
-.ant-select-dropdown-menu-item{
+.ant-select-dropdown-menu-item {
   line-height: 50px !important;
 }
 
-.ant-upload-select{
-  border : 1px dashed gray !important;
+.ant-upload-select {
+  border: 1px dashed gray !important;
   width: 40vw !important;
   height: 30vh !important;
   border-radius: 25px !important;
-} 
+}
 
-.ant-upload{
+.ant-upload {
   background-color: rgb(217, 217, 217);
   border-radius: 25px !important;
-
 }
 
 .ant-menu-horizontal,
@@ -105,8 +103,10 @@ body {
 }
 
 .textBoxMain {
-  background-color: #fff !important;
+  background-color: transparent !important;
   width: 45% !important;
+  border: 1px solid white;
+  border-radius: 10px;
 }
 
 .dataFlowNuoData {
@@ -122,8 +122,11 @@ body {
 }
 
 .textBox {
-  background-color: #fff !important;
-  width: 35% !important;
+  background-color: transparent !important;
+  width: 40% !important;
+  color: #fff;
+  border: 1px solid white;
+  border-radius: 10px;
 }
 
 .react-flow__attribution {
@@ -199,21 +202,21 @@ body {
   border-radius: 20px !important;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-    background-color: #FFF;
+  background-color: #fff;
 }
 
-.ant-table-thead th{
+.ant-table-thead th {
   color: #0c3246 !important;
   font-weight: bold !important;
 }
 
-.ant-collapse-header-text{
+.ant-collapse-header-text {
   color: #e74860 !important;
   font-weight: bolder;
   font-size: large;
 }
 
-.ant-collapse-expand-icon{
+.ant-collapse-expand-icon {
   color: #e74860 !important;
   font-weight: bolder;
   font-size: large;
@@ -221,13 +224,18 @@ body {
 
 @media (max-width: 600px) {
   .textBoxMain {
-    background-color: #fff !important;
+    background-color: transparent !important;
     width: 100% !important;
+    border: 1px solid white;
+    border-radius: 10px;
   }
 
   .textBox {
-    background-color: #fff !important;
-    width: 100% !important;
+    background-color: transparent !important;
+    width: 80% !important;
+    color: #fff;
+    border: 1px solid white;
+    border-radius: 10px;
   }
 }
 
