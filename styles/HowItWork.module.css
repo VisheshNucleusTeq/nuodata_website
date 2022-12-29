@@ -103,7 +103,7 @@
 
 @media (max-width: 600px) {
   .ModernizationWorksStepsDetails {
-    height:60vh;
+    height:100%;
     margin-top: 10%;
   }
 
@@ -191,11 +191,13 @@
 .textBoxText{
   font-size: 1.5vw;
   font-weight: bolder;
+  color: #fff !important;
 }
 
 @media (max-width: 600px) {
   .textBoxText{
     font-size: 4vw;
     font-weight: bolder;
+    color: #fff !important;
   }
 }
