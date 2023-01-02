@@ -2,15 +2,11 @@
 
 const nextConfig = {
   reactStrictMode: true,
-  // trailingSlash: true,
-  swcMinify : true,
-  async rewrites(){
-    return [
-      {
-        source : "/demo",
-        destination : "/demo/index.js"
-      }
-    ]
+  trailingSlash: true,
+  exportPathMap : function(){
+    return {
+      '/demo': { page: '/demo/index.html' }
+    }
   }
 };
 
