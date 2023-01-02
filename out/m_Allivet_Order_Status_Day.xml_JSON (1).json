@@ -1,0 +1,365 @@
+{
+    "Edges": [
+        {
+            "id": "e-0",
+            "source": "ALLIVET_ORDER_DAY",
+            "target": "SQ_Shortcut_to_ALLIVET_ORDER_DAY"
+        },
+        {
+            "id": "e-1",
+            "source": "ALLIVET_INVOICE_DAY",
+            "target": "SQ_Shortcut_to_ALLIVET_INVOICE_DAY"
+        },
+        {
+            "id": "e-2",
+            "source": "ALLIVET_SYSTEM_AUDIT_DAY",
+            "target": "SQ_Shortcut_to_ALLIVET_SYSTEM_AUDIT_DAY"
+        },
+        {
+            "id": "e-3",
+            "source": "SQ_Shortcut_to_ALLIVET_SYSTEM_AUDIT_DAY",
+            "target": "JNRTRANS"
+        },
+        {
+            "id": "e-4",
+            "source": "SQ_Shortcut_to_ALLIVET_ORDER_DAY",
+            "target": "JNRTRANS"
+        },
+        {
+            "id": "e-5",
+            "source": "JNRTRANS",
+            "target": "EXPTRANS1"
+        },
+        {
+            "id": "e-6",
+            "source": "EXPTRANS1",
+            "target": "JNRTRANS1"
+        },
+        {
+            "id": "e-7",
+            "source": "SQ_Shortcut_to_ALLIVET_INVOICE_DAY",
+            "target": "JNRTRANS1"
+        },
+        {
+            "id": "e-8",
+            "source": "JNRTRANS1",
+            "target": "Exp_Dates"
+        },
+        {
+            "id": "e-9",
+            "source": "Exp_Dates",
+            "target": "Srt_CHG_DT"
+        },
+        {
+            "id": "e-10",
+            "source": "Srt_CHG_DT",
+            "target": "Agg_Order_OrderLN"
+        },
+        {
+            "id": "e-11",
+            "source": "SQ_Shortcut_to_ALLIVET_ORDER_STATUS_DAY",
+            "target": "Jnr_Order_Status"
+        },
+        {
+            "id": "e-12",
+            "source": "Agg_Order_OrderLN",
+            "target": "Jnr_Order_Status"
+        },
+        {
+            "id": "e-13",
+            "source": "Jnr_Order_Status",
+            "target": "Exp_Update_Flag"
+        },
+        {
+            "id": "e-14",
+            "source": "Exp_Update_Flag",
+            "target": "Ftr_Insert_Update"
+        },
+        {
+            "id": "e-15",
+            "source": "Ftr_Insert_Update",
+            "target": "EXPTRANS"
+        },
+        {
+            "id": "e-16",
+            "source": "EXPTRANS",
+            "target": "UPDTRANS"
+        },
+        {
+            "id": "e-17",
+            "source": "UPDTRANS",
+            "target": "ALLIVET_ORDER_STATUS_DAY"
+        }
+    ],
+    "Nodes": [
+        {
+            "data": {
+                "label": "ALLIVET_ORDER_DAY",
+                "queries": [
+                    "df_3=spark.sql(\"\"\"SELECT ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nALLIVET_ORDER_DT AS ALLIVET_ORDER_DT FROM ALLIVET_ORDER_DAY_2\n WHERE \n( UPDATE_TSTMP >= current_date  \r\nOR LOAD_TSTMP >= current_date )\"\"\")",
+                    "df_3.createOrReplaceTempView(\"SQ_Shortcut_to_ALLIVET_ORDER_DAY_3\")"
+                ]
+            },
+            "id": "ALLIVET_ORDER_DAY",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "ALLIVET_INVOICE_DAY",
+                "queries": [
+                    "df_5=spark.sql(\"\"\"SELECT INVOICE_POSTING_DT AS INVOICE_POSTING_DT,\nALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR FROM ALLIVET_INVOICE_DAY_4\n WHERE \n(UPDATE_TSTMP >= current_date  \r\nOR LOAD_TSTMP >= current_date)\r\nAND \r\nlower(TXN_TYPE)='invoice'\"\"\")",
+                    "df_5.createOrReplaceTempView(\"SQ_Shortcut_to_ALLIVET_INVOICE_DAY_5\")"
+                ]
+            },
+            "id": "ALLIVET_INVOICE_DAY",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "ALLIVET_SYSTEM_AUDIT_DAY",
+                "queries": [
+                    "df_7=spark.sql(\"\"\"SELECT ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nOPERATION AS OPERATION,\nORDER_CHG_DT AS ORDER_CHG_DT FROM ALLIVET_SYSTEM_AUDIT_DAY_6\n WHERE \n( UPDATE_TSTMP >= current_date  OR \r\nLOAD_TSTMP >= current_date )\"\"\")",
+                    "df_7.createOrReplaceTempView(\"SQ_Shortcut_to_ALLIVET_SYSTEM_AUDIT_DAY_7\")"
+                ]
+            },
+            "id": "ALLIVET_SYSTEM_AUDIT_DAY",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "SQ_Shortcut_to_ALLIVET_SYSTEM_AUDIT_DAY",
+                "queries": [
+                    "df_8=spark.sql(\"\"\"SELECT DETAIL.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nDETAIL.OPERATION AS OPERATION,\nDETAIL.ORDER_CHG_DT AS ORDER_CHG_DT,\nMASTER.ALLIVET_ORDER_NBR1 AS ALLIVET_ORDER_NBR1,\nMASTER.ALLIVET_ORDER_DT AS ALLIVET_ORDER_DT,\nDETAIL.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nDETAIL.OPERATION AS OPERATION,\nDETAIL.ORDER_CHG_DT AS ORDER_CHG_DT,\nMASTER.ALLIVET_ORDER_NBR1 AS ALLIVET_ORDER_NBR1,\nMASTER.ALLIVET_ORDER_DT AS ALLIVET_ORDER_DT FROM SQ_Shortcut_to_ALLIVET_ORDER_DAY_3 MASTER  LEFT JOIN SQ_Shortcut_to_ALLIVET_SYSTEM_AUDIT_DAY_7 DETAIL  ON ALLIVET_ORDER_NBR1 = ALLIVET_ORDER_NBR\"\"\")",
+                    "df_8.createOrReplaceTempView(\"JNRTRANS_8\")"
+                ]
+            },
+            "id": "SQ_Shortcut_to_ALLIVET_SYSTEM_AUDIT_DAY",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "SQ_Shortcut_to_ALLIVET_ORDER_DAY",
+                "queries": [
+                    "df_8=spark.sql(\"\"\"SELECT DETAIL.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nDETAIL.OPERATION AS OPERATION,\nDETAIL.ORDER_CHG_DT AS ORDER_CHG_DT,\nMASTER.ALLIVET_ORDER_NBR1 AS ALLIVET_ORDER_NBR1,\nMASTER.ALLIVET_ORDER_DT AS ALLIVET_ORDER_DT,\nDETAIL.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nDETAIL.OPERATION AS OPERATION,\nDETAIL.ORDER_CHG_DT AS ORDER_CHG_DT,\nMASTER.ALLIVET_ORDER_NBR1 AS ALLIVET_ORDER_NBR1,\nMASTER.ALLIVET_ORDER_DT AS ALLIVET_ORDER_DT FROM SQ_Shortcut_to_ALLIVET_ORDER_DAY_3 MASTER  LEFT JOIN SQ_Shortcut_to_ALLIVET_SYSTEM_AUDIT_DAY_7 DETAIL  ON ALLIVET_ORDER_NBR1 = ALLIVET_ORDER_NBR\"\"\")",
+                    "df_8.createOrReplaceTempView(\"JNRTRANS_8\")"
+                ]
+            },
+            "id": "SQ_Shortcut_to_ALLIVET_ORDER_DAY",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "JNRTRANS",
+                "queries": [
+                    "df_9=spark.sql(\"\"\"SELECT OPERATION AS OPERATION,\nORDER_CHG_DT AS ORDER_CHG_DT,\nALLIVET_ORDER_DT AS ALLIVET_ORDER_DT,\nIIF(ISNULL(ALLIVET_ORDER_NBR),ALLIVET_ORDER_NBR1,ALLIVET_ORDER_NBR) AS ALLIVET_ORDER_NBR_New FROM JNRTRANS_8\"\"\")",
+                    "df_9.createOrReplaceTempView(\"EXPTRANS1_9\")"
+                ]
+            },
+            "id": "JNRTRANS",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "EXPTRANS1",
+                "queries": [
+                    "df_10=spark.sql(\"\"\"SELECT DETAIL.ALLIVET_ORDER_NBR_New AS ALLIVET_ORDER_NBR_New,\nDETAIL.OPERATION AS OPERATION,\nDETAIL.ORDER_CHG_DT AS ORDER_CHG_DT,\nDETAIL.ALLIVET_ORDER_DT AS ALLIVET_ORDER_DT,\nMASTER.INVOICE_POSTING_DT AS INVOICE_POSTING_DT,\nMASTER.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nDETAIL.ALLIVET_ORDER_NBR_New AS ALLIVET_ORDER_NBR_New,\nDETAIL.OPERATION AS OPERATION,\nDETAIL.ORDER_CHG_DT AS ORDER_CHG_DT,\nDETAIL.ALLIVET_ORDER_DT AS ALLIVET_ORDER_DT,\nMASTER.INVOICE_POSTING_DT AS INVOICE_POSTING_DT,\nMASTER.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR FROM SQ_Shortcut_to_ALLIVET_INVOICE_DAY_5 MASTER  LEFT JOIN EXPTRANS1_9 DETAIL  ON ALLIVET_ORDER_NBR = ALLIVET_ORDER_NBR_New\"\"\")",
+                    "df_10.createOrReplaceTempView(\"JNRTRANS1_10\")"
+                ]
+            },
+            "id": "EXPTRANS1",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "SQ_Shortcut_to_ALLIVET_INVOICE_DAY",
+                "queries": [
+                    "df_10=spark.sql(\"\"\"SELECT DETAIL.ALLIVET_ORDER_NBR_New AS ALLIVET_ORDER_NBR_New,\nDETAIL.OPERATION AS OPERATION,\nDETAIL.ORDER_CHG_DT AS ORDER_CHG_DT,\nDETAIL.ALLIVET_ORDER_DT AS ALLIVET_ORDER_DT,\nMASTER.INVOICE_POSTING_DT AS INVOICE_POSTING_DT,\nMASTER.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nDETAIL.ALLIVET_ORDER_NBR_New AS ALLIVET_ORDER_NBR_New,\nDETAIL.OPERATION AS OPERATION,\nDETAIL.ORDER_CHG_DT AS ORDER_CHG_DT,\nDETAIL.ALLIVET_ORDER_DT AS ALLIVET_ORDER_DT,\nMASTER.INVOICE_POSTING_DT AS INVOICE_POSTING_DT,\nMASTER.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR FROM SQ_Shortcut_to_ALLIVET_INVOICE_DAY_5 MASTER  LEFT JOIN EXPTRANS1_9 DETAIL  ON ALLIVET_ORDER_NBR = ALLIVET_ORDER_NBR_New\"\"\")",
+                    "df_10.createOrReplaceTempView(\"JNRTRANS1_10\")"
+                ]
+            },
+            "id": "SQ_Shortcut_to_ALLIVET_INVOICE_DAY",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "JNRTRANS1",
+                "queries": [
+                    "df_11=spark.sql(\"\"\"SELECT IIF(ISNULL(ALLIVET_ORDER_NBR),ALLIVET_ORDER_NBR1,ALLIVET_ORDER_NBR) AS ALLIVET_ORDER_NBR_New,\nORDER_CHG_DT AS ORDER_CHG_DT,\nALLIVET_ORDER_DT AS ALLIVET_ORDER_DT,\nIIF((INSTR(LTRIM(RTRIM(UPPER(OPERATION))),UPPER('ReSentToRPH'))>0 \r\nOR \r\nINSTR(LTRIM(RTRIM(UPPER(OPERATION))),UPPER('ReHold'))>0 \r\nOR \r\nLTRIM(RTRIM(OPERATION))=''),ORDER_CHG_DT,NULL) AS RX_HOLD_DT,\nIIF((INSTR(LTRIM(RTRIM(UPPER(OPERATION))),UPPER('PrintRxAndShippingLabel' ))>0 \r\nOR \r\nINSTR(LTRIM(RTRIM(UPPER(OPERATION))),UPPER('VoidInvoice'))>0),ORDER_CHG_DT,NULL) AS OPEN_DT,\nINVOICE_POSTING_DT\r\n--IIF((INSTR(LTRIM(RTRIM(UPPER(OPERATION))),UPPER('InsertInvoice'))>0),ORDER_CHG_DT,NULL) AS COMPLETE_DT,\nIIF((INSTR(LTRIM(RTRIM(UPPER(OPERATION))),UPPER('VoidSO'))>0),ORDER_CHG_DT,NULL) AS VOID_DT FROM JNRTRANS1_10\"\"\")",
+                    "df_11.createOrReplaceTempView(\"Exp_Dates_11\")"
+                ]
+            },
+            "id": "JNRTRANS1",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "Exp_Dates",
+                "queries": [
+                    "df_12=spark.sql(\"\"\"SELECT ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nORDER_CHG_DT AS ORDER_CHG_DT,\nRX_HOLD_DT AS RX_HOLD_DT,\nOPEN_DT AS OPEN_DT,\nCOMPLETE_DT AS COMPLETE_DT,\nVOID_DT AS VOID_DT,\nALLIVET_ORDER_DT AS ALLIVET_ORDER_DT FROM Exp_Dates_11 ORDER BY ALLIVET_ORDER_NBR ASC,\nORDER_CHG_DT ASC\"\"\")",
+                    "df_12.createOrReplaceTempView(\"Srt_CHG_DT_12\")"
+                ]
+            },
+            "id": "Exp_Dates",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "Srt_CHG_DT",
+                "queries": [
+                    "df_13=spark.sql(\"\"\"SELECT ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nMAX(RX_HOLD_DT) AS o_RX_HOLD_DT,\nMAX(OPEN_DT) AS o_OPEN_DT,\nMAX(COMPLETE_DT) AS o_COMPLETE_DT,\nMAX(VOID_DT) AS o_VOID_DT,\nMIN(ORDER_CHG_DT) AS o_ORDER_CHG_DT,\nmin(ALLIVET_ORDER_DT) AS o_ALLIVET_ORDER_DT FROM Srt_CHG_DT_12 GROUP BY ALLIVET_ORDER_NBR\"\"\")",
+                    "df_13.createOrReplaceTempView(\"Agg_Order_OrderLN_13\")"
+                ]
+            },
+            "id": "Srt_CHG_DT",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "SQ_Shortcut_to_ALLIVET_ORDER_STATUS_DAY",
+                "queries": [
+                    "df_14=spark.sql(\"\"\"SELECT DETAIL.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nDETAIL.o_RX_HOLD_DT AS o_RX_HOLD_DT,\nDETAIL.o_OPEN_DT AS o_OPEN_DT,\nDETAIL.o_COMPLETE_DT AS o_COMPLETE_DT,\nDETAIL.o_VOID_DT AS o_VOID_DT,\nDETAIL.o_ORDER_CHG_DT AS o_ORDER_CHG_DT,\nDETAIL.o_ALLIVET_ORDER_DT AS o_ALLIVET_ORDER_DT,\nMASTER.LKP_ALLIVET_ORDER_NBR AS LKP_ALLIVET_ORDER_NBR,\nMASTER.LKP_RX_HOLD_DT AS LKP_RX_HOLD_DT,\nMASTER.OPEN_DT AS LKP_OPEN_DT,\nMASTER.LKP_COMPLETE_DT AS LKP_COMPLETE_DT,\nMASTER.LKP_VOID_DT AS LKP_VOID_DT,\nMASTER.Lkp_LOAD_TSTMP AS Lkp_LOAD_TSTMP,\nDETAIL.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nDETAIL.o_RX_HOLD_DT AS o_RX_HOLD_DT,\nDETAIL.o_OPEN_DT AS o_OPEN_DT,\nDETAIL.o_COMPLETE_DT AS o_COMPLETE_DT,\nDETAIL.o_VOID_DT AS o_VOID_DT,\nDETAIL.o_ORDER_CHG_DT AS o_ORDER_CHG_DT,\nDETAIL.o_ALLIVET_ORDER_DT AS o_ALLIVET_ORDER_DT,\nMASTER.LKP_ALLIVET_ORDER_NBR AS LKP_ALLIVET_ORDER_NBR,\nMASTER.LKP_RX_HOLD_DT AS LKP_RX_HOLD_DT,\nMASTER.LKP_OPEN_DT AS LKP_OPEN_DT,\nMASTER.LKP_COMPLETE_DT AS LKP_COMPLETE_DT,\nMASTER.LKP_VOID_DT AS LKP_VOID_DT,\nMASTER.Lkp_LOAD_TSTMP AS Lkp_LOAD_TSTMP FROM SQ_Shortcut_to_ALLIVET_ORDER_STATUS_DAY_1 MASTER  LEFT JOIN Agg_Order_OrderLN_13 DETAIL  ON LKP_ALLIVET_ORDER_NBR = ALLIVET_ORDER_NBR\"\"\")",
+                    "df_14.createOrReplaceTempView(\"Jnr_Order_Status_14\")"
+                ]
+            },
+            "id": "SQ_Shortcut_to_ALLIVET_ORDER_STATUS_DAY",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "Agg_Order_OrderLN",
+                "queries": [
+                    "df_14=spark.sql(\"\"\"SELECT DETAIL.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nDETAIL.o_RX_HOLD_DT AS o_RX_HOLD_DT,\nDETAIL.o_OPEN_DT AS o_OPEN_DT,\nDETAIL.o_COMPLETE_DT AS o_COMPLETE_DT,\nDETAIL.o_VOID_DT AS o_VOID_DT,\nDETAIL.o_ORDER_CHG_DT AS o_ORDER_CHG_DT,\nDETAIL.o_ALLIVET_ORDER_DT AS o_ALLIVET_ORDER_DT,\nMASTER.LKP_ALLIVET_ORDER_NBR AS LKP_ALLIVET_ORDER_NBR,\nMASTER.LKP_RX_HOLD_DT AS LKP_RX_HOLD_DT,\nMASTER.OPEN_DT AS LKP_OPEN_DT,\nMASTER.LKP_COMPLETE_DT AS LKP_COMPLETE_DT,\nMASTER.LKP_VOID_DT AS LKP_VOID_DT,\nMASTER.Lkp_LOAD_TSTMP AS Lkp_LOAD_TSTMP,\nDETAIL.ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nDETAIL.o_RX_HOLD_DT AS o_RX_HOLD_DT,\nDETAIL.o_OPEN_DT AS o_OPEN_DT,\nDETAIL.o_COMPLETE_DT AS o_COMPLETE_DT,\nDETAIL.o_VOID_DT AS o_VOID_DT,\nDETAIL.o_ORDER_CHG_DT AS o_ORDER_CHG_DT,\nDETAIL.o_ALLIVET_ORDER_DT AS o_ALLIVET_ORDER_DT,\nMASTER.LKP_ALLIVET_ORDER_NBR AS LKP_ALLIVET_ORDER_NBR,\nMASTER.LKP_RX_HOLD_DT AS LKP_RX_HOLD_DT,\nMASTER.LKP_OPEN_DT AS LKP_OPEN_DT,\nMASTER.LKP_COMPLETE_DT AS LKP_COMPLETE_DT,\nMASTER.LKP_VOID_DT AS LKP_VOID_DT,\nMASTER.Lkp_LOAD_TSTMP AS Lkp_LOAD_TSTMP FROM SQ_Shortcut_to_ALLIVET_ORDER_STATUS_DAY_1 MASTER  LEFT JOIN Agg_Order_OrderLN_13 DETAIL  ON LKP_ALLIVET_ORDER_NBR = ALLIVET_ORDER_NBR\"\"\")",
+                    "df_14.createOrReplaceTempView(\"Jnr_Order_Status_14\")"
+                ]
+            },
+            "id": "Agg_Order_OrderLN",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "Jnr_Order_Status",
+                "queries": [
+                    "df_15=spark.sql(\"\"\"SELECT ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\no_ORDER_CHG_DT AS o_ORDER_CHG_DT,\no_ALLIVET_ORDER_DT AS o_ALLIVET_ORDER_DT,\n--IIF(ISNULL(Src_RX_HOLD_DT),LKP_RX_HOLD_DT,Src_RX_HOLD_DT)\r\n\r\n\r\nIIF( ISNULL (IIF( (ISNULL(Src_RX_HOLD_DT)  and Not isnull(o_ALLIVET_ORDER_DT)) , o_ALLIVET_ORDER_DT,Src_RX_HOLD_DT)),LKP_RX_HOLD_DT , IIF( (ISNULL(Src_RX_HOLD_DT)  and Not isnull(o_ALLIVET_ORDER_DT)) , o_ALLIVET_ORDER_DT,Src_RX_HOLD_DT)) AS o_RX_HOLD_DT,\nIIF(ISNULL(Src_OPEN_DT),LKP_OPEN_DT,Src_OPEN_DT) AS o_OPEN_DT,\nIIF(ISNULL(Src_COMPLETE_DT),LKP_COMPLETE_DT,Src_COMPLETE_DT) AS o_COMPLETE_DT,\nIIF(ISNULL(Src_VOID_DT),LKP_VOID_DT,Src_VOID_DT) AS o_VOID_DT,\nIIF(\r\nISNULL(Lkp_LOAD_TSTMP),SYSDATE,Lkp_LOAD_TSTMP) AS LOAD_TSTMP,\nSYSDATE AS UPDATE_TSTMP,\nIIF(( ISNULL(LKP_ALLIVET_ORDER_NBR) ),1,\r\n\r\nIIF ( NOT ( ISNULL(LKP_ALLIVET_ORDER_NBR)  ) \r\nAND (\r\n(IIF (ISNULL\r\n\t\t(IIF( ISNULL \r\n\t\t(IIF( (ISNULL(Src_RX_HOLD_DT)  \r\n\t\t\tand Not isnull(o_ALLIVET_ORDER_DT)) , o_ALLIVET_ORDER_DT,Src_RX_HOLD_DT)),LKP_RX_HOLD_DT , IIF( (ISNULL(Src_RX_HOLD_DT)  \r\n\t\t\t\tand Not isnull(o_ALLIVET_ORDER_DT)) , o_ALLIVET_ORDER_DT,Src_RX_HOLD_DT))),TO_DATE('9999-12-31','YYYY-MM-DD'),IIF( (ISNULL(Src_RX_HOLD_DT)  \r\nand Not isnull(o_ALLIVET_ORDER_DT)) , o_ALLIVET_ORDER_DT,Src_RX_HOLD_DT)) <> IIF(ISNULL(LKP_RX_HOLD_DT),TO_DATE('9999-12-31','YYYY-MM-DD'),LKP_RX_HOLD_DT) \r\n)\r\nOR \r\nIIF( ISNULL(Src_OPEN_DT),TO_DATE('9999-12-31','YYYY-MM-DD'),Src_OPEN_DT) <> IIF(ISNULL(LKP_OPEN_DT),TO_DATE('9999-12-31','YYYY-MM-DD'),LKP_OPEN_DT)\r\nOR \r\nIIF( ISNULL(Src_VOID_DT),TO_DATE('9999-12-31','YYYY-MM-DD'),Src_VOID_DT) <> IIF(ISNULL(LKP_VOID_DT),TO_DATE('9999-12-31','YYYY-MM-DD'),LKP_VOID_DT)\r\nOR \r\nIIF( ISNULL(Src_COMPLETE_DT),TO_DATE('9999-12-31','YYYY-MM-DD'),Src_COMPLETE_DT) <> IIF(ISNULL(LKP_COMPLETE_DT),TO_DATE('9999-12-31','YYYY-MM-DD'),LKP_COMPLETE_DT)),2,0)) AS UPDATE_FLAG FROM Jnr_Order_Status_14\"\"\")",
+                    "df_15.createOrReplaceTempView(\"Exp_Update_Flag_15\")"
+                ]
+            },
+            "id": "Jnr_Order_Status",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "Exp_Update_Flag",
+                "queries": [
+                    "df_16=spark.sql(\"\"\"SELECT ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\no_RX_HOLD_DT AS o_RX_HOLD_DT,\no_OPEN_DT AS o_OPEN_DT,\no_COMPLETE_DT AS o_COMPLETE_DT,\no_VOID_DT AS o_VOID_DT,\nLOAD_TSTMP AS LOAD_TSTMP,\nUPDATE_TSTMP AS UPDATE_TSTMP,\nUPDATE_FLAG AS UPDATE_FLAG,\no_ORDER_CHG_DT AS o_ORDER_CHG_DT,\no_ALLIVET_ORDER_DT AS o_ALLIVET_ORDER_DT FROM Exp_Update_Flag_15 WHERE IN(UPDATE_FLAG,1,2)\"\"\")",
+                    "df_16.createOrReplaceTempView(\"Ftr_Insert_Update_16\")"
+                ]
+            },
+            "id": "Exp_Update_Flag",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "Ftr_Insert_Update",
+                "queries": [
+                    "df_17=spark.sql(\"\"\"SELECT ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\no_OPEN_DT AS o_OPEN_DT,\no_COMPLETE_DT AS o_COMPLETE_DT,\no_VOID_DT AS o_VOID_DT,\nLOAD_TSTMP AS LOAD_TSTMP,\nUPDATE_TSTMP AS UPDATE_TSTMP,\nUPDATE_FLAG AS UPDATE_FLAG,\no_ALLIVET_ORDER_DT AS o_ALLIVET_ORDER_DT,\nIIF(UPDATE_FLAG=1,o_ALLIVET_ORDER_DT,o_RX_HOLD_DT)\r\n\r\n--IIF(UPDATE_FLAG=1,o_ORDER_CHG_DT,o_RX_HOLD_DT) AS o_RX_HOLD_DT1 FROM Ftr_Insert_Update_16\"\"\")",
+                    "df_17.createOrReplaceTempView(\"EXPTRANS_17\")"
+                ]
+            },
+            "id": "Ftr_Insert_Update",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "EXPTRANS",
+                "queries": [
+                    "df_18=spark.sql(\"\"\"SELECT ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\no_RX_HOLD_DT AS o_RX_HOLD_DT,\no_OPEN_DT AS o_OPEN_DT,\no_COMPLETE_DT AS o_COMPLETE_DT,\no_VOID_DT AS o_VOID_DT,\nLOAD_TSTMP AS LOAD_TSTMP,\nUPDATE_TSTMP AS UPDATE_TSTMP,\nUPDATE_FLAG AS UPDATE_FLAG FROM EXPTRANS_17 \"\"\")",
+                    "df_18.createOrReplaceTempView(\"UPDTRANS_18\")"
+                ]
+            },
+            "id": "EXPTRANS",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        },
+        {
+            "data": {
+                "label": "UPDTRANS",
+                "queries": [
+                    "spark.sql(\"\"\"INSERT INTO ALLIVET_ORDER_STATUS_DAY SELECT ALLIVET_ORDER_NBR AS ALLIVET_ORDER_NBR,\nRX_HOLD_DT AS RX_HOLD_DT,\nOPEN_DT AS OPEN_DT,\nCOMPLETE_DT AS COMPLETE_DT,\nVOID_DT AS VOID_DT,\nUPDATE_TSTMP AS UPDATE_TSTMP,\nLOAD_TSTMP AS LOAD_TSTMP FROM UPDTRANS_18\"\"\")"
+                ]
+            },
+            "id": "UPDTRANS",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "normalNode"
+        }
+    ]
+}
