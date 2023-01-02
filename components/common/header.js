@@ -57,6 +57,10 @@ export default function Header() {
                 key: "2",
                 label: "Data Modernization",
                 className: HeaderCss.hoverEffect,
+                onClick: () => {
+                  Router.push("/demo");
+                  router.push("/demo");
+                },
               },
               {
                 key: "3",
