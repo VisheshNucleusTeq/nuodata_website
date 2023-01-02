@@ -7,23 +7,23 @@ import Link from "next/link";
 export default function EnterpriseChallenge({ HomeCss }) {
   const [EnterpriseChallenge] = useState([
     {
-      image: "./home/enterpriseChallenge/12.png",
+      image: "/home/enterpriseChallenge/12.png",
       text: "No SME knowledge to bridge source & target tech-stack",
     },
     {
-      image: "./home/enterpriseChallenge/15.png",
+      image: "/home/enterpriseChallenge/15.png",
       text: "Time consuming & manual effort",
     },
     {
-      image: "./home/enterpriseChallenge/13.png",
+      image: "/home/enterpriseChallenge/13.png",
       text: "Majority of the data & queries are redundant",
     },
     {
-      image: "./home/enterpriseChallenge/11.png",
+      image: "/home/enterpriseChallenge/11.png",
       text: "Dumping everything on cloud is expensive",
     },
     {
-      image: "./home/enterpriseChallenge/14.png",
+      image: "/home/enterpriseChallenge/14.png",
       text: "Maintainability in the target environment",
     },
   ]);

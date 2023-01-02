@@ -15,11 +15,12 @@ import { ProtectRoute } from "../contexts/auth";
 function MyApp({ Component, pageProps }) {
   const [queryClient] = React.useState(() => new QueryClient());
   const router = useRouter();
-
-  // const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
-  // if (path) {
-  //   router.replace(path);
-  // } 
+  console.log(router.asPath)
+  const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
+  if (path) {
+    console.log(path)
+    router.replace(path);
+  } 
 
   return (
     <Provider store={store}>
