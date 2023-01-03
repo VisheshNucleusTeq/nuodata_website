@@ -13,7 +13,7 @@ export default function ModernizeWithConfidence({ HomeCss }) {
   ]);
 
   const [visibleData, setVisibleData] = useState(0);
-
+  const [innerWidth, setInnerWidth] = useState(400);
   // const useIsInViewport = (ref) => {
   //   const [isIntersecting, setIsIntersecting] = useState(false);
 
@@ -36,8 +36,15 @@ export default function ModernizeWithConfidence({ HomeCss }) {
   //   return isIntersecting;
   // }
 
+  useEffect(() => {
+    if(window && window?.innerWidth){
+      setInnerWidth( window?.innerWidth / 4)
+    }
+    
+  },[])
+
   return (
-    <div className={HomeCss.ECmain} style={{ marginTop: "2vh" }}>
+    <div className={HomeCss.ECmain}>
       <Row className={HomeCss.mainEnterpriseChallengeDiv}>
         <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
         <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
@@ -56,6 +63,7 @@ export default function ModernizeWithConfidence({ HomeCss }) {
         {modernizeData.map((e, i) => {
           return (
             <AnimationOnScroll
+            key={Math.random().toString(36).substring(2, 7)}
               // animateIn="animate__fadeInUp"
               animateIn={
                 i % 2 ? "animate__fadeInUp" : "animate__fadeInUp"
@@ -67,9 +75,9 @@ export default function ModernizeWithConfidence({ HomeCss }) {
               style={{ width: "100%" }}
               afterAnimatedIn={() => {
               }}
-              offset={400}
+              offset={innerWidth}
             >
-              <Row ref={e.ref} style={{ width: "100%" }}>
+              <Row ref={e.ref} className={`${HomeCss.MWCTextParent}`} >
                 <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
                 <Col
                   xs={20}

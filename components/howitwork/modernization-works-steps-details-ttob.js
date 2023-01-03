@@ -27,20 +27,20 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
       {
         className: "textBox",
         id: "2",
-        targetPosition: "left",
+        targetPosition: "right",
         position: {
-          x: 50,
-          y: width-150,
+          x: 40,
+          y: width-120,
         },
         data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.first}</p> },
       },
       {
         className: "textBox",
         id: "3",
-        targetPosition: "right",
+        targetPosition: "left",
         position: {
-          x: 40,
-          y: width + 20,
+          x: 30,
+          y: width + 50,
         },
         data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.second}</p> },
       }
@@ -75,7 +75,7 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
   });
 
   return (
-    <div ref={ref} style={{ height: "70vh" }}>
+    <div ref={ref} style={{ height: "65vh" }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
