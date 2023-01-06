@@ -4,12 +4,18 @@ import { AnimationOnScroll } from "react-animation-on-scroll";
 
 export default function ModernizeWithConfidence({ HomeCss }) {
   const [modernizeData, setModernizeData] = useState([
-    {text : "6-10x faster & 100% accurate conversion", ref : useRef(null)},
-    {text : "Data driven enterprise enabled through modern data lake", ref : useRef(null)},
-    {text : "Certified data for enterprise consumption", ref : useRef(null)},
-    {text : "No redundancies", ref : useRef(null)},
-    {text : "Single version of truth", ref : useRef(null)},
-    {text : "Enabling federation of data through self services", ref : useRef(null)},
+    { text: "6-10x faster & 100% accurate conversion", ref: useRef(null) },
+    {
+      text: "Data driven enterprise enabled through modern data lake",
+      ref: useRef(null),
+    },
+    { text: "Certified data for enterprise consumption", ref: useRef(null) },
+    { text: "No redundancies", ref: useRef(null) },
+    { text: "Single version of truth", ref: useRef(null) },
+    {
+      text: "Enabling federation of data through self services",
+      ref: useRef(null),
+    },
   ]);
 
   const [visibleData, setVisibleData] = useState(0);
@@ -37,11 +43,10 @@ export default function ModernizeWithConfidence({ HomeCss }) {
   // }
 
   useEffect(() => {
-    if(window && window?.innerWidth){
-      setInnerWidth( window?.innerWidth / 4)
+    if (window && window?.innerWidth) {
+      setInnerWidth(window?.innerWidth / 4);
     }
-    
-  },[])
+  }, []);
 
   return (
     <div className={HomeCss.ECmain}>
@@ -63,24 +68,16 @@ export default function ModernizeWithConfidence({ HomeCss }) {
         {modernizeData.map((e, i) => {
           return (
             <AnimationOnScroll
-            key={Math.random().toString(36).substring(2, 7)}
+              key={Math.random().toString(36).substring(2, 7)}
               // animateIn="animate__fadeInUp"
-              animateIn={
-                i % 2 ? "animate__fadeInUp" : "animate__fadeInUp"
-              }
-              animateOut={
-                i % 2 ? "animate__zoomOut" : "animate__zoomOut"
-              }
+              animateIn={i % 2 ? "animate__fadeInUp" : "animate__fadeInUp"}
+              animateOut={i % 2 ? "animate__zoomOut" : "animate__zoomOut"}
               animateOnce={false}
               style={{ width: "100%" }}
-              afterAnimatedIn={() => {
-                // e.ref.colorPicker.style.background = 'red';
-                // e.ref.current.style = {color : "red"}
-                // e.ref.current.style.setProperty('color', 'red','important');
-              }}
+              afterAnimatedIn={() => {}}
               offset={innerWidth}
             >
-              <Row  className={`${HomeCss.MWCTextParent}`} >
+              <Row className={`${HomeCss.MWCTextParent}`}>
                 <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
                 <Col
                   xs={20}
@@ -91,9 +88,25 @@ export default function ModernizeWithConfidence({ HomeCss }) {
                   xxl={20}
                   className={`${HomeCss.MWCText}`}
                 >
-                  <h1 ref={e.ref} >{e.text}</h1>
+                  <h1 ref={e.ref}>{e.text}</h1>
                 </Col>
                 <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
+
+                {modernizeData.length > i + 1 && (
+                  <>
+                    <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
+                    <Col
+                      xs={20}
+                      sm={20}
+                      md={20}
+                      lg={20}
+                      xl={20}
+                      xxl={20}
+                      style={{ borderBottom: "2px solid red" }}
+                    />
+                    <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
+                  </>
+                )}
               </Row>
             </AnimationOnScroll>
           );

@@ -232,10 +232,15 @@ body {
 
   .textBox {
     background-color: transparent !important;
-    width: 80% !important;
+    width: 100% !important;
     color: #fff;
     border: 1px solid white;
     border-radius: 10px;
+    height: 10vh;
+    display: flex;
+    text-align: center !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
 }
 
