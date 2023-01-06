@@ -27,9 +27,10 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
       {
         className: "textBox",
         id: "2",
-        targetPosition: "right",
+        targetPosition: "top",
+        sourcePosition:"bottom",
         position: {
-          x: 40,
+          x: 0,
           y: width-120,
         },
         data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.first}</p> },
@@ -37,10 +38,11 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
       {
         className: "textBox",
         id: "3",
-        targetPosition: "left",
+        targetPosition: "top",
+        sourcePosition:"top",
         position: {
-          x: 30,
-          y: width + 50,
+          x: 0,
+          y: width ,
         },
         data: { label: <p style={{fontWeight : "bold"}} className={HowItWorkCss.textBoxText}>{data?.second}</p> },
       }
@@ -57,25 +59,25 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
       },
       {
         id: "e2",
-        source: "1",
+        source: "2",
         target: "3",
         animated: true,
         type: "smoothstep",
         style: { stroke: '#E74860' },
       },
-      {
-        id: "e3",
-        source: "1",
-        target: "4",
-        animated: true,
-        type: "smoothstep",
-        style: { stroke: '#E74860' },
-      }
+      // {
+      //   id: "e3",
+      //   source: "1",
+      //   target: "4",
+      //   animated: true,
+      //   type: "smoothstep",
+      //   style: { stroke: '#E74860' },
+      // }
     ]);
   });
 
   return (
-    <div ref={ref} style={{ height: "65vh" }}>
+    <div ref={ref} style={{ height: "60vh" }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}

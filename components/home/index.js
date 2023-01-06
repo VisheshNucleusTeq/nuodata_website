@@ -18,7 +18,7 @@ export default function Home() {
         
       </div>
       <ModernizeWithConfidence HomeCss={HomeCss} />
-      <ModernizeWithConfidenceNew HomeCss={HomeCss} />
+      {/* <ModernizeWithConfidenceNew HomeCss={HomeCss} /> */}
       <DataModernizationArchitecture HomeCss={HomeCss} />
       <Footer HomeCss={HomeCss} />
     </>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Table, Space, Modal, Button } from "antd";
+import { Table, Space, Modal, Button, Input } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -133,31 +133,61 @@ export default function Design({ dataModernizationCss }) {
             },
             {
               title: "Target Table Plan",
-              dataIndex: "tableName",
+              // dataIndex: "tableName",
               key: "tableName",
+              render: (text, record, index) => (
+                <Input
+                  value={record.tableName}
+                  onChange={(e) => {
+                    const newData = [...data];
+                    newData[index]['tableName'] = e.target.value;
+                    setData(newData);
+                  }}
+                />
+              ),
             },
             {
               title: "Target Attribute Name",
-              key: "targetAttributeName",
-              render: (_, record) => {
-                return (
-                  <Button
-                    onClick={() => {
-                      setModelData(record);
-                      showModal()
-                    }}
-                    type="default"
-                    className={dataModernizationCss.targetAttributeName}
-                  >
-                    {record.columnName}
-                  </Button>
-                );
-              },
+              key: "columnName",
+              render: (text, record, index) => (
+                <Input
+                  value={record.columnName}
+                  onChange={(e) => {
+                    const newData = [...data];
+                    newData[index]['columnName'] = e.target.value;
+                    setData(newData);
+                  }}
+                />
+              ),
+              // render: (_, record) => {
+              //   return (
+              //     <Button
+              //       onClick={() => {
+              //         setModelData(record);
+              //         showModal()
+              //       }}
+              //       type="default"
+              //       className={dataModernizationCss.targetAttributeName}
+              //     >
+              //       {record.columnName}
+              //     </Button>
+              //   );
+              // },
             },
             {
               title: "Target Type",
-              dataIndex: "columnType",
+              // dataIndex: "columnType",
               key: "columnType",
+              render: (text, record, index) => (
+                <Input
+                  value={record.columnType}
+                  onChange={(e) => {
+                    const newData = [...data];
+                    newData[index]['columnType'] = e.target.value;
+                    setData(newData);
+                  }}
+                />
+              ),
             },
             {
               title: "Dependency & Lineage",
