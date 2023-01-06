@@ -3,7 +3,7 @@
 .space{
   background: url("../public/home/bg1.png") repeat center center;
   width: 100%;
-  height: 20vh;
+  height: 10vw;
   background-size: cover;
 }
 
@@ -38,7 +38,26 @@
   color: #e74860;
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 1200px) {
+  .mainDiv {
+    height: 70vh;
+  }
+}
+@media (max-width: 992px) {
+  .infoRow h1 {
+    font-size: 7vw;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+}
+@media (max-width: 576px) {
+  .infoRow h1 {
+    font-size: 8vw;
+  }
+}
+
+/* @media (max-width: 1150px) {
   .mainDiv {
     height: 60vh;
     background-size: cover;
@@ -54,7 +73,7 @@
   .infoRow h1 {
     font-size: 8vw;
   }
-}
+} */
 
 @keyframes zoom-in-zoom-out {
   0% {
@@ -258,7 +277,6 @@
     font-size: 4vw;
   }
 }
-
 @media (max-width: 992px) {
   .ECTitle {
     font-size: 6vw;
@@ -579,7 +597,7 @@
 }
 
 .MWCText h1 {
-  color: #fff !important;
+  color: #fff;
   text-align: center;
   font-size: 5vw;
   font-weight: bolder;
@@ -848,7 +866,9 @@
 .ECmainNew{
   height: 90vw;
   background-color: #123a50;
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ECmainNewChild{
@@ -856,15 +876,80 @@
   width: 80vw;
   clip-path: circle(50%);
   background-image: linear-gradient(to right, #07283B , #245772);
-  
 }
 
 .ECmainNewRow{
-  height: 13.33vw;
+  /* height: 13.33vw; */
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+}
+
+.textPos1{
+  height: 14vw;
+  margin-left: 30%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.textPos2{
+  height: 11vw;
+  margin-left: 15%;
   display: flex;
   align-items: center;
+}
+
+.textPos3{
+  height: 11vw;
+  margin-left: 10%;
+  display: flex;
+  align-items: center;
+}
+
+.textPos4{
+  height: 11vw;
+  margin-left: 10%;
+  display: flex;
+  align-items: center;
+}
+
+.textPos5{
+  height: 11vw;
+  margin-left: 15%;
+  display: flex;
+  align-items: center;
+}
+
+.textPos6{
+  height: 14vw;
+  margin-left: 30%;
+  display: flex;
+  align-items: center;
+}
+
+
+.ECmainNewChild h1{
+  color: #FFF;
+  font-size: 2.6vw;
+  /* padding-left: 10%;  */
+  text-align: center;
+}
+
+
+/* .ECmainNewRow{
+  height: 13.33vw;
+   display: flex;
+  align-items: center;
   justify-content: center;
-  border: 1px solid red;
+  border: 1px solid red; 
+}
+
+.textPos1{
+  border: 1px solid red !important;
+  height: 13.33vw;
+  margin-left: 25%;
+  display: flex;
+  align-items: center;
 }
 
 .ECmainNewChild h1{
@@ -872,4 +957,4 @@
   font-size: 2.5vw;
   padding-left: 10%;
   text-align: center;
-}
+} */

@@ -74,10 +74,13 @@ export default function ModernizeWithConfidence({ HomeCss }) {
               animateOnce={false}
               style={{ width: "100%" }}
               afterAnimatedIn={() => {
+                // e.ref.colorPicker.style.background = 'red';
+                // e.ref.current.style = {color : "red"}
+                // e.ref.current.style.setProperty('color', 'red','important');
               }}
               offset={innerWidth}
             >
-              <Row ref={e.ref} className={`${HomeCss.MWCTextParent}`} >
+              <Row  className={`${HomeCss.MWCTextParent}`} >
                 <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
                 <Col
                   xs={20}
@@ -88,7 +91,7 @@ export default function ModernizeWithConfidence({ HomeCss }) {
                   xxl={20}
                   className={`${HomeCss.MWCText}`}
                 >
-                  <h1>{e.text}</h1>
+                  <h1 ref={e.ref} >{e.text}</h1>
                 </Col>
                 <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
               </Row>

@@ -17,7 +17,6 @@ export default function Info({ HomeCss }) {
             lg={20}
             xl={20}
             xxl={20}
-            // className={HomeCss.infoRowSystem}
           >
             <AnimationOnScroll
               initiallyVisible={true}
@@ -34,12 +33,6 @@ export default function Info({ HomeCss }) {
             </AnimationOnScroll>
           </Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
-
-          {/* <Col offset={2} span={20} className={HomeCss.infoRowMobile}>
-            <h1>
-            <span className={HomeCss.spanText}>ONE PLATFORM</span> FOR ALL ENTERPRISE DATA <span className={HomeCss.spanText}>MODERNIZATION</span> & <span className={HomeCss.spanText}>MANAGEMENT</span> NEEDS.
-            </h1>
-          </Col> */}
         </Row>
       </div>
     </div>

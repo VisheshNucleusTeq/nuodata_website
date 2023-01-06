@@ -19,6 +19,7 @@ function ModernizationWorksStepsDetailsRtol({data, HowItWorkCss}) {
         className: "textBoxMain",
         id: "1",
         sourcePosition: "right",
+        targetPosition:"right",
         position: { x: 0, y: 0 },
         data: {
           label: <Image src={data?.image} />,
@@ -27,6 +28,7 @@ function ModernizationWorksStepsDetailsRtol({data, HowItWorkCss}) {
       {
         className: "textBox",
         id: "2",
+        sourcePosition: "left",
         targetPosition: "left",
         position: {
           x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 45,
@@ -37,6 +39,7 @@ function ModernizationWorksStepsDetailsRtol({data, HowItWorkCss}) {
       {
         className: "textBox",
         id: "4",
+        sourcePosition: "left",
         targetPosition: "left",
         position: {
           x: ref.current.clientWidth - (ref.current.clientWidth / 100) * 40,
