@@ -1,6 +1,4 @@
 module.exports = {
-    trailingSlash: true,
-  exportTrailingSlash: true,
   exportPathMap: async function (defaultPathMap) {
     return {
       '/demo/index.html': { page: '/demo' },
