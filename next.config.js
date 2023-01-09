@@ -1,5 +1,6 @@
 module.exports = {
   trailingSlash: true,
+  exportTrailingSlash: true
 }
 
 // /** @type {import('next').NextConfig} */
