@@ -1,15 +1,7 @@
 module.exports = {
-  exportPathMap: async function (defaultPathMap) {
-    return {
-      '/demo/index.html': { page: '/demo' },
-    };
-  }
+  trailingSlash: true,
+  exportTrailingSlash: true
 }
-
-// module.exports = {
-//   trailingSlash: true,
-//   exportTrailingSlash: true
-// }
 
 // /** @type {import('next').NextConfig} */
 
