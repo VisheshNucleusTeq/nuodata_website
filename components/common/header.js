@@ -30,7 +30,7 @@ export default function Header() {
       <Row className={HeaderCss.infoRow}>
         <Col offset={2} span={4}>
           <div className={HeaderCss.infoColImage}>
-            <Link href="/">
+            <Link href="/sign-up">
               <Image preview={false} src={"/logo.png"} />
             </Link>
           </div>
