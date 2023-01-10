@@ -2,7 +2,7 @@ import { Col, Row } from "antd";
 
 export default function DataModernizationArchitecture({ HomeCss }) {
   return (
-    <Row>
+    <Row className={HomeCss.dataModernizationArchitecture}>
       <Col
         offset={1}
         span={22}

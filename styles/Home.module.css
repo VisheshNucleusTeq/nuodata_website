@@ -798,10 +798,21 @@
 
 /* MODERN */
 
+.dataModernizationArchitecture{
+  display: block;
+}
+
+@media (max-width: 992px) {
+  .dataModernizationArchitecture{
+    display: none;
+  }
+}
+
 .dataModernizationArchitectureTtile {
   align-items: center;
   text-align: center;
   margin-top: 2%;
+  
 }
 
 .dataModernizationArchitectureTtile h1 span {
