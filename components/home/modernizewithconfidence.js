@@ -102,7 +102,7 @@ export default function ModernizeWithConfidence({ HomeCss }) {
                       lg={20}
                       xl={20}
                       xxl={20}
-                      style={{ borderBottom: "2px solid red" }}
+                      style={{ borderBottom: "2px solid #e74860" }}
                     />
                     <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
                   </>
