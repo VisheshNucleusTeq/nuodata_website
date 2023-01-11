@@ -32,7 +32,7 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
     dagreGraph.setEdge(edge.source, edge.target);
   });
 
-  dagre.layout(dagreGraph);
+  // dagre.layout(dagreGraph);
 
   nodes?.forEach((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
@@ -53,6 +53,7 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
 };
 
 const AnalyzeDetailPopup = ({ outputFileId, data }) => {
+  console.log(data)
   const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
     data?.Nodes,
     data?.Edges

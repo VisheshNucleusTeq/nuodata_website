@@ -804,7 +804,7 @@
 
 @media (max-width: 992px) {
   .dataModernizationArchitecture{
-    display: none;
+    /* display: none; */
   }
 }
 
@@ -830,6 +830,8 @@
 
 .infoRowSystemView {
   background: url("/home/archi-gif.gif") no-repeat center center;
+  /* background: url("/home/3-1-GIF.gif") no-repeat center center; */
+
   background-size: auto;
   height: 120vh;
   background-size: 100% 80%;
