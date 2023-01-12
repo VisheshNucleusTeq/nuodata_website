@@ -34,6 +34,7 @@ export default function Design({ dataModernizationCss }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const [fileName, setFileName] = useState(null);
   const [fileId, setFileId] = useState(null);
   const [outputFileId, setOutputFileId] = useState(null);
   const [fileData, setFileData] = useState([]);
@@ -148,6 +149,7 @@ export default function Design({ dataModernizationCss }) {
                       // setAnalyzeDetailsId(record.fileId);
                       // setAnalyze(false);
                       getFileDetails(record.fileId);
+                      setFileName(record.fileName);
                     }}
                   >
                     Details
@@ -165,7 +167,7 @@ export default function Design({ dataModernizationCss }) {
             <Collapse defaultActiveKey={["1"]} ghost>
               {Object.keys(collapseData).map((e, i) => {
                 return (
-                  <Panel header={e} key={i}>
+                  <Panel header={fileName} key={i}>
                     <Row style={{ marginTop: "1vh", marginBottom: "5vh" }}>
                       <Col
                         className={dataModernizationCss.tableNameView}

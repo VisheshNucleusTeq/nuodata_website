@@ -32,7 +32,7 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
     dagreGraph.setEdge(edge.source, edge.target);
   });
 
-  // dagre.layout(dagreGraph);
+  dagre.layout(dagreGraph);
 
   nodes?.forEach((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
