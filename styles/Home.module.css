@@ -822,6 +822,32 @@
   background-image: linear-gradient(#fff 75%, gray 100%);
 }
 
+/* 
+@media (max-width: 1200px) {
+  .ECTitle {
+    font-size: 6vw;
+  }
+}
+@media (max-width: 992px) {
+  .ECTitle {
+    font-size: 6vw;
+  }
+  
+}
+@media (max-width: 768px) {
+  .ECTitle {
+    font-size: 8vw;
+  }
+  
+}
+@media (max-width: 576px) {
+  .ECTitle {
+    font-size: 10vw;
+  }
+  
+} */
+
+
 .dataModernizationArchitectureTtile p {
   font-size: 1vw;
   font-weight: bold;
@@ -835,6 +861,17 @@
   background-size: auto;
   height: 120vh;
   background-size: 100% 80%;
+}
+
+@media (max-width: 992px) {
+  .infoRowSystemView {
+    /* background: url("/home/archi-gif.gif") no-repeat center center; */
+    background: url("/home/3-1-GIF.gif") no-repeat center center;
+  
+    background-size: auto;
+    /* height: 120vh; */
+    /* background-size: 100% 80%; */
+  }
 }
 
 .infoRowSystemTextView {
