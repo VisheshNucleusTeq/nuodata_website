@@ -13,3 +13,7 @@ export const ANALYZESUMMARY =
 export const DOWNLOADFILE = "https://api.dev.nuodata.io/core/v1/download/";
 export const DESIGN = "https://api.dev.nuodata.io/process/v1/design/";
 export const TARGET = "https://api.dev.nuodata.io/process/v1/target/";
+
+export const VERSION = "https://api.dev.nuodata.io/process/v1/design/metadata/file/"
+export const TABLE = "https://api.dev.nuodata.io/process/v1/design/target/tables/file/";
+export const TABLEDATA = "https://api.dev.nuodata.io/process/v1/design/target/columns/file/";

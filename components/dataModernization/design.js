@@ -21,6 +21,9 @@ import {
   ANALYZESUMMARY,
   GETANALYZEDATA,
   DESIGN,
+  VERSION,
+  TABLE,
+  TABLEDATA,
 } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
 import {
@@ -42,6 +45,9 @@ export default function Design({ dataModernizationCss }) {
   const [collapseData, setCollapseData] = useState({});
   const [modalData, setModalData] = useState();
   const [open, setOpen] = useState(false);
+  const [tables, setTables] = useState([]);
+  const [version, setVersion] = useState(1);
+  const [tableKeyData, setTableKeyData] = useState([]);
 
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -92,6 +98,27 @@ export default function Design({ dataModernizationCss }) {
     }, 10);
   };
 
+  const getFileData = async (fileId) => {
+    const modelVersionObj = await fetch_retry_get(`${VERSION}${fileId}`);
+    const tableData = await fetch_retry_get(
+      `${TABLE}${fileId}?version=${modelVersionObj?.data?.version}`
+    );
+    setFileId(fileId);
+    setVersion(modelVersionObj?.data?.version);
+    setTables(tableData?.data?.tables);
+  };
+
+  const getTableData = async (tableId) => {
+    const tableKeyData = await fetch_retry_get(
+      `${TABLEDATA}${fileId}?version=${version}&tableId=${tableId}`,
+      {
+        version: version,
+        tableId: tableId,
+      }
+    );
+    setTableKeyData(tableKeyData?.data);
+  };
+
   return (
     <>
       <Modal
@@ -109,7 +136,6 @@ export default function Design({ dataModernizationCss }) {
         onCancel={() => setOpen(false)}
         width={"100vw"}
       >
-        {/* {JSON.stringify(modalData)} */}
         <AnalyzeDetailPopup outputFileId={outputFileId} data={modalData} />
       </Modal>
 
@@ -146,10 +172,11 @@ export default function Design({ dataModernizationCss }) {
                 <Space size="middle">
                   <a
                     onClick={() => {
+                      getFileData(record.fileId);
                       // setAnalyzeDetailsId(record.fileId);
                       // setAnalyze(false);
-                      getFileDetails(record.fileId);
-                      setFileName(record.fileName);
+                      // getFileDetails(record.fileId);
+                      // setFileName(record.fileName);
                     }}
                   >
                     Details
@@ -161,7 +188,70 @@ export default function Design({ dataModernizationCss }) {
           dataSource={fileData}
         />
       </div>
-      {Object.keys(collapseData).length > 0 && (
+
+      <div className={dataModernizationCss.designMain}>
+        <Card bordered={false} className={dataModernizationCss.designCard}>
+          <Collapse defaultActiveKey={[""]} ghost>
+            {tables.map((e, i) => {
+              return (
+                <Panel
+                  onClick={() => {
+                    getTableData(e.tableId);
+                  }}
+                  header={`${e.tableName} (${e.baseTableName})`}
+                  key={i}
+                >
+                  <Row style={{ marginTop: "1vh", marginBottom: "5vh" }}>
+                    <Col
+                      className={dataModernizationCss.tableNameView}
+                      span={24}
+                    >
+                      Target Table Plan
+                    </Col>
+                    <Col xs={22} sm={22} md={10} lg={10} xl={10} xxl={10}>
+                      <Input
+                        value={e.tableName}
+                        style={{ borderRadius: "10px", height: "5vh" }}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Table
+                    pagination={false}
+                    // className="demo"
+                    columns={[
+                      {
+                        title: "Base Column Name",
+                        dataIndex: "baseColumnName",
+                        key: "baseColumnName",
+                      },
+                      {
+                        title: "Base Column Type",
+                        dataIndex: "baseColumnType",
+                        key: "baseColumnType",
+                      },
+
+                      {
+                        title: "Column Name",
+                        dataIndex: "columnName",
+                        key: "columnName",
+                      },
+                      {
+                        title: "Column Type",
+                        dataIndex: "columnType",
+                        key: "columnType",
+                      },
+                    ]}
+                    dataSource={tableKeyData}
+                  />
+                </Panel>
+              );
+            })}
+          </Collapse>
+        </Card>
+      </div>
+
+      {/* {Object.keys(collapseData).length > 0 && (
         <div className={dataModernizationCss.designMain}>
           <Card bordered={false} className={dataModernizationCss.designCard}>
             <Collapse defaultActiveKey={["1"]} ghost>
@@ -356,7 +446,7 @@ export default function Design({ dataModernizationCss }) {
             </Collapse>
           </Card>
         </div>
-      )}
+      )} */}
 
       <div className={dataModernizationCss.nextExitBtn}>
         <Button

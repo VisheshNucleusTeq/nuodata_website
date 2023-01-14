@@ -19,7 +19,7 @@ const nodeTypes = {
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 400;
-const nodeHeight = 36;
+const nodeHeight = 80;
 const getLayoutedElements = (nodes, edges, direction = "LR") => {
   const isHorizontal = (direction === "LR");
   dagreGraph.setGraph({ rankdir: direction });
@@ -95,7 +95,7 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
         style={{
           display: "flex",
           flex: 1,
-          height: "80vh",
+          height: "90vh",
         }}
       >
         <ReactFlow
