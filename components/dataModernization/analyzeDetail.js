@@ -56,7 +56,7 @@ const AnalyzeDetail = ({
 
   const getAnalyzeData = async () => {
     setLoading(true);
-    const data = await fetch_retry_get(`${GETANALYZEDATA}${analyzeDetailsId}`);
+    const data = await fetch_retry_get(`${GETANALYZEDATA}${analyzeDetailsId}?version=1`);
     setLoading(false);
     if (data.success) {
       dispatch(SetAnalyzeDetailAction(data?.data));

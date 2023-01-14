@@ -3,13 +3,17 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { fetch_retry_post, fetch_retry_get } from "../../network/api-manager";
-import { GETANALYZEDATA, DOWNLOADFILE, DESIGN } from "../../network/apiConstants";
+import {
+  GETANALYZEDATA,
+  DOWNLOADFILE,
+  DESIGN,
+} from "../../network/apiConstants";
 import { DownloadOutlined, EyeOutlined } from "@ant-design/icons";
 import AnalyzeDetailPopup from "./analyzeDetailPopup";
 import { SetAnalyzeDetailAction } from "../../Redux/action";
 
 const TransformDetails = ({ dataModernizationCss, changeStep }) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,10 +29,14 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
   const projectTransformDetails = useSelector(
     (state) => state.projectTransformDetails.projectTransformDetails
   );
+      
+    
 
   const getAnalyzeData = async (analyzeDetailsId) => {
     setLoading(true);
-    const data = await fetch_retry_get(`${GETANALYZEDATA}${analyzeDetailsId}`);
+    const data = await fetch_retry_get(
+      `${GETANALYZEDATA}${analyzeDetailsId}?version=1`
+    );
     setLoading(false);
     if (data.success) {
       dispatch(SetAnalyzeDetailAction(data?.data));
@@ -37,17 +45,12 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
     }
   };
 
-  
-
-
   useEffect(() => {
     setOutputFiles(analyzeDetail?.outputFiles);
 
     if (projectTransformDetails && projectTransformDetails.analyzeDetailsId) {
-        getAnalyzeData(projectTransformDetails.analyzeDetailsId);
-
-      } 
-
+      getAnalyzeData(projectTransformDetails.analyzeDetailsId);
+    }
   }, [analyzeDetail]);
 
   const getProjectData = async (fileId) => {
@@ -81,7 +84,13 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
           <span>{analyzeDetail?.fileName}</span>
         </h2>
         <h2>
-          You saved <span>{parseFloat(analyzeDetail?.complexity?.hoursSaved).toFixed(2)} {parseFloat(analyzeDetail?.complexity?.hoursSaved).toFixed(2) > 1 ? "Hours" : "hour"}</span>
+          You saved{" "}
+          <span>
+            {parseFloat(analyzeDetail?.complexity?.hoursSaved).toFixed(2)}{" "}
+            {parseFloat(analyzeDetail?.complexity?.hoursSaved).toFixed(2) > 1
+              ? "Hours"
+              : "hour"}
+          </span>
           of manual effort
         </h2>
       </Col>

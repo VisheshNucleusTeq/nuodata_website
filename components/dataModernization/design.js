@@ -235,6 +235,7 @@ export default function Design({ dataModernizationCss }) {
                         title: "Column Name",
                         dataIndex: "columnName",
                         key: "columnName",
+                        render: (record, e) => <Input value={e.columnName} />,
                       },
                       {
                         title: "Column Type",
@@ -459,7 +460,7 @@ export default function Design({ dataModernizationCss }) {
             dispatch(SetTabTypeAction("Transform"));
           }}
         >
-          Transform
+          Transform Project
         </Button>
         <Button
           type="primary"

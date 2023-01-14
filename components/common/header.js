@@ -70,7 +70,11 @@ export default function Header() {
               {
                 key: "4",
                 label: (
-                  <Tag className={HeaderCss.tryNowTag} color="#E74860">
+                  <Tag
+                    onClick={() => Router.push("/sign-in")}
+                    className={HeaderCss.tryNowTag}
+                    color="#E74860"
+                  >
                     Try Now
                   </Tag>
                 ),

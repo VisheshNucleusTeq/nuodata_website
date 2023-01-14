@@ -21,7 +21,7 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 400;
 const nodeHeight = 80;
 const getLayoutedElements = (nodes, edges, direction = "LR") => {
-  const isHorizontal = (direction === "LR");
+  const isHorizontal = direction === "LR";
   dagreGraph.setGraph({ rankdir: direction });
 
   nodes?.forEach((node) => {
@@ -29,9 +29,11 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
   });
 
   edges?.forEach((edge) => {
-    dagreGraph.setEdge(edge.source, edge.target);
+    if (edge.source != null && edge.source != "") {
+      dagreGraph.setEdge(edge.source, edge.target);
+    }
   });
-
+  console.log("dagre", dagreGraph);
   dagre.layout(dagreGraph);
 
   nodes?.forEach((node) => {
@@ -53,7 +55,7 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
 };
 
 const AnalyzeDetailPopup = ({ outputFileId, data }) => {
-  console.log(data)
+  console.log(data);
   const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
     data?.Nodes,
     data?.Edges
@@ -99,8 +101,7 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
         }}
       >
         <ReactFlow
-        panOnScroll 
-        
+          panOnScroll
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
