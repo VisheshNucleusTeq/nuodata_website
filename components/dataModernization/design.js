@@ -15,7 +15,7 @@ const { Panel } = Collapse;
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   TARGET,
   ANALYZESUMMARY,
@@ -36,7 +36,7 @@ export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
   const router = useRouter();
   const dispatch = useDispatch();
-
+  const refTable = useRef(null);
   const [fileName, setFileName] = useState(null);
   const [fileId, setFileId] = useState(null);
   const [outputFileId, setOutputFileId] = useState(null);
@@ -48,7 +48,10 @@ export default function Design({ dataModernizationCss }) {
   const [tables, setTables] = useState([]);
   const [version, setVersion] = useState(1);
   const [tableKeyData, setTableKeyData] = useState([]);
+  const [tableKeyDataValues, setTableKeyDataValues] = useState([]);
+
   const [versionListArr, setVersionListArr] = useState([]);
+  const [selectedTableName, setSelectedTableName] = useState("");
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
@@ -126,6 +129,7 @@ export default function Design({ dataModernizationCss }) {
       }
     );
     setTableKeyData(tableKeyData?.data);
+    setTableKeyDataValues(tableKeyData?.data);
   };
 
   const onVersionChange = async () => {
@@ -134,7 +138,16 @@ export default function Design({ dataModernizationCss }) {
     );
     setTables(tableData?.data?.tables ? tableData?.data?.tables : []);
   };
-
+  const updateColumnName = async (record, index, value) => {
+    console.log(record);
+    console.log(value);
+    record.columnName = value;
+    let temp = tableKeyData;
+    temp[index] = record;
+    console.log(temp);
+    setTableKeyData(temp);
+    setTableKeyDataValues(temp);
+  };
   return (
     <>
       <Modal
@@ -203,16 +216,20 @@ export default function Design({ dataModernizationCss }) {
 
       <div className={dataModernizationCss.designMain}>
         <Card bordered={false} className={dataModernizationCss.designCard}>
-          <Collapse defaultActiveKey={[""]} ghost>
+          <Collapse
+            onChange={(e) => {
+              console.log("id", e, tables[e]?.tableId);
+              if (tables[e]?.tableId != undefined) {
+                console.log("here");
+                getTableData(tables[e].tableId);
+              }
+            }}
+            accordion
+            ghost
+          >
             {tables.map((e, i) => {
               return (
-                <Panel
-                  onClick={() => {
-                    getTableData(e.tableId);
-                  }}
-                  header={`${e.tableName} (${e.baseTableName})`}
-                  key={i}
-                >
+                <Panel header={`${e.tableName} (${e.baseTableName})`} key={i}>
                   <Row style={{ marginTop: "1vh", marginBottom: "5vh" }}>
                     <Col span={11}>
                       <Row>
@@ -224,7 +241,15 @@ export default function Design({ dataModernizationCss }) {
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                           <Input
-                            value={e.tableName}
+                            onChange={(e) =>
+                              setSelectedTableName(e.target.value)
+                            }
+                            value={
+                              selectedTableName != ""
+                                ? selectedTableName
+                                : e.tableName
+                            }
+                            defaultValue={e.tableName}
                             style={{ borderRadius: "10px", height: "5vh" }}
                           />
                         </Col>
@@ -265,7 +290,6 @@ export default function Design({ dataModernizationCss }) {
                             onSelect={(ee) => {
                               setVersion(ee);
                               setTimeout(() => {
-                                
                                 onVersionChange();
                                 getTableData(e.tableId);
                               }, 500);
@@ -278,8 +302,10 @@ export default function Design({ dataModernizationCss }) {
                   </Row>
 
                   <Table
+                    ref={refTable}
                     pagination={false}
                     // className="demo"
+
                     columns={[
                       {
                         title: "Base Column Name",
@@ -296,7 +322,17 @@ export default function Design({ dataModernizationCss }) {
                         title: "Column Name",
                         dataIndex: "columnName",
                         key: "columnName",
-                        render: (record, e) => <Input value={e.columnName} />,
+                        render: (record, e, index) => (
+                          <Input
+                            defaultValue={e.columnName}
+                            // onBlur={(_e) =>
+                            //   updateColumnName(e, index, _e.target.value)
+                            // }
+                            onChange={(_e) => {
+                              updateColumnName(e, index, _e.target.value);
+                            }}
+                          />
+                        ),
                       },
                       {
                         title: "Column Type",
