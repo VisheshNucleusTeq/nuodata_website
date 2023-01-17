@@ -109,14 +109,12 @@ export default function Design({ dataModernizationCss }) {
 
     const versionList = [];
     for (let index = 1; index <= modelVersionObj?.data?.version; index++) {
-      versionList.push(
-        {
-          value: index,
-          label: "version " + index,
-        }
-      );
+      versionList.push({
+        value: index,
+        label: "version " + index,
+      });
     }
-    setVersionListArr(versionList)
+    setVersionListArr(versionList);
   };
 
   const getTableData = async (tableId) => {
@@ -128,6 +126,13 @@ export default function Design({ dataModernizationCss }) {
       }
     );
     setTableKeyData(tableKeyData?.data);
+  };
+
+  const onVersionChange = async () => {
+    const tableData = await fetch_retry_get(
+      `${TABLE}${fileId}?version=${version}`
+    );
+    setTables(tableData?.data?.tables ? tableData?.data?.tables : []);
   };
 
   return (
@@ -258,11 +263,12 @@ export default function Design({ dataModernizationCss }) {
                                 )
                             }
                             onSelect={(ee) => {
-                              setVersion(ee)
+                              setVersion(ee);
                               setTimeout(() => {
+                                
+                                onVersionChange();
                                 getTableData(e.tableId);
-                              }, 500)
-                              // alert(ee)
+                              }, 500);
                             }}
                             options={versionListArr}
                           />
