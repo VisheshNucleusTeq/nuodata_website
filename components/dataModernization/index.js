@@ -1,6 +1,6 @@
 import dataModernizationCss from "../../styles/dataModernization.module.css";
 
-import {  Row, Col } from "antd";
+import { Row, Col } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
 import Define from "./define";
@@ -9,10 +9,15 @@ import Analyze from "./analyze";
 import Transform from "./transform";
 import Design from "./design";
 import Validate from "./validate";
-import { SetTabTypeAction, SetProjectTransformDetailsAction } from "../../Redux/action";
-
+import {
+  SetTabTypeAction,
+  SetProjectTransformDetailsAction,
+} from "../../Redux/action";
+import { useRouter } from "next/router";
 
 export default function DataModernization() {
+  const { query } = useRouter();
+
   const dispatch = useDispatch();
   const tabType = useSelector((state) => state.tabType.tabType);
   const projectDetails = useSelector(
@@ -38,8 +43,10 @@ export default function DataModernization() {
             return (
               <Col
                 onClick={() => {
-                  dispatch(SetProjectTransformDetailsAction({}));
-                  dispatch(SetTabTypeAction(data));
+                  if ((query?.id ? query?.id : projectDetails?.projectId)) {
+                    dispatch(SetProjectTransformDetailsAction({}));
+                    dispatch(SetTabTypeAction(data));
+                  }
                 }}
                 xs={12}
                 sm={7}

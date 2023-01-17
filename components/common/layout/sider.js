@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SetTabTypeAction } from "../../../Redux/action";
 
 const SiderView = ({ layoutCss, height, componentName }) => {
+  const { query } = useRouter();
   const router = useRouter();
   const dispatch = useDispatch();
   const tabType = useSelector((state) => state.tabType.tabType);
@@ -17,6 +18,11 @@ const SiderView = ({ layoutCss, height, componentName }) => {
       dispatch(SetTabTypeAction(tab));
     }
   };
+
+  const projectDetails = useSelector(
+    (state) => state.projectDetails.projectDetails
+  );
+
 
   return (
     <Sider className={layoutCss.mainLayoutSider}>
@@ -80,7 +86,14 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             >
               <a
                 onClick={() => {
-                  changePage("/data-modernization", data);
+                  if ((query?.id ? query?.id : projectDetails?.projectId) || ("Define" === data)) {
+                    if((query?.id ? query?.id : projectDetails?.projectId)){
+                      changePage("/data-modernization?id=" + (query?.id ? query?.id : projectDetails?.projectId), data);
+                    }else{
+                      changePage("/data-modernization", data);
+                    }
+                    
+                  }
                 }}
               >
                 <Col

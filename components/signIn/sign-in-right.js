@@ -23,16 +23,6 @@ function SignInRight({ loginCss }) {
     }
   };
 
-  const validatePassword = (rule, value, callback) => {
-    const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
-    if (value && !re.test(value)) {
-      callback(
-        "Password must be 8 to 15 characters including number, Upper, Lower And one special character."
-      );
-    } else {
-      callback();
-    }
-  };
 
   return (
     <div className={loginCss.flexView}>
@@ -72,7 +62,6 @@ function SignInRight({ loginCss }) {
             name={"password"}
             rules={[
               { required: true, message: "Password is required." },
-              // { validator: validatePassword },
             ]}
           >
             <Input

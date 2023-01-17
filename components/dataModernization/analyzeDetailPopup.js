@@ -12,6 +12,7 @@ import dagre from "dagre";
 import NormalNode from "../NormalNode";
 import { DESIGN } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
+import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
 
 const nodeTypes = {
   normalNode: NormalNode,
@@ -60,8 +61,21 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
     data?.Nodes,
     data?.Edges
   );
-  const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
+
+  console.log("layoutedEdges --",layoutedEdges)
+  const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes.map(e => {
+    return {
+      ...e,
+    }
+  }));
+  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges.map(e => {
+    return {
+      ...e,
+      label: e.transformationType,
+      animated: true,
+      type: 'straight',
+    }
+  }));
   const [rfInstance, setRfInstance] = useState(null);
   const [selectedNode, setSelectedNode] = useState(null);
   const [jsonNode, setJson] = useState(null);
@@ -101,6 +115,7 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
         }}
       >
         <ReactFlow
+        
           panOnScroll
           nodes={nodes}
           edges={edges}

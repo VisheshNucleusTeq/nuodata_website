@@ -156,16 +156,18 @@ const AnalyzeDetail = ({
           },
           {
             title: "Manual Effort Hours",
-            dataIndex: "manualEfforHours",
-            key: "manualEfforHours",
+            dataIndex: "manualEffortHours",
+            key: "manualEffortHours",
             render: (value, row, index) => {
+              console.log({value, row, index})
               if (transformationSummary.length == index + 1) {
                 return (
-                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-                    <span>
-                      {value} {value > 1 ? "Hours" : "Hour"}
-                    </span>
-                  </b>
+                  // <b style={{ color: "#0c3246", fontWeight: "bold" }}>
+                  //   <span>
+                  //     {value} {value > 1 ? "Hours" : "Hour"}
+                  //   </span>
+                  // </b>
+                  <></>
                 );
               } else {
                 return (
@@ -174,6 +176,7 @@ const AnalyzeDetail = ({
                   </span>
                 );
               }
+
             },
           },
           {
@@ -230,9 +233,10 @@ const AnalyzeDetail = ({
             render: (value, row, index) => {
               if (transformationSummary.length == index + 1) {
                 return (
-                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-                    $<span>{value}</span>
-                  </b>
+                  // <b style={{ color: "#0c3246", fontWeight: "bold" }}>
+                  //   $<span>{value}</span>
+                  // </b>
+                  <></>
                 );
               } else {
                 return <span>${value}</span>;
