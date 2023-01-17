@@ -232,7 +232,7 @@ export default function Design({ dataModernizationCss }) {
                           className={dataModernizationCss.tableNameView}
                           span={24}
                         >
-                          Version {JSON.stringify(versionListArr)}
+                          Version
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                           {/* <Input
@@ -249,6 +249,7 @@ export default function Design({ dataModernizationCss }) {
                             filterOption={(input, option) =>
                               (option?.label ?? "").includes(input)
                             }
+                            defaultValue={1}
                             filterSort={(optionA, optionB) =>
                               (optionA?.label ?? "")
                                 .toLowerCase()
@@ -256,6 +257,13 @@ export default function Design({ dataModernizationCss }) {
                                   (optionB?.label ?? "").toLowerCase()
                                 )
                             }
+                            onSelect={(ee) => {
+                              setVersion(ee)
+                              setTimeout(() => {
+                                getTableData(e.tableId);
+                              }, 500)
+                              // alert(ee)
+                            }}
                             options={versionListArr}
                           />
                         </Col>
