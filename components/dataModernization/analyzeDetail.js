@@ -430,18 +430,18 @@ const AnalyzeDetail = ({
                 <Card.Grid hoverable={false}>
                   {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
                     ? analyzeDetails.manualEffortsEstimateHrs
-                    : "0"}
-                  %
+                    : "0"}{" "}
+                  hours
                 </Card.Grid>
 
                 <Card.Grid hoverable={false}>
                   Effort with x% automation
                 </Card.Grid>
                 <Card.Grid hoverable={false}>
-                  {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
-                    ? analyzeDetails.manualEffortsEstimateHrs
+                  {analyzeDetails && analyzeDetails.automationEffortPercent
+                    ? analyzeDetails.automationEffortPercent
                     : "0"}{" "}
-                  hours
+                  %
                 </Card.Grid>
 
                 <Card.Grid hoverable={false} bordered={false}>

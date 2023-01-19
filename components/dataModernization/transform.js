@@ -27,7 +27,7 @@ import { ANALYZESUMMARY, DESIGN } from "../../network/apiConstants";
 import PieChart from "./charts/pieChart";
 import { DOWNLOADFILE } from "../../network/apiConstants";
 import AnalyzeDetailPopup from "./analyzeDetailPopup";
-import { SetProjectTransformDetailsAction } from "../../Redux/action";
+import { SetProjectTransformDetailsAction, SetTabTypeAction } from "../../Redux/action";
 import TransformDetails from "./transformDetails";
 
 const Transform = ({ dataModernizationCss }) => {
@@ -60,6 +60,8 @@ const Transform = ({ dataModernizationCss }) => {
       setAnalyzeDetails({ convertedFilesCount: 2, ...data?.data });
       setComplexityGraph(data?.data?.complexityGraph);
     } else {
+      dispatch(SetProjectTransformDetailsAction({}));
+      dispatch(SetTabTypeAction("Connect"));
       message.error(data?.error ? [data?.error] : "Something went wrong.");
     }
   };
