@@ -16,4 +16,7 @@ export const TARGET = "https://api.dev.nuodata.io/process/v1/target/";
 
 export const VERSION = "https://api.dev.nuodata.io/process/v1/design/metadata/file/"
 export const TABLE = "https://api.dev.nuodata.io/process/v1/design/target/tables/file/";
+export const UPDATETABLE = "https://api.dev.nuodata.io/process/v1/design/target/tables/file/";
 export const TABLEDATA = "https://api.dev.nuodata.io/process/v1/design/target/columns/file/";
+export const UPDATECOLDETAILS = "https://api.dev.nuodata.io/process/v1/design/target/columns/file/";
+export const RELEASEVERSION = "https://api.dev.nuodata.io/process/v1/design/convert/file/";
