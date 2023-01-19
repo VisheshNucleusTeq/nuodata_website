@@ -12,7 +12,7 @@ import {
   Divider,
 } from "antd";
 const { Panel } = Collapse;
-import { ArrowRightOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
 
@@ -56,7 +56,9 @@ const AnalyzeDetail = ({
 
   const getAnalyzeData = async () => {
     setLoading(true);
-    const data = await fetch_retry_get(`${GETANALYZEDATA}${analyzeDetailsId}?version=1`);
+    const data = await fetch_retry_get(
+      `${GETANALYZEDATA}${analyzeDetailsId}?version=1`
+    );
     setLoading(false);
     if (data.success) {
       dispatch(SetAnalyzeDetailAction(data?.data));
@@ -143,6 +145,7 @@ const AnalyzeDetail = ({
             dataIndex: "transformationCount",
             key: "transformationCount",
             render: (value, row, index) => {
+              console.log("row", row);
               if (transformationSummary.length == index + 1) {
                 return (
                   <b style={{ color: "#0c3246", fontWeight: "bold" }}>
@@ -159,15 +162,14 @@ const AnalyzeDetail = ({
             dataIndex: "manualEffortHours",
             key: "manualEffortHours",
             render: (value, row, index) => {
-              console.log({value, row, index})
+              console.log({ value, row, index });
               if (transformationSummary.length == index + 1) {
                 return (
-                  // <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-                  //   <span>
-                  //     {value} {value > 1 ? "Hours" : "Hour"}
-                  //   </span>
-                  // </b>
-                  <></>
+                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
+                    <span>
+                      {value} {value > 1 ? "Hours" : "Hour"}
+                    </span>
+                  </b>
                 );
               } else {
                 return (
@@ -176,7 +178,6 @@ const AnalyzeDetail = ({
                   </span>
                 );
               }
-
             },
           },
           {

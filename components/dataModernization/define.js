@@ -3,15 +3,19 @@ import { Button, Row, Col, Form, Input, Select, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
-import { fetch_retry_post, fetch_retry_get, fetch_retry_put } from "../../network/api-manager";
+import {
+  fetch_retry_post,
+  fetch_retry_get,
+  fetch_retry_put,
+} from "../../network/api-manager";
 import { BUSINESSUNITLIST } from "../../network/default-data";
 import { DEFINE, GETPROJECT, UPDATEPROJECT } from "../../network/apiConstants";
 import { SetProjectDetailsAction, SetTabTypeAction } from "../../Redux/action";
 
 const Define = ({ dataModernizationCss }) => {
   const { query } = useRouter();
-  const router = useRouter()
-  const [form] = Form.useForm()
+  const router = useRouter();
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
 
@@ -20,8 +24,8 @@ const Define = ({ dataModernizationCss }) => {
   );
 
   useEffect(() => {
-    form.setFieldsValue(projectDetails)
-   }, [form, projectDetails])
+    form.setFieldsValue(projectDetails);
+  }, [form, projectDetails]);
 
   const onFinishDefine = async (payload) => {
     if (projectDetails && projectDetails.name) {
@@ -51,38 +55,37 @@ const Define = ({ dataModernizationCss }) => {
 
   const onUpdateProject = async (payload) => {
     setLoading(true);
-      const data = await fetch_retry_put(`${UPDATEPROJECT}${query.id}`, {
-        name: payload.name,
-        businessUnit: payload.businessUnit,
-        sourcePlatform: payload.sourcePlatform,
-        sourceLang: payload.sourceLang,
-        targetPlatform: payload.targetPlatform,
-        targetLang: payload.targetLang,
-      });
-      setLoading(false);
-      if (data.success) {
-        dispatch(SetProjectDetailsAction(data.data));
-        router.push(`/dashboard`)
-      } else {
-        message.error([data?.error]);
-      }
-  }
+    const data = await fetch_retry_put(`${UPDATEPROJECT}${query.id}`, {
+      name: payload.name,
+      businessUnit: payload.businessUnit,
+      sourcePlatform: payload.sourcePlatform,
+      sourceLang: payload.sourceLang,
+      targetPlatform: payload.targetPlatform,
+      targetLang: payload.targetLang,
+    });
+    setLoading(false);
+    if (data.success) {
+      dispatch(SetProjectDetailsAction(data.data));
+      router.push(`/dashboard`);
+    } else {
+      message.error([data?.error]);
+    }
+  };
 
   const getProjectData = async (projectId) => {
     const data = await fetch_retry_get(`${GETPROJECT}${query.id}`);
     dispatch(SetProjectDetailsAction(data.data));
-  }
+  };
 
   useEffect(() => {
-    getProjectData(query.id)
-  },[query.id])
+    getProjectData(query.id);
+  }, [query.id]);
 
   return (
     <Row className={dataModernizationCss.defineForm}>
       <Col offset={3} span={18}>
         <Form
-            form={form}
-
+          form={form}
           layout="horizontal"
           autoComplete="on"
           labelCol={{ span: 7 }}
@@ -200,6 +203,26 @@ const Define = ({ dataModernizationCss }) => {
                   value: "informatica",
                   label: "Informatica",
                 },
+                {
+                  value: "netezza",
+                  label: "Netezza",
+                },
+                {
+                  value: "Hadoop",
+                  label: "Hadoop",
+                },
+                {
+                  value: "Teradata",
+                  label: "Teradata",
+                },
+                {
+                  value: "Vertica",
+                  label: "Vertica",
+                },
+                {
+                  value: "Oracle",
+                  label: "Oracle",
+                },
               ]}
             />
           </Form.Item>
@@ -270,6 +293,30 @@ const Define = ({ dataModernizationCss }) => {
                   value: "databricks",
                   label: "Data Bricks",
                 },
+                {
+                  value: "Databricks-Lakehouse",
+                  label: "Databricks-Lakehouse",
+                },
+                {
+                  value: "gcp",
+                  label: "Google Cloud Platform",
+                },
+                {
+                  value: "AWS",
+                  label: "AWS",
+                },
+                {
+                  value: "Azure",
+                  label: "Azure",
+                },
+                {
+                  value: "Snowflake",
+                  label: "Snowflake",
+                },
+                {
+                  value: "Apache_Airflow",
+                  label: "Apache Airflow",
+                },
               ]}
             />
           </Form.Item>
@@ -303,7 +350,11 @@ const Define = ({ dataModernizationCss }) => {
               options={[
                 {
                   value: "pysql",
-                  label: "pysql",
+                  label: "PySql",
+                },
+                {
+                  value: "PySpark",
+                  label: "PySpark",
                 },
               ]}
             />
@@ -323,7 +374,9 @@ const Define = ({ dataModernizationCss }) => {
               type="primary"
               danger
               className={dataModernizationCss.exitBtn}
-              onClick={() => { router.push(`/dashboard`) }}
+              onClick={() => {
+                router.push(`/dashboard`);
+              }}
             >
               Exit
             </Button>

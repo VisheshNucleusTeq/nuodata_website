@@ -61,17 +61,16 @@ export default function Header() {
                   Router.push("/how-it-works");
                   router.push("/how-it-works");
                 },
-                style : {
-                  visibility : "hidden"
-                }
               },
               {
                 key: "3",
-                label: "Data Management",
+                // label: "Data Management",
                 className: HeaderCss.hoverEffect,
-                style : {
-                  visibility : "hidden"
-                }
+                label: (
+                  <a className={HeaderCss.hoverEffect} href="#dataManagement">
+                    Data Management
+                  </a>
+                ),
               },
               {
                 key: "4",

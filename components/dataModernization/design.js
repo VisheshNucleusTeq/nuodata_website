@@ -14,7 +14,7 @@ import {
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   ANALYZESUMMARY,
@@ -23,9 +23,17 @@ import {
   TABLEDATA,
   UPDATETABLE,
   UPDATECOLDETAILS,
-  RELEASEVERSION
+  RELEASEVERSION,
 } from "../../network/apiConstants";
-import { fetch_retry_post, fetch_retry_get, fetch_retry_put } from "../../network/api-manager";
+import {
+  fetch_retry_post,
+  fetch_retry_get,
+  fetch_retry_put,
+} from "../../network/api-manager";
+import {
+  SetTabTypeAction,
+  SetProjectTransformDetailsAction,
+} from "../../Redux/action";
 
 export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
@@ -38,7 +46,7 @@ export default function Design({ dataModernizationCss }) {
   const [tableId, setTableId] = useState([]);
   const [tableName, setTableName] = useState("");
   const [versionListArr, setVersionListArr] = useState([]);
-
+  const dispatch = useDispatch();
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
@@ -103,20 +111,29 @@ export default function Design({ dataModernizationCss }) {
 
   const updateFileRecord = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
-    console.log(authData?.userId)
-    await fetch_retry_put(`${UPDATETABLE}${fileId}?userId=${authData?.userId}`, [
-      {
-        tableId: tableId,
-        tableName: tableName,
-      },
-    ]);
-
-    await fetch_retry_put(
-      `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
-      childTableData
+    console.log(authData?.userId);
+    let res1 = await fetch_retry_put(
+      `${UPDATETABLE}${fileId}?userId=${authData?.userId}`,
+      [
+        {
+          tableId: tableId,
+          tableName: tableName,
+        },
+      ]
     );
+    if (res1.success) {
+      let res2 = await fetch_retry_put(
+        `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
+        childTableData
+      );
+      if (res2.success) {
+        let res3 = await fetch_retry_post(`${RELEASEVERSION}${fileId}`);
 
-    await fetch_retry_post(`${RELEASEVERSION}${fileId}`);
+        if (res3.success && res1.success && res2.success) {
+          dispatch(SetTabTypeAction("Transform"));
+        }
+      }
+    }
   };
 
   const changeVersion = async (version) => {
