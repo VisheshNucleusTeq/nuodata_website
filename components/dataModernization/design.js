@@ -64,6 +64,8 @@ export default function Design({ dataModernizationCss }) {
     if (data.success) {
       setFileData(data?.data?.fileDetails);
     } else {
+      dispatch(SetProjectTransformDetailsAction({}));
+      dispatch(SetTabTypeAction("Connect"));
       message.error([data?.error]);
     }
   };

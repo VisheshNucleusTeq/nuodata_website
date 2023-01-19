@@ -49,24 +49,24 @@ export default function Header() {
                 label: "Why NuoData?",
                 className: HeaderCss.hoverEffect,
                 onClick: () => {
-                  Router.push("/sign-up");
-                  router.push("/sign-up");
+                  Router.push("/how-it-works");
+                  router.push("/how-it-works");
                 },
               },
-              {
-                key: "2",
-                label: "Data Modernization",
-                className: HeaderCss.hoverEffect,
-                onClick: () => {
-                  Router.push("/demo");
-                  router.push("/demo");
-                },
-              },
-              {
-                key: "3",
-                label: "Data Management",
-                className: HeaderCss.hoverEffect,
-              },
+              // {
+              //   key: "2",
+              //   label: "Data Modernization",
+              //   className: HeaderCss.hoverEffect,
+              //   onClick: () => {
+              //     Router.push("/how-it-works");
+              //     router.push("/how-it-works");
+              //   },
+              // },
+              // {
+              //   key: "3",
+              //   label: "Data Management",
+              //   className: HeaderCss.hoverEffect,
+              // },
               {
                 key: "4",
                 label: (
@@ -75,7 +75,7 @@ export default function Header() {
                     className={HeaderCss.tryNowTag}
                     color="#E74860"
                   >
-                    Try Now
+                    Sign In
                   </Tag>
                 ),
                 className: HeaderCss.marginLeft,

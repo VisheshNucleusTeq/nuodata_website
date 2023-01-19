@@ -41,6 +41,8 @@ const Analyze = ({ dataModernizationCss }) => {
       setAnalyzeDetails(data?.data);
       setComplexityGraph(data?.data?.complexityGraph);
     } else {
+      dispatch(SetProjectTransformDetailsAction({}));
+      dispatch(SetTabTypeAction("Connect"));
       message.error([data?.error]);
     }
   };

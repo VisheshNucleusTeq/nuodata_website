@@ -5,10 +5,16 @@ import FooterCss from '../../styles/Footer.module.css'
 const Footer = () => {
   return (
     <Row style={{ backgroundColor: "#072A3D" }}>
-      {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: "2%" }}>
-        <Image width={"25%"} src={"./logo.png"} style={{ maxWidth: "200px" }} />
-      </Col> */}
-      <Col span={20} offset={3}>
+      <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: "2%", display:"flex", justifyContent : "center" }}>
+        <Image preview={false} width={"25%"} src={"./logo.png"} style={{ maxWidth: "100%" }} />
+      </Col>
+      <Col span={20} offset={2} style={{ borderTop: "2px solid #FFF" }}>
+        <Divider style={{ color: "red" }} />
+      </Col>
+      <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ paddingBottom: "2%",display:"flex", justifyContent : "center" }}>
+        <p style={{color : "#e74860"}}>Copyright © NuoData. {(new Date().getFullYear())} | All rights reserved.</p>
+      </Col>
+      {/* <Col span={20} offset={3}>
         <Row style={{ backgroundColor: "#072A3D" }}>
           <Col
             xs={24}
@@ -146,7 +152,7 @@ const Footer = () => {
       </Col>
       <Col span={20} offset={2} style={{ borderTop: "2px solid #FFF" }}>
         <Divider style={{ color: "red" }} />
-      </Col>
+      </Col> */}
     </Row>
   );
 };
