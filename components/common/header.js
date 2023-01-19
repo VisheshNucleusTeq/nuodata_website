@@ -53,20 +53,26 @@ export default function Header() {
                   router.push("/how-it-works");
                 },
               },
-              // {
-              //   key: "2",
-              //   label: "Data Modernization",
-              //   className: HeaderCss.hoverEffect,
-              //   onClick: () => {
-              //     Router.push("/how-it-works");
-              //     router.push("/how-it-works");
-              //   },
-              // },
-              // {
-              //   key: "3",
-              //   label: "Data Management",
-              //   className: HeaderCss.hoverEffect,
-              // },
+              {
+                key: "2",
+                label: "Data Modernization",
+                className: HeaderCss.hoverEffect,
+                onClick: () => {
+                  Router.push("/how-it-works");
+                  router.push("/how-it-works");
+                },
+                style : {
+                  visibility : "hidden"
+                }
+              },
+              {
+                key: "3",
+                label: "Data Management",
+                className: HeaderCss.hoverEffect,
+                style : {
+                  visibility : "hidden"
+                }
+              },
               {
                 key: "4",
                 label: (

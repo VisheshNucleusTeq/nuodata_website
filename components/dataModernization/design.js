@@ -13,45 +13,32 @@ import {
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import { useEffect, useState, useRef } from "react";
 import {
-  TARGET,
   ANALYZESUMMARY,
-  GETANALYZEDATA,
-  DESIGN,
   VERSION,
   TABLE,
   TABLEDATA,
+  UPDATETABLE,
+  UPDATECOLDETAILS,
+  RELEASEVERSION
 } from "../../network/apiConstants";
-import { fetch_retry_get } from "../../network/api-manager";
-import {
-  SetTabTypeAction,
-  SetProjectTransformDetailsAction,
-} from "../../Redux/action";
-import AnalyzeDetailPopup from "./analyzeDetailPopup";
+import { fetch_retry_post, fetch_retry_get, fetch_retry_put } from "../../network/api-manager";
 
 export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const refTable = useRef(null);
-  const [fileName, setFileName] = useState(null);
-  const [fileId, setFileId] = useState(null);
-  const [outputFileId, setOutputFileId] = useState(null);
-  const [fileData, setFileData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [collapseData, setCollapseData] = useState({});
-  const [modalData, setModalData] = useState();
-  const [open, setOpen] = useState(false);
-  const [tables, setTables] = useState([]);
-  const [version, setVersion] = useState(1);
-  const [tableKeyData, setTableKeyData] = useState([]);
-  const [tableKeyDataValues, setTableKeyDataValues] = useState([]);
-
+  const [fileList, setFileList] = useState([]);
+  const [fileId, setFileId] = useState();
+  const [version, setVersion] = useState();
+  const [childData, setChildData] = useState([]);
+  const [childTableData, setChildTableData] = useState([]);
+  const [tableId, setTableId] = useState([]);
+  const [tableName, setTableName] = useState("");
   const [versionListArr, setVersionListArr] = useState([]);
-  const [selectedTableName, setSelectedTableName] = useState("");
+
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
@@ -62,7 +49,7 @@ export default function Design({ dataModernizationCss }) {
     );
     setLoading(false);
     if (data.success) {
-      setFileData(data?.data?.fileDetails);
+      setFileList(data?.data?.fileDetails);
     } else {
       dispatch(SetProjectTransformDetailsAction({}));
       dispatch(SetTabTypeAction("Connect"));
@@ -74,46 +61,24 @@ export default function Design({ dataModernizationCss }) {
     getDesignData();
   }, []);
 
-  const getFileDetails = async (fileId) => {
-    const data = await fetch_retry_get(`${TARGET}${fileId}`);
-    const collapseData = {};
-    data.data.forEach((e) => {
-      if (!collapseData[e.tableName]) {
-        collapseData[e.tableName] = [e];
-      } else {
-        collapseData[e.tableName].push(e);
-      }
-    });
-    setFileId(fileId);
-    setCollapseData(collapseData);
-
-    const analyzeDetails = await fetch_retry_get(`${GETANALYZEDATA}${fileId}`);
-    console.log(analyzeDetails?.data?.outputFiles);
-    const outputFileId = analyzeDetails?.data?.outputFiles.find((e) => {
-      return e.fileType === "graph_src";
-    });
-    setOutputFileId(outputFileId?.outputFileId);
-  };
-
-  const getModelData = async (fileId) => {
-    const modelDataObj = await fetch_retry_get(`${DESIGN}${fileId}`);
-    setModalData(modelDataObj?.data);
-    setTimeout(() => {
-      setOpen(true);
-    }, 10);
-  };
-
   const getFileData = async (fileId) => {
-    const modelVersionObj = await fetch_retry_get(`${VERSION}${fileId}`);
-    const tableData = await fetch_retry_get(
-      `${TABLE}${fileId}?version=${modelVersionObj?.data?.version}`
-    );
     setFileId(fileId);
-    setVersion(modelVersionObj?.data?.version);
-    setTables(tableData?.data?.tables ? tableData?.data?.tables : []);
+
+    const modelVersionObj = await fetch_retry_get(`${VERSION}${fileId}`);
+    console.log(modelVersionObj);
+    const version = modelVersionObj?.data?.isDraft
+      ? modelVersionObj?.data?.version + 1
+      : modelVersionObj?.data?.version;
+
+    setVersion(version);
+
+    const tableData = await fetch_retry_get(
+      `${TABLE}${fileId}?version=${version}`
+    );
+    setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
 
     const versionList = [];
-    for (let index = 1; index <= modelVersionObj?.data?.version; index++) {
+    for (let index = 1; index <= version; index++) {
       versionList.push({
         value: index,
         label: "version " + index,
@@ -123,6 +88,8 @@ export default function Design({ dataModernizationCss }) {
   };
 
   const getTableData = async (tableId) => {
+    setTableId(tableId);
+
     const tableKeyData = await fetch_retry_get(
       `${TABLEDATA}${fileId}?version=${version}&tableId=${tableId}`,
       {
@@ -130,46 +97,37 @@ export default function Design({ dataModernizationCss }) {
         tableId: tableId,
       }
     );
-    setTableKeyData(tableKeyData?.data);
-    setTableKeyDataValues(tableKeyData?.data);
+
+    setChildTableData(tableKeyData?.data);
   };
 
-  const onVersionChange = async () => {
+  const updateFileRecord = async () => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    console.log(authData?.userId)
+    await fetch_retry_put(`${UPDATETABLE}${fileId}?userId=${authData?.userId}`, [
+      {
+        tableId: tableId,
+        tableName: tableName,
+      },
+    ]);
+
+    await fetch_retry_put(
+      `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
+      childTableData
+    );
+
+    await fetch_retry_post(`${RELEASEVERSION}${fileId}`);
+  };
+
+  const changeVersion = async (version) => {
     const tableData = await fetch_retry_get(
       `${TABLE}${fileId}?version=${version}`
     );
-    setTables(tableData?.data?.tables ? tableData?.data?.tables : []);
+    setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
   };
-  const updateColumnName = async (record, index, value) => {
-    console.log(record);
-    console.log(value);
-    record.columnName = value;
-    let temp = tableKeyData;
-    temp[index] = record;
-    console.log(temp);
-    setTableKeyData(temp);
-    setTableKeyDataValues(temp);
-  };
+
   return (
     <>
-      <Modal
-        destroyOnClose
-        centered
-        open={open}
-        onOk={() => {
-          dispatch(
-            SetProjectTransformDetailsAction({
-              analyzeDetailsId: fileId,
-            })
-          );
-          dispatch(SetTabTypeAction("Transform"));
-        }}
-        onCancel={() => setOpen(false)}
-        width={"100vw"}
-      >
-        <AnalyzeDetailPopup outputFileId={outputFileId} data={modalData} />
-      </Modal>
-
       <div className={dataModernizationCss.designMain}>
         <Table
           pagination={false}
@@ -212,169 +170,138 @@ export default function Design({ dataModernizationCss }) {
               ),
             },
           ]}
-          dataSource={fileData}
+          dataSource={fileList}
         />
       </div>
 
-      <div className={dataModernizationCss.designMain}>
-        <Card bordered={false} className={dataModernizationCss.designCard}>
-          <Collapse
-            onChange={(e) => {
-              console.log("id", e, tables[e]?.tableId);
-              if (tables[e]?.tableId != undefined) {
-                console.log("here");
-                getTableData(tables[e].tableId);
-              }
-            }}
-            accordion
-            ghost
-          >
-            {tables.map((e, i) => {
-              return (
-                <Panel header={`${e.tableName} (${e.baseTableName})`} key={i}>
-                  <Row style={{ marginTop: "1vh", marginBottom: "5vh" }}>
-                    <Col span={11}>
-                      <Row>
-                        <Col
-                          className={dataModernizationCss.tableNameView}
-                          span={24}
-                        >
-                          Target Table Plan
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                          <Input
-                            onChange={(e) =>
-                              setSelectedTableName(e.target.value)
-                            }
-                            value={
-                              selectedTableName != ""
-                                ? selectedTableName
-                                : e.tableName
-                            }
-                            defaultValue={e.tableName}
-                            style={{ borderRadius: "10px", height: "5vh" }}
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col span={2} />
-                    <Col span={11}>
-                      <Row>
-                        <Col
-                          className={dataModernizationCss.tableNameView}
-                          span={24}
-                        >
-                          Version
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                          {/* <Input
-                            value={e.tableName}
-                            style={{ borderRadius: "10px", height: "5vh" }}
-                          /> */}
-                          <Select
-                            showSearch
-                            style={{
-                              width: "100%",
-                            }}
-                            placeholder="Search to Select"
-                            optionFilterProp="children"
-                            filterOption={(input, option) =>
-                              (option?.label ?? "").includes(input)
-                            }
-                            defaultValue={1}
-                            filterSort={(optionA, optionB) =>
-                              (optionA?.label ?? "")
-                                .toLowerCase()
-                                .localeCompare(
-                                  (optionB?.label ?? "").toLowerCase()
-                                )
-                            }
-                            onSelect={(ee) => {
-                              setVersion(ee);
-                              setTimeout(() => {
-                                onVersionChange();
-                                getTableData(e.tableId);
-                              }, 500);
-                            }}
-                            options={versionListArr}
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
+      {childData.length && (
+        <div className={dataModernizationCss.designMain}>
+          <Card bordered={false} className={dataModernizationCss.designCard}>
+            <Collapse
+              onChange={(e) => {
+                if (childData[e]?.tableId != undefined) {
+                  getTableData(childData[e].tableId);
+                  setTableName(childData[e].tableName);
+                }
+              }}
+              accordion
+              ghost
+            >
+              {childData.map((e, i) => {
+                return (
+                  <Panel header={`${e.tableName} (${e.baseTableName})`} key={i}>
+                    <Row style={{ marginTop: "1vh", marginBottom: "5vh" }}>
+                      <Col span={11}>
+                        <Row>
+                          <Col
+                            className={dataModernizationCss.tableNameView}
+                            span={24}
+                          >
+                            Target Table Plan
+                          </Col>
+                          <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Input
+                              onChange={(e) => setTableName(e.target.value)}
+                              value={tableName != "" ? tableName : e.tableName}
+                              defaultValue={e.tableName}
+                              style={{ borderRadius: "10px", height: "5vh" }}
+                            />
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col span={2} />
+                      <Col span={11}>
+                        <Row>
+                          <Col
+                            className={dataModernizationCss.tableNameView}
+                            span={24}
+                          >
+                            Version
+                          </Col>
+                          <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Select
+                              showSearch
+                              style={{
+                                width: "100%",
+                              }}
+                              placeholder="Search to Select"
+                              optionFilterProp="children"
+                              filterOption={(input, option) =>
+                                (option?.label ?? "").includes(input)
+                              }
+                              value={version}
+                              onSelect={(version) => {
+                                setVersion(version);
+                                changeVersion(version);
+                              }}
+                              options={versionListArr}
+                            />
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
 
-                  <Table
-                    ref={refTable}
-                    pagination={false}
-                    // className="demo"
+                    <Table
+                      pagination={false}
+                      columns={[
+                        {
+                          title: "Base Column Name",
+                          dataIndex: "baseColumnName",
+                          key: "baseColumnName",
+                        },
+                        {
+                          title: "Base Column Type",
+                          dataIndex: "baseColumnType",
+                          key: "baseColumnType",
+                        },
 
-                    columns={[
-                      {
-                        title: "Base Column Name",
-                        dataIndex: "baseColumnName",
-                        key: "baseColumnName",
-                      },
-                      {
-                        title: "Base Column Type",
-                        dataIndex: "baseColumnType",
-                        key: "baseColumnType",
-                      },
+                        {
+                          title: "Column Name",
+                          dataIndex: "columnName",
+                          key: "columnName",
+                          render: (record, e, index) => (
+                            <Input
+                              value={e.columnName}
+                              onChange={(_e) => {
+                                const _tamp = JSON.parse(
+                                  JSON.stringify(childTableData)
+                                );
+                                _tamp[index].columnName = _e.target.value;
+                                setChildTableData(_tamp);
+                              }}
+                            />
+                          ),
+                        },
+                        {
+                          title: "Column Type",
+                          dataIndex: "columnType",
+                          key: "columnType",
+                        },
+                      ]}
+                      dataSource={childTableData}
+                    />
 
-                      {
-                        title: "Column Name",
-                        dataIndex: "columnName",
-                        key: "columnName",
-                        render: (record, e, index) => (
-                          <Input
-                            defaultValue={e.columnName}
-                            // onBlur={(_e) =>
-                            //   updateColumnName(e, index, _e.target.value)
-                            // }
-                            onChange={(_e) => {
-                              updateColumnName(e, index, _e.target.value);
-                            }}
-                          />
-                        ),
-                      },
-                      {
-                        title: "Column Type",
-                        dataIndex: "columnType",
-                        key: "columnType",
-                      },
-                    ]}
-                    dataSource={tableKeyData}
-                  />
-                </Panel>
-              );
-            })}
-          </Collapse>
-        </Card>
-      </div>
-
-      <div className={dataModernizationCss.nextExitBtn}>
-        <Button
-          type="primary"
-          danger
-          className={dataModernizationCss.nextBtn}
-          htmlType="submit"
-          onClick={() => {
-            dispatch(SetProjectTransformDetailsAction({}));
-            dispatch(SetTabTypeAction("Transform"));
-          }}
-        >
-          Transform Project
-        </Button>
-        <Button
-          type="primary"
-          danger
-          className={dataModernizationCss.exitBtn}
-          onClick={() => {
-            router.push(`/dashboard`);
-          }}
-        >
-          Save & Exit
-        </Button>
-      </div>
+                    <div className={dataModernizationCss.nextExitBtn}>
+                      <Button
+                        type="primary"
+                        danger
+                        className={dataModernizationCss.nextBtn}
+                        htmlType="submit"
+                        onClick={() => {
+                          updateFileRecord();
+                        }}
+                        style={{ marginTop: "2%" }}
+                      >
+                        Transform Project File
+                      </Button>
+                    </div>
+                  </Panel>
+                );
+              })}
+            </Collapse>
+          </Card>
+        </div>
+      )}
     </>
   );
 }
