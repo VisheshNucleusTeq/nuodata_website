@@ -122,7 +122,7 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
           nodeTypes={nodeTypes}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
-          title="Test Data"
+          title="NuoData"
           fitView
           attributionPosition="bottom-left"
           onConnect={onConnect}

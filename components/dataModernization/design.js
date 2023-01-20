@@ -55,7 +55,7 @@ export default function Design({ dataModernizationCss }) {
   const [tableId, setTableId] = useState([]);
   const [tableName, setTableName] = useState("");
   const [versionListArr, setVersionListArr] = useState([]);
-  const [isDraftState,setIsDraftState] =useState(false)
+  const [isDraftState, setIsDraftState] = useState(false);
   const dispatch = useDispatch();
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -80,7 +80,7 @@ export default function Design({ dataModernizationCss }) {
   }, []);
 
   const getFileData = async (fileId) => {
-    setChildData([])
+    setChildData([]);
     setFileId(fileId);
 
     const modelVersionObj = await fetch_retry_get(`${VERSION}${fileId}`);
@@ -154,13 +154,12 @@ export default function Design({ dataModernizationCss }) {
           dispatch(
             SetProjectTransformDetailsAction({
               analyzeDetailsId: fileId,
-              version: isDraftState?version: version+1,
+              version: isDraftState ? version : version + 1,
             })
           );
-          setTimeout(() => {
-            dispatch(SetTabTypeAction("Transform"));
-            setLoading(false);
-          }, 2000);
+
+          dispatch(SetTabTypeAction("Transform"));
+          setLoading(false);
         } else {
           setLoading(false);
         }
@@ -289,7 +288,7 @@ export default function Design({ dataModernizationCss }) {
                               value={version}
                               onSelect={(version) => {
                                 setVersion(version);
-                                changeVersion(version,i);
+                                changeVersion(version, i);
                               }}
                               options={versionListArr}
                             />
@@ -360,24 +359,25 @@ export default function Design({ dataModernizationCss }) {
                     >
                       <Button
                         type="primary"
+                        style={{ marginRight: "1rem", color: "#fff" }}
                         danger
-                        className={dataModernizationCss.nextBtn}
+                        className={dataModernizationCss.exitBtn}
                         htmlType="submit"
                         onClick={() => {
                           updateFileRecord();
                         }}
-                        disabled={loading}
+                        disabled={loading || versionListArr.length != version}
                       >
                         Save {loading && <LoadingOutlined spin />}
                       </Button>
                       <Button
                         type="primary"
                         danger
-                        className={dataModernizationCss.exitBtn}
+                        className={dataModernizationCss.nextBtn}
                         onClick={() => {
                           updateFileRecord(true);
                         }}
-                        disabled={loading}
+                        disabled={loading || versionListArr.length != version}
                       >
                         Transform File
                       </Button>
@@ -396,6 +396,7 @@ export default function Design({ dataModernizationCss }) {
           danger
           className={dataModernizationCss.nextBtn}
           htmlType="submit"
+          disabled={loading || versionListArr.length != version}
           onClick={() => {
             dispatch(SetProjectTransformDetailsAction({}));
             dispatch(SetTabTypeAction("Transform"));
@@ -403,7 +404,7 @@ export default function Design({ dataModernizationCss }) {
         >
           Transform Project
         </Button>
-        <Button
+        {/* <Button
           type="primary"
           danger
           className={dataModernizationCss.exitBtn}
@@ -412,7 +413,7 @@ export default function Design({ dataModernizationCss }) {
           }}
         >
           Save & Exit
-        </Button>
+        </Button> */}
       </div>
     </>
   );
