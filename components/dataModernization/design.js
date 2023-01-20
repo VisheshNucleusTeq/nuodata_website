@@ -33,8 +33,16 @@ import {
 import {
   SetTabTypeAction,
   SetProjectTransformDetailsAction,
-  SetDesignDetailsAction
+  SetDesignDetailsAction,
 } from "../../Redux/action";
+
+import {
+  HomeOutlined,
+  LoadingOutlined,
+  SettingFilled,
+  SmileOutlined,
+  SyncOutlined,
+} from "@ant-design/icons";
 
 export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
@@ -90,19 +98,24 @@ export default function Design({ dataModernizationCss }) {
     for (let index = 1; index <= version; index++) {
       versionList.push({
         value: index,
-        label: "version " + index,
+        label:
+          "Version " +
+          index +
+          (modelVersionObj?.data?.isDraft == true && index == version
+            ? " (Draft)"
+            : ""),
       });
     }
     setVersionListArr(versionList);
   };
 
-  const getTableData = async (tableId) => {
+  const getTableData = async (tableId, v = null) => {
     setTableId(tableId);
 
     const tableKeyData = await fetch_retry_get(
-      `${TABLEDATA}${fileId}?version=${version}&tableId=${tableId}`,
+      `${TABLEDATA}${fileId}?version=${v ? v : version}&tableId=${tableId}`,
       {
-        version: version,
+        version: v ? v : version,
         tableId: tableId,
       }
     );
@@ -110,7 +123,8 @@ export default function Design({ dataModernizationCss }) {
     setChildTableData(tableKeyData?.data);
   };
 
-  const updateFileRecord = async () => {
+  const updateFileRecord = async (release = false) => {
+    setLoading(true);
     const authData = JSON.parse(localStorage.getItem("authData"));
     let res1 = await fetch_retry_put(
       `${UPDATETABLE}${fileId}?userId=${authData?.userId}`,
@@ -121,24 +135,30 @@ export default function Design({ dataModernizationCss }) {
         },
       ]
     );
+    getFileData(fileId);
     if (res1.success) {
       let res2 = await fetch_retry_put(
         `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
         childTableData
-      );
-      if (res2.success) {
+      )
+      getFileData(fileId);
+      if (res2.success && release) {
         let res3 = await fetch_retry_post(`${RELEASEVERSION}${fileId}`);
 
         if (res3.success && res1.success && res2.success) {
-          // dispatch(SetDesignDetailsAction({
-          //   fileId, tableId
-          // }));
           dispatch(
-            SetProjectTransformDetailsAction({ analyzeDetailsId :fileId})
+            SetProjectTransformDetailsAction({ analyzeDetailsId: fileId })
           );
           dispatch(SetTabTypeAction("Transform"));
+          setLoading(false);
+        } else {
+          setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
+    } else {
+      setLoading(false);
     }
   };
 
@@ -147,6 +167,8 @@ export default function Design({ dataModernizationCss }) {
       `${TABLE}${fileId}?version=${version}`
     );
     setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
+    getTableData(tableId, version);
+    setTableName("");
   };
 
   return (
@@ -197,7 +219,7 @@ export default function Design({ dataModernizationCss }) {
         />
       </div>
 
-      {childData.length && (
+      {childData.length > 0 && (
         <div className={dataModernizationCss.designMain}>
           <Card bordered={false} className={dataModernizationCss.designCard}>
             <Collapse
@@ -228,6 +250,7 @@ export default function Design({ dataModernizationCss }) {
                               value={tableName != "" ? tableName : e.tableName}
                               defaultValue={e.tableName}
                               style={{ borderRadius: "10px", height: "5vh" }}
+                              disabled={versionListArr.length != version}
                             />
                           </Col>
                         </Row>
@@ -239,7 +262,7 @@ export default function Design({ dataModernizationCss }) {
                             className={dataModernizationCss.tableNameView}
                             span={24}
                           >
-                            Version
+                            Select Versions
                           </Col>
                           <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Select
@@ -292,6 +315,7 @@ export default function Design({ dataModernizationCss }) {
                                 _tamp[index].columnName = _e.target.value;
                                 setChildTableData(_tamp);
                               }}
+                              disabled={versionListArr.length != version}
                             />
                           ),
                         },
@@ -304,7 +328,7 @@ export default function Design({ dataModernizationCss }) {
                       dataSource={childTableData}
                     />
 
-                    <div className={dataModernizationCss.nextExitBtn}>
+                    {/* <div className={dataModernizationCss.nextExitBtn}>
                       <Button
                         type="primary"
                         danger
@@ -315,7 +339,36 @@ export default function Design({ dataModernizationCss }) {
                         }}
                         style={{ marginTop: "2%" }}
                       >
-                        Transform Project File
+                        Transform File
+                      </Button>
+                    </div> */}
+
+                    <div
+                      style={{ marginTop: "2%" }}
+                      className={dataModernizationCss.nextExitBtn}
+                    >
+                      <Button
+                        type="primary"
+                        danger
+                        className={dataModernizationCss.nextBtn}
+                        htmlType="submit"
+                        onClick={() => {
+                          updateFileRecord();
+                        }}
+                        disabled={loading}
+                      >
+                        Save {loading && <LoadingOutlined spin />}
+                      </Button>
+                      <Button
+                        type="primary"
+                        danger
+                        className={dataModernizationCss.exitBtn}
+                        onClick={() => {
+                          updateFileRecord(true);
+                        }}
+                        disabled={loading}
+                      >
+                        Transform File
                       </Button>
                     </div>
                   </Panel>

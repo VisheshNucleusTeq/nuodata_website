@@ -1,11 +1,13 @@
 import React from "react";
 import { Col, Row, List, Image, Divider } from "antd";
 import FooterCss from '../../styles/Footer.module.css'
-// xs sm md lg xl
+import Router, { useRouter } from "next/router";
 const Footer = () => {
+  const router = useRouter();
+
   return (
     <Row style={{ backgroundColor: "#072A3D" }}>
-      <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: "2%", display:"flex", justifyContent : "center" }}>
+      {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: "2%", display:"flex", justifyContent : "center" }}>
         <Image preview={false} width={"25%"} src={"./logo.png"} style={{ maxWidth: "100%" }} />
       </Col>
       <Col span={20} offset={2} style={{ borderTop: "2px solid #FFF" }}>
@@ -13,8 +15,8 @@ const Footer = () => {
       </Col>
       <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ paddingBottom: "2%",display:"flex", justifyContent : "center" }}>
         <p style={{color : "#e74860"}}>Copyright © NuoData. {(new Date().getFullYear())} | All rights reserved.</p>
-      </Col>
-      {/* <Col span={20} offset={3}>
+      </Col> */}
+      <Col span={20} offset={3}>
         <Row style={{ backgroundColor: "#072A3D" }}>
           <Col
             xs={24}
@@ -25,13 +27,21 @@ const Footer = () => {
             className={FooterCss.footerCol}
           >
             <div className={FooterCss.footerColChild}>
-              <h1>Why NuoData?</h1>
+              <h1 
+                onClick={() => {
+                  Router.push("/how-it-works");
+                  router.push("/how-it-works");
+                }}
+                style={{
+                  cursor : "pointer"
+                }}
+              >Why NuoData?</h1>
               <List>
-                <p style={{ color: "#FFF" }}>Speed</p>
-                <p style={{ color: "#FFF" }}>Cost</p>
-                <p style={{ color: "#FFF" }}>Accuracy</p>
-                <p style={{ color: "#FFF" }}>Transparency</p>
-                <p style={{ color: "#FFF" }}>Longevity</p>
+                <p style={{ color: "#FFF" }}>6-10X Faster</p>
+                <p style={{ color: "#FFF" }}>60-70% reduced cost</p>
+                <p style={{ color: "#FFF" }}>100% accuracy</p>
+                <p style={{ color: "#FFF" }}>Single version of truth</p>
+                <p style={{ color: "#FFF" }}>Self service validation</p>
               </List>
             </div>
           </Col>
@@ -44,12 +54,23 @@ const Footer = () => {
             className={FooterCss.footerCol}
           >
             <div className={FooterCss.footerColChild}>
-              <h1>How it works</h1>
+              <h1
+              onClick={() => {
+                Router.push("/how-it-works");
+                router.push("/how-it-works");
+              }}
+              style={{
+                cursor : "pointer"
+              }}
+              >How it works</h1>
               <List>
-                <p style={{ color: "#FFF" }}>4 step system</p>
-                <p style={{ color: "#FFF" }}>Automation</p>
+                <p style={{ color: "#FFF" }}>Enterprise grade platform</p>
+                <p style={{ color: "#FFF" }}>Well defined process</p>
                 <p style={{ color: "#FFF" }}>Prescriptive analysis</p>
-                <p style={{ color: "#FFF" }}>End-to-end approach</p>
+                <p style={{ color: "#FFF" }}>Design aimed at Single version of truth</p>
+                <p style={{ color: "#FFF" }}>No-Code transformation</p>
+                <p style={{ color: "#FFF" }}>Multi Tenancy & RBAC</p>
+                <p style={{ color: "#FFF" }}>Intuitive UI</p>
               </List>
             </div>
           </Col>
@@ -62,14 +83,13 @@ const Footer = () => {
             className={FooterCss.footerCol}
           >
             <div className={FooterCss.footerColChild}>
-              <h1>Resources</h1>
+              <h1>Partners</h1>
               <List>
-                <p style={{ color: "#FFF" }}>Webinars</p>
-                <p style={{ color: "#FFF" }}>E-books</p>
-                <p style={{ color: "#FFF" }}>Case Studies</p>
-                <p style={{ color: "#FFF" }}>Solution Briefs</p>
-                <p style={{ color: "#FFF" }}>Videos</p>
-                <p style={{ color: "#FFF" }}>Blogs</p>
+                <p style={{ color: "#FFF" }}>AWS</p>
+                <p style={{ color: "#FFF" }}>Google Cloud</p>
+                <p style={{ color: "#FFF" }}>Azure</p>
+                <p style={{ color: "#FFF" }}>Databricks</p>
+                <p style={{ color: "#FFF" }}>Snowflakes</p>
               </List>
             </div>
           </Col>
@@ -84,14 +104,14 @@ const Footer = () => {
             <div className={FooterCss.footerColChild}>
               <h1>Connect</h1>
               <List>
-                <p style={{ color: "#FFF" }}>Events</p>
-                <p style={{ color: "#FFF" }}>Offices</p>
+                <p style={{ color: "#FFF" }}>Book a Demo</p>
+                <p style={{ color: "#FFF" }}>Contact Us</p>
               </List>
             </div>
           </Col>
         </Row>
       </Col>
-      <Col span={20} offset={3}>
+      {/* <Col span={20} offset={3}>
         <Row style={{ backgroundColor: "#072A3D" }}>
           <Col
             xs={24}
@@ -149,10 +169,13 @@ const Footer = () => {
             </div>
           </Col>
         </Row>
-      </Col>
+      </Col> */}
       <Col span={20} offset={2} style={{ borderTop: "2px solid #FFF" }}>
         <Divider style={{ color: "red" }} />
-      </Col> */}
+      </Col>
+      <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ display:"flex", justifyContent : "center" }}>
+        <p style={{color : "#e74860"}}>Copyright © NuoData. {(new Date().getFullYear())} | All rights reserved.</p>
+      </Col>
     </Row>
   );
 };

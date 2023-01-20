@@ -67,10 +67,13 @@ export default function Header() {
                 // label: "Data Management",
                 className: HeaderCss.hoverEffect,
                 label: (
-                  <a className={HeaderCss.hoverEffect} href="#dataManagement">
+                  <a className={HeaderCss.hoverEffect} href="/#dataManagement">
                     Data Management
                   </a>
                 ),
+                style : {
+                  visibility :  "hidden"
+                }
               },
               {
                 key: "4",

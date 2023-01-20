@@ -12,13 +12,13 @@ export default function SignUp() {
           <SignUpLeft signUpCss={signUpCss} />
         </Col>
         <Col span={16}>
-          <AuthHeader />
+          {/* <AuthHeader /> */}
           <SignUpRight signUpCss={signUpCss} />
         </Col>
       </Row>
       <Row style={{ height: "100vh" }} className={signUpCss.mobileView}>
         <Col span={24}>
-          <AuthHeader />
+          {/* <AuthHeader /> */}
           <SignUpRight signUpCss={signUpCss} />
         </Col>
       </Row>
