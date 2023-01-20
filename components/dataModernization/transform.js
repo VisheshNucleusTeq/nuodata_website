@@ -50,6 +50,14 @@ const Transform = ({ dataModernizationCss }) => {
     (state) => state.projectTransformDetails.projectTransformDetails
   );
 
+  const designDetails = useSelector(
+    (state) => state.designDetails.designDetails
+  );
+  
+  useEffect(() => {
+    console.log(designDetails)
+  },[designDetails])
+
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
       `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`

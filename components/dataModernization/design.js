@@ -33,6 +33,7 @@ import {
 import {
   SetTabTypeAction,
   SetProjectTransformDetailsAction,
+  SetDesignDetailsAction
 } from "../../Redux/action";
 
 export default function Design({ dataModernizationCss }) {
@@ -111,7 +112,6 @@ export default function Design({ dataModernizationCss }) {
 
   const updateFileRecord = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
-    console.log(authData?.userId);
     let res1 = await fetch_retry_put(
       `${UPDATETABLE}${fileId}?userId=${authData?.userId}`,
       [
@@ -130,6 +130,12 @@ export default function Design({ dataModernizationCss }) {
         let res3 = await fetch_retry_post(`${RELEASEVERSION}${fileId}`);
 
         if (res3.success && res1.success && res2.success) {
+          // dispatch(SetDesignDetailsAction({
+          //   fileId, tableId
+          // }));
+          dispatch(
+            SetProjectTransformDetailsAction({ analyzeDetailsId :fileId})
+          );
           dispatch(SetTabTypeAction("Transform"));
         }
       }
@@ -319,6 +325,31 @@ export default function Design({ dataModernizationCss }) {
           </Card>
         </div>
       )}
+
+      <div className={dataModernizationCss.nextExitBtn}>
+        <Button
+          type="primary"
+          danger
+          className={dataModernizationCss.nextBtn}
+          htmlType="submit"
+          onClick={() => {
+            dispatch(SetProjectTransformDetailsAction({}));
+            dispatch(SetTabTypeAction("Transform"));
+          }}
+        >
+          Transform Project
+        </Button>
+        <Button
+          type="primary"
+          danger
+          className={dataModernizationCss.exitBtn}
+          onClick={() => {
+            router.push(`/dashboard`);
+          }}
+        >
+          Save & Exit
+        </Button>
+      </div>
     </>
   );
 }
