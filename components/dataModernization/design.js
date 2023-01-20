@@ -79,6 +79,7 @@ export default function Design({ dataModernizationCss }) {
   }, []);
 
   const getFileData = async (fileId) => {
+    setChildData([])
     setFileId(fileId);
 
     const modelVersionObj = await fetch_retry_get(`${VERSION}${fileId}`);
@@ -124,6 +125,8 @@ export default function Design({ dataModernizationCss }) {
   };
 
   const updateFileRecord = async (release = false) => {
+    // alert(tableName);
+    // return true;
     setLoading(true);
     const authData = JSON.parse(localStorage.getItem("authData"));
     let res1 = await fetch_retry_put(
@@ -162,13 +165,13 @@ export default function Design({ dataModernizationCss }) {
     }
   };
 
-  const changeVersion = async (version) => {
+  const changeVersion = async (version, i) => {
     const tableData = await fetch_retry_get(
       `${TABLE}${fileId}?version=${version}`
     );
     setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
     getTableData(tableId, version);
-    setTableName("");
+    setTableName(tableData?.data?.tables[i]?.tableName);
   };
 
   return (
@@ -223,6 +226,7 @@ export default function Design({ dataModernizationCss }) {
         <div className={dataModernizationCss.designMain}>
           <Card bordered={false} className={dataModernizationCss.designCard}>
             <Collapse
+              defaultActiveKey={""}
               onChange={(e) => {
                 if (childData[e]?.tableId != undefined) {
                   getTableData(childData[e].tableId);
@@ -248,7 +252,7 @@ export default function Design({ dataModernizationCss }) {
                             <Input
                               onChange={(e) => setTableName(e.target.value)}
                               value={tableName != "" ? tableName : e.tableName}
-                              defaultValue={e.tableName}
+                              // defaultValue={e.tableName}
                               style={{ borderRadius: "10px", height: "5vh" }}
                               disabled={versionListArr.length != version}
                             />
@@ -278,7 +282,7 @@ export default function Design({ dataModernizationCss }) {
                               value={version}
                               onSelect={(version) => {
                                 setVersion(version);
-                                changeVersion(version);
+                                changeVersion(version,i);
                               }}
                               options={versionListArr}
                             />

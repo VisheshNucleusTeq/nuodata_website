@@ -96,9 +96,9 @@ const Analyze = ({ dataModernizationCss }) => {
               </Card.Grid>
 
               
-              <Card.Grid style={{ color: "#09bd21" }}>Automation Effort</Card.Grid>
+              <Card.Grid>Automation Effort</Card.Grid>
               <Card.Grid>
-                <span style={{ color: "#09bd21" }}>
+                <span>
                   {analyzeDetails && 
                   parseFloat(analyzeDetails.manualEffortsEstimateHrs - analyzeDetails.hoursSaved).toFixed(2)
                   }{" "}
