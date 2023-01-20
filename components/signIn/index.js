@@ -12,13 +12,13 @@ export default function SignIn() {
         <SignInLeft  loginCss={loginCss} />
       </Col>
       <Col span={15}>
-        <AuthHeader />
+        {/* <AuthHeader /> */}
         <SignInRight  loginCss={loginCss} />
       </Col>
     </Row>
     <Row style={{ height: "100vh" }} className={loginCss.mobileView}>
       <Col span={24}>
-        <AuthHeader />
+        {/* <AuthHeader /> */}
         <SignInRight  loginCss={loginCss} />
       </Col>
     </Row>

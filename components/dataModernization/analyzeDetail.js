@@ -149,7 +149,7 @@ const AnalyzeDetail = ({
               if (transformationSummary.length == index + 1) {
                 return (
                   <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-                    <span>{value}</span>
+                    <span>{value ? value : ""}</span>
                   </b>
                 );
               } else {
@@ -167,14 +167,16 @@ const AnalyzeDetail = ({
                 return (
                   <b style={{ color: "#0c3246", fontWeight: "bold" }}>
                     <span>
-                      {value} {value > 1 ? "Hours" : "Hour"}
+                      {value}
+                      {/* {value > 1 ? "Hours" : "Hour"} */}
                     </span>
                   </b>
                 );
               } else {
                 return (
                   <span>
-                    {value} {value > 1 ? "Hours" : "Hour"}
+                    {value}
+                    {/* {value > 1 ? "Hours" : "Hour"} */}
                   </span>
                 );
               }
@@ -189,14 +191,16 @@ const AnalyzeDetail = ({
                 return (
                   <b style={{ color: "#0c3246", fontWeight: "bold" }}>
                     <span>
-                      {value} {value > 1 ? "Hours" : "Hour"}
+                      {value}
+                      {/* {value > 1 ? "Hours" : "Hour"} */}
                     </span>
                   </b>
                 );
               } else {
                 return (
                   <span>
-                    {value} {value > 1 ? "Hours" : "Hour"}
+                    {value}
+                    {/* {value > 1 ? "Hours" : "Hour"} */}
                   </span>
                 );
               }
@@ -436,13 +440,20 @@ const AnalyzeDetail = ({
                 </Card.Grid>
 
                 <Card.Grid hoverable={false}>
-                  Effort with x% automation
+                  {/* Effort with x% automation */}
+                  Automated Effort Hours
                 </Card.Grid>
                 <Card.Grid hoverable={false}>
-                  {analyzeDetails && analyzeDetails.automationEffortPercent
+                  {/* {analyzeDetails && analyzeDetails.automationEffortPercent
                     ? analyzeDetails.automationEffortPercent
                     : "0"}{" "}
-                  %
+                  % */}
+                  {analyzeDetails && parseFloat(
+                    analyzeDetails.manualEffortsEstimateHrs -
+                      (analyzeDetails.manualEffortsEstimateHrs / 100) *
+                        analyzeDetails.automationEffortPercent
+                  ).toFixed(1)}
+                  {" "}hours
                 </Card.Grid>
 
                 <Card.Grid hoverable={false} bordered={false}>

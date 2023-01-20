@@ -1,13 +1,11 @@
 /* INFO */
 
-.space{
+.space {
   background: url("../public/home/bg1.png") repeat center center;
   width: 100%;
   height: 10vw;
   background-size: cover;
 }
-
-
 
 .mainDiv {
   background: url("../public/home/sequence.gif") no-repeat center center;
@@ -108,10 +106,17 @@
   line-height: 0px;
 }
 
+.thinkBigChild {
+  margin-top: 2%;
+  display: flex;
+  align-items: center;
+  /* border-bottom: 1px solid rgb(226, 224, 224); */
+}
+
 .thinkBigChild h2 {
   color: #0c3246 !important;
   font-size: 3vw !important;
-  margin-top: 2%;
+  /* margin-top: 2%; */
   font-weight: bold;
 }
 
@@ -136,11 +141,33 @@
   }
 
   .thinkBigChild h2 {
-    font-size: 6vw !important;
+    font-size: 3.5vw !important;
   }
 
   .thinkBigMainDiv {
     margin: 2% 0% 2% 0%;
+  }
+}
+
+.thinkBigChildStstem {
+  display:flex;
+}
+
+.thinkBigChildMobile {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .thinkBigChild h2 {
+    font-size: 5vw !important;
+  }
+
+  .thinkBigChildStstem {
+    display: none;
+  }
+  
+  .thinkBigChildMobile {
+    display: flex;
   }
 }
 
@@ -154,7 +181,7 @@
   }
 
   .thinkBigChild h2 {
-    font-size: 8vw !important;
+    font-size: 5vw !important;
   }
 }
 
@@ -596,7 +623,6 @@
   align-items: center;
 }
 
-
 .MWCText h1 {
   color: #fff;
   text-align: center;
@@ -604,7 +630,7 @@
   font-weight: bolder;
 }
 
-@media (max-width: 1200px){
+@media (max-width: 1200px) {
   .MWCTextParent {
     height: 50vh;
   }
@@ -612,8 +638,8 @@
     font-size: 6vw;
   }
 }
-@media (max-width: 992px){
-  @media (max-width: 1200px){
+@media (max-width: 992px) {
+  @media (max-width: 1200px) {
     .MWCTextParent {
       height: 60vh;
     }
@@ -622,8 +648,8 @@
     }
   }
 }
-@media (max-width: 768px){
-  @media (max-width: 1200px){
+@media (max-width: 768px) {
+  @media (max-width: 1200px) {
     .MWCTextParent {
       height: 60vh;
     }
@@ -632,8 +658,8 @@
     }
   }
 }
-@media (max-width: 576px){
-  @media (max-width: 1200px){
+@media (max-width: 576px) {
+  @media (max-width: 1200px) {
     .MWCTextParent {
       height: 50vh;
     }
@@ -798,12 +824,12 @@
 
 /* MODERN */
 
-.dataModernizationArchitecture{
+.dataModernizationArchitecture {
   display: block;
 }
 
 @media (max-width: 992px) {
-  .dataModernizationArchitecture{
+  .dataModernizationArchitecture {
     /* display: none; */
   }
 }
@@ -812,7 +838,6 @@
   align-items: center;
   text-align: center;
   margin-top: 2%;
-  
 }
 
 .dataModernizationArchitectureTtile h1 span {
@@ -847,7 +872,6 @@
   
 } */
 
-
 .dataModernizationArchitectureTtile p {
   font-size: 1vw;
   font-weight: bold;
@@ -867,7 +891,7 @@
   .infoRowSystemView {
     /* background: url("/home/archi-gif.gif") no-repeat center center; */
     background: url("/home/3-1-GIF.gif") no-repeat center center;
-  
+
     background-size: auto;
     /* height: 120vh; */
     /* background-size: 100% 80%; */
@@ -913,8 +937,7 @@
 
 /* PLATFORMS */
 
-
-.ECmainNew{
+.ECmainNew {
   height: 90vw;
   background-color: #123a50;
   display: flex;
@@ -922,70 +945,68 @@
   align-items: center;
 }
 
-.ECmainNewChild{
+.ECmainNewChild {
   height: 80vw;
   width: 80vw;
   clip-path: circle(50%);
-  background-image: linear-gradient(to right, #07283B , #245772);
+  background-image: linear-gradient(to right, #07283b, #245772);
 }
 
-.ECmainNewRow{
+.ECmainNewRow {
   /* height: 13.33vw; */
   /* display: flex;
   align-items: center;
   justify-content: center; */
 }
 
-.textPos1{
+.textPos1 {
   height: 14vw;
   margin-left: 30%;
   display: flex;
   align-items: flex-end;
 }
 
-.textPos2{
+.textPos2 {
   height: 11vw;
   margin-left: 15%;
   display: flex;
   align-items: center;
 }
 
-.textPos3{
+.textPos3 {
   height: 11vw;
   margin-left: 10%;
   display: flex;
   align-items: center;
 }
 
-.textPos4{
+.textPos4 {
   height: 11vw;
   margin-left: 10%;
   display: flex;
   align-items: center;
 }
 
-.textPos5{
+.textPos5 {
   height: 11vw;
   margin-left: 15%;
   display: flex;
   align-items: center;
 }
 
-.textPos6{
+.textPos6 {
   height: 14vw;
   margin-left: 30%;
   display: flex;
   align-items: center;
 }
 
-
-.ECmainNewChild h1{
-  color: #FFF;
+.ECmainNewChild h1 {
+  color: #fff;
   font-size: 2.6vw;
   /* padding-left: 10%;  */
   text-align: center;
 }
-
 
 /* .ECmainNewRow{
   height: 13.33vw;

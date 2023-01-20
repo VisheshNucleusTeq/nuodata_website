@@ -228,13 +228,13 @@ const Define = ({ dataModernizationCss }) => {
           </Form.Item>
 
           <Form.Item
-            label={"Source Language"}
+            label={"Source File Type"}
             labelAlign={"left"}
             name={"sourceLang"}
             rules={[
               {
                 required: true,
-                message: "Source language is required.",
+                message: "Source File Type is required.",
               },
             ]}
           >
@@ -289,10 +289,10 @@ const Define = ({ dataModernizationCss }) => {
                   : ""
               }
               options={[
-                {
-                  value: "databricks",
-                  label: "Data Bricks",
-                },
+                // {
+                //   value: "databricks",
+                //   label: "Data Bricks",
+                // },
                 {
                   value: "Databricks-Lakehouse",
                   label: "Databricks-Lakehouse",
@@ -313,10 +313,10 @@ const Define = ({ dataModernizationCss }) => {
                   value: "Snowflake",
                   label: "Snowflake",
                 },
-                {
-                  value: "Apache_Airflow",
-                  label: "Apache Airflow",
-                },
+                // {
+                //   value: "Apache_Airflow",
+                //   label: "Apache Airflow",
+                // },
               ]}
             />
           </Form.Item>
@@ -352,10 +352,10 @@ const Define = ({ dataModernizationCss }) => {
                   value: "pysql",
                   label: "PySql",
                 },
-                {
-                  value: "PySpark",
-                  label: "PySpark",
-                },
+                // {
+                //   value: "PySpark",
+                //   label: "PySpark",
+                // },
               ]}
             />
           </Form.Item>

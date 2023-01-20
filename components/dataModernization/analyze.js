@@ -94,6 +94,19 @@ const Analyze = ({ dataModernizationCss }) => {
                   hours
                 </span>
               </Card.Grid>
+
+              
+              <Card.Grid style={{ color: "#09bd21" }}>Automation Effort</Card.Grid>
+              <Card.Grid>
+                <span style={{ color: "#09bd21" }}>
+                  {analyzeDetails && 
+                  parseFloat(analyzeDetails.manualEffortsEstimateHrs - analyzeDetails.hoursSaved).toFixed(2)
+                  }{" "}
+                  hours
+                </span>
+              </Card.Grid>
+
+
               <Card.Grid style={{ color: "#09bd21" }}>Hours Saved</Card.Grid>
               <Card.Grid>
                 <span style={{ color: "#09bd21" }}>
@@ -103,6 +116,8 @@ const Analyze = ({ dataModernizationCss }) => {
                   hours
                 </span>
               </Card.Grid>
+
+
             </Card>
           </Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
