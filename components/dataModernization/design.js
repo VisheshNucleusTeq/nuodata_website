@@ -55,6 +55,7 @@ export default function Design({ dataModernizationCss }) {
   const [tableId, setTableId] = useState([]);
   const [tableName, setTableName] = useState("");
   const [versionListArr, setVersionListArr] = useState([]);
+  const [isDraftState,setIsDraftState] =useState(false)
   const dispatch = useDispatch();
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -87,6 +88,7 @@ export default function Design({ dataModernizationCss }) {
       ? modelVersionObj?.data?.version + 1
       : modelVersionObj?.data?.version;
 
+    setIsDraftState(modelVersionObj?.data?.isDraft);
     setVersion(version);
 
     const tableData = await fetch_retry_get(
@@ -140,17 +142,22 @@ export default function Design({ dataModernizationCss }) {
       let res2 = await fetch_retry_put(
         `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
         childTableData
-      )
+      );
       getFileData(fileId);
       if (res2.success && release) {
         let res3 = await fetch_retry_post(`${RELEASEVERSION}${fileId}`);
 
         if (res3.success && res1.success && res2.success) {
           dispatch(
-            SetProjectTransformDetailsAction({ analyzeDetailsId: fileId })
+            SetProjectTransformDetailsAction({
+              analyzeDetailsId: fileId,
+              version: isDraftState?version: version+1,
+            })
           );
-          dispatch(SetTabTypeAction("Transform"));
-          setLoading(false);
+          setTimeout(() => {
+            dispatch(SetTabTypeAction("Transform"));
+            setLoading(false);
+          }, 2000);
         } else {
           setLoading(false);
         }
