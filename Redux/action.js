@@ -5,6 +5,7 @@ import {
   TABTYPE,
   ANALYZEDETAIL,
   PROJECTTRANSFORMDETAILS,
+  DESIGNDETAILS
 } from "./type";
 
 export const UserDetails = (data) => (dispatch) => {
@@ -45,6 +46,13 @@ export const SetAnalyzeDetailAction = (data) => (dispatch) => {
 export const SetProjectTransformDetailsAction = (data) => (dispatch) => {
   dispatch({
     type: PROJECTTRANSFORMDETAILS,
+    payload: data,
+  });
+};
+
+export const SetDesignDetailsAction = (data) => (dispatch) => {
+  dispatch({
+    type: DESIGNDETAILS,
     payload: data,
   });
 };
