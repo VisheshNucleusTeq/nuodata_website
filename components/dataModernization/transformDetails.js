@@ -32,10 +32,11 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
       
     
 
-  const getAnalyzeData = async (analyzeDetailsId) => {
+  const getAnalyzeData = async (analyzeDetailsId,version) => {
+    console.log("analyze details",analyzeDetailsId,version)
     setLoading(true);
     const data = await fetch_retry_get(
-      `${GETANALYZEDATA}${analyzeDetailsId}?version=1`
+      `${GETANALYZEDATA}${analyzeDetailsId}?version=${version}`
     );
     setLoading(false);
     if (data.success) {
@@ -48,10 +49,13 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
   useEffect(() => {
     setOutputFiles(analyzeDetail?.outputFiles);
 
-    if (projectTransformDetails && projectTransformDetails.analyzeDetailsId) {
-      getAnalyzeData(projectTransformDetails.analyzeDetailsId);
+    if (projectTransformDetails && projectTransformDetails.analyzeDetailsId && projectTransformDetails.version) {
+      getAnalyzeData(
+        projectTransformDetails?.analyzeDetailsId,
+        projectTransformDetails?.version
+      );
     }
-  }, [analyzeDetail]);
+  }, []);
 
   const getProjectData = async (fileId) => {
     const data = await fetch_retry_get(`${DESIGN}${fileId}`);
