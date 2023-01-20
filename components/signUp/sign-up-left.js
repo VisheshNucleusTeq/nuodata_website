@@ -5,7 +5,7 @@ function SignUpLeft({ signUpCss }) {
   return (
     <div className={signUpCss.signUpLeft}>
       <div className={signUpCss.logo}>
-        <Image src="../assets/images/login-logo.png" preview={false} />
+        <Image src="../assets/images/logo.png" preview={false} />
       </div>
       <div className={signUpCss.leftImage}>
         <Image
