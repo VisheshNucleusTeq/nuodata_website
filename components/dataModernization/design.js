@@ -203,7 +203,7 @@ export default function Design({ dataModernizationCss }) {
     if (result && result.length) {
       await fetch_retry_put(
         `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
-        childTableData
+        result
       );
       getFileData(fileId);
     }
