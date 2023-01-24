@@ -28,6 +28,18 @@ body {
   align-items: center;
 }
 
+.inputDesignSelect div {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  border-radius: 10px !important;
+  height: 5vh !important;
+  justify-content: center;
+  align-items: center;
+}
+
 .ant-select-selection-search {
   justify-content: center;
   align-items: center;
@@ -70,7 +82,7 @@ body {
 }
 
 .ant-timeline-item-left .ant-timeline-item-label {
-  padding-right: 10% !important;
+  padding-right: 2% !important;
 }
 
 .ant-timeline-item-right .ant-timeline-item-label {
@@ -256,4 +268,11 @@ body {
     background-color: transparent !important;
     padding: 0%;
   }
+}
+
+
+.centerButton{
+  display: flex;
+  align-items :flex-end;
+  height: 6vh;
 }
