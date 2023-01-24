@@ -20,3 +20,5 @@ export const UPDATETABLE = "https://api.dev.nuodata.io/process/v1/design/target/
 export const TABLEDATA = "https://api.dev.nuodata.io/process/v1/design/target/columns/file/";
 export const UPDATECOLDETAILS = "https://api.dev.nuodata.io/process/v1/design/target/columns/file/";
 export const RELEASEVERSION = "https://api.dev.nuodata.io/process/v1/design/convert/file/";
+export const TABLECHANGELOGS = "https://api.dev.nuodata.io/process/v1/design/target/table/changelogs?tableId=";
+export const COLUMNCHANGELOGS = "https://api.dev.nuodata.io/process/v1/design/target/column/changelogs?columnId=";

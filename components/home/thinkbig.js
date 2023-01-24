@@ -28,7 +28,7 @@ export default function ThinkBig({ HomeCss }) {
 
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
         <Col xs={22} sm={22} md={22} lg={10} xl={10} xxl={10}>
-          <Image src="/home/ezgif.com-gif-maker (2).gif" preview={false} />
+          <Image src="/home/ezgif.com-gif-maker (3).gif" preview={false} />
         </Col>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
       </Row>
