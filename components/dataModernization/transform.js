@@ -27,8 +27,12 @@ import { ANALYZESUMMARY, DESIGN } from "../../network/apiConstants";
 import PieChart from "./charts/pieChart";
 import { DOWNLOADFILE } from "../../network/apiConstants";
 import AnalyzeDetailPopup from "./analyzeDetailPopup";
-import { SetProjectTransformDetailsAction, SetTabTypeAction } from "../../Redux/action";
+import {
+  SetProjectTransformDetailsAction,
+  SetTabTypeAction,
+} from "../../Redux/action";
 import TransformDetails from "./transformDetails";
+import AnalyzeDetail from "./analyzeDetail";
 
 const Transform = ({ dataModernizationCss }) => {
   const { query } = useRouter();
@@ -41,6 +45,7 @@ const Transform = ({ dataModernizationCss }) => {
   const [modalData, setModalData] = useState();
   const [open, setOpen] = useState(false);
   const [isDetails, setIsDetails] = useState(false);
+  const [fileId, setFileId] = useState(0);
 
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -53,10 +58,10 @@ const Transform = ({ dataModernizationCss }) => {
   const designDetails = useSelector(
     (state) => state.designDetails.designDetails
   );
-  
+
   useEffect(() => {
-    console.log(designDetails)
-  },[designDetails])
+    console.log(designDetails);
+  }, [designDetails]);
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
@@ -83,13 +88,13 @@ const Transform = ({ dataModernizationCss }) => {
     if (data.success) return data.data;
   };
 
-  const getDataCall = async (id) => {
-    let datar = await getProjectData(id);
-    setModalData(datar);
-    setTimeout(() => {
-      setOpen(true);
-    }, 1000);
-  };
+  // const getDataCall = async (id) => {
+  //   let datar = await getProjectData(id);
+  //   setModalData(datar);
+  //   setTimeout(() => {
+  //     setOpen(true);
+  //   }, 1000);
+  // };
 
   useEffect(() => {
     if (projectTransformDetails && projectTransformDetails.analyzeDetailsId) {
@@ -98,6 +103,14 @@ const Transform = ({ dataModernizationCss }) => {
       setIsDetails(false);
     }
   }, [projectTransformDetails.analyzeDetailsId]);
+
+  // const getAnalysisData = (data) => {
+  //   const result = fetch_retry_get(
+  //     `${GETANALYZEDATA}${analyzeDetailsId}?version=1`
+  //   );
+
+  //   return data?.outputFileId;
+  // };
 
   return (
     <>
@@ -226,11 +239,15 @@ const Transform = ({ dataModernizationCss }) => {
               xxl={24}
               className={dataModernizationCss.analyzeMainDetails}
             >
-              <Collapse defaultActiveKey="" ghost accordion>
+              <Collapse
+                defaultActiveKey=""
+                ghost
+                accordion
+              >
                 {data.map((e, i) => {
                   return (
                     <Panel
-                      key={i}
+                      key={e.fileId}
                       header={e.fileName}
                       style={{ margin: "2% 0% 2% 0%" }}
                       extra={
@@ -245,9 +262,8 @@ const Transform = ({ dataModernizationCss }) => {
                             );
                           }}
                         >
-                          {" "}
                           <EyeOutlined /> View
-                          {i != 1 ? (
+                          {i % 2 != 1 ? (
                             <Tag icon={<CheckCircleOutlined />} color="success">
                               {"Transformed Successfully"}
                             </Tag>
@@ -262,52 +278,10 @@ const Transform = ({ dataModernizationCss }) => {
                         </Space>
                       }
                     >
-                      <Table
-                        pagination={false}
-                        columns={[
-                          {
-                            title: "",
-                            dataIndex: "description",
-                            key: "description",
-                          },
-                          {
-                            title: "",
-                            key: "action",
-                            render: (_, record) => {
-                              if (record.fileType == "graph_src") {
-                                return (
-                                  <a
-                                    onClick={async () => {
-                                      getDataCall(record.outputFileId);
-                                    }}
-                                  >
-                                    <Space
-                                      size="middle"
-                                      style={{ cursor: "pointer" }}
-                                    >
-                                      <EyeOutlined /> View
-                                    </Space>
-                                  </a>
-                                );
-                              } else {
-                                return (
-                                  <a
-                                    target={"_blank"}
-                                    href={`${DOWNLOADFILE}${record.outputFileId}`}
-                                  >
-                                    <Space
-                                      size="middle"
-                                      style={{ cursor: "pointer" }}
-                                    >
-                                      <DownloadOutlined /> Download
-                                    </Space>
-                                  </a>
-                                );
-                              }
-                            },
-                          },
-                        ]}
-                        dataSource={e?.outputFiles}
+                      <AnalyzeDetail
+                        analyzeDetailsId={e.fileId}
+                        dataModernizationCss={dataModernizationCss}
+                        showTop={false}
                       />
                     </Panel>
                   );

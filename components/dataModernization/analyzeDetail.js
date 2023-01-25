@@ -20,6 +20,7 @@ import {
   GETANALYZEDATA,
   DOWNLOADFILE,
   DESIGN,
+  VERSION,
 } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
 
@@ -39,6 +40,7 @@ const AnalyzeDetail = ({
   dataModernizationCss,
   analyzeDetailsId,
   setAnalyze,
+  showTop,
 }) => {
   const dispatch = useDispatch();
 
@@ -56,8 +58,16 @@ const AnalyzeDetail = ({
 
   const getAnalyzeData = async () => {
     setLoading(true);
+
+    const modelVersionObj = await fetch_retry_get(
+      `${VERSION}${analyzeDetailsId}`
+    );
+    const version = modelVersionObj?.data?.isDraft
+      ? modelVersionObj?.data?.version + 1
+      : modelVersionObj?.data?.version;
+
     const data = await fetch_retry_get(
-      `${GETANALYZEDATA}${analyzeDetailsId}?version=1`
+      `${GETANALYZEDATA}${analyzeDetailsId}?version=${version}`
     );
     setLoading(false);
     if (data.success) {
@@ -166,19 +176,11 @@ const AnalyzeDetail = ({
               if (transformationSummary.length == index + 1) {
                 return (
                   <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-                    <span>
-                      {value}
-                      {/* {value > 1 ? "Hours" : "Hour"} */}
-                    </span>
+                    <span>{value}</span>
                   </b>
                 );
               } else {
-                return (
-                  <span>
-                    {value}
-                    {/* {value > 1 ? "Hours" : "Hour"} */}
-                  </span>
-                );
+                return <span>{value}</span>;
               }
             },
           },
@@ -190,47 +192,14 @@ const AnalyzeDetail = ({
               if (transformationSummary.length == index + 1) {
                 return (
                   <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-                    <span>
-                      {value}
-                      {/* {value > 1 ? "Hours" : "Hour"} */}
-                    </span>
+                    <span>{value}</span>
                   </b>
                 );
               } else {
-                return (
-                  <span>
-                    {value}
-                    {/* {value > 1 ? "Hours" : "Hour"} */}
-                  </span>
-                );
+                return <span>{value}</span>;
               }
             },
           },
-          // {
-          //   title: "Manual Rate",
-          //   dataIndex: "manualRate",
-          //   key: "manualRate",
-          //   render: (value, row, index) => {
-          //     if(transformationSummary.length == (index + 1)){
-          //       return <b style={{color : "#0c3246", fontWeight : "bold"}}>$<span>{value}</span></b>;
-          //     }else{
-          //       return <span>${value}</span>;
-          //     }
-          //   },
-          // },
-          // {
-          //   title: "Automated Rate",
-          //   dataIndex: "automatedRate",
-          //   key: "automatedRate",
-          //   render: (value, row, index) => {
-          //     if(transformationSummary.length == (index + 1)){
-          //       return <b style={{color : "#0c3246", fontWeight : "bold"}}>$<span>{value}</span></b>;
-          //     }else{
-          //       return <span>${value}</span>;
-          //     }
-          //   },
-          // },
-
           {
             title: "Hourly Unit Rate",
             dataIndex: "hourlyUnitRate",
@@ -319,12 +288,14 @@ const AnalyzeDetail = ({
 
   return (
     <>
-      <ArrowLeftOutlined
-        style={{ fontSize: "1.5vw" }}
-        onClick={() => {
-          setAnalyze(true);
-        }}
-      />
+      {showTop && (
+        <ArrowLeftOutlined
+          style={{ fontSize: "1.5vw" }}
+          onClick={() => {
+            setAnalyze(true);
+          }}
+        />
+      )}
 
       {loading ? (
         <center>
@@ -335,164 +306,113 @@ const AnalyzeDetail = ({
           className={dataModernizationCss.analyzeMain}
           style={{
             backgroundColor: "#FFF",
-            padding: "2%",
+            // padding: showTop ? "2%" : "0%",
             borderRadius: "25px",
+            border : "1px solid #f0f0f0"
           }}
         >
           <Row>
-            {/* <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15}>
-              <div className={dataModernizationCss.analyzeMain}>
-                <Table
-                  pagination={false}
-                  className="demo"
-                  columns={[
-                    {
-                      title: "File",
-                      dataIndex: "fileName",
-                      key: "fileName",
-                    },
-                    {
-                      title: "Workflows",
-                      dataIndex: "workflows",
-                      key: "workflows",
-                    },
-                    {
-                      title: "Mappings",
-                      dataIndex: "mappings",
-                      key: "mappings",
-                    },
-                    {
-                      title: "Transformations",
-                      dataIndex: "transformations",
-                      key: "transformations",
-                    },
-                  ]}
-                  dataSource={data}
-                />
-              </div>
-            </Col> */}
+            {showTop && (
+              <>
+                <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15}>
+                  <Card
+                    className={dataModernizationCss.cardViewGrid}
+                    hoverable={false}
+                  >
+                    <Card.Grid hoverable={false}>File</Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      {data && data.fileName ? data.fileName : "0"}
+                    </Card.Grid>
 
-            <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15}>
-              <Card
-                className={dataModernizationCss.cardViewGrid}
-                hoverable={false}
-              >
-                <Card.Grid hoverable={false}>File</Card.Grid>
-                <Card.Grid hoverable={false}>
-                  {data && data.fileName ? data.fileName : "0"}
-                </Card.Grid>
+                    <Card.Grid hoverable={false}>Work flows</Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      {data && data.workflows ? data.workflows : "0"}
+                    </Card.Grid>
 
-                <Card.Grid hoverable={false}>Work flows</Card.Grid>
-                <Card.Grid hoverable={false}>
-                  {data && data.workflows ? data.workflows : "0"}
-                </Card.Grid>
+                    <Card.Grid hoverable={false}>Mappings</Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      {data && data.mappings ? data.mappings : "0"}
+                    </Card.Grid>
 
-                <Card.Grid hoverable={false}>Mappings</Card.Grid>
-                <Card.Grid hoverable={false}>
-                  {data && data.mappings ? data.mappings : "0"}
-                </Card.Grid>
+                    <Card.Grid hoverable={false}>Transformations</Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      {data && data.transformations
+                        ? data.transformations
+                        : "0"}
+                    </Card.Grid>
+                  </Card>
+                </Col>
 
-                <Card.Grid hoverable={false}>Transformations</Card.Grid>
-                <Card.Grid hoverable={false}>
-                  {data && data.transformations ? data.transformations : "0"}
-                </Card.Grid>
-              </Card>
-            </Col>
+                <Col
+                  xs={1}
+                  sm={1}
+                  md={1}
+                  lg={1}
+                  xl={1}
+                  xxl={1}
+                  style={{ justifyContent: "center", display: "flex" }}
+                >
+                  <Divider
+                    style={{ height: "100%", backgroundColor: "#f8f8f8" }}
+                    type="vertical"
+                  />
+                </Col>
 
-            <Col
-              xs={1}
-              sm={1}
-              md={1}
-              lg={1}
-              xl={1}
-              xxl={1}
-              style={{ justifyContent: "center", display: "flex" }}
-            >
-              <Divider
-                style={{ height: "100%", backgroundColor: "#f8f8f8" }}
-                type="vertical"
-              />
-            </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                  <Card className={dataModernizationCss.cardViewGrid}>
+                    <Card.Grid hoverable={false}>Complexity</Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      {analyzeDetails && analyzeDetails.complexity
+                        ? analyzeDetails.complexity
+                        : "0"}
+                    </Card.Grid>
 
-            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-              <Card className={dataModernizationCss.cardViewGrid}>
-                <Card.Grid hoverable={false}>Complexity</Card.Grid>
-                <Card.Grid hoverable={false}>
-                  {analyzeDetails && analyzeDetails.complexity
-                    ? analyzeDetails.complexity
-                    : "0"}
-                </Card.Grid>
+                    <Card.Grid hoverable={false}>Conversion</Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      {analyzeDetails && analyzeDetails.conversion
+                        ? analyzeDetails.conversion
+                        : "0"}
+                      %
+                    </Card.Grid>
 
-                <Card.Grid hoverable={false}>Conversion</Card.Grid>
-                <Card.Grid hoverable={false}>
-                  {analyzeDetails && analyzeDetails.conversion
-                    ? analyzeDetails.conversion
-                    : "0"}
-                  %
-                </Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      Manual effort estimate
+                    </Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
+                        ? analyzeDetails.manualEffortsEstimateHrs
+                        : "0"}{" "}
+                      hours
+                    </Card.Grid>
 
-                <Card.Grid hoverable={false}>Manual effort estimate</Card.Grid>
-                <Card.Grid hoverable={false}>
-                  {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
-                    ? analyzeDetails.manualEffortsEstimateHrs
-                    : "0"}{" "}
-                  hours
-                </Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      Automated Effort Hours
+                    </Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      {analyzeDetails &&
+                        parseFloat(
+                          analyzeDetails.manualEffortsEstimateHrs -
+                            (analyzeDetails.manualEffortsEstimateHrs / 100) *
+                              analyzeDetails.automationEffortPercent
+                        ).toFixed(1)}{" "}
+                      hours
+                    </Card.Grid>
 
-                <Card.Grid hoverable={false}>
-                  {/* Effort with x% automation */}
-                  Automated Effort Hours
-                </Card.Grid>
-                <Card.Grid hoverable={false}>
-                  {/* {analyzeDetails && analyzeDetails.automationEffortPercent
-                    ? analyzeDetails.automationEffortPercent
-                    : "0"}{" "}
-                  % */}
-                  {analyzeDetails && parseFloat(
-                    analyzeDetails.manualEffortsEstimateHrs -
-                      (analyzeDetails.manualEffortsEstimateHrs / 100) *
-                        analyzeDetails.automationEffortPercent
-                  ).toFixed(1)}
-                  {" "}hours
-                </Card.Grid>
+                    <Card.Grid hoverable={false} bordered={false}>
+                      Hours Saved
+                    </Card.Grid>
+                    <Card.Grid hoverable={false} bordered={false}>
+                      {analyzeDetails && analyzeDetails.hoursSaved
+                        ? analyzeDetails.hoursSaved
+                        : "0"}{" "}
+                      hours
+                    </Card.Grid>
+                  </Card>
+                </Col>
+              </>
+            )}
 
-                <Card.Grid hoverable={false} bordered={false}>
-                  Hours Saved
-                </Card.Grid>
-                <Card.Grid hoverable={false} bordered={false}>
-                  {analyzeDetails && analyzeDetails.hoursSaved
-                    ? analyzeDetails.hoursSaved
-                    : "0"}{" "}
-                  hours
-                </Card.Grid>
-              </Card>
-            </Col>
-
-            {/* <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-              <Modal
-                destroyOnClose
-                centered
-                open={false}
-                onOk={() => setOpen(false)}
-                onCancel={() => setOpen(false)}
-                width={"100vw"}
-              >
-                <AnalyzeDetailPopup
-                  outputFileId={outputFileId}
-                  data={modalData}
-                />
-              </Modal>
-            </Col> */}
-
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={24}
-              xl={24}
-              xxl={24}
-              className={dataModernizationCss.analyzeMainDetails}
-            >
+            <Col span={24} className={dataModernizationCss.analyzeMainDetails}>
               <Collapse ghost accordion>
                 {outputFiles
                   .filter(function (item) {
@@ -507,7 +427,7 @@ const AnalyzeDetail = ({
                             : e.description
                         }
                         key={i}
-                        style={{ margin: "2% 0% 2% 0%" }}
+                        style={showTop ? { margin: "2% 0% 2% 0%" } : { margin: "1% 0% 1% 0%" }}
                         extra={
                           e.fileType != "graph_src" && (
                             <a
@@ -527,23 +447,6 @@ const AnalyzeDetail = ({
                         }
                       >
                         <Row>
-                          {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                          {e.fileType != "graph_src" && (
-                            <a
-                              target={"_blank"}
-                              href={`${DOWNLOADFILE}${e.outputFileId}`}
-                            >
-                              <Space
-                                size="middle"
-                                className={
-                                  dataModernizationCss.downloadBtnSpace
-                                }
-                              >
-                                <DownloadOutlined /> Download
-                              </Space>
-                            </a>
-                          )}
-                        </Col> */}
                           <Col
                             xs={24}
                             sm={24}
@@ -565,131 +468,47 @@ const AnalyzeDetail = ({
                     );
                   })}
               </Collapse>
+              {showTop && (
+                <div className={dataModernizationCss.nextExitBtn}>
+                  <Button
+                    type="primary"
+                    danger
+                    className={dataModernizationCss.nextBtn}
+                    htmlType="submit"
+                    onClick={() => {
+                      dispatch(SetTabTypeAction("Design"));
+                    }}
+                    style={{ marginRight: "2%" }}
+                  >
+                    Design Workflow <ArrowRightOutlined />
+                  </Button>
+                  <Button
+                    type="primary"
+                    danger
+                    className={dataModernizationCss.nextBtn}
+                    htmlType="submit"
+                    onClick={() => {
+                      dispatch(
+                        SetProjectTransformDetailsAction({ analyzeDetailsId })
+                      );
+                      dispatch(SetTabTypeAction("Transform"));
+                    }}
+                  >
+                    Transform
+                  </Button>
 
-              {/* {outputFiles.map((e) => {
-                  return (
-                    <Row className={dataModernizationCss.dataList}>
-                      <Col
-                        xs={6}
-                        sm={6}
-                        md={6}
-                        lg={6}
-                        xl={6}
-                        xxl={6}
-                        className={dataModernizationCss.transformation}
-                      >
-                        {e.description}
-                      </Col>
-
-                      <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} />
-                      <Col
-                        xs={6}
-                        sm={6}
-                        md={6}
-                        lg={6}
-                        xl={6}
-                        xxl={6}
-                        className={dataModernizationCss.downloadBtn}
-                      >
-                        {e.fileType != "graph_src" && (
-                          <a
-                            target={"_blank"}
-                            href={`${DOWNLOADFILE}${e.outputFileId}`}
-                          >
-                            <Space
-                              size="middle"
-                              className={dataModernizationCss.downloadBtnSpace}
-                            >
-                              <DownloadOutlined /> Download
-                            </Space>
-                          </a>
-                        )}
-                      </Col>
-                      <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        {e.fileType != "graph_src" ? (
-                          <Table
-                            className={`demo ${dataModernizationCss.analyzeMain}`}
-                            pagination={false}
-                            columns={[
-                              {
-                                title: "File",
-                                dataIndex: "fileName",
-                                key: "fileName",
-                              },
-                              {
-                                title: "Workflows",
-                                dataIndex: "workflows",
-                                key: "workflows",
-                              },
-                              {
-                                title: "Mappings",
-                                dataIndex: "mappings",
-                                key: "mappings",
-                              },
-                              {
-                                title: "Transformations",
-                                dataIndex: "transformations",
-                                key: "transformations",
-                              },
-                            ]}
-                            dataSource={data}
-                          />
-                        ) : (
-                          <>
-                          {open && (
-                            <p>dsf</p>
-                            // <AnalyzeDetailPopup
-                            //   outputFileId={outputFileId}
-                            //   data={modalData}
-                            // />
-                            )}
-                          </>
-                        )}
-                      </Col>
-                    </Row>
-                  );
-                })} */}
-
-              <div className={dataModernizationCss.nextExitBtn}>
-                <Button
-                  type="primary"
-                  danger
-                  className={dataModernizationCss.nextBtn}
-                  htmlType="submit"
-                  onClick={() => {
-                    // dispatch(SetProjectTransformDetailsAction({ analyzeDetailsId }));
-                    dispatch(SetTabTypeAction("Design"));
-                  }}
-                  style={{ marginRight: "2%" }}
-                >
-                  Design Workflow <ArrowRightOutlined />
-                </Button>
-                <Button
-                  type="primary"
-                  danger
-                  className={dataModernizationCss.nextBtn}
-                  htmlType="submit"
-                  onClick={() => {
-                    dispatch(
-                      SetProjectTransformDetailsAction({ analyzeDetailsId })
-                    );
-                    dispatch(SetTabTypeAction("Transform"));
-                  }}
-                >
-                  Transform
-                </Button>
-
-                <Button
-                  type="primary"
-                  danger
-                  className={dataModernizationCss.exitBtn}
-                  onClick={() => {
-                    router.push(`/dashboard`);
-                  }}
-                >
-                  Exit
-                </Button>
-              </div>
+                  <Button
+                    type="primary"
+                    danger
+                    className={dataModernizationCss.exitBtn}
+                    onClick={() => {
+                      router.push(`/dashboard`);
+                    }}
+                  >
+                    Exit
+                  </Button>
+                </div>
+              )}
             </Col>
           </Row>
         </div>
