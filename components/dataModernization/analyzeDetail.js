@@ -308,7 +308,7 @@ const AnalyzeDetail = ({
             backgroundColor: "#FFF",
             // padding: showTop ? "2%" : "0%",
             borderRadius: "25px",
-            border : "1px solid #f0f0f0"
+            border: "1px solid #f0f0f0",
           }}
         >
           <Row>
@@ -366,14 +366,17 @@ const AnalyzeDetail = ({
                         ? analyzeDetails.complexity
                         : "0"}
                     </Card.Grid>
-
-                    <Card.Grid hoverable={false}>Conversion</Card.Grid>
-                    <Card.Grid hoverable={false}>
-                      {analyzeDetails && analyzeDetails.conversion
-                        ? analyzeDetails.conversion
-                        : "0"}
-                      %
-                    </Card.Grid>
+                    {analyzeDetails && analyzeDetails.conversion > 0 && (
+                      <>
+                        <Card.Grid hoverable={false}>Conversion</Card.Grid>
+                        <Card.Grid hoverable={false}>
+                          {analyzeDetails && analyzeDetails.conversion
+                            ? analyzeDetails.conversion
+                            : "0"}
+                          %
+                        </Card.Grid>
+                      </>
+                    )}
 
                     <Card.Grid hoverable={false}>
                       Manual effort estimate
@@ -427,7 +430,11 @@ const AnalyzeDetail = ({
                             : e.description
                         }
                         key={i}
-                        style={showTop ? { margin: "2% 0% 2% 0%" } : { margin: "1% 0% 1% 0%" }}
+                        style={
+                          showTop
+                            ? { margin: "2% 0% 2% 0%" }
+                            : { margin: "1% 0% 1% 0%" }
+                        }
                         extra={
                           e.fileType != "graph_src" && (
                             <a

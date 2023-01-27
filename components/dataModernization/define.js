@@ -349,8 +349,8 @@ const Define = ({ dataModernizationCss }) => {
               }
               options={[
                 {
-                  value: "pysql",
-                  label: "PySql",
+                  value: "sparkSql",
+                  label: "Spark SQL",
                 },
                 // {
                 //   value: "PySpark",
