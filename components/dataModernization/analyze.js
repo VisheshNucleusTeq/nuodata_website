@@ -315,6 +315,7 @@ const Analyze = ({ dataModernizationCss }) => {
           setAnalyze={() => {
             setAnalyze(true);
           }}
+          showTop={true}
         />
       )}
     </div>

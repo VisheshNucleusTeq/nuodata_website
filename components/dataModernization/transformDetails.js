@@ -11,6 +11,7 @@ import {
 import { DownloadOutlined, EyeOutlined } from "@ant-design/icons";
 import AnalyzeDetailPopup from "./analyzeDetailPopup";
 import { SetAnalyzeDetailAction } from "../../Redux/action";
+import AnalyzeDetail from "./analyzeDetail";
 
 const TransformDetails = ({ dataModernizationCss, changeStep }) => {
   const dispatch = useDispatch();
@@ -29,11 +30,8 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
   const projectTransformDetails = useSelector(
     (state) => state.projectTransformDetails.projectTransformDetails
   );
-      
-    
 
-  const getAnalyzeData = async (analyzeDetailsId,version) => {
-    console.log("analyze details",analyzeDetailsId,version)
+  const getAnalyzeData = async (analyzeDetailsId, version) => {
     setLoading(true);
     const data = await fetch_retry_get(
       `${GETANALYZEDATA}${analyzeDetailsId}?version=${version}`
@@ -48,8 +46,11 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
 
   useEffect(() => {
     setOutputFiles(analyzeDetail?.outputFiles);
-
-    if (projectTransformDetails && projectTransformDetails.analyzeDetailsId && projectTransformDetails.version) {
+    if (
+      projectTransformDetails &&
+      projectTransformDetails.analyzeDetailsId &&
+      projectTransformDetails.version
+    ) {
       getAnalyzeData(
         projectTransformDetails?.analyzeDetailsId,
         projectTransformDetails?.version
@@ -72,7 +73,6 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
 
   return (
     <Row className={dataModernizationCss.defineForm}>
-      {/* <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} /> */}
       <Col
         xs={23}
         sm={23}
@@ -102,7 +102,6 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
       <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
         <div className={dataModernizationCss.analyzeMain}>
           <Modal
-            // title="Modal 1000px width"
             destroyOnClose
             centered
             open={open}
@@ -110,53 +109,12 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
             onCancel={() => setOpen(false)}
             width={"100vw"}
           >
-            {/* <p>{ Date.now() }</p> */}
             <AnalyzeDetailPopup outputFileId={outputFileId} data={modalData} />
           </Modal>
-
-          <Table
-            pagination={false}
-            // className="demo"
-            columns={[
-              {
-                title: "",
-                dataIndex: "description",
-                key: "description",
-              },
-              {
-                title: "",
-                key: "action",
-                render: (_, record) => {
-                  if (record.fileType == "graph_src") {
-                    return (
-                      <a
-                        onClick={async () => {
-                          // setOutputFileId(record.outputFileId);
-                          getDataCall(record.outputFileId);
-                        }}
-                      >
-                        <Space size="middle" style={{ cursor: "pointer" }}>
-                          <EyeOutlined /> View
-                        </Space>
-                      </a>
-                    );
-                  } else {
-                    return (
-                      //http://3.109.185.25:8080/core/v1/download/155
-                      <a
-                        target={"_blank"}
-                        href={`${DOWNLOADFILE}${record.outputFileId}`}
-                      >
-                        <Space size="middle" style={{ cursor: "pointer" }}>
-                          <DownloadOutlined /> Download
-                        </Space>
-                      </a>
-                    );
-                  }
-                },
-              },
-            ]}
-            dataSource={analyzeDetail?.outputFiles}
+          <AnalyzeDetail
+            analyzeDetailsId={projectTransformDetails?.analyzeDetailsId}
+            dataModernizationCss={dataModernizationCss}
+            showTop={false}
           />
         </div>
       </Col>
