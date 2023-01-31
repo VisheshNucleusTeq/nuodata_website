@@ -22,3 +22,4 @@ export const UPDATECOLDETAILS = "https://api.dev.nuodata.io/process/v1/design/ta
 export const RELEASEVERSION = "https://api.dev.nuodata.io/process/v1/design/convert/file/";
 export const TABLECHANGELOGS = "https://api.dev.nuodata.io/process/v1/design/target/table/changelogs?tableId=";
 export const COLUMNCHANGELOGS = "https://api.dev.nuodata.io/process/v1/design/target/column/changelogs?columnId=";
+export const CHANGELOGS = "https://api.dev.nuodata.io/process/v1/design/target/changelog/file/";

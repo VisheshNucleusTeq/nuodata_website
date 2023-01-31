@@ -8,7 +8,7 @@ import {
   DESIGNDETAILS
 } from "./type";
 
-export const UserDetails = (data) => (dispatch) => {
+export const UserDetailsAction = (data) => (dispatch) => {
   dispatch({
     type: LOGIN,
     payload: data,

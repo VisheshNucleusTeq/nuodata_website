@@ -41,12 +41,19 @@
   background: #14394d;
 }
 
+.signUpBtn:focus {
+  height: 50px;
+  border-radius: 15px;
+  background: #14394d;
+}
+
 .signup {
   margin-top: 20px;
 }
 
 .cursorPointer {
   cursor: pointer;
+  color: #0c3246;
 }
 
 .desktopView {

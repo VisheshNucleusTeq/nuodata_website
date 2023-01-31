@@ -7,25 +7,26 @@ import "../styles/globals.css";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider } from "react-redux";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 import { wrapper, store } from "../Redux/store";
 import { ProtectRoute } from "../contexts/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = React.useState(() => new QueryClient());
   const router = useRouter();
   const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
   if (path) {
-    console.log(path)
     router.replace(path);
-  } 
+  }
+  const user = useSelector((state) => state.userDetails.isLogged);
 
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <ProtectRoute>
+          <ProtectRoute user={user}>
             <Component key={router.asPath} {...pageProps} />
           </ProtectRoute>
         </Hydrate>
@@ -36,4 +37,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default wrapper.withRedux(MyApp);
-// export default MyApp;

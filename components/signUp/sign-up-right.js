@@ -87,7 +87,7 @@ function SignUpRight({ signUpCss }) {
             <Input
               key={"input-phone-number"}
               className={"input"}
-              placeholder={"9xxxxxxxxx"}
+              placeholder={"xxxxxxxxxx"}
               name={"phone_number"}
               type={"text"}
             />
@@ -127,14 +127,14 @@ function SignUpRight({ signUpCss }) {
             <Input
               key={"input-title"}
               className={"input"}
-              placeholder={"Data Modernization"}
+              placeholder={"Ex. Data Modernization"}
               name={"title"}
               type={"text"}
             />
           </Form.Item>
 
           <Form.Item
-          hasFeedback
+            hasFeedback
             label={"Modernization Objective"}
             labelAlign={"left"}
             name={"modernization_objective"}

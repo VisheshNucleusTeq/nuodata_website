@@ -20,13 +20,13 @@ export default function Info({ HowItWorkCss }) {
               >
                 <div>
                   <h1>
-                    How it <span>Works ?</span>
+                    How it <span>Works </span>
                   </h1>
                   <p>
                     NuoData brings intelligence and automation to the
                     modernization process for data warehouses, ETL, and
-                    analytics systems, improving speed and accuracy while
-                    lowering risks and costs
+                    analytics systems improving speed and accuracy while
+                    lowering risks and costs.
                   </p>
                 </div>
                 <Button className={HowItWorkCss.launchYourFreeTrial} block>

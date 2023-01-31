@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Space, Tooltip, Button } from "antd";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import dashboardCss from "../styles/dashboard.module.css";
 import { fetch_retry_get } from "../network/api-manager";
@@ -14,11 +14,12 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const user = useSelector((state) => state.userDetails.isLogged);
 
   const getAllProjects = async () => {
     setLoading(true);
     const authData = JSON.parse(localStorage.getItem("authData"));
-    const data = await fetch_retry_get(`${GETALLPROJECT}${authData.orgId}`);
+    const data = await fetch_retry_get(`${GETALLPROJECT}${authData?.orgId}`);
     setLoading(false);
     if (data.success) {
       setData(data.data);
@@ -28,7 +29,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    getAllProjects();
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    if(authData && authData?.orgId){
+      getAllProjects();
+    }
   }, []);
 
   const showUpdatePage = (projectId) => {
