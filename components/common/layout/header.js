@@ -1,36 +1,39 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Layout, Divider, Avatar, Menu } from "antd";
 const { Header, Content } = Layout;
-
+import { useRouter } from "next/router";
 import { BellOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Button } from "antd";
+import {useDispatch, useSelector} from "react-redux"
 
-import {useSelector} from "react-redux"
-
-
-const items = [
-  {
-    key: "1",
-    label: (
-      <a
-        rel="noopener noreferrer"
-        onClick={() => {
-          localStorage.clear();
-          window.location.replace("/");
-        }}
-      >
-        Logout
-      </a>
-    ),
-  },
-];
+import {
+  UserDetailsAction
+} from "../../../Redux/action";
 
 const HeaderView = ({ layoutCss, ref }) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const [userDetails, setUserDetails] = useState();
   const [Volumestate, setVolumestate] = useState();
-  
+  const [items] = useState([
+    {
+      key: "1",
+      label: (
+        <a
+          rel="noopener noreferrer"
+          onClick={() => {
+            localStorage.clear();
+            dispatch(UserDetailsAction(false));
+            router.push("/");
+          }}
+        >
+          Logout
+        </a>
+      ),
+    },
+  ]);
 
   useEffect(() => {
     const authData = JSON.parse(localStorage.getItem("authData"));
@@ -41,7 +44,7 @@ const HeaderView = ({ layoutCss, ref }) => {
     <Header ref={ref} className={layoutCss.mainLayoutHeader}>
       <div style={{ float: "left" }}>
         {userDetails && userDetails?.firstName && (
-          <h1>Welcome {userDetails?.firstName}! </h1>
+          <h1>Welcome {userDetails?.firstName}!</h1>
         )}
       </div>
 

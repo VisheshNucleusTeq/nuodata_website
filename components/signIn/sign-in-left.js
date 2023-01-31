@@ -1,10 +1,15 @@
 import React from "react";
 import { Image } from "antd";
+import { useRouter } from "next/router";
 
 function SignInLeft({ loginCss }) {
+  const router = useRouter();
+
   return (
     <div className={loginCss.LogInLeft}>
-      <div className={loginCss.logo}>
+      <div onClick={() => {
+        router.push('/')
+      }} className={loginCss.logo}>
         <Image src="../assets/images/logo.png" preview={false} />
       </div>
       <div className={loginCss.leftImage}>

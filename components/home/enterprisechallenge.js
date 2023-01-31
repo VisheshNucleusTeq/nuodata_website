@@ -12,7 +12,8 @@ export default function EnterpriseChallenge({ HomeCss }) {
     },
     {
       image: "/home/enterpriseChallenge/15.png",
-      text: "Time consuming & manual effort",
+      // text: "Time consuming & manual effort",
+      text: "Time consuming and Labor-Intensive",
     },
     {
       image: "/home/enterpriseChallenge/13.png",
@@ -20,7 +21,8 @@ export default function EnterpriseChallenge({ HomeCss }) {
     },
     {
       image: "/home/enterpriseChallenge/11.png",
-      text: "Dumping everything on cloud is expensive",
+      // text: "Dumping everything on cloud is expensive",
+      text: "Dumping is informal, try putting or doing",
     },
     {
       image: "/home/enterpriseChallenge/14.png",

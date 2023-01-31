@@ -48,7 +48,7 @@ export default function ThinkBig({ HomeCss }) {
           <AnimationOnScroll animateIn="animate__fadeInDown" animateOnce={true}>
             <h2>
               Unified <span>Data Management</span> platform for all data
-              engineering, analytics & operations needs.
+              engineering, analytics, operation needs.
             </h2>
           </AnimationOnScroll>
         </Col>

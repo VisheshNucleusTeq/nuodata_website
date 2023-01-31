@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Image, Form, Button, Divider, message, Input } from "antd";
 import { useRouter } from "next/router";
-
 import Link from "next/link";
-// import Input from "../common/Input";
 import { fetch_retry_post } from "../../network/api-manager";
 import { LOGIN } from "../../network/apiConstants";
+import {
+  UserDetailsAction
+} from "../../Redux/action";
+import { useDispatch } from "react-redux";
 
 function SignInRight({ loginCss }) {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
 
@@ -17,6 +20,7 @@ function SignInRight({ loginCss }) {
     setLoading(false);
     if (data.success) {
       localStorage.setItem("authData", JSON.stringify(data.data));
+      dispatch(UserDetailsAction(true));
       router.push("dashboard");
     } else {
       message.error([data?.error]);
