@@ -710,8 +710,12 @@ export default function Design({ dataModernizationCss }) {
                             onClick={() => {
                               getFileChangeLog();
                             }}
+                            style={{
+                              color: "#e74860",
+                              cursor: "pointer",
+                            }}
                           >
-                            View Change Logs
+                            Change Logs
                           </a>
                         </div>
                       }
