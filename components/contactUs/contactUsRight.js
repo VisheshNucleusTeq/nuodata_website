@@ -11,23 +11,18 @@ function SignUpRight({ signUpCss }) {
   };
 
   return (
+
+
     <div className={signUpCss.flexView}>
       <div className={signUpCss.signUpForm}>
-        <h1 style={{ marginBottom: "25px" }}>
-          <b>Sign-up for a free trial</b>
-        </h1>
-        {/* <Form
+        <h1 style={{ marginBottom: "25px" }}>Contact Us.</h1>
+
+        <Form
           layout="horizontal"
-          name="basic"
+          autoComplete="off"
           labelCol={{ span: 8 }}
-          wrapperCol={{ span: 20 }}
-          initialValues={{ remember: true }}
-          style={{ width: "100vh" }}
-        > */}
-        <Form layout="horizontal" autoComplete="off"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 24 }}
-        onFinish={onFinish}
+          wrapperCol={{ span: 24 }}
+          onFinish={onFinish}
         >
           <Form.Item
             label={"Full Name"}
@@ -107,7 +102,7 @@ function SignUpRight({ signUpCss }) {
             <Input
               key={"input-company-name"}
               className={"input"}
-              placeholder={"Your Company Name "}
+              placeholder={"Your Company Name"}
               name={"company_name"}
               type={"text"}
             />
@@ -127,7 +122,7 @@ function SignUpRight({ signUpCss }) {
             <Input
               key={"input-title"}
               className={"input"}
-              placeholder={"Ex. Data Modernization"}
+              placeholder={"CEO , Product Owner , Manager , Developer "}
               name={"title"}
               type={"text"}
             />
@@ -196,18 +191,19 @@ function SignUpRight({ signUpCss }) {
             block
             htmlType="submit"
           >
-            Register
+           Send
           </Button>
 
-          <p className={signUpCss.signup}>
+          {/* <p className={signUpCss.signup}>
             Have an account? &nbsp;
             <Link href="/sign-in">
               <b className={signUpCss.cursorPointer}>Sign in</b>
             </Link>
-          </p>
+          </p> */}
         </Form>
       </div>
     </div>
+
   );
 }
 

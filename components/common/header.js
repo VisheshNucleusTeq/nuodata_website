@@ -18,8 +18,12 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      console.log("router", router);
     };
   }, []);
+  useEffect(() => {
+    console.log("router", router);
+  }, [router.pathname]);
 
   return (
     <div
@@ -46,20 +50,20 @@ export default function Header() {
             items={[
               {
                 key: "1",
-                label: "Why NuoData?",
                 className: HeaderCss.hoverEffect,
-                onClick: () => {
-                  Router.push("/how-it-works");
-                  router.push("/how-it-works");
-                },
+                label: (
+                  <a className={HeaderCss.hoverEffect} href="/#benefitsID">
+                    Why NuoData?
+                  </a>
+                ),
               },
               {
                 key: "2",
                 label: "Data Modernization",
                 className: HeaderCss.hoverEffect,
                 onClick: () => {
-                  Router.push("/how-it-works");
-                  router.push("/how-it-works");
+                  // Router.push("/how-it-works");
+                  router.replace("/how-it-works");
                 },
               },
               {
@@ -71,15 +75,17 @@ export default function Header() {
                     Data Management
                   </a>
                 ),
-                // style : {
-                //   visibility :  "hidden"
-                // }
+                style : {
+                  visibility :  "hidden"
+                }
               },
               {
                 key: "4",
                 label: (
                   <Tag
-                    onClick={() => Router.push("/sign-in")}
+                    onClick={() => {
+                     router.push("/sign-in")
+                    }}
                     className={HeaderCss.tryNowTag}
                     color="#E74860"
                   >
@@ -91,9 +97,11 @@ export default function Header() {
               {
                 key: "5",
                 label: (
-                  <Tag 
-                  onClick={() => Router.push("/sign-up")}
-                  className={HeaderCss.tryNowTag} color="#E74860">
+                  <Tag
+                    onClick={() => Router.push("/contact-us")}
+                    className={HeaderCss.tryNowTag}
+                    color="#E74860"
+                  >
                     Contact Us
                   </Tag>
                 ),

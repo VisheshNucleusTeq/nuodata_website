@@ -97,6 +97,7 @@
   color: #0c3246 !important;
   font-size: 6vw;
   font-weight: bolder;
+  
 }
 
 .thinkBigChild h1:last-child {
@@ -107,9 +108,10 @@
 }
 
 .thinkBigChild {
-  margin-top: 2%;
+  margin-top: 5%;
   display: flex;
   align-items: center;
+
   /* border-bottom: 1px solid rgb(226, 224, 224); */
 }
 
@@ -222,7 +224,7 @@
 }
 
 .ECTitle span {
-  background-image: linear-gradient(#000000 60%, #626262 50%);
+  background-image: linear-gradient(#000000 60%, #0c3246 50%);
 }
 
 .ECmainRow {
@@ -844,7 +846,7 @@
   font-size: 4vw;
   font-weight: bolder;
   color: #0c3246;
-  background-image: linear-gradient(#fff 75%, gray 100%);
+  /* background-image: linear-gradient(#fff 75%, #07283b 100%); */
 }
 
 /* 

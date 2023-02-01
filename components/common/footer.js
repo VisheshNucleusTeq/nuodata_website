@@ -6,7 +6,7 @@ const Footer = () => {
   const router = useRouter();
 
   return (
-    <Row style={{ backgroundColor: "#072A3D" }}>
+    <Row style={{ backgroundColor: "#000" }}>
       {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: "2%", display:"flex", justifyContent : "center" }}>
         <Image preview={false} width={"25%"} src={"./logo.png"} style={{ maxWidth: "100%" }} />
       </Col>
@@ -17,7 +17,7 @@ const Footer = () => {
         <p style={{color : "#e74860"}}>Copyright © NuoData. {(new Date().getFullYear())} | All rights reserved.</p>
       </Col> */}
       <Col span={20} offset={3}>
-        <Row style={{ backgroundColor: "#072A3D" }}>
+        <Row style={{ backgroundColor: "#000" }}>
           <Col
             xs={24}
             sm={12}
@@ -27,15 +27,17 @@ const Footer = () => {
             className={FooterCss.footerCol}
           >
             <div className={FooterCss.footerColChild}>
-              <h1 
+              <h1
                 onClick={() => {
                   Router.push("/how-it-works");
                   router.push("/how-it-works");
                 }}
                 style={{
-                  cursor : "pointer"
+                  cursor: "pointer",
                 }}
-              >Why NuoData?</h1>
+              >
+                Why NuoData?
+              </h1>
               <List>
                 <p style={{ color: "#FFF" }}>6-10X Faster</p>
                 <p style={{ color: "#FFF" }}>60-70% reduced cost</p>
@@ -55,19 +57,23 @@ const Footer = () => {
           >
             <div className={FooterCss.footerColChild}>
               <h1
-              onClick={() => {
-                Router.push("/how-it-works");
-                router.push("/how-it-works");
-              }}
-              style={{
-                cursor : "pointer"
-              }}
-              >How it works</h1>
+                onClick={() => {
+                  Router.push("/how-it-works");
+                  router.push("/how-it-works");
+                }}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                How it works
+              </h1>
               <List>
                 <p style={{ color: "#FFF" }}>Enterprise grade platform</p>
                 <p style={{ color: "#FFF" }}>Well defined process</p>
                 <p style={{ color: "#FFF" }}>Prescriptive analysis</p>
-                <p style={{ color: "#FFF" }}>Design aimed at Single version of truth</p>
+                <p style={{ color: "#FFF" }}>
+                  Delivering Single version of truth
+                </p>
                 <p style={{ color: "#FFF" }}>No-Code transformation</p>
                 <p style={{ color: "#FFF" }}>Multi Tenancy & RBAC</p>
                 <p style={{ color: "#FFF" }}>Intuitive UI</p>
@@ -83,7 +89,7 @@ const Footer = () => {
             className={FooterCss.footerCol}
           >
             <div className={FooterCss.footerColChild}>
-              <h1>Partners</h1>
+              <h1> OurPartners</h1>
               <List>
                 <p style={{ color: "#FFF" }}>AWS</p>
                 <p style={{ color: "#FFF" }}>Google Cloud</p>
@@ -102,7 +108,12 @@ const Footer = () => {
             className={FooterCss.footerCol}
           >
             <div className={FooterCss.footerColChild}>
-              <h1>Connect</h1>
+              <h1
+                style={{ cursor: "pointer" }}
+                onClick={() => Router.push("/contact-us")}
+              >
+                Connect
+              </h1>
               <List>
                 <p style={{ color: "#FFF" }}>Book a Demo</p>
                 <p style={{ color: "#FFF" }}>Contact Us</p>
@@ -173,8 +184,17 @@ const Footer = () => {
       <Col span={20} offset={2} style={{ borderTop: "2px solid #FFF" }}>
         <Divider style={{ color: "red" }} />
       </Col>
-      <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ display:"flex", justifyContent : "center" }}>
-        <p style={{color : "#e74860"}}>Copyright © NuoData. {(new Date().getFullYear())} | All rights reserved.</p>
+      <Col
+        xs={24}
+        sm={24}
+        md={24}
+        lg={24}
+        xl={24}
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <p style={{ color: "#e74860" }}>
+          Copyright © NuoData. {new Date().getFullYear()} | All rights reserved.
+        </p>
       </Col>
     </Row>
   );

@@ -56,6 +56,7 @@ function SignInRight({ loginCss }) {
               placeholder={"example@gmail.com"}
               name={"email"}
               type={"text"}
+              style={{ minWidth: "40vw" }}
               disabled={isLoading}
             />
           </Form.Item>
@@ -64,9 +65,7 @@ function SignInRight({ loginCss }) {
             label={"Password"}
             labelAlign={"left"}
             name={"password"}
-            rules={[
-              { required: true, message: "Password is required." },
-            ]}
+            rules={[{ required: true, message: "Password is required." }]}
           >
             <Input
               key={"input-password"}
@@ -94,8 +93,8 @@ function SignInRight({ loginCss }) {
             Login
           </Button>
 
-          <Divider plain>Or</Divider>
-          <Button
+          <Divider plain>NuoData</Divider>
+          {/* <Button
             size={"large"}
             className={loginCss.googleLoginBtn}
             type=""
@@ -107,7 +106,7 @@ function SignInRight({ loginCss }) {
               preview={false}
             />
             &nbsp; Login with Google
-          </Button>
+          </Button> */}
           <p className={loginCss.signup}>
             Don’t have an account? &nbsp;
             <Link href="/sign-up">

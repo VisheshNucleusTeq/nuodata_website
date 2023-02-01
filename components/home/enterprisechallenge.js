@@ -21,8 +21,8 @@ export default function EnterpriseChallenge({ HomeCss }) {
     },
     {
       image: "/home/enterpriseChallenge/11.png",
-      // text: "Dumping everything on cloud is expensive",
-      text: "Dumping is informal, try putting or doing",
+      text: "Dumping everything on cloud is expensive",
+      // text: "Dumping is informal, try putting or doing",
     },
     {
       image: "/home/enterpriseChallenge/14.png",
@@ -117,13 +117,13 @@ export default function EnterpriseChallenge({ HomeCss }) {
         </Col>
         <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
 
-        <Col span={24} className={HomeCss.howNuoDataworksBtn}>
+        {/* <Col span={24} className={HomeCss.howNuoDataworksBtn}>
           <Link prefetch href="/how-it-works">
             <Button>
               “Explore How NuoData works” <RiseOutlined />
             </Button>
           </Link>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );

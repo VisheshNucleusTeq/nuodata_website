@@ -11,13 +11,19 @@ import { useEffect } from "react";
 export const ProtectRoute = ({ children, users }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const authPage = ["/", "/how-it-works", "/sign-in", "/sign-up"];
+  const authPage = [
+    "/",
+    "/how-it-works",
+    "/sign-in",
+    "/sign-up",
+    "/contact-us",
+  ];
   const user = useSelector((state) => state.userDetails.isLogged);
 
   useEffect(() => {
     if (!authPage.includes(router.pathname) && !user) {
       router.push("/");
-    } else if (["/sign-in", "/sign-up"].includes(router.pathname) && user) {
+    } else if (["/sign-in", "/sign-up","/contact-us"].includes(router.pathname) && user) {
       router.push("/dashboard");
     }
   }, [children, user]);

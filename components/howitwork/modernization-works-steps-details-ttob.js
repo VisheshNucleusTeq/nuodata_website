@@ -74,7 +74,7 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
       //   style: { stroke: '#E74860' },
       // }
     ]);
-  });
+  },[ref.current]);
 
   return (
     <div ref={ref} style={{ height: "60vh" }}>
