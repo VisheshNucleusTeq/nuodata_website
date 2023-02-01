@@ -71,9 +71,9 @@ export default function Header() {
                     Data Management
                   </a>
                 ),
-                style : {
-                  visibility :  "hidden"
-                }
+                // style : {
+                //   visibility :  "hidden"
+                // }
               },
               {
                 key: "4",
@@ -91,7 +91,9 @@ export default function Header() {
               {
                 key: "5",
                 label: (
-                  <Tag className={HeaderCss.tryNowTag} color="#E74860">
+                  <Tag 
+                  onClick={() => Router.push("/sign-up")}
+                  className={HeaderCss.tryNowTag} color="#E74860">
                     Contact Us
                   </Tag>
                 ),

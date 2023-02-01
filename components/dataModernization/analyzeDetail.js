@@ -419,7 +419,9 @@ const AnalyzeDetail = ({
               <Collapse ghost accordion>
                 {outputFiles
                   .filter(function (item) {
-                    return item.description !== "Transformation SQL";
+                    return (
+                      item.description !== (showTop ? "Transformation SQL" : "")
+                    );
                   })
                   .map((e, i) => {
                     return (
