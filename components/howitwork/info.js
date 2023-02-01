@@ -29,9 +29,7 @@ export default function Info({ HowItWorkCss }) {
                     lowering risks and costs.
                   </p>
                 </div>
-                <Button className={HowItWorkCss.launchYourFreeTrial} block>
-                  Launch your free trial
-                </Button>
+                
               </Col>
               <Col
                 xs={24}

@@ -7,9 +7,13 @@ function SignInLeft({ loginCss }) {
 
   return (
     <div className={loginCss.LogInLeft}>
-      <div onClick={() => {
-        router.push('/')
-      }} className={loginCss.logo}>
+      <div
+        style={{ padding: "2rem",cursor:"pointer" }}
+        onClick={() => {
+          router.push("/");
+        }}
+        className={loginCss.logo}
+      >
         <Image src="../assets/images/logo.png" preview={false} />
       </div>
       <div className={loginCss.leftImage}>

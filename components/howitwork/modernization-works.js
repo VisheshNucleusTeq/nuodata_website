@@ -2,6 +2,7 @@ import { Col, Row, Button, Image } from "antd";
 import ModernizationWorksStepsDetailsRtol from "./modernization-works-steps-details-rtol";
 import ModernizationWorksStepsDetailsLtoR from "./modernization-works-steps-details-ltor";
 import ModernizationWorksStepsDetailsTtob from "./modernization-works-steps-details-ttob";
+import Router from "next/router";
 
 export default function ModernizationWorks({ HowItWorkCss }) {
   return (
@@ -228,7 +229,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
               Experience transformation for your data warehouse, ETL, or
               analytics system
             </h1>
-            <Button className={HowItWorkCss.enterpriseChallengeColFooterButton}>
+            <Button onClick={()=>Router.push("/contact-us")} className={HowItWorkCss.enterpriseChallengeColFooterButton}>
               Book a free Demo
             </Button>
           </div>

@@ -12,7 +12,7 @@ export default function WhatIsNuoData({ HomeCss }) {
           </p>
           <p>
             Data management platform for all data engineering, analytics &
-            operations needs
+            operational needs
           </p>
         </div>
         <Button size={"large"} className={HomeCss.contactUsBtn}>

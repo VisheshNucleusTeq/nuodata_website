@@ -51,7 +51,7 @@ function ModernizationWorksStepsDetailsLtoR({data, HowItWorkCss}) {
       { id: "e2", source: "1", target: "3", animated: true, style: { stroke: '#E74860' }, },
       { id: "e3", source: "1", target: "4", animated: true, style: { stroke: '#E74860' }, }
     ]);
-  });
+  },[]);
 
   return (
     <div ref={ref} style={{ height: "50vh" }}>
