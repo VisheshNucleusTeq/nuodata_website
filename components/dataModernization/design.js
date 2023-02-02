@@ -528,7 +528,7 @@ export default function Design({ dataModernizationCss }) {
         />
       </div>
       <Drawer
-        title={tableNameLog.length > 0 ? "Table Logs" : "Column Logs"}
+        title={tableNameLog.length > 0 ? "Table Logs" : (columnLog.length > 0 ? "Column Logs" : "Change logs")}
         placement={"right"}
         closable={false}
         onClose={onClose}
@@ -632,6 +632,19 @@ export default function Design({ dataModernizationCss }) {
                         return e.value > 1;
                       })}
                     />
+                  </Col>
+                  <Col span={24} style={{ marginTop: "1%", marginBottom : "3%" }}>
+                    <Row>
+                      <Col span={1}></Col>
+                      <Col span={10} style={{color : "#e74860", fontWeight : "bold"}}>
+                        VERSION {version - 1}
+                      </Col>
+                      <Col span={2} style={{textAlign : "center"}}>{">"}</Col>
+                      <Col span={10} style={{color : "#e74860", fontWeight : "bold"}}>
+                      VERSION {version}
+                      </Col>
+                      <Col span={1}></Col>
+                    </Row>
                   </Col>
                   <Col span={24}>
                     <h3>

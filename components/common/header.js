@@ -68,16 +68,20 @@ export default function Header() {
               },
               {
                 key: "3",
-                // label: "Data Management",
+                label: "Data Management",
                 className: HeaderCss.hoverEffect,
-                label: (
-                  <a className={HeaderCss.hoverEffect} href="/#dataManagement">
-                    Data Management
-                  </a>
-                ),
-                style : {
-                  visibility :  "hidden"
-                }
+                onClick: () => {
+                  // Router.push("/how-it-works");
+                  router.replace("/data-management");
+                },
+                // label: (
+                //   <a className={HeaderCss.hoverEffect} href="/#dataManagement">
+                //     Data Management
+                //   </a>
+                // ),
+                // style : {
+                //   visibility :  "hidden"
+                // }
               },
               {
                 key: "4",

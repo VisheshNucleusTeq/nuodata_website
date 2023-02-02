@@ -10,6 +10,7 @@ import {
   Collapse,
   Button,
   Divider,
+  Modal,
 } from "antd";
 const { Panel } = Collapse;
 import { ArrowRightOutlined } from "@ant-design/icons";
@@ -107,6 +108,20 @@ const AnalyzeDetail = ({
   useEffect(() => {
     getAnalyzeData();
   }, []);
+
+  const getProjectData = async (fileId) => {
+    const data = await fetch_retry_get(`${DESIGN}${fileId}`);
+    if (data.success) return data.data;
+  };
+
+  const getDataCall = async (id) => {
+    setOpen(true);
+    let datar = await getProjectData(id);
+    setModalData(datar);
+    setTimeout(() => {
+      setOpen(true);
+    }, 1000);
+  };
 
   useEffect(() => {
     outputFiles.forEach((e) => {
@@ -288,6 +303,17 @@ const AnalyzeDetail = ({
 
   return (
     <>
+      <Modal
+        destroyOnClose
+        centered
+        open={open}
+        onOk={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
+        width={"100vw"}
+      >
+        <AnalyzeDetailPopup outputFileId={"outputFileId"} data={modalData} />
+      </Modal>
+
       {showTop && (
         <ArrowLeftOutlined
           style={{ fontSize: "1.5vw" }}
@@ -438,7 +464,7 @@ const AnalyzeDetail = ({
                             : { margin: "1% 0% 1% 0%" }
                         }
                         extra={
-                          e.fileType != "graph_src" && (
+                          e.fileType != "graph_src" ? (
                             <a
                               target={"_blank"}
                               href={`${DOWNLOADFILE}${e.outputFileId}`}
@@ -452,7 +478,28 @@ const AnalyzeDetail = ({
                                 <DownloadOutlined /> Download
                               </Space>
                             </a>
+                          ) : !showTop ? (
+                            <div onClick={(e) => e.stopPropagation()}>
+                              <Space
+                                onClick={() => {
+                                  getDataCall(e.outputFileId);
+                                }}
+                                size="middle"
+                                className={
+                                  dataModernizationCss.downloadBtnSpace
+                                }
+                                style={{ cursor: "pointer" }}
+                              >
+                                <EyeOutlined /> View
+                              </Space>
+                            </div>
+                          ) : (
+                            <></>
                           )
+                        }
+                        // showArrow={e.fileType != "graph_src"}
+                        collapsible={
+                          (e.fileType == "graph_src" && !showTop) ? "disabled" : ""
                         }
                       >
                         <Row>
