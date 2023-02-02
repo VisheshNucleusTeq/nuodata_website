@@ -7,6 +7,7 @@ import ReactFlow, {
   useReactFlow,
   Controls,
   Background,
+  MiniMap
 } from "reactflow";
 import dagre from "dagre";
 import NormalNode from "../NormalNode";
@@ -136,6 +137,7 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
         >
           <Background />
           <Controls />
+          <MiniMap/>
         </ReactFlow>
       </div>
     </>
