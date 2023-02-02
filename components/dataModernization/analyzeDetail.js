@@ -498,9 +498,9 @@ const AnalyzeDetail = ({
                           )
                         }
                         // showArrow={e.fileType != "graph_src"}
-                        collapsible={
-                          (e.fileType == "graph_src" && !showTop) ? "disabled" : ""
-                        }
+                        // collapsible={
+                        //   (e.fileType == "graph_src" && !showTop) ? "disabled" : ""
+                        // }
                       >
                         <Row>
                           <Col
