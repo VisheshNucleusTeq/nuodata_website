@@ -1,0 +1,35 @@
+.nodeStyle {
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    padding: 1rem;
+    border-style: solid;
+    border-radius: 0;
+    border-color: rgba(241, 162, 174, 1);
+    z-index: -1;
+  }
+  
+  .nodeStyle:hover {
+    background-color: rgba(241, 162, 174, 1);
+    color: #fff;
+  }
+  
+  .nodePoint {
+    width: 8px;
+    height: 65px;
+    border-radius: 3px;
+    border: rgba(241, 162, 174, 1);
+    z-index: 1;
+    background: rgba(241, 162, 174, 1);
+  }
+  
+  .nodePoint:hover {
+    background: #e74860;
+  }
+  
+  .iconStyle {
+    font-size: 18px;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
