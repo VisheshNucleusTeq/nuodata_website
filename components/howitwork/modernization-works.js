@@ -205,7 +205,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       >
                         <Image
                           width={40}
-                          src={`/how_it_work/${e.header}-red.png`}
+                          src={`/how_it_work/${e.header.toLowerCase()}-red.png`}
                         />
                         <span style={{ marginLeft: "1%" }}>
                           <i>{e.header}</i>
