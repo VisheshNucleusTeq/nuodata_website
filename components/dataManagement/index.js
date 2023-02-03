@@ -5,7 +5,6 @@ import Footer from "../common/footer";
 export default function DataManagement() {
   return (
     <>
-      
         <Info DataManagementCss={DataManagementCss}/>
         <Timeline DataManagementCss={DataManagementCss}/>
         <Footer DataManagementCss={DataManagementCss} />

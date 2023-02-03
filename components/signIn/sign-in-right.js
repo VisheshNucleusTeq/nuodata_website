@@ -5,7 +5,8 @@ import Link from "next/link";
 import { fetch_retry_post } from "../../network/api-manager";
 import { LOGIN } from "../../network/apiConstants";
 import {
-  UserDetailsAction
+  UserDetailsAction,
+  loderShowHideAction
 } from "../../Redux/action";
 import { useDispatch } from "react-redux";
 
@@ -16,11 +17,13 @@ function SignInRight({ loginCss }) {
 
   const onFinish = async (payload) => {
     setLoading(true);
+    dispatch(loderShowHideAction(true));
     const data = await fetch_retry_post(LOGIN, payload);
     setLoading(false);
     if (data.success) {
       localStorage.setItem("authData", JSON.stringify(data.data));
       dispatch(UserDetailsAction(true));
+      dispatch(loderShowHideAction(false));
       router.push("dashboard");
     } else {
       message.error([data?.error]);
@@ -93,20 +96,8 @@ function SignInRight({ loginCss }) {
             Login
           </Button>
 
-          <Divider plain>NuoData</Divider>
-          {/* <Button
-            size={"large"}
-            className={loginCss.googleLoginBtn}
-            type=""
-            block
-          >
-            <Image
-              width={"4%"}
-              src="../assets/images/google.png"
-              preview={false}
-            />
-            &nbsp; Login with Google
-          </Button> */}
+          <Divider plain></Divider>
+          
           <p className={loginCss.signup}>
             Don’t have an account? &nbsp;
             <Link href="/sign-up">

@@ -192,6 +192,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                 return (
                   <>
                     <Col
+                    key={(Math.random() + 1).toString(36).substring(7)}
                       offset={1}
                       span={22}
                       className={HowItWorkCss.ModernizationWorksStepsDetails}

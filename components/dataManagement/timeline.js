@@ -85,6 +85,7 @@ export default function Timeline({ DataManagementCss }) {
           return (
             <>
             <Col
+            key={(Math.random() + 1).toString(36).substring(7)}
                 xs={24}
                 sm={24}
                 md={24}
@@ -141,6 +142,7 @@ export default function Timeline({ DataManagementCss }) {
                   {e.data.map((ee) => {
                     return (
                       <Col
+                      key={(Math.random() + 1).toString(36).substring(7)}
                         className={DataManagementCss.timelineRightChildCol}
                         span={24}
                       >

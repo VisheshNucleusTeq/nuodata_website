@@ -12,7 +12,7 @@ export default function Info({ DataManagementCss }) {
           <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
             <AnimationOnScroll
               initiallyVisible={true}
-              animateIn="animate__fadeInRight"
+              animateIn="animate__bounceIn"
               animatePreScroll={true}
               animateOnce={true}
             >
