@@ -1,25 +1,14 @@
-import Header from "../common/header";
 import DataManagementCss from "../../styles/dataManagement.module.css";
-import { Col, Row } from "antd";
-
-import { AnimationOnScroll } from "react-animation-on-scroll";
-
+import Info from "./info";
+import Timeline from "./timeline";
+import Footer from "../common/footer";
 export default function DataManagement() {
   return (
     <>
-      <div className={DataManagementCss.mainDiv}>
-        <Header />
-        <div className={DataManagementCss.detailsDiv}>
-          <Row className={DataManagementCss.infoRow}>
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
-            <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20} >
-              <h1>Deliver Impact <span>Faster</span></h1>
-              <p><span>Unified Data Management platform </span>for all data engineering, analytics & operations needs.</p>
-            </Col>
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
-          </Row>
-        </div>
-      </div>
+      
+        <Info DataManagementCss={DataManagementCss}/>
+        <Timeline DataManagementCss={DataManagementCss}/>
+        <Footer DataManagementCss={DataManagementCss} />
     </>
   );
 }
