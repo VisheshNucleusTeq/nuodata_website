@@ -1,7 +1,7 @@
 module.exports = {
   trailingSlash: true,
   exportTrailingSlash: true,
-  staticPageGenerationTimeout:120
+  staticPageGenerationTimeout:1200
 }
 
 // /** @type {import('next').NextConfig} */

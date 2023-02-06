@@ -1,7 +1,8 @@
 import React, { memo, useEffect, useState, useRef } from "react";
 import { Handle } from "reactflow";
 import { Col, Popover, Row } from "antd";
-import ReactJson from "react-json-view";
+import dynamic from "next/dynamic";
+const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false });
 import {
   TbTarget,
   TbArrowsJoin,
@@ -97,7 +98,11 @@ export default memo(({ data, isConnectable }) => {
             <Col span={4} style={{ textAlign: "end" }}>
               <RiCloseCircleFill
                 onClick={() => ref.current.close()}
-                style={{ fontSize: "20px", color: "#e74860",cursor:"pointer" }}
+                style={{
+                  fontSize: "20px",
+                  color: "#e74860",
+                  cursor: "pointer",
+                }}
               />
             </Col>
           </Row>
@@ -105,7 +110,7 @@ export default memo(({ data, isConnectable }) => {
         trigger="click"
         content={
           //latest code
-          <ReactJson
+          <DynamicReactJson
             style={{ maxWidth: "50vw", padding: "5vh" }}
             // theme={"tube:inverted"}
             src={data.queries}
