@@ -541,6 +541,7 @@ export default function Design({ dataModernizationCss }) {
             tableNameLog.map((e) => {
               return (
                 <Timeline.Item
+                key={(Math.random() + 1).toString(36).substring(7)}
                   style={{ height: "20vh", fontSize: "16px" }}
                   label={
                     <>
@@ -574,6 +575,7 @@ export default function Design({ dataModernizationCss }) {
             columnLog.map((e) => {
               return (
                 <Timeline.Item
+                key={(Math.random() + 1).toString(36).substring(7)}
                   style={{ height: "20vh", fontSize: "16px" }}
                   label={
                     <>
@@ -608,8 +610,8 @@ export default function Design({ dataModernizationCss }) {
           {tableColumnsChange?.pastVersionDetails?.tableAndColumns.map(
             (table, i) => {
               return (
-                <Row>
-                  <Col span={24}>
+                <Row key={(Math.random() + 1).toString(36).substring(7)}>
+                  <Col span={24} key={(Math.random() + 1).toString(36).substring(7)}>
                     <Select
                       className="inputDesignSelect"
                       showSearch
@@ -672,7 +674,7 @@ export default function Design({ dataModernizationCss }) {
                   <Col span={24} style={{ marginTop: "1%" }}>
                     {table?.columnDetails.map((col, j) => {
                       return (
-                        <Row>
+                        <Row key={(Math.random() + 1).toString(36).substring(7)}>
                           <Col span={2}></Col>
                           <Col span={9}>
                             {findCurrentColumnName(col.columnId, i, "OLD")}

@@ -192,6 +192,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                 return (
                   <>
                     <Col
+                    key={(Math.random() + 1).toString(36).substring(7)}
                       offset={1}
                       span={22}
                       className={HowItWorkCss.ModernizationWorksStepsDetails}
@@ -205,7 +206,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       >
                         <Image
                           width={40}
-                          src={`/how_it_work/${e.header}-red.png`}
+                          src={`/how_it_work/${e.header.toLowerCase()}-red.png`}
                         />
                         <span style={{ marginLeft: "1%" }}>
                           <i>{e.header}</i>

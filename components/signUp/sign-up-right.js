@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Form, Input, Row, Col } from "antd";
 
-// import Input from "../common/Input";
 import Link from "next/link";
 
 function SignUpRight({ signUpCss }) {
@@ -16,14 +15,6 @@ function SignUpRight({ signUpCss }) {
         <h1 style={{ marginBottom: "25px" }}>
           <b>Sign-up for a free trial</b>
         </h1>
-        {/* <Form
-          layout="horizontal"
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 20 }}
-          initialValues={{ remember: true }}
-          style={{ width: "100vh" }}
-        > */}
         <Form layout="horizontal" autoComplete="off"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 24 }}

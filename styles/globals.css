@@ -270,9 +270,13 @@ body {
   }
 }
 
-
-.centerButton{
+.centerButton {
   display: flex;
-  align-items :flex-end;
+  align-items: flex-end;
   height: 6vh;
+}
+
+.ant-menu-submenu-popup li {
+  color: #e74860 !important;
+  font-weight: bold;
 }

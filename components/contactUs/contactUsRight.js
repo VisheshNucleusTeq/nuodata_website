@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Form, Input, Row, Col } from "antd";
 
-// import Input from "../common/Input";
 import Link from "next/link";
 
 function SignUpRight({ signUpCss }) {

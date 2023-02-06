@@ -18,12 +18,8 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      console.log("router", router);
     };
   }, []);
-  useEffect(() => {
-    console.log("router", router);
-  }, [router.pathname]);
 
   return (
     <div
@@ -71,24 +67,15 @@ export default function Header() {
                 label: "Data Management",
                 className: HeaderCss.hoverEffect,
                 onClick: () => {
-                  // Router.push("/how-it-works");
                   router.replace("/data-management");
                 },
-                // label: (
-                //   <a className={HeaderCss.hoverEffect} href="/#dataManagement">
-                //     Data Management
-                //   </a>
-                // ),
-                // style : {
-                //   visibility :  "hidden"
-                // }
               },
               {
                 key: "4",
                 label: (
                   <Tag
                     onClick={() => {
-                     router.push("/sign-in")
+                      router.push("/sign-in");
                     }}
                     className={HeaderCss.tryNowTag}
                     color="#E74860"

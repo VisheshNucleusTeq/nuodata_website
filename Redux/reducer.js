@@ -6,7 +6,8 @@ import {
   TABTYPE,
   ANALYZEDETAIL,
   PROJECTTRANSFORMDETAILS,
-  DESIGNDETAILS
+  DESIGNDETAILS,
+  LOADER,
 } from "./type";
 // import { Storage } from "../Storage"
 import LocalData from "./LocalData";
@@ -24,7 +25,7 @@ const initialData = {
   analyzeDetail: {},
   projectTransform: {},
   projectTransformDetails: {},
-  designDetails : {}
+  designDetails: {},
 };
 
 export const userDetailReducer = (state = initialState, action) => {
@@ -112,6 +113,18 @@ export const designDetailsReducer = (state = initialData, action) => {
   }
 };
 
+export const loderShowHideReducer = (state = initialData, action) => {
+  switch (action.type) {
+    case LOADER:
+      return {
+        ...state,
+        isLoaderShow: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   userDetails: userDetailReducer,
   projectDetails: projectDetailsReducer,
@@ -120,4 +133,5 @@ export default combineReducers({
   analyzeDetail: analyzeDetailReducer,
   projectTransformDetails: projectTransformDetailsReducer,
   designDetails: designDetailsReducer,
+  loderShowHide: loderShowHideReducer,
 });

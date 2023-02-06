@@ -1,5 +1,5 @@
 .mainDiv {
-  background: url("../public/home/sequence.gif") no-repeat center center;
+  background: url("../public/home/daga_manage.gif") no-repeat center center;
   width: 100%;
   height: 100vh;
   background-size: cover;
@@ -7,20 +7,20 @@
 
 .detailsDiv {
   height: 90%;
+  width: 100%;
 }
 
 .infoRow {
   display: flex;
   height: 100%;
   align-items: center;
-  text-align: center;
 }
 
 .infoRow h1 {
   color: #fff;
   font-weight: bold;
   font-size: 5vw;
-  text-transform: uppercase;
+  text-align: center;
 }
 
 .infoRow h1 span {
@@ -29,10 +29,201 @@
 
 .infoRow p {
   color: #fff;
+  text-align: center;
+  font-size: 5vh;
   font-weight: bold;
-  font-size: 3vw;
 }
 
 .infoRow p span {
   color: #e74860;
+}
+
+.timelineLeft {
+  text-align: end;
+  padding-right: 2vw;
+}
+
+.timelineLeftDiv {
+  padding-right: 10%;
+}
+
+.timelineLeftImage {
+  width: 6vw;
+}
+
+.timelineLeft p {
+  color: #0c3246;
+  font-size: 2vw;
+  font-weight: bold;
+}
+
+.timelineRight {
+  border-left: 5px solid #e74860;
+}
+
+.timelineRow {
+  margin: 5vw;
+}
+
+.timelineRightChildRow {
+  margin-left: 10%;
+  margin-bottom: 5vw;
+}
+
+.timelineRightChildCol {
+  height: 5vw;
+  width: 80%;
+  margin: 0vw 0vw 1vh 1vh;
+  border-radius: 100px;
+  background-color: #0c3246;
+}
+
+.timelineRightChildColImage {
+  height: 4vw;
+  width: 4vw;
+  border-radius: 100px;
+  margin: 0.5vw;
+  background-color: #fff;
+  padding: 10%;
+}
+
+.timelineRightChildColText {
+  display: flex;
+  align-items: center;
+}
+
+.timelineRightChildColText p {
+  color: #fff;
+  align-items: center;
+  display: flex;
+}
+
+.showDotDiv{
+  display: flex;
+  justify-content: center;
+}
+
+.showDot{
+  border: 1px solid #e74860;
+  background-color: #e74860;
+  height: 20px;
+  width: 20px;
+  transform: rotate(45deg);
+  margin-left: .5%;
+}
+
+@media (max-width: 1200px) {
+  .mainDiv {
+    height: 70vh;
+  }
+  .infoRow h1 {
+    font-size: 7vw;
+  }
+  .infoRow p {
+    font-size: 3vw;
+  }
+}
+@media (max-width: 992px) {
+  .infoRow h1 {
+    font-size: 7vw;
+  }
+
+  .infoRow p {
+    font-size: 3vw;
+  }
+
+  .timelineLeftImage {
+    width: 7vw;
+  }
+
+  .timelineLeft p {
+    color: #0c3246;
+    font-size: 2.5vw;
+    font-weight: bold;
+  }
+}
+@media (max-width: 768px) {
+  .infoRow h1 {
+    font-size: 8vw;
+  }
+
+  .infoRow p {
+    font-size: 4vw;
+  }
+
+  .timelineLeftImage {
+    width: 10vw;
+  }
+
+  .timelineLeft p {
+    color: #0c3246;
+    font-size: 3vw;
+    font-weight: bold;
+  }
+
+  .timelineRightChildCol {
+    height: 10vw;
+  }
+
+  .timelineRightChildColImage {
+    height: 8vw;
+    width: 8vw;
+    margin: 1vw;
+  }
+}
+@media (max-width: 576px) {
+  .mainDiv {
+    height: 60vh;
+  }
+  .infoRow h1 {
+    font-size: 10vw;
+  }
+
+  .infoRow p {
+    font-size: 5vw;
+  }
+
+  .timelineLeft {
+    text-align: center;
+  }
+
+  .timelineLeftImage {
+    width: 15vw;
+  }
+
+  .timelineLeft p {
+    color: #0c3246;
+    font-size: 5vw;
+    font-weight: bold;
+  }
+
+  .timelineRight {
+    border-left: none;
+  }
+
+  .timelineRightChildRow {
+    margin-left: 0%;
+    margin-bottom: 5vw;
+    padding-bottom: 10vw;
+    border-bottom: 1px solid #e74860;
+  }
+
+  .timelineRightChildCol {
+    height: 14vw;
+    margin: 0vw 0vw 1vh 0vh;
+  }
+
+  .timelineRightChildColImage {
+    height: 12vw;
+    width: 12vw;
+    border-radius: 100px;
+    margin: 1vw;
+    background-color: #fff;
+    padding: 10%;
+  }
+
+  .timelineLeftDiv {
+    padding-right: 0%;
+    margin-bottom: 5%;
+  }
 }

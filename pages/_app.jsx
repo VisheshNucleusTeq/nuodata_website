@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { wrapper, store } from "../Redux/store";
 import { ProtectRoute } from "../contexts/auth";
 import { useDispatch, useSelector } from "react-redux";
+import FullPageLoader from "../components/common/fullPageLoader";
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -21,11 +22,13 @@ function MyApp({ Component, pageProps }) {
     router.replace(path);
   }
   const user = useSelector((state) => state.userDetails.isLogged);
+  const isLoaderShow = useSelector((state) => state.loderShowHide.isLoaderShow);
 
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
+          {isLoaderShow && <FullPageLoader />}
           <ProtectRoute user={user}>
             <Component key={router.asPath} {...pageProps} />
           </ProtectRoute>

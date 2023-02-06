@@ -7,7 +7,8 @@ import ReactFlow, {
   useReactFlow,
   Controls,
   Background,
-  MiniMap
+  MiniMap,
+  MarkerType
 } from "reactflow";
 import dagre from "dagre";
 import NormalNode from "../NormalNode";
@@ -75,7 +76,17 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
       label: e.transformationType,
       animated: true,
       type: 'straight',
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+        width: 20,
+        height: 20,
+        color: '#e74860',
+      },
+      style: {
+        stroke: "#e74860",
+        strokeWidth: "2px",
     }
+  }
   }));
   const [rfInstance, setRfInstance] = useState(null);
   const [selectedNode, setSelectedNode] = useState(null);
@@ -83,7 +94,11 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
 
   const [name, SetName] = useState(null);
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge({ ...params, animated: true }, eds)),
+    (params) => setEdges((eds) => addEdge({ ...params, animated: true,  type: "straight",
+    style: {
+      stroke: "rgba(116, 166, 192, 1)",
+      strokeWidth: "2px",
+    }, }, eds)),
     [setEdges]
   );
   const onLayout = useCallback(

@@ -79,6 +79,7 @@ const Define = () => {
                 className={`${dataModernizationCss.defineStep} ${
                   step == data && dataModernizationCss.defineStepSelect
                 }`}
+                key={(Math.random() + 1).toString(36).substring(7)}
               >
                 {data}
               </Col>
