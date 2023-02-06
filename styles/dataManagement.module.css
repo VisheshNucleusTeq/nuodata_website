@@ -76,6 +76,9 @@
   margin: 0vw 0vw 1vh 1vh;
   border-radius: 100px;
   background-color: #0c3246;
+  webkit-box-shadow: 0px 10px 13px -7px rgba(0, 0, 0, 0.46);
+  -moz-box-shadow: 0px 10px 13px -7px rgba(0, 0, 0, 0.46);
+  box-shadow: 0px 10px 13px -7px rgba(0, 0, 0, 0.46);
 }
 
 .timelineRightChildColImage {
@@ -90,26 +93,30 @@
 .timelineRightChildColText {
   display: flex;
   align-items: center;
+  /* justify-content: center; */
 }
 
 .timelineRightChildColText p {
   color: #fff;
   align-items: center;
   display: flex;
+  font-size: 2rem;
+  margin-bottom: 0;
 }
 
-.showDotDiv{
+.showDotDiv {
   display: flex;
   justify-content: center;
 }
 
-.showDot{
+.showDot {
   border: 1px solid #e74860;
   background-color: #e74860;
   height: 20px;
   width: 20px;
   transform: rotate(45deg);
-  margin-left: .5%;
+  margin-left: 0.5%;
+  
 }
 
 @media (max-width: 1200px) {
@@ -138,7 +145,7 @@
 
   .timelineLeft p {
     color: #0c3246;
-    font-size: 2.5vw;
+    font-size: 2rem;
     font-weight: bold;
   }
 }

@@ -1,81 +1,172 @@
 import { Col, Row, Image } from "antd";
 import { useState } from "react";
 import { CodeSandboxOutlined } from "@ant-design/icons";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 
 export default function Timeline({ DataManagementCss }) {
   const [data, setData] = useState([
     {
       titleText: "Data Catalog",
-      titleImage: "/data_management/image_1.png",
+      titleImage: "/data_management/Title icons/1st.png",
       data: [
         {
-          titleText: "Data Catalog",
-          titleImage: "/data_management/image_1.png",
+          titleText: "Metadata Management",
+          titleImage: "/data_management/small icons/1.png",
         },
         {
-          titleText: "Data Catalog",
-          titleImage: "/data_management/image_1.png",
+          titleText: "Data Discovery",
+          titleImage: "/data_management/small icons/2.png",
         },
         {
-          titleText: "Data Catalog",
-          titleImage: "/data_management/image_1.png",
+          titleText: "Data Lineage",
+          titleImage: "/data_management/small icons/3.png",
         },
       ],
     },
     {
-      titleText: "Data Catalog",
-      titleImage: "/data_management/image_1.png",
+      titleText: "Data Security",
+      titleImage: "/data_management/Title icons/2nd.png",
       data: [
         {
-          titleText: "Data Catalog",
-          titleImage: "/data_management/image_1.png",
+          titleText: "Role Based Access",
+          titleImage: "/data_management/small icons/4.png",
         },
         {
-          titleText: "Data Catalog",
-          titleImage: "/data_management/image_1.png",
+          titleText: "Compliance & PLL",
+          titleImage: "/data_management/small icons/5.png",
         },
         {
-          titleText: "Data Catalog",
-          titleImage: "/data_management/image_1.png",
+          titleText: "Policy Admin",
+          titleImage: "/data_management/small icons/6.png",
         },
       ],
     },
     {
-      titleText: "Data Catalog",
-      titleImage: "/data_management/image_1.png",
+      titleText: "Data Governanace",
+      titleImage: "/data_management/Title icons/3rd.png",
       data: [
         {
-          titleText: "Data Catalog",
-          titleImage: "/data_management/image_1.png",
+          titleText: "Data Stewardship",
+          titleImage: "/data_management/small icons/7.png",
         },
         {
-          titleText: "Data Catalog",
-          titleImage: "/data_management/image_1.png",
+          titleText: "Data Policy",
+          titleImage: "/data_management/small icons/8.png",
         },
         {
-          titleText: "Data Catalog",
-          titleImage: "/data_management/image_1.png",
+          titleText: "Workflow",
+          titleImage: "/data_management/small icons/9.png",
         },
       ],
     },
     {
-        titleText: "Data Catalog",
-        titleImage: "/data_management/image_1.png",
-        data: [
-          {
-            titleText: "Data Catalog",
-            titleImage: "/data_management/image_1.png",
-          },
-          {
-            titleText: "Data Catalog",
-            titleImage: "/data_management/image_1.png",
-          },
-          {
-            titleText: "Data Catalog",
-            titleImage: "/data_management/image_1.png",
-          },
-        ],
-      },
+      titleText: "Data Lineage",
+      titleImage: "/data_management/Title icons/4th.png",
+      data: [
+        {
+          titleText: "Graph Lineage",
+          titleImage: "/data_management/small icons/10.png",
+        },
+        {
+          titleText: "Code Lineage",
+          titleImage: "/data_management/small icons/11.png",
+        },
+        {
+          titleText: "Impact Analysis",
+          titleImage: "/data_management/small icons/12.png",
+        },
+      ],
+    },
+    {
+      titleText: "Data Quality",
+      titleImage: "/data_management/Title icons/5th.png",
+      data: [
+        {
+          titleText: "Data Profiling",
+          titleImage: "/data_management/small icons/13.png",
+        },
+        {
+          titleText: "Data Analysis",
+          titleImage: "/data_management/small icons/14.png",
+        },
+        {
+          titleText: "Data Validation",
+          titleImage: "/data_management/small icons/15.png",
+        },
+      ],
+    },
+    {
+      titleText: "Ingestion",
+      titleImage: "/data_management/Title icons/6th.png",
+      data: [
+        {
+          titleText: "Batch Ingestion",
+          titleImage: "/data_management/small icons/16.png",
+        },
+        {
+          titleText: "Real-time ingestion",
+          titleImage: "/data_management/small icons/17.png",
+        },
+        {
+          titleText: "IOT",
+          titleImage: "/data_management/small icons/18.png",
+        },
+      ],
+    },
+    {
+      titleText: "Transformation",
+      titleImage: "/data_management/Title icons/7th.png",
+      data: [
+        {
+          titleText: "No-Code Pipelines",
+          titleImage: "/data_management/small icons/19.png",
+        },
+        {
+          titleText: "Wrangling",
+          titleImage: "/data_management/small icons/20.png",
+        },
+        {
+          titleText: "Refinement",
+          titleImage: "/data_management/small icons/21.png",
+        },
+      ],
+    },
+    {
+      titleText: "Operations",
+      titleImage: "/data_management/Title icons/8th.png",
+      data: [
+        {
+          titleText: "Observability",
+          titleImage: "/data_management/small icons/22.png",
+        },
+        {
+          titleText: "DevOps / CICD",
+          titleImage: "/data_management/small icons/23.png",
+        },
+        {
+          titleText: "AI / ML Ops",
+          titleImage: "/data_management/small icons/24.png",
+        },
+      ],
+    },
+    {
+      titleText: "Federation",
+      titleImage: "/data_management/Title icons/9th.png",
+      data: [
+        {
+          titleText: "APIs Dockers / EKS",
+          titleImage: "/data_management/small icons/25.png",
+        },
+        {
+          titleText: "BI / Reporting",
+          titleImage: "/data_management/small icons/26.png",
+        },
+        {
+          titleText: "Self Service",
+          titleImage: "/data_management/small icons/27.png",
+        },
+      ],
+    },
   ]);
 
   return (
@@ -84,8 +175,8 @@ export default function Timeline({ DataManagementCss }) {
         {data.map((e) => {
           return (
             <>
-            <Col
-            key={(Math.random() + 1).toString(36).substring(7)}
+              <Col
+                key={(Math.random() + 1).toString(36).substring(7)}
                 xs={24}
                 sm={24}
                 md={24}
@@ -100,7 +191,7 @@ export default function Timeline({ DataManagementCss }) {
                     xs={16}
                     sm={16}
                     md={16}
-                    lg={16} 
+                    lg={16}
                     xl={16}
                     xxl={16}
                     className={DataManagementCss.showDotDiv}
@@ -121,12 +212,19 @@ export default function Timeline({ DataManagementCss }) {
                 className={DataManagementCss.timelineLeft}
               >
                 <div className={DataManagementCss.timelineLeftDiv}>
-                  <Image
-                    preview={false}
-                    src={e.titleImage}
-                    className={DataManagementCss.timelineLeftImage}
-                  />
-                  <p>{e.titleText}</p>
+                  <AnimationOnScroll
+                    animateOut="animate__fadeOut"
+                    animateIn="animate__fadeIn"
+                    animateOnce={true}
+                    // className={DataManagementCss.timelineRightChildCol}
+                  >
+                    <Image
+                      preview={false}
+                      src={e.titleImage}
+                      className={DataManagementCss.timelineLeftImage}
+                    />
+                    <p>{e.titleText}</p>
+                  </AnimationOnScroll>
                 </div>
               </Col>
               <Col
@@ -139,38 +237,44 @@ export default function Timeline({ DataManagementCss }) {
                 className={DataManagementCss.timelineRight}
               >
                 <Row className={DataManagementCss.timelineRightChildRow}>
-                  {e.data.map((ee) => {
+                  {e.data.map((item, key) => {
                     return (
                       <Col
-                      key={(Math.random() + 1).toString(36).substring(7)}
-                        className={DataManagementCss.timelineRightChildCol}
+                        key={(Math.random() + 1).toString(36).substring(7)}
                         span={24}
                       >
-                        <Row>
-                          <Col xs={4} sm={6} md={4} lg={4} xl={4} xxl={4}>
-                            <div
-                              className={
-                                DataManagementCss.timelineRightChildColImage
-                              }
-                            >
-                              <Image preview={false} src={ee.titleImage} />
-                            </div>
-                          </Col>
+                        <AnimationOnScroll
+                          animateOut="animate__fadeOutRight"
+                          animateIn="animate__slideInUp"
+                          animateOnce={true}
+                          className={DataManagementCss.timelineRightChildCol}
+                        >
+                          <Row>
+                            <Col xs={4} sm={6} md={4} lg={4} xl={4} xxl={4}>
+                              <div
+                                className={
+                                  DataManagementCss.timelineRightChildColImage
+                                }
+                              >
+                                <Image preview={false} src={item.titleImage} />
+                              </div>
+                            </Col>
 
-                          <Col
-                            className={
-                              DataManagementCss.timelineRightChildColText
-                            }
-                            xs={20}
-                            sm={18}
-                            md={20}
-                            lg={20}
-                            xl={20}
-                            xxl={20}
-                          >
-                            <p>{e.titleText}</p>
-                          </Col>
-                        </Row>
+                            <Col
+                              className={
+                                DataManagementCss.timelineRightChildColText
+                              }
+                              xs={20}
+                              sm={18}
+                              md={20}
+                              lg={20}
+                              xl={20}
+                              xxl={20}
+                            >
+                              <p>{item.titleText}</p>
+                            </Col>
+                          </Row>
+                        </AnimationOnScroll>
                       </Col>
                     );
                   })}

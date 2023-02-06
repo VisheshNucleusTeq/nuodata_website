@@ -11,7 +11,7 @@ export const InnerLayout = ({ children, componentName }) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    setHeight(ref.current.clientHeight);
+    setHeight(ref?.current?.clientHeight);
   });
 
   return (

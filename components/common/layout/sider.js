@@ -4,7 +4,7 @@ import { Layout, Row, Col, Image } from "antd";
 const { Sider } = Layout;
 
 import { useDispatch, useSelector } from "react-redux";
-import { SetTabTypeAction } from "../../../Redux/action";
+import { SetTabTypeAction,loderShowHideAction } from "../../../Redux/action";
 
 const SiderView = ({ layoutCss, height, componentName }) => {
   const { query } = useRouter();
@@ -41,6 +41,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
         >
           <a
             onClick={() => {
+              dispatch(loderShowHideAction(true));
               changePage("/dashboard");
             }}
           >

@@ -24,7 +24,7 @@ export const ProtectRoute = ({ children, users }) => {
   useEffect(() => {
     if (!authPage.includes(router.pathname) && !user) {
       router.push("/");
-    } else if (["/sign-in", "/sign-up","/contact-us"].includes(router.pathname) && user) {
+    } else if (["/sign-in", "/sign-up"].includes(router.pathname) && user) {
       router.push("/dashboard");
     }
   }, [children, user]);

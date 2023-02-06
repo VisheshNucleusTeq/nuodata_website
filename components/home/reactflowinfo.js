@@ -50,8 +50,8 @@ function ReactFlowInfo(props) {
   }, []);
 
   useEffect(() => {
-    setWidth(ref.current.clientWidth);
-    setHeight(ref.current.clientHeight);
+    setWidth(ref?.current?.clientWidth);
+    setHeight(ref?.current?.clientHeight);
 
     setNodes([
       {
@@ -59,7 +59,7 @@ function ReactFlowInfo(props) {
         id: "6",
         sourcePosition: "right",
         targetPosition: "right",
-        position: { x: 0, y: (ref.current.clientHeight / 6) * 1 },
+        position: { x: 0, y: (ref?.current?.clientHeight / 6) * 1 },
         data: {
           label: (
             <Image
@@ -80,7 +80,7 @@ function ReactFlowInfo(props) {
         id: "7",
         sourcePosition: "right",
         targetPosition: "right",
-        position: { x: 20, y: (ref.current.clientHeight / 6) * 2 },
+        position: { x: 20, y: (ref?.current?.clientHeight / 6) * 2 },
         data: {
           label: (
             <Image
@@ -101,7 +101,7 @@ function ReactFlowInfo(props) {
         id: "8",
         sourcePosition: "right",
         targetPosition: "right",
-        position: { x: 20, y: (ref.current.clientHeight / 6) * 3 },
+        position: { x: 20, y: (ref?.current?.clientHeight / 6) * 3 },
         data: {
           label: (
             <Image
@@ -122,7 +122,7 @@ function ReactFlowInfo(props) {
         id: "9",
         sourcePosition: "right",
         targetPosition: "right",
-        position: { x: 0, y: (ref.current.clientHeight / 6) * 4 },
+        position: { x: 0, y: (ref?.current?.clientHeight / 6) * 4 },
         data: {
           label: (
             <Image
@@ -144,8 +144,8 @@ function ReactFlowInfo(props) {
         sourcePosition: "right",
         targetPosition: "left",
         position: {
-          x: ref.current.clientWidth / 2 - 50,
-          y: ref.current.clientHeight / 2 - 50,
+          x: ref?.current?.clientWidth / 2 - 50,
+          y: ref?.current?.clientHeight / 2 - 50,
         },
         data: {
           label: (
@@ -163,8 +163,8 @@ function ReactFlowInfo(props) {
         sourcePosition: "left",
         targetPosition: "left",
         position: {
-          x: ref.current.clientWidth - 120,
-          y: (ref.current.clientHeight / 6) * 1,
+          x: ref?.current?.clientWidth - 120,
+          y: (ref?.current?.clientHeight / 6) * 1,
         },
         data: {
           label: (
@@ -188,8 +188,8 @@ function ReactFlowInfo(props) {
         sourcePosition: "left",
         targetPosition: "left",
         position: {
-          x: ref.current.clientWidth - 140,
-          y: (ref.current.clientHeight / 6) * 2,
+          x: ref?.current?.clientWidth - 140,
+          y: (ref?.current?.clientHeight / 6) * 2,
         },
         data: {
           label: (
@@ -212,8 +212,8 @@ function ReactFlowInfo(props) {
         sourcePosition: "left",
         targetPosition: "left",
         position: {
-          x: ref.current.clientWidth - 140,
-          y: (ref.current.clientHeight / 6) * 3,
+          x: ref?.current?.clientWidth - 140,
+          y: (ref?.current?.clientHeight / 6) * 3,
         },
         data: {
           label: (
@@ -236,8 +236,8 @@ function ReactFlowInfo(props) {
         sourcePosition: "left",
         targetPosition: "left",
         position: {
-          x: ref.current.clientWidth - 120,
-          y: (ref.current.clientHeight / 6) * 4,
+          x: ref?.current?.clientWidth - 120,
+          y: (ref?.current?.clientHeight / 6) * 4,
         },
         data: {
           label: (

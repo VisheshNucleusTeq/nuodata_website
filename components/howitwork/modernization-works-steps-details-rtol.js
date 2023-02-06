@@ -11,8 +11,8 @@ function ModernizationWorksStepsDetailsRtol({data, HowItWorkCss}) {
   const ref = useRef(null);
 
   useEffect(() => {
-    setWidth(ref.current.clientWidth);
-    setHeight(ref.current.clientHeight);
+    setWidth(ref?.current?.clientWidth);
+    setHeight(ref?.current?.clientHeight);
 
     setNodes([
       {

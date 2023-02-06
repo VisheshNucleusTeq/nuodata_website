@@ -23,11 +23,12 @@ function SignInRight({ loginCss }) {
     if (data.success) {
       localStorage.setItem("authData", JSON.stringify(data.data));
       dispatch(UserDetailsAction(true));
-      dispatch(loderShowHideAction(false));
       router.push("dashboard");
     } else {
       message.error([data?.error]);
     }
+      dispatch(loderShowHideAction(false));
+
   };
 
 
