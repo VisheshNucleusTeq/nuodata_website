@@ -503,7 +503,7 @@ const AnalyzeDetail = ({
                                 style={{ cursor: "pointer" }}
                               >
                                 {loadingView ? (
-                                  <><LoadingOutlined /> Load</>
+                                  <><LoadingOutlined /> Loading</>
                                 ) : (
                                   <>
                                     <EyeOutlined /> View
@@ -524,7 +524,7 @@ const AnalyzeDetail = ({
                                 style={{ cursor: "pointer" }}
                               >
                                 {loadingView ? (
-                                  <><LoadingOutlined /> Load</>
+                                  <><LoadingOutlined /> Loading</>
                                 ) : (
                                   <>
                                     <EyeOutlined /> View
