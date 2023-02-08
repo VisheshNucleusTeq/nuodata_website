@@ -23,7 +23,6 @@ const SiderView = ({ layoutCss, height, componentName }) => {
     (state) => state.projectDetails.projectDetails
   );
 
-
   return (
     <Sider className={layoutCss.mainLayoutSider}>
       <div style={{ height: height + "px" }} className={layoutCss.logoImage}>

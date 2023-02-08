@@ -29,11 +29,12 @@ export default function ModernizeWithConfidence({ HomeCss }) {
   }, []);
 
   return (
-    <div className={HomeCss.ECmain}>
+    // id="benefitsID"
+    <div className={HomeCss.ECmain}> 
       <Row className={HomeCss.mainEnterpriseChallengeDiv}>
         <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
         <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
-          <h2 id="benefitsID" className={HomeCss.ECTitle}>
+          <h2 className={HomeCss.ECTitle}>
             <AnimationOnScroll
               animateOut="animate__fadeOut"
               animateIn="animate__fadeIn"

@@ -55,24 +55,6 @@
   }
 }
 
-/* @media (max-width: 1150px) {
-  .mainDiv {
-    height: 60vh;
-    background-size: cover;
-  }
-
-  .infoRow h1 {
-    font-size: 8vw;
-    text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .infoRow h1 {
-    font-size: 8vw;
-  }
-} */
-
 @keyframes zoom-in-zoom-out {
   0% {
     transform: scale(0);
@@ -382,239 +364,6 @@
   }
 }
 
-/* .mainEnterpriseChallenge {
-  background-color: #0c3246;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-}
-
-.mainEnterpriseChallenge h2 {
-  width: 100%;
-  text-align: center;
-  font-size: 4vw;
-  margin: 2%;
-  font-weight: bolder;
-  color: #fff;
-}
-
-.mainEnterpriseChallenge h2 span {
-  background-image: linear-gradient(#0c3246 60%, #626262 50%);
-}
-
-.childDiv {
-  margin: 2% 0% 3% 0%;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  border-radius: 0.8rem;
-}
-
-.childDivNew {
-  margin: 2% 0% 3% 0%;
-  border-bottom: 1px dotted #e74860;
-}
-
-.childDiv:hover {
-  color: #fff;
-  scale: 1.05;
-  transition: all 1s ease;
-  border: 5px solid #e74860;
-}
-
-.childDivNew:hover {
-  display: flex;
-  justify-content: flex-start;
-  color: #e74860;
-  scale: 1.05;
-  transition: all 1s ease;
-}
-.imageDiv {
-  display: flex;
-  justify-content: center;
-  height: 30vh;
-}
-
-.textDiv {
-  height: 30vh;
-  padding: 4%;
-}
-.imageDiv img {
-  border-radius: 0.8rem;
-}
-.textDiv h1 {
-  color: #fff;
-  font-weight: bold;
-}
-
-.textDiv h1:hover {
-  color: #e74860;
-}
-
-.textDiv h1 span {
-  font-weight: bolder;
-  font-size: 50px !important;
-}
-
-
-@media (max-width: 760px) {
-  .mainEnterpriseChallenge h2 {
-    font-size: 6vw;
-  }
-  .textDiv,
-  .imageDiv {
-    display: flex;
-    justify-content: center;
-    height:100%;
-    padding: 4%;
-  }
-} */
-
-/* .mainEnterpriseChallenge {
-  background-color: #000000;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-}
-
-.mainEnterpriseChallengeDiv {
-  background: url("../public/home/enterpriseChallenge/output-onlinepngtools.png")
-    no-repeat center center;
-}
-
-.mainEnterpriseChallenge h2 {
-  width: 100%;
-  text-align: center;
-  font-size: 4vw;
-  margin: 2%;
-  font-weight: bolder;
-  color: #fff;
-}
-
-.mainEnterpriseChallenge h2 span {
-  background-image: linear-gradient(#000000 60%, rgb(98, 98, 98, 0.5) 50%);
-}
-
-.enterpriseChallengeList {
-  margin: 4vh 0% 4vh 0%;
-}
-
-.mainEnterpriseChallengeImageDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.mainEnterpriseChallengeImage {
-  height: 100%;
-}
-
-.mainEnterpriseChallengeNumber {
-  font-size: 6vw !important;
-  font-weight: bolder !important;
-  margin: 0 !important;
-  color: #fff;
-  text-decoration: underline;
-  align-items: center;
-  display: flex;
-}
-
-.mainEnterpriseChallengeText {
-  font-size: 4vw;
-  font-weight: bolder;
-  margin: 0 !important;
-  color: #fff;
-  line-height: 120%;
-}
-
-.mainEnterpriseChallengeDottedLine {
-  height: 20vh;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  background-image: linear-gradient(#514f4f 50%, black 50%);
-  background-position: left;
-  background-size: 2px 15px;
-  background-repeat: repeat-y;
-}
-
-.howNuoDataworksBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3% 0% 3% 0%;
-}
-
-.howNuoDataworksBtn button {
-  color: #e74860 !important;
-  font-weight: bolder;
-  font-size: 18px;
-  height: 8vh;
-  border-radius: 15px;
-  border: 1px solid #e74860 !important;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-.howNuoDataworksBtn button:hover {
-  border: 2px solid #e74860 !important;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
-    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-}
-
-@media (max-width: 1150px) {
-  .mainEnterpriseChallenge h2 {
-    font-size: 7vw;
-  }
-  .mainEnterpriseChallengeNumber {
-    font-size: 6vw !important;
-  }
-
-  .mainEnterpriseChallengeText {
-    font-size: 4vw;
-  }
-
-  .mainEnterpriseChallengeDottedLine {
-    height: 15vh;
-  }
-  .mainEnterpriseChallengeImage {
-    height: 90%;
-  }
-}
-@media (max-width: 760px) {
-  .mainEnterpriseChallenge h2 {
-    font-size: 8vw;
-  }
-  .mainEnterpriseChallengeNumber {
-    font-size: 10vw !important;
-  }
-
-  .mainEnterpriseChallengeText {
-    font-size: 6vw;
-  }
-
-  .mainEnterpriseChallengeDottedLine {
-    height: 12vh;
-  }
-  .mainEnterpriseChallengeImage {
-    height: 80%;
-  }
-}
-@media (max-width: 480px) {
-  .mainEnterpriseChallenge h2 {
-    font-size: 10vw;
-  }
-  .mainEnterpriseChallengeNumber {
-    font-size: 10vw !important;
-  }
-
-  .mainEnterpriseChallengeText {
-    font-size: 8vw;
-    font-weight: 500
-  }
-  .mainEnterpriseChallengeImage {
-    height: 70%;
-  }
-  .mainEnterpriseChallengeDottedLine {
-    height: 10vh;
-  }
-} */
 
 /* MODERN */
 
@@ -692,137 +441,6 @@
   }
 }
 
-/* .bgImage {
-  background: url("../public/home/bg4.png") no-repeat center center;
-  background-size: cover;
-  text-align: center;
-}
-
-.bgImage h1 {
-  width: 100%;
-  text-align: center;
-  font-size: 4vw;
-  margin: 2% 0% 2% 0%;
-  font-weight: bolder;
-  color: rgb(54, 54, 54);
-}
-
-.bgImage h1 span {
-  background-image: linear-gradient(#fff 75%, gray 100%);
-}
-
-.bgImage p {
-  font-size: 1vw;
-  font-weight: bold;
-  color: rgb(54, 54, 54);
-}
-
-.modernizeWithConfidenceMain {
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
-
-.ModernData {
-  height: 8vh;
-  border: 1px solid #e74860;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  border-radius: 15px;
-  font-size: 22px;
-  font-weight: bold;
-  padding: 3% !important;
-  color: #0c3246 !important;
-  transition: all 1s ease;
-  -webkit-transition: all 1s ease;
-}
-
-.ModernData:hover {
-  background-color: #e74860;
-  color: #fff !important;
-  cursor: pointer;
-  scale: 1.2;
-  transition: all 1s ease;
-  -webkit-transition: all 1s ease;
-}
-
-.ModernDataDev {
-  height: 6vh;
-  border-right: 1px solid #858585 !important;
-  margin-top: 0.5%;
-  margin-bottom: 0.5%;
-  font-size: 22px;
-  padding-left: 44%;
-}
-
-.chat:after {
-  content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 15px solid white;
-  position: absolute;
-  bottom: -12px;
-}
-
-.chat:before {
-  content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  border-left: 17px solid transparent;
-  border-right: 17px solid transparent;
-  border-bottom: 17px solid #e74860;
-  position: absolute;
-  bottom: -15px;
-}
-
-.chat.right:after,
-.chat.right:before {
-  rotate: 45deg;
-}
-.chat.right:before {
-  left: calc(75%);
-  border-bottom: 15px solid #e74860;
-}
-.chat.right:after {
-  left: calc(75% + 1px);
-}
-
-.chat.left:after,
-.chat.left:before {
-  rotate: -45deg;
-}
-.chat.left:before {
-  right: calc(75%);
-}
-.chat.left:after {
-  right: calc(75% + 1px);
-  border-bottom: 15px solid #fff;
-}
-
-.chat.left:hover:after {
-  right: calc(75% + 1px);
-  border-bottom: 15px solid #e74860;
-  transition: all 1s ease;
-  -webkit-transition: all 1s ease;
-}
-
-.chat.right:hover:after {
-  right: calc(75% + 1px);
-  border-bottom: 15px solid #e74860;
-  transition: all 1s ease;
-  -webkit-transition: all 1s ease;
-}
-
-@media (max-width: 760px) {
-  .ModernData {
-    height: 8vh;
-    font-size: 14px;
-  }
-} */
 
 /* MODERN */
 
@@ -846,33 +464,8 @@
   font-size: 4vw;
   font-weight: bolder;
   color: #0c3246;
-  /* background-image: linear-gradient(#fff 75%, #07283b 100%); */
 }
 
-/* 
-@media (max-width: 1200px) {
-  .ECTitle {
-    font-size: 6vw;
-  }
-}
-@media (max-width: 992px) {
-  .ECTitle {
-    font-size: 6vw;
-  }
-  
-}
-@media (max-width: 768px) {
-  .ECTitle {
-    font-size: 8vw;
-  }
-  
-}
-@media (max-width: 576px) {
-  .ECTitle {
-    font-size: 10vw;
-  }
-  
-} */
 
 .dataModernizationArchitectureTtile p {
   font-size: 1vw;
@@ -882,21 +475,15 @@
 
 .infoRowSystemView {
   background: url("/home/archi-gif.gif") no-repeat center center;
-  /* background: url("/home/3-1-GIF.gif") no-repeat center center; */
-
   background-size: auto;
-  height: 120vh;
+  height: 100vh;
   background-size: 100% 80%;
 }
 
 @media (max-width: 992px) {
   .infoRowSystemView {
-    /* background: url("/home/archi-gif.gif") no-repeat center center; */
     background: url("/home/3-1-GIF.gif") no-repeat center center;
-
     background-size: auto;
-    /* height: 120vh; */
-    /* background-size: 100% 80%; */
   }
 }
 

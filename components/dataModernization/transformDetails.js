@@ -85,12 +85,17 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
         <h1>Congratulations !</h1>
         <h2>
           Transformation Completed for File{" "}
-          <span>{analyzeDetail?.fileName}</span>
+          <span>
+            {analyzeDetail?.fileName ? analyzeDetail?.fileName : "--"}
+          </span>
         </h2>
         <h2>
-          You saved{" "}
+          You saved
           <span>
-            {parseFloat(analyzeDetail?.complexity?.hoursSaved).toFixed(2)}{" "}
+            {" "}
+            {analyzeDetail?.complexity?.hoursSaved
+              ? parseFloat(analyzeDetail?.complexity?.hoursSaved).toFixed(2)
+              : "--"}{" "}
             {parseFloat(analyzeDetail?.complexity?.hoursSaved).toFixed(2) > 1
               ? "Hours"
               : "hour"}
@@ -109,7 +114,11 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
             onCancel={() => setOpen(false)}
             width={"100vw"}
           >
-            <AnalyzeDetailPopup outputFileId={outputFileId} data={modalData} showPopUp={true} />
+            <AnalyzeDetailPopup
+              outputFileId={outputFileId}
+              data={modalData}
+              showPopUp={true}
+            />
           </Modal>
           <AnalyzeDetail
             analyzeDetailsId={projectTransformDetails?.analyzeDetailsId}

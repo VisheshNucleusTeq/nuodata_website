@@ -177,31 +177,31 @@ export default function Timeline({ DataManagementCss }) {
             <>
               <Col
                 key={(Math.random() + 1).toString(36).substring(7)}
-                xs={24}
+                xs={0}
                 sm={24}
                 md={24}
                 lg={24}
                 xl={24}
                 xxl={24}
-                // className={DataManagementCss.createDot}
               >
                 <Row>
-                  <Col xs={4} sm={4} md={2} lg={2} xl={2} xxl={2} />
+                  <Col xs={4} sm={4} md={2} lg={2} xl={2} xxl={2} key={(Math.random() + 1).toString(36).substring(7)}/>
                   <Col
-                    xs={16}
-                    sm={16}
+                    xs={24}
+                    sm={10}
                     md={16}
                     lg={16}
                     xl={16}
                     xxl={16}
                     className={DataManagementCss.showDotDiv}
+                    key={(Math.random() + 1).toString(36).substring(7)}
                   >
                     <div className={DataManagementCss.showDot}></div>
                   </Col>
-                  <Col xs={4} sm={4} md={2} lg={2} xl={2} xxl={2} />
+                  <Col xs={4} sm={4} md={2} lg={2} xl={2} xxl={2} key={(Math.random() + 1).toString(36).substring(7)} />
                 </Row>
               </Col>
-              <Col xs={0} sm={1} md={1} lg={1} xl={2} xxl={2} />
+              <Col xs={0} sm={1} md={1} lg={1} xl={2} xxl={2} key={(Math.random() + 1).toString(36).substring(7)} />
               <Col
                 xs={24}
                 sm={8}
@@ -210,20 +210,22 @@ export default function Timeline({ DataManagementCss }) {
                 xl={8}
                 xxl={8}
                 className={DataManagementCss.timelineLeft}
+                key={(Math.random() + 1).toString(36).substring(7)}
               >
-                <div className={DataManagementCss.timelineLeftDiv}>
+                <div className={DataManagementCss.timelineLeftDiv} key={(Math.random() + 1).toString(36).substring(7)}>
                   <AnimationOnScroll
                     animateOut="animate__fadeOut"
                     animateIn="animate__fadeIn"
-                    animateOnce={true}
-                    // className={DataManagementCss.timelineRightChildCol}
+                    animateOnce={false}
+                    key={(Math.random() + 1).toString(36).substring(7)}
                   >
                     <Image
                       preview={false}
                       src={e.titleImage}
                       className={DataManagementCss.timelineLeftImage}
+                      key={(Math.random() + 1).toString(36).substring(7)}
                     />
-                    <p>{e.titleText}</p>
+                    <p key={(Math.random() + 1).toString(36).substring(7)}>{e.titleText}</p>
                   </AnimationOnScroll>
                 </div>
               </Col>
@@ -235,28 +237,31 @@ export default function Timeline({ DataManagementCss }) {
                 xl={12}
                 xxl={12}
                 className={DataManagementCss.timelineRight}
+                key={(Math.random() + 1).toString(36).substring(7)}
               >
-                <Row className={DataManagementCss.timelineRightChildRow}>
-                  {e.data.map((item, key) => {
+                <Row className={DataManagementCss.timelineRightChildRow} key={(Math.random() + 1).toString(36).substring(7)}>
+                  {e.data.map((ee) => {
                     return (
-                      <Col
+                      <AnimationOnScroll
+                        animateOut="animate__fadeOutRight"
+                        animateIn="animate__slideInUp"
+                        animateOnce={0}
+                        className={DataManagementCss.timelineRightChildCol}
                         key={(Math.random() + 1).toString(36).substring(7)}
-                        span={24}
                       >
-                        <AnimationOnScroll
-                          animateOut="animate__fadeOutRight"
-                          animateIn="animate__slideInUp"
-                          animateOnce={true}
-                          className={DataManagementCss.timelineRightChildCol}
+                        <Col
+                          key={(Math.random() + 1).toString(36).substring(7)}
+                          span={24}
                         >
-                          <Row>
-                            <Col xs={4} sm={6} md={4} lg={4} xl={4} xxl={4}>
+                          <Row key={(Math.random() + 1).toString(36).substring(7)}>
+                            <Col xs={4} sm={6} md={4} lg={4} xl={4} xxl={4} key={(Math.random() + 1).toString(36).substring(7)}>
                               <div
                                 className={
                                   DataManagementCss.timelineRightChildColImage
                                 }
+                                key={(Math.random() + 1).toString(36).substring(7)}
                               >
-                                <Image preview={false} src={item.titleImage} />
+                                <Image preview={false} src={ee.titleImage} key={(Math.random() + 1).toString(36).substring(7)} />
                               </div>
                             </Col>
 
@@ -270,17 +275,18 @@ export default function Timeline({ DataManagementCss }) {
                               lg={20}
                               xl={20}
                               xxl={20}
+                              key={(Math.random() + 1).toString(36).substring(7)}
                             >
-                              <p>{item.titleText}</p>
+                              <p key={(Math.random() + 1).toString(36).substring(7)}>{ee.titleText}</p>
                             </Col>
                           </Row>
-                        </AnimationOnScroll>
-                      </Col>
+                        </Col>
+                      </AnimationOnScroll>
                     );
                   })}
                 </Row>
               </Col>
-              <Col xs={0} sm={1} md={1} lg={1} xl={2} xxl={2} />
+              <Col xs={0} sm={1} md={1} lg={1} xl={2} xxl={2} key={(Math.random() + 1).toString(36).substring(7)} />
             </>
           );
         })}

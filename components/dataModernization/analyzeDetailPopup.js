@@ -69,12 +69,12 @@ const AnalyzeDetailPopup = ({ outputFileId, data,showPopUp }) => {
   );
 
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes.map(e => {
+  const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes?.map(e => {
     return {
       ...e,
     }
   }));
-  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges.map(e => {
+  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges?.map(e => {
     return {
       ...e,
       label: e.transformationType,
