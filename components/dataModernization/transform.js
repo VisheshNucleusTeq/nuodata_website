@@ -134,13 +134,16 @@ const Transform = ({ dataModernizationCss }) => {
                 <span>
                   {projectDetails && projectDetails?.name
                     ? projectDetails.name
-                    : ""}
+                    : "--"}
                 </span>
               </h2>
               <h2>
-                You saved{" "}
+                You saved
                 <span>
-                  {parseFloat(analyzeDetails?.hoursSaved).toFixed(2)}{" "}
+                  {" "}
+                  {analyzeDetails?.hoursSaved
+                    ? parseFloat(analyzeDetails?.hoursSaved).toFixed(2)
+                    : "--"}{" "}
                   {parseFloat(analyzeDetails?.hoursSaved).toFixed(2) > 1
                     ? "Hours"
                     : "hour"}
@@ -239,11 +242,7 @@ const Transform = ({ dataModernizationCss }) => {
               xxl={24}
               className={dataModernizationCss.analyzeMainDetails}
             >
-              <Collapse
-                defaultActiveKey=""
-                ghost
-                accordion
-              >
+              <Collapse defaultActiveKey="" ghost accordion>
                 {data.map((e, i) => {
                   return (
                     <Panel

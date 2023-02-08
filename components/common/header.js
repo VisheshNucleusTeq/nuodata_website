@@ -53,13 +53,22 @@ export default function Header() {
                   </a>
                 ),
               },
+              // {
+              //   key: "1",
+              //   label: "Why NuoData?",
+              //   className: HeaderCss.hoverEffect,
+              //   onClick: () => {
+              //     // Router.push("/how-it-works");
+              //     router.push("?mwc=true");
+              //   },
+              // },
               {
                 key: "2",
                 label: "Data Modernization",
                 className: HeaderCss.hoverEffect,
                 onClick: () => {
                   // Router.push("/how-it-works");
-                  router.replace("/how-it-works");
+                  router.push("/how-it-works");
                 },
               },
               {
@@ -67,7 +76,7 @@ export default function Header() {
                 label: "Data Management",
                 className: HeaderCss.hoverEffect,
                 onClick: () => {
-                  router.replace("/data-management");
+                  router.push("/data-management");
                 },
               },
               {

@@ -1,7 +1,9 @@
 import DataManagement from "../components/dataManagement"
 
-export default function DataManagementView(props) {
-  return (
-    <DataManagement/>
-  )
+function DataManagementView(props) {
+    return (
+        <DataManagement/>
+    );
 }
+
+export default DataManagementView;

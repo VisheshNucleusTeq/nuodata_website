@@ -30,6 +30,7 @@ import {
   DownloadOutlined,
   EyeOutlined,
   ArrowLeftOutlined,
+  LoadingOutlined
 } from "@ant-design/icons";
 import {
   SetTabTypeAction,
@@ -42,11 +43,12 @@ const AnalyzeDetail = ({
   analyzeDetailsId,
   setAnalyze,
   showTop,
-  showPopUp
+  showPopUp,
 }) => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [loadingView, setLoadingView] = useState(false);
   const [data, setData] = useState([]);
   const [modalData, setModalData] = useState();
   const [analyzeDetails, setAnalyzeDetails] = useState(null);
@@ -116,12 +118,13 @@ const AnalyzeDetail = ({
   };
 
   const getDataCall = async (id) => {
-    setOpen(true);
+    setLoadingView(true);
     let datar = await getProjectData(id);
     setModalData(datar);
     setTimeout(() => {
       setOpen(true);
-    }, 1000);
+      setLoadingView(false);
+    }, 10);
   };
 
   useEffect(() => {
@@ -461,7 +464,9 @@ const AnalyzeDetail = ({
                       <Panel
                         header={
                           e.description === "Graph Source"
-                            ? showPopUp?"Target Graph": "Source Graph"
+                            ? showPopUp
+                              ? "Target Graph"
+                              : "Source Graph"
                             : e.description
                         }
                         key={i}
@@ -497,11 +502,36 @@ const AnalyzeDetail = ({
                                 }
                                 style={{ cursor: "pointer" }}
                               >
-                                <EyeOutlined /> View
+                                {loadingView ? (
+                                  <><LoadingOutlined /> Load</>
+                                ) : (
+                                  <>
+                                    <EyeOutlined /> View
+                                  </>
+                                )}
                               </Space>
                             </div>
                           ) : (
-                            <></>
+                            <div onClick={(e) => e.stopPropagation()}>
+                              <Space
+                                onClick={() => {
+                                  getDataCall(e.outputFileId);
+                                }}
+                                size="middle"
+                                className={
+                                  dataModernizationCss.downloadBtnSpace
+                                }
+                                style={{ cursor: "pointer" }}
+                              >
+                                {loadingView ? (
+                                  <><LoadingOutlined /> Load</>
+                                ) : (
+                                  <>
+                                    <EyeOutlined /> View
+                                  </>
+                                )}
+                              </Space>
+                            </div>
                           )
                         }
                         // showArrow={e.fileType != "graph_src"}
