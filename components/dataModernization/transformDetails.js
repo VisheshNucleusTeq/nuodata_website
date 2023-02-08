@@ -109,12 +109,13 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
             onCancel={() => setOpen(false)}
             width={"100vw"}
           >
-            <AnalyzeDetailPopup outputFileId={outputFileId} data={modalData} />
+            <AnalyzeDetailPopup outputFileId={outputFileId} data={modalData} showPopUp={true} />
           </Modal>
           <AnalyzeDetail
             analyzeDetailsId={projectTransformDetails?.analyzeDetailsId}
             dataModernizationCss={dataModernizationCss}
             showTop={false}
+            showPopUp={true}
           />
         </div>
       </Col>

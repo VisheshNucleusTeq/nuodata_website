@@ -89,7 +89,7 @@ const Footer = () => {
             className={FooterCss.footerCol}
           >
             <div className={FooterCss.footerColChild}>
-              <h1> OurPartners</h1>
+              <h1> Our Partners</h1>
               <List>
                 <p style={{ color: "#FFF" }}>AWS</p>
                 <p style={{ color: "#FFF" }}>Google Cloud</p>

@@ -23,12 +23,15 @@ const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 400;
 const nodeHeight = 80;
-const getLayoutedElements = (nodes, edges, direction = "LR") => {
+const getLayoutedElements = (nodes, edges, showPopUp, direction = "LR") => {
   const isHorizontal = direction === "LR";
   dagreGraph.setGraph({ rankdir: direction });
 
   nodes?.forEach((node) => {
-    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
+    dagreGraph.setNode(node.id, {
+      width: nodeWidth,
+      height: nodeHeight,
+    });
   });
 
   edges?.forEach((edge) => {
@@ -36,14 +39,14 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
       dagreGraph.setEdge(edge.source, edge.target);
     }
   });
-  console.log("dagre", dagreGraph);
+
   dagre.layout(dagreGraph);
 
   nodes?.forEach((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
     node.targetPosition = isHorizontal ? "left" : "top";
     node.sourcePosition = isHorizontal ? "right" : "bottom";
-
+    node.data.showPopUp = showPopUp;
     // We are shifting the dagre node position (anchor=center center) to the top left
     // so it matches the React Flow node anchor point (top left).
     node.position = {
@@ -57,14 +60,15 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
   return { nodes, edges };
 };
 
-const AnalyzeDetailPopup = ({ outputFileId, data }) => {
-  console.log(data);
+const AnalyzeDetailPopup = ({ outputFileId, data,showPopUp }) => {
+
   const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
     data?.Nodes,
-    data?.Edges
+    data?.Edges,
+    showPopUp
   );
 
-  console.log("layoutedEdges --",layoutedEdges)
+
   const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes.map(e => {
     return {
       ...e,
@@ -75,18 +79,18 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
       ...e,
       label: e.transformationType,
       animated: true,
-      type: 'straight',
+      type: "smoothstep",
       markerEnd: {
         type: MarkerType.ArrowClosed,
         width: 20,
         height: 20,
-        color: '#e74860',
+        color: "#e74860",
       },
       style: {
         stroke: "#e74860",
-        strokeWidth: "2px",
-    }
-  }
+        strokeWidth: "1px",
+      },
+    };
   }));
   const [rfInstance, setRfInstance] = useState(null);
   const [selectedNode, setSelectedNode] = useState(null);
@@ -94,7 +98,7 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
 
   const [name, SetName] = useState(null);
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge({ ...params, animated: true,  type: "straight",
+    (params) => setEdges((eds) => addEdge({ ...params, animated: false,  type: "straight",
     style: {
       stroke: "rgba(116, 166, 192, 1)",
       strokeWidth: "2px",
@@ -144,7 +148,6 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
           onConnect={onConnect}
           onInit={setRfInstance}
           onNodeClick={(value, node) => {
-            console.log("value", value, node);
             SetName(node?.data?.queries);
             setSelectedNode(value);
             setJson(node);
@@ -159,8 +162,8 @@ const AnalyzeDetailPopup = ({ outputFileId, data }) => {
   );
 };
 
-export default ({ data }) => (
+export default ({ data, showPopUp }) => (
   <ReactFlowProvider>
-    <AnalyzeDetailPopup data={data} />
+    <AnalyzeDetailPopup data={data} showPopUp={showPopUp} />
   </ReactFlowProvider>
 );

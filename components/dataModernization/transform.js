@@ -282,6 +282,7 @@ const Transform = ({ dataModernizationCss }) => {
                         analyzeDetailsId={e.fileId}
                         dataModernizationCss={dataModernizationCss}
                         showTop={false}
+                        showPopUp={true}
                       />
                     </Panel>
                   );
@@ -300,6 +301,7 @@ const Transform = ({ dataModernizationCss }) => {
             <AnalyzeDetailPopup
               outputFileId={"outputFileId"}
               data={modalData}
+              showPopUp={true}
             />
           </Modal>
         </>

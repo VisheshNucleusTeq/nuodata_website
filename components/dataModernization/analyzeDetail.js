@@ -42,6 +42,7 @@ const AnalyzeDetail = ({
   analyzeDetailsId,
   setAnalyze,
   showTop,
+  showPopUp
 }) => {
   const dispatch = useDispatch();
 
@@ -170,7 +171,6 @@ const AnalyzeDetail = ({
             dataIndex: "transformationCount",
             key: "transformationCount",
             render: (value, row, index) => {
-              console.log("row", row);
               if (transformationSummary.length == index + 1) {
                 return (
                   <b style={{ color: "#0c3246", fontWeight: "bold" }}>
@@ -187,7 +187,6 @@ const AnalyzeDetail = ({
             dataIndex: "manualEffortHours",
             key: "manualEffortHours",
             render: (value, row, index) => {
-              console.log({ value, row, index });
               if (transformationSummary.length == index + 1) {
                 return (
                   <b style={{ color: "#0c3246", fontWeight: "bold" }}>
@@ -271,7 +270,11 @@ const AnalyzeDetail = ({
 
   const getGraphSrcData = (data) => {
     return modalData ? (
-      <AnalyzeDetailPopup outputFileId={outputFileId} data={modalData} />
+      <AnalyzeDetailPopup
+        outputFileId={outputFileId}
+        data={modalData}
+        showPopUp={showPopUp}
+      />
     ) : (
       <p>Loading...</p>
     );
@@ -311,7 +314,11 @@ const AnalyzeDetail = ({
         onCancel={() => setOpen(false)}
         width={"100vw"}
       >
-        <AnalyzeDetailPopup outputFileId={"outputFileId"} data={modalData} />
+        <AnalyzeDetailPopup
+          outputFileId={"outputFileId"}
+          data={modalData}
+          showPopUp={showPopUp}
+        />
       </Modal>
 
       {showTop && (
@@ -454,7 +461,7 @@ const AnalyzeDetail = ({
                       <Panel
                         header={
                           e.description === "Graph Source"
-                            ? "Source Graph"
+                            ? showPopUp?"Target Graph": "Source Graph"
                             : e.description
                         }
                         key={i}

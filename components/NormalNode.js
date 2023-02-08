@@ -23,12 +23,10 @@ import NormalNodeCss from "../styles/NormalNode.module.css";
 export default memo(({ data, isConnectable }) => {
   const [transformTypeData, setTransformType] = useState();
   const ref = useRef(null);
-  console.log("this is the data", data);
 
   useEffect(() => {
     setTransformType(data.transformationType);
   }, []);
-  console.log("this is for node icon ", transformTypeData);
 
   const status = transformTypeData;
   let icon = null;
@@ -107,7 +105,7 @@ export default memo(({ data, isConnectable }) => {
             </Col>
           </Row>
         }
-        trigger="click"
+        trigger={data.showPopUp===true?"click":[]}
         content={
           //latest code
           <DynamicReactJson

@@ -316,6 +316,7 @@ const Analyze = ({ dataModernizationCss }) => {
             setAnalyze(true);
           }}
           showTop={true}
+          showPopUp={false}
         />
       )}
     </div>
