@@ -209,6 +209,14 @@
   background-image: linear-gradient(#000000 60%, #0c3246 50%);
 }
 
+.ECTitle1{
+  color: #0c3246 !important;
+}
+
+.ECTitle1 span {
+  background-image: linear-gradient(#FFF 60%, #FFF 50%) !important;
+}
+
 .ECmainRow {
   margin: 2% 0% 2% 0%;
 }
@@ -473,18 +481,36 @@
   color: #0c3246;
 }
 
-.infoRowSystemView {
+/* .infoRowSystemView {
   background: url("/home/archi-gif.gif") no-repeat center center;
   background-size: auto;
   height: 100vh;
   background-size: 100% 80%;
+} */
+
+.infoRowSystemViewSystem{
+  display: block;
 }
 
-@media (max-width: 992px) {
-  .infoRowSystemView {
+.infoRowSystemViewmobile{
+  display: none;
+}
+
+@media (max-width: 576px) {
+  /* .infoRowSystemView {
     background: url("/home/3-1-GIF.gif") no-repeat center center;
     background-size: auto;
+    height: 120vh;
+  } */
+
+  .infoRowSystemViewSystem{
+    display: none;
   }
+  
+  .infoRowSystemViewmobile{
+    display: block;
+  }
+
 }
 
 .infoRowSystemTextView {

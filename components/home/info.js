@@ -20,9 +20,9 @@ export default function Info({ HomeCss }) {
           >
             <AnimationOnScroll
               initiallyVisible={true}
-              animateIn="animate__fadeInRight"
+              animateIn="animate__fadeIn"
               animatePreScroll={true}
-              animateOnce={true}
+              animateOnce={false}
             >
               <h1>
                 <span className={HomeCss.spanText}>ONE PLATFORM</span> FOR ALL

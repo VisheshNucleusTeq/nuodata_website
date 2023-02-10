@@ -261,8 +261,53 @@ const Transform = ({ dataModernizationCss }) => {
                             );
                           }}
                         >
-                          <EyeOutlined /> View
-                          {i % 2 != 1 ? (
+                          {e.fileStatus === "converted" && (
+                            <Row style={{ width: "16vw" }}>
+                              <Col span={12}>
+                                <EyeOutlined /> View
+                              </Col>
+                              <Col span={12}>
+                                <Tag
+                                  icon={<CheckCircleOutlined />}
+                                  color="success"
+                                >
+                                  {"converted"}
+                                </Tag>
+                              </Col>
+                            </Row>
+                          )}
+                          {e.fileStatus === "analyze_failed" && (
+                            <Row style={{ width: "16vw" }}>
+                              <Col span={12}>
+                                {/* <EyeOutlined /> View */}
+                              </Col>
+                              <Col span={12}>
+                                <Tag
+                                  icon={<CheckCircleOutlined />}
+                                  color="red"
+                                >
+                                  {"Analyze Failed"}
+                                </Tag>
+                              </Col>
+                            </Row>
+                          )}
+                          {e.fileStatus === "convert_failed" && (
+                            <Row style={{ width: "16vw" }}>
+                              <Col span={12}>
+                                {/* <EyeOutlined /> View */}
+                              </Col>
+                              <Col span={12}>
+                                <Tag
+                                  icon={<CheckCircleOutlined />}
+                                  color="red"
+                                >
+                                  {"Convert Failed"}
+                                </Tag>
+                              </Col>
+                            </Row>
+                          )}
+                          {/* <EyeOutlined /> View {e.fileStatus} */}
+                          {/* {i % 2 != 1 ? (
                             <Tag icon={<CheckCircleOutlined />} color="success">
                               {"Transformed Successfully"}
                             </Tag>
@@ -273,7 +318,7 @@ const Transform = ({ dataModernizationCss }) => {
                             >
                               {"Transformation Pending"}
                             </Tag>
-                          )}
+                          )} */}
                         </Space>
                       }
                     >

@@ -10,8 +10,6 @@ import {
   message,
   Select,
   Drawer,
-  Timeline,
-  Divider,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -42,6 +40,7 @@ import {
 } from "../../Redux/action";
 
 import { LoadingOutlined } from "@ant-design/icons";
+import DrawerView from "./drawerView";
 
 export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
@@ -62,110 +61,10 @@ export default function Design({ dataModernizationCss }) {
   const [open, setOpen] = useState(false);
   const [tableNameLog, setTableNameLog] = useState([]);
   const [columnLog, setColumnLog] = useState([]);
-  const [tableColumnsChange, setTableColumnsChange] = useState({
-    pastVersionDetails: {
-      tableAndColumns: [
-        {
-          tableId: 464,
-          tableName: "ALLIVET_ORDER_STATUS_DAY",
-          columnDetails: [
-            {
-              columnId: 5468,
-              columnName: "ALLIVET_ORDER_NBR",
-              columnType: "STRING",
-            },
-            {
-              columnId: 5469,
-              columnName: "RX_HOLD_DT",
-              columnType: "DATE",
-            },
-            {
-              columnId: 5470,
-              columnName: "OPEN_DT",
-              columnType: "DATE",
-            },
-            {
-              columnId: 5471,
-              columnName: "COMPLETE_DT",
-              columnType: "DATE",
-            },
-            {
-              columnId: 5472,
-              columnName: "VOID_DT",
-              columnType: "DATE",
-            },
-            {
-              columnId: 5473,
-              columnName: "UPDATE_TSTMP",
-              columnType: "TIMESTAMP",
-            },
-            {
-              columnId: 5474,
-              columnName: "LOAD_TSTMP",
-              columnType: "TIMESTAMP",
-            },
-          ],
-        },
-      ],
-    },
-    currentVersionDetails: {
-      tableAndColumsWithUser: [
-        {
-          tableName: "ALLIVET_ORDER_STATUS_DAY_version_2",
-          tableId: 464,
-          userEmail: "vishesh.tungare@nucleusteq.com",
-          columnDetails: [
-            {
-              columnId: 5468,
-              columnName: "ALLIVET_ORDER_NBR_v2",
-              columnType: "STRING",
-            },
-            {
-              columnId: 5469,
-              columnName: "RX_HOLD_DT",
-              columnType: "DATE",
-            },
-            {
-              columnId: 5470,
-              columnName: "OPEN_DT",
-              columnType: "DATE",
-            },
-            {
-              columnId: 5471,
-              columnName: "COMPLETE_DT",
-              columnType: "DATE",
-            },
-            {
-              columnId: 5472,
-              columnName: "VOID_DT",
-              columnType: "DATE",
-            },
-            {
-              columnId: 5473,
-              columnName: "UPDATE_TSTMP",
-              columnType: "TIMESTAMP",
-            },
-            {
-              columnId: 5474,
-              columnName: "LOAD_TSTMP",
-              columnType: "TIMESTAMP",
-            },
-          ],
-        },
-      ],
-    },
-    changedColumnDetails: [
-      {
-        tableId: 464,
-        columnIdAndUserEmail: [
-          {
-            columnId: 5468,
-            userEmail: "vishesh.tungare@nucleusteq.com",
-          },
-        ],
-      },
-    ],
-  });
+  const [tableColumnsChange, setTableColumnsChange] = useState({});
+
+  const [updatedTableDetails, setUpdatedTableDetails] = useState({});
+  const [updatedColumnDetails, setUpdatedColumnDetails] = useState({});
 
   const dispatch = useDispatch();
   const projectDetails = useSelector(
@@ -276,6 +175,12 @@ export default function Design({ dataModernizationCss }) {
       });
     }
     setVersionListArr(versionList);
+    gerTableDate()
+
+  };
+
+  const gerTableDate = async () => {
+    // console.log(setChildData)
   };
 
   const getTableData = async (tableId, v = null) => {
@@ -344,48 +249,6 @@ export default function Design({ dataModernizationCss }) {
     setLoading(false);
   };
 
-  const updateFileRecord_old = async (release = false) => {
-    setLoading(true);
-    const authData = JSON.parse(localStorage.getItem("authData"));
-    let res1 = await fetch_retry_put(
-      `${UPDATETABLE}${fileId}?userId=${authData?.userId}`,
-      [
-        {
-          tableId: tableId,
-          tableName: tableName,
-        },
-      ]
-    );
-
-    getFileData(fileId);
-    if (res1.success) {
-      let res2 = await fetch_retry_put(
-        `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
-        childTableData
-      );
-      getFileData(fileId);
-      if (res2.success && release) {
-        let res3 = await fetch_retry_post(`${RELEASEVERSION}${fileId}`);
-
-        if (res3.success && res1.success && res2.success) {
-          dispatch(
-            SetProjectTransformDetailsAction({
-              analyzeDetailsId: fileId,
-              version: isDraftState ? version : version + 1,
-            })
-          );
-          dispatch(SetTabTypeAction("Transform"));
-          setLoading(false);
-        } else {
-          setLoading(false);
-        }
-      } else {
-        setLoading(false);
-      }
-    } else {
-      setLoading(false);
-    }
-  };
 
   const changeVersion = async (version, i) => {
     const tableData = await fetch_retry_get(
@@ -394,90 +257,6 @@ export default function Design({ dataModernizationCss }) {
     setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
     getTableData(tableId, version);
     setTableName(tableData?.data?.tables[i]?.tableName);
-  };
-
-  const findCurrentTableName = (tableId, type) => {
-    const oldName =
-      tableColumnsChange?.pastVersionDetails?.tableAndColumns.find(
-        (o) => o.tableId === tableId
-      );
-    const newName =
-      tableColumnsChange?.currentVersionDetails?.tableAndColumsWithUser.find(
-        (o) => o.tableId === tableId
-      );
-
-    if (type == "OLD") {
-      return (
-        <p
-          style={{
-            backgroundColor:
-              oldName?.tableName != newName?.tableName ? "#ffd7d5" : "#FFF",
-            // color: oldName?.tableName != newName?.tableName ? "red" : "#0c3246",
-          }}
-        >
-          <b>{oldName?.tableName}</b>
-        </p>
-      );
-    } else {
-      return (
-        <p
-          style={{
-            backgroundColor:
-              oldName?.tableName != newName?.tableName ? "#e6ffec" : "#FFF",
-            // color: oldName?.tableName != newName?.tableName ? "green" : "#0c3246",
-          }}
-        >
-          <b>{newName?.tableName}</b>
-        </p>
-      );
-    }
-  };
-
-  const findCurrentColumnName = (columnId, i, type) => {
-    const oldName = tableColumnsChange?.pastVersionDetails?.tableAndColumns[
-      i
-    ].columnDetails.find((o) => o.columnId === columnId);
-
-    const newName =
-      tableColumnsChange?.currentVersionDetails?.tableAndColumsWithUser[
-        i
-      ].columnDetails.find((o) => o.columnId === columnId);
-
-    if (type == "OLD") {
-      return (
-        <>
-          <p
-            style={{
-              backgroundColor:
-                oldName?.columnName != newName?.columnName ? "#ffd7d5" : "#FFF",
-            }}
-          >
-            <b>{oldName?.columnName}</b>
-          </p>
-          <p>
-            <small><i>{oldName?.columnType}</i></small>
-          </p>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <p
-            style={{
-              backgroundColor:
-                oldName?.columnName != newName?.columnName ? "#e6ffec" : "#FFF",
-            }}
-          >
-            <b>{newName?.columnName}</b>
-          </p>
-          <p>
-            <small><i>{newName?.columnType}</i></small>
-          </p>
-        </>
-      );
-    }
-
-    return <p>{columnId}</p>;
   };
 
   return (
@@ -527,8 +306,15 @@ export default function Design({ dataModernizationCss }) {
           dataSource={fileList}
         />
       </div>
+
       <Drawer
-        title={tableNameLog.length > 0 ? "Table Logs" : (columnLog.length > 0 ? "Column Logs" : "Change logs")}
+        title={
+          tableNameLog.length > 0
+            ? "Table Logs"
+            : columnLog.length > 0
+            ? "Column Logs"
+            : "Change logs"
+        }
         placement={"right"}
         closable={false}
         onClose={onClose}
@@ -536,172 +322,35 @@ export default function Design({ dataModernizationCss }) {
         key={"placement1"}
         width={"45%"}
       >
-        <Timeline mode={"left"}>
-          {tableNameLog.length > 0 &&
-            tableNameLog.map((e) => {
-              return (
-                <Timeline.Item
-                key={(Math.random() + 1).toString(36).substring(7)}
-                  style={{ height: "20vh", fontSize: "16px" }}
-                  label={
-                    <>
-                      <div
-                        style={{
-                          border: "1px solid #f0f0f0",
-                          paddingRight: "5%",
-                        }}
-                      >
-                        <h3 style={{ color: "#e74860", fontWeight: "bold" }}>
-                          Version {e.version}
-                        </h3>
-                        <p
-                          style={{
-                            color: "#0c3246",
-                            wordBreak: "break-all",
-                          }}
-                        >
-                          {e.tableName}
-                        </p>
-                      </div>
-                    </>
-                  }
-                >
-                  <p style={{ color: "#0c3246" }}>{e.userEmail}</p>
-                </Timeline.Item>
-              );
-            })}
-
-          {columnLog.length > 0 &&
-            columnLog.map((e) => {
-              return (
-                <Timeline.Item
-                key={(Math.random() + 1).toString(36).substring(7)}
-                  style={{ height: "20vh", fontSize: "16px" }}
-                  label={
-                    <>
-                      <div
-                        style={{
-                          border: "1px solid #f0f0f0",
-                          paddingRight: "5%",
-                        }}
-                      >
-                        <h3 style={{ color: "#e74860", fontWeight: "bold" }}>
-                          Version {e.version}
-                        </h3>
-                        <p style={{ color: "#0c3246", wordBreak: "break-all" }}>
-                          {e.columnName}
-                        </p>
-                        <h5
-                          style={{ color: "#0c3246", wordBreak: "break-all" }}
-                        >
-                          {e.columnType}
-                        </h5>
-                      </div>
-                    </>
-                  }
-                >
-                  <div>
-                    <p style={{ color: "#0c3246" }}>{e.userEmail}</p>
-                  </div>
-                </Timeline.Item>
-              );
-            })}
-
-          {tableColumnsChange?.pastVersionDetails?.tableAndColumns.map(
-            (table, i) => {
-              return (
-                <Row key={(Math.random() + 1).toString(36).substring(7)}>
-                  <Col span={24} key={(Math.random() + 1).toString(36).substring(7)}>
-                    <Select
-                      className="inputDesignSelect"
-                      showSearch
-                      style={{
-                        width: "100%",
-                        marginBottom: "4%",
-                      }}
-                      placeholder="Search to Select"
-                      optionFilterProp="children"
-                      filterOption={(input, option) =>
-                        (option?.label ?? "").includes(input)
-                      }
-                      value={version}
-                      onSelect={(version) => {
-                        setVersion(version);
-                        changeVersion(version, i);
-                        getFileChangeLog(version);
-                      }}
-                      options={versionListArr.filter((e) => {
-                        return e.value > 1;
-                      })}
-                    />
-                  </Col>
-                  <Col span={24} style={{ marginTop: "1%", marginBottom : "3%" }}>
-                    <Row>
-                      <Col span={1}></Col>
-                      <Col span={10} style={{color : "#e74860", fontWeight : "bold"}}>
-                        VERSION {version - 1}
-                      </Col>
-                      <Col span={2} style={{textAlign : "center"}}>{">"}</Col>
-                      <Col span={10} style={{color : "#e74860", fontWeight : "bold"}}>
-                      VERSION {version}
-                      </Col>
-                      <Col span={1}></Col>
-                    </Row>
-                  </Col>
-                  <Col span={24}>
-                    <h3>
-                      <b>TABLE NAME</b>
-                    </h3>
-                  </Col>
-                  <Col span={24} style={{ marginTop: "1%" }}>
-                    <Row>
-                      <Col span={1}></Col>
-                      <Col span={10}>
-                        {findCurrentTableName(table.tableId, "OLD")}
-                      </Col>
-                      <Col span={2} style={{textAlign : "center"}}>-</Col>
-                      <Col span={10}>
-                        {findCurrentTableName(table.tableId, "NEW")}
-                      </Col>
-                      <Col span={1}></Col>
-                    </Row>
-                  </Col>
-                  <Col span={24} style={{ marginTop: "2%" }}>
-                    <h3>
-                      <b>COLUMN</b>
-                    </h3>
-                  </Col>
-                  <Col span={24} style={{ marginTop: "1%" }}>
-                    {table?.columnDetails.map((col, j) => {
-                      return (
-                        <Row key={(Math.random() + 1).toString(36).substring(7)}>
-                          <Col span={2}></Col>
-                          <Col span={9}>
-                            {findCurrentColumnName(col.columnId, i, "OLD")}
-                          </Col>
-                          <Col span={2} style={{textAlign : "center"}}>-</Col>
-                          <Col span={9}>
-                            <p>
-                              {findCurrentColumnName(col.columnId, i, "NEW")}
-                            </p>
-                          </Col>
-                          <Col span={2}></Col>
-                          <Col span={24}>{/* <Divider /> */}</Col>
-                        </Row>
-                      );
-                    })}
-                  </Col>
-                </Row>
-              );
-            }
-          )}
-        </Timeline>
+        {open && (
+          <DrawerView
+            tableNameLog={tableNameLog}
+            columnLog={columnLog}
+            tableColumnsChange={tableColumnsChange}
+            versionListArr={versionListArr}
+            version={version}
+            setVersion={setVersion}
+            changeVersion={changeVersion}
+            getFileChangeLog={getFileChangeLog}
+          />
+        )}
       </Drawer>
+
       <div className={dataModernizationCss.designMain} ref={myRef}>
         {childData.length > 0 && (
           <Card bordered={false} className={dataModernizationCss.designCard}>
             <Collapse
-              defaultActiveKey={""}
+              // activeKey={Array(childData.length)
+              //   .fill(undefined)
+              //   .map((a, b) => {
+              //     return b;
+              //   })}
+              defaultActiveKey={Array(childData.length)
+                .fill(undefined)
+                .map((a, b) => {
+                  return b;
+                })}
+              // defaultOpenAll={true}
               onChange={(e) => {
                 if (childData[e]?.tableId != undefined) {
                   getTableData(childData[e].tableId);
@@ -709,7 +358,7 @@ export default function Design({ dataModernizationCss }) {
                   setPreTableName(childData[e].tableName);
                 }
               }}
-              accordion
+              // accordion
               ghost
             >
               {childData.map((e, i) => {
@@ -746,10 +395,11 @@ export default function Design({ dataModernizationCss }) {
                             </Col>
                             <Col span={24}>
                               <Input
-                                onChange={(e) => setTableName(e.target.value)}
-                                value={
-                                  tableName != "" ? tableName : e.tableName
-                                }
+                                // onChange={(e) => setTableName(e.target.value)}
+                                // value={
+                                //   tableName != "" ? tableName : e.tableName
+                                // }
+                                value={e.tableName}
                                 // defaultValue={e.tableName}
                                 style={{ borderRadius: "10px", height: "5vh" }}
                                 disabled={versionListArr.length != version}
@@ -788,20 +438,7 @@ export default function Design({ dataModernizationCss }) {
                             </Col>
                           </Row>
                         </Col>
-                        {/* <Col span={1} /> */}
                         <Col span={4} className="centerButton">
-                          {/* <Button
-                            type="primary"
-                            style={{
-                              backgroundColor: "#e74860",
-                              border: "1px solid #e74860",
-                            }}
-                            onClick={() => {
-                              showTableLogs(e.baseTableName);
-                            }}
-                          >
-                            Table Change Logs
-                          </Button> */}
                           <p
                             style={{
                               color: "#e74860",
@@ -816,66 +453,10 @@ export default function Design({ dataModernizationCss }) {
                         </Col>
                       </Row>
 
-                      <Table
-                        pagination={false}
-                        columns={[
-                          {
-                            title: "Base Column Name",
-                            dataIndex: "baseColumnName",
-                            key: "baseColumnName",
-                          },
-                          {
-                            title: "Base Column Type",
-                            dataIndex: "baseColumnType",
-                            key: "baseColumnType",
-                          },
+                      {JSON.stringify(e?.columnData)}
+                      {/* {gerTableDate(i, e)} */}
 
-                          {
-                            title: "Column Name",
-                            dataIndex: "columnName",
-                            key: "columnName",
-                            render: (record, e, index) => (
-                              <Input
-                                value={e.columnName}
-                                onChange={(_e) => {
-                                  const _tamp = JSON.parse(
-                                    JSON.stringify(childTableData)
-                                  );
-                                  _tamp[index].columnName = _e.target.value;
-                                  setChildTableData(_tamp);
-                                }}
-                                disabled={versionListArr.length != version}
-                              />
-                            ),
-                          },
-                          {
-                            title: "Column Type",
-                            dataIndex: "columnType",
-                            key: "columnType",
-                          },
-                          {
-                            title: "Action",
-                            dataIndex: "columnId",
-                            key: "columnId",
-                            render: (record, e, index) => (
-                              <p
-                                style={{
-                                  color: "#e74860",
-                                  cursor: "pointer",
-                                }}
-                                onClick={() => {
-                                  showColumnLogs(e.columnId);
-                                }}
-                              >
-                                Change Logs
-                              </p>
-                            ),
-                          },
-                        ]}
-                        dataSource={childTableData}
-                      />
-
-                      <div
+                      {/* <div
                         style={{ marginTop: "2%" }}
                         className={dataModernizationCss.nextExitBtn}
                       >
@@ -903,7 +484,7 @@ export default function Design({ dataModernizationCss }) {
                         >
                           Transform File
                         </Button>
-                      </div>
+                      </div> */}
                     </Panel>
                   </>
                 );

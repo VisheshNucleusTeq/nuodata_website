@@ -8,8 +8,8 @@ export default function HowItWork() {
   return (
     <>
       <Info HowItWorkCss={HowItWorkCss} />
-      <ModernizationWorks HowItWorkCss={HowItWorkCss} />
-      <Footer HowItWorkCss={HowItWorkCss} />
+      {/* <ModernizationWorks HowItWorkCss={HowItWorkCss} /> */}
+      {/* <Footer HowItWorkCss={HowItWorkCss} /> */}
     </>
   );
 }

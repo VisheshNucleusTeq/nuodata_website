@@ -95,17 +95,17 @@ const Analyze = ({ dataModernizationCss }) => {
                 </span>
               </Card.Grid>
 
-              
               <Card.Grid>Automation Effort</Card.Grid>
               <Card.Grid>
                 <span>
-                  {analyzeDetails && 
-                  parseFloat(analyzeDetails.manualEffortsEstimateHrs - analyzeDetails.hoursSaved).toFixed(2)
-                  }{" "}
+                  {analyzeDetails &&
+                    parseFloat(
+                      analyzeDetails.manualEffortsEstimateHrs -
+                        analyzeDetails.hoursSaved
+                    ).toFixed(2)}{" "}
                   hours
                 </span>
               </Card.Grid>
-
 
               <Card.Grid style={{ color: "#09bd21" }}>Hours Saved</Card.Grid>
               <Card.Grid>
@@ -116,8 +116,6 @@ const Analyze = ({ dataModernizationCss }) => {
                   hours
                 </span>
               </Card.Grid>
-
-
             </Card>
           </Col>
           <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
@@ -252,18 +250,57 @@ const Analyze = ({ dataModernizationCss }) => {
                   {
                     title: "Action",
                     key: "action",
-                    render: (_, record) => (
-                      <Space size="middle">
-                        <a
-                          onClick={() => {
-                            setAnalyzeDetailsId(record.fileId);
-                            setAnalyze(false);
-                          }}
-                        >
-                          Details
-                        </a>
-                      </Space>
-                    ),
+                    render: (_, record) => {
+                      switch (record.fileStatus) {
+                        case "converted":
+                          return (
+                            <Space size="middle">
+                              <a
+                                onClick={() => {
+                                  setAnalyzeDetailsId(record.fileId);
+                                  setAnalyze(false);
+                                }}
+                              >
+                                Details
+                              </a>
+                            </Space>
+                          );
+                        case "analyze_failed":
+                          return (
+                            <Space size="middle">
+                              <a
+                              style={{color : "red", cursor : "no-drop"}}
+                              >
+                                Analyze Failed
+                              </a>
+                            </Space>
+                          );
+                        case "convert_failed":
+                          return (
+                            <Space size="middle">
+                              <a
+                              style={{color : "yellow", cursor : "no-drop"}}
+                              >
+                                Convertion Failed
+                              </a>
+                            </Space>
+                          );
+                        default:
+                          return "NA";
+                      }
+                      //  return record.fileStatus == "converted" &&  (
+                      //   <Space size="middle">
+                      //     <a
+                      //       onClick={() => {
+                      //         setAnalyzeDetailsId(record.fileId);
+                      //         setAnalyze(false);
+                      //       }}
+                      //     >
+                      //       Details
+                      //     </a>
+                      //   </Space>
+                      // );
+                    },
                   },
                 ]}
                 dataSource={data}
