@@ -77,7 +77,8 @@ export default function Header() {
                 },
                 style: {
                   visibility: "hidden"
-                }
+                },
+                className : "SPACEMENU"
               },
               {
                 key: "4",

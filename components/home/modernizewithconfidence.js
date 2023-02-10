@@ -30,7 +30,7 @@ export default function ModernizeWithConfidence({ HomeCss }) {
 
   return (
     // id="benefitsID"
-    <div className={HomeCss.ECmain}> 
+    <div id="benefitsID" className={HomeCss.ECmain}> 
       <Row className={HomeCss.mainEnterpriseChallengeDiv}>
         <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
         <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
