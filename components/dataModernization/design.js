@@ -175,12 +175,6 @@ export default function Design({ dataModernizationCss }) {
       });
     }
     setVersionListArr(versionList);
-    gerTableDate()
-
-  };
-
-  const gerTableDate = async () => {
-    // console.log(setChildData)
   };
 
   const getTableData = async (tableId, v = null) => {
@@ -249,6 +243,48 @@ export default function Design({ dataModernizationCss }) {
     setLoading(false);
   };
 
+  const updateFileRecord_old = async (release = false) => {
+    setLoading(true);
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    let res1 = await fetch_retry_put(
+      `${UPDATETABLE}${fileId}?userId=${authData?.userId}`,
+      [
+        {
+          tableId: tableId,
+          tableName: tableName,
+        },
+      ]
+    );
+
+    getFileData(fileId);
+    if (res1.success) {
+      let res2 = await fetch_retry_put(
+        `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
+        childTableData
+      );
+      getFileData(fileId);
+      if (res2.success && release) {
+        let res3 = await fetch_retry_post(`${RELEASEVERSION}${fileId}`);
+
+        if (res3.success && res1.success && res2.success) {
+          dispatch(
+            SetProjectTransformDetailsAction({
+              analyzeDetailsId: fileId,
+              version: isDraftState ? version : version + 1,
+            })
+          );
+          dispatch(SetTabTypeAction("Transform"));
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      } else {
+        setLoading(false);
+      }
+    } else {
+      setLoading(false);
+    }
+  };
 
   const changeVersion = async (version, i) => {
     const tableData = await fetch_retry_get(
@@ -322,35 +358,23 @@ export default function Design({ dataModernizationCss }) {
         key={"placement1"}
         width={"45%"}
       >
-        {open && (
-          <DrawerView
-            tableNameLog={tableNameLog}
-            columnLog={columnLog}
-            tableColumnsChange={tableColumnsChange}
-            versionListArr={versionListArr}
-            version={version}
-            setVersion={setVersion}
-            changeVersion={changeVersion}
-            getFileChangeLog={getFileChangeLog}
-          />
-        )}
+        {open && <DrawerView
+          tableNameLog={tableNameLog}
+          columnLog={columnLog}
+          tableColumnsChange={tableColumnsChange}
+          versionListArr={versionListArr}
+          version={version}
+          setVersion={setVersion}
+          changeVersion={changeVersion}
+          getFileChangeLog={getFileChangeLog}
+        />}
       </Drawer>
 
       <div className={dataModernizationCss.designMain} ref={myRef}>
         {childData.length > 0 && (
           <Card bordered={false} className={dataModernizationCss.designCard}>
             <Collapse
-              // activeKey={Array(childData.length)
-              //   .fill(undefined)
-              //   .map((a, b) => {
-              //     return b;
-              //   })}
-              defaultActiveKey={Array(childData.length)
-                .fill(undefined)
-                .map((a, b) => {
-                  return b;
-                })}
-              // defaultOpenAll={true}
+              defaultActiveKey={""}
               onChange={(e) => {
                 if (childData[e]?.tableId != undefined) {
                   getTableData(childData[e].tableId);
@@ -358,7 +382,7 @@ export default function Design({ dataModernizationCss }) {
                   setPreTableName(childData[e].tableName);
                 }
               }}
-              // accordion
+              accordion
               ghost
             >
               {childData.map((e, i) => {
@@ -395,11 +419,10 @@ export default function Design({ dataModernizationCss }) {
                             </Col>
                             <Col span={24}>
                               <Input
-                                // onChange={(e) => setTableName(e.target.value)}
-                                // value={
-                                //   tableName != "" ? tableName : e.tableName
-                                // }
-                                value={e.tableName}
+                                onChange={(e) => setTableName(e.target.value)}
+                                value={
+                                  tableName != "" ? tableName : e.tableName
+                                }
                                 // defaultValue={e.tableName}
                                 style={{ borderRadius: "10px", height: "5vh" }}
                                 disabled={versionListArr.length != version}
@@ -438,7 +461,20 @@ export default function Design({ dataModernizationCss }) {
                             </Col>
                           </Row>
                         </Col>
+                        {/* <Col span={1} /> */}
                         <Col span={4} className="centerButton">
+                          {/* <Button
+                            type="primary"
+                            style={{
+                              backgroundColor: "#e74860",
+                              border: "1px solid #e74860",
+                            }}
+                            onClick={() => {
+                              showTableLogs(e.baseTableName);
+                            }}
+                          >
+                            Table Change Logs
+                          </Button> */}
                           <p
                             style={{
                               color: "#e74860",
@@ -453,10 +489,66 @@ export default function Design({ dataModernizationCss }) {
                         </Col>
                       </Row>
 
-                      {JSON.stringify(e?.columnData)}
-                      {/* {gerTableDate(i, e)} */}
+                      <Table
+                        pagination={false}
+                        columns={[
+                          {
+                            title: "Base Column Name",
+                            dataIndex: "baseColumnName",
+                            key: "baseColumnName",
+                          },
+                          {
+                            title: "Base Column Type",
+                            dataIndex: "baseColumnType",
+                            key: "baseColumnType",
+                          },
 
-                      {/* <div
+                          {
+                            title: "Column Name",
+                            dataIndex: "columnName",
+                            key: "columnName",
+                            render: (record, e, index) => (
+                              <Input
+                                value={e.columnName}
+                                onChange={(_e) => {
+                                  const _tamp = JSON.parse(
+                                    JSON.stringify(childTableData)
+                                  );
+                                  _tamp[index].columnName = _e.target.value;
+                                  setChildTableData(_tamp);
+                                }}
+                                disabled={versionListArr.length != version}
+                              />
+                            ),
+                          },
+                          {
+                            title: "Column Type",
+                            dataIndex: "columnType",
+                            key: "columnType",
+                          },
+                          {
+                            title: "Action",
+                            dataIndex: "columnId",
+                            key: "columnId",
+                            render: (record, e, index) => (
+                              <p
+                                style={{
+                                  color: "#e74860",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  showColumnLogs(e.columnId);
+                                }}
+                              >
+                                Change Logs
+                              </p>
+                            ),
+                          },
+                        ]}
+                        dataSource={childTableData}
+                      />
+
+                      <div
                         style={{ marginTop: "2%" }}
                         className={dataModernizationCss.nextExitBtn}
                       >
@@ -484,7 +576,7 @@ export default function Design({ dataModernizationCss }) {
                         >
                           Transform File
                         </Button>
-                      </div> */}
+                      </div>
                     </Panel>
                   </>
                 );

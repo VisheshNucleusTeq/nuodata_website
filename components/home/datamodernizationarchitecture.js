@@ -23,8 +23,8 @@ export default function DataModernizationArchitecture({ HomeCss }) {
         </p> */}
       </Col>
       <Col offset={1} span={22} className={HomeCss.infoRowSystemView}>
-        <Image width={"100%"} src={'/home/archi-gif.gif'} className={HomeCss.infoRowSystemViewSystem}/>
-        <Image height={"100%"} src={'/home/3-1-GIF.gif'} className={HomeCss.infoRowSystemViewmobile}/>
+        <Image preview={false} width={"100%"} src={'/home/archi-gif.gif'} className={HomeCss.infoRowSystemViewSystem}/>
+        <Image preview={false} height={"100%"} src={'/home/3-1-GIF.gif'} className={HomeCss.infoRowSystemViewmobile}/>
         {/* <div className={HomeCss.infoRowSystemTextView} /> */}
       </Col>
 

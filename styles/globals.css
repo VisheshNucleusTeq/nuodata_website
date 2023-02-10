@@ -284,3 +284,6 @@ body {
 .ant-menu-submenu-popup .SPACEMENU {
   display: none;
 }
+html {
+  scroll-behavior:calc(5000);
+}
