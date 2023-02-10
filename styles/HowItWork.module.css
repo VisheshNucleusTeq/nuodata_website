@@ -1,29 +1,17 @@
 .mainDiv {
   background: url("/home/bg3-overlay (1).png") no-repeat center center;
-  width: 100%;
-  height: 100vh;
+  width: 100vw;
   background-size: cover;
 }
 
-.mainDivOP {
-  width: 100%;
-  height: 100%;
-  /* background-color: #000; */
-  /* opacity: 0.9; */
-}
-
-.infoTextImage {
-  height: 90vh;
+.infoText {
   display: flex;
+  height: 90vh;
   align-items: center;
 }
 
-.infoText {
-  text-align: center;
-}
-
 .infoText h1 {
-  font-size: 5vw;
+  font-size: 6vw;
   color: #fff;
   font-weight: bolder;
 }
@@ -33,18 +21,83 @@
 }
 
 .infoText p {
-  font-size: 2vw;
+  font-size: 1.5vw;
   color: #fff;
-  /* font-weight: bolder; */
+  font-weight: bold;
 }
 
-@media (max-width: 760px) {
+.infoImage {
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoImageTag {
+  object-fit: contain;
+  height: 90vh;
+}
+
+@media (max-width: 1200px) {
   .infoText h1 {
-    font-size: 6vw;
+    font-size: 6.5vw;
+  }
+
+  .infoText p {
+    font-size: 1.6vw;
+  }
+}
+@media (max-width: 992px) {
+  .infoText h1 {
+    font-size: 8vw;
+  }
+
+  .infoText p {
+    font-size: 2vw;
+  }
+}
+@media (max-width: 768px) {
+  .infoText h1 {
+    font-size: 10vw;
   }
 
   .infoText p {
     font-size: 3vw;
+  }
+
+  .infoText {
+    height: 50vh;
+    text-align: center;
+  }
+
+  .infoImage {
+    height: 55vh;
+  }
+
+  .infoImageTag {
+    height: 50vh;
+  }
+}
+@media (max-width: 576px) {
+  .infoText h1 {
+    font-size: 12vw;
+  }
+
+  .infoText p {
+    font-size: 5vw;
+  }
+
+  .infoText {
+    height: 40vh;
+    text-align: center;
+  }
+
+  .infoImage {
+    height: 40vh;
+  }
+
+  .infoImageTag {
+    height: 40vh;
   }
 }
 
@@ -62,7 +115,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 30vh;
+  /* height: 30vh; */
 }
 
 .enterpriseChallengeColTitle h1 {
@@ -208,7 +261,6 @@
 }
 
 .ModernizationWorksBgImage {
-  /* height: 100%; */
   background-size: cover !important;
   background: url("/home/hiwbg.jpg");
   background-repeat: no-repeat !important;
