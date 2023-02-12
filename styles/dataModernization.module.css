@@ -359,3 +359,17 @@
   font-weight: bold;
   margin-bottom: 1vh;
 }
+
+.detailsTitle {
+  margin: 2%;
+  border-bottom: 2px solid rgb(224, 224, 224);
+}
+
+.detailsTitle h2 {
+  color: #0c3246;
+  font-weight: bold;
+}
+
+.detailsTitle h2 span {
+ font-size:small;
+}
