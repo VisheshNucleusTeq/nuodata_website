@@ -95,7 +95,7 @@ const Footer = () => {
                 <p style={{ color: "#FFF" }}>Google Cloud</p>
                 <p style={{ color: "#FFF" }}>Azure</p>
                 <p style={{ color: "#FFF" }}>Databricks</p>
-                <p style={{ color: "#FFF" }}>Snowflakes</p>
+                <p style={{ color: "#FFF" }}>Snowflake</p>
               </List>
             </div>
           </Col>

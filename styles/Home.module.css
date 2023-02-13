@@ -229,6 +229,7 @@
 
 .ECColimage {
   height: 18vh;
+  object-fit: contain;
 }
 
 .ECnumberCol h1 {
