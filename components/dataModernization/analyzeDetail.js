@@ -152,6 +152,7 @@ const AnalyzeDetail = ({
       <Table
         pagination={false}
         dataSource={transformationSummary}
+        rowKey="fileId"
         columns={[
           {
             title: "Transformation Type",
@@ -437,10 +438,10 @@ const AnalyzeDetail = ({
                       hours
                     </Card.Grid>
 
-                    <Card.Grid hoverable={false} bordered={false}>
+                    <Card.Grid hoverable={false} >
                       Hours Saved
                     </Card.Grid>
-                    <Card.Grid hoverable={false} bordered={false}>
+                    <Card.Grid hoverable={false} >
                       {analyzeDetails && analyzeDetails.hoursSaved
                         ? analyzeDetails.hoursSaved
                         : "0"}{" "}
@@ -534,10 +535,6 @@ const AnalyzeDetail = ({
                             </div>
                           )
                         }
-                        // showArrow={e.fileType != "graph_src"}
-                        // collapsible={
-                        //   (e.fileType == "graph_src" && !showTop) ? "disabled" : ""
-                        // }
                       >
                         <Row>
                           <Col

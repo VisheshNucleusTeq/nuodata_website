@@ -8,7 +8,7 @@ import {
 } from "../Redux/action";
 import { useEffect } from "react";
 
-export const ProtectRoute = ({ children, users }) => {
+export const ProtectRoute = ({ children }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const authPage = [
@@ -17,7 +17,7 @@ export const ProtectRoute = ({ children, users }) => {
     "/sign-in",
     "/sign-up",
     "/contact-us",
-    "/data-management"
+    "/data-management",
   ];
   const user = useSelector((state) => state.userDetails.isLogged);
 
@@ -27,19 +27,20 @@ export const ProtectRoute = ({ children, users }) => {
     } else if (["/sign-in", "/sign-up"].includes(router.pathname) && user) {
       router.push("/dashboard");
     }
+
+    if (!authPage.includes(router.pathname)) {
+      if (router.pathname != "/data-modernization") {
+        dispatch(SetProjectDetailsAction({}));
+        dispatch(SetConnectDetailsAction({}));
+      }
+    }
   }, [children, user]);
 
   if (authPage.includes(router.pathname)) {
     return children;
   } else {
-    if (router.pathname != "/data-modernization") {
-      dispatch(SetProjectDetailsAction({}));
-      dispatch(SetConnectDetailsAction({}));
-    }
     return (
-      <InnerLayout componentName={router.pathname}>
-        {children}
-      </InnerLayout>
+      <InnerLayout componentName={router.pathname}>{children}</InnerLayout>
     );
   }
 };

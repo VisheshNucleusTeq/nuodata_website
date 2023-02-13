@@ -64,6 +64,7 @@ const DashboardView = () => {
       <h1>Data Modernization</h1>
       <Table
         className="demo"
+        rowKey="projectId"
         columns={[
           {
             title: "Business Unit",

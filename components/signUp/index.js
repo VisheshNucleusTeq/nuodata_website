@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import AuthHeader from "../common/AuthHeader";
+// import AuthHeader from "../common/AuthHeader";
 import signUpCss from "../../styles/signUp.module.css";
 import SignUpLeft from "./sign-up-left";
 import SignUpRight from "./sign-up-right";

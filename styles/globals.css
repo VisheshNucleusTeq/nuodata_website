@@ -280,3 +280,10 @@ body {
   color: #e74860 !important;
   font-weight: bold;
 }
+
+.ant-menu-submenu-popup .SPACEMENU {
+  display: none;
+}
+html {
+  scroll-behavior:calc(5000);
+}

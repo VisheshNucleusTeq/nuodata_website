@@ -43,32 +43,27 @@ const Connect = ({ dataModernizationCss }) => {
     if (data.success) {
       dispatch(SetConnectDetailsAction(data.data));
       setFileData(data.data);
-
-      await analyzeCall(data.data);
-      await getTransform(data.data);
+      const analyeData = await analyzeCall(data.data);
+      const transData = await getTransform(data.data);
       setLoading(false);
     } else {
+      setLoading(false);
       message.error([data?.error]);
     }
   };
 
   const analyzeCall = async (fileDetails) => {
-    setLoading(true);
     const data = await fetch_retry_post(`${ANALYZE}/${fileDetails.fileId}`, {});
-    setLoading(false);
-    if (data.success) {
-      // dispatch(SetTabTypeAction("Analyze"));
-    } else {
+    if (!data.success && data?.error) {
+      setLoading(false);
       message.error([data?.error]);
     }
   };
 
   const getTransform = async (fileDetails) => {
     const data = await fetch_retry_post(`${TRANSFORM}${fileDetails.fileId}`);
-    setLoading(false);
-    if (data.success) {
-      // setData(data?.data);
-    } else {
+    if (!data.success && data?.error) {
+      setLoading(false);
       message.error([data?.error]);
     }
   };

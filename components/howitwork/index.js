@@ -1,5 +1,4 @@
 import HowItWorkCss from '../../styles/HowItWork.module.css'
-
 import Footer from '../common/footer';
 import Info from './info';
 import ModernizationWorks from './modernization-works';

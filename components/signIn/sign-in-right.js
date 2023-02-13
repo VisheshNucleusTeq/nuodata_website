@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { Image, Form, Button, Divider, message, Input } from "antd";
+import { Form, Button, Divider, message, Input } from "antd";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { fetch_retry_post } from "../../network/api-manager";
 import { LOGIN } from "../../network/apiConstants";
-import {
-  UserDetailsAction,
-  loderShowHideAction
-} from "../../Redux/action";
+import { UserDetailsAction, loderShowHideAction } from "../../Redux/action";
 import { useDispatch } from "react-redux";
 
 function SignInRight({ loginCss }) {
@@ -27,10 +24,8 @@ function SignInRight({ loginCss }) {
     } else {
       message.error([data?.error]);
     }
-      dispatch(loderShowHideAction(false));
-
+    dispatch(loderShowHideAction(false));
   };
-
 
   return (
     <div className={loginCss.flexView}>
@@ -98,7 +93,7 @@ function SignInRight({ loginCss }) {
           </Button>
 
           <Divider plain></Divider>
-          
+
           <p className={loginCss.signup}>
             Don’t have an account? &nbsp;
             <Link href="/sign-up">
