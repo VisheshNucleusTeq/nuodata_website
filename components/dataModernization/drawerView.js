@@ -293,6 +293,7 @@ const DrawerView = ({
                       );
                     })}
                   </Col>
+                  <Divider />
                 </Row>
               );
             }

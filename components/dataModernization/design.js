@@ -39,6 +39,8 @@ import {
   loderShowHideAction,
 } from "../../Redux/action";
 
+import { DownOutlined } from '@ant-design/icons';
+
 import DrawerView from "./drawerView";
 import DesignPanel from "./designPanel";
 
@@ -272,6 +274,7 @@ export default function Design({ dataModernizationCss }) {
   };
 
   const refs = useRef();
+  const refBtn = useRef();
   const changeLogs = () => {
     return (
       <>
@@ -386,6 +389,9 @@ export default function Design({ dataModernizationCss }) {
       <div className={dataModernizationCss.designMain} ref={myRef}>
         {childData.length > 0 && (
           <Card bordered={false} className={dataModernizationCss.designCard}>
+            <div className={dataModernizationCss.okbutton} onClick={() => {
+              refBtn.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})  
+            }} ><DownOutlined /></div>
             <Row className={dataModernizationCss.detailsTitle}>
               <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                 <h2>
@@ -466,6 +472,7 @@ export default function Design({ dataModernizationCss }) {
       <div
         style={{ marginTop: "2%" }}
         className={dataModernizationCss.nextExitBtn}
+        ref={refBtn}
       >
         <Button
           type="primary"
