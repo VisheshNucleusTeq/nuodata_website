@@ -362,7 +362,7 @@
 
 .detailsTitle {
   margin: 2%;
-  border-bottom: 2px solid rgb(224, 224, 224);
+  /* border-bottom: 2px solid rgb(224, 224, 224); */
 }
 
 .detailsTitle h2 {

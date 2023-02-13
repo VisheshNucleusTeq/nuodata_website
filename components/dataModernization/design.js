@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   Select,
+  Divider,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -109,7 +110,6 @@ export default function Design({ dataModernizationCss }) {
   };
 
   const getFileChangeLog = async (v = null) => {
-    alert('getFileChangeLog')
     setColumnLog([]);
     setTableNameLog([]);
 
@@ -392,7 +392,7 @@ export default function Design({ dataModernizationCss }) {
                 />
               </Col>
             </Row>
-
+<Divider/>
             <Collapse
               defaultActiveKey={Array(childData.length)
                 .fill(undefined)
