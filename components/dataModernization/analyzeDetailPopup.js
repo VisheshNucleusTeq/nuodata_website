@@ -115,15 +115,6 @@ const AnalyzeDetailPopup = ({ outputFileId, data,showPopUp }) => {
     },
     [nodes, edges]
   );
-  // const getProjectData = async (fileId) => {
-  //   const data = await fetch_retry_get(`${DESIGN}${fileId}`);
-  //   // setData(data);
-  //   // console.log(data);
-  // };
-
-  // useEffect(() => {
-  //   getProjectData(outputFileId);
-  // }, []);
 
   return (
     <>

@@ -225,6 +225,7 @@ const Analyze = ({ dataModernizationCss }) => {
             <div className={dataModernizationCss.analyzeMain}>
               <Table
                 className="demo"
+                rowKey="fileId"
                 columns={[
                   {
                     title: "File",

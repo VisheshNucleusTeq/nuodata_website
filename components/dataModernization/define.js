@@ -140,7 +140,7 @@ const Define = ({ dataModernizationCss }) => {
               options={BUSINESSUNITLIST.sort((a, b) =>
                 a.label.localeCompare(b.label)
               )}
-              defaultValue={
+              initialvalues={
                 projectDetails && projectDetails.businessUnit
                   ? projectDetails.businessUnit
                   : ""
@@ -166,7 +166,7 @@ const Define = ({ dataModernizationCss }) => {
               type={"text"}
               disabled={isLoading}
               placeholder={"Project Name"}
-              defaultValue={
+              initialvalues={
                 projectDetails && projectDetails.name ? projectDetails.name : ""
               }
             />
@@ -193,7 +193,7 @@ const Define = ({ dataModernizationCss }) => {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-              defaultValue={
+              initialvalues={
                 projectDetails && projectDetails.sourcePlatform
                   ? projectDetails.sourcePlatform
                   : ""
@@ -248,7 +248,7 @@ const Define = ({ dataModernizationCss }) => {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-              defaultValue={
+              initialvalues={
                 projectDetails && projectDetails.sourceLang
                   ? projectDetails.sourceLang
                   : ""
@@ -283,7 +283,7 @@ const Define = ({ dataModernizationCss }) => {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-              defaultValue={
+              initialvalues={
                 projectDetails && projectDetails.targetPlatform
                   ? projectDetails.targetPlatform
                   : ""
@@ -342,7 +342,7 @@ const Define = ({ dataModernizationCss }) => {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-              defaultValue={
+              initialvalues={
                 projectDetails && projectDetails.targetLang
                   ? projectDetails.targetLang
                   : ""

@@ -58,16 +58,12 @@ const DesignPanel = ({
         tableId: tableId,
       }
     );
-
-    console.log(tableKeyData);
-
     setChildTableData(tableKeyData?.data);
     setPreChildTableData(tableKeyData?.data);
   };
 
   useEffect(() => {
     getTableData(e.tableId);
-    console.log(e.tableId);
   }, [e]);
 
   return (
@@ -136,6 +132,7 @@ const DesignPanel = ({
 
       <Table
         pagination={false}
+        rowKey="columnId"
         columns={[
           {
             title: "Base Column Name",

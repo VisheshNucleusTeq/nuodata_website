@@ -5,11 +5,9 @@ import { useRouter } from "next/router";
 import { BellOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Button } from "antd";
-import {useDispatch, useSelector} from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 
-import {
-  UserDetailsAction
-} from "../../../Redux/action";
+import { UserDetailsAction } from "../../../Redux/action";
 
 const HeaderView = ({ layoutCss, ref }) => {
   const dispatch = useDispatch();
@@ -49,8 +47,38 @@ const HeaderView = ({ layoutCss, ref }) => {
       </div>
 
       <div style={{ float: "right" }}>
-        <Menu mode="horizontal">
-          <Menu.Item key="1">
+        <Menu
+          mode="horizontal"
+          items={[
+            {
+              key: "1",
+              label: <BellOutlined style={{ fontSize: "18px" }} />,
+            },
+            {
+              key: "2",
+              label: <QuestionCircleOutlined style={{ fontSize: "18px" }} />,
+            },
+            {
+              key: "3",
+              label: (
+                <Divider style={{ backgroundColor: "gray" }} type="vertical" />
+              ),
+            },
+            {
+              key: "4",
+              label: userDetails && userDetails?.firstName && (
+                <Dropdown menu={{ items }}>
+                  <Space>
+                    {userDetails?.firstName} &nbsp;
+                    <Avatar src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=600" />
+                    <DownOutlined />
+                  </Space>
+                </Dropdown>
+              ),
+            },
+          ]}
+        >
+          {/* <Menu.Item key="1">
             <BellOutlined style={{ fontSize: "18px" }} />
           </Menu.Item>
           <Menu.Item key="2">
@@ -69,7 +97,7 @@ const HeaderView = ({ layoutCss, ref }) => {
                 </Space>
               </Dropdown>
             )}
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </div>
     </Header>

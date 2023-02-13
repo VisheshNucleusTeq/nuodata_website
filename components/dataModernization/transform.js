@@ -59,9 +59,9 @@ const Transform = ({ dataModernizationCss }) => {
     (state) => state.designDetails.designDetails
   );
 
-  useEffect(() => {
-    console.log(designDetails);
-  }, [designDetails]);
+  // useEffect(() => {
+  //   console.log(designDetails);
+  // }, [designDetails]);
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
@@ -306,19 +306,6 @@ const Transform = ({ dataModernizationCss }) => {
                               </Col>
                             </Row>
                           )}
-                          {/* <EyeOutlined /> View {e.fileStatus} */}
-                          {/* {i % 2 != 1 ? (
-                            <Tag icon={<CheckCircleOutlined />} color="success">
-                              {"Transformed Successfully"}
-                            </Tag>
-                          ) : (
-                            <Tag
-                              icon={<ExclamationCircleOutlined />}
-                              color="warning"
-                            >
-                              {"Transformation Pending"}
-                            </Tag>
-                          )} */}
                         </Space>
                       }
                     >

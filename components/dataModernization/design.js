@@ -35,6 +35,7 @@ import {
 import {
   SetTabTypeAction,
   SetProjectTransformDetailsAction,
+  loderShowHideAction
 } from "../../Redux/action";
 
 import DrawerView from "./drawerView";
@@ -89,7 +90,7 @@ export default function Design({ dataModernizationCss }) {
       );
     } else {
       setTableNameLog([]);
-      setOpen(false);
+      setOpen(true);
     }
   };
 
@@ -103,11 +104,12 @@ export default function Design({ dataModernizationCss }) {
       setColumnLog(logDataArr.sort((a, b) => b.version - a.version));
     } else {
       setColumnLog([]);
-      setOpen(false);
+      setOpen(true);
     }
   };
 
   const getFileChangeLog = async (v = null) => {
+    alert('getFileChangeLog')
     setColumnLog([]);
     setTableNameLog([]);
 
@@ -174,6 +176,7 @@ export default function Design({ dataModernizationCss }) {
       });
     }
     setVersionListArr(versionList);
+    myRef?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const getTableData = async (tableId, v = null) => {
@@ -190,13 +193,16 @@ export default function Design({ dataModernizationCss }) {
   };
 
   const updateFileRecord = async (release = false) => {
+
+    dispatch(loderShowHideAction(true));
+
     const authData = JSON.parse(localStorage.getItem("authData"));
     if (updatedTableDetails && updatedTableDetails.length) {
       await fetch_retry_put(
         `${UPDATETABLE}${fileId}?userId=${authData?.userId}`,
         updatedTableDetails
       );
-      getFileData(fileId);
+      // getFileData(fileId);
     }
 
     if (updatedColumnDetails && updatedColumnDetails.length) {
@@ -204,7 +210,7 @@ export default function Design({ dataModernizationCss }) {
         `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
         updatedColumnDetails
       );
-      getFileData(fileId);
+      // getFileData(fileId);
     }
 
     if (release) {
@@ -217,6 +223,8 @@ export default function Design({ dataModernizationCss }) {
       );
       dispatch(SetTabTypeAction("Transform"));
     }
+    getFileData(fileId);
+    dispatch(loderShowHideAction(false));
   };
 
   const changeVersion = async (version) => {
@@ -270,6 +278,7 @@ export default function Design({ dataModernizationCss }) {
         <Table
           pagination={false}
           className="demo"
+          rowKey="fileId"
           columns={[
             {
               title: "File",
@@ -341,8 +350,6 @@ export default function Design({ dataModernizationCss }) {
           />
         )}
       </Drawer>
-      {/* {JSON.stringify(updatedTableDetails)}
-      {JSON.stringify(updatedColumnDetails)} */}
       <div className={dataModernizationCss.designMain} ref={myRef}>
         {childData.length > 0 && (
           <Card bordered={false} className={dataModernizationCss.designCard}>
@@ -390,32 +397,16 @@ export default function Design({ dataModernizationCss }) {
               defaultActiveKey={Array(childData.length)
                 .fill(undefined)
                 .map((a, b) => {
-                  return b;
+                  return b + "panel";
                 })}
               ghost
             >
               {childData.map((e, i) => {
                 return (
-                  <>
                     <Panel
                       header={`${e.tableName} (${e.baseTableName})`}
-                      key={i}
+                      key={i + "panel"}
                       forceRender={true}
-                      // extra={
-                      //   <div onClick={(e) => e.stopPropagation()}>
-                      //     <a
-                      //       onClick={() => {
-                      //         getFileChangeLog();
-                      //       }}
-                      //       style={{
-                      //         color: "#e74860",
-                      //         cursor: "pointer",
-                      //       }}
-                      //     >
-                      //       Change Logs
-                      //     </a>
-                      //   </div>
-                      // }
                     >
                       <DesignPanel
                         dataModernizationCss={dataModernizationCss}
@@ -428,37 +419,7 @@ export default function Design({ dataModernizationCss }) {
                         updatedColumnDetailsAction={updatedColumnDetailsAction}
                         showTableLogs={showTableLogs}
                       />
-                      {/* <div
-                        style={{ marginTop: "2%" }}
-                        className={dataModernizationCss.nextExitBtn}
-                      >
-                        <Button
-                          type="primary"
-                          style={{ marginRight: "1rem", color: "#fff" }}
-                          danger
-                          className={dataModernizationCss.exitBtn}
-                          htmlType="submit"
-                          onClick={() => {
-                            updateFileRecord();
-                          }}
-                          disabled={loading || versionListArr.length != version}
-                        >
-                          Save {loading && <LoadingOutlined spin />}
-                        </Button>
-                        <Button
-                          type="primary"
-                          danger
-                          className={dataModernizationCss.nextBtn}
-                          onClick={() => {
-                            updateFileRecord(true);
-                          }}
-                          disabled={loading || versionListArr.length != version}
-                        >
-                          Transform File
-                        </Button>
-                      </div> */}
                     </Panel>
-                  </>
                 );
               })}
             </Collapse>
@@ -495,22 +456,6 @@ export default function Design({ dataModernizationCss }) {
           Transform File
         </Button>
       </div>
-
-      {/* <div className={dataModernizationCss.nextExitBtn}>
-        <Button
-          type="primary"
-          danger
-          className={dataModernizationCss.nextBtn}
-          htmlType="submit"
-          disabled={loading || versionListArr.length != version}
-          onClick={() => {
-            dispatch(SetProjectTransformDetailsAction({}));
-            dispatch(SetTabTypeAction("Transform"));
-          }}
-        >
-          Transform Project
-        </Button>
-      </div> */}
     </>
   );
 }

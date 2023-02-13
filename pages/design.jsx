@@ -107,7 +107,6 @@ const Design = () => {
           onConnect={onConnect}
           onInit={setRfInstance}
           onNodeClick={(value, node) => {
-            console.log("value", value, node);
             SetName(node?.data?.queries);
             setSelectedNode(value);
             setJson(node);

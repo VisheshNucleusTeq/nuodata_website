@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import AuthHeader from "../common/AuthHeader";
+// import AuthHeader from "../common/AuthHeader";
 import SignInLeft from "./sign-in-left";
 import SignInRight from "./sign-in-right";
 import loginCss from "../../styles/login.module.css";
@@ -18,7 +18,7 @@ export default function SignIn() {
       </Row>
       <Row style={{ height: "100vh" }} className={loginCss.mobileView}>
         <Col span={24}>
-          <AuthHeader />
+          {/* <AuthHeader /> */}
           <SignInRight loginCss={loginCss} />
         </Col>
       </Row>
