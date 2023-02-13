@@ -39,10 +39,11 @@ import {
   loderShowHideAction,
 } from "../../Redux/action";
 
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
 
 import DrawerView from "./drawerView";
 import DesignPanel from "./designPanel";
+import { useIsVisible } from "../../hooks/useIsVisible";
 
 export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
@@ -68,7 +69,6 @@ export default function Design({ dataModernizationCss }) {
 
   const [updatedTableDetails, setUpdatedTableDetails] = useState([]);
   const [updatedColumnDetails, setUpdatedColumnDetails] = useState([]);
-
   const dispatch = useDispatch();
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -275,6 +275,10 @@ export default function Design({ dataModernizationCss }) {
 
   const refs = useRef();
   const refBtn = useRef();
+  const UpperRef = useRef();
+
+  const isVisible = useIsVisible(refBtn);
+
   const changeLogs = () => {
     return (
       <>
@@ -388,10 +392,30 @@ export default function Design({ dataModernizationCss }) {
       </Drawer>
       <div className={dataModernizationCss.designMain} ref={myRef}>
         {childData.length > 0 && (
-          <Card bordered={false} className={dataModernizationCss.designCard}>
-            <div className={dataModernizationCss.okbutton} onClick={() => {
-              refBtn.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})  
-            }} ><DownOutlined /></div>
+          <Card
+            ref={UpperRef}
+            bordered={false}
+            className={dataModernizationCss.designCard}
+          >
+            <div
+              className={dataModernizationCss.okbutton}
+              onClick={() => {
+                console.log("is Visible", isVisible);
+                isVisible
+                  ? UpperRef.current.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                      inline: "nearest",
+                    })
+                  : refBtn.current.scrollIntoView({
+                      behavior: "smooth",
+                      block: "end",
+                      inline: "nearest",
+                    });
+              }}
+            >
+              {isVisible ? <UpOutlined /> : <DownOutlined />}
+            </div>
             <Row className={dataModernizationCss.detailsTitle}>
               <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                 <h2>

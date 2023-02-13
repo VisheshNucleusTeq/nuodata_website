@@ -386,8 +386,12 @@
   border-radius: 50px;
   background-color: #e74860;
   color: #FFF;
-  padding: 10px 12px 10px 12px;
+  /* padding: 10px 12px 10px 12px;
+   */
+   padding:20px;
   align-items: center;
   justify-content: center;
   display: flex;
+  cursor:pointer;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
