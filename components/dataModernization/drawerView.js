@@ -193,7 +193,7 @@ const DrawerView = ({
             (table, i) => {
               return (
                 <Row key={(Math.random() + 1).toString(36).substring(7)}>
-                  <Col
+                  {/* <Col
                     span={24}
                     key={(Math.random() + 1).toString(36).substring(7)}
                   >
@@ -219,7 +219,7 @@ const DrawerView = ({
                         return e.value > 1;
                       })}
                     />
-                  </Col>
+                  </Col> */}
                   <Col
                     span={24}
                     style={{ marginTop: "1%", marginBottom: "3%" }}

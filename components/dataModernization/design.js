@@ -36,7 +36,7 @@ import {
 import {
   SetTabTypeAction,
   SetProjectTransformDetailsAction,
-  loderShowHideAction
+  loderShowHideAction,
 } from "../../Redux/action";
 
 import DrawerView from "./drawerView";
@@ -72,7 +72,7 @@ export default function Design({ dataModernizationCss }) {
     (state) => state.projectDetails.projectDetails
   );
 
-  const showTableLogs = async (baseTableName,tableId) => {
+  const showTableLogs = async (baseTableName, tableId) => {
     setColumnLog([]);
     setTableColumnsChange({});
     const logData = await fetch_retry_get(`${TABLECHANGELOGS}${tableId}`);
@@ -193,7 +193,6 @@ export default function Design({ dataModernizationCss }) {
   };
 
   const updateFileRecord = async (release = false) => {
-
     dispatch(loderShowHideAction(true));
 
     const authData = JSON.parse(localStorage.getItem("authData"));
@@ -272,6 +271,40 @@ export default function Design({ dataModernizationCss }) {
     setUpdatedColumnDetails(_temp);
   };
 
+  const refs = useRef();
+  const changeLogs = () => {
+    return (
+      <>
+        <p>Change logs</p>
+        {tableColumnsChange?.pastVersionDetails?.tableAndColumns.length > 0 && (
+          <Select
+            ref={refs}
+            className="inputDesignSelect"
+            showSearch
+            style={{
+              width: "100%",
+            }}
+            placeholder="Search to Select"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? "").includes(input)
+            }
+            value={version}
+            onSelect={(version) => {
+              refs.current.blur();
+              setVersion(version);
+              changeVersion(version);
+              getFileChangeLog(version);
+            }}
+            options={versionListArr.filter((e) => {
+              return e.value > 1;
+            })}
+          />
+        )}
+      </>
+    );
+  };
+
   return (
     <>
       <div className={dataModernizationCss.designMain}>
@@ -328,7 +361,7 @@ export default function Design({ dataModernizationCss }) {
             ? "Table Logs"
             : columnLog.length > 0
             ? "Column Logs"
-            : "Change logs"
+            : changeLogs()
         }
         placement={"right"}
         closable={false}
@@ -356,19 +389,22 @@ export default function Design({ dataModernizationCss }) {
             <Row className={dataModernizationCss.detailsTitle}>
               <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                 <h2>
-                  {fileName}{" "} <span>(
-                  <a
-                    onClick={() => {
-                      getFileChangeLog();
-                    }}
-                    style={{
-                      color: "#e74860",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Change Logs
-                  </a>
-                  )</span>
+                  {fileName}{" "}
+                  <span>
+                    (
+                    <a
+                      onClick={() => {
+                        getFileChangeLog();
+                      }}
+                      style={{
+                        color: "#e74860",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Change Logs
+                    </a>
+                    )
+                  </span>
                 </h2>
               </Col>
               <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
@@ -392,7 +428,7 @@ export default function Design({ dataModernizationCss }) {
                 />
               </Col>
             </Row>
-<Divider/>
+            <Divider />
             <Collapse
               defaultActiveKey={Array(childData.length)
                 .fill(undefined)
@@ -403,23 +439,23 @@ export default function Design({ dataModernizationCss }) {
             >
               {childData.map((e, i) => {
                 return (
-                    <Panel
-                      header={`${e.tableName} (${e.baseTableName})`}
-                      key={i + "panel"}
-                      forceRender={true}
-                    >
-                      <DesignPanel
-                        dataModernizationCss={dataModernizationCss}
-                        e={e}
-                        versionListArr={versionListArr}
-                        version={version}
-                        fileId={fileId}
-                        showColumnLogs={showColumnLogs}
-                        updatedTableDetailsAction={updatedTableDetailsAction}
-                        updatedColumnDetailsAction={updatedColumnDetailsAction}
-                        showTableLogs={showTableLogs}
-                      />
-                    </Panel>
+                  <Panel
+                    header={`${e.tableName} (${e.baseTableName})`}
+                    key={i + "panel"}
+                    forceRender={true}
+                  >
+                    <DesignPanel
+                      dataModernizationCss={dataModernizationCss}
+                      e={e}
+                      versionListArr={versionListArr}
+                      version={version}
+                      fileId={fileId}
+                      showColumnLogs={showColumnLogs}
+                      updatedTableDetailsAction={updatedTableDetailsAction}
+                      updatedColumnDetailsAction={updatedColumnDetailsAction}
+                      showTableLogs={showTableLogs}
+                    />
+                  </Panel>
                 );
               })}
             </Collapse>
