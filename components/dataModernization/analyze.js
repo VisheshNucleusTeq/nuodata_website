@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Col, Table, Space, Card, message, Carousel, Button } from "antd";
+import {
+  Row,
+  Col,
+  Table,
+  Space,
+  Card,
+  message,
+  Carousel,
+  Button,
+  Badge,
+} from "antd";
 import { useRouter } from "next/router";
 import { ArrowRightOutlined } from "@ant-design/icons";
 
@@ -95,6 +105,19 @@ const Analyze = ({ dataModernizationCss }) => {
                 </span>
               </Card.Grid>
 
+
+              <Card.Grid>Workflows</Card.Grid>
+              <Card.Grid>
+                <span>
+                  {analyzeDetails && analyzeDetails.workflows
+                    ? analyzeDetails.workflows
+                    : "0"}
+                </span>
+              </Card.Grid>
+
+
+              
+
               <Card.Grid>Automation Effort</Card.Grid>
               <Card.Grid>
                 <span>
@@ -118,8 +141,8 @@ const Analyze = ({ dataModernizationCss }) => {
               </Card.Grid>
             </Card>
           </Col>
-          <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
-          <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14} style={{}}>
+          <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col>
+          <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15} style={{}}>
             <Card className={dataModernizationCss.cardViewGraphs}>
               <Carousel autoplay draggable>
                 <div className={dataModernizationCss.cardViewGraph}>
@@ -247,13 +270,32 @@ const Analyze = ({ dataModernizationCss }) => {
                     dataIndex: "transformations",
                     key: "transformations",
                   },
-
+                  {
+                    title: "Status",
+                    key: "fileStatus",
+                    render: (_, record) => {
+                      switch (record.fileStatus) {
+                        case "analyze_failed":
+                          return <Badge count={"Analysis Failed"} color="red" />;
+                        default:
+                          return <Badge count={"Analysis Completed"} color="green" />;
+                      }
+                    },
+                  },
                   {
                     title: "Action",
                     key: "action",
                     render: (_, record) => {
                       switch (record.fileStatus) {
-                        case "converted":
+                        case "analyze_failed":
+                          return (
+                            <Space size="middle" style={{cursor : "not-allowed"}}>
+                              <a style={{cursor : "not-allowed"}}>
+                                Details
+                              </a>
+                            </Space>
+                          );
+                        default:
                           return (
                             <Space size="middle">
                               <a
@@ -266,41 +308,7 @@ const Analyze = ({ dataModernizationCss }) => {
                               </a>
                             </Space>
                           );
-                        case "analyze_failed":
-                          return (
-                            <Space size="middle">
-                              <a
-                              style={{color : "red", cursor : "no-drop"}}
-                              >
-                                Analyze Failed
-                              </a>
-                            </Space>
-                          );
-                        case "convert_failed":
-                          return (
-                            <Space size="middle">
-                              <a
-                              style={{color : "yellow", cursor : "no-drop"}}
-                              >
-                                Convertion Failed
-                              </a>
-                            </Space>
-                          );
-                        default:
-                          return "NA";
                       }
-                      //  return record.fileStatus == "converted" &&  (
-                      //   <Space size="middle">
-                      //     <a
-                      //       onClick={() => {
-                      //         setAnalyzeDetailsId(record.fileId);
-                      //         setAnalyze(false);
-                      //       }}
-                      //     >
-                      //       Details
-                      //     </a>
-                      //   </Space>
-                      // );
                     },
                   },
                 ]}

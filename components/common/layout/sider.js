@@ -6,7 +6,7 @@ const { Sider } = Layout;
 import { useDispatch, useSelector } from "react-redux";
 import { SetTabTypeAction, loderShowHideAction } from "../../../Redux/action";
 import { useState } from "react";
-import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
+import { CaretLeftOutlined, CaretDownOutlined } from "@ant-design/icons";
 
 const SiderView = ({ layoutCss, height, componentName }) => {
   const { query } = useRouter();
@@ -69,7 +69,12 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             }}
           >
             {/* CaretUpOutlined, CaretDownOutlined */}
-            Data Modernization &nbsp; {showDataModernization ? <CaretUpOutlined style={{color : "#e74860"}}/> :<CaretDownOutlined style={{color : "#e74860"}}/>}
+            Data Modernization &nbsp;{" "}
+            {showDataModernization ? (
+              <CaretDownOutlined style={{ color: "#e74860" }} />
+            ) : (
+              <CaretLeftOutlined style={{ color: "#e74860" }} />
+            )}
           </Col>
         </Col>
 

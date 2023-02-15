@@ -11,6 +11,7 @@ import {
   Modal,
   Tag,
   message,
+  Badge,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -111,6 +112,25 @@ const Transform = ({ dataModernizationCss }) => {
 
   //   return data?.outputFileId;
   // };
+
+  const getFileName = (e) => {
+    const getStatus = (record) => {
+      switch (record.fileStatus) {
+        case "convert_failed":
+          return <Badge count={"Transformed Partially"} color="red" />;
+        default:
+          return <Badge count={"Transformed Successfully"} color="green" />;
+      }
+    };
+    return (
+      <Row>
+        <Col span={10}>{e.fileName}</Col>
+        <Col span={10}>
+          <p>{getStatus(e)}</p>
+        </Col>
+      </Row>
+    );
+  };
 
   return (
     <>
@@ -247,67 +267,90 @@ const Transform = ({ dataModernizationCss }) => {
                   return (
                     <Panel
                       key={e.fileId}
-                      header={e.fileName}
+                      // header={e.fileName}
+                      header={getFileName(e)}
                       style={{ margin: "2% 0% 2% 0%" }}
                       extra={
-                        <Space
-                          size="middle"
-                          className={dataModernizationCss.downloadBtnSpace}
-                          onClick={() => {
-                            dispatch(
-                              SetProjectTransformDetailsAction({
-                                analyzeDetailsId: e.fileId,
-                              })
-                            );
-                          }}
-                        >
+                        <>
                           {e.fileStatus === "converted" && (
-                            <Row style={{ width: "16vw" }}>
-                              <Col span={12}>
-                                <EyeOutlined /> View
-                              </Col>
-                              <Col span={12}>
-                                <Tag
-                                  icon={<CheckCircleOutlined />}
-                                  color="success"
-                                >
-                                  {"converted"}
-                                </Tag>
-                              </Col>
-                            </Row>
+                            <Space
+                              size="middle"
+                              className={dataModernizationCss.downloadBtnSpace}
+                              onClick={() => {
+                                dispatch(
+                                  SetProjectTransformDetailsAction({
+                                    analyzeDetailsId: e.fileId,
+                                  })
+                                );
+                              }}
+                            >
+                              <EyeOutlined /> View
+                            </Space>
                           )}
-                          {e.fileStatus === "analyze_failed" && (
-                            <Row style={{ width: "16vw" }}>
-                              <Col span={12}>
-                                {/* <EyeOutlined /> View */}
-                              </Col>
-                              <Col span={12}>
-                                <Tag
-                                  icon={<CheckCircleOutlined />}
-                                  color="red"
-                                >
-                                  {"Analyze Failed"}
-                                </Tag>
-                              </Col>
-                            </Row>
-                          )}
+
                           {e.fileStatus === "convert_failed" && (
-                            <Row style={{ width: "16vw" }}>
-                              <Col span={12}>
-                                {/* <EyeOutlined /> View */}
-                              </Col>
-                              <Col span={12}>
-                                <Tag
-                                  icon={<CheckCircleOutlined />}
-                                  color="red"
-                                >
-                                  {"Convert Failed"}
-                                </Tag>
-                              </Col>
-                            </Row>
+                            <Space
+                              size="middle"
+                              className={dataModernizationCss.downloadBtnSpace}
+                              style={{ cursor: "not-allowed" }}
+                            >
+                              <EyeOutlined /> View
+                            </Space>
                           )}
-                        </Space>
+                        </>
                       }
+                      // extra={
+                      //   <Space
+                      //     size="middle"
+                      //     className={dataModernizationCss.downloadBtnSpace}
+                      //   >
+                      //     {e.fileStatus === "converted" && (
+                      //       <Row style={{ width: "16vw" }}>
+                      //         <Col span={12}>
+                      //           <EyeOutlined /> View
+                      //         </Col>
+                      //         <Col span={12}>
+                      //           <Tag
+                      //             icon={<CheckCircleOutlined />}
+                      //             color="success"
+                      //           >
+                      //             {"converted"}
+                      //           </Tag>
+                      //         </Col>
+                      //       </Row>
+                      //     )}
+                      //     {e.fileStatus === "analyze_failed" && (
+                      //       <Row style={{ width: "16vw" }}>
+                      //         <Col span={12}>
+                      //           <EyeOutlined /> View
+                      //         </Col>
+                      //         <Col span={12}>
+                      //           <Tag
+                      //             icon={<CheckCircleOutlined />}
+                      //             color="red"
+                      //           >
+                      //             {"Analyze Failed"}
+                      //           </Tag>
+                      //         </Col>
+                      //       </Row>
+                      //     )}
+                      //     {e.fileStatus === "convert_failed" && (
+                      //       <Row style={{ width: "16vw" }}>
+                      //         <Col span={12}>
+                      //           {/* <EyeOutlined /> View */}
+                      //         </Col>
+                      //         <Col span={12}>
+                      //           <Tag
+                      //             icon={<CheckCircleOutlined />}
+                      //             color="red"
+                      //           >
+                      //             {"Convert Failed"}
+                      //           </Tag>
+                      //         </Col>
+                      //       </Row>
+                      //     )}
+                      //   </Space>
+                      // }
                     >
                       <AnalyzeDetail
                         analyzeDetailsId={e.fileId}
