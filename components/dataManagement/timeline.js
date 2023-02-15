@@ -31,7 +31,7 @@ export default function Timeline({ DataManagementCss }) {
           titleImage: "/data_management/small icons/4.png",
         },
         {
-          titleText: "Compliance & PLL",
+          titleText: "Compliance & PII",
           titleImage: "/data_management/small icons/5.png",
         },
         {

@@ -400,7 +400,6 @@ export default function Design({ dataModernizationCss }) {
             <div
               className={dataModernizationCss.okbutton}
               onClick={() => {
-                console.log("is Visible", isVisible);
                 isVisible
                   ? UpperRef.current.scrollIntoView({
                       behavior: "smooth",

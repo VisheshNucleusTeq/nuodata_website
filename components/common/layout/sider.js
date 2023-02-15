@@ -4,13 +4,17 @@ import { Layout, Row, Col, Image } from "antd";
 const { Sider } = Layout;
 
 import { useDispatch, useSelector } from "react-redux";
-import { SetTabTypeAction,loderShowHideAction } from "../../../Redux/action";
+import { SetTabTypeAction, loderShowHideAction } from "../../../Redux/action";
+import { useState } from "react";
+import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 const SiderView = ({ layoutCss, height, componentName }) => {
   const { query } = useRouter();
   const router = useRouter();
   const dispatch = useDispatch();
   const tabType = useSelector((state) => state.tabType.tabType);
+
+  const [showDataModernization, setShowDataModernization] = useState(true);
 
   const changePage = async (page, tab) => {
     router.push(page);
@@ -32,7 +36,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
       </div>
 
       <Row style={{ marginTop: "10%" }}>
-        <Col
+        {/* <Col
           span={24}
           className={`${layoutCss.mainMenuCol} ${
             componentName == "/dashboard" ? layoutCss.activeMenu : null
@@ -53,19 +57,24 @@ const SiderView = ({ layoutCss, height, componentName }) => {
               Dashboard
             </Col>
           </a>
-        </Col>
+        </Col> */}
         <Col span={24} className={layoutCss.mainMenuCol}>
           <Col
             offset={2}
             span={20}
             style={{ height: height / 1.5 + "px" }}
             className={layoutCss.mainMenu}
+            onClick={() => {
+              setShowDataModernization(!showDataModernization);
+            }}
           >
-            Data Modernization +
+            {/* CaretUpOutlined, CaretDownOutlined */}
+            Data Modernization &nbsp; {showDataModernization ? <CaretUpOutlined style={{color : "#e74860"}}/> :<CaretDownOutlined style={{color : "#e74860"}}/>}
           </Col>
         </Col>
 
         {[
+          "Dashboard",
           "Define",
           "Connect",
           "Analyze",
@@ -75,37 +84,49 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           "Rollout",
         ].map((data, i) => {
           return (
-            <Col
-              key={(Math.random() + 1).toString(36).substring(7)}
-              span={24}
-              className={`${layoutCss.mainMenuCol} ${
-                tabType === data && componentName == "/data-modernization"
-                  ? layoutCss.activeMenu
-                  : null
-              }`}
-            >
-              <a
-                onClick={() => {
-                  if ((query?.id ? query?.id : projectDetails?.projectId) || ("Define" === data)) {
-                    if((query?.id ? query?.id : projectDetails?.projectId)){
-                      changePage("/data-modernization?id=" + (query?.id ? query?.id : projectDetails?.projectId), data);
-                    }else{
-                      changePage("/data-modernization", data);
-                    }
-                    
-                  }
-                }}
+            showDataModernization && (
+              <Col
+                key={(Math.random() + 1).toString(36).substring(7)}
+                span={24}
+                className={`${layoutCss.mainMenuCol} ${
+                  tabType === data &&
+                  (componentName == "/data-modernization" ||
+                    componentName == "/dashboard")
+                    ? layoutCss.activeMenu
+                    : null
+                }`}
               >
-                <Col
-                  offset={4}
-                  span={20}
-                  style={{ height: height / 2 + "px" }}
-                  className={layoutCss.subMainMenu}
+                <a
+                  onClick={() => {
+                    if (data === "Dashboard") {
+                      changePage("/dashboard", data);
+                    } else if (
+                      (query?.id ? query?.id : projectDetails?.projectId) ||
+                      "Define" === data
+                    ) {
+                      if (query?.id ? query?.id : projectDetails?.projectId) {
+                        changePage(
+                          "/data-modernization?id=" +
+                            (query?.id ? query?.id : projectDetails?.projectId),
+                          data
+                        );
+                      } else {
+                        changePage("/data-modernization", data);
+                      }
+                    }
+                  }}
                 >
-                  {data}
-                </Col>
-              </a>
-            </Col>
+                  <Col
+                    offset={4}
+                    span={20}
+                    style={{ height: height / 2 + "px" }}
+                    className={layoutCss.subMainMenu}
+                  >
+                    {data}
+                  </Col>
+                </a>
+              </Col>
+            )
           );
         })}
 
