@@ -10,6 +10,7 @@ import {
   Col,
   Select,
   Divider,
+  Badge,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -340,22 +341,61 @@ export default function Design({ dataModernizationCss }) {
               dataIndex: "transformations",
               key: "transformations",
             },
+            {
+              title: "Status",
+              key: "fileStatus",
+              render: (_, record) => {
+                switch (record.fileStatus) {
+                  case "analyze_failed":
+                    return <Badge count={"Analysis Failed"} color="red" />;
+                  default:
+                    return <Badge count={"Analysis Completed"} color="green" />;
+                }
+              },
+            },
 
+            // {
+            //   title: "Action",
+            //   key: "action",
+            //   render: (_, record) => (
+            //     <Space size="middle">
+            //       <a
+            //         onClick={() => {
+            //           getFileData(record.fileId);
+            //           setFileName(record.fileName);
+            //         }}
+            //       >
+            //         Details
+            //       </a>
+            //     </Space>
+            //   ),
+            // },
             {
               title: "Action",
               key: "action",
-              render: (_, record) => (
-                <Space size="middle">
-                  <a
-                    onClick={() => {
-                      getFileData(record.fileId);
-                      setFileName(record.fileName);
-                    }}
-                  >
-                    Details
-                  </a>
-                </Space>
-              ),
+              render: (_, record) => {
+                switch (record.fileStatus) {
+                  case "analyze_failed":
+                    return (
+                      <Space size="middle" style={{ cursor: "not-allowed" }}>
+                        <a style={{ cursor: "not-allowed" }}>Details</a>
+                      </Space>
+                    );
+                  default:
+                    return (
+                      <Space size="middle">
+                        <a
+                          onClick={() => {
+                           getFileData(record.fileId);
+                           setFileName(record.fileName);
+                          }}
+                        >
+                          Details
+                        </a>
+                      </Space>
+                    );
+                }
+              },
             },
           ]}
           dataSource={fileList}
