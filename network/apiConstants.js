@@ -23,3 +23,4 @@ export const RELEASEVERSION = "https://api.dev.nuodata.io/process/v1/design/conv
 export const TABLECHANGELOGS = "https://api.dev.nuodata.io/process/v1/design/target/table/changelogs?tableId=";
 export const COLUMNCHANGELOGS = "https://api.dev.nuodata.io/process/v1/design/target/column/changelogs?columnId=";
 export const CHANGELOGS = "https://api.dev.nuodata.io/process/v1/design/target/changelog/file/";
+export const CONTACT = "https://api.dev.nuodata.io/usermgmt/v1/contact";

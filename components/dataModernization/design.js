@@ -10,6 +10,8 @@ import {
   Col,
   Select,
   Divider,
+  Badge,
+  Modal,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -27,6 +29,7 @@ import {
   TABLECHANGELOGS,
   COLUMNCHANGELOGS,
   CHANGELOGS,
+  GETANALYZEDATA,
 } from "../../network/apiConstants";
 import {
   fetch_retry_post,
@@ -66,13 +69,19 @@ export default function Design({ dataModernizationCss }) {
   const [columnLog, setColumnLog] = useState([]);
   const [tableColumnsChange, setTableColumnsChange] = useState({});
   const [fileName, setFileName] = useState();
-
+  const [errorDetails, setErrorDetails] = useState({});
   const [updatedTableDetails, setUpdatedTableDetails] = useState([]);
   const [updatedColumnDetails, setUpdatedColumnDetails] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
+
+  const refs = useRef();
+  const refBtn = useRef();
+  const UpperRef = useRef();
+  const isVisible = useIsVisible(refBtn);
 
   const showTableLogs = async (baseTableName, tableId) => {
     setColumnLog([]);
@@ -273,11 +282,22 @@ export default function Design({ dataModernizationCss }) {
     setUpdatedColumnDetails(_temp);
   };
 
-  const refs = useRef();
-  const refBtn = useRef();
-  const UpperRef = useRef();
+  const getErrorDetails = async (analyzeDetailsId) => {
+    setLoading(true);
+    const modelVersionObj = await fetch_retry_get(
+      `${VERSION}${analyzeDetailsId}`
+    );
+    const version = modelVersionObj?.data?.isDraft
+      ? modelVersionObj?.data?.version + 1
+      : modelVersionObj?.data?.version;
 
-  const isVisible = useIsVisible(refBtn);
+    const data = await fetch_retry_get(
+      `${GETANALYZEDATA}${analyzeDetailsId}?version=${version}`
+    );
+    setErrorDetails(data.data);
+    setModalOpen(true);
+    setLoading(false);
+  };
 
   const changeLogs = () => {
     return (
@@ -314,6 +334,26 @@ export default function Design({ dataModernizationCss }) {
 
   return (
     <>
+      <Modal
+        title={<h4 style={{ color: "#052b3b" }}>{errorDetails.fileName}</h4>}
+        centered
+        open={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        onOk={() => setModalOpen(false)}
+        cancelButtonProps={{ style: { display: "none" } }}
+      >
+        <ul>
+          {errorDetails &&
+            errorDetails?.failureReasons &&
+            errorDetails?.failureReasons.map((error) => {
+              return (
+                <li style={{ color: "#e74860", marginBottom: "4px" }}>
+                  {error?.errorLocation}
+                </li>
+              );
+            })}
+        </ul>
+      </Modal>
       <div className={dataModernizationCss.designMain}>
         <Table
           pagination={false}
@@ -340,22 +380,51 @@ export default function Design({ dataModernizationCss }) {
               dataIndex: "transformations",
               key: "transformations",
             },
-
+            {
+              title: "Status",
+              key: "fileStatus",
+              render: (_, record) => {
+                switch (record.fileStatus) {
+                  case "analyze_failed":
+                    return <Badge count={"Analysis Failed"} color="red" />;
+                  default:
+                    return <Badge count={"Analysis Completed"} color="green" />;
+                }
+              },
+            },
             {
               title: "Action",
               key: "action",
-              render: (_, record) => (
-                <Space size="middle">
-                  <a
-                    onClick={() => {
-                      getFileData(record.fileId);
-                      setFileName(record.fileName);
-                    }}
-                  >
-                    Details
-                  </a>
-                </Space>
-              ),
+              render: (_, record) => {
+                switch (record.fileStatus) {
+                  case "analyze_failed":
+                    return (
+                      <Space size="middle" style={{ cursor: "not-allowed-" }}>
+                        <a
+                          style={{ cursor: "not-allowed-" }}
+                          onClick={() => {
+                            getErrorDetails(record.fileId);
+                          }}
+                        >
+                          Details
+                        </a>
+                      </Space>
+                    );
+                  default:
+                    return (
+                      <Space size="middle">
+                        <a
+                          onClick={() => {
+                            getFileData(record.fileId);
+                            setFileName(record.fileName);
+                          }}
+                        >
+                          Details
+                        </a>
+                      </Space>
+                    );
+                }
+              },
             },
           ]}
           dataSource={fileList}

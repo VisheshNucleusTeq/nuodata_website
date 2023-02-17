@@ -11,6 +11,7 @@ import {
   Modal,
   Tag,
   message,
+  Badge,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -111,6 +112,25 @@ const Transform = ({ dataModernizationCss }) => {
 
   //   return data?.outputFileId;
   // };
+
+  const getFileName = (e) => {
+    const getStatus = (record) => {
+      switch (record.fileStatus) {
+        case "convert_failed":
+          return <Badge count={"Transformed Partially"} color="red" />;
+        default:
+          return <Badge count={"Transformed Successfully"} color="green" />;
+      }
+    };
+    return (
+      <Row>
+        <Col span={10}>{e.fileName}</Col>
+        <Col span={10}>
+          <p>{getStatus(e)}</p>
+        </Col>
+      </Row>
+    );
+  };
 
   return (
     <>
@@ -242,83 +262,127 @@ const Transform = ({ dataModernizationCss }) => {
               xxl={24}
               className={dataModernizationCss.analyzeMainDetails}
             >
-              <Collapse defaultActiveKey="" ghost accordion>
-                {data.map((e, i) => {
-                  return (
-                    <Panel
-                      key={e.fileId}
-                      header={e.fileName}
-                      style={{ margin: "2% 0% 2% 0%" }}
-                      extra={
-                        <Space
-                          size="middle"
-                          className={dataModernizationCss.downloadBtnSpace}
-                          onClick={() => {
-                            dispatch(
-                              SetProjectTransformDetailsAction({
-                                analyzeDetailsId: e.fileId,
-                              })
-                            );
-                          }}
-                        >
-                          {e.fileStatus === "converted" && (
-                            <Row style={{ width: "16vw" }}>
-                              <Col span={12}>
-                                <EyeOutlined /> View
-                              </Col>
-                              <Col span={12}>
-                                <Tag
-                                  icon={<CheckCircleOutlined />}
-                                  color="success"
-                                >
-                                  {"converted"}
-                                </Tag>
-                              </Col>
-                            </Row>
-                          )}
-                          {e.fileStatus === "analyze_failed" && (
-                            <Row style={{ width: "16vw" }}>
-                              <Col span={12}>
-                                {/* <EyeOutlined /> View */}
-                              </Col>
-                              <Col span={12}>
-                                <Tag
-                                  icon={<CheckCircleOutlined />}
-                                  color="red"
-                                >
-                                  {"Analyze Failed"}
-                                </Tag>
-                              </Col>
-                            </Row>
-                          )}
-                          {e.fileStatus === "convert_failed" && (
-                            <Row style={{ width: "16vw" }}>
-                              <Col span={12}>
-                                {/* <EyeOutlined /> View */}
-                              </Col>
-                              <Col span={12}>
-                                <Tag
-                                  icon={<CheckCircleOutlined />}
-                                  color="red"
-                                >
-                                  {"Convert Failed"}
-                                </Tag>
-                              </Col>
-                            </Row>
-                          )}
-                        </Space>
+              <Table
+                pagination={false}
+                // className="demo"
+                rowKey="fileId"
+                expandable={{
+                  expandedRowRender: (record) => (
+                    <AnalyzeDetail
+                      analyzeDetailsId={record.fileId}
+                      dataModernizationCss={dataModernizationCss}
+                      showTop={false}
+                      showPopUp={true}
+                    />
+                  ),
+                  // rowExpandable: (record) => record.name !== "Not Expandable",
+                }}
+                columns={[
+                  {
+                    title: "File",
+                    dataIndex: "fileName",
+                    key: "fileName",
+                  },
+                  {
+                    title: "Workflows",
+                    dataIndex: "workflows",
+                    key: "workflows",
+                  },
+                  {
+                    title: "Mappings",
+                    dataIndex: "mappings",
+                    key: "mappings",
+                  },
+                  {
+                    title: "Transformations",
+                    dataIndex: "transformations",
+                    key: "transformations",
+                  },
+                  {
+                    title: "Status",
+                    key: "fileStatus",
+                    render: (_, record) => {
+                      switch (record.fileStatus) {
+                        case "convert_failed":
+                          return (
+                            <Badge
+                              count={"Transformed Partially"}
+                              color="orange"
+                            />
+                          );
+                        // converted;
+                        case "converted":
+                          return (
+                            <Badge
+                              count={"Transformed Successfully"}
+                              color="green"
+                            />
+                          );
+                        // convert_failed
+                        default:
+                          return (
+                            <Badge count={"Analysis Completed"} color="green" />
+                          );
                       }
-                    >
-                      <AnalyzeDetail
-                        analyzeDetailsId={e.fileId}
-                        dataModernizationCss={dataModernizationCss}
-                        showTop={false}
-                        showPopUp={true}
-                      />
-                    </Panel>
-                  );
-                })}
-              </Collapse>
+                    },
+                  },
+
+                  // {
+                  //   title: "Action",
+                  //   key: "action",
+                  //   render: (_, record) => (
+                  //     <Space size="middle">
+                  //       <a
+                  //         onClick={() => {
+                  //           getFileData(record.fileId);
+                  //           setFileName(record.fileName);
+                  //         }}
+                  //       >
+                  //         Details
+                  //       </a>
+                  //     </Space>
+                  //   ),
+                  // },
+                  {
+                    title: "Action",
+                    key: "action",
+                    render: (_, record) => {
+                      switch (record.fileStatus) {
+                        case "analyze_failed":
+                          return (
+                            <Space
+                              size="middle"
+                              style={{ cursor: "not-allowed" }}
+                            >
+                              <a style={{ cursor: "not-allowed" }}>
+                                <EyeOutlined /> View
+                              </a>
+                            </Space>
+                          );
+                        default:
+                          return (
+                            <Space size="middle">
+                              <a
+                                onClick={() => {
+                                  // getFileData(record.fileId);
+                                  // setFileName(record.fileName);
+                                  dispatch(
+                                    SetProjectTransformDetailsAction({
+                                      analyzeDetailsId: record.fileId,
+                                    })
+                                  );
+                                }}
+                              >
+                                <EyeOutlined /> View
+                              </a>
+                            </Space>
+                          );
+                      }
+                    },
+                  },
+                ]}
+                dataSource={data}
+              />
             </Col>
           </Row>
           <Modal
