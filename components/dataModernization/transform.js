@@ -338,7 +338,7 @@ const Transform = ({ dataModernizationCss }) => {
                     },
                   },
                 ]}
-                dataSource={data}
+                dataSource={data.filter(data => data.fileStatus !== "analyze_failed")}
               />
             </Col>
           </Row>
