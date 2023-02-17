@@ -16,8 +16,6 @@ body {
   border-radius: 20px !important;
 }
 
-
-
 .inputSelect div {
   width: 100%;
   padding: 12px;
@@ -212,7 +210,6 @@ body {
 }
 .demo .ant-table-content {
   padding: 2%;
-  /* border: 1px solid gray; */
   border-radius: 20px !important;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
@@ -287,7 +284,7 @@ body {
   display: none;
 }
 html {
-  scroll-behavior:calc(5000);
+  scroll-behavior: calc(5000);
 }
 
 .inputGroup {
@@ -304,7 +301,7 @@ html {
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
-  border-radius: 20px 0px 0px 20px  !important;
+  border-radius: 20px 0px 0px 20px !important;
   height: 48px !important;
   justify-content: center;
   align-items: center;

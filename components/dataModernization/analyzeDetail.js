@@ -218,52 +218,6 @@ const AnalyzeDetail = ({
               }
             },
           },
-          // {
-          //   title: "Hourly Unit Rate",
-          //   dataIndex: "hourlyUnitRate",
-          //   key: "hourlyUnitRate",
-          //   render: (value, row, index) => {
-          //     if (transformationSummary.length == index + 1) {
-          //       return (
-          //         <></>
-          //       );
-          //     } else {
-          //       return <span>${value}</span>;
-          //     }
-          //   },
-          // },
-          // {
-          //   title: "Manual Cost",
-          //   dataIndex: "manualCost",
-          //   key: "manualCost",
-          //   render: (value, row, index) => {
-          //     if (transformationSummary.length == index + 1) {
-          //       return (
-          //         <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-          //           $<span>{value}</span>
-          //         </b>
-          //       );
-          //     } else {
-          //       return <span>${value}</span>;
-          //     }
-          //   },
-          // },
-          // {
-          //   title: "Automated Cost",
-          //   dataIndex: "automatedCost",
-          //   key: "automatedCost",
-          //   render: (value, row, index) => {
-          //     if (transformationSummary.length == index + 1) {
-          //       return (
-          //         <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-          //           $<span>{value}</span>
-          //         </b>
-          //       );
-          //     } else {
-          //       return <span>${value}</span>;
-          //     }
-          //   },
-          // },
         ]}
       />
     );
@@ -340,7 +294,6 @@ const AnalyzeDetail = ({
           className={dataModernizationCss.analyzeMain}
           style={{
             backgroundColor: "#FFF",
-            // padding: showTop ? "2%" : "0%",
             borderRadius: "25px",
             border: "1px solid #f0f0f0",
           }}

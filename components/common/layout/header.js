@@ -77,28 +77,7 @@ const HeaderView = ({ layoutCss, ref }) => {
               ),
             },
           ]}
-        >
-          {/* <Menu.Item key="1">
-            <BellOutlined style={{ fontSize: "18px" }} />
-          </Menu.Item>
-          <Menu.Item key="2">
-            <QuestionCircleOutlined style={{ fontSize: "18px" }} />
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Divider style={{ "backgroundColor": "gray" }} type="vertical" />
-          </Menu.Item>
-          <Menu.Item key="4">
-            {userDetails && userDetails?.firstName && (
-              <Dropdown menu={{ items }}>
-                <Space>
-                  {userDetails?.firstName} &nbsp;
-                  <Avatar src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=600" />
-                  <DownOutlined />
-                </Space>
-              </Dropdown>
-            )}
-          </Menu.Item> */}
-        </Menu>
+        />
       </div>
     </Header>
   );

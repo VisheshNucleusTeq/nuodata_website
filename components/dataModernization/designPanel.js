@@ -41,7 +41,7 @@ const DesignPanel = ({
   showColumnLogs,
   updatedTableDetailsAction,
   updatedColumnDetailsAction,
-  showTableLogs
+  showTableLogs,
 }) => {
   const [tableName, setTableName] = useState("");
   const [childTableData, setChildTableData] = useState([]);
@@ -77,44 +77,21 @@ const DesignPanel = ({
             <Col span={24}>
               <Input
                 onChange={(tableNameValue) => {
-                    setTableName(tableNameValue.target.value)
-                    updatedTableDetailsAction({...e, newName : tableNameValue.target.value})
+                  setTableName(tableNameValue.target.value);
+                  updatedTableDetailsAction({
+                    ...e,
+                    newName: tableNameValue.target.value,
+                  });
                 }}
                 value={tableName != "" ? tableName : e.tableName}
                 style={{ borderRadius: "10px", height: "5vh" }}
                 disabled={versionListArr.length != version}
               />
             </Col>
-          </Row> 
+          </Row>
         </Col>
         <Col span={2} />
-        <Col span={11}>
-          {/* <Row>
-            <Col className={dataModernizationCss.tableNameView} span={24}>
-              Select Versions
-            </Col>
-            <Col span={24}>
-              <Select
-                className="inputDesignSelect"
-                showSearch
-                style={{
-                  width: "100%",
-                }}
-                placeholder="Search to Select"
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  (option?.label ?? "").includes(input)
-                }
-                value={version}
-                onSelect={(version) => {
-                  setVersion(version);
-                  changeVersion(version, i);
-                }}
-                options={versionListArr}
-              />
-            </Col>
-          </Row> */}
-        </Col>
+        <Col span={11}></Col>
         <Col span={4} className="centerButton">
           <p
             style={{
@@ -156,7 +133,10 @@ const DesignPanel = ({
                   const _tamp = JSON.parse(JSON.stringify(childTableData));
                   _tamp[index].columnName = _e.target.value;
                   setChildTableData(_tamp);
-                  updatedColumnDetailsAction({...preChildTableData[index], newName : _e.target.value})
+                  updatedColumnDetailsAction({
+                    ...preChildTableData[index],
+                    newName: _e.target.value,
+                  });
                 }}
                 disabled={versionListArr.length != version}
               />

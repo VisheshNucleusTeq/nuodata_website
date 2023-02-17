@@ -31,33 +31,11 @@ const SiderView = ({ layoutCss, height, componentName }) => {
     <Sider className={layoutCss.mainLayoutSider}>
       <div style={{ height: height + "px" }} className={layoutCss.logoImage}>
         <Link href="/">
-          <Image src="/assets/images/logo.png" preview={false} />
+          <Image src="/auth/logo.png" preview={false} />
         </Link>
       </div>
 
       <Row style={{ marginTop: "10%" }}>
-        {/* <Col
-          span={24}
-          className={`${layoutCss.mainMenuCol} ${
-            componentName == "/dashboard" ? layoutCss.activeMenu : null
-          }`}
-        >
-          <a
-            onClick={() => {
-              dispatch(loderShowHideAction(true));
-              changePage("/dashboard");
-            }}
-          >
-            <Col
-              offset={2}
-              span={20}
-              style={{ height: height / 1.5 + "px" }}
-              className={layoutCss.mainMenu}
-            >
-              Dashboard
-            </Col>
-          </a>
-        </Col> */}
         <Col span={24} className={layoutCss.mainMenuCol}>
           <Col
             offset={2}
@@ -68,7 +46,6 @@ const SiderView = ({ layoutCss, height, componentName }) => {
               setShowDataModernization(!showDataModernization);
             }}
           >
-            {/* CaretUpOutlined, CaretDownOutlined */}
             Data Modernization &nbsp;{" "}
             {showDataModernization ? (
               <CaretDownOutlined style={{ color: "#e74860" }} />
@@ -134,147 +111,6 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             )
           );
         })}
-
-        {/* <Col
-          span={24}
-          className={`${layoutCss.mainMenuCol} ${
-            tabType === "Define" && componentName == "/data-modernization"
-              ? layoutCss.activeMenu
-              : null
-          }`}
-        >
-          <Link href="/data-modernization">
-            <Col
-              offset={4}
-              span={20}
-              style={{ height: height / 2 + "px" }}
-              className={layoutCss.subMainMenu}
-            >
-              Define
-            </Col>
-          </Link>
-        </Col>
-
-        <Col
-          span={24}
-          className={`${layoutCss.mainMenuCol} ${
-            tabType === "Connect" && componentName == "/data-modernization"
-              ? layoutCss.activeMenu
-              : null
-          }`}
-        >
-          <Link href="/data-modernization">
-            <Col
-              offset={4}
-              span={20}
-              style={{ height: height / 2 + "px" }}
-              className={layoutCss.subMainMenu}
-            >
-              Connect
-            </Col>
-          </Link>
-        </Col>
-
-        <Col
-          span={24}
-          className={`${layoutCss.mainMenuCol} ${
-            tabType === "Analyze" && componentName == "/data-modernization"
-              ? layoutCss.activeMenu
-              : null
-          }`}
-        >
-          <Link href="/data-modernization">
-            <Col
-              offset={4}
-              span={20}
-              style={{ height: height / 2 + "px" }}
-              className={layoutCss.subMainMenu}
-            >
-              Analyze
-            </Col>
-          </Link>
-        </Col>
-
-        <Col
-          span={24}
-          className={`${layoutCss.mainMenuCol} ${
-            tabType === "Design" && componentName == "/data-modernization"
-              ? layoutCss.activeMenu
-              : null
-          }`}
-        >
-          <Link href="/data-modernization">
-            <Col
-              offset={4}
-              span={20}
-              style={{ height: height / 2 + "px" }}
-              className={layoutCss.subMainMenu}
-            >
-              Design
-            </Col>
-          </Link>
-        </Col>
-
-        <Col
-          span={24}
-          className={`${layoutCss.mainMenuCol} ${
-            tabType === "Transform" && componentName == "/data-modernization"
-              ? layoutCss.activeMenu
-              : null
-          }`}
-        >
-          <Link href="/data-modernization">
-            <Col
-              offset={4}
-              span={20}
-              style={{ height: height / 2 + "px" }}
-              className={layoutCss.subMainMenu}
-            >
-              Transform
-            </Col>
-          </Link>
-        </Col>
-
-        <Col
-          span={24}
-          className={`${layoutCss.mainMenuCol} ${
-            tabType === "Validate" && componentName == "/data-modernization"
-              ? layoutCss.activeMenu
-              : null
-          }`}
-        >
-          <Link href="/data-modernization">
-            <Col
-              offset={4}
-              span={20}
-              style={{ height: height / 2 + "px" }}
-              className={layoutCss.subMainMenu}
-            >
-              Validate
-            </Col>
-          </Link>
-        </Col>
-
-        <Col
-          span={24}
-          className={`${layoutCss.mainMenuCol} ${
-            tabType === "Rollout" && componentName == "/data-modernization"
-              ? layoutCss.activeMenu
-              : null
-          }`}
-        >
-          <Link href="/data-modernization">
-            <Col
-              offset={4}
-              span={20}
-              style={{ height: height / 2 + "px" }}
-              className={layoutCss.subMainMenu}
-            >
-              Rollout
-            </Col>
-          </Link>
-        </Col> */}
-
         <Col span={24} className={layoutCss.mainMenuCol}>
           <Col
             offset={2}

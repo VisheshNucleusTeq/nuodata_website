@@ -7,15 +7,6 @@ const Footer = () => {
 
   return (
     <Row style={{ backgroundColor: "#000" }}>
-      {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: "2%", display:"flex", justifyContent : "center" }}>
-        <Image preview={false} width={"25%"} src={"./logo.png"} style={{ maxWidth: "100%" }} />
-      </Col>
-      <Col span={20} offset={2} style={{ borderTop: "2px solid #FFF" }}>
-        <Divider style={{ color: "red" }} />
-      </Col>
-      <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ paddingBottom: "2%",display:"flex", justifyContent : "center" }}>
-        <p style={{color : "#e74860"}}>Copyright © NuoData. {(new Date().getFullYear())} | All rights reserved.</p>
-      </Col> */}
       <Col span={20} offset={3}>
         <Row style={{ backgroundColor: "#000" }}>
           <Col
@@ -122,65 +113,6 @@ const Footer = () => {
           </Col>
         </Row>
       </Col>
-      {/* <Col span={20} offset={3}>
-        <Row style={{ backgroundColor: "#072A3D" }}>
-          <Col
-            xs={24}
-            sm={12}
-            md={8}
-            lg={6}
-            xl={6}
-            className={FooterCss.footerCol}
-          >
-            <div className={FooterCss.footerColChild}>
-              <h1>Source Target Support</h1>
-              <List>
-                <p style={{ color: "#FFF" }}>Overview</p>
-                <p style={{ color: "#FFF" }}>Doop Dives</p>
-                <p style={{ color: "#FFF" }}>Feature list</p>
-              </List>
-            </div>
-          </Col>
-
-          <Col
-            xs={24}
-            sm={12}
-            md={8}
-            lg={6}
-            xl={6}
-            className={FooterCss.footerCol}
-          >
-            <div className={FooterCss.footerColChild}>
-              <h1>Get Started</h1>
-              <List>
-                <p style={{ color: "#FFF" }}>Free trial</p>
-                <p style={{ color: "#FFF" }}>Book a demo</p>
-                <p style={{ color: "#FFF" }}>FAQs</p>
-              </List>
-            </div>
-          </Col>
-
-          <Col
-            xs={24}
-            sm={12}
-            md={8}
-            lg={6}
-            xl={6}
-            className={FooterCss.footerCol}
-          >
-            <div className={FooterCss.footerColChild}>
-              <h1>Partners</h1>
-              <List>
-                <p style={{ color: "#FFF" }}>AWS</p>
-                <p style={{ color: "#FFF" }}>Databricks</p>
-                <p style={{ color: "#FFF" }}>GCP</p>
-                <p style={{ color: "#FFF" }}>Azure</p>
-                <p style={{ color: "#FFF" }}>Snowflake</p>
-              </List>
-            </div>
-          </Col>
-        </Row>
-      </Col> */}
       <Col span={20} offset={2} style={{ borderTop: "2px solid #FFF" }}>
         <Divider style={{ color: "red" }} />
       </Col>

@@ -107,10 +107,8 @@ export default memo(({ data, isConnectable }) => {
         }
         trigger={data.showPopUp===true?"click":[]}
         content={
-          //latest code
           <DynamicReactJson
             style={{ maxWidth: "50vw", padding: "5vh" }}
-            // theme={"tube:inverted"}
             src={data.queries}
             theme={{
               base00: "white",

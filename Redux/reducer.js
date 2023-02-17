@@ -9,7 +9,6 @@ import {
   DESIGNDETAILS,
   LOADER,
 } from "./type";
-// import { Storage } from "../Storage"
 import LocalData from "./LocalData";
 
 const user = LocalData.getData("authData");

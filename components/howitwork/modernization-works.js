@@ -32,14 +32,16 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                     firstImage: "define-red.png",
                     secondImage: "connect-red.png",
                     firstData: {
-                      image: "/how_it_work/image (3).png",
+                      image:
+                        "/how_it_work/IndustryLeadingModernization/image1.png",
                       first:
                         "Create modernization projects at business unit level(s)",
                       second:
                         "Select any source and any target platform for your modernization",
                     },
                     secondData: {
-                      image: "/how_it_work/image (4).png",
+                      image:
+                        "/how_it_work/IndustryLeadingModernization/image2.png",
                       first: "Connect with source platform(s)",
                       second: "Upload ETLs, & configuration files",
                     },
@@ -50,12 +52,14 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                     firstImage: "analyze-red.png",
                     secondImage: "design-red.png",
                     firstData: {
-                      image: "/how_it_work/image (7).png",
+                      image:
+                        "/how_it_work/IndustryLeadingModernization/image3.png",
                       first: "Analyze workloads & transformations",
                       second: "Identify cost & effort savings",
                     },
                     secondData: {
-                      image: "/how_it_work/image (8).png",
+                      image:
+                        "/how_it_work/IndustryLeadingModernization/image4.png",
                       first: "Create single version of truth",
                       second: "Optimize queries & ETLs with self service UI",
                     },
@@ -66,12 +70,14 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                     firstImage: "transform-red.png",
                     secondImage: "validate-red.png",
                     firstData: {
-                      image: "/how_it_work/image 11.png",
+                      image:
+                        "/how_it_work/IndustryLeadingModernization/image5.png",
                       first: "Transform workloads to your choice of cloud",
                       second: "Optimize queries on target platform(s)",
                     },
                     secondData: {
-                      image: "/how_it_work/image (10).png",
+                      image:
+                        "/how_it_work/IndustryLeadingModernization/image6.png",
                       first: "Self service validation of transformed workloads",
                       second: "UI driven workflow for QA",
                     },
@@ -80,7 +86,8 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                     firstHead: "Rollout",
                     firstImage: "rollout-red.png",
                     firstData: {
-                      image: "/how_it_work/step.png",
+                      image:
+                        "/how_it_work/IndustryLeadingModernization/image1.png",
                       first: "Transform workloads to your choice of cloud",
                       second: "Optimize queries on target platform(s)",
                     },
@@ -100,7 +107,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                           <h1 style={{ color: "#E74860", fontWeight: "600" }}>
                             <Image
                               width={40}
-                              src={`/how_it_work/${e.firstImage}`}
+                              src={`/how_it_work/IndustryLeadingModernization/${e.firstImage}`}
                             />
                             <span style={{ marginLeft: "1%" }}>
                               <i>{e.firstHead}</i>
@@ -130,7 +137,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                           >
                             <Image
                               width={40}
-                              src={`/how_it_work/${e.secondImage}`}
+                              src={`/how_it_work/IndustryLeadingModernization/${e.secondImage}`}
                             />
                             <span style={{ marginLeft: "1%" }}>
                               <i>{e.secondHead}</i>
@@ -160,6 +167,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       second:
                         "Select any source and any target platform for your modernization",
                     },
+                    image: "/how_it_work/IndustryLeadingModernization/image1.png",
                   },
                   {
                     header: "Connect",
@@ -167,6 +175,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       first: "Connect with source platform(s)",
                       second: "Upload ETLs, & configuration files",
                     },
+                    image: "/how_it_work/IndustryLeadingModernization/image2.png",
                   },
                   {
                     header: "Analyze",
@@ -174,6 +183,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       first: "Analyze workloads & transformations",
                       second: "Identify cost & effort savings",
                     },
+                    image: "/how_it_work/IndustryLeadingModernization/image3.png",
                   },
                   {
                     header: "Design",
@@ -181,6 +191,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       first: "Create single version of truth",
                       second: "Optimize queries & ETLs with self service UI",
                     },
+                    image: "/how_it_work/IndustryLeadingModernization/image4.png",
                   },
                   {
                     header: "Transform",
@@ -188,6 +199,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       first: "Transform workloads to your choice of cloud",
                       second: "Optimize queries on target platform(s)",
                     },
+                    image: "/how_it_work/IndustryLeadingModernization/image5.png",
                   },
                   {
                     header: "Validate",
@@ -195,6 +207,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       first: "Self service validation of transformed workloads",
                       second: "UI driven workflow for QA",
                     },
+                    image: "/how_it_work/IndustryLeadingModernization/image6.png",
                   },
                   {
                     header: "Rollout",
@@ -202,6 +215,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                       first: "Transform workloads to your choice of cloud",
                       second: "Optimize queries on target platform(s)",
                     },
+                    image: "/how_it_work/IndustryLeadingModernization/image1.png",
                   },
                 ].map((e) => {
                   return (
@@ -221,7 +235,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                         >
                           <Image
                             width={40}
-                            src={`/how_it_work/${e.header.toLowerCase()}-red.png`}
+                            src={`/how_it_work/IndustryLeadingModernization/${e.header.toLowerCase()}-red.png`}
                           />
                           <span style={{ marginLeft: "1%" }}>
                             <i>{e.header}</i>
@@ -230,6 +244,7 @@ export default function ModernizationWorks({ HowItWorkCss }) {
                         <ModernizationWorksStepsDetailsTtob
                           HowItWorkCss={HowItWorkCss}
                           data={e.data}
+                          image={e.image}
                         />
                       </Col>
                     </div>
