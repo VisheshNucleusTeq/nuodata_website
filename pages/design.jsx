@@ -11,6 +11,7 @@ import ReactFlow, {
 import dagre from "dagre";
 import NormalNode from "../components/NormalNode";
 import * as data from "../public/wf_OMS_SLA_JSON.json";
+
 const getNodeId = () => `randomnode_${+new Date()}`;
 const initialNodes = data.Nodes;
 const initialEdges = data.Edges;
