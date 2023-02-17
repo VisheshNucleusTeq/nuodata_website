@@ -48,7 +48,7 @@ function ContactUsRight({ signUpCss }) {
           onFinish={onFinish}
         >
           <Row justify="center">
-            <Col span={11}>
+            <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"First Name"}
                 labelAlign={"left"}
@@ -70,7 +70,7 @@ function ContactUsRight({ signUpCss }) {
               </Form.Item>
             </Col>
             <Col span={1} />
-            <Col span={11}>
+            <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"Last Name"}
                 labelAlign={"left"}
@@ -94,7 +94,7 @@ function ContactUsRight({ signUpCss }) {
           </Row>
 
           <Row justify="center">
-            <Col span={11}>
+            <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"Email"}
                 labelAlign={"left"}
@@ -120,7 +120,7 @@ function ContactUsRight({ signUpCss }) {
               </Form.Item>
             </Col>
             <Col span={1} />
-            <Col span={11}>
+            <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 style={{
                   marginBottom: "0px !important",
@@ -208,7 +208,7 @@ function ContactUsRight({ signUpCss }) {
           </Row>
 
           <Row justify="center">
-            <Col span={11}>
+            <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"Source Platform"}
                 labelAlign={"left"}
@@ -256,7 +256,7 @@ function ContactUsRight({ signUpCss }) {
               </Form.Item>
             </Col>
             <Col span={1} />
-            <Col span={11}>
+            <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               {" "}
               <Form.Item
                 label={"Target Platform"}
@@ -303,7 +303,7 @@ function ContactUsRight({ signUpCss }) {
           </Row>
 
           <Row justify="center">
-            <Col span={11}>
+            <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"Source File Type"}
                 labelAlign={"left"}
@@ -331,7 +331,7 @@ function ContactUsRight({ signUpCss }) {
               </Form.Item>
             </Col>
             <Col span={1} />
-            <Col span={11}>
+            <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"Target Language"}
                 labelAlign={"left"}
@@ -361,7 +361,7 @@ function ContactUsRight({ signUpCss }) {
           </Row>
 
           <Row justify="center">
-            <Col span={11}>
+            <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"Organization Name"}
                 labelAlign={"left"}
@@ -383,7 +383,7 @@ function ContactUsRight({ signUpCss }) {
               </Form.Item>
             </Col>
             <Col span={1} />
-            <Col span={11}>
+            <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"Job Title"}
                 labelAlign={"left"}

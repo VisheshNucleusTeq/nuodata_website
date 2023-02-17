@@ -129,12 +129,6 @@ function SignUpRight({ signUpCss }) {
             label={"Modernization Objective"}
             labelAlign={"left"}
             name={"modernization_objective"}
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "",
-            //   },
-            // ]}
           >
             <Input.Group>
               <Row>

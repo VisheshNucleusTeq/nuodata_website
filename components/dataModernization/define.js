@@ -289,10 +289,6 @@ const Define = ({ dataModernizationCss }) => {
                   : ""
               }
               options={[
-                // {
-                //   value: "databricks",
-                //   label: "Data Bricks",
-                // },
                 {
                   value: "Databricks-Lakehouse",
                   label: "Databricks-Lakehouse",
@@ -313,10 +309,6 @@ const Define = ({ dataModernizationCss }) => {
                   value: "Snowflake",
                   label: "Snowflake",
                 },
-                // {
-                //   value: "Apache_Airflow",
-                //   label: "Apache Airflow",
-                // },
               ]}
             />
           </Form.Item>
@@ -352,10 +344,6 @@ const Define = ({ dataModernizationCss }) => {
                   value: "sparkSql",
                   label: "Spark SQL",
                 },
-                // {
-                //   value: "PySpark",
-                //   label: "PySpark",
-                // },
               ]}
             />
           </Form.Item>

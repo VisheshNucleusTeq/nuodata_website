@@ -212,7 +212,6 @@ export default function Design({ dataModernizationCss }) {
         `${UPDATETABLE}${fileId}?userId=${authData?.userId}`,
         updatedTableDetails
       );
-      // getFileData(fileId);
     }
 
     if (updatedColumnDetails && updatedColumnDetails.length) {
@@ -220,7 +219,6 @@ export default function Design({ dataModernizationCss }) {
         `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
         updatedColumnDetails
       );
-      // getFileData(fileId);
     }
 
     if (release) {

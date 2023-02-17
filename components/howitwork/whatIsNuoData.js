@@ -28,6 +28,3 @@ export default function WhatIsNuoData({ HowItWorkCss }) {
     </Row>
   );
 }
-
-
-{/*  */}

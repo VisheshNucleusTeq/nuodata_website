@@ -1,5 +1,5 @@
 .mainDiv {
-  background: url("../public/home/daga_manage.gif") no-repeat center center;
+  background: url("/data_management/daga_manage.gif") no-repeat center center;
   width: 100vw;
   height: 100vh;
   background-size: cover;

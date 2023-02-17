@@ -1,5 +1,5 @@
 .mainDiv {
-  background: url("/home/bg3-overlay (1).png") no-repeat center center;
+  background: url("/how_it_work/bg3-overlay (1).png") no-repeat center center;
   width: 100vw;
   background-size: cover;
 }
@@ -115,7 +115,6 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  /* height: 30vh; */
 }
 
 .enterpriseChallengeColTitle h1 {
@@ -190,7 +189,7 @@
   padding: 5%;
   font-size: 1vw;
   font-weight: bolder !important;
-  background: url("../public/home/bg1.png") repeat center center;
+  background: url("/how_it_work/bg1.png") repeat center center;
   background-size: cover;
 }
 
@@ -262,7 +261,7 @@
 
 .ModernizationWorksBgImage {
   background-size: cover !important;
-  background: url("/home/hiwbg.jpg");
+  background: url("/how_it_work/hiwbg.jpg");
   background-repeat: no-repeat !important;
   border-radius: 10vw 10vw 0px 0px;
 }

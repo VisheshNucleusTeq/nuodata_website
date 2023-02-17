@@ -85,7 +85,6 @@ const Connect = ({ dataModernizationCss }) => {
           autoComplete="off"
           labelCol={{ span: 7 }}
           wrapperCol={{ span: 18 }}
-          // onFinish={analyzeCall}
           onFinish={() => {
             dispatch(SetTabTypeAction("Analyze"));
           }}
@@ -105,7 +104,6 @@ const Connect = ({ dataModernizationCss }) => {
             }
           >
             <Upload
-              // className="avatar-uploader"
               action={avatarUpload}
               listType="picture-card"
               fileList={[]}

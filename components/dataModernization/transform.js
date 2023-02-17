@@ -60,10 +60,6 @@ const Transform = ({ dataModernizationCss }) => {
     (state) => state.designDetails.designDetails
   );
 
-  // useEffect(() => {
-  //   console.log(designDetails);
-  // }, [designDetails]);
-
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
       `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
@@ -89,14 +85,6 @@ const Transform = ({ dataModernizationCss }) => {
     if (data.success) return data.data;
   };
 
-  // const getDataCall = async (id) => {
-  //   let datar = await getProjectData(id);
-  //   setModalData(datar);
-  //   setTimeout(() => {
-  //     setOpen(true);
-  //   }, 1000);
-  // };
-
   useEffect(() => {
     if (projectTransformDetails && projectTransformDetails.analyzeDetailsId) {
       setIsDetails(true);
@@ -104,14 +92,6 @@ const Transform = ({ dataModernizationCss }) => {
       setIsDetails(false);
     }
   }, [projectTransformDetails.analyzeDetailsId]);
-
-  // const getAnalysisData = (data) => {
-  //   const result = fetch_retry_get(
-  //     `${GETANALYZEDATA}${analyzeDetailsId}?version=1`
-  //   );
-
-  //   return data?.outputFileId;
-  // };
 
   const getFileName = (e) => {
     const getStatus = (record) => {
@@ -264,7 +244,6 @@ const Transform = ({ dataModernizationCss }) => {
             >
               <Table
                 pagination={false}
-                // className="demo"
                 rowKey="fileId"
                 expandable={{
                   expandedRowRender: (record) => (
@@ -275,7 +254,6 @@ const Transform = ({ dataModernizationCss }) => {
                       showPopUp={true}
                     />
                   ),
-                  // rowExpandable: (record) => record.name !== "Not Expandable",
                 }}
                 columns={[
                   {
@@ -310,7 +288,6 @@ const Transform = ({ dataModernizationCss }) => {
                               color="orange"
                             />
                           );
-                        // converted;
                         case "converted":
                           return (
                             <Badge
@@ -318,7 +295,6 @@ const Transform = ({ dataModernizationCss }) => {
                               color="green"
                             />
                           );
-                        // convert_failed
                         default:
                           return (
                             <Badge count={"Analysis Completed"} color="green" />
@@ -326,23 +302,6 @@ const Transform = ({ dataModernizationCss }) => {
                       }
                     },
                   },
-
-                  // {
-                  //   title: "Action",
-                  //   key: "action",
-                  //   render: (_, record) => (
-                  //     <Space size="middle">
-                  //       <a
-                  //         onClick={() => {
-                  //           getFileData(record.fileId);
-                  //           setFileName(record.fileName);
-                  //         }}
-                  //       >
-                  //         Details
-                  //       </a>
-                  //     </Space>
-                  //   ),
-                  // },
                   {
                     title: "Action",
                     key: "action",
@@ -364,8 +323,6 @@ const Transform = ({ dataModernizationCss }) => {
                             <Space size="middle">
                               <a
                                 onClick={() => {
-                                  // getFileData(record.fileId);
-                                  // setFileName(record.fileName);
                                   dispatch(
                                     SetProjectTransformDetailsAction({
                                       analyzeDetailsId: record.fileId,

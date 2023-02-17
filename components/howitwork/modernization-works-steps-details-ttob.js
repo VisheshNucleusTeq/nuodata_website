@@ -3,7 +3,7 @@ import ReactFlow from "reactflow";
 import { Image } from "antd";
 import "reactflow/dist/style.css";
 
-function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
+function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss,image}) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [height, setHeight] = useState(0);
@@ -21,7 +21,7 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
         sourcePosition: "bottom",
         position: { x: 0, y: 0 },
         data: {
-          label: <Image src="/how_it_work/step.png" />,
+          label: <Image src={image} />,
         },
       },
       {
@@ -64,15 +64,7 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss}) {
         animated: true,
         type: "smoothstep",
         style: { stroke: '#E74860' },
-      },
-      // {
-      //   id: "e3",
-      //   source: "1",
-      //   target: "4",
-      //   animated: true,
-      //   type: "smoothstep",
-      //   style: { stroke: '#E74860' },
-      // }
+      }
     ]);
   },[ref.current]);
 

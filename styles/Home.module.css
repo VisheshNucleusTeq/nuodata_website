@@ -1,14 +1,14 @@
 /* INFO */
 
 .space {
-  background: url("../public/home/bg1.png") repeat center center;
+  background: url("/home/bg1.png") repeat center center;
   width: 100%;
   height: 10vw;
   background-size: cover;
 }
 
 .mainDiv {
-  background: url("../public/home/sequence.gif") no-repeat center center;
+  background: url("/home/sequence.gif") no-repeat center center;
   width: 100%;
   height: 100vh;
   background-size: cover;
@@ -79,7 +79,6 @@
   color: #0c3246 !important;
   font-size: 6vw;
   font-weight: bolder;
-  
 }
 
 .thinkBigChild h1:last-child {
@@ -93,14 +92,11 @@
   margin-top: 5%;
   display: flex;
   align-items: center;
-
-  /* border-bottom: 1px solid rgb(226, 224, 224); */
 }
 
 .thinkBigChild h2 {
   color: #0c3246 !important;
   font-size: 3vw !important;
-  /* margin-top: 2%; */
   font-weight: bold;
 }
 
@@ -134,7 +130,7 @@
 }
 
 .thinkBigChildStstem {
-  display:flex;
+  display: flex;
 }
 
 .thinkBigChildMobile {
@@ -149,7 +145,7 @@
   .thinkBigChildStstem {
     display: none;
   }
-  
+
   .thinkBigChildMobile {
     display: flex;
   }
@@ -192,7 +188,7 @@
 }
 
 .mainEnterpriseChallengeDiv {
-  background: url("../public/home/enterpriseChallenge/output-onlinepngtools.png")
+  background: url("/home/enterpriseChallenge/output-onlinepngtools.png")
     no-repeat center center;
 }
 
@@ -209,12 +205,12 @@
   background-image: linear-gradient(#000000 60%, #0c3246 50%);
 }
 
-.ECTitle1{
+.ECTitle1 {
   color: #0c3246 !important;
 }
 
 .ECTitle1 span {
-  background-image: linear-gradient(#FFF 60%, #FFF 50%) !important;
+  background-image: linear-gradient(#fff 60%, #fff 50%) !important;
 }
 
 .ECmainRow {
@@ -251,8 +247,6 @@
 
 .mainEnterpriseChallengeDottedLine {
   height: 15vh;
-  /* margin-top: 2%;
-  margin-bottom: 2%; */
   background-image: linear-gradient(#514f4f 50%, black 50%);
   background-position: right;
   background-size: 2px 15px;
@@ -373,7 +367,6 @@
   }
 }
 
-
 /* MODERN */
 
 .MWCTextParent {
@@ -450,17 +443,10 @@
   }
 }
 
-
 /* MODERN */
 
 .dataModernizationArchitecture {
   display: block;
-}
-
-@media (max-width: 992px) {
-  .dataModernizationArchitecture {
-    /* display: none; */
-  }
 }
 
 .dataModernizationArchitectureTtile {
@@ -475,43 +461,28 @@
   color: #0c3246;
 }
 
-
 .dataModernizationArchitectureTtile p {
   font-size: 1vw;
   font-weight: bold;
   color: #0c3246;
 }
 
-/* .infoRowSystemView {
-  background: url("/home/archi-gif.gif") no-repeat center center;
-  background-size: auto;
-  height: 100vh;
-  background-size: 100% 80%;
-} */
-
-.infoRowSystemViewSystem{
+.infoRowSystemViewSystem {
   display: block;
 }
 
-.infoRowSystemViewmobile{
+.infoRowSystemViewmobile {
   display: none;
 }
 
 @media (max-width: 576px) {
-  /* .infoRowSystemView {
-    background: url("/home/3-1-GIF.gif") no-repeat center center;
-    background-size: auto;
-    height: 120vh;
-  } */
-
-  .infoRowSystemViewSystem{
+  .infoRowSystemViewSystem {
     display: none;
   }
-  
-  .infoRowSystemViewmobile{
+
+  .infoRowSystemViewmobile {
     display: block;
   }
-
 }
 
 .infoRowSystemTextView {
@@ -533,7 +504,7 @@
   background-color: #052b3b;
 }
 .platFormColBg {
-  background: url("../public/home/platform-gif.gif") no-repeat center center;
+  background: url("/home/platform-gif.gif") no-repeat center center;
   background-size: 100% 100%;
   height: 100vh;
 }
@@ -566,13 +537,6 @@
   width: 80vw;
   clip-path: circle(50%);
   background-image: linear-gradient(to right, #07283b, #245772);
-}
-
-.ECmainNewRow {
-  /* height: 13.33vw; */
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
 }
 
 .textPos1 {
@@ -620,29 +584,5 @@
 .ECmainNewChild h1 {
   color: #fff;
   font-size: 2.6vw;
-  /* padding-left: 10%;  */
   text-align: center;
 }
-
-/* .ECmainNewRow{
-  height: 13.33vw;
-   display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid red; 
-}
-
-.textPos1{
-  border: 1px solid red !important;
-  height: 13.33vw;
-  margin-left: 25%;
-  display: flex;
-  align-items: center;
-}
-
-.ECmainNewChild h1{
-  color: #FFF;
-  font-size: 2.5vw;
-  padding-left: 10%;
-  text-align: center;
-} */

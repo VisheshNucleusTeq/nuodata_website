@@ -41,7 +41,6 @@ const DrawerView = ({
           style={{
             backgroundColor:
               oldName?.tableName != newName?.tableName ? "#ffd7d5" : "#FFF",
-            // color: oldName?.tableName != newName?.tableName ? "red" : "#0c3246",
           }}
         >
           <b>{oldName?.tableName}</b>
@@ -53,7 +52,6 @@ const DrawerView = ({
           style={{
             backgroundColor:
               oldName?.tableName != newName?.tableName ? "#e6ffec" : "#FFF",
-            // color: oldName?.tableName != newName?.tableName ? "green" : "#0c3246",
           }}
         >
           <b>{newName?.tableName}</b>
@@ -193,33 +191,6 @@ const DrawerView = ({
             (table, i) => {
               return (
                 <Row key={(Math.random() + 1).toString(36).substring(7)}>
-                  {/* <Col
-                    span={24}
-                    key={(Math.random() + 1).toString(36).substring(7)}
-                  >
-                    <Select
-                      className="inputDesignSelect"
-                      showSearch
-                      style={{
-                        width: "100%",
-                        marginBottom: "4%",
-                      }}
-                      placeholder="Search to Select"
-                      optionFilterProp="children"
-                      filterOption={(input, option) =>
-                        (option?.label ?? "").includes(input)
-                      }
-                      value={version}
-                      onSelect={(version) => {
-                        setVersion(version);
-                        changeVersion(version, i);
-                        getFileChangeLog(version);
-                      }}
-                      options={versionListArr.filter((e) => {
-                        return e.value > 1;
-                      })}
-                    />
-                  </Col> */}
                   <Col
                     span={24}
                     style={{ marginTop: "1%", marginBottom: "3%" }}

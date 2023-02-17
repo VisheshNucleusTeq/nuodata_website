@@ -500,19 +500,6 @@ const Define = () => {
                 type={"file"}
                 disabled={isLoading}
               />
-                {/* <Upload
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  listType="picture"
-                  maxCount={1}
-                  multiple={false}
-                >
-                  <Button
-                    className={dataModernizationCss.inputFile}
-                    icon={<UploadOutlined />}
-                  >
-                    Select File
-                  </Button>
-                </Upload> */}
               </Form.Item>
 
               <div className={dataModernizationCss.nextExitBtn}>
@@ -536,45 +523,6 @@ const Define = () => {
             </Form>
           </Col>
         </Row>
-        // <Row className={dataModernizationCss.defineForm}>
-        //   <Col offset={3} span={18}>
-        //     <Form
-        //       layout="horizontal"
-        //       autoComplete="off"
-        //       labelCol={{ span: 7 }}
-        //       wrapperCol={{ span: 18 }}
-        //       onFinish={onFinishConnect}
-        //     >
-        //       <Upload
-        //         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        //         listType="picture"
-        //         maxCount={1}
-        //         multiple={false}
-        //       >
-        //         <Button className={dataModernizationCss.inputFile} icon={<UploadOutlined />}>Select File</Button>
-        //       </Upload>
-
-        //       <div className={dataModernizationCss.nextExitBtn}>
-        //         <Button
-        //           type="primary"
-        //           danger
-        //           className={dataModernizationCss.nextBtn}
-        //           htmlType="submit"
-        //         >
-        //           Next
-        //         </Button>
-
-        //         <Button
-        //           type="primary"
-        //           danger
-        //           className={dataModernizationCss.exitBtn}
-        //         >
-        //           Exit
-        //         </Button>
-        //       </div>
-        //     </Form>
-        //   </Col>
-        // </Row>
       )}
 
       {step === "Analyze" && <p>CODE HERE</p>}
