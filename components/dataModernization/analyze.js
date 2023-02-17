@@ -10,11 +10,17 @@ import {
   Carousel,
   Button,
   Badge,
+  Modal,
 } from "antd";
 import { useRouter } from "next/router";
 import { ArrowRightOutlined } from "@ant-design/icons";
 
-import { GETPROJECT, ANALYZESUMMARY } from "../../network/apiConstants";
+import {
+  GETPROJECT,
+  ANALYZESUMMARY,
+  VERSION,
+  GETANALYZEDATA,
+} from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
 import BarChart from "./charts/barChart";
 import LineChart from "./charts/lineChart";
@@ -36,6 +42,8 @@ const Analyze = ({ dataModernizationCss }) => {
   const [complexityGraph, setComplexityGraph] = useState();
   const [analyze, setAnalyze] = useState(true);
   const [analyzeDetailsId, setAnalyzeDetailsId] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [errorDetails, setErrorDetails] = useState({});
 
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -69,8 +77,46 @@ const Analyze = ({ dataModernizationCss }) => {
     getAnalyzeData();
   }, [query.id]);
 
+  const getErrorDetails = async (analyzeDetailsId) => {
+    setLoading(true);
+    const modelVersionObj = await fetch_retry_get(
+      `${VERSION}${analyzeDetailsId}`
+    );
+    const version = modelVersionObj?.data?.isDraft
+      ? modelVersionObj?.data?.version + 1
+      : modelVersionObj?.data?.version;
+
+    const data = await fetch_retry_get(
+      `${GETANALYZEDATA}${analyzeDetailsId}?version=${version}`
+    );
+    setErrorDetails(data.data);
+    setModalOpen(true);
+    setLoading(false);
+  };
+
   return (
     <div className={dataModernizationCss.analyzeMain}>
+      <Modal
+        title={<h4 style={{ color: "#052b3b" }}>{errorDetails.fileName}</h4>}
+        centered
+        open={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        onOk={() => setModalOpen(false)}
+        cancelButtonProps={{ style: { display: "none" } }}
+      >
+        <ul>
+          {errorDetails &&
+            errorDetails?.failureReasons &&
+            errorDetails?.failureReasons.map((error) => {
+              return (
+                <li style={{ color: "#e74860", marginBottom: "4px" }}>
+                  {error?.errorLocation}
+                </li>
+              );
+            })}
+        </ul>
+      </Modal>
+
       {analyze ? (
         <Row>
           <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -105,7 +151,6 @@ const Analyze = ({ dataModernizationCss }) => {
                 </span>
               </Card.Grid>
 
-
               <Card.Grid>Workflows</Card.Grid>
               <Card.Grid>
                 <span>
@@ -114,9 +159,6 @@ const Analyze = ({ dataModernizationCss }) => {
                     : "0"}
                 </span>
               </Card.Grid>
-
-
-              
 
               <Card.Grid>Automation Effort</Card.Grid>
               <Card.Grid>
@@ -247,6 +289,9 @@ const Analyze = ({ dataModernizationCss }) => {
           <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
             <div className={dataModernizationCss.analyzeMain}>
               <Table
+                locale={{
+                  emptyText: "Abc",
+                }}
                 className="demo"
                 rowKey="fileId"
                 columns={[
@@ -276,9 +321,13 @@ const Analyze = ({ dataModernizationCss }) => {
                     render: (_, record) => {
                       switch (record.fileStatus) {
                         case "analyze_failed":
-                          return <Badge count={"Analysis Failed"} color="red" />;
+                          return (
+                            <Badge count={"Analysis Failed"} color="red" />
+                          );
                         default:
-                          return <Badge count={"Analysis Completed"} color="green" />;
+                          return (
+                            <Badge count={"Analysis Completed"} color="green" />
+                          );
                       }
                     },
                   },
@@ -289,8 +338,16 @@ const Analyze = ({ dataModernizationCss }) => {
                       switch (record.fileStatus) {
                         case "analyze_failed":
                           return (
-                            <Space size="middle" style={{cursor : "not-allowed"}}>
-                              <a style={{cursor : "not-allowed"}}>
+                            <Space
+                              size="middle"
+                              style={{ cursor: "not-allowed-" }}
+                            >
+                              <a
+                                style={{ cursor: "not-allowed-" }}
+                                onClick={() => {
+                                  getErrorDetails(record.fileId);
+                                }}
+                              >
                                 Details
                               </a>
                             </Space>
