@@ -65,14 +65,14 @@ const Analyze = ({ dataModernizationCss }) => {
     }
   };
 
-  const getProjectData = async (projectId) => {
+  const getProjectData = async () => {
     const data = await fetch_retry_get(`${GETPROJECT}${query.id}`);
     dispatch(SetProjectDetailsAction(data.data));
   };
 
   useEffect(() => {
     if (query.id) {
-      getProjectData(query.id);
+      getProjectData();
     }
     getAnalyzeData();
   }, [query.id]);
@@ -186,7 +186,7 @@ const Analyze = ({ dataModernizationCss }) => {
           <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col>
           <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15} style={{}}>
             <Card className={dataModernizationCss.cardViewGraphs}>
-              <Carousel autoplay draggable>
+              <Carousel dots={false} autoplay draggable className={dataModernizationCss.cardViewGraphCarousel}>
                 <div className={dataModernizationCss.cardViewGraph}>
                   {complexityGraph && (
                     <BarChart

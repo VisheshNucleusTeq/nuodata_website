@@ -55,7 +55,7 @@ const Connect = ({ dataModernizationCss }) => {
   const analyzeCall = async (fileDetails) => {
     const data = await fetch_retry_post(`${ANALYZE}/${fileDetails.fileId}`, {});
     if (!data.success && data?.error) {
-      setLoading(false);
+      // setLoading(false);
       message.error([data?.error]);
     }
   };
@@ -63,7 +63,7 @@ const Connect = ({ dataModernizationCss }) => {
   const getTransform = async (fileDetails) => {
     const data = await fetch_retry_post(`${TRANSFORM}${fileDetails.fileId}`);
     if (!data.success && data?.error) {
-      setLoading(false);
+      // setLoading(false);
       message.error([data?.error]);
     }
   };
@@ -145,7 +145,8 @@ const Connect = ({ dataModernizationCss }) => {
               danger
               className={dataModernizationCss.nextBtn}
               htmlType="submit"
-              disabled={fileData.fileName ? false : true}
+              // disabled={fileData.fileName ? false : true}
+              disabled={isLoading}
             >
               Analyze File
             </Button>
@@ -157,6 +158,7 @@ const Connect = ({ dataModernizationCss }) => {
               onClick={() => {
                 router.push(`/dashboard`);
               }}
+              disabled={isLoading}
             >
               Exit
             </Button>
