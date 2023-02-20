@@ -16,6 +16,7 @@ import FullPageLoader from "../components/common/fullPageLoader";
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = React.useState(() => new QueryClient());
+  
   const router = useRouter();
   const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
   if (path) {
@@ -33,7 +34,7 @@ function MyApp({ Component, pageProps }) {
             <Component key={router.asPath} {...pageProps} />
           </ProtectRoute>
         </Hydrate>
-        <ReactQueryDevtools />
+        {/* <ReactQueryDevtools /> */}
       </QueryClientProvider>
     </Provider>
   );

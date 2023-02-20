@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { Layout, Divider, Avatar, Menu } from "antd";
+import { Layout, Divider, Avatar, Menu, Badge } from "antd";
 const { Header, Content } = Layout;
 import { useRouter } from "next/router";
 import { BellOutlined, QuestionCircleOutlined } from "@ant-design/icons";
@@ -52,7 +52,11 @@ const HeaderView = ({ layoutCss, ref }) => {
           items={[
             {
               key: "1",
-              label: <BellOutlined style={{ fontSize: "18px" }} />,
+              label: (
+                <Badge size="default" count={5}>
+                  <BellOutlined style={{ fontSize: "18px" }} />
+                </Badge>
+              ),
             },
             {
               key: "2",

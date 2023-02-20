@@ -216,6 +216,14 @@ body {
   background-color: #fff;
 }
 
+
+.demoCard {
+  border-radius: 20px !important;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  background-color: #fff;
+}
+
 .ant-table-thead th {
   color: #0c3246 !important;
   font-weight: bold !important;
@@ -315,4 +323,9 @@ html {
 
 .inputGroupNumber {
   -moz-appearance: textfield;
+}
+
+.search::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #0c3246;
+  opacity: 1; /* Firefox */
 }

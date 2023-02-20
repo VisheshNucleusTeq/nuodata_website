@@ -5,7 +5,7 @@ const { Sider } = Layout;
 
 import { useDispatch, useSelector } from "react-redux";
 import { SetTabTypeAction, loderShowHideAction } from "../../../Redux/action";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CaretLeftOutlined, CaretDownOutlined } from "@ant-design/icons";
 
 const SiderView = ({ layoutCss, height, componentName }) => {
@@ -26,6 +26,12 @@ const SiderView = ({ layoutCss, height, componentName }) => {
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
+
+  useEffect(() => {
+    if (componentName === "/dashboard") {
+      dispatch(SetTabTypeAction("Dashboard"));
+    }
+  }, [componentName]);
 
   return (
     <Sider className={layoutCss.mainLayoutSider}>

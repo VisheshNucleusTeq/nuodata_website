@@ -1,19 +1,11 @@
 import retry from "async-retry";
-import Axios from "axios";
 import { BaseURL as ApiInstance } from "./enviroment";
-
-const create_header = (endpoint) => {
-  return {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
-};
 
 export const fetch_retry_get = async (endpoint, payload = {}) => {
   try {
     return await retry(
       async () => {
-        const response = await Axios.get(endpoint, payload);
+        const response = await ApiInstance.get(endpoint, payload);
         if (response.status === 200) {
           return { success: true, data: response.data };
         }
@@ -31,7 +23,7 @@ export const fetch_retry_post = async (endpoint, payload = {}) => {
   try {
     return await retry(
       async () => {
-        const response = await Axios.post(endpoint, payload);
+        const response = await ApiInstance.post(endpoint, payload);
         if (response.status === 200) {
           return { success: true, data: response.data };
         }
@@ -49,7 +41,7 @@ export const fetch_retry_put = async (endpoint, payload = {}) => {
   try {
     return await retry(
       async () => {
-        const response = await Axios.put(endpoint, payload);
+        const response = await ApiInstance.put(endpoint, payload);
         if (response.status === 200) {
           return { success: true, data: response.data };
         }
@@ -67,7 +59,7 @@ export const fetch_retry_post_with_file = async (endpoint, payload = {}) => {
   try {
     return await retry(
       async () => {
-        const response = await Axios.post(endpoint, payload, {
+        const response = await ApiInstance.post(endpoint, payload, {
           headers: {
             "content-type": "multipart/form-data",
           },

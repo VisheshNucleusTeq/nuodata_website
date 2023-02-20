@@ -1,6 +1,5 @@
 import axios from "axios";
-
 export const BaseURL = axios.create({
-  baseURL: "http://3.109.185.25", //"http://13.52.240.48:8080/",
+  baseURL: "https://api.dev.nuodata.io/",
   timeout: 5000,
 });
