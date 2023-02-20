@@ -19,13 +19,13 @@ export default function DataModernizationArchitecture({ HomeCss }) {
         <Image
           preview={false}
           width={"100%"}
-          src={"/home/archi-gif.gif"}
+          src={"/home/dma_system.gif"}
           className={HomeCss.infoRowSystemViewSystem}
         />
         <Image
           preview={false}
           height={"100%"}
-          src={"/home/3-1-GIF.gif"}
+          src={"/home/dma_mobile.gif"}
           className={HomeCss.infoRowSystemViewmobile}
         />
       </Col>
