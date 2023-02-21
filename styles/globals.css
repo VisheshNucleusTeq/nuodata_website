@@ -117,8 +117,8 @@ body {
 .textBoxMain {
   background-color: transparent !important;
   width: 45% !important;
-  border: 1px solid white;
-  border-radius: 10px;
+  border: 1px solid white !important;
+  border-radius: 10px !important;
 }
 
 .dataFlowNuoData {

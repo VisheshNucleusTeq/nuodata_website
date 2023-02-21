@@ -19,6 +19,7 @@ function ModernizationWorksStepsDetailsTtob({data, HowItWorkCss,image}) {
         className: "textBoxMain",
         id: "1",
         sourcePosition: "bottom",
+        targetPosition: "bottom",
         position: { x: 0, y: 0 },
         data: {
           label: <Image src={image} />,
