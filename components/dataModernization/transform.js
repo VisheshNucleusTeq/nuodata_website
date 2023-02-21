@@ -67,7 +67,13 @@ const Transform = ({ dataModernizationCss }) => {
     setLoading(false);
     if (data.success) {
       setData(data?.data?.fileDetails);
-      setAnalyzeDetails({ convertedFilesCount: 2, ...data?.data });
+      const failData = data?.data?.fileDetails.filter((e) => {
+        return e.fileStatus === "analyze_failed";
+      });
+      setAnalyzeDetails({
+        convertedFilesCount: failData.length,
+        ...data?.data,
+      });
       setComplexityGraph(data?.data?.complexityGraph);
     } else {
       dispatch(SetProjectTransformDetailsAction({}));
@@ -208,13 +214,18 @@ const Transform = ({ dataModernizationCss }) => {
               <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
               <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14} style={{}}>
                 <Card className={dataModernizationCss.cardViewGraphs}>
-                  <Carousel autoplay draggable>
+                  <Carousel
+                    dots={false}
+                    autoplay
+                    draggable
+                    className={dataModernizationCss.cardViewGraphCarousel}
+                  >
                     <div className={dataModernizationCss.cardViewGraph}>
                       {complexityGraph && (
                         <PieChart
                           complexityGraph={complexityGraph}
                           dataModernizationCss={dataModernizationCss}
-                          labels={["Not Converted", "converted"]}
+                          labels={["Converted", "Not converted"]}
                           data={[
                             analyzeDetails.totalFiles -
                               (analyzeDetails?.convertedFilesCount
@@ -338,7 +349,9 @@ const Transform = ({ dataModernizationCss }) => {
                     },
                   },
                 ]}
-                dataSource={data.filter(data => data.fileStatus !== "analyze_failed")}
+                dataSource={data.filter(
+                  (data) => data.fileStatus !== "analyze_failed"
+                )}
               />
             </Col>
           </Row>
