@@ -15,7 +15,7 @@ function ContactUsRight({ signUpCss }) {
     const data = await fetch_retry_post(CONTACT, payload);
     if (data.success) {
       message.success([
-        "Mail sent successfully, We will get back to you soon.",
+        "Thank you for contacting us. We will reach out to you soon.",
       ]);
       form.resetFields();
     } else {
