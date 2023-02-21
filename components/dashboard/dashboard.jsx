@@ -73,6 +73,16 @@ const DashboardView = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [search]);
 
+  const changeDateFormat = (date) => {
+    const dt = new Date(date);
+    const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
+    return `${padL(dt.getMonth() + 1)}/${padL(
+      dt.getDate()
+    )}/${dt.getFullYear()} ${padL(dt.getHours())}:${padL(
+      dt.getMinutes()
+    )}:${padL(dt.getSeconds())}`;
+  };
+
   return (
     <div className={dashboardCss.main}>
       <Button
@@ -128,6 +138,21 @@ const DashboardView = () => {
               title: "Target",
               dataIndex: "targetPlatform",
               key: "targetPlatform",
+            },
+            {
+              title: "Conversion",
+              // dataIndex: "conversion",
+              key: "conversion",
+              render: (_, record) => (
+                <span>{Number(record.conversion) ? record.conversion : 0}%</span>
+              ),
+            },
+            {
+              title: "Created Date",
+              key: "creationDateTime",
+              render: (_, record) => (
+                <span>{changeDateFormat(record.creationDateTime)}</span>
+              ),
             },
             {
               title: "Action",
