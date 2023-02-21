@@ -5,9 +5,9 @@ export default function Info({ HowItWorkCss }) {
   return (
     <div className={HowItWorkCss.mainDiv}>
       <Header />
+      <div className={HowItWorkCss.detailsDiv}>
       <Row>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
-
         <Col
           xs={22}
           sm={22}
@@ -29,7 +29,6 @@ export default function Info({ HowItWorkCss }) {
           </div>
         </Col>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
-
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
         <Col
           xs={22}
@@ -48,6 +47,7 @@ export default function Info({ HowItWorkCss }) {
         </Col>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
       </Row>
+      </div>
     </div>
   );
 }

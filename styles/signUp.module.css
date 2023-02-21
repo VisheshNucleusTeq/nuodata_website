@@ -30,6 +30,11 @@
   margin: 5% 15% 0% 15%;
 }
 
+.contactUsForm h1 {
+  color: #0c3246;
+  font-weight: bolder;
+}
+
 .signUpBtn {
   height: 50px;
   border-radius: 15px;
@@ -74,5 +79,17 @@
 
   .mobileView {
     display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .contactUsForm {
+    margin: 5% 2% 0% 2%;
+  }
+
+  .contactUsForm h1 {
+    color: #0c3246;
+    font-weight: bolder;
+    text-align: center;
   }
 }

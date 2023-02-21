@@ -2,7 +2,7 @@ import React from "react";
 import { Image } from "antd";
 import { useRouter } from "next/router";
 
-function SignUpLeft({ signUpCss }) {
+function ContactUsLeft({ signUpCss }) {
   const router = useRouter();
 
   return (
@@ -27,4 +27,4 @@ function SignUpLeft({ signUpCss }) {
   );
 }
 
-export default SignUpLeft;
+export default ContactUsLeft;

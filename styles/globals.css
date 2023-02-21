@@ -17,33 +17,33 @@ body {
 }
 
 .inputSelect div {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
+  width: 100% !important;
+  padding: 12px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  resize: vertical !important;
   border-radius: 20px !important;
   height: 50px !important;
-  justify-content: center;
-  align-items: center;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .inputDesignSelect div {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
+  width: 100% !important;
+  padding: 12px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  resize: vertical !important;
   border-radius: 10px !important;
   height: 5vh !important;
-  justify-content: center;
-  align-items: center;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .ant-select-selection-search {
-  justify-content: center;
-  align-items: center;
-  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  display: flex !important;
 }
 
 .ant-select-dropdown-menu-item {
@@ -58,7 +58,7 @@ body {
 }
 
 .ant-upload {
-  background-color: rgb(217, 217, 217);
+  background-color: rgb(217, 217, 217) !important;
   border-radius: 25px !important;
 }
 
@@ -69,16 +69,16 @@ body {
 }
 
 .react-flow__node.circle {
-  padding: 0%;
-  width: 160px;
-  height: 160px;
+  padding: 0% !important;
+  width: 160px !important;
+  height: 160px !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  transform: rotateZ(45deg);
+  transform: rotateZ(45deg) !important;
   background-color: transparent !important;
-  padding: 0%;
-  border: 1px solid transparent;
+  padding: 0% !important;
+  border: 1px solid transparent !important;
 }
 
 .ant-timeline-item-left .ant-timeline-item-label {
@@ -95,23 +95,23 @@ body {
 }
 
 .ant-timeline-item-tail {
-  background-color: #e74860;
-  width: 4px;
+  background-color: #e74860 !important;
+  width: 4px !important;
 }
 
 .modernizationWorks .ant-steps-item-description {
   color: #fff !important;
-  font-size: 12px;
+  font-size: 12px !important;
 }
 
 .modernizationWorks .ant-steps-item-container :hover {
-  transition: all 1s ease;
-  scale: 1.04;
-  cursor: pointer;
+  transition: all 1s ease !important;
+  scale: 1.04 !important;
+  cursor: pointer !important;
 }
 
 .ant-steps-item-content {
-  text-align: center;
+  text-align: center !important;
 }
 
 .textBoxMain {
@@ -142,54 +142,54 @@ body {
 }
 
 .react-flow__attribution {
-  display: none;
+  display: none !important;
 }
 
 .defineTabs .ant-tabs-nav-wrap {
-  border-radius: 25px;
+  border-radius: 25px !important;
 }
 
 .defineTabs .ant-tabs-nav-list {
   width: 100% !important;
-  background-color: #fff;
-  border-radius: 25px;
+  background-color: #fff !important;
+  border-radius: 25px !important;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset !important;
 }
 
 .defineTabs .ant-tabs-nav-list .ant-tabs-tab {
-  border: 1px solid #d7d7d7;
+  border: 1px solid #d7d7d7 !important;
   width: 14% !important;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  margin: 1.5%;
-  padding: 0.5%;
-  border-radius: 10px;
-  color: black;
-  font-weight: bold;
+  display: flex !important;
+  text-align: center !important;
+  justify-content: center !important;
+  margin: 1.5% !important;
+  padding: 0.5% !important;
+  border-radius: 10px !important;
+  color: black !important;
+  font-weight: bold !important;
 }
 
 .defineTabs .ant-tabs-nav-list .ant-tabs-tab-active {
-  background-color: #0c3246;
+  background-color: #0c3246 !important;
   color: #fff !important;
 }
 
 .defineTabs .ant-tabs-nav-list .ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: #fff;
+  color: #fff !important;
 }
 
 .ant-tabs-ink-bar {
-  height: 5px;
+  height: 5px !important;
   background: transparent !important;
 }
 
 .defineForm .ant-form-item .ant-form-item-label label {
-  color: #000000;
-  font-weight: bold;
+  color: #000000 !important;
+  font-weight: bold !important;
 }
 
 .ant-form-item-label label {
@@ -209,19 +209,18 @@ body {
   border-radius: 0px 0px 20px 0px !important;
 }
 .demo .ant-table-content {
-  padding: 2%;
+  padding: 2% !important;
   border-radius: 20px !important;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-  background-color: #fff;
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
+  background-color: #fff !important;
 }
-
 
 .demoCard {
   border-radius: 20px !important;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-  background-color: #fff;
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
+  background-color: #fff !important;
 }
 
 .ant-table-thead th {
@@ -231,32 +230,32 @@ body {
 
 .ant-collapse-header-text {
   color: #e74860 !important;
-  font-weight: bolder;
-  font-size: large;
+  font-weight: bolder !important;
+  font-size: large !important;
 }
 
 .ant-collapse-expand-icon {
   color: #e74860 !important;
-  font-weight: bolder;
-  font-size: large;
+  font-weight: bolder !important;
+  font-size: large !important;
 }
 
 @media (max-width: 600px) {
   .textBoxMain {
     background-color: transparent !important;
     width: 100% !important;
-    border: 1px solid white;
-    border-radius: 10px;
+    border: 1px solid white !important;
+    border-radius: 10px !important;
   }
 
   .textBox {
     background-color: transparent !important;
     width: 100% !important;
-    color: #fff;
-    border: 1px solid white;
-    border-radius: 10px;
-    height: 10vh;
-    display: flex;
+    color: #fff !important;
+    border: 1px solid white !important;
+    border-radius: 10px !important;
+    height: 10vh !important;
+    display: flex !important;
     text-align: center !important;
     justify-content: center !important;
     align-items: center !important;
@@ -265,34 +264,35 @@ body {
 
 @media (max-width: 760px) {
   .react-flow__node.circle {
-    padding: 0%;
-    width: 300px;
-    height: 300px;
+    padding: 0% !important;
+    width: 300px !important;
+    height: 300px !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    transform: rotateZ(45deg);
+    transform: rotateZ(45deg) !important;
     background-color: transparent !important;
-    padding: 0%;
+    padding: 0% !important;
   }
 }
 
 .centerButton {
-  display: flex;
-  align-items: flex-end;
-  height: 6vh;
+  display: flex !important;
+  align-items: flex-end !important;
+  height: 6vh !important;
 }
 
 .ant-menu-submenu-popup li {
   color: #e74860 !important;
-  font-weight: bold;
+  font-weight: bold !important;
 }
 
 .ant-menu-submenu-popup .SPACEMENU {
-  display: none;
+  display: none !important;
 }
+
 html {
-  scroll-behavior: calc(5000);
+  scroll-behavior: calc(5000) !important;
 }
 
 .inputGroup {
@@ -304,28 +304,28 @@ html {
 }
 
 .inputSelectGroup div {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
+  width: 100% !important;
+  padding: 12px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  resize: vertical !important;
   border-radius: 20px 0px 0px 20px !important;
   height: 48px !important;
-  justify-content: center;
-  align-items: center;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .inputGroupNumber::-webkit-outer-spin-button,
 .inputGroupNumber::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+  -webkit-appearance: none !important;
+  margin: 0 !important;
 }
 
 .inputGroupNumber {
-  -moz-appearance: textfield;
+  -moz-appearance: textfield !important;
 }
 
-.search::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #0c3246;
-  opacity: 1; /* Firefox */
+.search::placeholder {
+  color: #0c3246 !important ;
+  opacity: 1 !important;
 }

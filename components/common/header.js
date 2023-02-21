@@ -5,26 +5,18 @@ import { MenuOutlined } from "@ant-design/icons";
 import Router, { useRouter } from "next/router";
 
 import HeaderCss from "../../styles/Header.module.css";
+import { scroll } from "../../hooks/scroll";
 
 export default function Header() {
-  const [scrollY, setScrollY] = useState(0);
   const router = useRouter();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const data = scroll();
 
   return (
     <div
       className={`${HeaderCss.menuDiv} ${
-        scrollY > 500 ? HeaderCss.menuDivScrollY : null
+        data.scrollY > 500 && data.scrollDirection == "up"
+          ? HeaderCss.menuDivScrollY
+          : null
       }`}
     >
       <Row className={HeaderCss.infoRow}>
@@ -76,9 +68,9 @@ export default function Header() {
                   router.push("/");
                 },
                 style: {
-                  visibility: "hidden"
+                  visibility: "hidden",
                 },
-                className : "SPACEMENU"
+                className: "SPACEMENU",
               },
               {
                 key: "4",
