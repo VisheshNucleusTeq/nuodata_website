@@ -7,7 +7,7 @@ import { fetch_retry_post } from "../../network/api-manager";
 import { CONTACT } from "../../network/apiConstants";
 import { loderShowHideAction } from "../../Redux/action";
 
-function ContactUsRight({ signUpCss }) {
+function ContactUsRight({ signUpCss, title, buttonText }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const onFinish = async (payload) => {
@@ -27,7 +27,7 @@ function ContactUsRight({ signUpCss }) {
   return (
     <div className={signUpCss.flexView}>
       <div className={signUpCss.contactUsForm}>
-        <h1 style={{ marginBottom: "25px" }}>Contact Us.</h1>
+        <h1 style={{ marginBottom: "25px" }}>{title}</h1>
 
         <Form
           form={form}
@@ -69,7 +69,7 @@ function ContactUsRight({ signUpCss }) {
                 />
               </Form.Item>
             </Col>
-            <Col span={1} />
+            <Col xs={0} sm={0} md={0} lg={1} xl={1} xxl={1} />
             <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"Last Name"}
@@ -119,7 +119,7 @@ function ContactUsRight({ signUpCss }) {
                 />
               </Form.Item>
             </Col>
-            <Col span={1} />
+            <Col xs={0} sm={0} md={0} lg={1} xl={1} xxl={1} />
             <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 style={{
@@ -255,7 +255,7 @@ function ContactUsRight({ signUpCss }) {
                 />
               </Form.Item>
             </Col>
-            <Col span={1} />
+            <Col xs={0} sm={0} md={0} lg={1} xl={1} xxl={1} />
             <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               {" "}
               <Form.Item
@@ -330,7 +330,7 @@ function ContactUsRight({ signUpCss }) {
                 />
               </Form.Item>
             </Col>
-            <Col span={1} />
+            <Col xs={0} sm={0} md={0} lg={1} xl={1} xxl={1} />
             <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"Target Language"}
@@ -382,7 +382,7 @@ function ContactUsRight({ signUpCss }) {
                 />
               </Form.Item>
             </Col>
-            <Col span={1} />
+            <Col xs={0} sm={0} md={0} lg={1} xl={1} xxl={1} />
             <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
               <Form.Item
                 label={"Job Title"}
@@ -438,7 +438,7 @@ function ContactUsRight({ signUpCss }) {
             htmlType="submit"
             style={{ marginBottom: "5%" }}
           >
-            Send
+            {buttonText}
           </Button>
         </Form>
       </div>

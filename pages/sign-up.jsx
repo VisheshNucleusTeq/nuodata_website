@@ -1,9 +1,12 @@
 import SignUp from "../components/signUp";
 
 function Sign_up(props) {
-    return (
-        <SignUp/>
-    );
+  return (
+    <>
+      <title>NuoData | Sign Up</title>
+      <SignUp />
+    </>
+  );
 }
 
 export default Sign_up;
