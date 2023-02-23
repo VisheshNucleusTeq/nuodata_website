@@ -69,7 +69,6 @@ const DashboardView = () => {
         getAllProjects();
       }
     }, 1000);
-
     return () => clearTimeout(delayDebounceFn);
   }, [search]);
 
@@ -118,34 +117,42 @@ const DashboardView = () => {
               title: "Business Unit",
               dataIndex: "businessUnit",
               key: "businessUnit",
+              sorter: (a, b) => a.businessUnit.localeCompare(b.businessUnit),
+              // align: 'center'
             },
             {
               title: "Project",
               dataIndex: "name",
               key: "name",
+              sorter: (a, b) => a.name.localeCompare(b.name),
             },
             {
               title: "Total Files",
               dataIndex: "totalFiles",
               key: "totalFiles",
+              sorter: (a, b) => a.totalFiles - b.totalFiles,
             },
             {
               title: "Source Platform",
               dataIndex: "sourcePlatform",
               key: "sourcePlatform",
+              sorter: (a, b) => a.sourcePlatform.localeCompare(b.sourcePlatform),
             },
             {
               title: "Target",
               dataIndex: "targetPlatform",
               key: "targetPlatform",
+              sorter: (a, b) => a.targetPlatform.localeCompare(b.targetPlatform),
             },
             {
               title: "Conversion",
-              // dataIndex: "conversion",
               key: "conversion",
               render: (_, record) => (
-                <span>{Number(record.conversion) ? record.conversion : 0}%</span>
+                <span>
+                  {Number(record.conversion) ? record.conversion : 0}%
+                </span>
               ),
+              sorter: (a, b) => (Number(a.conversion) ? a.conversion : 0) - (Number(b.conversion) ? b.conversion : 0),
             },
             {
               title: "Created Date",
@@ -153,6 +160,9 @@ const DashboardView = () => {
               render: (_, record) => (
                 <span>{changeDateFormat(record.creationDateTime)}</span>
               ),
+              sorter: (a, b) =>
+                new Date(a.creationDateTime).getTime() -
+                new Date(b.creationDateTime).getTime(),
             },
             {
               title: "Action",

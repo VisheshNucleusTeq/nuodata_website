@@ -9,6 +9,8 @@ import Analyze from "./analyze";
 import Transform from "./transform";
 import Design from "./design";
 import Validate from "./validate";
+import Rollout from "./Rollout";
+
 import {
   SetTabTypeAction,
   SetProjectTransformDetailsAction,
@@ -42,9 +44,9 @@ export default function DataModernization() {
           ].map((data, i) => {
             return (
               <Col
-              key={(Math.random() + 1).toString(36).substring(7)}
+                key={(Math.random() + 1).toString(36).substring(7)}
                 onClick={() => {
-                  if ((query?.id ? query?.id : projectDetails?.projectId)) {
+                  if (query?.id ? query?.id : projectDetails?.projectId) {
                     dispatch(SetProjectTransformDetailsAction({}));
                     dispatch(SetTabTypeAction(data));
                   }
@@ -65,7 +67,7 @@ export default function DataModernization() {
           })}
         </Row>
       </div>
-
+      
       {tabType === "Define" && (
         <Define dataModernizationCss={dataModernizationCss} />
       )}
@@ -83,6 +85,9 @@ export default function DataModernization() {
       )}
       {tabType === "Validate" && (
         <Validate dataModernizationCss={dataModernizationCss} />
+      )}
+      {tabType === "Rollout" && (
+        <Rollout dataModernizationCss={dataModernizationCss} />
       )}
     </>
   );
