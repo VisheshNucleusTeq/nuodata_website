@@ -5,6 +5,17 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Poppins", sans-serif !important;
+  background-color: #fff !important;
+}
+
+::-webkit-scrollbar {
+  background-color: #0c3246;
+  width: 0.4vw;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #e74860;
+  border-radius: 5px;
 }
 
 .input {
