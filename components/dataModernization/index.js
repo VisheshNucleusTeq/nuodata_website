@@ -9,7 +9,7 @@ import Analyze from "./analyze";
 import Transform from "./transform";
 import Design from "./design";
 import Validate from "./validate";
-import Rollout from "./Rollout";
+import Rollout from "./rollout";
 
 import {
   SetTabTypeAction,
