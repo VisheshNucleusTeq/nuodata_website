@@ -30,13 +30,15 @@ import {
   DownloadOutlined,
   EyeOutlined,
   ArrowLeftOutlined,
-  LoadingOutlined
+  LoadingOutlined,
 } from "@ant-design/icons";
 import {
   SetTabTypeAction,
   SetAnalyzeDetailAction,
   SetProjectTransformDetailsAction,
 } from "../../Redux/action";
+
+import GraphView from "./analyzeDetail/graphView";
 
 const AnalyzeDetail = ({
   dataModernizationCss,
@@ -55,7 +57,6 @@ const AnalyzeDetail = ({
   const [outputFiles, setOutputFiles] = useState([]);
   const [transformationSummary, setTransformationSummary] = useState([]);
   const [open, setOpen] = useState(false);
-  const [outputFileId, setOutputFileId] = useState();
   const [transformSql, setTransformSql] = useState();
   const [sourceDdl, setSourceDdl] = useState();
   const [targetDdl, setTargetDdl] = useState();
@@ -88,26 +89,6 @@ const AnalyzeDetail = ({
     }
   };
 
-  const getGraphSrcDataApi = async (id) => {
-    const data = await fetch_retry_get(`${DESIGN}${id}`);
-    if (data.success) setModalData(data.data);
-  };
-
-  const getTransformSqlDataApi = async (id) => {
-    const data = await fetch_retry_get(`${DOWNLOADFILE}${id}`);
-    if (data.success) setTransformSql(data.data);
-  };
-
-  const getSourceDdlDataApi = async (id) => {
-    const data = await fetch_retry_get(`${DOWNLOADFILE}${id}`);
-    if (data.success) setSourceDdl(data.data);
-  };
-
-  const getTargetDdlDataApi = async (id) => {
-    const data = await fetch_retry_get(`${DOWNLOADFILE}${id}`);
-    if (data.success) setTargetDdl(data.data);
-  };
-
   useEffect(() => {
     getAnalyzeData();
   }, []);
@@ -118,31 +99,29 @@ const AnalyzeDetail = ({
   };
 
   const getDataCall = async (id) => {
-    setLoadingView(true);
-    let datar = await getProjectData(id);
-    setModalData(datar);
-    setTimeout(() => {
-      setOpen(true);
-      setLoadingView(false);
-    }, 10);
+    setOpen(true);
   };
 
   useEffect(() => {
-    outputFiles.forEach((e) => {
+    outputFiles.forEach(async (e) => {
       if (e.fileType == "graph_src") {
-        getGraphSrcDataApi(e.outputFileId);
+        const data = await fetch_retry_get(`${DESIGN}${e?.outputFileId}`);
+        if (data.success) setModalData(data.data);
       }
 
       if (e.fileType == "transform_sql") {
-        getTransformSqlDataApi(e.outputFileId);
+        const data = await fetch_retry_get(`${DOWNLOADFILE}${e?.outputFileId}`);
+        if (data.success) setTransformSql(data.data);
       }
 
       if (e.fileType == "source_ddl") {
-        getSourceDdlDataApi(e.outputFileId);
+        const data = await fetch_retry_get(`${DOWNLOADFILE}${e?.outputFileId}`);
+        if (data.success) setSourceDdl(data.data);
       }
 
       if (e.fileType == "target_ddl") {
-        getTargetDdlDataApi(e.outputFileId);
+        const data = await fetch_retry_get(`${DOWNLOADFILE}${e?.outputFileId}`);
+        if (data.success) setTargetDdl(data.data);
       }
     });
   }, [outputFiles]);
@@ -220,18 +199,6 @@ const AnalyzeDetail = ({
           },
         ]}
       />
-    );
-  };
-
-  const getGraphSrcData = (data) => {
-    return modalData ? (
-      <AnalyzeDetailPopup
-        outputFileId={outputFileId}
-        data={modalData}
-        showPopUp={showPopUp}
-      />
-    ) : (
-      <p>Loading...</p>
     );
   };
 
@@ -388,10 +355,8 @@ const AnalyzeDetail = ({
                       hours
                     </Card.Grid>
 
-                    <Card.Grid hoverable={false} >
-                      Hours Saved
-                    </Card.Grid>
-                    <Card.Grid hoverable={false} >
+                    <Card.Grid hoverable={false}>Hours Saved</Card.Grid>
+                    <Card.Grid hoverable={false}>
                       {analyzeDetails && analyzeDetails.hoursSaved
                         ? analyzeDetails.hoursSaved
                         : "0"}{" "}
@@ -430,7 +395,9 @@ const AnalyzeDetail = ({
                           e.fileType != "graph_src" ? (
                             <a
                               target={"_blank"}
-                              href={`${DOWNLOADFILE}${e.outputFileId}`}
+                              href={`${"https://api.dev.nuodata.io/"}${DOWNLOADFILE}${
+                                e.outputFileId
+                              }`}
                             >
                               <Space
                                 size="middle"
@@ -441,32 +408,11 @@ const AnalyzeDetail = ({
                                 <DownloadOutlined /> Download
                               </Space>
                             </a>
-                          ) : !showTop ? (
-                            <div onClick={(e) => e.stopPropagation()}>
-                              <Space
-                                onClick={() => {
-                                  getDataCall(e.outputFileId);
-                                }}
-                                size="middle"
-                                className={
-                                  dataModernizationCss.downloadBtnSpace
-                                }
-                                style={{ cursor: "pointer" }}
-                              >
-                                {loadingView ? (
-                                  <><LoadingOutlined /> Loading</>
-                                ) : (
-                                  <>
-                                    <EyeOutlined /> View
-                                  </>
-                                )}
-                              </Space>
-                            </div>
                           ) : (
                             <div onClick={(e) => e.stopPropagation()}>
                               <Space
                                 onClick={() => {
-                                  getDataCall(e.outputFileId);
+                                  setOpen(true);
                                 }}
                                 size="middle"
                                 className={
@@ -475,7 +421,9 @@ const AnalyzeDetail = ({
                                 style={{ cursor: "pointer" }}
                               >
                                 {loadingView ? (
-                                  <><LoadingOutlined /> Loading</>
+                                  <>
+                                    <LoadingOutlined /> Loading
+                                  </>
                                 ) : (
                                   <>
                                     <EyeOutlined /> View
@@ -497,7 +445,13 @@ const AnalyzeDetail = ({
                             className={dataModernizationCss.analyzeMainDetails}
                           >
                             {e.fileType === "analysis" && getAnalysisData(e)}
-                            {e.fileType === "graph_src" && getGraphSrcData(e)}
+                            {e.fileType === "graph_src" && (
+                              <GraphView
+                                data={e}
+                                modalData={modalData}
+                                showPopUp={showPopUp}
+                              />
+                            )}
                             {e.fileType === "transform_sql" &&
                               getTransformSqlData(e)}
                             {e.fileType === "source_ddl" && getSourceDdlData(e)}
