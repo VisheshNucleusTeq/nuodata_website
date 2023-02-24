@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   Row,
   Col,
-  Table,
   Space,
   Card,
   message,
@@ -12,11 +11,8 @@ import {
   Divider,
   Modal,
 } from "antd";
-const { Panel } = Collapse;
 import { ArrowRightOutlined } from "@ant-design/icons";
-
 import { useDispatch } from "react-redux";
-
 import {
   GETANALYZEDATA,
   DOWNLOADFILE,
@@ -24,8 +20,6 @@ import {
   VERSION,
 } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
-
-import AnalyzeDetailPopup from "./analyzeDetailPopup";
 import {
   DownloadOutlined,
   EyeOutlined,
@@ -39,6 +33,7 @@ import {
 } from "../../Redux/action";
 
 import GraphView from "./analyzeDetail/graphView";
+import AnalysisView from "./analyzeDetail/analysisView";
 
 const AnalyzeDetail = ({
   dataModernizationCss,
@@ -48,7 +43,6 @@ const AnalyzeDetail = ({
   showPopUp,
 }) => {
   const dispatch = useDispatch();
-
   const [loading, setLoading] = useState(false);
   const [loadingView, setLoadingView] = useState(false);
   const [data, setData] = useState([]);
@@ -63,7 +57,6 @@ const AnalyzeDetail = ({
 
   const getAnalyzeData = async () => {
     setLoading(true);
-
     const modelVersionObj = await fetch_retry_get(
       `${VERSION}${analyzeDetailsId}`
     );
@@ -77,10 +70,7 @@ const AnalyzeDetail = ({
     setLoading(false);
     if (data.success) {
       dispatch(SetAnalyzeDetailAction(data?.data));
-      setData({
-        fileName: data?.data?.fileName,
-        ...data?.data?.analysis,
-      });
+      setData({ fileName: data?.data?.fileName, ...data?.data?.analysis });
       setAnalyzeDetails(data?.data?.complexity);
       setOutputFiles(data?.data?.outputFiles);
       setTransformationSummary(data?.data?.transformationSummary);
@@ -92,15 +82,6 @@ const AnalyzeDetail = ({
   useEffect(() => {
     getAnalyzeData();
   }, []);
-
-  const getProjectData = async (fileId) => {
-    const data = await fetch_retry_get(`${DESIGN}${fileId}`);
-    if (data.success) return data.data;
-  };
-
-  const getDataCall = async (id) => {
-    setOpen(true);
-  };
 
   useEffect(() => {
     outputFiles.forEach(async (e) => {
@@ -126,104 +107,27 @@ const AnalyzeDetail = ({
     });
   }, [outputFiles]);
 
-  const getAnalysisData = (data) => {
-    return (
-      <Table
-        pagination={false}
-        dataSource={transformationSummary}
-        rowKey="fileId"
-        columns={[
-          {
-            title: "Transformation Type",
-            dataIndex: "transformationType",
-            key: "transformationType",
-            render: (value, row, index) => {
-              if (transformationSummary.length == index + 1) {
-                return (
-                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-                    <span>{value}</span>
-                  </b>
-                );
-              } else {
-                return <span>{value}</span>;
-              }
-            },
-          },
-          {
-            title: "Transformation Count",
-            dataIndex: "transformationCount",
-            key: "transformationCount",
-            render: (value, row, index) => {
-              if (transformationSummary.length == index + 1) {
-                return (
-                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-                    <span>{value ? value : ""}</span>
-                  </b>
-                );
-              } else {
-                return <span>{value}</span>;
-              }
-            },
-          },
-          {
-            title: "Manual Effort Hours",
-            dataIndex: "manualEffortHours",
-            key: "manualEffortHours",
-            render: (value, row, index) => {
-              if (transformationSummary.length == index + 1) {
-                return (
-                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-                    <span>{value}</span>
-                  </b>
-                );
-              } else {
-                return <span>{value}</span>;
-              }
-            },
-          },
-          {
-            title: "Automated Effort Hours",
-            dataIndex: "automatedEffortHours",
-            key: "automatedEffortHours",
-            render: (value, row, index) => {
-              if (transformationSummary.length == index + 1) {
-                return (
-                  <b style={{ color: "#0c3246", fontWeight: "bold" }}>
-                    <span>{value}</span>
-                  </b>
-                );
-              } else {
-                return <span>{value}</span>;
-              }
-            },
-          },
-        ]}
-      />
-    );
-  };
-
-  const getTransformSqlData = () => {
+  const preCodeView = (data) => {
     return (
       <pre>
-        <code>{transformSql}</code>
+        <code>{data}</code>
       </pre>
     );
   };
 
-  const getSourceDdlData = () => {
-    return (
-      <pre>
-        <code>{sourceDdl}</code>
-      </pre>
-    );
+  const getProjectData = async (fileId) => {
+    const data = await fetch_retry_get(`${DESIGN}${fileId}`);
+    if (data.success) return data.data;
   };
 
-  const getTargetDdlData = () => {
-    return (
-      <pre>
-        <code>{targetDdl}</code>
-      </pre>
-    );
+  const getDataCall = async (id) => {
+    setLoadingView(true);
+    let datar = await getProjectData(id);
+    setModalData(datar);
+    setTimeout(() => {
+      setOpen(true);
+      setLoadingView(false);
+    }, 10);
   };
 
   return (
@@ -236,11 +140,7 @@ const AnalyzeDetail = ({
         onCancel={() => setOpen(false)}
         width={"100vw"}
       >
-        <AnalyzeDetailPopup
-          outputFileId={"outputFileId"}
-          data={modalData}
-          showPopUp={showPopUp}
-        />
+        <GraphView modalData={modalData} showPopUp={showPopUp} />
       </Modal>
 
       {showTop && (
@@ -377,7 +277,7 @@ const AnalyzeDetail = ({
                   })
                   .map((e, i) => {
                     return (
-                      <Panel
+                      <Collapse.Panel
                         header={
                           e.description === "Graph Source"
                             ? showPopUp
@@ -391,6 +291,7 @@ const AnalyzeDetail = ({
                             ? { margin: "2% 0% 2% 0%" }
                             : { margin: "1% 0% 1% 0%" }
                         }
+                        collapsible={e.fileType == "graph_src" ? "disabled" : ""}
                         extra={
                           e.fileType != "graph_src" ? (
                             <a
@@ -411,8 +312,11 @@ const AnalyzeDetail = ({
                           ) : (
                             <div onClick={(e) => e.stopPropagation()}>
                               <Space
+                                // onClick={() => {
+                                //   setOpen(true);
+                                // }}
                                 onClick={() => {
-                                  setOpen(true);
+                                  getDataCall(e.outputFileId);
                                 }}
                                 size="middle"
                                 className={
@@ -444,21 +348,26 @@ const AnalyzeDetail = ({
                             xxl={24}
                             className={dataModernizationCss.analyzeMainDetails}
                           >
-                            {e.fileType === "analysis" && getAnalysisData(e)}
+                            {e.fileType === "analysis" && (
+                              <AnalysisView
+                                transformationSummary={transformationSummary}
+                              />
+                            )}
                             {e.fileType === "graph_src" && (
                               <GraphView
-                                data={e}
                                 modalData={modalData}
                                 showPopUp={showPopUp}
                               />
                             )}
                             {e.fileType === "transform_sql" &&
-                              getTransformSqlData(e)}
-                            {e.fileType === "source_ddl" && getSourceDdlData(e)}
-                            {e.fileType === "target_ddl" && getTargetDdlData(e)}
+                              preCodeView(transformSql)}
+                            {e.fileType === "source_ddl" &&
+                              preCodeView(sourceDdl)}
+                            {e.fileType === "target_ddl" &&
+                              preCodeView(targetDdl)}
                           </Col>
                         </Row>
-                      </Panel>
+                      </Collapse.Panel>
                     );
                   })}
               </Collapse>
@@ -490,7 +399,6 @@ const AnalyzeDetail = ({
                   >
                     Transform
                   </Button>
-
                   <Button
                     type="primary"
                     danger

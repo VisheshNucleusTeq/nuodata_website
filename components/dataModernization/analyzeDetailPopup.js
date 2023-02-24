@@ -122,7 +122,7 @@ const AnalyzeDetailPopup = ({ outputFileId, data,showPopUp }) => {
         style={{
           display: "flex",
           flex: 1,
-          height: "90vh",
+          height: "85vh",
         }}
       >
         <ReactFlow

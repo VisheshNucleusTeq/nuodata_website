@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Row, Col, Tree, Input } from "antd";
 import {
-  ArrowRightOutlined,
+  FormOutlined,
   DownOutlined,
-  FolderOutlined,
+  CarryOutOutlined,
 } from "@ant-design/icons";
 
 import AnalyzeDetailPopup from "../analyzeDetailPopup";
@@ -12,138 +12,83 @@ const GraphView = ({ modalData, showPopUp }) => {
   const [outputFileId, setOutputFileId] = useState();
   const [treeData, setTreeData] = useState([
     {
-      title: "aa",
-      key: (Math.random() + 1).toString(36).substring(7),
+      title: "parent 1",
+      key: "0-0",
+      icon: <CarryOutOutlined />,
       children: [
         {
-          title: "bb",
-          key: (Math.random() + 1).toString(36).substring(7),
+          title: "parent 1-0",
+          key: "0-0-0",
+          icon: <CarryOutOutlined />,
           children: [
             {
-              title: "cc",
-              key: (Math.random() + 1).toString(36).substring(7),
+              title: "leaf",
+              key: "0-0-0-0",
+              icon: <CarryOutOutlined />,
             },
             {
-              title: "dd",
-              key: (Math.random() + 1).toString(36).substring(7),
+              title: "demo",
+              key: "0-0-0-1",
+              icon: <CarryOutOutlined />,
             },
             {
-              title: "ee",
-              key: (Math.random() + 1).toString(36).substring(7),
-              children: [
-                {
-                  title: "ff",
-                  key: (Math.random() + 1).toString(36).substring(7),
-                },
-                {
-                  title: "gg",
-                  key: (Math.random() + 1).toString(36).substring(7),
-                  children: [
-                    {
-                      title: "ii",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                    {
-                      title: "jj",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                    {
-                      title: "kk",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                  ],
-                },
-                {
-                  title: "hh",
-                  key: (Math.random() + 1).toString(36).substring(7),
-                  children: [
-                    {
-                      title: "ll",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                    {
-                      title: "mm",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                    {
-                      title: "aaa",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                  ],
-                },
-              ],
+              title: "leaf",
+              key: "0-0-0-2",
+              icon: <CarryOutOutlined />,
+            },
+          ],
+        },
+        {
+          title: "parent 1-1",
+          key: "0-0-1",
+          icon: <CarryOutOutlined />,
+          children: [
+            {
+              title: "leaf",
+              key: "0-0-1-0",
+              icon: <CarryOutOutlined />,
+            },
+          ],
+        },
+        {
+          title: "parent 1-2",
+          key: "0-0-2",
+          icon: <CarryOutOutlined />,
+          children: [
+            {
+              title: "leaf",
+              key: "0-0-2-0",
+              icon: <CarryOutOutlined />,
+            },
+            {
+              title: "leaf",
+              key: "0-0-2-1",
+              icon: <CarryOutOutlined />,
+              switcherIcon: <FormOutlined />,
             },
           ],
         },
       ],
     },
     {
-      title: "sdf",
-      key: (Math.random() + 1).toString(36).substring(7),
+      title: "parent 2",
+      key: "0-1",
+      icon: <CarryOutOutlined />,
       children: [
         {
-          title: "sd55f456sd",
-          key: (Math.random() + 1).toString(36).substring(7),
+          title: "parent 2-0",
+          key: "0-1-0",
+          icon: <CarryOutOutlined />,
           children: [
             {
-              title: "r8vb",
-              key: (Math.random() + 1).toString(36).substring(7),
+              title: "leaf",
+              key: "0-1-0-0",
+              icon: <CarryOutOutlined />,
             },
             {
-              title: "cvb4cv9",
-              key: (Math.random() + 1).toString(36).substring(7),
-            },
-            {
-              title: "hk8m54",
-              key: (Math.random() + 1).toString(36).substring(7),
-              children: [
-                {
-                  title: "awds",
-                  key: (Math.random() + 1).toString(36).substring(7),
-                },
-                {
-                  title: "sdcl",
-                  key: (Math.random() + 1).toString(36).substring(7),
-                  children: [
-                    {
-                      title: "spod",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                    {
-                      title: "vjoidjf",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                    {
-                      title: "qplm",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                  ],
-                },
-                {
-                  title: "fpopskd",
-                  key: (Math.random() + 1).toString(36).substring(7),
-                  children: [
-                    {
-                      title: "dkfkd",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                    {
-                      title: "fgkbbdfj",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                    },
-                    {
-                      title: "0000",
-                      key: (Math.random() + 1).toString(36).substring(7),
-                      children: [
-                        {
-                          title: "787878",
-                          key: (Math.random() + 1).toString(36).substring(7),
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
+              title: "leaf",
+              key: "0-1-0-1",
+              icon: <CarryOutOutlined />,
             },
           ],
         },
@@ -172,25 +117,24 @@ const GraphView = ({ modalData, showPopUp }) => {
     <>
       {modalData ? (
         <Row>
-          <Col span={6} style={{ backgroundColor: "#0c3246", height: "90vh" }}>
+          <Col span={4} style={{ backgroundColor: "#0c3246", height: "85vh" }}>
             <Input
               placeholder="Search"
               onKeyUp={(e) => {
-                const tDdata = JSON.parse(JSON.stringify(treeDataDefault));
-                const filterData = filter(tDdata, e.target.value);
+                const filterData = filter(treeDataDefault, e.target.value);
                 setTreeData(filterData);
               }}
-              style={{ height: "5vh" }}
+              style={{ height: "5vh", border: "1px solid #0c3246" }}
             />
             <Tree
               className="treeCss"
               defaultExpandAll={true}
               style={{
                 color: "#FFF",
-                padding: "5vh",
+                paddingTop: "2vh",
                 backgroundColor: "#0c3246",
-                height: "85vh",
-                overflow: "scroll",
+                height: "80vh",
+                overflowY: "scroll",
               }}
               showLine
               switcherIcon={<DownOutlined />}
@@ -200,7 +144,7 @@ const GraphView = ({ modalData, showPopUp }) => {
               treeData={treeData}
             />
           </Col>
-          <Col span={18} style={{ height: "90vh" }}>
+          <Col span={20} style={{ height: "85vh", paddingLeft: "1vw" }}>
             <AnalyzeDetailPopup
               outputFileId={outputFileId}
               data={modalData}
