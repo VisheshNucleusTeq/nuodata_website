@@ -291,7 +291,7 @@ const AnalyzeDetail = ({
                             ? { margin: "2% 0% 2% 0%" }
                             : { margin: "1% 0% 1% 0%" }
                         }
-                        collapsible={e.fileType == "graph_src" ? "disabled" : ""}
+                        // collapsible={e.fileType == "graph_src" ? "disabled" : ""}
                         extra={
                           e.fileType != "graph_src" ? (
                             <a

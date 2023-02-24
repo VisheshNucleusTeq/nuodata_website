@@ -117,7 +117,7 @@ const GraphView = ({ modalData, showPopUp }) => {
     <>
       {modalData ? (
         <Row>
-          <Col span={4} style={{ backgroundColor: "#0c3246", height: "85vh" }}>
+          {/* <Col span={4} style={{ backgroundColor: "#0c3246", height: "85vh" }}>
             <Input
               placeholder="Search"
               onKeyUp={(e) => {
@@ -143,8 +143,8 @@ const GraphView = ({ modalData, showPopUp }) => {
               }}
               treeData={treeData}
             />
-          </Col>
-          <Col span={20} style={{ height: "85vh", paddingLeft: "1vw" }}>
+          </Col> */}
+          <Col span={24} style={{ height: "85vh", paddingLeft: "1vw" }}>
             <AnalyzeDetailPopup
               outputFileId={outputFileId}
               data={modalData}
