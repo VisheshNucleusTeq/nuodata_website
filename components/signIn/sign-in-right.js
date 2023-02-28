@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Divider, message, Input } from "antd";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -26,6 +26,21 @@ function SignInRight({ loginCss }) {
     }
     dispatch(loderShowHideAction(false));
   };
+
+  // useEffect(() => {
+  //   localStorage.setItem("authData", JSON.stringify({
+  //     "userId": 1,
+  //     "firstName": "Vishesh",
+  //     "lastName": "Tungare",
+  //     "email": "vishesh.tungare@nucleusteq.com",
+  //     "mobileNo": "9856457895",
+  //     "jobTitle": "Software Engineer",
+  //     "orgId": 1,
+  //     "orgName": "Nucleusteq"
+  // }));
+  //     dispatch(UserDetailsAction(true));
+  //     router.push("dashboard");
+  // },[])
 
   return (
     <div className={loginCss.flexView}>

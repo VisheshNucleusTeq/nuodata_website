@@ -186,7 +186,12 @@ const Analyze = ({ dataModernizationCss }) => {
           <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col>
           <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15} style={{}}>
             <Card className={dataModernizationCss.cardViewGraphs}>
-              <Carousel dots={false} autoplay draggable className={dataModernizationCss.cardViewGraphCarousel}>
+              <Carousel
+                dots={false}
+                autoplay
+                draggable
+                className={dataModernizationCss.cardViewGraphCarousel}
+              >
                 <div className={dataModernizationCss.cardViewGraph}>
                   {complexityGraph && (
                     <BarChart
@@ -290,7 +295,7 @@ const Analyze = ({ dataModernizationCss }) => {
             <div className={dataModernizationCss.analyzeMain}>
               <Table
                 locale={{
-                  emptyText: "Abc",
+                  emptyText: "No Record Available",
                 }}
                 className="demo"
                 rowKey="fileId"

@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
             <Component key={router.asPath} {...pageProps} />
           </ProtectRoute>
         </Hydrate>
-        {/* <ReactQueryDevtools /> */}
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </Provider>
   );
