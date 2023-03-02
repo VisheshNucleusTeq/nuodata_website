@@ -296,7 +296,7 @@ const AnalyzeDetail = ({
                           e.fileType != "graph_src" ? (
                             <a
                               target={"_blank"}
-                              href={`${"https://api.dev.nuodata.io/"}${DOWNLOADFILE}${
+                              href={`${"https://api.nuodata.io/"}${DOWNLOADFILE}${
                                 e.outputFileId
                               }`}
                             >
