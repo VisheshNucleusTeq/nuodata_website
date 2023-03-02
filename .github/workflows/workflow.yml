@@ -21,7 +21,6 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         # uses: aws-actions/configure-aws-credentials@v1-node16
-
         with:
           role-to-assume: arn:aws:iam::555646157689:role/github-actions-website-upload-role
           # role-to-assume: arn:aws:iam::471681951701:role/github-actions-website-upload-role
