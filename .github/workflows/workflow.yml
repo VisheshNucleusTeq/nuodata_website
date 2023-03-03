@@ -17,7 +17,8 @@ jobs:
       matrix:
         node-version: [14.17.x]
 
-    if: ${{ github.ref == 'refs/heads/dev_uat' }}
+    # if: ${{ github.ref == 'refs/heads/dev_uat' }}
+    if: contains('refs/heads/dev_uat', github.ref)
     steps:
       - uses: actions/checkout@v3
       - name: Configure AWS Credentials
@@ -39,7 +40,8 @@ jobs:
       - name: Output Run Attempt
         run: echo ${{ github.run_attempt }}
 
-    if: ${{ github.ref == 'refs/heads/master' }}
+    # if: ${{ github.ref == 'refs/heads/master' }}
+    if: contains('refs/heads/master', github.ref)
     steps:
       - uses: actions/checkout@v3
       - name: Configure AWS Credentials
