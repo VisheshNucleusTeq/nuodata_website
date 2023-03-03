@@ -3,7 +3,8 @@ name: React CI
 on:
   push:
     branches:
-      - "dev_aish"
+      - "master"
+      - "dev_uat"
 
 jobs:
   build:
@@ -21,16 +22,24 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         # uses: aws-actions/configure-aws-credentials@v1-node16
+
         with:
+          if: ${{ github.ref == 'refs/heads/master' }}
+          role-to-assume: arn:aws:iam::471681951701:role/github-actions-website-upload-role
+          if: ${{ github.ref == 'refs/heads/dev_uat' }}
           role-to-assume: arn:aws:iam::555646157689:role/github-actions-website-upload-role
-          # role-to-assume: arn:aws:iam::471681951701:role/github-actions-website-upload-role
 
           aws-region: us-west-1
       - name: Generating Next JS Build
         run: npm install && npm run build
-      - name: Deploying  build to S3 bucket
+
+      - name: Prod Deploying  build to S3 bucket
+        if: ${{ github.ref == 'refs/heads/master' }}
+        run: aws s3 sync ./out/ s3://nuodata.io --delete
+
+      - name: develop Deploying  build to S3 bucket
+        if: ${{ github.ref == 'refs/heads/dev_uat' }}
         run: aws s3 sync ./out/ s3://dev.nuodata.io --delete
-        # run: aws s3 sync ./out/ s3://nuodata.io --delete
 
       - name: Output Run ID
         run: echo ${{ github.run_id }}
