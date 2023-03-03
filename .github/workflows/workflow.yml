@@ -17,29 +17,42 @@ jobs:
       matrix:
         node-version: [14.17.x]
 
+    if: ${{ github.ref == 'refs/heads/dev_uat' }}
     steps:
       - uses: actions/checkout@v3
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
-        # uses: aws-actions/configure-aws-credentials@v1-node16
 
         with:
-          if: ${{ github.ref == 'refs/heads/master' }}
-          role-to-assume: arn:aws:iam::471681951701:role/github-actions-website-upload-role
-          if: ${{ github.ref == 'refs/heads/dev_uat' }}
           role-to-assume: arn:aws:iam::555646157689:role/github-actions-website-upload-role
 
           aws-region: us-west-1
       - name: Generating Next JS Build
         run: npm install && npm run build
-
-      - name: Prod Deploying  build to S3 bucket
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: aws s3 sync ./out/ s3://nuodata.io --delete
-
-      - name: develop Deploying  build to S3 bucket
-        if: ${{ github.ref == 'refs/heads/dev_uat' }}
+      - name: Deploying  build to S3 bucket
         run: aws s3 sync ./out/ s3://dev.nuodata.io --delete
+
+      - name: Output Run ID
+        run: echo ${{ github.run_id }}
+      - name: Output Run Number
+        run: echo ${{ github.run_number }}
+      - name: Output Run Attempt
+        run: echo ${{ github.run_attempt }}
+
+    if: ${{ github.ref == 'refs/heads/master' }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+
+        with:
+          role-to-assume: arn:aws:iam::471681951701:role/github-actions-website-upload-role
+
+          aws-region: us-west-1
+      - name: Generating Next JS Build
+        run: npm install && npm run build
+      - name: Deploying  build to S3 bucket
+        run: aws s3 sync ./out/ s3://nuodata.io --delete
 
       - name: Output Run ID
         run: echo ${{ github.run_id }}
