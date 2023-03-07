@@ -368,3 +368,17 @@ html {
   background-color: #e74860 !important;
   border: 1px solid #FFF;
 }
+
+/* .treeCss .demo123{
+  color: #e74860;
+}
+
+.treeCss .demo123:hover{
+  color: #FFF;
+}
+
+.demo123 .ant-tree-node-selected{
+  background-color: #e74860 !important;
+  border: 1px solid #FFF;
+  color: #FFF;
+} */

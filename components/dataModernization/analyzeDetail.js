@@ -140,7 +140,7 @@ const AnalyzeDetail = ({
         onCancel={() => setOpen(false)}
         width={"100vw"}
       >
-        <GraphView modalData={modalData} showPopUp={showPopUp} />
+        <GraphView modalData={[]} showPopUp={showPopUp} analyzeDetailsId={analyzeDetailsId} />
       </Modal>
 
       {showTop && (
@@ -269,10 +269,43 @@ const AnalyzeDetail = ({
 
             <Col span={24} className={dataModernizationCss.analyzeMainDetails}>
               <Collapse ghost accordion>
+                
+                <Collapse.Panel
+                  header={"Source Graph"}
+                  extra={
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <Space
+                        onClick={() => {
+                          setOpen(true);
+                          // alert(analyzeDetailsId);
+                        }}
+                        size="middle"
+                        className={dataModernizationCss.downloadBtnSpace}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {loadingView ? (
+                          <>
+                            <LoadingOutlined /> Loading
+                          </>
+                        ) : (
+                          <>
+                            <EyeOutlined /> View
+                          </>
+                        )}
+                      </Space>
+                    </div>
+                  }
+                >
+                  <center
+                  >Please Click On view</center>
+                </Collapse.Panel>
+
                 {outputFiles
                   .filter(function (item) {
                     return (
-                      item.description !== (showTop ? "Transformation SQL" : "")
+                      item.description !==
+                        (showTop ? "Transformation SQL" : "") 
+                        && item.description != "Graph Source"
                     );
                   })
                   .map((e, i) => {
@@ -291,9 +324,8 @@ const AnalyzeDetail = ({
                             ? { margin: "2% 0% 2% 0%" }
                             : { margin: "1% 0% 1% 0%" }
                         }
-                        // collapsible={e.fileType == "graph_src" ? "disabled" : ""}
                         extra={
-                          e.fileType != "graph_src" ? (
+                          !e.fileType.includes("_graph_src") ? (
                             <a
                               target={"_blank"}
                               href={`${"https://api.dev.nuodata.io/"}${DOWNLOADFILE}${
@@ -353,7 +385,7 @@ const AnalyzeDetail = ({
                                 transformationSummary={transformationSummary}
                               />
                             )}
-                            {e.fileType === "graph_src" && (
+                            {e.fileType.includes("_graph_src") && (
                               <GraphView
                                 modalData={modalData}
                                 showPopUp={showPopUp}

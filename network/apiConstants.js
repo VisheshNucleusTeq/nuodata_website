@@ -23,3 +23,4 @@ export const COLUMNCHANGELOGS =
   "process/v1/design/target/column/changelogs?columnId=";
 export const CHANGELOGS = "process/v1/design/target/changelog/file/";
 export const CONTACT = "usermgmt/v1/contact";
+export const GRAPHTREE = "process/v1/design/graph/structure/";
