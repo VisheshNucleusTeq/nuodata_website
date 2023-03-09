@@ -1,20 +1,17 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col, Tree, Input } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import AnalyzeDetailPopup from "../analyzeDetailPopup";
-import { GRAPHTREE, DESIGN } from "../../../network/apiConstants";
-import { fetch_retry_get } from "../../../network/api-manager";
 import { LoadingOutlined, FolderOutlined } from "@ant-design/icons";
+import { PYSPARK, DOWNLOADFILE } from "../../../network/apiConstants";
+import { fetch_retry_get } from "../../../network/api-manager";
 
-const GraphView = ({ showPopUp, analyzeDetailsId }) => {
-  const [outputFileId, setOutputFileId] = useState();
+const SqlView = ({ showPopUp, analyzeDetailsId }) => {
+  const [showHide, setShowHide] = useState(true);
   const [treeData, setTreeData] = useState([]);
   const [treeDataDefault, setTreeDataDefault] = useState([]);
-  const [showHide, setShowHide] = useState(true);
   const [search, setSearch] = useState("");
-  const [modalData, setModalData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState();
   const [selectedTree, setSelectedTree] = useState();
+  const [loading, setLoading] = useState(false);
 
   const filter = (array, text) => {
     const getNodes = (result, object) => {
@@ -32,12 +29,11 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
   };
 
   const getTreeData = async (analyzeDetailsId) => {
-    const data = await fetch_retry_get(`${GRAPHTREE}${analyzeDetailsId}`);
+    const data = await fetch_retry_get(`${PYSPARK}${analyzeDetailsId}`);
     const treeDataObj = {
       ...data?.data,
-      key: "defaultExpandedKey"
+      key: "defaultExpandedKey",
     };
-    console.log(treeDataObj);
     setTreeData([treeDataObj]);
     setTreeDataDefault([treeDataObj]);
   };
@@ -54,12 +50,11 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
     }
 
     setLoading(true);
-    setModalData({});
+    setData("");
     const dataId = (id + "").split("_")[0];
-    const data = await fetch_retry_get(`${DESIGN}${dataId}`);
+    const data = await fetch_retry_get(`${DOWNLOADFILE}${dataId}`);
     if (data.success) {
-      console.log(data.data);
-      setModalData(data.data);
+      setData(data.data);
     }
     setLoading(false);
   };
@@ -80,6 +75,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
             onKeyUp={(e) => {
               setSearch(e.target.value);
               const filterData = filter(treeDataDefault, e.target.value);
+              console.log(filterData);
               setTreeData(filterData);
             }}
             style={{ height: "5vh", border: "1px solid #0c3246" }}
@@ -99,14 +95,10 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
                       overflowY: "scroll",
                     }}
                     showLine
-                    // switcherIcon={<FolderOutlined />}
                     onSelect={(e) => {
                       getGraphData(e);
                     }}
                     treeData={treeData}
-                    onClick={(e) => {
-                      console.log(e);
-                    }}
                   />
                 </>
               ) : (
@@ -124,7 +116,6 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
                       overflowY: "scroll",
                     }}
                     showLine
-                    // switcherIcon={<FolderOutlined />}
                     onSelect={(e) => {
                       getGraphData(e);
                     }}
@@ -141,35 +132,16 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
             </center>
           )}
         </Col>
+        <a href="tel:0019136382948">001-913-638-2948</a>
         <Col
           span={showHide ? 18 : 24}
-          style={{ height: "85vh", paddingLeft: "1vw" }}
+          style={{ height: "85vh", paddingLeft: "1vw", overflow : "scroll" }}
         >
-          {modalData?.Edges ? (
-            <AnalyzeDetailPopup
-              showHide={showHide}
-              setShowHide={setShowHide}
-              outputFileId={outputFileId}
-              data={modalData}
-              showPopUp={showPopUp}
-            />
-          ) : (
-            <center
-              style={{
-                height: "100%",
-                justifyContent: "center",
-                display: "flex",
-                alignItems: "center",
-                color: "#e74860",
-              }}
-            >
-              {loading ? "Loading..." : "Select graph from tree view"}
-            </center>
-          )}
+          <pre>{data}</pre>
         </Col>
       </Row>
     </>
   );
 };
 
-export default GraphView;
+export default SqlView;

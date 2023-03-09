@@ -24,3 +24,4 @@ export const COLUMNCHANGELOGS =
 export const CHANGELOGS = "process/v1/design/target/changelog/file/";
 export const CONTACT = "usermgmt/v1/contact";
 export const GRAPHTREE = "process/v1/design/graph/structure/";
+export const PYSPARK = "process/v1/design/pyspark/structure/";

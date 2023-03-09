@@ -34,6 +34,7 @@ import {
 
 import GraphView from "./analyzeDetail/graphView";
 import AnalysisView from "./analyzeDetail/analysisView";
+import SqlView from "./analyzeDetail/sqlView";
 
 const AnalyzeDetail = ({
   dataModernizationCss,
@@ -51,6 +52,7 @@ const AnalyzeDetail = ({
   const [outputFiles, setOutputFiles] = useState([]);
   const [transformationSummary, setTransformationSummary] = useState([]);
   const [open, setOpen] = useState(false);
+  const [sqlOpen, setSqlOpen] = useState(false);
   const [transformSql, setTransformSql] = useState();
   const [sourceDdl, setSourceDdl] = useState();
   const [targetDdl, setTargetDdl] = useState();
@@ -140,7 +142,27 @@ const AnalyzeDetail = ({
         onCancel={() => setOpen(false)}
         width={"100vw"}
       >
-        <GraphView modalData={[]} showPopUp={showPopUp} analyzeDetailsId={analyzeDetailsId} />
+        <GraphView
+          modalData={[]}
+          showPopUp={showPopUp}
+          analyzeDetailsId={analyzeDetailsId}
+        />
+      </Modal>
+
+      <Modal
+        destroyOnClose
+        centered
+        open={sqlOpen}
+        onOk={() => setSqlOpen(false)}
+        onCancel={() => setSqlOpen(false)}
+        width={"100vw"}
+      >
+        <SqlView showPopUp={showPopUp} analyzeDetailsId={analyzeDetailsId} />
+        {/* <GraphView
+          modalData={[]}
+          showPopUp={showPopUp}
+          analyzeDetailsId={analyzeDetailsId}
+        /> */}
       </Modal>
 
       {showTop && (
@@ -269,7 +291,6 @@ const AnalyzeDetail = ({
 
             <Col span={24} className={dataModernizationCss.analyzeMainDetails}>
               <Collapse ghost accordion>
-                
                 <Collapse.Panel
                   header={"Source Graph"}
                   extra={
@@ -296,16 +317,38 @@ const AnalyzeDetail = ({
                     </div>
                   }
                 >
-                  <center
-                  >Please Click On view</center>
+                  <center>Please Click On view</center>
                 </Collapse.Panel>
+
+                {showPopUp && (
+                  <Collapse.Panel
+                    header={"Transformation SQL"}
+                    extra={
+                      <div onClick={(e) => e.stopPropagation()}>
+                        <Space
+                          onClick={() => {
+                            setSqlOpen(true);
+                            // alert(analyzeDetailsId);
+                          }}
+                          size="middle"
+                          className={dataModernizationCss.downloadBtnSpace}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <EyeOutlined /> View
+                        </Space>
+                      </div>
+                    }
+                  >
+                    <center>Please Click On view</center>
+                  </Collapse.Panel>
+                )}
 
                 {outputFiles
                   .filter(function (item) {
                     return (
                       item.description !==
-                        (showTop ? "Transformation SQL" : "") 
-                        && item.description != "Graph Source"
+                        (showTop ? "Transformation SQL" : "") &&
+                      item.description != "Graph Source"
                     );
                   })
                   .map((e, i) => {
