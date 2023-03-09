@@ -14,18 +14,19 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
   const [search, setSearch] = useState("");
   const [modalData, setModalData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [selectedTree, setSelectedTree] = useState();
 
   const filter = (array, text) => {
     const getNodes = (result, object) => {
       if (object.title.toLowerCase().includes(text.toLowerCase())) {
-        result.push({...object, className : text ? "demo123" : ""});
+        result.push({ ...object, className: text ? "demo123" : "" });
         return result;
       }
       if (Array.isArray(object.children)) {
         const children = object.children.reduce(getNodes, []);
         if (children.length) result.push({ ...object, children });
       }
-      return result; 
+      return result;
     };
     return array.reduce(getNodes, []);
   };
@@ -39,6 +40,16 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
   };
 
   const getGraphData = async (id) => {
+    if ((id + "")) {
+      if((id + "") == (selectedTree + "")){
+        return true
+      }
+      setSelectedTree(id);
+    } else {
+      id = selectedTree;
+      return true
+    }
+
     setLoading(true);
     setModalData({});
     const dataId = (id + "").split("_")[0];
@@ -91,7 +102,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
                     }}
                     treeData={treeData}
                     onClick={(e) => {
-                      console.log(e)
+                      console.log(e);
                     }}
                   />
                 </>
