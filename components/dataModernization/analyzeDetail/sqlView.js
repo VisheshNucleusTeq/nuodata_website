@@ -132,7 +132,6 @@ const SqlView = ({ showPopUp, analyzeDetailsId }) => {
             </center>
           )}
         </Col>
-        <a href="tel:0019136382948">001-913-638-2948</a>
         <Col
           span={showHide ? 18 : 24}
           style={{ height: "85vh", paddingLeft: "1vw", overflow : "scroll" }}
