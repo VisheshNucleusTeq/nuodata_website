@@ -4,7 +4,7 @@ import { DownOutlined } from "@ant-design/icons";
 import AnalyzeDetailPopup from "../analyzeDetailPopup";
 import { GRAPHTREE, DESIGN } from "../../../network/apiConstants";
 import { fetch_retry_get } from "../../../network/api-manager";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, FolderOutlined } from "@ant-design/icons";
 
 const GraphView = ({ showPopUp, analyzeDetailsId }) => {
   const [outputFileId, setOutputFileId] = useState();
@@ -33,7 +33,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
 
   const getTreeData = async (analyzeDetailsId) => {
     const data = await fetch_retry_get(`${GRAPHTREE}${analyzeDetailsId}`);
-    const treeDataObj = { ...data?.data, key: "defaultExpandedKey" };
+    const treeDataObj = { ...data?.data, key: "defaultExpandedKey", icon : <LoadingOutlined /> };
     console.log(treeDataObj);
     setTreeData([treeDataObj]);
     setTreeDataDefault([treeDataObj]);
@@ -96,7 +96,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
                       overflowY: "scroll",
                     }}
                     showLine
-                    switcherIcon={<DownOutlined />}
+                    // switcherIcon={<FolderOutlined />}
                     onSelect={(e) => {
                       getGraphData(e);
                     }}
@@ -112,6 +112,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
                   <Tree
                     className="treeCss"
                     defaultExpandAll={true}
+                    defaultExpandParent={true}
                     style={{
                       color: "#FFF",
                       paddingTop: "2vh",
@@ -120,7 +121,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
                       overflowY: "scroll",
                     }}
                     showLine
-                    switcherIcon={<DownOutlined />}
+                    // switcherIcon={<FolderOutlined />}
                     onSelect={(e) => {
                       getGraphData(e);
                     }}
@@ -159,7 +160,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
                 color: "#e74860",
               }}
             >
-              {loading ? "Loading..." : "Select Graph from tree view"}
+              {loading ? "Loading..." : "Select graph from tree view"}
             </center>
           )}
         </Col>
