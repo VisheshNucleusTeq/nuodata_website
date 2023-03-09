@@ -374,11 +374,11 @@ html {
 }
 
 .treeCss .demo123:hover{
-  color: #FFF;
+  color: #FFF !important;
 }
 
 .demo123 .ant-tree-node-selected{
   background-color: #e74860 !important;
-  border: 1px solid #FFF;
-  color: #FFF;
+  border: 1px solid #FFF !important;
+  color: #FFF !important;
 }
