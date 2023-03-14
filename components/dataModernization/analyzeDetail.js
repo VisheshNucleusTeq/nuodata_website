@@ -292,7 +292,7 @@ const AnalyzeDetail = ({
             <Col span={24} className={dataModernizationCss.analyzeMainDetails}>
               <Collapse ghost accordion>
                 <Collapse.Panel
-                  header={"Source Graph"}
+                  header={"Graph"}
                   extra={
                     <div onClick={(e) => e.stopPropagation()}>
                       <Space
