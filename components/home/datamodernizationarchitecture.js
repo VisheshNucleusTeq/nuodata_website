@@ -16,7 +16,11 @@ export default function DataModernizationArchitecture({ HomeCss }) {
         <h1></h1>
       </Col>
       <Col offset={1} span={22} className={HomeCss.infoRowSystemView}>
-        <Image
+      <iframe
+            src="all-graph/three/demo/data.html"
+            style={{ width: "100%", height: "100vh", border : "none" }}
+          />
+        {/* <Image
           preview={false}
           width={"100%"}
           src={"/home/dma_system.gif"}
@@ -27,7 +31,7 @@ export default function DataModernizationArchitecture({ HomeCss }) {
           height={"100%"}
           src={"/home/dma_mobile.gif"}
           className={HomeCss.infoRowSystemViewmobile}
-        />
+        /> */}
       </Col>
 
       <Col span={24} className={HomeCss.howNuoDataworksBtn}>

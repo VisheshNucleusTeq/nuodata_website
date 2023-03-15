@@ -36,7 +36,7 @@ const Connect = ({ dataModernizationCss }) => {
     payload.append("file", file);
     const authData = JSON.parse(localStorage.getItem("authData"));
     const data = await fetch_retry_post_with_file(
-      `${UPLOADFILE}/${projectDetails.projectId}/${authData.userId}`,
+      `${UPLOADFILE}/project/${projectDetails.projectId}/user/${authData.userId}`,
       payload
     );
 

@@ -18,8 +18,10 @@ import {
   DOWNLOADFILE,
   DESIGN,
   VERSION,
+  CONVERTTRANSFORN,
+  DOWNLOADZIP,
 } from "../../network/apiConstants";
-import { fetch_retry_get } from "../../network/api-manager";
+import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
 import {
   DownloadOutlined,
   EyeOutlined,
@@ -56,6 +58,7 @@ const AnalyzeDetail = ({
   const [transformSql, setTransformSql] = useState();
   const [sourceDdl, setSourceDdl] = useState();
   const [targetDdl, setTargetDdl] = useState();
+  const [showDownload, setShowDownload] = useState(false);
 
   const getAnalyzeData = async () => {
     setLoading(true);
@@ -132,20 +135,41 @@ const AnalyzeDetail = ({
     }, 10);
   };
 
+  const updateTransformStatus = async (id) => {
+    const data = await fetch_retry_post(`${CONVERTTRANSFORN}${id}`);
+    return data;
+  };
+
   return (
     <>
       <Modal
         destroyOnClose
         centered
         open={open}
-        onOk={() => setOpen(false)}
-        onCancel={() => setOpen(false)}
+        onOk={() => {
+          const file_path = `${"https://api.dev.nuodata.io/"}${DOWNLOADFILE}${showDownload}`;
+          const a = document.createElement("A");
+          a.href = file_path;
+          a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }}
+        onCancel={() => {
+          setOpen(false);
+          setShowDownload(false);
+        }}
         width={"100vw"}
+        okButtonProps={{ style: { display: showDownload ? "" : "none" } }}
+        cancelText={"Close"}
+        okText={"Download"}
+        closable={false}
       >
         <GraphView
           modalData={[]}
           showPopUp={showPopUp}
           analyzeDetailsId={analyzeDetailsId}
+          setShowDownload={setShowDownload}
         />
       </Modal>
 
@@ -156,8 +180,12 @@ const AnalyzeDetail = ({
         onOk={() => setSqlOpen(false)}
         onCancel={() => setSqlOpen(false)}
         width={"100vw"}
+        // cancelButtonProps={{ style: { display: 'none' } }}
+        cancelText={"Close"}
+        okText={"Download"}
+        closable={false}
       >
-        <SqlView showPopUp={showPopUp} analyzeDetailsId={analyzeDetailsId} />
+        <SqlView showPopUp={showPopUp} analyzeDetailsId={analyzeDetailsId} dataModernizationCss={dataModernizationCss}/>
         {/* <GraphView
           modalData={[]}
           showPopUp={showPopUp}
@@ -208,6 +236,11 @@ const AnalyzeDetail = ({
                     <Card.Grid hoverable={false}>Mappings</Card.Grid>
                     <Card.Grid hoverable={false}>
                       {data && data.mappings ? data.mappings : "0"}
+                    </Card.Grid>
+
+                    <Card.Grid hoverable={false}>Mapplets</Card.Grid>
+                    <Card.Grid hoverable={false}>
+                      {data && data.mapplets ? data.mapplets : "0"}
                     </Card.Grid>
 
                     <Card.Grid hoverable={false}>Transformations</Card.Grid>
@@ -292,13 +325,13 @@ const AnalyzeDetail = ({
             <Col span={24} className={dataModernizationCss.analyzeMainDetails}>
               <Collapse ghost accordion>
                 <Collapse.Panel
-                  header={"Graph"}
+                  key={"Source-Graph"}
+                  header={"Source Graph"}
                   extra={
                     <div onClick={(e) => e.stopPropagation()}>
                       <Space
                         onClick={() => {
                           setOpen(true);
-                          // alert(analyzeDetailsId);
                         }}
                         size="middle"
                         className={dataModernizationCss.downloadBtnSpace}
@@ -322,19 +355,29 @@ const AnalyzeDetail = ({
 
                 {showPopUp && (
                   <Collapse.Panel
+                    key={"Transformation-SQL"}
                     header={"Transformation SQL"}
                     extra={
                       <div onClick={(e) => e.stopPropagation()}>
-                        <Space
-                          onClick={() => {
-                            setSqlOpen(true);
-                            // alert(analyzeDetailsId);
-                          }}
-                          size="middle"
-                          className={dataModernizationCss.downloadBtnSpace}
-                          style={{ cursor: "pointer" }}
-                        >
-                          <EyeOutlined /> View
+                        <Space size="middle" style={{ cursor: "pointer" }}>
+                          <a
+                            href={`${"https://api.dev.nuodata.io/"}${DOWNLOADZIP}${analyzeDetailsId}?type=pyspark&workflowId=0`}
+                          >
+                            <span
+                              className={dataModernizationCss.downloadBtnSpace}
+                            >
+                              <EyeOutlined /> Download
+                            </span>
+                          </a>
+
+                          <span
+                            className={dataModernizationCss.downloadBtnSpace}
+                            onClick={() => {
+                              setSqlOpen(true);
+                            }}
+                          >
+                            <EyeOutlined /> View
+                          </span>
                         </Space>
                       </div>
                     }
@@ -369,27 +412,25 @@ const AnalyzeDetail = ({
                         }
                         extra={
                           !e.fileType.includes("_graph_src") ? (
-                            <a
-                              target={"_blank"}
-                              href={`${"https://api.dev.nuodata.io/"}${DOWNLOADFILE}${
-                                e.outputFileId
-                              }`}
-                            >
-                              <Space
-                                size="middle"
-                                className={
-                                  dataModernizationCss.downloadBtnSpace
-                                }
+                            <div onClick={(e) => e.stopPropagation()}>
+                              <a
+                                href={`${"https://api.dev.nuodata.io/"}${DOWNLOADFILE}${
+                                  e.outputFileId
+                                }`}
                               >
-                                <DownloadOutlined /> Download
-                              </Space>
-                            </a>
+                                <Space
+                                  size="middle"
+                                  className={
+                                    dataModernizationCss.downloadBtnSpace
+                                  }
+                                >
+                                  <DownloadOutlined /> Download
+                                </Space>
+                              </a>
+                            </div>
                           ) : (
                             <div onClick={(e) => e.stopPropagation()}>
                               <Space
-                                // onClick={() => {
-                                //   setOpen(true);
-                                // }}
                                 onClick={() => {
                                   getDataCall(e.outputFileId);
                                 }}
@@ -428,12 +469,12 @@ const AnalyzeDetail = ({
                                 transformationSummary={transformationSummary}
                               />
                             )}
-                            {e.fileType.includes("_graph_src") && (
+                            {/* {e.fileType.includes("_graph_src") && (
                               <GraphView
                                 modalData={modalData}
                                 showPopUp={showPopUp}
                               />
-                            )}
+                            )} */}
                             {e.fileType === "transform_sql" &&
                               preCodeView(transformSql)}
                             {e.fileType === "source_ddl" &&
@@ -465,7 +506,8 @@ const AnalyzeDetail = ({
                     danger
                     className={dataModernizationCss.nextBtn}
                     htmlType="submit"
-                    onClick={() => {
+                    onClick={async () => {
+                      await updateTransformStatus(analyzeDetailsId);
                       dispatch(
                         SetProjectTransformDetailsAction({ analyzeDetailsId })
                       );

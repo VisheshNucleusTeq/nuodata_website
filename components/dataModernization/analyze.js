@@ -20,8 +20,9 @@ import {
   ANALYZESUMMARY,
   VERSION,
   GETANALYZEDATA,
+  CONVERTTRANSFORN,
 } from "../../network/apiConstants";
-import { fetch_retry_get } from "../../network/api-manager";
+import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
 import BarChart from "./charts/barChart";
 import LineChart from "./charts/lineChart";
 import PieChart from "./charts/pieChart";
@@ -51,7 +52,9 @@ const Analyze = ({ dataModernizationCss }) => {
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
+      `${ANALYZESUMMARY}${
+        query.id ? query.id : projectDetails.projectId
+      }?type=analyze`
     );
     setLoading(false);
     if (data.success) {
@@ -92,6 +95,34 @@ const Analyze = ({ dataModernizationCss }) => {
     setErrorDetails(data.data);
     setModalOpen(true);
     setLoading(false);
+  };
+
+  const updateTransformStatus = async () => {
+    data?.forEach(async (e) => {
+      if (!e?.isUserAction) {
+        await fetch_retry_post(`${CONVERTTRANSFORN}${e?.fileId}`);
+      }
+    });
+  };
+
+  const getTrueStatus = (fileStatus) => {
+    switch (fileStatus) {
+      case "convert_failed":
+        return <Badge count={"Transformed Partially"} color="orange" />;
+      case "converted":
+        return <Badge count={"Transformed Successfully"} color="green" />;
+      default:
+        return <Badge count={"Analysis Completed"} color="green" />;
+    }
+  };
+
+  const gerFalseStatus = (fileStatus) => {
+    switch (fileStatus) {
+      case "analyze_failed":
+        return <Badge count={"Analysis Failed"} color="red" />;
+      default:
+        return <Badge count={"Analysis Completed"} color="green" />;
+    }
   };
 
   return (
@@ -324,16 +355,21 @@ const Analyze = ({ dataModernizationCss }) => {
                     title: "Status",
                     key: "fileStatus",
                     render: (_, record) => {
-                      switch (record.fileStatus) {
-                        case "analyze_failed":
-                          return (
-                            <Badge count={"Analysis Failed"} color="red" />
-                          );
-                        default:
-                          return (
-                            <Badge count={"Analysis Completed"} color="green" />
-                          );
-                      }
+                      return record?.isUserAction
+                        ? getTrueStatus(record.fileStatus)
+                        : gerFalseStatus(record.fileStatus);
+
+                      return <>{record?.isUserAction + ""}</>;
+                      // switch (record.fileStatus) {
+                      //   case "analyze_failed":
+                      //     return (
+                      //       <Badge count={"Analysis Failed"} color="red" />
+                      //     );
+                      //   default:
+                      //     return (
+                      //       <Badge count={"Analysis Completed"} color="green" />
+                      //     );
+                      // }
                     },
                   },
                   {
@@ -395,7 +431,8 @@ const Analyze = ({ dataModernizationCss }) => {
                 danger
                 className={dataModernizationCss.nextBtn}
                 htmlType="submit"
-                onClick={() => {
+                onClick={async () => {
+                  await updateTransformStatus();
                   dispatch(SetProjectTransformDetailsAction({}));
                   dispatch(SetTabTypeAction("Transform"));
                 }}

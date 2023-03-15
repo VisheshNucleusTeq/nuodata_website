@@ -1,7 +1,11 @@
 import { Col, Row, Image } from "antd";
 import { AnimationOnScroll } from "react-animation-on-scroll";
+// import html from "./data.html"
 export default function ThinkBig({ HomeCss }) {
   return (
+    // <div id="dataManagement" className={HomeCss.thinkBigMainDiv}>
+    //   <iframe src="data.html" style={{width : "100%", height : "90vh"}}></iframe>
+    // </div>
     <div id="dataManagement" className={HomeCss.thinkBigMainDiv}>
       <Row className={HomeCss.thinkBigChild}>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
@@ -27,7 +31,11 @@ export default function ThinkBig({ HomeCss }) {
 
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
         <Col span={18}>
-          <Image src="/home/landing-page.gif" preview={false} />
+          <iframe
+            src="all-graph/one/demo/data.html"
+            style={{ width: "100%", height: "100vh", border: "none" }}
+          />
+          {/* <Image src="/home/landing-page.gif" preview={false} /> */}
         </Col>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
       </Row>
@@ -52,7 +60,11 @@ export default function ThinkBig({ HomeCss }) {
 
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
         <Col span={16}>
-          <Image src="/home/new-video.gif" preview={false} />
+          <iframe
+            src="all-graph/two/demo/two.html"
+            style={{ width: "100%", height: "100vh", border: "none" }}
+          />
+          {/* <Image src="/home/new-video.gif" preview={false} /> */}
         </Col>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
       </Row>

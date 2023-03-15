@@ -1,12 +1,12 @@
 import React, { Component, useState } from "react";
-import { Row, Col, Tree, Input } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Row, Col, Tree, Input, Space, Tooltip } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 import AnalyzeDetailPopup from "../analyzeDetailPopup";
-import { GRAPHTREE, DESIGN } from "../../../network/apiConstants";
+import { GRAPHTREE, DESIGN, DOWNLOADZIP } from "../../../network/apiConstants";
 import { fetch_retry_get } from "../../../network/api-manager";
-import { LoadingOutlined, FolderOutlined } from "@ant-design/icons";
+import { LoadingOutlined, CloudDownloadOutlined } from "@ant-design/icons";
 
-const GraphView = ({ showPopUp, analyzeDetailsId }) => {
+const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
   const [outputFileId, setOutputFileId] = useState();
   const [treeData, setTreeData] = useState([]);
   const [treeDataDefault, setTreeDataDefault] = useState([]);
@@ -15,6 +15,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
   const [modalData, setModalData] = useState({});
   const [loading, setLoading] = useState(false);
   const [selectedTree, setSelectedTree] = useState();
+  const [parentArr, setParentArr] = useState([]);
 
   const filter = (array, text) => {
     const getNodes = (result, object) => {
@@ -35,14 +36,47 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
     const data = await fetch_retry_get(`${GRAPHTREE}${analyzeDetailsId}`);
     const treeDataObj = {
       ...data?.data,
-      key: "defaultExpandedKey"
+      key: "defaultExpandedKey",
     };
-    console.log(treeDataObj);
+
+    treeDataObj?.children.forEach((elementP, i) => {
+      elementP?.children.forEach((elementC, j) => {
+        if (elementC && elementC?.children && elementC?.children.length) {
+          setParentArr([
+            (treeDataObj.children[i].children[j].key + "").split("_")[0],
+            ...parentArr,
+          ]);
+          treeDataObj.children[i].children[j].title = (
+            <>
+              <span>{treeDataObj.children[i].children[j].title}</span>
+              <span onClick={(e) => e.stopPropagation()}>
+                <Tooltip placement="right" title={"Download"}>
+                  <a
+                    href={`${"https://api.dev.nuodata.io/"}${DOWNLOADZIP}${analyzeDetailsId}?type=workflow&workflowId=${
+                      (treeDataObj.children[i].children[j].key + "").split(
+                        "_"
+                      )[0]
+                    }`}
+                    className="downloadBtn"
+                  >
+                    <Space size="middle" style={{ cursor: "pointer" }} info>
+                      <DownloadOutlined />
+                    </Space>
+                  </a>
+                </Tooltip>
+              </span>
+            </>
+          );
+        }
+      });
+    });
+
     setTreeData([treeDataObj]);
     setTreeDataDefault([treeDataObj]);
   };
 
   const getGraphData = async (id) => {
+    setShowDownload(false);
     if (id + "") {
       if (id + "" == selectedTree + "") {
         return true;
@@ -58,8 +92,8 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
     const dataId = (id + "").split("_")[0];
     const data = await fetch_retry_get(`${DESIGN}${dataId}`);
     if (data.success) {
-      console.log(data.data);
       setModalData(data.data);
+      if (!parentArr.includes(dataId)) setShowDownload(dataId);
     }
     setLoading(false);
   };
@@ -99,14 +133,10 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
                       overflowY: "scroll",
                     }}
                     showLine
-                    // switcherIcon={<FolderOutlined />}
                     onSelect={(e) => {
                       getGraphData(e);
                     }}
                     treeData={treeData}
-                    onClick={(e) => {
-                      console.log(e);
-                    }}
                   />
                 </>
               ) : (
@@ -124,7 +154,6 @@ const GraphView = ({ showPopUp, analyzeDetailsId }) => {
                       overflowY: "scroll",
                     }}
                     showLine
-                    // switcherIcon={<FolderOutlined />}
                     onSelect={(e) => {
                       getGraphData(e);
                     }}

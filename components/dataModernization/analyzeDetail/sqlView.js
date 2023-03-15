@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Row, Col, Tree, Input } from "antd";
+import { Row, Col, Tree, Input, Tabs } from "antd";
 import { LoadingOutlined, FolderOutlined } from "@ant-design/icons";
 import { PYSPARK, DOWNLOADFILE } from "../../../network/apiConstants";
 import { fetch_retry_get } from "../../../network/api-manager";
 
-const SqlView = ({ showPopUp, analyzeDetailsId }) => {
+const SqlView = ({ showPopUp, analyzeDetailsId, dataModernizationCss }) => {
   const [showHide, setShowHide] = useState(true);
   const [treeData, setTreeData] = useState([]);
   const [treeDataDefault, setTreeDataDefault] = useState([]);
@@ -12,6 +12,7 @@ const SqlView = ({ showPopUp, analyzeDetailsId }) => {
   const [data, setData] = useState();
   const [selectedTree, setSelectedTree] = useState();
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("SQL");
 
   const filter = (array, text) => {
     const getNodes = (result, object) => {
@@ -75,7 +76,6 @@ const SqlView = ({ showPopUp, analyzeDetailsId }) => {
             onKeyUp={(e) => {
               setSearch(e.target.value);
               const filterData = filter(treeDataDefault, e.target.value);
-              console.log(filterData);
               setTreeData(filterData);
             }}
             style={{ height: "5vh", border: "1px solid #0c3246" }}
@@ -134,9 +134,18 @@ const SqlView = ({ showPopUp, analyzeDetailsId }) => {
         </Col>
         <Col
           span={showHide ? 18 : 24}
-          style={{ height: "85vh", paddingLeft: "1vw", overflow : "scroll" }}
+          style={{ height: "85vh" }}
         >
-          <pre>{data}</pre>
+          <Row className={dataModernizationCss.tabViewPar}>
+            <Col onClick={() => {setActiveTab("SQL")}} span={11} className={`${dataModernizationCss.tabView} ${activeTab === "SQL" ? dataModernizationCss.tabViewActive : ""}`}>
+              Transformation SQL
+            </Col>
+            <Col span={1}/>
+            <Col onClick={() => {setActiveTab("GRAPH")}} span={11} className={`${dataModernizationCss.tabView} ${activeTab === "GRAPH" ? dataModernizationCss.tabViewActive : ""}`}>
+              Source Graph
+            </Col>
+          </Row>
+          <pre style={{ height: "80vh", paddingLeft: "1vw", overflow: "scroll" }} >{data}</pre>
         </Col>
       </Row>
     </>

@@ -140,7 +140,7 @@ export default function Design({ dataModernizationCss }) {
 
   const getDesignData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}?type=analyze`
     );
     setLoading(false);
     if (data.success) {
