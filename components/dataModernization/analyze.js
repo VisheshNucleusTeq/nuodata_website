@@ -98,11 +98,21 @@ const Analyze = ({ dataModernizationCss }) => {
   };
 
   const updateTransformStatus = async () => {
+    console.log(data.filter(e => e.isUserAction === false))
     data?.forEach(async (e) => {
       if (!e?.isUserAction) {
         await fetch_retry_post(`${CONVERTTRANSFORN}${e?.fileId}`);
       }
     });
+
+
+    [{isUserAction : true},{isUserAction : false}]
+
+
+    setTimeout(() => {
+      dispatch(SetProjectTransformDetailsAction({}));
+      dispatch(SetTabTypeAction("Transform"));
+    },1000);
   };
 
   const getTrueStatus = (fileStatus) => {
@@ -433,8 +443,6 @@ const Analyze = ({ dataModernizationCss }) => {
                 htmlType="submit"
                 onClick={async () => {
                   await updateTransformStatus();
-                  dispatch(SetProjectTransformDetailsAction({}));
-                  dispatch(SetTabTypeAction("Transform"));
                 }}
               >
                 Transform <ArrowRightOutlined />

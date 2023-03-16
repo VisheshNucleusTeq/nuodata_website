@@ -17,6 +17,41 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
   const [selectedTree, setSelectedTree] = useState();
   const [parentArr, setParentArr] = useState([]);
 
+  const addDownloadIcon = (treeDataObj) => {
+    treeDataObj?.children.forEach((elementP, i) => {
+      elementP?.children.forEach((elementC, j) => {
+        if (elementC && elementC?.children && elementC?.children.length) {
+          setParentArr([
+            (treeDataObj.children[i].children[j].key + "").split("_")[0],
+            ...parentArr,
+          ]);
+          treeDataObj.children[i].children[j].title = (
+            <>
+              <span>{treeDataObj.children[i].children[j].title}</span>
+              <span onClick={(e) => e.stopPropagation()}>
+                <Tooltip placement="right" title={"Download"}>
+                  <a
+                    href={`${"https://api.dev.nuodata.io/"}${DOWNLOADZIP}${analyzeDetailsId}?type=workflow&workflowId=${
+                      (treeDataObj.children[i].children[j].key + "").split(
+                        "_"
+                      )[0]
+                    }`}
+                    className="downloadBtn"
+                  >
+                    <Space size="middle" style={{ cursor: "pointer" }} info>
+                      <DownloadOutlined />
+                    </Space>
+                  </a>
+                </Tooltip>
+              </span>
+            </>
+          );
+        }
+      });
+    });
+    return treeDataObj;
+  };
+
   const filter = (array, text) => {
     const getNodes = (result, object) => {
       if (object.title.toLowerCase().includes(text.toLowerCase())) {
@@ -34,45 +69,17 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
 
   const getTreeData = async (analyzeDetailsId) => {
     const data = await fetch_retry_get(`${GRAPHTREE}${analyzeDetailsId}`);
-    const treeDataObj = {
-      ...data?.data,
+    var treeDataObj = {
+      ...JSON.parse(JSON.stringify(data?.data)),
       key: "defaultExpandedKey",
     };
 
-    // treeDataObj?.children.forEach((elementP, i) => {
-    //   elementP?.children.forEach((elementC, j) => {
-    //     if (elementC && elementC?.children && elementC?.children.length) {
-    //       setParentArr([
-    //         (treeDataObj.children[i].children[j].key + "").split("_")[0],
-    //         ...parentArr,
-    //       ]);
-    //       treeDataObj.children[i].children[j].title = (
-    //         <>
-    //           <span>{treeDataObj.children[i].children[j].title}</span>
-    //           <span onClick={(e) => e.stopPropagation()}>
-    //             <Tooltip placement="right" title={"Download"}>
-    //               <a
-    //                 href={`${"https://api.dev.nuodata.io/"}${DOWNLOADZIP}${analyzeDetailsId}?type=workflow&workflowId=${
-    //                   (treeDataObj.children[i].children[j].key + "").split(
-    //                     "_"
-    //                   )[0]
-    //                 }`}
-    //                 className="downloadBtn"
-    //               >
-    //                 <Space size="middle" style={{ cursor: "pointer" }} info>
-    //                   <DownloadOutlined />
-    //                 </Space>
-    //               </a>
-    //             </Tooltip>
-    //           </span>
-    //         </>
-    //       );
-    //     }
-    //   });
-    // });
-
-    setTreeData([treeDataObj]);
-    setTreeDataDefault([treeDataObj]);
+    const treeDataObjDefault = {
+      ...JSON.parse(JSON.stringify(data?.data)),
+      key: "defaultExpandedKey",
+    };
+    setTreeDataDefault([treeDataObjDefault]);
+    setTreeData([addDownloadIcon(treeDataObj)]);
   };
 
   const getGraphData = async (id) => {
@@ -109,12 +116,23 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
           span={showHide ? 6 : 0}
           style={{ backgroundColor: "#0c3246", height: "85vh" }}
         >
+          <button
+            onClick={() => {
+              console.log(treeDataDefault[0].children[0].children[0].title);
+            }}
+          >
+            OK
+          </button>
           <Input
             placeholder="Search"
             onKeyUp={(e) => {
               setSearch(e.target.value);
               const filterData = filter(treeDataDefault, e.target.value);
-              setTreeData(filterData);
+              setTreeData(
+                filterData.length
+                  ? [addDownloadIcon(JSON.parse(JSON.stringify(filterData[0])))]
+                  : []
+              );
             }}
             style={{ height: "5vh", border: "1px solid #0c3246" }}
           />

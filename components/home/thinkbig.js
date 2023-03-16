@@ -33,7 +33,7 @@ export default function ThinkBig({ HomeCss }) {
         <Col span={18}>
           <iframe
             src="all-graph/one/demo/data.html"
-            style={{ width: "100%", height: "100vh", border: "none" }}
+            style={{ width: "100%", height: "40vw", border: "none" }}
           />
           {/* <Image src="/home/landing-page.gif" preview={false} /> */}
         </Col>
@@ -62,7 +62,7 @@ export default function ThinkBig({ HomeCss }) {
         <Col span={16}>
           <iframe
             src="all-graph/two/demo/two.html"
-            style={{ width: "100%", height: "100vh", border: "none" }}
+            style={{ width: "100%", height: "40vw", border: "none" }}
           />
           {/* <Image src="/home/new-video.gif" preview={false} /> */}
         </Col>
