@@ -326,7 +326,7 @@ const AnalyzeDetail = ({
               <Collapse ghost accordion>
                 <Collapse.Panel
                   key={"Source-Graph"}
-                  header={"Source Graph"}
+                  header={"Graph"}
                   extra={
                     <div onClick={(e) => e.stopPropagation()}>
                       <Space
