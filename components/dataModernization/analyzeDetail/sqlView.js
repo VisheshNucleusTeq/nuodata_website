@@ -142,7 +142,7 @@ const SqlView = ({ showPopUp, analyzeDetailsId, dataModernizationCss }) => {
             </Col>
             <Col span={1}/>
             <Col onClick={() => {setActiveTab("GRAPH")}} span={11} className={`${dataModernizationCss.tabView} ${activeTab === "GRAPH" ? dataModernizationCss.tabViewActive : ""}`}>
-              Source Graph
+              Graph
             </Col>
           </Row>
           <pre style={{ height: "80vh", paddingLeft: "1vw", overflow: "scroll" }} >{data}</pre>
