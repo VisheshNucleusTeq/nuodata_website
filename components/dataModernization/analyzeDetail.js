@@ -186,11 +186,6 @@ const AnalyzeDetail = ({
         closable={false}
       >
         <SqlView showPopUp={showPopUp} analyzeDetailsId={analyzeDetailsId} dataModernizationCss={dataModernizationCss}/>
-        {/* <GraphView
-          modalData={[]}
-          showPopUp={showPopUp}
-          analyzeDetailsId={analyzeDetailsId}
-        /> */}
       </Modal>
 
       {showTop && (

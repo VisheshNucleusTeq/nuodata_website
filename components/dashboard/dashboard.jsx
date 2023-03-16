@@ -110,7 +110,6 @@ const DashboardView = () => {
           </Col>
         </Row>
         <Table
-          // className="demo"
           rowKey="projectId"
           columns={[
             {
@@ -118,7 +117,6 @@ const DashboardView = () => {
               dataIndex: "businessUnit",
               key: "businessUnit",
               sorter: (a, b) => a.businessUnit.localeCompare(b.businessUnit),
-              // align: 'center'
             },
             {
               title: "Project",

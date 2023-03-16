@@ -31,6 +31,7 @@ import {
   SetProjectDetailsAction,
   SetTabTypeAction,
   SetProjectTransformDetailsAction,
+  loderShowHideAction,
 } from "../../Redux/action";
 
 const Analyze = ({ dataModernizationCss }) => {
@@ -98,21 +99,21 @@ const Analyze = ({ dataModernizationCss }) => {
   };
 
   const updateTransformStatus = async () => {
-    console.log(data.filter(e => e.isUserAction === false))
-    data?.forEach(async (e) => {
-      if (!e?.isUserAction) {
-        await fetch_retry_post(`${CONVERTTRANSFORN}${e?.fileId}`);
-      }
-    });
-
-
-    [{isUserAction : true},{isUserAction : false}]
-
-
-    setTimeout(() => {
-      dispatch(SetProjectTransformDetailsAction({}));
-      dispatch(SetTabTypeAction("Transform"));
-    },1000);
+    dispatch(loderShowHideAction(true));
+    const isUserActionData = data.filter((e) => e.isUserAction === false);
+    const resultData = await Promise.all(
+      isUserActionData.map(async (e) => {
+        return new Promise(async (resolve, reject) => {
+          const data = await fetch_retry_post(
+            `${CONVERTTRANSFORN}${e?.fileId}`
+          );
+          resolve(data);
+        });
+      })
+    );
+    dispatch(SetProjectTransformDetailsAction({}));
+    dispatch(SetTabTypeAction("Transform"));
+    dispatch(loderShowHideAction(false));
   };
 
   const getTrueStatus = (fileStatus) => {
@@ -436,18 +437,19 @@ const Analyze = ({ dataModernizationCss }) => {
               >
                 Design Workflow <ArrowRightOutlined color="red" />
               </Button>
-              <Button
-                type="primary"
-                danger
-                className={dataModernizationCss.nextBtn}
-                htmlType="submit"
-                onClick={async () => {
-                  await updateTransformStatus();
-                }}
-              >
-                Transform <ArrowRightOutlined />
-              </Button>
-
+              {data.filter((e) => e.isUserAction === false).length ? (
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.nextBtn}
+                  htmlType="submit"
+                  onClick={async () => {
+                    await updateTransformStatus();
+                  }}
+                >
+                  Transform <ArrowRightOutlined />
+                </Button>
+              ) : null}
               <Button
                 type="primary"
                 danger

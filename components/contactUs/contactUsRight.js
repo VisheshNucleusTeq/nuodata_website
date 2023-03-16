@@ -220,7 +220,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   },
                 ]}
               >
-                <Select
+                {/* <Select
                   name={"source_platform"}
                   className="inputSelect"
                   placeholder="Select source platform"
@@ -252,12 +252,18 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                       label: "Oracle",
                     },
                   ]}
+                /> */}
+                <Input
+                  key={"input-source-platform"}
+                  className={"input"}
+                  placeholder={"Source platform"}
+                  name={"source_platform"}
+                  type={"text"}
                 />
               </Form.Item>
             </Col>
             <Col xs={0} sm={0} md={0} lg={1} xl={1} xxl={1} />
             <Col xs={22} sm={22} md={22} lg={11} xl={11} xxl={11}>
-              {" "}
               <Form.Item
                 label={"Target Platform"}
                 labelAlign={"left"}
@@ -269,7 +275,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   },
                 ]}
               >
-                <Select
+                {/* <Select
                   name={"target_platform"}
                   className="inputSelect"
                   placeholder="Select target platform"
@@ -297,6 +303,13 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                       label: "Snowflake",
                     },
                   ]}
+                /> */}
+                <Input
+                  key={"input-target-platform"}
+                  className={"input"}
+                  placeholder={"Target platform"}
+                  name={"target_platform"}
+                  type={"text"}
                 />
               </Form.Item>
             </Col>
@@ -315,7 +328,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   },
                 ]}
               >
-                <Select
+                {/* <Select
                   name={"source_lang"}
                   className="inputSelect"
                   placeholder="Select source language"
@@ -327,6 +340,13 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                       label: "XML",
                     },
                   ]}
+                /> */}
+                <Input
+                  key={"input-source-platform"}
+                  className={"input"}
+                  placeholder={"Source language Ex. xml"}
+                  name={"source_lang"}
+                  type={"text"}
                 />
               </Form.Item>
             </Col>
@@ -343,7 +363,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   },
                 ]}
               >
-                <Select
+                {/* <Select
                   name={"target_lang"}
                   className="inputSelect"
                   placeholder="Select target language"
@@ -355,6 +375,14 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                       label: "Spark SQL",
                     },
                   ]}
+                /> */}
+
+                <Input
+                  key={"input-target-platform"}
+                  className={"input"}
+                  placeholder={"Target language Ex. Spark SQL"}
+                  name={"target_lang"}
+                  type={"text"}
                 />
               </Form.Item>
             </Col>
