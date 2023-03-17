@@ -116,13 +116,13 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
           span={showHide ? 6 : 0}
           style={{ backgroundColor: "#0c3246", height: "85vh" }}
         >
-          <button
+          {/* <button
             onClick={() => {
               console.log(treeDataDefault[0].children[0].children[0].title);
             }}
           >
             OK
-          </button>
+          </button> */}
           <Input
             placeholder="Search"
             onKeyUp={(e) => {
