@@ -10,7 +10,7 @@ import {
   DOWNLOADZIP,
 } from "../../network/apiConstants";
 import { DownloadOutlined } from "@ant-design/icons";
-import AnalyzeDetailPopup from "./analyzeDetailPopup";
+import AnalyzeDetailPopup from "./graphView/analyzeDetailPopup";
 import { SetAnalyzeDetailAction } from "../../Redux/action";
 import AnalyzeDetail from "./analyzeDetail";
 

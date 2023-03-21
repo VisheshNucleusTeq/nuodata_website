@@ -1,10 +1,13 @@
 import React, { Component, useState } from "react";
 import { Row, Col, Tree, Input, Space, Tooltip } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
-import AnalyzeDetailPopup from "../analyzeDetailPopup";
-import { GRAPHTREE, DESIGN, DOWNLOADZIP } from "../../../network/apiConstants";
+import { LoadingOutlined, DownloadOutlined } from "@ant-design/icons";
+import AnalyzeDetailPopup from "../graphView/analyzeDetailPopup";
+import {
+  JSONSTRUCTURE,
+  DESIGN,
+  DOWNLOADZIP,
+} from "../../../network/apiConstants";
 import { fetch_retry_get } from "../../../network/api-manager";
-import { LoadingOutlined, CloudDownloadOutlined } from "@ant-design/icons";
 
 const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
   const [outputFileId, setOutputFileId] = useState();
@@ -18,36 +21,39 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
   const [parentArr, setParentArr] = useState([]);
 
   const addDownloadIcon = (treeDataObj) => {
+    return treeDataObj
     treeDataObj?.children.forEach((elementP, i) => {
-      elementP?.children.forEach((elementC, j) => {
-        if (elementC && elementC?.children && elementC?.children.length) {
-          setParentArr([
-            (treeDataObj.children[i].children[j].key + "").split("_")[0],
-            ...parentArr,
-          ]);
-          treeDataObj.children[i].children[j].title = (
-            <>
-              <span>{treeDataObj.children[i].children[j].title}</span>
-              <span onClick={(e) => e.stopPropagation()}>
-                <Tooltip placement="right" title={"Download"}>
-                  <a
-                    href={`${"https://api.dev.nuodata.io/"}${DOWNLOADZIP}${analyzeDetailsId}?type=workflow&workflowId=${
-                      (treeDataObj.children[i].children[j].key + "").split(
-                        "_"
-                      )[0]
-                    }`}
-                    className="downloadBtn"
-                  >
-                    <Space size="middle" style={{ cursor: "pointer" }} info>
-                      <DownloadOutlined />
-                    </Space>
-                  </a>
-                </Tooltip>
-              </span>
-            </>
-          );
-        }
-      });
+      if (elementP?.children) {
+        elementP?.children.forEach((elementC, j) => {
+          if (elementC && elementC?.children && elementC?.children.length) {
+            setParentArr([
+              (treeDataObj.children[i].children[j].key + "").split("_")[0],
+              ...parentArr,
+            ]);
+            treeDataObj.children[i].children[j].title = (
+              <>
+                <span>{treeDataObj.children[i].children[j].title}</span>
+                <span onClick={(e) => e.stopPropagation()}>
+                  <Tooltip placement="right" title={"Download"}>
+                    <a
+                      href={`${"https://api.dev.nuodata.io/"}${DOWNLOADZIP}${analyzeDetailsId}?type=workflow&workflowId=${
+                        (treeDataObj.children[i].children[j].key + "").split(
+                          "_"
+                        )[0]
+                      }`}
+                      className="downloadBtn"
+                    >
+                      <Space size="middle" style={{ cursor: "pointer" }} info>
+                        <DownloadOutlined />
+                      </Space>
+                    </a>
+                  </Tooltip>
+                </span>
+              </>
+            );
+          }
+        });
+      }
     });
     return treeDataObj;
   };
@@ -68,7 +74,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
   };
 
   const getTreeData = async (analyzeDetailsId) => {
-    const data = await fetch_retry_get(`${GRAPHTREE}${analyzeDetailsId}`);
+    const data = await fetch_retry_get(`${JSONSTRUCTURE}${analyzeDetailsId}`);
     var treeDataObj = {
       ...JSON.parse(JSON.stringify(data?.data)),
       key: "defaultExpandedKey",
@@ -100,7 +106,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
     const data = await fetch_retry_get(`${DESIGN}${dataId}`);
     if (data.success) {
       setModalData(data.data);
-      if (!parentArr.includes(dataId)) setShowDownload(dataId);
+      if (!parentArr.includes(dataId)) setShowDownload(false);
     }
     setLoading(false);
   };
@@ -116,13 +122,6 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
           span={showHide ? 6 : 0}
           style={{ backgroundColor: "#0c3246", height: "85vh" }}
         >
-          {/* <button
-            onClick={() => {
-              console.log(treeDataDefault[0].children[0].children[0].title);
-            }}
-          >
-            OK
-          </button> */}
           <Input
             placeholder="Search"
             onKeyUp={(e) => {

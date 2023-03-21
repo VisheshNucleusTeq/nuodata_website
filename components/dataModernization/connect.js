@@ -43,9 +43,7 @@ const Connect = ({ dataModernizationCss }) => {
     if (data.success) {
       dispatch(SetConnectDetailsAction(data.data));
       setFileData(data.data);
-      const analyeData = await analyzeCall(data.data);
-      const transData = await getTransform(data.data);
-      setLoading(false);
+      await analyzeCall(data.data);      
     } else {
       setLoading(false);
       message.error([data?.error]);
@@ -55,15 +53,17 @@ const Connect = ({ dataModernizationCss }) => {
   const analyzeCall = async (fileDetails) => {
     const data = await fetch_retry_post(`${ANALYZE}/${fileDetails.fileId}`, {});
     if (!data.success && data?.error) {
-      // setLoading(false);
+      setLoading(false);
       message.error([data?.error]);
+    }else{
+      await getTransform(fileDetails);
+      setLoading(false);
     }
   };
 
   const getTransform = async (fileDetails) => {
     const data = await fetch_retry_post(`${TRANSFORM}${fileDetails.fileId}`);
     if (!data.success && data?.error) {
-      // setLoading(false);
       message.error([data?.error]);
     }
   };

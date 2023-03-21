@@ -10,7 +10,7 @@ import ReactFlow, {
   MarkerType,
 } from "reactflow";
 import dagre from "dagre";
-import NormalNode from "../NormalNode";
+import NormalNode from "../../NormalNode";
 import { RightOutlined,LeftOutlined, DownOutlined } from "@ant-design/icons";
 
 const nodeTypes = {

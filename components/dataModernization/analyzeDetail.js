@@ -59,6 +59,7 @@ const AnalyzeDetail = ({
   const [sourceDdl, setSourceDdl] = useState();
   const [targetDdl, setTargetDdl] = useState();
   const [showDownload, setShowDownload] = useState(false);
+  const [activeTab, setActiveTab] = useState("SQL");
 
   const getAnalyzeData = async () => {
     setLoading(true);
@@ -166,7 +167,6 @@ const AnalyzeDetail = ({
         closable={false}
       >
         <GraphView
-          modalData={[]}
           showPopUp={showPopUp}
           analyzeDetailsId={analyzeDetailsId}
           setShowDownload={setShowDownload}
@@ -177,15 +177,32 @@ const AnalyzeDetail = ({
         destroyOnClose
         centered
         open={sqlOpen}
-        onOk={() => setSqlOpen(false)}
-        onCancel={() => setSqlOpen(false)}
+        onOk={() => {
+          const file_path = `${"https://api.dev.nuodata.io/"}${DOWNLOADFILE}${showDownload}`;
+          const a = document.createElement("A");
+          a.href = file_path;
+          a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }}
+        onCancel={() => {
+          setSqlOpen(false);
+          setShowDownload(false);
+        }}
         width={"100vw"}
-        // cancelButtonProps={{ style: { display: 'none' } }}
+        okButtonProps={{ style: { display: showDownload ? "" : "none" } }}
         cancelText={"Close"}
         okText={"Download"}
         closable={false}
       >
-        <SqlView showPopUp={showPopUp} analyzeDetailsId={analyzeDetailsId} dataModernizationCss={dataModernizationCss}/>
+        <SqlView
+          showPopUp={showPopUp}
+          analyzeDetailsId={analyzeDetailsId}
+          dataModernizationCss={dataModernizationCss}
+          setShowDownload={setShowDownload}
+          activeTabValue={activeTab}
+        />
       </Modal>
 
       {showTop && (
@@ -326,7 +343,9 @@ const AnalyzeDetail = ({
                     <div onClick={(e) => e.stopPropagation()}>
                       <Space
                         onClick={() => {
-                          setOpen(true);
+                          showPopUp
+                            ? (setSqlOpen(true), setActiveTab("GRAPH"))
+                            : setOpen(true);
                         }}
                         size="middle"
                         className={dataModernizationCss.downloadBtnSpace}
@@ -361,7 +380,7 @@ const AnalyzeDetail = ({
                             <span
                               className={dataModernizationCss.downloadBtnSpace}
                             >
-                              <EyeOutlined /> Download
+                              <DownloadOutlined /> Download
                             </span>
                           </a>
 
@@ -369,6 +388,7 @@ const AnalyzeDetail = ({
                             className={dataModernizationCss.downloadBtnSpace}
                             onClick={() => {
                               setSqlOpen(true);
+                              setActiveTab("SQL");
                             }}
                           >
                             <EyeOutlined /> View

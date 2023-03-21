@@ -27,7 +27,7 @@ import { fetch_retry_get } from "../../network/api-manager";
 import { ANALYZESUMMARY, DESIGN } from "../../network/apiConstants";
 import PieChart from "./charts/pieChart";
 import { DOWNLOADFILE } from "../../network/apiConstants";
-import AnalyzeDetailPopup from "./analyzeDetailPopup";
+import AnalyzeDetailPopup from "./graphView/analyzeDetailPopup";
 import {
   SetProjectTransformDetailsAction,
   SetTabTypeAction,
@@ -62,7 +62,9 @@ const Transform = ({ dataModernizationCss }) => {
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}?type=transform`
+      `${ANALYZESUMMARY}${
+        query.id ? query.id : projectDetails.projectId
+      }?type=transform`
     );
     setLoading(false);
     if (data.success) {
@@ -76,9 +78,9 @@ const Transform = ({ dataModernizationCss }) => {
       });
       setComplexityGraph(data?.data?.complexityGraph);
     } else {
-      dispatch(SetProjectTransformDetailsAction({}));
-      dispatch(SetTabTypeAction("Connect"));
-      message.error(data?.error ? [data?.error] : "Something went wrong.");
+      // dispatch(SetProjectTransformDetailsAction({}));
+      // dispatch(SetTabTypeAction("Connect"));
+      // message.error(data?.error ? [data?.error] : "Something went wrong.");
     }
   };
 
@@ -124,125 +126,138 @@ const Transform = ({ dataModernizationCss }) => {
         <TransformDetails dataModernizationCss={dataModernizationCss} />
       ) : (
         <>
-          <Row className={dataModernizationCss.defineForm}>
-            <Col
-              xs={23}
-              sm={23}
-              md={23}
-              lg={23}
-              xl={23}
-              xxl={23}
-              className={dataModernizationCss.transform}
-            >
-              <h1>Congratulations !</h1>
-              <h2>
-                Transformation Completed for
-                <span>
-                  {projectDetails && projectDetails?.name
-                    ? projectDetails.name
-                    : "--"}
-                </span>
-              </h2>
-              <h2>
-                You saved
-                <span>
-                  {" "}
-                  {analyzeDetails?.hoursSaved
-                    ? parseFloat(analyzeDetails?.hoursSaved).toFixed(2)
-                    : "--"}{" "}
-                  {parseFloat(analyzeDetails?.hoursSaved).toFixed(2) > 1
-                    ? "Hours"
-                    : "hour"}
-                </span>
-                of manual effort
-              </h2>
-            </Col>
-          </Row>
-          <div className={dataModernizationCss.analyzeMain}>
-            <Row>
-              <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                <Card className={dataModernizationCss.cardView}>
-                  <Card.Grid>Total Files</Card.Grid>
-                  <Card.Grid>
-                    {analyzeDetails && analyzeDetails.totalFiles
-                      ? analyzeDetails.totalFiles
-                      : "0"}
-                  </Card.Grid>
-                  <Card.Grid>Transformations</Card.Grid>
-                  <Card.Grid>
-                    {analyzeDetails && analyzeDetails.transformations
-                      ? analyzeDetails.transformations
-                      : "0"}
-                  </Card.Grid>
-                  <Card.Grid>Mappings</Card.Grid>
-                  <Card.Grid>
-                    {analyzeDetails && analyzeDetails.mappings
-                      ? analyzeDetails.mappings
-                      : "0"}
-                  </Card.Grid>
-                  <Card.Grid>Conversion</Card.Grid>
-                  <Card.Grid>
-                    {analyzeDetails && analyzeDetails.conversions
-                      ? analyzeDetails.conversions
-                      : "0"}{" "}
-                    %
-                  </Card.Grid>
-                  <Card.Grid>Manual Effort</Card.Grid>
-                  <Card.Grid>
-                    <span>
-                      {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
-                        ? parseFloat(
-                            analyzeDetails.manualEffortsEstimateHrs
-                          ).toFixed(2)
-                        : "0"}{" "}
-                      hours
-                    </span>
-                  </Card.Grid>
-                  <Card.Grid style={{ color: "#09bd21" }}>
-                    Hours Saved
-                  </Card.Grid>
-                  <Card.Grid>
-                    <span style={{ color: "#09bd21" }}>
-                      {analyzeDetails && analyzeDetails.hoursSaved
-                        ? parseFloat(analyzeDetails.hoursSaved).toFixed(2)
-                        : "0"}{" "}
-                      hours
-                    </span>
-                  </Card.Grid>
-                </Card>
-              </Col>
-              <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
-              <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14} style={{}}>
-                <Card className={dataModernizationCss.cardViewGraphs}>
-                  <Carousel
-                    dots={false}
-                    autoplay
-                    draggable
-                    className={dataModernizationCss.cardViewGraphCarousel}
-                  >
-                    <div className={dataModernizationCss.cardViewGraph}>
-                      {complexityGraph && (
-                        <PieChart
-                          complexityGraph={complexityGraph}
-                          dataModernizationCss={dataModernizationCss}
-                          labels={["Converted", "Not converted"]}
-                          data={[
-                            analyzeDetails.totalFiles -
-                              (analyzeDetails?.convertedFilesCount
-                                ? analyzeDetails.convertedFilesCount
-                                : 0),
-                            analyzeDetails?.convertedFilesCount
-                              ? analyzeDetails.convertedFilesCount
-                              : 0,
-                          ]}
-                        />
-                      )}
-                    </div>
-                  </Carousel>
-                </Card>
+          {data.length ? (
+            <Row className={dataModernizationCss.defineForm}>
+              <Col
+                xs={23}
+                sm={23}
+                md={23}
+                lg={23}
+                xl={23}
+                xxl={23}
+                className={dataModernizationCss.transform}
+              >
+                <h1>Congratulations !</h1>
+                <h2>
+                  Transformation Completed for
+                  <span>
+                    {projectDetails && projectDetails?.name
+                      ? projectDetails.name
+                      : "--"}
+                  </span>
+                </h2>
+                <h2>
+                  You saved
+                  <span>
+                    {" "}
+                    {analyzeDetails?.hoursSaved
+                      ? parseFloat(analyzeDetails?.hoursSaved).toFixed(2)
+                      : "--"}{" "}
+                    {parseFloat(analyzeDetails?.hoursSaved).toFixed(2) > 1
+                      ? "Hours"
+                      : "hour"}
+                  </span>
+                  of manual effort
+                </h2>
               </Col>
             </Row>
-          </div>
+          ) : null}
+          {data.length ? (
+            <div className={dataModernizationCss.analyzeMain}>
+              <Row>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                  <Card className={dataModernizationCss.cardView}>
+                    <Card.Grid>Total Files</Card.Grid>
+                    <Card.Grid>
+                      {analyzeDetails && analyzeDetails.totalFiles
+                        ? analyzeDetails.totalFiles
+                        : "0"}
+                    </Card.Grid>
+                    <Card.Grid>Transformations</Card.Grid>
+                    <Card.Grid>
+                      {analyzeDetails && analyzeDetails.transformations
+                        ? analyzeDetails.transformations
+                        : "0"}
+                    </Card.Grid>
+                    <Card.Grid>Mappings</Card.Grid>
+                    <Card.Grid>
+                      {analyzeDetails && analyzeDetails.mappings
+                        ? analyzeDetails.mappings
+                        : "0"}
+                    </Card.Grid>
+                    <Card.Grid>Conversion</Card.Grid>
+                    <Card.Grid>
+                      {analyzeDetails && analyzeDetails.conversions
+                        ? analyzeDetails.conversions
+                        : "0"}{" "}
+                      %
+                    </Card.Grid>
+                    <Card.Grid>Manual Effort</Card.Grid>
+                    <Card.Grid>
+                      <span>
+                        {analyzeDetails &&
+                        analyzeDetails.manualEffortsEstimateHrs
+                          ? parseFloat(
+                              analyzeDetails.manualEffortsEstimateHrs
+                            ).toFixed(2)
+                          : "0"}{" "}
+                        hours
+                      </span>
+                    </Card.Grid>
+                    <Card.Grid style={{ color: "#09bd21" }}>
+                      Hours Saved
+                    </Card.Grid>
+                    <Card.Grid>
+                      <span style={{ color: "#09bd21" }}>
+                        {analyzeDetails && analyzeDetails.hoursSaved
+                          ? parseFloat(analyzeDetails.hoursSaved).toFixed(2)
+                          : "0"}{" "}
+                        hours
+                      </span>
+                    </Card.Grid>
+                  </Card>
+                </Col>
+                <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
+                <Col
+                  xs={14}
+                  sm={14}
+                  md={14}
+                  lg={14}
+                  xl={14}
+                  xxl={14}
+                  style={{}}
+                >
+                  <Card className={dataModernizationCss.cardViewGraphs}>
+                    <Carousel
+                      dots={false}
+                      autoplay
+                      draggable
+                      className={dataModernizationCss.cardViewGraphCarousel}
+                    >
+                      <div className={dataModernizationCss.cardViewGraph}>
+                        {complexityGraph && (
+                          <PieChart
+                            complexityGraph={complexityGraph}
+                            dataModernizationCss={dataModernizationCss}
+                            labels={["Converted", "Not converted"]}
+                            data={[
+                              analyzeDetails.totalFiles -
+                                (analyzeDetails?.convertedFilesCount
+                                  ? analyzeDetails.convertedFilesCount
+                                  : 0),
+                              analyzeDetails?.convertedFilesCount
+                                ? analyzeDetails.convertedFilesCount
+                                : 0,
+                            ]}
+                          />
+                        )}
+                      </div>
+                    </Carousel>
+                  </Card>
+                </Col>
+              </Row>
+            </div>
+          ) : null}
           <Row className={dataModernizationCss.defineForm}>
             <Col
               xs={24}
@@ -350,7 +365,9 @@ const Transform = ({ dataModernizationCss }) => {
                   },
                 ]}
                 dataSource={data.filter(
-                  (data) => data.fileStatus !== "analyze_failed" && data.isUserAction === true
+                  (data) =>
+                    data.fileStatus !== "analyze_failed" &&
+                    data.isUserAction === true
                 )}
               />
             </Col>
