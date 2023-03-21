@@ -22,40 +22,6 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
 
   const addDownloadIcon = (treeDataObj) => {
     return treeDataObj
-    treeDataObj?.children.forEach((elementP, i) => {
-      if (elementP?.children) {
-        elementP?.children.forEach((elementC, j) => {
-          if (elementC && elementC?.children && elementC?.children.length) {
-            setParentArr([
-              (treeDataObj.children[i].children[j].key + "").split("_")[0],
-              ...parentArr,
-            ]);
-            treeDataObj.children[i].children[j].title = (
-              <>
-                <span>{treeDataObj.children[i].children[j].title}</span>
-                <span onClick={(e) => e.stopPropagation()}>
-                  <Tooltip placement="right" title={"Download"}>
-                    <a
-                      href={`${"https://api.dev.nuodata.io/"}${DOWNLOADZIP}${analyzeDetailsId}?type=workflow&workflowId=${
-                        (treeDataObj.children[i].children[j].key + "").split(
-                          "_"
-                        )[0]
-                      }`}
-                      className="downloadBtn"
-                    >
-                      <Space size="middle" style={{ cursor: "pointer" }} info>
-                        <DownloadOutlined />
-                      </Space>
-                    </a>
-                  </Tooltip>
-                </span>
-              </>
-            );
-          }
-        });
-      }
-    });
-    return treeDataObj;
   };
 
   const filter = (array, text) => {
