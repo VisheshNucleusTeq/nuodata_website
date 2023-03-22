@@ -8,7 +8,7 @@ export default function Validate({ dataModernizationCss }) {
   return (
     <Row className={dataModernizationCss.validateTab}>
       <Col span={24}>
-        <h1>abdc</h1>
+        <h1>Demo_Test</h1>
       </Col>
       <Col span={24}>
         <Table
@@ -24,6 +24,9 @@ export default function Validate({ dataModernizationCss }) {
               title: "Name",
               dataIndex: "name",
               key: "name",
+              render: (_, record) => {
+                return <b style={{color : "#0c3246"}}>{record.name}</b>
+              },
             },
 
             {
@@ -107,9 +110,6 @@ export default function Validate({ dataModernizationCss }) {
                       <Col span={24}>
                         <Row>
                           <Col
-                            onClick={() => {
-                              setActiveTab("SQL");
-                            }}
                             span={11}
                             className={`${dataModernizationCss.tabView} ${dataModernizationCss.tabViewActiveValidation}`}
                           >
@@ -117,9 +117,6 @@ export default function Validate({ dataModernizationCss }) {
                           </Col>
                           <Col span={2} />
                           <Col
-                            onClick={() => {
-                              setActiveTab("GRAPH");
-                            }}
                             span={11}
                             className={`${dataModernizationCss.tabView} ${dataModernizationCss.tabViewActiveValidation}`}
                           >

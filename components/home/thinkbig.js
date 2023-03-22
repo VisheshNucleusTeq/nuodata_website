@@ -1,11 +1,7 @@
 import { Col, Row, Image } from "antd";
 import { AnimationOnScroll } from "react-animation-on-scroll";
-// import html from "./data.html"
 export default function ThinkBig({ HomeCss }) {
   return (
-    // <div id="dataManagement" className={HomeCss.thinkBigMainDiv}>
-    //   <iframe src="data.html" style={{width : "100%", height : "90vh"}}></iframe>
-    // </div>
     <div id="dataManagement" className={HomeCss.thinkBigMainDiv}>
       <Row className={HomeCss.thinkBigChild}>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
@@ -18,7 +14,7 @@ export default function ThinkBig({ HomeCss }) {
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
       </Row>
 
-      <Row className={HomeCss.thinkBigChild} align="stretch" justify={"center"}>
+      {/* <Row className={HomeCss.thinkBigChild} align="stretch" justify={"center"}>
         <Col span={20}>
           <AnimationOnScroll animateIn="animate__fadeInDown" animateOnce={true}>
             <h2>
@@ -32,10 +28,60 @@ export default function ThinkBig({ HomeCss }) {
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
         <Col span={18}>
           <iframe
-            src="all-graph/one/demo/data.html"
+            src="all-graph/home/one/demo/one.html"
             style={{ width: "100%", height: "40vw", border: "none" }}
           />
-          {/* <Image src="/home/landing-page.gif" preview={false} /> */}
+        </Col>
+        <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
+      </Row> */}
+
+      <Row
+        className={`${HomeCss.thinkBigChild} ${HomeCss.thinkBigChildStstem}`}
+        align="stretch"
+        justify={"center"}
+      >
+        <Col span={20}>
+          <AnimationOnScroll animateIn="animate__fadeInDown" animateOnce={true}>
+            <h2>
+              Modernize your enterprise data from <span>ANY</span> source to{" "}
+              <span>ANY</span> cloud platform.
+            </h2>
+          </AnimationOnScroll>
+        </Col>
+        <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
+
+        <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
+        <Col span={16}>
+          <iframe
+            src="all-graph/home/one/demo/one.html"
+            style={{ width: "100%", height: "40vw", border: "none" }}
+          />
+          {/* <Image src="/home/new-video.gif" preview={false} /> */}
+        </Col>
+        <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
+      </Row>
+
+      <Row
+        className={`${HomeCss.thinkBigChild} ${HomeCss.thinkBigChildMobile}`}
+        align="center"
+      >
+        <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
+        <Col xs={22} sm={22} md={22} lg={10} xl={10} xxl={10}>
+          <AnimationOnScroll animateIn="animate__fadeInDown" animateOnce={true}>
+            <h2>
+              Modernize your enterprise data from <span>ANY</span> source to{" "}
+              <span>ANY</span> cloud platform.
+            </h2>
+          </AnimationOnScroll>
+        </Col>
+        <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
+
+        <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
+        <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10}>
+          <iframe
+            src="all-graph/home/mobile_view/one/demo/one.html"
+            style={{ width: "100vw", height: "100vw", border: "none" }}
+          />
         </Col>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
       </Row>
@@ -43,6 +89,7 @@ export default function ThinkBig({ HomeCss }) {
       <Row style={{ marginTop: "5%" }} align="stretch" justify={"center"}>
         <Col span={12} style={{ borderTop: "1px solid #e74860" }}></Col>
       </Row>
+
       <Row
         className={`${HomeCss.thinkBigChild} ${HomeCss.thinkBigChildStstem}`}
         align="stretch"
@@ -61,7 +108,7 @@ export default function ThinkBig({ HomeCss }) {
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
         <Col span={16}>
           <iframe
-            src="all-graph/two/demo/two.html"
+            src="all-graph/home/two/demo/two.html"
             style={{ width: "100%", height: "40vw", border: "none" }}
           />
           {/* <Image src="/home/new-video.gif" preview={false} /> */}
@@ -85,8 +132,11 @@ export default function ThinkBig({ HomeCss }) {
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
 
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
-        <Col xs={22} sm={22} md={22} lg={10} xl={10} xxl={10}>
-          <Image src="/home/new-video.gif" preview={false} />
+        <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10}>
+          <iframe
+            src="all-graph/home/mobile_view/two/demo/two.html"
+            style={{ width: "100%", height: "100vw", border: "none" }}
+          />
         </Col>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
       </Row>
