@@ -1,6 +1,14 @@
-import { Row, Col, Badge, Table, Space } from "antd";
-import { EyeOutlined, EditOutlined, DownloadOutlined } from "@ant-design/icons";
+import { Row, Col, Badge, Table, Space, Card, Carousel } from "antd";
+import {
+  EyeOutlined,
+  EditOutlined,
+  DownloadOutlined,
+  GithubOutlined,
+  DatabaseOutlined,
+  CheckCircleOutlined
+} from "@ant-design/icons";
 import { useState } from "react";
+import PieChart from "./charts/pieChart";
 
 export default function Validate({ dataModernizationCss }) {
   const [selectedTab, setSelecterTab] = useState("uploadTestData");
@@ -10,6 +18,53 @@ export default function Validate({ dataModernizationCss }) {
       <Col span={24}>
         <h1>Demo_Test</h1>
       </Col>
+      <Col span={24}>
+        <div className={dataModernizationCss.analyzeMain}>
+          <Row>
+            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+              <Card className={dataModernizationCss.cardView}>
+                <Card.Grid>Total Files</Card.Grid>
+                <Card.Grid>1</Card.Grid>
+                <Card.Grid>Transformations</Card.Grid>
+                <Card.Grid>200</Card.Grid>
+                <Card.Grid>Mappings</Card.Grid>
+                <Card.Grid>36</Card.Grid>
+                <Card.Grid>Validation Completed</Card.Grid>
+                <Card.Grid>75%</Card.Grid>
+                <Card.Grid>Manual Effort</Card.Grid>
+                <Card.Grid>
+                  <span>123.50 hours</span>
+                </Card.Grid>
+                <Card.Grid style={{ color: "#09bd21" }}>Hours Saved</Card.Grid>
+                <Card.Grid>
+                  <span style={{ color: "#09bd21" }}>450.30 hours</span>
+                </Card.Grid>
+              </Card>
+            </Col>
+            <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
+            <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14} style={{}}>
+              <Card className={dataModernizationCss.cardViewGraphs}>
+                <Carousel
+                  dots={false}
+                  autoplay
+                  draggable
+                  className={dataModernizationCss.cardViewGraphCarousel}
+                >
+                  <div className={dataModernizationCss.cardViewGraph}>
+                    <PieChart
+                      complexityGraph={[]}
+                      dataModernizationCss={dataModernizationCss}
+                      labels={["Converted", "Not converted"]}
+                      data={[10, 10]}
+                    />
+                  </div>
+                </Carousel>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </Col>
+
       <Col span={24}>
         <Table
           pagination={false}
@@ -25,7 +80,7 @@ export default function Validate({ dataModernizationCss }) {
               dataIndex: "name",
               key: "name",
               render: (_, record) => {
-                return <b style={{color : "#0c3246"}}>{record.name}</b>
+                return <b style={{ color: "#0c3246" }}>{record.name}</b>;
               },
             },
 
@@ -155,10 +210,28 @@ export default function Validate({ dataModernizationCss }) {
             },
 
             {
-              title: "Type",
-              dataIndex: "type",
-              key: "type",
+              title: "Workflows",
+              dataIndex: "workflows",
+              key: "workflows",
             },
+
+            {
+              title: "Mappings",
+              dataIndex: "mappings",
+              key: "mappings",
+            },
+
+            {
+              title: "Transformations",
+              dataIndex: "transformations",
+              key: "transformations",
+            },
+
+            // {
+            //   title: "Type",
+            //   dataIndex: "type",
+            //   key: "type",
+            // },
 
             {
               title: "Status",
@@ -180,12 +253,19 @@ export default function Validate({ dataModernizationCss }) {
               render: (_, record) => {
                 return (
                   <>
-                    <Space size="middle" style={{ cursor: "pointer" }}>
+                    {/* <Space size="middle" style={{ cursor: "pointer" }}> */}
                       <a style={{ cursor: "pointer" }}>
-                        <EditOutlined /> View
+                        <GithubOutlined /> {"Check-in (GitHub)"}
                       </a>
-                      <Badge count={"Completed"} color="green" />
-                    </Space>
+                      <br/>
+                      <a style={{ cursor: "pointer" }}>
+                      <DatabaseOutlined /> {"Launch Databricks"}
+                      </a>
+                      <br/>
+                      <a style={{ cursor: "pointer" }}>
+                      <CheckCircleOutlined /> {"Mark Validation Completed"}
+                      </a>
+                    {/* </Space> */}
                   </>
                 );
               },
@@ -195,12 +275,18 @@ export default function Validate({ dataModernizationCss }) {
             {
               fileId: 1,
               file: "demo1.XML",
+              workflows: 1,
+              mappings: 36,
+              transformations: 25,
               type: "workflow",
               status: "validationCompleted",
             },
             {
               fileId: 2,
               file: "demo2.XML",
+              workflows: 2,
+              mappings: 86,
+              transformations: 54,
               type: "workflow",
               status: "validationCompleted",
             },

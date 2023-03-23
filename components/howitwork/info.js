@@ -39,11 +39,15 @@ export default function Info({ HowItWorkCss }) {
           xxl={10}
           className={HowItWorkCss.infoImage}
         >
-          <Image
+          <iframe
+            src="/all-graph/how_it_work/header/demo/header.html"
+            style={{ width: "100%", height: "40vw", border: "none" }}
+          />
+          {/* <Image
             className={HowItWorkCss.infoImageTag}
             preview={false}
             src="/how_it_work/how-it-works.gif"
-          />
+          /> */}
         </Col>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
       </Row>
