@@ -65,68 +65,6 @@ export default function Validate({ dataModernizationCss }) {
         </div>
       </Col>
 
-      <Col span={24}>
-        <Table
-          pagination={false}
-          showHeader={false}
-          locale={{
-            emptyText: "No Record Available",
-          }}
-          className="demo"
-          rowKey="fileId"
-          columns={[
-            {
-              title: "Name",
-              dataIndex: "name",
-              key: "name",
-              render: (_, record) => {
-                return <b style={{ color: "#0c3246" }}>{record.name}</b>;
-              },
-            },
-
-            {
-              title: "Status",
-              key: "fileStatus",
-              render: (_, record) => {
-                switch (record.fileStatus) {
-                  case "active":
-                    return <Badge count={"Active"} color="green" />;
-                  case "uploadedSuccessfully":
-                    return (
-                      <Badge count={"uploaded Successfully"} color="orange" />
-                    );
-                  default:
-                    return <Badge count={"Inactive"} color="red" />;
-                }
-              },
-            },
-            {
-              title: "Action",
-              key: "action",
-              render: (_, record) => {
-                return (
-                  <>
-                    <Space size="middle" style={{ cursor: "pointer" }}>
-                      <a style={{ cursor: "pointer" }}>
-                        <EyeOutlined /> Edit
-                      </a>
-
-                      <a style={{ cursor: "pointer" }}>
-                        <EditOutlined /> View
-                      </a>
-                    </Space>
-                  </>
-                );
-              },
-            },
-          ]}
-          dataSource={[
-            { name: "Test Environment (Databricks)", fileStatus: "active" },
-            { name: "Test Data", fileStatus: "uploadedSuccessfully" },
-          ]}
-        />
-      </Col>
-
       <Col span={24} style={{ marginTop: "2vh" }}>
         <Table
           pagination={false}
@@ -138,67 +76,7 @@ export default function Validate({ dataModernizationCss }) {
           expandable={{
             expandedRowRender: (record) => {
               return (
-                <Row className={dataModernizationCss.expandableTableCss}>
-                  <Col span={16}>
-                    <h2>Transformed Workflow</h2>
-                  </Col>
-                  <Col span={8}>
-                    <>
-                      <Space size="middle" style={{ cursor: "pointer" }}>
-                        <a style={{ cursor: "pointer" }}>
-                          <EyeOutlined /> Edit
-                        </a>
-
-                        <a style={{ cursor: "pointer" }}>
-                          <EditOutlined /> View
-                        </a>
-
-                        <a style={{ cursor: "pointer" }}>
-                          <DownloadOutlined /> Download
-                        </a>
-                      </Space>
-                    </>
-                  </Col>
-
-                  <Col span={24} style={{ marginTop: "2%" }}>
-                    <Row className={dataModernizationCss.tabViewPar}>
-                      <Col span={24}>
-                        <Row>
-                          <Col
-                            span={11}
-                            className={`${dataModernizationCss.tabView} ${dataModernizationCss.tabViewActiveValidation}`}
-                          >
-                            QA Completed
-                          </Col>
-                          <Col span={2} />
-                          <Col
-                            span={11}
-                            className={`${dataModernizationCss.tabView} ${dataModernizationCss.tabViewActiveValidation}`}
-                          >
-                            UAT Completed
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col span={24} style={{ marginTop: "2%" }}>
-                        <Row>
-                          <Col span={11}>
-                            <div>
-                              <p>Email</p>
-                              <p>View/upload test results </p>
-                            </div>
-                          </Col>
-                          <Col span={2} />
-                          <Col span={11}>
-                            <div>
-                              <p>Email</p>
-                              <p>View/upload test results </p>
-                            </div>
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
+                <p>Tree</p>
               );
             },
           }}
