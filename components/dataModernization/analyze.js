@@ -55,7 +55,7 @@ const Analyze = ({ dataModernizationCss }) => {
     const data = await fetch_retry_get(
       `${ANALYZESUMMARY}${
         query.id ? query.id : projectDetails.projectId
-      }?type=analyze`
+      }` //?type=analyze
     );
     setLoading(false);
     if (data.success) {
@@ -321,7 +321,7 @@ const Analyze = ({ dataModernizationCss }) => {
             </Card>
           </Col>
 
-          <Col
+          {/* <Col
             xs={24}
             sm={24}
             md={24}
@@ -331,7 +331,7 @@ const Analyze = ({ dataModernizationCss }) => {
             className={`${dataModernizationCss.validateTab} ${dataModernizationCss.downloadData}`}
           >
             <Button type="default">Download all output .zip file</Button>
-          </Col>
+          </Col> */}
 
           <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
             <div className={dataModernizationCss.analyzeMain}>
@@ -421,7 +421,7 @@ const Analyze = ({ dataModernizationCss }) => {
                     },
                   },
                 ]}
-                dataSource={data}
+                dataSource={data.sort((a, b) => a.fileId - b.fileId)}
               />
             </div>
             <div className={dataModernizationCss.nextExitBtn}>

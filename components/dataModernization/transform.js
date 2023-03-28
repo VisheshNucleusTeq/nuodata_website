@@ -62,9 +62,7 @@ const Transform = ({ dataModernizationCss }) => {
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${
-        query.id ? query.id : projectDetails.projectId
-      }?type=transform`
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}` //?type=transform
     );
     setLoading(false);
     if (data.success) {
@@ -364,11 +362,13 @@ const Transform = ({ dataModernizationCss }) => {
                     },
                   },
                 ]}
-                dataSource={data.filter(
-                  (data) =>
-                    data.fileStatus !== "analyze_failed" &&
-                    data.isUserAction === true
-                )}
+                dataSource={data
+                  .sort((a, b) => a.fileId - b.fileId)
+                  .filter(
+                    (data) =>
+                      data.fileStatus !== "analyze_failed" &&
+                      data.isUserAction === true
+                  )}
               />
             </Col>
           </Row>

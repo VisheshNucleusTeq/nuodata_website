@@ -414,3 +414,7 @@
   color: #fff;
 }
 /* validate */
+
+.wordCss{
+  word-wrap: break-word;
+}

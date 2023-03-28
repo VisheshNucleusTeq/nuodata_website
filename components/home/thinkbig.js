@@ -80,7 +80,7 @@ export default function ThinkBig({ HomeCss }) {
         <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10}>
           <iframe
             src="all-graph/home/mobile_view/one/demo/one.html"
-            style={{ width: "100vw", height: "100vw", border: "none" }}
+            style={{ width: "100vw", height: "100vh", border: "none" }}
           />
         </Col>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
@@ -135,7 +135,7 @@ export default function ThinkBig({ HomeCss }) {
         <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10}>
           <iframe
             src="all-graph/home/mobile_view/two/demo/two.html"
-            style={{ width: "100%", height: "100vw", border: "none" }}
+            style={{ width: "100%", height: "100vh", border: "none" }}
           />
         </Col>
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />

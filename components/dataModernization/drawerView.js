@@ -1,16 +1,7 @@
 import React from "react";
 import {
-  Table,
-  Space,
-  Button,
-  Input,
-  Collapse,
-  Card,
   Row,
   Col,
-  message,
-  Select,
-  Drawer,
   Timeline,
   Divider,
 } from "antd";
@@ -19,11 +10,8 @@ const DrawerView = ({
   tableNameLog,
   columnLog,
   tableColumnsChange,
-  versionListArr,
   version,
-  setVersion,
-  changeVersion,
-  getFileChangeLog,
+  dataModernizationCss
 }) => {
   const findCurrentTableName = (tableId, type) => {
     const oldName =
@@ -76,7 +64,12 @@ const DrawerView = ({
           <p
             style={{
               backgroundColor:
-                oldName?.columnName != newName?.columnName ? "#ffd7d5" : "#FFF",
+                oldName?.columnName !=
+                (newName?.columnName
+                  ? newName?.columnName
+                  : oldName?.columnName)
+                  ? "#ffd7d5"
+                  : "#FFF",
             }}
           >
             <b>{oldName?.columnName}</b>
@@ -94,14 +87,25 @@ const DrawerView = ({
           <p
             style={{
               backgroundColor:
-                oldName?.columnName != newName?.columnName ? "#e6ffec" : "#FFF",
+                oldName?.columnName !=
+                (newName?.columnName
+                  ? newName?.columnName
+                  : oldName?.columnName)
+                  ? "#e6ffec"
+                  : "#FFF",
             }}
           >
-            <b>{newName?.columnName}</b>
+            <b>
+              {newName?.columnName ? newName?.columnName : oldName?.columnName}
+            </b>
           </p>
           <p>
             <small>
-              <i>{newName?.columnType}</i>
+              <i>
+                {newName?.columnType
+                  ? newName?.columnType
+                  : oldName?.columnType}
+              </i>
             </small>
           </p>
         </>
@@ -223,13 +227,13 @@ const DrawerView = ({
                   <Col span={24} style={{ marginTop: "1%" }}>
                     <Row>
                       <Col span={1}></Col>
-                      <Col span={10}>
+                      <Col span={10} className={dataModernizationCss.wordCss}>
                         {findCurrentTableName(table.tableId, "OLD")}
                       </Col>
                       <Col span={2} style={{ textAlign: "center" }}>
                         -
                       </Col>
-                      <Col span={10}>
+                      <Col span={10} className={dataModernizationCss.wordCss}>
                         {findCurrentTableName(table.tableId, "NEW")}
                       </Col>
                       <Col span={1}></Col>
@@ -247,13 +251,13 @@ const DrawerView = ({
                           key={(Math.random() + 1).toString(36).substring(7)}
                         >
                           <Col span={2}></Col>
-                          <Col span={9}>
+                          <Col span={9} className={dataModernizationCss.wordCss}>
                             {findCurrentColumnName(col.columnId, i, "OLD")}
                           </Col>
                           <Col span={2} style={{ textAlign: "center" }}>
                             -
                           </Col>
-                          <Col span={9}>
+                          <Col span={9} className={dataModernizationCss.wordCss}>
                             <p>
                               {findCurrentColumnName(col.columnId, i, "NEW")}
                             </p>

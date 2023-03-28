@@ -18,11 +18,12 @@ export const TABLEDATA = "process/v1/design/target/columns/file/";
 export const UPDATECOLDETAILS = "process/v1/design/target/columns/file/";
 export const RELEASEVERSION = "process/v1/design/convert/file/";
 export const TABLECHANGELOGS =
-  "process/v1/design/target/table/changelogs?tableId=";
+  "process/v1/design/target/table/changelogs/file/";
 export const COLUMNCHANGELOGS =
-  "process/v1/design/target/column/changelogs?columnId=";
+  "process/v1/design/target/column/changelogs/file/";
 export const CHANGELOGS = "process/v1/design/target/changelog/file/";
 export const CONTACT = "usermgmt/v1/contact";
 export const JSONSTRUCTURE = "process/v1/design/json/structure/";
 export const CONVERTTRANSFORN = "process/v1/convert/transform/";
 export const DOWNLOADZIP = "core/v1/download/zip/file/";
+export const UPDATEDESIGN = "process/v1/design/target/tables/columns/file/"
