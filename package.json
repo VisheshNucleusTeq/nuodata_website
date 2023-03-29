@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "set NODE_ENV=local && next dev",
     "build": "next build && next export",
     "start": "next start",
-    "lint": "next lint",
-    "deploy" : "git config --global user.name 'aishwary-nucleusteq' && git config --global user.email 'aishwary.rathore@nucleusteq.com' && git add . && git commit -m 'latest --deploy' && git push origin dev_uat"
+    "lint": "next lint"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
