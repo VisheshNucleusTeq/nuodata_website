@@ -24,7 +24,6 @@ export default function Info({ HomeCss }) {
               animatePreScroll={true}
               animateOnce={false}
             >
-              <p style={{color : "red"}}>{process.env.BASE_URL}</p>
               <h1>
                 <span className={HomeCss.spanText}>ONE PLATFORM</span> FOR ALL
                 ENTERPRISE DATA <br />
