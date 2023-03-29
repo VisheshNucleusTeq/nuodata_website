@@ -87,7 +87,7 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
           Congratulations !
           <a
             className={dataModernizationCss.downloadIcon}
-            href={`${"https://api.dev.nuodata.io/"}${DOWNLOADZIP}${
+            href={`${process.env.BASE_URL}${DOWNLOADZIP}${
               analyzeDetail?.fileId
             }?type=xml&workflowId=0`}
           >

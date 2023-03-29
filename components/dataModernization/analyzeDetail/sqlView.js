@@ -44,7 +44,7 @@ const SqlView = ({
                 <span onClick={(e) => e.stopPropagation()}>
                   <Tooltip placement="right" title={"Download"}>
                     <a
-                      href={`${"https://api.dev.nuodata.io/"}${DOWNLOADZIP}${analyzeDetailsId}?type=workflow&workflowId=${
+                      href={`${process.env.BASE_URL}${DOWNLOADZIP}${analyzeDetailsId}?type=workflow&workflowId=${
                         (treeDataObj.children[i].children[j].key + "").split(
                           "_"
                         )[0]

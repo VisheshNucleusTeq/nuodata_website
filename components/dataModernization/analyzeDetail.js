@@ -148,7 +148,7 @@ const AnalyzeDetail = ({
         centered
         open={open}
         onOk={() => {
-          const file_path = `${"https://api.dev.nuodata.io/"}${DOWNLOADFILE}${showDownload}`;
+          const file_path = `${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`;
           const a = document.createElement("A");
           a.href = file_path;
           a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
@@ -178,7 +178,7 @@ const AnalyzeDetail = ({
         centered
         open={sqlOpen}
         onOk={() => {
-          const file_path = `${"https://api.dev.nuodata.io/"}${DOWNLOADFILE}${showDownload}`;
+          const file_path = `${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`;
           const a = document.createElement("A");
           a.href = file_path;
           a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
@@ -375,7 +375,7 @@ const AnalyzeDetail = ({
                       <div onClick={(e) => e.stopPropagation()}>
                         <Space size="middle" style={{ cursor: "pointer" }}>
                           <a
-                            href={`${"https://api.dev.nuodata.io/"}${DOWNLOADZIP}${analyzeDetailsId}?type=pyspark&workflowId=0`}
+                            href={`${process.env.BASE_URL}${DOWNLOADZIP}${analyzeDetailsId}?type=pyspark&workflowId=0`}
                           >
                             <span
                               className={dataModernizationCss.downloadBtnSpace}
@@ -429,7 +429,7 @@ const AnalyzeDetail = ({
                           !e.fileType.includes("_graph_src") ? (
                             <div onClick={(e) => e.stopPropagation()}>
                               <a
-                                href={`${"https://api.dev.nuodata.io/"}${DOWNLOADFILE}${
+                                href={`${process.env.BASE_URL}${DOWNLOADFILE}${
                                   e.outputFileId
                                 }`}
                               >
