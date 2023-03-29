@@ -10,6 +10,7 @@ export default function Home() {
   return (
     <>
       <Info HomeCss={HomeCss} />
+      <p style={{color : "red"}}>{process.env.BASE_URL}</p>
       <ThinkBig HomeCss={HomeCss} />
       <EnterpriseChallenge HomeCss={HomeCss} />
       <div className={HomeCss.space} />
