@@ -172,8 +172,6 @@ const Connect = ({ dataModernizationCss }) => {
 
 export default Connect;
 
-
-
 // import {
 //   InboxOutlined,
 //   FileAddOutlined,
