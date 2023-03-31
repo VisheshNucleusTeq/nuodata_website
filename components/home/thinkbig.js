@@ -53,7 +53,7 @@ export default function ThinkBig({ HomeCss }) {
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
         <Col span={16}>
           <iframe
-            src="all-graph/home/one/demo/one.html"
+            src="all-graph/home/one/one.html"
             style={{ width: "100%", height: "40vw", border: "none" }}
           />
           {/* <Image src="/home/new-video.gif" preview={false} /> */}

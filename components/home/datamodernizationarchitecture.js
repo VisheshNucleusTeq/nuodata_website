@@ -25,7 +25,7 @@ export default function DataModernizationArchitecture({ HomeCss }) {
       <Col offset={0} span={24} className={`${HomeCss.infoRowSystemView} ${HomeCss.infoRowSystemViewmobile}`}>
         <iframe
           src="all-graph/home/mobile_view/three/three.html"
-          style={{ width: "100%", height: "80vh", border: "none" }}
+          style={{ width: "100%", height: "60vh", border: "none" }}
         />
       </Col>
 
