@@ -109,10 +109,10 @@ export default function Validate({ dataModernizationCss }) {
                 render: (_, record) => {
                   return (
                     <b
-                      // onClick={() => {
-                      //   console.log(record)
-                      //   setOpen(true);
-                      // }}
+                      onClick={() => {
+                        console.log(record)
+                        setOpen(true);
+                      }}
                       style={{ cursor: "pointer", color: "#e74860" }}
                     >
                       {record.file}

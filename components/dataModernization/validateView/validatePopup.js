@@ -8,74 +8,16 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 
-const dataSource = Array(20)
-  .fill(undefined)
-  .map((e, i) => {
-    return {
-      key: 1 + i,
-      select: i + " Mike",
-      input: 32 + i,
-      action: "10 Downing Street",
-    };
-  });
-
-const columns = [
-  {
-    title: "Select",
-    dataIndex: "select",
-    key: "select",
-    render: (value, row, index) => {
-      return (
-        <Select
-          placeholder="Status"
-          options={[
-            {
-              value: "notStarted",
-              label: "Not Started",
-            },
-            {
-              value: "passed",
-              label: "Passed",
-            },
-            {
-              value: "failed",
-              label: "Failed",
-            },
-          ]}
-          style={{ width: "100%" }}
-        />
-      );
-    },
-  },
-  {
-    title: "Input",
-    dataIndex: "input",
-    key: "input",
-    render: (value, row, index) => {
-      return <Input.TextArea style={{ width: "100%" }} rows={1} placeholder={"Comments"}/>;
-    },
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    render: (value, row, index) => {
-      return (
-        <Space>
-          <a>
-            <FileAddOutlined style={{ fontSize: "2.5vh" }} />
-          </a>
-          <a>
-            <EyeOutlined style={{ fontSize: "2.5vh" }} />
-          </a>
-          <a>
-            <SyncOutlined style={{ fontSize: "2.5vh" }} />
-          </a>
-        </Space>
-      );
-    },
-  },
-];
+// const dataSource = Array(20)
+//   .fill(undefined)
+//   .map((e, i) => {
+//     return {
+//       key: 1 + i,
+//       select: i + " Mike",
+//       input: 32 + i,
+//       action: "10 Downing Street",
+//     };
+//   });
 
 const ValidatePopup = () => {
   const [treeData, setTreeData] = useState([
@@ -210,6 +152,8 @@ const ValidatePopup = () => {
       key: "defaultExpandedKey",
     },
   ]);
+
+  const [childData, setChildData] = useState([]);
   const [treeDataDefault, setTreeDataDefault] = useState(treeData);
   const [search, setSearch] = useState("");
 
@@ -256,12 +200,32 @@ const ValidatePopup = () => {
                       overflowY: "scroll",
                     }}
                     showLine
-                    onSelect={(e,i) => {
-                      console.log(i.node?.children);
+                    onSelect={(e, i) => {
+                      if (i?.node?.children) {
+                        setChildData([]);
+                      } else {
+                        const element = document.querySelector(
+                          `[data-row-key="${e[0]}"]`
+                        );
+                        console.log(element);
+                        if (element) {
+                          element.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                            inline: "center",
+                          });
+                          element.animate({backgroundColor: "rgb(12, 50, 70, .9)"}, 5000);
+                          element.animate({backgroundColor: "#FFF"}, 5000);
+                        }
+                      }
+                      if (
+                        i?.node?.children &&
+                        i?.node?.children.length &&
+                        !i?.node?.children[0].children
+                      ) {
+                        setChildData(i?.node?.children);
+                      }
                     }}
-                    // onClick={(e) => {
-                    //   console.log(e)
-                    // }}
                     treeData={treeData}
                   />
                 </>
@@ -280,8 +244,17 @@ const ValidatePopup = () => {
                       overflowY: "scroll",
                     }}
                     showLine
-                    onSelect={(e) => {
-                      alert(e);
+                    onSelect={(e, i) => {
+                      if (i?.node?.children) {
+                        setChildData([]);
+                      }
+                      if (
+                        i?.node?.children &&
+                        i?.node?.children.length &&
+                        !i?.node?.children[0].children
+                      ) {
+                        setChildData(i?.node?.children);
+                      }
                     }}
                     treeData={treeData}
                   />
@@ -299,10 +272,92 @@ const ValidatePopup = () => {
 
         <Col span={18} style={{ height: "85vh", padding: "1vw" }}>
           <Table
+            // onRow={(record, rowIndex) => ({
+            //   id: rowIndex.key,
+            // })}
             showHeader={false}
             pagination={false}
-            dataSource={dataSource}
-            columns={columns}
+            columns={[
+              {
+                title: "File",
+                dataIndex: "file",
+                key: "file",
+                render: (_, record) => {
+                  return (
+                    <b
+                      onClick={() => {
+                        console.log(record);
+                      }}
+                      style={{ cursor: "pointer", color: "#e74860" }}
+                    >
+                      {record.title}
+                    </b>
+                  );
+                },
+              },
+              {
+                title: "Select",
+                dataIndex: "select",
+                key: "select",
+                render: (value, row, index) => {
+                  return (
+                    <Select
+                      placeholder="Status"
+                      options={[
+                        {
+                          value: "notStarted",
+                          label: "Not Started",
+                        },
+                        {
+                          value: "passed",
+                          label: "Passed",
+                        },
+                        {
+                          value: "failed",
+                          label: "Failed",
+                        },
+                      ]}
+                      style={{ width: "100%" }}
+                    />
+                  );
+                },
+              },
+              {
+                title: "Input",
+                dataIndex: "input",
+                key: "input",
+                render: (value, row, index) => {
+                  return (
+                    <Input.TextArea
+                      style={{ width: "100%" }}
+                      rows={1}
+                      placeholder={"Comments"}
+                    />
+                  );
+                },
+              },
+              {
+                title: "Action",
+                dataIndex: "action",
+                key: "action",
+                render: (value, row, index) => {
+                  return (
+                    <Space id={row.key + "_id"}>
+                      <a>
+                        <FileAddOutlined style={{ fontSize: "2.5vh" }} />
+                      </a>
+                      <a>
+                        <EyeOutlined style={{ fontSize: "2.5vh" }} />
+                      </a>
+                      <a>
+                        <SyncOutlined style={{ fontSize: "2.5vh" }} />
+                      </a>
+                    </Space>
+                  );
+                },
+              },
+            ]}
+            dataSource={childData}
             style={{ height: "83vh", overflow: "scroll" }}
           />
         </Col>
