@@ -1,29 +1,31 @@
 export const LOGIN = "usermgmt/v1/login";
+export const CONTACT = "usermgmt/v1/contact";
+
+export const ANALYZE = "process/v2/analyze";
+export const GETANALYZEDATA = "process/v2/analyze/file/";
+export const TRANSFORM = "process/v2/convert/";
+export const ANALYZESUMMARY = "process/v2/analyze/summary/";
+export const DESIGN = "process/v2/design/graph/json/";
+export const TARGET = "process/v2/target/";
+export const VERSION = "process/v2/design/metadata/file/";
+export const TABLE = "process/v2/design/target/tables/file/";
+export const UPDATETABLE = "process/v2/design/target/tables/file/";
+export const TABLEDATA = "process/v2/design/target/columns/file/";
+export const UPDATECOLDETAILS = "process/v2/design/target/columns/file/";
+export const RELEASEVERSION = "process/v2/design/convert/file/";
+export const JSONSTRUCTURE = "process/v2/design/json/structure/";
+export const CONVERTTRANSFORN = "process/v2/convert/transform/";
+export const CHANGELOGS = "process/v2/design/target/changelog/file/";
+export const TABLECHANGELOGS =
+  "process/v2/design/target/table/changelogs/file/";
+export const UPDATEDESIGN = "process/v2/design/target/tables/columns/file/";
+export const COLUMNCHANGELOGS =
+  "process/v2/design/target/column/changelogs/file/";
+
 export const DEFINE = "core/v1/project";
 export const UPLOADFILE = "core/v1/upload";
-export const ANALYZE = "process/v1/analyze";
 export const GETALLPROJECT = "core/v1/project/all/org/";
-export const GETANALYZEDATA = "process/v1/analyze/file/";
-export const TRANSFORM = "process/v1/convert/";
 export const GETPROJECT = "core/v1/project/";
 export const UPDATEPROJECT = "core/v1/project/";
-export const ANALYZESUMMARY = "process/v1/analyze/summary/";
 export const DOWNLOADFILE = "core/v1/download/file/";
-export const DESIGN = "process/v1/design/graph/json/";
-export const TARGET = "process/v1/target/";
-export const VERSION = "process/v1/design/metadata/file/";
-export const TABLE = "process/v1/design/target/tables/file/";
-export const UPDATETABLE = "process/v1/design/target/tables/file/";
-export const TABLEDATA = "process/v1/design/target/columns/file/";
-export const UPDATECOLDETAILS = "process/v1/design/target/columns/file/";
-export const RELEASEVERSION = "process/v1/design/convert/file/";
-export const TABLECHANGELOGS =
-  "process/v1/design/target/table/changelogs/file/";
-export const COLUMNCHANGELOGS =
-  "process/v1/design/target/column/changelogs/file/";
-export const CHANGELOGS = "process/v1/design/target/changelog/file/";
-export const CONTACT = "usermgmt/v1/contact";
-export const JSONSTRUCTURE = "process/v1/design/json/structure/";
-export const CONVERTTRANSFORN = "process/v1/convert/transform/";
 export const DOWNLOADZIP = "core/v1/download/zip/file/";
-export const UPDATEDESIGN = "process/v1/design/target/tables/columns/file/"

@@ -42,7 +42,6 @@ const columns = [
               label: "Failed",
             },
           ]}
-          // defaultValue={"notStarted"}
           style={{ width: "100%" }}
         />
       );
@@ -257,9 +256,12 @@ const ValidatePopup = () => {
                       overflowY: "scroll",
                     }}
                     showLine
-                    onSelect={(e) => {
-                      alert(e);
+                    onSelect={(e,i) => {
+                      console.log(i.node?.children);
                     }}
+                    // onClick={(e) => {
+                    //   console.log(e)
+                    // }}
                     treeData={treeData}
                   />
                 </>

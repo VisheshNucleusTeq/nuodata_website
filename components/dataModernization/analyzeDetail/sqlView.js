@@ -131,7 +131,6 @@ const SqlView = ({
         if(designView){
           setActiveTab("GRAPH");
         }
-        // if (!parentArr.includes(dataId2)) setShowDownload(dataId2);
       }
     }
 

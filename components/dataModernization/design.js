@@ -23,8 +23,6 @@ import {
   VERSION,
   TABLE,
   TABLEDATA,
-  // UPDATETABLE,
-  // UPDATECOLDETAILS,
   RELEASEVERSION,
   TABLECHANGELOGS,
   COLUMNCHANGELOGS,
@@ -292,37 +290,6 @@ export default function Design({ dataModernizationCss }) {
     dispatch(loderShowHideAction(false));
   };
 
-  // const updateFileRecord = async (release = false) => {
-  //   dispatch(loderShowHideAction(true));
-
-  //   const authData = JSON.parse(localStorage.getItem("authData"));
-  //   if (updatedTableDetails && updatedTableDetails.length) {
-  //     await fetch_retry_put(
-  //       `${UPDATETABLE}${fileId}?userId=${authData?.userId}`,
-  //       updatedTableDetails
-  //     );
-  //   }
-
-  //   if (updatedColumnDetails && updatedColumnDetails.length) {
-  //     await fetch_retry_put(
-  //       `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
-  //       updatedColumnDetails
-  //     );
-  //   }
-
-  //   if (release) {
-  //     await fetch_retry_post(`${RELEASEVERSION}${fileId}`);
-  //     dispatch(
-  //       SetProjectTransformDetailsAction({
-  //         analyzeDetailsId: fileId,
-  //         version: isDraftState ? version : version + 1,
-  //       })
-  //     );
-  //     dispatch(SetTabTypeAction("Transform"));
-  //   }
-  //   getFileData(fileId);
-  //   dispatch(loderShowHideAction(false));
-  // };
 
   const changeVersion = async (version) => {
     const tableData = await fetch_retry_get(
@@ -503,13 +470,6 @@ export default function Design({ dataModernizationCss }) {
                 return record?.isUserAction
                   ? getTrueStatus(record.fileStatus)
                   : gerFalseStatus(record.fileStatus);
-
-                // switch (record.fileStatus) {
-                //   case "analyze_failed":
-                //     return <Badge count={"Analysis Failed"} color="red" />;
-                //   default:
-                //     return <Badge count={"Analysis Completed"} color="green" />;
-                // }
               },
             },
             {
@@ -719,9 +679,10 @@ export default function Design({ dataModernizationCss }) {
           danger
           className={dataModernizationCss.nextBtn}
           onClick={() => {
-            updateFileRecord(true);
+            // updateFileRecord(true);
           }}
-          disabled={loading || versionListArr.length != version}
+          // disabled={loading || versionListArr.length != version}
+          disabled={true}
         >
           Transform File
         </Button>

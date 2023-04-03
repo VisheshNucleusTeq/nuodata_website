@@ -96,11 +96,11 @@ export default function Validate({ dataModernizationCss }) {
               emptyText: "No Record Available",
             }}
             rowKey="fileId"
-            expandable={{
-              expandedRowRender: (record) => {
-                return <ValidatePopup />;
-              },
-            }}
+            // expandable={{
+            //   expandedRowRender: (record) => {
+            //     return <ValidatePopup />;
+            //   },
+            // }}
             columns={[
               {
                 title: "File",
@@ -109,10 +109,11 @@ export default function Validate({ dataModernizationCss }) {
                 render: (_, record) => {
                   return (
                     <b
-                      onClick={() => {
-                        setOpen(true);
-                      }}
-                      style={{cursor : "pointer", color :"#e74860"}}
+                      // onClick={() => {
+                      //   console.log(record)
+                      //   setOpen(true);
+                      // }}
+                      style={{ cursor: "pointer", color: "#e74860" }}
                     >
                       {record.file}
                     </b>
@@ -131,19 +132,11 @@ export default function Validate({ dataModernizationCss }) {
                 dataIndex: "mappings",
                 key: "mappings",
               },
-
               {
                 title: "Transformations",
                 dataIndex: "transformations",
                 key: "transformations",
               },
-
-              // {
-              //   title: "Type",
-              //   dataIndex: "type",
-              //   key: "type",
-              // },
-
               {
                 title: "Status",
                 key: "status",
@@ -165,15 +158,15 @@ export default function Validate({ dataModernizationCss }) {
                   return (
                     <>
                       {/* <Space size="middle" style={{ cursor: "pointer" }}> */}
-                      <a style={{ cursor: "pointer" }}>
+                      <a style={{ cursor : "not-allowed" }}>
                         <GithubOutlined /> {"Check-in (GitHub)"}
                       </a>
                       <br />
-                      <a style={{ cursor: "pointer" }}>
+                      <a style={{ cursor: "not-allowed" }}>
                         <DatabaseOutlined /> {"Launch Databricks"}
                       </a>
                       <br />
-                      <a style={{ cursor: "pointer" }}>
+                      <a style={{ cursor: "not-allowed" }}>
                         <CheckCircleOutlined /> {"Mark Validation Completed"}
                       </a>
                       {/* </Space> */}

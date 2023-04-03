@@ -369,18 +369,6 @@ const Analyze = ({ dataModernizationCss }) => {
                       return record?.isUserAction
                         ? getTrueStatus(record.fileStatus)
                         : gerFalseStatus(record.fileStatus);
-
-                      return <>{record?.isUserAction + ""}</>;
-                      // switch (record.fileStatus) {
-                      //   case "analyze_failed":
-                      //     return (
-                      //       <Badge count={"Analysis Failed"} color="red" />
-                      //     );
-                      //   default:
-                      //     return (
-                      //       <Badge count={"Analysis Completed"} color="green" />
-                      //     );
-                      // }
                     },
                   },
                   {

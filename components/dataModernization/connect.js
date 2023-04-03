@@ -33,9 +33,7 @@ const Connect = ({ dataModernizationCss }) => {
     action: `${process.env.BASE_URL}${UPLOADFILE}/project/${
       query.id ? query.id : projectDetails.projectId
     }/user/${authData.userId}`,
-    // showUploadList :false,
     onChange(info) {
-      console.log(info)
       setLoading(true);
       const { status } = info.file;
       if (status === "done") {
@@ -133,81 +131,3 @@ const Connect = ({ dataModernizationCss }) => {
 };
 
 export default Connect;
-
-// import { FileAddOutlined, LoadingOutlined } from "@ant-design/icons";
-// import { message, Upload, Row, Col } from "antd";
-// import { useState } from "react";
-// const { Dragger } = Upload;
-// import { useDispatch, useSelector } from "react-redux";
-// import { UPLOADFILE, ANALYZE, TRANSFORM } from "../../network/apiConstants";
-
-// const Connect = ({ dataModernizationCss }) => {
-//   const [isLoading, setLoading] = useState(false);
-
-//   const projectDetails = useSelector(
-//     (state) => state.projectDetails.projectDetails
-//   );
-//   const authData = JSON.parse(localStorage.getItem("authData"));
-//   const props = {
-//     name: "file",
-//     multiple: true,
-//     action: `${process.env.BASE_URL}${UPLOADFILE}/project/${projectDetails.projectId}/user/${authData.userId}`,
-//     onChange(info) {
-//       setLoading(true);
-//       const { status } = info.file;
-//       if (status !== "uploading") {
-//         console.log("uploading", info.file, info.fileList);
-//       }
-//       if (status === "done") {
-//         message.success(`${info.file.name} file uploaded successfully.`);
-//       } else if (status === "error") {
-//         message.error(`${info.file.name} file upload failed.`);
-//       }
-//     },
-//     onDrop(e) {
-//       console.log("Dropped files", e.dataTransfer.files);
-//     },
-//   };
-
-//   return (
-//     <Row className={dataModernizationCss.defineForm}>
-//       <Col xs={1} sm={2} md={4} lg={5} xl={6} xxl={6} />
-//       <Col
-//         xs={22}
-//         sm={20}
-//         md={16}
-//         lg={14}
-//         xl={12}
-//         xxl={12}
-//         className={dataModernizationCss.connectFileInput}
-//       >
-//         <Dragger
-//           {...props}
-//           style={{ width: "40vw", border: "none" }}
-//           height={"15vw"}
-//         >
-//           <Row>
-//             {isLoading ? (
-//               <Col span={24}>
-//                 <LoadingOutlined style={{ fontSize: "40px" }} />
-//               </Col>
-//             ) : (
-//               <Col span={24}>
-//                 <FileAddOutlined style={{ fontSize: "50px" }} />
-//               </Col>
-//             )}
-//             <Col span={24} style={{ marginTop: "4%" }}>
-//               Drag and drop or &nbsp;
-//               <span style={{ color: "#e74860", fontWeight: "bold" }}>
-//                 browse
-//               </span>
-//               &nbsp; your files
-//             </Col>
-//           </Row>
-//         </Dragger>
-//       </Col>
-//       <Col xs={1} sm={2} md={4} lg={5} xl={6} xxl={6} />
-//     </Row>
-//   );
-// };
-// export default Connect;

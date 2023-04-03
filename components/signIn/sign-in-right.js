@@ -27,21 +27,6 @@ function SignInRight({ loginCss }) {
     dispatch(loderShowHideAction(false));
   };
 
-  // useEffect(() => {
-  //   localStorage.setItem("authData", JSON.stringify({
-  //     "userId": 1,
-  //     "firstName": "Vishesh",
-  //     "lastName": "Tungare",
-  //     "email": "vishesh.tungare@nucleusteq.com",
-  //     "mobileNo": "9856457895",
-  //     "jobTitle": "Software Engineer",
-  //     "orgId": 1,
-  //     "orgName": "Nucleusteq"
-  // }));
-  //     dispatch(UserDetailsAction(true));
-  //     router.push("dashboard");
-  // },[])
-
   return (
     <div className={loginCss.flexView}>
       <div className={loginCss.loginForm}>
