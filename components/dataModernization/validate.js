@@ -22,7 +22,7 @@ export default function Validate({ dataModernizationCss }) {
         centered
         open={open}
         onOk={() => {
-          alert("OK");
+          setOpen(false);
         }}
         onCancel={() => {
           setOpen(false);
