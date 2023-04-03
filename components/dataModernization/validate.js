@@ -28,9 +28,9 @@ export default function Validate({ dataModernizationCss }) {
           setOpen(false);
         }}
         width={"100vw"}
-        okButtonProps={{ style: { display: "none" } }}
+        // okButtonProps={{ style: { display: "none" } }}
         cancelText={"Close"}
-        okText={"Download"}
+        okText={"Save"}
         closable={false}
       >
         <ValidatePopup />
