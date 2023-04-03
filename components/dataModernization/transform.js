@@ -12,6 +12,7 @@ import {
   Tag,
   message,
   Badge,
+  Tooltip,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -116,6 +117,26 @@ const Transform = ({ dataModernizationCss }) => {
         </Col>
       </Row>
     );
+  };
+
+  const getTrueStatus = (fileStatus) => {
+    switch (fileStatus) {
+      case "convert_failed":
+        return <Badge count={"Transformed Partially"} color="orange" />;
+      case "converted":
+        return <Badge count={"Transformed Successfully"} color="green" />;
+      default:
+        return <Badge count={"Analysis Completed"} color="green" />;
+    }
+  };
+
+  const gerFalseStatus = (fileStatus) => {
+    switch (fileStatus) {
+      case "analyze_failed":
+        return <Badge count={"Analysis Failed"} color="red" />;
+      default:
+        return <Badge count={"Analysis Completed"} color="green" />;
+    }
   };
 
   return (
@@ -271,13 +292,18 @@ const Transform = ({ dataModernizationCss }) => {
                 rowKey="fileId"
                 expandable={{
                   expandedRowRender: (record) => (
+                    // record.fileStatus === true ? (
                     <AnalyzeDetail
                       analyzeDetailsId={record.fileId}
                       dataModernizationCss={dataModernizationCss}
+                      isUserAction={record?.isUserAction}
                       showTop={false}
-                      showPopUp={true}
+                      showPopUp={record?.isUserAction}
                     />
                   ),
+                  // ) : (
+                  //   <center style={{color : "#e74860"}}>Please transform this file</center>
+                  // ),
                 }}
                 columns={[
                   {
@@ -303,27 +329,32 @@ const Transform = ({ dataModernizationCss }) => {
                   {
                     title: "Status",
                     key: "fileStatus",
+                    // render: (_, record) => {
+                    //   switch (record.fileStatus) {
+                    //     case "convert_failed":
+                    //       return (
+                    //         <Badge
+                    //           count={"Transformed Partially"}
+                    //           color="orange"
+                    //         />
+                    //       );
+                    //     case "converted":
+                    //       return (
+                    //         <Badge
+                    //           count={"Transformed Successfully"}
+                    //           color="green"
+                    //         />
+                    //       );
+                    //     default:
+                    //       return (
+                    //         <Badge count={"Analysis Completed"} color="green" />
+                    //       );
+                    //   }
+                    // },
                     render: (_, record) => {
-                      switch (record.fileStatus) {
-                        case "convert_failed":
-                          return (
-                            <Badge
-                              count={"Transformed Partially"}
-                              color="orange"
-                            />
-                          );
-                        case "converted":
-                          return (
-                            <Badge
-                              count={"Transformed Successfully"}
-                              color="green"
-                            />
-                          );
-                        default:
-                          return (
-                            <Badge count={"Analysis Completed"} color="green" />
-                          );
-                      }
+                      return record?.isUserAction
+                        ? getTrueStatus(record.fileStatus)
+                        : gerFalseStatus(record.fileStatus);
                     },
                   },
                   {
@@ -343,13 +374,39 @@ const Transform = ({ dataModernizationCss }) => {
                             </Space>
                           );
                         default:
-                          return (
+                          return record?.isUserAction ? (
                             <Space size="middle">
                               <a
                                 onClick={() => {
                                   dispatch(
                                     SetProjectTransformDetailsAction({
                                       analyzeDetailsId: record.fileId,
+                                      isUserAction: record.isUserAction,
+                                    })
+                                  );
+                                }}
+                              >
+                                <EyeOutlined /> View
+                              </a>
+                            </Space>
+                          ) : (
+                            // <Tooltip placement="topLeft" title={"Please transform this file."}>
+                            //   <Space
+                            //     size="middle"
+                            //     style={{ cursor: "not-allowed" }}
+                            //   >
+                            //     <a style={{ cursor: "not-allowed" }}>
+                            //       <EyeOutlined /> View
+                            //     </a>
+                            //   </Space>
+                            // </Tooltip>
+                            <Space size="middle">
+                              <a
+                                onClick={() => {
+                                  dispatch(
+                                    SetProjectTransformDetailsAction({
+                                      analyzeDetailsId: record.fileId,
+                                      isUserAction: record.isUserAction,
                                     })
                                   );
                                 }}
@@ -365,9 +422,8 @@ const Transform = ({ dataModernizationCss }) => {
                 dataSource={data
                   .sort((a, b) => a.fileId - b.fileId)
                   .filter(
-                    (data) =>
-                      data.fileStatus !== "analyze_failed" &&
-                      data.isUserAction === true
+                    (data) => data.fileStatus !== "analyze_failed"
+                    // && data.isUserAction === true
                   )}
               />
             </Col>

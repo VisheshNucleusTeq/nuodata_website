@@ -44,6 +44,7 @@ const AnalyzeDetail = ({
   setAnalyze,
   showTop,
   showPopUp,
+  isUserAction,
 }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -75,6 +76,7 @@ const AnalyzeDetail = ({
     );
     setLoading(false);
     if (data.success) {
+      console.log(data?.data);
       dispatch(SetAnalyzeDetailAction(data?.data));
       setData({ fileName: data?.data?.fileName, ...data?.data?.analysis });
       setAnalyzeDetails(data?.data?.complexity);
@@ -196,13 +198,21 @@ const AnalyzeDetail = ({
         okText={"Download"}
         closable={false}
       >
-        <SqlView
-          showPopUp={showPopUp}
-          analyzeDetailsId={analyzeDetailsId}
-          dataModernizationCss={dataModernizationCss}
-          setShowDownload={setShowDownload}
-          activeTabValue={activeTab}
-        />
+        {isUserAction ? (
+          <SqlView
+            showPopUp={showPopUp}
+            analyzeDetailsId={analyzeDetailsId}
+            dataModernizationCss={dataModernizationCss}
+            setShowDownload={setShowDownload}
+            activeTabValue={activeTab}
+          />
+        ) : (
+          <GraphView
+            showPopUp={showPopUp}
+            analyzeDetailsId={analyzeDetailsId}
+            setShowDownload={setShowDownload}
+          />
+        )}
       </Modal>
 
       {showTop && (
@@ -367,7 +377,7 @@ const AnalyzeDetail = ({
                   <center>Please Click On view</center>
                 </Collapse.Panel>
 
-                {showPopUp && (
+                {showPopUp && isUserAction && (
                   <Collapse.Panel
                     key={"Transformation-SQL"}
                     header={"Transformation SQL"}
@@ -429,9 +439,7 @@ const AnalyzeDetail = ({
                           !e.fileType.includes("_graph_src") ? (
                             <div onClick={(e) => e.stopPropagation()}>
                               <a
-                                href={`${process.env.BASE_URL}${DOWNLOADFILE}${
-                                  e.outputFileId
-                                }`}
+                                href={`${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`}
                               >
                                 <Space
                                   size="middle"

@@ -113,7 +113,7 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
               ? "Hours"
               : "hour"}
           </span>
-          of manual effort
+          of manual effort {projectTransformDetails?.isUserAction + ""}
         </h2>
       </Col>
       <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
@@ -137,7 +137,8 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
             analyzeDetailsId={projectTransformDetails?.analyzeDetailsId}
             dataModernizationCss={dataModernizationCss}
             showTop={false}
-            showPopUp={true}
+            showPopUp={projectTransformDetails?.isUserAction}
+            isUserAction={projectTransformDetails?.isUserAction}
           />
         </div>
       </Col>

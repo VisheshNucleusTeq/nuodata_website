@@ -12,6 +12,7 @@ import {
   Divider,
   Badge,
   Modal,
+  Tooltip
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -507,12 +508,15 @@ export default function Design({ dataModernizationCss }) {
                         );
                       default:
                         return (
+                          <Tooltip placement="topLeft" title={"Please transform this file."}>
+
                           <Space
                             size="middle"
                             style={{ cursor: "not-allowed" }}
                           >
                             <a style={{ cursor: "not-allowed" }}>Details</a>
                           </Space>
+                          </Tooltip>
                         );
                     }
                 }
