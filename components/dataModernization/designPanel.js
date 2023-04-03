@@ -1,36 +1,9 @@
 import React from "react";
-import {
-  Table,
-  Space,
-  Button,
-  Input,
-  Collapse,
-  Card,
-  Row,
-  Col,
-  message,
-  Select,
-  Drawer,
-} from "antd";
-import { useEffect, useRef, useState } from "react";
+import { Table, Input, Row, Col } from "antd";
+import { useEffect, useState } from "react";
 
-import {
-  ANALYZESUMMARY,
-  VERSION,
-  TABLE,
-  TABLEDATA,
-  UPDATETABLE,
-  UPDATECOLDETAILS,
-  RELEASEVERSION,
-  TABLECHANGELOGS,
-  COLUMNCHANGELOGS,
-  CHANGELOGS,
-} from "../../network/apiConstants";
-import {
-  fetch_retry_post,
-  fetch_retry_get,
-  fetch_retry_put,
-} from "../../network/api-manager";
+import { TABLEDATA } from "../../network/apiConstants";
+import { fetch_retry_get } from "../../network/api-manager";
 
 const DesignPanel = ({
   dataModernizationCss,
@@ -126,9 +99,9 @@ const DesignPanel = ({
             title: "Column Name",
             dataIndex: "columnName",
             key: "columnName",
-            render: (record, e, index) => (
+            render: (record, eData, index) => (
               <Input
-                value={e.columnName}
+                value={eData.columnName}
                 onChange={(_e) => {
                   const _tamp = JSON.parse(JSON.stringify(childTableData));
                   _tamp[index].columnName = _e.target.value;
@@ -136,6 +109,7 @@ const DesignPanel = ({
                   updatedColumnDetailsAction({
                     ...preChildTableData[index],
                     newName: _e.target.value,
+                    tableDetails: e,
                   });
                 }}
                 disabled={versionListArr.length != version}
@@ -151,14 +125,19 @@ const DesignPanel = ({
             title: "Action",
             dataIndex: "columnId",
             key: "columnId",
-            render: (record, e, index) => (
+            render: (record, _e, index) => (
               <p
                 style={{
                   color: "#e74860",
                   cursor: "pointer",
                 }}
                 onClick={() => {
-                  showColumnLogs(e.columnId);
+                  showColumnLogs(
+                    _e.columnId,
+                    _e.baseColumnName,
+                    _e.baseColumnType,
+                    e.tableId
+                  );
                 }}
               >
                 Change Logs
@@ -166,7 +145,7 @@ const DesignPanel = ({
             ),
           },
         ]}
-        dataSource={childTableData}
+        dataSource={childTableData.sort((a, b) => a.columnId - b.columnId)}
       />
     </>
   );

@@ -10,12 +10,14 @@ body {
 
 ::-webkit-scrollbar {
   background-color: #0c3246;
-  width: 0.4vw;
+  width: 0.3vw;
+  height: 0.3vw;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #e74860;
   border-radius: 5px;
+  height: 0.4vw;
 }
 
 .input {
@@ -341,10 +343,56 @@ html {
   opacity: 1 !important;
 }
 
-.treeCss .ant-tree-switcher{
+.treeCss .ant-tree-switcher {
   background-color: transparent !important;
 }
 
 .treeCss .ant-tree .ant-tree-treenode {
   padding: 0 0 10px 0 !important;
+}
+
+.controls-node {
+  position: absolute;
+  z-index: 5
+}
+
+.ant-tree-node-content-wrapper:hover {
+  background-color: #e74860 !important;
+}
+
+.treeCss .ant-tree-node-content-wrapper:hover {
+  background-color: #e74860 !important;
+}
+
+.treeCss .ant-tree-node-selected {
+  background-color: #e74860 !important;
+  border: 1px solid #fff;
+}
+
+.treeCss .demo123 {
+  color: #e74860;
+}
+
+.treeCss .demo123:hover {
+  color: #fff !important;
+}
+
+.demo123 .ant-tree-node-selected {
+  background-color: #e74860 !important;
+  border: 1px solid #fff !important;
+  color: #fff !important;
+}
+
+.downloadBtn {
+  background-color: #0c3246 !important;
+  padding: 0px 10px 0px 10px;
+  border-radius: 5px;
+  margin-left: 5px;
+  color: #fff;
+  font-weight: bolder !important;
+}
+
+.downloadBtn:hover {
+  border: 1px solid #fff;
+  color: #fff !important;
 }

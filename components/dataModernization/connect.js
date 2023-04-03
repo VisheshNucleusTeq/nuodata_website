@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Row, Col, Form, message, Upload } from "antd";
+const { Dragger } = Upload;
 import { FileAddOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -12,160 +13,119 @@ import { UPLOADFILE, ANALYZE, TRANSFORM } from "../../network/apiConstants";
 import { SetConnectDetailsAction, SetTabTypeAction } from "../../Redux/action";
 
 const Connect = ({ dataModernizationCss }) => {
+  const { query } = useRouter();
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const [isLoading, setLoading] = useState(false);
-  const [fileData, setFileData] = useState({});
-
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
-
   const connectDetails = useSelector(
     (state) => state.connectDetail.connectDetails
   );
+  const [isLoading, setLoading] = useState(false);
+  const authData = JSON.parse(localStorage.getItem("authData"));
 
-  useEffect(() => {
-    setFileData(connectDetails);
+  const [drawerViewProp] = useState({
+    style: { width: "40vw", border: "none", border : "1px dashed #0c3246" },
+    height: "15vw",
+    name: "file",
+    multiple: true,
+    action: `${process.env.BASE_URL}${UPLOADFILE}/project/${
+      query.id ? query.id : projectDetails.projectId
+    }/user/${authData.userId}`,
+    onChange(info) {
+      setLoading(true);
+      const { status } = info.file;
+      if (status === "done") {
+        analyzeCall(info?.file?.response);
+      } else if (status === "error") {
+        setLoading(false);
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e) {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
   });
-
-  const avatarUpload = async (file) => {
-    setLoading(true);
-    const payload = new FormData();
-    payload.append("file", file);
-    const authData = JSON.parse(localStorage.getItem("authData"));
-    const data = await fetch_retry_post_with_file(
-      `${UPLOADFILE}/${projectDetails.projectId}/${authData.userId}`,
-      payload
-    );
-
-    if (data.success) {
-      dispatch(SetConnectDetailsAction(data.data));
-      setFileData(data.data);
-      const analyeData = await analyzeCall(data.data);
-      const transData = await getTransform(data.data);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      message.error([data?.error]);
-    }
-  };
 
   const analyzeCall = async (fileDetails) => {
     const data = await fetch_retry_post(`${ANALYZE}/${fileDetails.fileId}`, {});
     if (!data.success && data?.error) {
-      // setLoading(false);
+      setLoading(false);
       message.error([data?.error]);
+    } else {
+      await getTransform(fileDetails);
+      setLoading(false);
     }
   };
 
   const getTransform = async (fileDetails) => {
     const data = await fetch_retry_post(`${TRANSFORM}${fileDetails.fileId}`);
     if (!data.success && data?.error) {
-      // setLoading(false);
       message.error([data?.error]);
     }
   };
 
   return (
     <Row className={dataModernizationCss.defineForm}>
-      <Col xs={1} sm={2} md={4} lg={5} xl={6} xxl={6} />
-      <Col
-        xs={22}
-        sm={20}
-        md={16}
-        lg={14}
-        xl={12}
-        xxl={12}
-        className={dataModernizationCss.connectFileInput}
-      >
-        <Form
-          layout="horizontal"
-          autoComplete="off"
-          labelCol={{ span: 7 }}
-          wrapperCol={{ span: 18 }}
-          onFinish={() => {
-            dispatch(SetTabTypeAction("Analyze"));
-          }}
-        >
-          <Form.Item
-            labelAlign={"left"}
-            name={"file"}
-            rules={
-              !fileData.fileName
-                ? [
-                    {
-                      required: true,
-                      message: "Source file is required.",
-                    },
-                  ]
-                : []
-            }
-          >
-            <Upload
-              action={avatarUpload}
-              listType="picture-card"
-              fileList={[]}
-              onChange={() => {}}
-              onPreview={() => {}}
-              style={{ width: "100vw" }}
-              accept=".xml"
-            >
-              <Row>
-                {isLoading ? (
-                  <Col span={24}>
-                    <LoadingOutlined style={{ fontSize: "40px" }} />
-                  </Col>
-                ) : (
-                  <Col span={24}>
-                    <FileAddOutlined style={{ fontSize: "50px" }} />
-                  </Col>
-                )}
-
-                <Col span={24} style={{ marginTop: "4%" }}>
-                  Drag and drop or &nbsp;
-                  <span style={{ color: "#e74860", fontWeight: "bold" }}>
-                    browse
-                  </span>
-                  &nbsp; your files
-                  <br />
-                  <br />
-                  {fileData.fileName && (
-                    <p style={{ color: "#e74860" }}>{fileData.fileName}</p>
-                  )}
-                </Col>
-              </Row>
-            </Upload>
-          </Form.Item>
-
-          <div className={dataModernizationCss.nextExitBtn}>
-            <Button
-              type="primary"
-              danger
-              className={dataModernizationCss.nextBtn}
-              htmlType="submit"
-              // disabled={fileData.fileName ? false : true}
-              disabled={isLoading}
-            >
-              Analyze File
-            </Button>
-
-            <Button
-              type="primary"
-              danger
-              className={dataModernizationCss.exitBtn}
-              onClick={() => {
-                router.push(`/dashboard`);
-              }}
-              disabled={isLoading}
-            >
-              Exit
-            </Button>
-          </div>
-        </Form>
+      <Col span={24} className={dataModernizationCss.connectFileInput}>
+        <Dragger {...drawerViewProp}>
+          <Row>
+            {isLoading ? (
+              <Col span={24}>
+                <LoadingOutlined style={{ fontSize: "40px" }} />
+              </Col>
+            ) : (
+              <Col span={24}>
+                <FileAddOutlined style={{ fontSize: "50px" }} />
+              </Col>
+            )}
+            <Col span={24} style={{ marginTop: "4%" }}>
+              Drag and drop or &nbsp;
+              <span style={{ color: "#e74860", fontWeight: "bold" }}>
+                browse
+              </span>
+              &nbsp; your files
+            </Col>
+          </Row>
+        </Dragger>
       </Col>
-      <Col xs={1} sm={2} md={4} lg={5} xl={6} xxl={6} />
+      {/* <Col span={24}>
+      {fileList.map(file => (
+          <div>
+            {file.name}{" "}
+            <a onClick={() => this.handleRemove(file.uid)}>click to remove</a>
+          </div>
+        ))}
+      </Col> */}
+      <Col span={24} style={{ marginTop: "2vw" }}>
+        <div className={dataModernizationCss.nextExitBtn}>
+          <Button
+            type="primary"
+            danger
+            className={dataModernizationCss.nextBtn}
+            htmlType="submit"
+            disabled={isLoading}
+            onClick={() => {
+              dispatch(SetTabTypeAction("Analyze"));
+            }}
+          >
+            Analyze File
+          </Button>
+
+          <Button
+            type="primary"
+            danger
+            className={dataModernizationCss.exitBtn}
+            onClick={() => {
+              router.push(`/dashboard`);
+            }}
+            disabled={isLoading}
+          >
+            Exit
+          </Button>
+        </div>
+      </Col>
     </Row>
   );
 };

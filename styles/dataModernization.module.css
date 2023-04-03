@@ -213,7 +213,7 @@
 }
 
 .downloadBtnSpace {
-  float: right;
+  /* float: right; */
   color: #0c3246;
   font-weight: bold;
 }
@@ -250,7 +250,7 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.validateTab {
+/* .validateTab {
   margin: 2% 0% 2% 0%;
 }
 
@@ -283,7 +283,7 @@
   border-left: 5px solid #f3f3f3;
   border-top-right-radius: 100px;
   border-bottom-right-radius: 100px;
-}
+} */
 
 .downloadData {
   text-align: end;
@@ -336,4 +336,85 @@
   display: flex;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.downloadIcon {
+  cursor: pointer !important;
+  float: right;
+  font-size: 3vh;
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+  padding: 0px 10px 0px 10px;
+  border-radius: 10px;
+  color: #e74860;
+}
+
+.downloadIcon:hover {
+  -webkit-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+  color: #e74860;
+}
+
+.tabView{
+  transition-duration: 1000ms;
+  border: 1px solid gray;
+  text-align: center;
+  height: 5vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  font-size: larger;
+  font-weight: bold;
+  border-radius: 2px;
+  color: #0c3246;
+  /* background-color: #0c3246;
+  color: #fff; */
+}
+
+.tabViewActive{
+  transition-duration: 1000ms;
+  background-color: #0c3246;
+  color: #fff;
+}
+
+.tabViewPar{
+  justify-content: center; 
+}
+
+/* validate */
+
+.validateTab{
+  margin: 2% 0% 2% 0%;
+}
+
+.validateTab h1{
+  color: #e74860;
+  font-weight: bold;
+  font-size: 2vw;
+}
+
+.expandableTableCss{
+  margin: 1%;
+  padding: 1%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.expandableTableCss h2 {
+  color: #0c3246;
+  font-weight: bold;
+}
+
+.tabViewActiveValidation{
+  background-color: #548135;
+  color: #fff;
+}
+/* validate */
+
+.wordCss{
+  word-wrap: break-word;
 }

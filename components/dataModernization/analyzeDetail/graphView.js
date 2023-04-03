@@ -1,107 +1,33 @@
-import React, { useState } from "react";
-import { Row, Col, Tree, Input } from "antd";
+import React, { Component, useState } from "react";
+import { Row, Col, Tree, Input, Space, Tooltip } from "antd";
+import { LoadingOutlined, DownloadOutlined } from "@ant-design/icons";
+import AnalyzeDetailPopup from "../graphView/analyzeDetailPopup";
 import {
-  FormOutlined,
-  DownOutlined,
-  CarryOutOutlined,
-} from "@ant-design/icons";
+  JSONSTRUCTURE,
+  DESIGN,
+  DOWNLOADZIP,
+} from "../../../network/apiConstants";
+import { fetch_retry_get } from "../../../network/api-manager";
 
-import AnalyzeDetailPopup from "../analyzeDetailPopup";
-
-const GraphView = ({ modalData, showPopUp }) => {
+const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
   const [outputFileId, setOutputFileId] = useState();
-  const [treeData, setTreeData] = useState([
-    {
-      title: "parent 1",
-      key: "0-0",
-      icon: <CarryOutOutlined />,
-      children: [
-        {
-          title: "parent 1-0",
-          key: "0-0-0",
-          icon: <CarryOutOutlined />,
-          children: [
-            {
-              title: "leaf",
-              key: "0-0-0-0",
-              icon: <CarryOutOutlined />,
-            },
-            {
-              title: "demo",
-              key: "0-0-0-1",
-              icon: <CarryOutOutlined />,
-            },
-            {
-              title: "leaf",
-              key: "0-0-0-2",
-              icon: <CarryOutOutlined />,
-            },
-          ],
-        },
-        {
-          title: "parent 1-1",
-          key: "0-0-1",
-          icon: <CarryOutOutlined />,
-          children: [
-            {
-              title: "leaf",
-              key: "0-0-1-0",
-              icon: <CarryOutOutlined />,
-            },
-          ],
-        },
-        {
-          title: "parent 1-2",
-          key: "0-0-2",
-          icon: <CarryOutOutlined />,
-          children: [
-            {
-              title: "leaf",
-              key: "0-0-2-0",
-              icon: <CarryOutOutlined />,
-            },
-            {
-              title: "leaf",
-              key: "0-0-2-1",
-              icon: <CarryOutOutlined />,
-              switcherIcon: <FormOutlined />,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "parent 2",
-      key: "0-1",
-      icon: <CarryOutOutlined />,
-      children: [
-        {
-          title: "parent 2-0",
-          key: "0-1-0",
-          icon: <CarryOutOutlined />,
-          children: [
-            {
-              title: "leaf",
-              key: "0-1-0-0",
-              icon: <CarryOutOutlined />,
-            },
-            {
-              title: "leaf",
-              key: "0-1-0-1",
-              icon: <CarryOutOutlined />,
-            },
-          ],
-        },
-      ],
-    },
-  ]);
+  const [treeData, setTreeData] = useState([]);
+  const [treeDataDefault, setTreeDataDefault] = useState([]);
+  const [showHide, setShowHide] = useState(true);
+  const [search, setSearch] = useState("");
+  const [modalData, setModalData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [selectedTree, setSelectedTree] = useState();
+  const [parentArr, setParentArr] = useState([]);
 
-  const [treeDataDefault, setTreeDataDefault] = useState(treeData);
+  const addDownloadIcon = (treeDataObj) => {
+    return treeDataObj
+  };
 
   const filter = (array, text) => {
     const getNodes = (result, object) => {
       if (object.title.toLowerCase().includes(text.toLowerCase())) {
-        result.push(object);
+        result.push({ ...object, className: text ? "demo123" : "" });
         return result;
       }
       if (Array.isArray(object.children)) {
@@ -113,48 +39,147 @@ const GraphView = ({ modalData, showPopUp }) => {
     return array.reduce(getNodes, []);
   };
 
+  const getTreeData = async (analyzeDetailsId) => {
+    const data = await fetch_retry_get(`${JSONSTRUCTURE}${analyzeDetailsId}`);
+    var treeDataObj = {
+      ...JSON.parse(JSON.stringify(data?.data)),
+      key: "defaultExpandedKey",
+    };
+
+    const treeDataObjDefault = {
+      ...JSON.parse(JSON.stringify(data?.data)),
+      key: "defaultExpandedKey",
+    };
+    setTreeDataDefault([treeDataObjDefault]);
+    setTreeData([addDownloadIcon(treeDataObj)]);
+  };
+
+  const getGraphData = async (id) => {
+    setShowDownload(false);
+    if (id + "") {
+      if (id + "" == selectedTree + "") {
+        return true;
+      }
+      setSelectedTree(id);
+    } else {
+      id = selectedTree;
+      return true;
+    }
+
+    setLoading(true);
+    setModalData({});
+    const dataId = (id + "").split("_")[0];
+    const data = await fetch_retry_get(`${DESIGN}${dataId}`);
+    if (data.success) {
+      setModalData(data.data);
+      if (!parentArr.includes(dataId)) setShowDownload(false);
+    }
+    setLoading(false);
+  };
+
+  useState(() => {
+    getTreeData(analyzeDetailsId);
+  }, [analyzeDetailsId]);
+
   return (
     <>
-      {modalData ? (
-        <Row>
-          {/* <Col span={4} style={{ backgroundColor: "#0c3246", height: "85vh" }}>
-            <Input
-              placeholder="Search"
-              onKeyUp={(e) => {
-                const filterData = filter(treeDataDefault, e.target.value);
-                setTreeData(filterData);
-              }}
-              style={{ height: "5vh", border: "1px solid #0c3246" }}
-            />
-            <Tree
-              className="treeCss"
-              defaultExpandAll={true}
-              style={{
-                color: "#FFF",
-                paddingTop: "2vh",
-                backgroundColor: "#0c3246",
-                height: "80vh",
-                overflowY: "scroll",
-              }}
-              showLine
-              switcherIcon={<DownOutlined />}
-              onSelect={(e) => {
-                alert(e);
-              }}
-              treeData={treeData}
-            />
-          </Col> */}
-          <Col span={24} style={{ height: "85vh", paddingLeft: "1vw" }}>
+      <Row>
+        <Col
+          span={showHide ? 6 : 0}
+          style={{ backgroundColor: "#0c3246", height: "85vh" }}
+        >
+          <Input
+            placeholder="Search"
+            onKeyUp={(e) => {
+              setSearch(e.target.value);
+              const filterData = filter(treeDataDefault, e.target.value);
+              setTreeData(
+                filterData.length
+                  ? [addDownloadIcon(JSON.parse(JSON.stringify(filterData[0])))]
+                  : []
+              );
+            }}
+            style={{ height: "5vh", border: "1px solid #0c3246" }}
+          />
+          {treeData.length > 0 || search.length > 0 ? (
+            <>
+              {search == "" ? (
+                <>
+                  <Tree
+                    className="treeCss"
+                    defaultExpandedKeys={["defaultExpandedKey"]}
+                    style={{
+                      color: "#FFF",
+                      paddingTop: "2vh",
+                      backgroundColor: "#0c3246",
+                      height: "80vh",
+                      overflowY: "scroll",
+                    }}
+                    showLine
+                    onSelect={(e) => {
+                      getGraphData(e);
+                    }}
+                    treeData={treeData}
+                  />
+                </>
+              ) : (
+                <>
+                  <span></span>
+                  <Tree
+                    className="treeCss"
+                    defaultExpandAll={true}
+                    defaultExpandParent={true}
+                    style={{
+                      color: "#FFF",
+                      paddingTop: "2vh",
+                      backgroundColor: "#0c3246",
+                      height: "80vh",
+                      overflowY: "scroll",
+                    }}
+                    showLine
+                    onSelect={(e) => {
+                      getGraphData(e);
+                    }}
+                    treeData={treeData}
+                  />
+                </>
+              )}
+            </>
+          ) : (
+            <center>
+              <LoadingOutlined
+                style={{ color: "#e74860", fontSize: "4vh", marginTop: "4vh" }}
+              />
+            </center>
+          )}
+        </Col>
+        <Col
+          span={showHide ? 18 : 24}
+          style={{ height: "85vh", paddingLeft: "1vw" }}
+        >
+          {modalData?.Edges ? (
             <AnalyzeDetailPopup
+              showHide={showHide}
+              setShowHide={setShowHide}
               outputFileId={outputFileId}
               data={modalData}
               showPopUp={showPopUp}
             />
-          </Col>
-        </Row>
-      ) : (
-        <p>Loading...</p>
-      )}
+          ) : (
+            <center
+              style={{
+                height: "100%",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+                color: "#e74860",
+              }}
+            >
+              {loading ? "Loading..." : "Select graph from tree view"}
+            </center>
+          )}
+        </Col>
+      </Row>
     </>
   );
 };

@@ -4,17 +4,14 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   addEdge,
-  useReactFlow,
-  Controls,
+ Controls,
   Background,
   MiniMap,
-  MarkerType
+  MarkerType,
 } from "reactflow";
 import dagre from "dagre";
-import NormalNode from "../NormalNode";
-import { DESIGN } from "../../network/apiConstants";
-import { fetch_retry_get } from "../../network/api-manager";
-import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
+import NormalNode from "../../NormalNode";
+import { RightOutlined,LeftOutlined, DownOutlined } from "@ant-design/icons";
 
 const nodeTypes = {
   normalNode: NormalNode,
@@ -60,49 +57,67 @@ const getLayoutedElements = (nodes, edges, showPopUp, direction = "LR") => {
   return { nodes, edges };
 };
 
-const AnalyzeDetailPopup = ({ outputFileId, data,showPopUp }) => {
-
+const AnalyzeDetailPopup = ({
+  outputFileId,
+  data,
+  showPopUp,
+  showHide,
+  setShowHide,
+}) => {
   const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
     data?.Nodes,
     data?.Edges,
     showPopUp
   );
 
-
-  const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes?.map(e => {
-    return {
-      ...e,
-    }
-  }));
-  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges?.map(e => {
-    return {
-      ...e,
-      label: e.transformationType,
-      animated: true,
-      type: "smoothstep",
-      markerEnd: {
-        type: MarkerType.ArrowClosed,
-        width: 20,
-        height: 20,
-        color: "#e74860",
-      },
-      style: {
-        stroke: "#e74860",
-        strokeWidth: "1px",
-      },
-    };
-  }));
+  const [nodes, setNodes, onNodesChange] = useNodesState(
+    layoutedNodes?.map((e) => {
+      return {
+        ...e,
+      };
+    })
+  );
+  const [edges, setEdges, onEdgesChange] = useEdgesState(
+    layoutedEdges?.map((e) => {
+      return {
+        ...e,
+        label: e.transformationType,
+        animated: true,
+        type: "smoothstep",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          width: 20,
+          height: 20,
+          color: "#e74860",
+        },
+        style: {
+          stroke: "#e74860",
+          strokeWidth: "1px",
+        },
+      };
+    })
+  );
   const [rfInstance, setRfInstance] = useState(null);
   const [selectedNode, setSelectedNode] = useState(null);
   const [jsonNode, setJson] = useState(null);
 
   const [name, SetName] = useState(null);
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge({ ...params, animated: false,  type: "straight",
-    style: {
-      stroke: "rgba(116, 166, 192, 1)",
-      strokeWidth: "2px",
-    }, }, eds)),
+    (params) =>
+      setEdges((eds) =>
+        addEdge(
+          {
+            ...params,
+            animated: false,
+            type: "straight",
+            style: {
+              stroke: "rgba(116, 166, 192, 1)",
+              strokeWidth: "2px",
+            },
+          },
+          eds
+        )
+      ),
     [setEdges]
   );
   const onLayout = useCallback(
@@ -126,7 +141,6 @@ const AnalyzeDetailPopup = ({ outputFileId, data,showPopUp }) => {
         }}
       >
         <ReactFlow
-        
           panOnScroll
           nodes={nodes}
           edges={edges}
@@ -144,17 +158,34 @@ const AnalyzeDetailPopup = ({ outputFileId, data,showPopUp }) => {
             setJson(node);
           }}
         >
+          <div className="controls-node">
+            <a
+              style={{color : "#e74860"}}
+              onClick={() => {
+                if (setShowHide) {
+                  setShowHide(!showHide);
+                }
+              }}
+            >
+              {showHide && showHide == true ? (<><LeftOutlined /> Hide</>) : (<>Show <RightOutlined/></>)}
+            </a>
+          </div>
           <Background />
           <Controls />
-          <MiniMap/>
+          <MiniMap />
         </ReactFlow>
       </div>
     </>
   );
 };
 
-export default ({ data, showPopUp }) => (
+export default ({ data, showPopUp, showHide, setShowHide }) => (
   <ReactFlowProvider>
-    <AnalyzeDetailPopup data={data} showPopUp={showPopUp} />
+    <AnalyzeDetailPopup
+      data={data}
+      showPopUp={showPopUp}
+      showHide={showHide}
+      setShowHide={setShowHide}
+    />
   </ReactFlowProvider>
 );

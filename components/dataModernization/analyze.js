@@ -20,8 +20,9 @@ import {
   ANALYZESUMMARY,
   VERSION,
   GETANALYZEDATA,
+  CONVERTTRANSFORN,
 } from "../../network/apiConstants";
-import { fetch_retry_get } from "../../network/api-manager";
+import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
 import BarChart from "./charts/barChart";
 import LineChart from "./charts/lineChart";
 import PieChart from "./charts/pieChart";
@@ -30,6 +31,7 @@ import {
   SetProjectDetailsAction,
   SetTabTypeAction,
   SetProjectTransformDetailsAction,
+  loderShowHideAction,
 } from "../../Redux/action";
 
 const Analyze = ({ dataModernizationCss }) => {
@@ -51,7 +53,9 @@ const Analyze = ({ dataModernizationCss }) => {
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
+      `${ANALYZESUMMARY}${
+        query.id ? query.id : projectDetails.projectId
+      }` //?type=analyze
     );
     setLoading(false);
     if (data.success) {
@@ -92,6 +96,44 @@ const Analyze = ({ dataModernizationCss }) => {
     setErrorDetails(data.data);
     setModalOpen(true);
     setLoading(false);
+  };
+
+  const updateTransformStatus = async () => {
+    dispatch(loderShowHideAction(true));
+    const isUserActionData = data.filter((e) => e.isUserAction === false);
+    const resultData = await Promise.all(
+      isUserActionData.map(async (e) => {
+        return new Promise(async (resolve, reject) => {
+          const data = await fetch_retry_post(
+            `${CONVERTTRANSFORN}${e?.fileId}`
+          );
+          resolve(data);
+        });
+      })
+    );
+    dispatch(SetProjectTransformDetailsAction({}));
+    dispatch(SetTabTypeAction("Transform"));
+    dispatch(loderShowHideAction(false));
+  };
+
+  const getTrueStatus = (fileStatus) => {
+    switch (fileStatus) {
+      case "convert_failed":
+        return <Badge count={"Transformed Partially"} color="orange" />;
+      case "converted":
+        return <Badge count={"Transformed Successfully"} color="green" />;
+      default:
+        return <Badge count={"Analysis Completed"} color="green" />;
+    }
+  };
+
+  const gerFalseStatus = (fileStatus) => {
+    switch (fileStatus) {
+      case "analyze_failed":
+        return <Badge count={"Analysis Failed"} color="red" />;
+      default:
+        return <Badge count={"Analysis Completed"} color="green" />;
+    }
   };
 
   return (
@@ -186,7 +228,12 @@ const Analyze = ({ dataModernizationCss }) => {
           <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col>
           <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15} style={{}}>
             <Card className={dataModernizationCss.cardViewGraphs}>
-              <Carousel dots={false} autoplay draggable className={dataModernizationCss.cardViewGraphCarousel}>
+              <Carousel
+                dots={false}
+                autoplay
+                draggable
+                className={dataModernizationCss.cardViewGraphCarousel}
+              >
                 <div className={dataModernizationCss.cardViewGraph}>
                   {complexityGraph && (
                     <BarChart
@@ -274,7 +321,7 @@ const Analyze = ({ dataModernizationCss }) => {
             </Card>
           </Col>
 
-          <Col
+          {/* <Col
             xs={24}
             sm={24}
             md={24}
@@ -284,13 +331,13 @@ const Analyze = ({ dataModernizationCss }) => {
             className={`${dataModernizationCss.validateTab} ${dataModernizationCss.downloadData}`}
           >
             <Button type="default">Download all output .zip file</Button>
-          </Col>
+          </Col> */}
 
           <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
             <div className={dataModernizationCss.analyzeMain}>
               <Table
                 locale={{
-                  emptyText: "Abc",
+                  emptyText: "No Record Available",
                 }}
                 className="demo"
                 rowKey="fileId"
@@ -319,16 +366,9 @@ const Analyze = ({ dataModernizationCss }) => {
                     title: "Status",
                     key: "fileStatus",
                     render: (_, record) => {
-                      switch (record.fileStatus) {
-                        case "analyze_failed":
-                          return (
-                            <Badge count={"Analysis Failed"} color="red" />
-                          );
-                        default:
-                          return (
-                            <Badge count={"Analysis Completed"} color="green" />
-                          );
-                      }
+                      return record?.isUserAction
+                        ? getTrueStatus(record.fileStatus)
+                        : gerFalseStatus(record.fileStatus);
                     },
                   },
                   {
@@ -369,7 +409,7 @@ const Analyze = ({ dataModernizationCss }) => {
                     },
                   },
                 ]}
-                dataSource={data}
+                dataSource={data.sort((a, b) => a.fileId - b.fileId)}
               />
             </div>
             <div className={dataModernizationCss.nextExitBtn}>
@@ -385,19 +425,19 @@ const Analyze = ({ dataModernizationCss }) => {
               >
                 Design Workflow <ArrowRightOutlined color="red" />
               </Button>
-              <Button
-                type="primary"
-                danger
-                className={dataModernizationCss.nextBtn}
-                htmlType="submit"
-                onClick={() => {
-                  dispatch(SetProjectTransformDetailsAction({}));
-                  dispatch(SetTabTypeAction("Transform"));
-                }}
-              >
-                Transform <ArrowRightOutlined />
-              </Button>
-
+              {data.filter((e) => e.isUserAction === false).length ? (
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.nextBtn}
+                  htmlType="submit"
+                  onClick={async () => {
+                    await updateTransformStatus();
+                  }}
+                >
+                  Transform <ArrowRightOutlined />
+                </Button>
+              ) : null}
               <Button
                 type="primary"
                 danger

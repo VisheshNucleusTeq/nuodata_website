@@ -1,15 +1,16 @@
-import { Row, Col, Table, Space, Card, message, Button, Modal } from "antd";
+import { Row, Col, message, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { fetch_retry_post, fetch_retry_get } from "../../network/api-manager";
+import { fetch_retry_get } from "../../network/api-manager";
 import {
   GETANALYZEDATA,
   DOWNLOADFILE,
   DESIGN,
+  DOWNLOADZIP,
 } from "../../network/apiConstants";
-import { DownloadOutlined, EyeOutlined } from "@ant-design/icons";
-import AnalyzeDetailPopup from "./analyzeDetailPopup";
+import { DownloadOutlined } from "@ant-design/icons";
+import AnalyzeDetailPopup from "./graphView/analyzeDetailPopup";
 import { SetAnalyzeDetailAction } from "../../Redux/action";
 import AnalyzeDetail from "./analyzeDetail";
 
@@ -82,9 +83,21 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
         xxl={23}
         className={dataModernizationCss.transform}
       >
-        <h1>Congratulations !</h1>
+        <h1>
+          Congratulations !
+          <a
+            className={dataModernizationCss.downloadIcon}
+            href={`${process.env.BASE_URL}${DOWNLOADZIP}${
+              analyzeDetail?.fileId
+            }?type=xml&workflowId=0`}
+          >
+            <span>
+              <DownloadOutlined /> Download
+            </span>
+          </a>
+        </h1>
         <h2>
-          Transformation Completed for File{" "}
+          Transformation Completed for File
           <span>
             {analyzeDetail?.fileName ? analyzeDetail?.fileName : "--"}
           </span>

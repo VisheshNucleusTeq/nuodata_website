@@ -23,13 +23,12 @@ import {
   VERSION,
   TABLE,
   TABLEDATA,
-  UPDATETABLE,
-  UPDATECOLDETAILS,
   RELEASEVERSION,
   TABLECHANGELOGS,
   COLUMNCHANGELOGS,
   CHANGELOGS,
   GETANALYZEDATA,
+  UPDATEDESIGN,
 } from "../../network/apiConstants";
 import {
   fetch_retry_post,
@@ -72,6 +71,7 @@ export default function Design({ dataModernizationCss }) {
   const [errorDetails, setErrorDetails] = useState({});
   const [updatedTableDetails, setUpdatedTableDetails] = useState([]);
   const [updatedColumnDetails, setUpdatedColumnDetails] = useState([]);
+  const [finalDataForUpdate, setFinalDataForUpdate] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
   const projectDetails = useSelector(
@@ -86,7 +86,9 @@ export default function Design({ dataModernizationCss }) {
   const showTableLogs = async (baseTableName, tableId) => {
     setColumnLog([]);
     setTableColumnsChange({});
-    const logData = await fetch_retry_get(`${TABLECHANGELOGS}${tableId}`);
+    const logData = await fetch_retry_get(
+      `${TABLECHANGELOGS}${fileId}?tableId=${tableId}`
+    );
     const logDataArr = logData?.data;
     if (logDataArr?.length > 0) {
       setOpen(true);
@@ -106,14 +108,31 @@ export default function Design({ dataModernizationCss }) {
     }
   };
 
-  const showColumnLogs = async (columnId) => {
+  const showColumnLogs = async (
+    columnId,
+    baseColumnName,
+    baseColumnType,
+    tableId
+  ) => {
     setTableNameLog([]);
     setTableColumnsChange({});
-    const logData = await fetch_retry_get(`${COLUMNCHANGELOGS}${columnId}`);
+    const logData = await fetch_retry_get(
+      `${COLUMNCHANGELOGS}${fileId}?tableId=${tableId}&columnId=${columnId}`
+    );
     const logDataArr = logData?.data;
     if (logDataArr?.length > 0) {
       setOpen(true);
-      setColumnLog(logDataArr.sort((a, b) => b.version - a.version));
+      setColumnLog(
+        [
+          ...logDataArr,
+          {
+            columnName: baseColumnName,
+            columnType: baseColumnType,
+            userEmail: <p style={{ color: "green" }}>Base Column Name</p>,
+            version: 1,
+          },
+        ].sort((a, b) => b.version - a.version)
+      );
     } else {
       setColumnLog([]);
       setOpen(true);
@@ -140,7 +159,9 @@ export default function Design({ dataModernizationCss }) {
 
   const getDesignData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
+      `${ANALYZESUMMARY}${
+        query.id ? query.id : projectDetails.projectId
+      }?type=analyze`
     );
     setLoading(false);
     if (data.success) {
@@ -203,21 +224,55 @@ export default function Design({ dataModernizationCss }) {
     setPreChildTableData(tableKeyData?.data);
   };
 
+  const updateFinalFileRecord = async () => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    const _temp = JSON.parse(JSON.stringify(updatedTableDetails));
+
+    if (updatedColumnDetails && updatedColumnDetails.length) {
+      updatedColumnDetails.forEach((e) => {
+        var index = _temp.findIndex(
+          (p) => p.tableId == e?.tableDetails?.tableId
+        );
+        if (index < 0) {
+          _temp.push({
+            tableId: e?.tableDetails?.tableId,
+            tableName: e?.tableDetails?.tableName,
+            columns: [
+              {
+                columnId: e.columnId,
+                columnName: e.columnName,
+                columnType: e.columnType,
+                changedBy: authData?.userId,
+                changeDateTime: null,
+              },
+            ],
+          });
+        } else {
+          _temp[index]?.columns.push({
+            columnId: e.columnId,
+            columnName: e.columnName,
+            columnType: e.columnType,
+            changedBy: authData?.userId,
+            changeDateTime: null,
+          });
+        }
+      });
+    }
+    setFinalDataForUpdate(_temp);
+  };
+
+  useEffect(() => {
+    updateFinalFileRecord();
+  }, [updatedTableDetails, updatedColumnDetails]);
+
   const updateFileRecord = async (release = false) => {
     dispatch(loderShowHideAction(true));
 
     const authData = JSON.parse(localStorage.getItem("authData"));
-    if (updatedTableDetails && updatedTableDetails.length) {
+    if (finalDataForUpdate.length) {
       await fetch_retry_put(
-        `${UPDATETABLE}${fileId}?userId=${authData?.userId}`,
-        updatedTableDetails
-      );
-    }
-
-    if (updatedColumnDetails && updatedColumnDetails.length) {
-      await fetch_retry_put(
-        `${UPDATECOLDETAILS}${fileId}?userId=${authData?.userId}`,
-        updatedColumnDetails
+        `${UPDATEDESIGN}${fileId}?userId=${authData?.userId}`,
+        finalDataForUpdate
       );
     }
 
@@ -235,12 +290,16 @@ export default function Design({ dataModernizationCss }) {
     dispatch(loderShowHideAction(false));
   };
 
+
   const changeVersion = async (version) => {
     const tableData = await fetch_retry_get(
       `${TABLE}${fileId}?version=${version}`
     );
     setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
     getTableData(tableId, version);
+
+    setUpdatedTableDetails([]);
+    setUpdatedColumnDetails([]);
   };
 
   const updatedTableDetailsAction = async (data) => {
@@ -250,6 +309,7 @@ export default function Design({ dataModernizationCss }) {
       _temp.push({
         tableId: data.tableId,
         tableName: data.newName,
+        columns: [],
       });
     } else {
       if (data.newName === data.tableName) {
@@ -263,12 +323,17 @@ export default function Design({ dataModernizationCss }) {
 
   const updatedColumnDetailsAction = async (data) => {
     const _temp = JSON.parse(JSON.stringify(updatedColumnDetails));
-    var index = _temp.findIndex((p) => p.columnId == data.columnId);
+    var index = _temp.findIndex(
+      (p) =>
+        p.columnId == data.columnId &&
+        p.tableDetails.tableId == data.tableDetails.tableId
+    );
     if (index < 0) {
       _temp.push({
         columnId: data.columnId,
         columnName: data.newName,
         columnType: data.columnType,
+        tableDetails: data?.tableDetails,
       });
     } else {
       if (data.newName === data.columnName) {
@@ -330,6 +395,26 @@ export default function Design({ dataModernizationCss }) {
     );
   };
 
+  const getTrueStatus = (fileStatus) => {
+    switch (fileStatus) {
+      case "convert_failed":
+        return <Badge count={"Transformed Partially"} color="orange" />;
+      case "converted":
+        return <Badge count={"Transformed Successfully"} color="green" />;
+      default:
+        return <Badge count={"Analysis Completed"} color="green" />;
+    }
+  };
+
+  const gerFalseStatus = (fileStatus) => {
+    switch (fileStatus) {
+      case "analyze_failed":
+        return <Badge count={"Analysis Failed"} color="red" />;
+      default:
+        return <Badge count={"Analysis Completed"} color="green" />;
+    }
+  };
+
   return (
     <>
       <Modal
@@ -382,12 +467,9 @@ export default function Design({ dataModernizationCss }) {
               title: "Status",
               key: "fileStatus",
               render: (_, record) => {
-                switch (record.fileStatus) {
-                  case "analyze_failed":
-                    return <Badge count={"Analysis Failed"} color="red" />;
-                  default:
-                    return <Badge count={"Analysis Completed"} color="green" />;
-                }
+                return record?.isUserAction
+                  ? getTrueStatus(record.fileStatus)
+                  : gerFalseStatus(record.fileStatus);
               },
             },
             {
@@ -409,23 +491,35 @@ export default function Design({ dataModernizationCss }) {
                       </Space>
                     );
                   default:
-                    return (
-                      <Space size="middle">
-                        <a
-                          onClick={() => {
-                            getFileData(record.fileId);
-                            setFileName(record.fileName);
-                          }}
-                        >
-                          Details
-                        </a>
-                      </Space>
-                    );
+                    switch (record.isUserAction) {
+                      case true:
+                        return (
+                          <Space size="middle">
+                            <a
+                              onClick={() => {
+                                getFileData(record.fileId);
+                                setFileName(record.fileName);
+                              }}
+                            >
+                              Details
+                            </a>
+                          </Space>
+                        );
+                      default:
+                        return (
+                          <Space
+                            size="middle"
+                            style={{ cursor: "not-allowed" }}
+                          >
+                            <a style={{ cursor: "not-allowed" }}>Details</a>
+                          </Space>
+                        );
+                    }
                 }
               },
             },
           ]}
-          dataSource={fileList}
+          dataSource={fileList.sort((a, b) => a.fileId - b.fileId)}
         />
       </div>
 
@@ -451,6 +545,7 @@ export default function Design({ dataModernizationCss }) {
             tableColumnsChange={tableColumnsChange}
             versionListArr={versionListArr}
             version={version}
+            dataModernizationCss={dataModernizationCss}
             setVersion={setVersion}
             changeVersion={changeVersion}
             getFileChangeLog={getFileChangeLog}
@@ -533,27 +628,29 @@ export default function Design({ dataModernizationCss }) {
                 })}
               ghost
             >
-              {childData.map((e, i) => {
-                return (
-                  <Panel
-                    header={`${e.tableName} (${e.baseTableName})`}
-                    key={i + "panel"}
-                    forceRender={true}
-                  >
-                    <DesignPanel
-                      dataModernizationCss={dataModernizationCss}
-                      e={e}
-                      versionListArr={versionListArr}
-                      version={version}
-                      fileId={fileId}
-                      showColumnLogs={showColumnLogs}
-                      updatedTableDetailsAction={updatedTableDetailsAction}
-                      updatedColumnDetailsAction={updatedColumnDetailsAction}
-                      showTableLogs={showTableLogs}
-                    />
-                  </Panel>
-                );
-              })}
+              {childData
+                .sort((a, b) => a.tableId - b.tableId)
+                .map((e, i) => {
+                  return (
+                    <Panel
+                      header={`${e.tableName} (${e.baseTableName})`}
+                      key={i + "panel"}
+                      forceRender={true}
+                    >
+                      <DesignPanel
+                        dataModernizationCss={dataModernizationCss}
+                        e={e}
+                        versionListArr={versionListArr}
+                        version={version}
+                        fileId={fileId}
+                        showColumnLogs={showColumnLogs}
+                        updatedTableDetailsAction={updatedTableDetailsAction}
+                        updatedColumnDetailsAction={updatedColumnDetailsAction}
+                        showTableLogs={showTableLogs}
+                      />
+                    </Panel>
+                  );
+                })}
             </Collapse>
           </Card>
         )}
@@ -582,9 +679,10 @@ export default function Design({ dataModernizationCss }) {
           danger
           className={dataModernizationCss.nextBtn}
           onClick={() => {
-            updateFileRecord(true);
+            // updateFileRecord(true);
           }}
-          disabled={loading || versionListArr.length != version}
+          // disabled={loading || versionListArr.length != version}
+          disabled={true}
         >
           Transform File
         </Button>
