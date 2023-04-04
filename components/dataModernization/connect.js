@@ -26,45 +26,40 @@ const Connect = ({ dataModernizationCss }) => {
   const authData = JSON.parse(localStorage.getItem("authData"));
 
   const [drawerViewProp] = useState({
-    style: { width: "40vw", border: "none", border : "1px dashed #0c3246" },
+    style: { width: "40vw", border: "none", border: "1px dashed #0c3246" },
     height: "15vw",
     name: "file",
     multiple: true,
     action: `${process.env.BASE_URL}${UPLOADFILE}/project/${
       query.id ? query.id : projectDetails.projectId
     }/user/${authData.userId}`,
-    onChange(info) {
+    async onChange(info, i) {
       setLoading(true);
-      const { status } = info.file;
-      if (status === "done") {
-        analyzeCall(info?.file?.response);
-      } else if (status === "error") {
+      if (
+        info.fileList.length ===
+        info.fileList.filter((e) => e.status != "uploading").length
+      ) {
+        const resultData = await Promise.all(
+          info.fileList.map(async (e) => {
+            return new Promise(async (resolve, reject) => {
+              const result1 = await fetch_retry_post(
+                `${ANALYZE}/${e?.response?.fileId}`,
+                {}
+              );
+              const result2 = await fetch_retry_post(
+                `${TRANSFORM}${e?.response?.fileId}`
+              );
+              resolve({ result1, result2 });
+            });
+          })
+        );
         setLoading(false);
-        message.error(`${info.file.name} file upload failed.`);
       }
     },
     onDrop(e) {
       console.log("Dropped files", e.dataTransfer.files);
     },
   });
-
-  const analyzeCall = async (fileDetails) => {
-    const data = await fetch_retry_post(`${ANALYZE}/${fileDetails.fileId}`, {});
-    if (!data.success && data?.error) {
-      setLoading(false);
-      message.error([data?.error]);
-    } else {
-      await getTransform(fileDetails);
-      setLoading(false);
-    }
-  };
-
-  const getTransform = async (fileDetails) => {
-    const data = await fetch_retry_post(`${TRANSFORM}${fileDetails.fileId}`);
-    if (!data.success && data?.error) {
-      message.error([data?.error]);
-    }
-  };
 
   return (
     <Row className={dataModernizationCss.defineForm}>

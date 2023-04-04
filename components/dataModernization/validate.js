@@ -1,19 +1,82 @@
 import { Row, Col, Badge, Table, Modal, Card, Carousel } from "antd";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
-  EyeOutlined,
-  EditOutlined,
-  DownloadOutlined,
   GithubOutlined,
   DatabaseOutlined,
   CheckCircleOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import PieChart from "./charts/pieChart";
 import ValidatePopup from "./validateView/validatePopup";
-
+import {
+  ANALYZESUMMARY,
+  VALIDATEFILE,
+  GITHUBCHECKIN,
+} from "../../network/apiConstants";
+import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
+import { SetTabTypeAction, loderShowHideAction } from "../../Redux/action";
+import { fileStatusBadge } from "../helper/fileStatus";
 export default function Validate({ dataModernizationCss }) {
+  const { query } = useRouter();
+  const dispatch = useDispatch();
+
   const [selectedTab, setSelecterTab] = useState("uploadTestData");
   const [open, setOpen] = useState(false);
+  const [analyzeDetails, setAnalyzeDetails] = useState();
+  const [data, setData] = useState([]);
+  const [complexityGraph, setComplexityGraph] = useState();
+  const [selectedFile, setSelectedFile] = useState(0);
+  const [fileId, setFileId] = useState(0);
+
+  const projectDetails = useSelector(
+    (state) => state.projectDetails.projectDetails
+  );
+
+  const getAnalyzeData = async () => {
+    const data = await fetch_retry_get(
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}` //?type=transform
+    );
+    if (data.success) {
+      setData(data?.data?.fileDetails);
+      const failData = data?.data?.fileDetails.filter((e) => {
+        return e.fileStatus === "analyze_failed";
+      });
+      setAnalyzeDetails({
+        convertedFilesCount: failData.length,
+        ...data?.data,
+      });
+      setComplexityGraph(data?.data?.complexityGraph);
+      setSelectedFile(0);
+    } else {
+      // dispatch(SetProjectTransformDetailsAction({}));
+      // dispatch(SetTabTypeAction("Connect"));
+      // message.error(data?.error ? [data?.error] : "Something went wrong.");
+    }
+  };
+
+  useEffect(() => {
+    getAnalyzeData();
+  }, [query.id]);
+
+  const updateFileValidationStatus = async (fileId) => {
+    setSelectedFile(fileId);
+    const data = await fetch_retry_post(`${VALIDATEFILE}${fileId}`);
+    if (data.success) {
+      getAnalyzeData();
+    }
+  };
+
+  const githubCheckIn = async (fileId) => {
+    setSelectedFile(fileId);
+    const data = await fetch_retry_post(`${GITHUBCHECKIN}${fileId}`);
+    if (data.success) {
+      getAnalyzeData();
+    }
+  };
 
   return (
     <>
@@ -33,7 +96,7 @@ export default function Validate({ dataModernizationCss }) {
         okText={"Save"}
         closable={false}
       >
-        <ValidatePopup />
+        <ValidatePopup fileId={fileId}/>
       </Modal>
 
       <Row className={dataModernizationCss.validateTab}>
@@ -44,7 +107,7 @@ export default function Validate({ dataModernizationCss }) {
           <div className={dataModernizationCss.analyzeMain}>
             <Row>
               <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                <Card className={dataModernizationCss.cardView}>
+                {/* <Card className={dataModernizationCss.cardView}>
                   <Card.Grid>Total Files</Card.Grid>
                   <Card.Grid>1</Card.Grid>
                   <Card.Grid>Transformations</Card.Grid>
@@ -63,6 +126,55 @@ export default function Validate({ dataModernizationCss }) {
                   <Card.Grid>
                     <span style={{ color: "#09bd21" }}>450.30 hours</span>
                   </Card.Grid>
+                </Card> */}
+                <Card className={dataModernizationCss.cardView}>
+                  <Card.Grid>Total Files</Card.Grid>
+                  <Card.Grid>
+                    {analyzeDetails && analyzeDetails.totalFiles
+                      ? analyzeDetails.totalFiles
+                      : "0"}
+                  </Card.Grid>
+                  <Card.Grid>Transformations</Card.Grid>
+                  <Card.Grid>
+                    {analyzeDetails && analyzeDetails.transformations
+                      ? analyzeDetails.transformations
+                      : "0"}
+                  </Card.Grid>
+                  <Card.Grid>Mappings</Card.Grid>
+                  <Card.Grid>
+                    {analyzeDetails && analyzeDetails.mappings
+                      ? analyzeDetails.mappings
+                      : "0"}
+                  </Card.Grid>
+                  <Card.Grid>Validation</Card.Grid>
+                  <Card.Grid>
+                    {analyzeDetails && analyzeDetails.validation
+                      ? analyzeDetails.validation
+                      : "0"}{" "}
+                    %
+                  </Card.Grid>
+                  <Card.Grid>Manual Effort</Card.Grid>
+                  <Card.Grid>
+                    <span>
+                      {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
+                        ? parseFloat(
+                            analyzeDetails.manualEffortsEstimateHrs
+                          ).toFixed(2)
+                        : "0"}{" "}
+                      hours
+                    </span>
+                  </Card.Grid>
+                  <Card.Grid style={{ color: "#09bd21" }}>
+                    Hours Saved
+                  </Card.Grid>
+                  <Card.Grid>
+                    <span style={{ color: "#09bd21" }}>
+                      {analyzeDetails && analyzeDetails.hoursSaved
+                        ? parseFloat(analyzeDetails.hoursSaved).toFixed(2)
+                        : "0"}{" "}
+                      hours
+                    </span>
+                  </Card.Grid>
                 </Card>
               </Col>
               <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
@@ -75,12 +187,22 @@ export default function Validate({ dataModernizationCss }) {
                     className={dataModernizationCss.cardViewGraphCarousel}
                   >
                     <div className={dataModernizationCss.cardViewGraph}>
-                      <PieChart
-                        complexityGraph={[]}
-                        dataModernizationCss={dataModernizationCss}
-                        labels={["Converted", "Not converted"]}
-                        data={[10, 10]}
-                      />
+                      {complexityGraph && (
+                        <PieChart
+                          complexityGraph={complexityGraph}
+                          dataModernizationCss={dataModernizationCss}
+                          labels={["Converted", "Not converted"]}
+                          data={[
+                            analyzeDetails.totalFiles -
+                              (analyzeDetails?.convertedFilesCount
+                                ? analyzeDetails.convertedFilesCount
+                                : 0),
+                            analyzeDetails?.convertedFilesCount
+                              ? analyzeDetails.convertedFilesCount
+                              : 0,
+                          ]}
+                        />
+                      )}
                     </div>
                   </Carousel>
                 </Card>
@@ -103,19 +225,26 @@ export default function Validate({ dataModernizationCss }) {
             // }}
             columns={[
               {
-                title: "File",
-                dataIndex: "file",
-                key: "file",
+                title: "File Name",
+                dataIndex: "fileName",
+                key: "fileName",
                 render: (_, record) => {
                   return (
                     <b
                       onClick={() => {
-                        console.log(record)
+                        // dispatch(
+                        //   SetProjectTransformDetailsAction({
+                        //     analyzeDetailsId: record.fileId,
+                        //     isUserAction: record.isUserAction,
+                        //   })
+                        // );
+                        setFileId(record.fileId)
+                        console.log(record);
                         setOpen(true);
                       }}
                       style={{ cursor: "pointer", color: "#e74860" }}
                     >
-                      {record.file}
+                      {record.fileName}
                     </b>
                   );
                 },
@@ -139,16 +268,18 @@ export default function Validate({ dataModernizationCss }) {
               },
               {
                 title: "Status",
-                key: "status",
+                key: "fileStatus",
                 render: (_, record) => {
-                  switch (record.status) {
-                    case "validationCompleted":
-                      return (
-                        <Badge count={"Validation Completed"} color="green" />
-                      );
-                    default:
-                      return <Badge count={"Inactive"} color="red" />;
-                  }
+                  // switch (record.fileStatus) {
+                  //   case "validated":
+                  //     return <Badge count={"Validated"} color="green" />;
+                  //   default:
+                  //     return <Badge count={"Not Validated"} color="orange" />;
+                  // }
+                  return fileStatusBadge(
+                    record.fileStatus,
+                    record?.isUserAction
+                  );
                 },
               },
               {
@@ -158,43 +289,59 @@ export default function Validate({ dataModernizationCss }) {
                   return (
                     <>
                       {/* <Space size="middle" style={{ cursor: "pointer" }}> */}
-                      <a style={{ cursor : "not-allowed" }}>
-                        <GithubOutlined /> {"Check-in (GitHub)"}
+                      <a
+                        onClick={() => {
+                          githubCheckIn(record.fileId);
+                        }}
+                        // style={{ cursor: "not-allowed" }}
+                      >
+                        <GithubOutlined />
+                        {" Check-in (GitHub)"}
                       </a>
                       <br />
                       <a style={{ cursor: "not-allowed" }}>
-                        <DatabaseOutlined /> {"Launch Databricks"}
+                        <DatabaseOutlined />
+                        {" Launch Databricks"}
                       </a>
                       <br />
-                      <a style={{ cursor: "not-allowed" }}>
-                        <CheckCircleOutlined /> {"Mark Validation Completed"}
-                      </a>
+                      {record.fileStatus != "validated" ? (
+                        record?.isUserAction ? (
+                          <a
+                            onClick={() => {
+                              updateFileValidationStatus(record.fileId);
+                            }}
+                          >
+                            {record.fileId === selectedFile ? (
+                              <>
+                                <LoadingOutlined /> {"Validating"}
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircleOutlined />
+                                {" Mark Validation Completed"}
+                              </>
+                            )}
+                          </a>
+                        ) : (
+                          <a style={{ cursor: "not-allowed" }}>
+                            <CheckCircleOutlined />
+                            {" Mark Validation Completed"}
+                          </a>
+                        )
+                      ) : (
+                        <a style={{ color: "#adadad", cursor: "not-allowed" }}>
+                          <CheckCircleOutlined />
+                          {" Validation Completed"}
+                        </a>
+                      )}
+
                       {/* </Space> */}
                     </>
                   );
                 },
               },
             ]}
-            dataSource={[
-              {
-                fileId: 1,
-                file: "demo1.XML",
-                workflows: 1,
-                mappings: 36,
-                transformations: 25,
-                type: "workflow",
-                status: "validationCompleted",
-              },
-              {
-                fileId: 2,
-                file: "demo2.XML",
-                workflows: 2,
-                mappings: 86,
-                transformations: 54,
-                type: "workflow",
-                status: "validationCompleted",
-              },
-            ]}
+            dataSource={data.sort((a, b) => a.fileId - b.fileId)}
           />
         </Col>
 

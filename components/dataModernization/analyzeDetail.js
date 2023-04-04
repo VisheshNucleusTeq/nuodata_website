@@ -76,7 +76,6 @@ const AnalyzeDetail = ({
     );
     setLoading(false);
     if (data.success) {
-      console.log(data?.data);
       dispatch(SetAnalyzeDetailAction(data?.data));
       setData({ fileName: data?.data?.fileName, ...data?.data?.analysis });
       setAnalyzeDetails(data?.data?.complexity);
@@ -532,7 +531,10 @@ const AnalyzeDetail = ({
                     onClick={async () => {
                       await updateTransformStatus(analyzeDetailsId);
                       dispatch(
-                        SetProjectTransformDetailsAction({ analyzeDetailsId })
+                        SetProjectTransformDetailsAction({
+                          analyzeDetailsId,
+                          isUserAction: true,
+                        })
                       );
                       dispatch(SetTabTypeAction("Transform"));
                     }}

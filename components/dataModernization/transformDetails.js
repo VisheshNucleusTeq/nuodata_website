@@ -133,6 +133,7 @@ const TransformDetails = ({ dataModernizationCss, changeStep }) => {
               showPopUp={true}
             />
           </Modal>
+          {/* {JSON.stringify(projectTransformDetails)} */}
           <AnalyzeDetail
             analyzeDetailsId={projectTransformDetails?.analyzeDetailsId}
             dataModernizationCss={dataModernizationCss}

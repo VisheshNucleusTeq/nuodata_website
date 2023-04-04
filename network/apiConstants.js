@@ -29,3 +29,5 @@ export const GETPROJECT = "core/v1/project/";
 export const UPDATEPROJECT = "core/v1/project/";
 export const DOWNLOADFILE = "core/v1/download/file/";
 export const DOWNLOADZIP = "core/v1/download/zip/file/";
+export const VALIDATEFILE = "process/v2/validate/file/";
+export const GITHUBCHECKIN = "github/v1/checkin/file/";

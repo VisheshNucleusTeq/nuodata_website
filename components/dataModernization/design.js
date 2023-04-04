@@ -47,6 +47,7 @@ import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import DrawerView from "./drawerView";
 import DesignPanel from "./designPanel";
 import { useIsVisible } from "../../hooks/useIsVisible";
+import { fileStatusBadge } from "../helper/fileStatus";
 
 export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
@@ -396,26 +397,6 @@ export default function Design({ dataModernizationCss }) {
     );
   };
 
-  const getTrueStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "convert_failed":
-        return <Badge count={"Transformed Partially"} color="orange" />;
-      case "converted":
-        return <Badge count={"Transformed Successfully"} color="green" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
-  };
-
-  const gerFalseStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "analyze_failed":
-        return <Badge count={"Analysis Failed"} color="red" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
-  };
-
   return (
     <>
       <Modal
@@ -468,9 +449,10 @@ export default function Design({ dataModernizationCss }) {
               title: "Status",
               key: "fileStatus",
               render: (_, record) => {
-                return record?.isUserAction
-                  ? getTrueStatus(record.fileStatus)
-                  : gerFalseStatus(record.fileStatus);
+                return fileStatusBadge(
+                  record.fileStatus,
+                  record?.isUserAction
+                );
               },
             },
             {

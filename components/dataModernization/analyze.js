@@ -33,6 +33,7 @@ import {
   SetProjectTransformDetailsAction,
   loderShowHideAction,
 } from "../../Redux/action";
+import { fileStatusBadge } from "../helper/fileStatus";
 
 const Analyze = ({ dataModernizationCss }) => {
   const dispatch = useDispatch();
@@ -53,9 +54,7 @@ const Analyze = ({ dataModernizationCss }) => {
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${
-        query.id ? query.id : projectDetails.projectId
-      }` //?type=analyze
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}` //?type=analyze
     );
     setLoading(false);
     if (data.success) {
@@ -116,25 +115,25 @@ const Analyze = ({ dataModernizationCss }) => {
     dispatch(loderShowHideAction(false));
   };
 
-  const getTrueStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "convert_failed":
-        return <Badge count={"Transformed Partially"} color="orange" />;
-      case "converted":
-        return <Badge count={"Transformed Successfully"} color="green" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
-  };
+  // const getTrueStatus = (fileStatus) => {
+  //   switch (fileStatus) {
+  //     case "convert_failed":
+  //       return <Badge count={"Transformed Partially"} color="orange" />;
+  //     case "converted":
+  //       return <Badge count={"Transformed Successfully"} color="green" />;
+  //     default:
+  //       return <Badge count={"Analysis Completed"} color="green" />;
+  //   }
+  // };
 
-  const gerFalseStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "analyze_failed":
-        return <Badge count={"Analysis Failed"} color="red" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
-  };
+  // const gerFalseStatus = (fileStatus) => {
+  //   switch (fileStatus) {
+  //     case "analyze_failed":
+  //       return <Badge count={"Analysis Failed"} color="red" />;
+  //     default:
+  //       return <Badge count={"Analysis Completed"} color="green" />;
+  //   }
+  // };
 
   return (
     <div className={dataModernizationCss.analyzeMain}>
@@ -366,9 +365,10 @@ const Analyze = ({ dataModernizationCss }) => {
                     title: "Status",
                     key: "fileStatus",
                     render: (_, record) => {
-                      return record?.isUserAction
-                        ? getTrueStatus(record.fileStatus)
-                        : gerFalseStatus(record.fileStatus);
+                      return fileStatusBadge(
+                        record.fileStatus,
+                        record?.isUserAction
+                      );
                     },
                   },
                   {

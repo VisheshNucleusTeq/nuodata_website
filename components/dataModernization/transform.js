@@ -35,7 +35,7 @@ import {
 } from "../../Redux/action";
 import TransformDetails from "./transformDetails";
 import AnalyzeDetail from "./analyzeDetail";
-
+import { fileStatusBadge } from "../helper/fileStatus";
 const Transform = ({ dataModernizationCss }) => {
   const { query } = useRouter();
   const dispatch = useDispatch();
@@ -117,26 +117,6 @@ const Transform = ({ dataModernizationCss }) => {
         </Col>
       </Row>
     );
-  };
-
-  const getTrueStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "convert_failed":
-        return <Badge count={"Transformed Partially"} color="orange" />;
-      case "converted":
-        return <Badge count={"Transformed Successfully"} color="green" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
-  };
-
-  const gerFalseStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "analyze_failed":
-        return <Badge count={"Analysis Failed"} color="red" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
   };
 
   return (
@@ -352,9 +332,10 @@ const Transform = ({ dataModernizationCss }) => {
                     //   }
                     // },
                     render: (_, record) => {
-                      return record?.isUserAction
-                        ? getTrueStatus(record.fileStatus)
-                        : gerFalseStatus(record.fileStatus);
+                      return fileStatusBadge(
+                        record.fileStatus,
+                        record?.isUserAction
+                      );
                     },
                   },
                   {
