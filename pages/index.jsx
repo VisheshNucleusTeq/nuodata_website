@@ -14,7 +14,7 @@ export default function Main(props) {
   return (
     <>
       <title>NuoData | Home</title>
-      <h2>pathname:- {router.pathname}</h2>
+      <h2>pathname:- {router.asPath}</h2>
             {/* <h2>query:- {router.query}</h2>
             <h2>asPath:- {router.asPath}</h2> */}
       <Home />
