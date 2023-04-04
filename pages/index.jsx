@@ -3,7 +3,6 @@ import {useRouter} from 'next/router';
 import { useEffect } from "react";
 
 export default function Main(props) {
-  console.log(123)
   const router = useRouter()
 
   useEffect(() => {
