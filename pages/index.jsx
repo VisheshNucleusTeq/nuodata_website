@@ -1,22 +1,19 @@
 import Home from "../components/home";
-import {useRouter} from 'next/router';
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export default function Main(props) {
-  const router = useRouter()
-
+  const router = useRouter();
   useEffect(() => {
-    if(router.asPath != "/"){
-      alert(router.asPath)
+    if (router.asPath != "/") {
+      router.push(router.asPath)
     }
-  },[router.asPath])
+  }, [router.asPath]);
 
   return (
     <>
       <title>NuoData | Home</title>
-      <h2>pathname:- {router.asPath}</h2>
-            {/* <h2>query:- {router.query}</h2>
-            <h2>asPath:- {router.asPath}</h2> */}
+      {/* <h2>pathname:- {router.asPath}</h2> */}
       <Home />
     </>
   );
