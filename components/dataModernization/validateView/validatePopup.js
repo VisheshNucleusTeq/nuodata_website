@@ -227,6 +227,7 @@ const ValidatePopup = ({ fileId }) => {
                           label: "Failed",
                         },
                       ]}
+                      defaultValue={"notStarted"}
                       style={{ width: "100%" }}
                     />
                   );
