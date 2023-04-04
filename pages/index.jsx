@@ -6,10 +6,10 @@ export default function Main(props) {
   const router = useRouter()
 
   useEffect(() => {
-    if(router.pathname != "/"){
-      alert(router.pathname)
+    if(router.asPath != "/"){
+      alert(router.asPath)
     }
-  },[router.pathname])
+  },[router.asPath])
 
   return (
     <>
