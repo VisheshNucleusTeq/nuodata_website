@@ -53,19 +53,19 @@ const HeaderView = ({ layoutCss, ref }) => {
             {
               key: "1",
               label: (
-                <Badge size="default" count={5}>
-                  <BellOutlined style={{ fontSize: "18px" }} />
+                <Badge size="default" count={0}>
+                  <BellOutlined disabled style={{ fontSize: "18px",color:'grey' }} />
                 </Badge>
               ),
             },
-            {
-              key: "2",
-              label: <QuestionCircleOutlined style={{ fontSize: "18px" }} />,
-            },
+            // {
+            //   key: "2",
+            //   label: <QuestionCircleOutlined style={{ fontSize: "18px" }} />,
+            // },
             {
               key: "3",
               label: (
-                <Divider style={{ backgroundColor: "gray" }} type="vertical" />
+                <Divider style={{ backgroundColor: "grey" }} type="vertical" />
               ),
             },
             {
@@ -73,7 +73,7 @@ const HeaderView = ({ layoutCss, ref }) => {
               label: userDetails && userDetails?.firstName && (
                 <Dropdown menu={{ items }}>
                   <Space>
-                    {userDetails?.firstName} &nbsp;
+                    {/* {userDetails?.firstName} &nbsp; */}
                     <Avatar src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=600" />
                     <DownOutlined />
                   </Space>
