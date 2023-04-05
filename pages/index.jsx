@@ -13,7 +13,6 @@ export default function Main(props) {
   return (
     <>
       <title>NuoData | Home</title>
-      {/* <h2>pathname:- {router.asPath}</h2> */}
       <Home />
     </>
   );

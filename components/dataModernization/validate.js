@@ -100,9 +100,9 @@ export default function Validate({ dataModernizationCss }) {
       </Modal>
 
       <Row className={dataModernizationCss.validateTab}>
-        <Col span={24}>
+        {/* <Col span={24}>
           <h1>Demo_Test</h1>
-        </Col>
+        </Col> */}
         <Col span={24}>
           <div className={dataModernizationCss.analyzeMain}>
             <Row>
