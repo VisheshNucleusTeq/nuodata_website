@@ -1,4 +1,4 @@
-import { Row, Col, Badge, Table, Modal, Card, Carousel } from "antd";
+import { Row, Col, Badge, Table, Modal, Card, Carousel,Tooltip } from "antd";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -323,10 +323,13 @@ export default function Validate({ dataModernizationCss }) {
                             )}
                           </a>
                         ) : (
+                          <Tooltip placement="topLeft" title={"Please transform this file."}>
+
                           <a style={{ cursor: "not-allowed" }}>
                             <CheckCircleOutlined />
                             {" Mark Validation Completed"}
                           </a>
+                          </Tooltip>
                         )
                       ) : (
                         <a style={{ color: "#adadad", cursor: "not-allowed" }}>
