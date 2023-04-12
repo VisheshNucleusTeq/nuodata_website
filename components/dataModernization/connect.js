@@ -26,6 +26,7 @@ const Connect = ({ dataModernizationCss }) => {
   const authData = JSON.parse(localStorage.getItem("authData"));
 
   const [drawerViewProp] = useState({
+    className : "antdUpload",
     style: { width: "40vw", border: "none", border: "1px dashed #0c3246" },
     height: "15vw",
     name: "file",

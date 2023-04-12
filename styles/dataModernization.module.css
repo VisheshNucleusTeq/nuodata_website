@@ -357,7 +357,7 @@
   color: #e74860;
 }
 
-.tabView{
+.tabView {
   transition-duration: 1000ms;
   border: 1px solid gray;
   text-align: center;
@@ -374,29 +374,29 @@
   color: #fff; */
 }
 
-.tabViewActive{
+.tabViewActive {
   transition-duration: 1000ms;
   background-color: #0c3246;
   color: #fff;
 }
 
-.tabViewPar{
-  justify-content: center; 
+.tabViewPar {
+  justify-content: center;
 }
 
 /* validate */
 
-.validateTab{
+.validateTab {
   margin: 2% 0% 2% 0%;
 }
 
-.validateTab h1{
+.validateTab h1 {
   color: #e74860;
   font-weight: bold;
   font-size: 2vw;
 }
 
-.expandableTableCss{
+.expandableTableCss {
   margin: 1%;
   padding: 1%;
   justify-content: center;
@@ -409,12 +409,25 @@
   font-weight: bold;
 }
 
-.tabViewActiveValidation{
+.tabViewActiveValidation {
   background-color: #548135;
   color: #fff;
 }
 /* validate */
 
-.wordCss{
+.wordCss {
   word-wrap: break-word;
+}
+
+.addAttachment {
+  border-radius: 5px;
+  border: 1px dotted #0c3246;
+  color: #0c3246;
+}
+
+.addAttachment:hover {
+  border-radius: 5px;
+  border: 1px dotted #0c3246;
+  color: #0c3246 !important;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

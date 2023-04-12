@@ -12,7 +12,7 @@ import {
   Divider,
   Badge,
   Modal,
-  Tooltip
+  Tooltip,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -292,7 +292,6 @@ export default function Design({ dataModernizationCss }) {
     dispatch(loderShowHideAction(false));
   };
 
-
   const changeVersion = async (version) => {
     const tableData = await fetch_retry_get(
       `${TABLE}${fileId}?version=${version}`
@@ -449,10 +448,7 @@ export default function Design({ dataModernizationCss }) {
               title: "Status",
               key: "fileStatus",
               render: (_, record) => {
-                return fileStatusBadge(
-                  record.fileStatus,
-                  record?.isUserAction
-                );
+                return fileStatusBadge(record.fileStatus, record?.isUserAction);
               },
             },
             {
@@ -490,14 +486,18 @@ export default function Design({ dataModernizationCss }) {
                         );
                       default:
                         return (
-                          <Tooltip placement="topLeft" title={"Please transform this file."}>
-
-                          <Space
-                            size="middle"
-                            style={{ cursor: "not-allowed" }}
+                          <Tooltip
+                            placement="topLeft"
+                            title={"Please transform this file."}
                           >
-                            <a style={{ cursor: "not-allowed" }}>Details</a>
-                          </Space>
+                            <Space
+                              size="middle"
+                              style={{
+                                cursor: "not-allowed",
+                              }}
+                            >
+                              <a style={{ color: "#adadad",cursor: "not-allowed" }}>Details</a>
+                            </Space>
                           </Tooltip>
                         );
                     }

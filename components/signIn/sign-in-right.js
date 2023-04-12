@@ -6,11 +6,20 @@ import { fetch_retry_post } from "../../network/api-manager";
 import { LOGIN } from "../../network/apiConstants";
 import { UserDetailsAction, loderShowHideAction } from "../../Redux/action";
 import { useDispatch } from "react-redux";
+import {
+  GoogleLogin,
+  GoogleOAuthProvider,
+  googleLogout,
+} from "@react-oauth/google";
 
 function SignInRight({ loginCss }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    googleLogout();
+  }, []);
 
   const onFinish = async (payload) => {
     setLoading(true);
@@ -91,6 +100,20 @@ function SignInRight({ loginCss }) {
           >
             Login
           </Button>
+          <Divider plain></Divider>
+
+          <GoogleOAuthProvider clientId="995061213404-vbdmb63jpqa8ua22u5jhlc9t9f4r8h3m.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                console.log(credentialResponse);
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+              useOneTap
+              theme={"filled_blue"}
+            />
+          </GoogleOAuthProvider>
 
           <Divider plain></Divider>
 
