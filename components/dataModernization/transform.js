@@ -32,6 +32,7 @@ import AnalyzeDetailPopup from "./graphView/analyzeDetailPopup";
 import {
   SetProjectTransformDetailsAction,
   SetTabTypeAction,
+  SetProjectDetailsAction,
 } from "../../Redux/action";
 import TransformDetails from "./transformDetails";
 import AnalyzeDetail from "./analyzeDetail";
@@ -63,7 +64,7 @@ const Transform = ({ dataModernizationCss }) => {
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}` //?type=transform
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
     );
     setLoading(false);
     if (data.success) {
@@ -87,42 +88,13 @@ const Transform = ({ dataModernizationCss }) => {
     getAnalyzeData();
   }, [query.id]);
 
-  const getProjectData = async (fileId) => {
-    const data = await fetch_retry_get(`${DESIGN}${fileId}`);
-    if (data.success) return data.data;
-  };
-
-  useEffect(() => {
-    if (projectTransformDetails && projectTransformDetails.analyzeDetailsId) {
-      setIsDetails(true);
-    } else {
-      setIsDetails(false);
-    }
-  }, [projectTransformDetails.analyzeDetailsId]);
-
-  const getFileName = (e) => {
-    const getStatus = (record) => {
-      switch (record.fileStatus) {
-        case "convert_failed":
-          return <Badge count={"Transformed Partially"} color="red" />;
-        default:
-          return <Badge count={"Transformed Successfully"} color="green" />;
-      }
-    };
-    return (
-      <Row>
-        <Col span={10}>{e.fileName}</Col>
-        <Col span={10}>
-          <p>{getStatus(e)}</p>
-        </Col>
-      </Row>
-    );
-  };
-
   return (
     <>
       {isDetails ? (
-        <TransformDetails dataModernizationCss={dataModernizationCss} />
+        <TransformDetails
+          dataModernizationCss={dataModernizationCss}
+          setIsDetails={setIsDetails}
+        />
       ) : (
         <>
           {data.length ? (
@@ -365,6 +337,7 @@ const Transform = ({ dataModernizationCss }) => {
                                       isUserAction: record.isUserAction,
                                     })
                                   );
+                                  setIsDetails(true);
                                 }}
                               >
                                 <EyeOutlined /> View
@@ -390,6 +363,7 @@ const Transform = ({ dataModernizationCss }) => {
                                       isUserAction: record.isUserAction,
                                     })
                                   );
+                                  setIsDetails(true);
                                 }}
                               >
                                 <EyeOutlined /> View

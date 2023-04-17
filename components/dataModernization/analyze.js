@@ -13,7 +13,7 @@ import {
   Modal,
 } from "antd";
 import { useRouter } from "next/router";
-import { ArrowRightOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined,EyeOutlined } from "@ant-design/icons";
 
 import {
   GETPROJECT,
@@ -401,7 +401,7 @@ const Analyze = ({ dataModernizationCss }) => {
                                   setAnalyze(false);
                                 }}
                               >
-                                Details
+                                <EyeOutlined /> View
                               </a>
                             </Space>
                           );

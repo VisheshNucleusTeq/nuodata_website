@@ -42,7 +42,7 @@ import {
   loderShowHideAction,
 } from "../../Redux/action";
 
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import { DownOutlined, UpOutlined,EyeOutlined } from "@ant-design/icons";
 
 import DrawerView from "./drawerView";
 import DesignPanel from "./designPanel";
@@ -465,7 +465,7 @@ export default function Design({ dataModernizationCss }) {
                             getErrorDetails(record.fileId);
                           }}
                         >
-                          Details
+                          <EyeOutlined /> View
                         </a>
                       </Space>
                     );
@@ -480,7 +480,7 @@ export default function Design({ dataModernizationCss }) {
                                 setFileName(record.fileName);
                               }}
                             >
-                              Details
+                              <EyeOutlined /> View
                             </a>
                           </Space>
                         );
@@ -496,7 +496,7 @@ export default function Design({ dataModernizationCss }) {
                                 cursor: "not-allowed",
                               }}
                             >
-                              <a style={{ color: "#adadad",cursor: "not-allowed" }}>Details</a>
+                              <a style={{ color: "#adadad",cursor: "not-allowed" }}><EyeOutlined /> View</a>
                             </Space>
                           </Tooltip>
                         );

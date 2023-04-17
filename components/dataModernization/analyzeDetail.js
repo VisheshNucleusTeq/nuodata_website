@@ -10,6 +10,7 @@ import {
   Button,
   Divider,
   Modal,
+  Badge
 } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
@@ -215,8 +216,10 @@ const AnalyzeDetail = ({
       </Modal>
 
       {showTop && (
-        <ArrowLeftOutlined
-          style={{ fontSize: "1.5vw" }}
+          <Badge
+          style={{ cursor: "pointer" }}
+          count={"< Go Back"}
+          color="#0c3246"
           onClick={() => {
             setAnalyze(true);
           }}

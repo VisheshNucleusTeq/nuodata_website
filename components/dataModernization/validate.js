@@ -88,7 +88,7 @@ export default function Validate({ dataModernizationCss }) {
       });
       setComplexityGraph(data?.data?.complexityGraph);
       setSelectedFile(0);
-      await getFileStatusData(data?.data?.fileDetails);
+      // await getFileStatusData(data?.data?.fileDetails);
     } else {
       // dispatch(SetProjectTransformDetailsAction({}));
       // dispatch(SetTabTypeAction("Connect"));
@@ -266,8 +266,8 @@ export default function Validate({ dataModernizationCss }) {
                   </Card.Grid>
                 </Card>
               </Col>
-              <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
-              <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14} style={{}}>
+              <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col>
+              <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15} style={{}}>
                 <Card className={dataModernizationCss.cardViewGraphs}>
                   <Carousel
                     dots={false}
@@ -339,19 +339,12 @@ export default function Validate({ dataModernizationCss }) {
                 render: (_, record) => {
                   return (
                     <Table
+                    className={`${"validatePopupTable"}`}
                       pagination={false}
-                      dataSource={[record]}
+                      dataSource={[
+                        { ...record.entitySummary, mappings: record.mappings },
+                      ]}
                       columns={[
-                        {
-                          title: "Total",
-                          dataIndex: "mappings",
-                          key: "mappings",
-                        },
-                        {
-                          title: "Not Started",
-                          dataIndex: "notStartedCount",
-                          key: "notStartedCount",
-                        },
                         {
                           title: "Passed",
                           dataIndex: "passedCount",
@@ -363,6 +356,16 @@ export default function Validate({ dataModernizationCss }) {
                           key: "failedCount",
                         },
                         {
+                          title: "Total",
+                          dataIndex: "mappings",
+                          key: "mappings",
+                        },
+                        {
+                          title: "Not Started",
+                          dataIndex: "notStartedCount",
+                          key: "notStartedCount",
+                        },
+                        {
                           title: "Action",
                           render: (_, record) => {
                             return (
@@ -371,6 +374,7 @@ export default function Validate({ dataModernizationCss }) {
                                   setMappingModelData(record);
                                   setMappingModelOpen(true);
                                 }}
+                                style={{ color: "#e74860" }}
                               >
                                 <EyeOutlined />
                                 {" View"}
