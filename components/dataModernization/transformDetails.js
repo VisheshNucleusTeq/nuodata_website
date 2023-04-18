@@ -46,7 +46,6 @@ const TransformDetails = ({ dataModernizationCss,setIsDetails }) => {
       projectTransformDetails.analyzeDetailsId &&
       projectTransformDetails.version
     ) {
-      alert(1);
       getAnalyzeData(
         projectTransformDetails?.analyzeDetailsId,
         projectTransformDetails?.version
