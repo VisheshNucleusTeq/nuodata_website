@@ -319,7 +319,8 @@ export default function Validate({ dataModernizationCss }) {
                         setFileId(record.fileId);
                         setOpen(true);
                       }}
-                      style={{ cursor: "pointer", color: "#e74860" }}
+                      style={{ cursor: "pointer" }}
+                      className={dataModernizationCss.validateFileName}
                     >
                       {record.fileName}
                     </b>
@@ -330,6 +331,7 @@ export default function Validate({ dataModernizationCss }) {
                 title: "Workflows",
                 dataIndex: "workflows",
                 key: "workflows",
+                align: 'center'
               },
               {
                 title: "Mappings",
@@ -349,21 +351,25 @@ export default function Validate({ dataModernizationCss }) {
                           title: "Passed",
                           dataIndex: "passedCount",
                           key: "passedCount",
+                          align: 'center'
                         },
                         {
                           title: "Failed",
                           dataIndex: "failedCount",
                           key: "failedCount",
+                          align: 'center'
                         },
                         {
                           title: "Total",
                           dataIndex: "mappings",
                           key: "mappings",
+                          align: 'center'
                         },
                         {
                           title: "Not Started",
                           dataIndex: "notStartedCount",
                           key: "notStartedCount",
+                          align: 'center'
                         },
                         {
                           title: "Action",
@@ -380,6 +386,7 @@ export default function Validate({ dataModernizationCss }) {
                                 {" View"}
                               </a>
                             );
+                            align: 'center'
                           },
                         },
                       ]}
@@ -391,6 +398,7 @@ export default function Validate({ dataModernizationCss }) {
                 title: "Transformations",
                 dataIndex: "transformations",
                 key: "transformations",
+                align: 'center'
               },
               {
                 title: "Status",
@@ -489,6 +497,7 @@ export default function Validate({ dataModernizationCss }) {
                     </>
                   );
                 },
+                align: 'center'
               },
             ]}
             // scroll={{

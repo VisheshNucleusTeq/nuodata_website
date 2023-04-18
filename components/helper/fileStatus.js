@@ -1,9 +1,10 @@
 import { Badge } from "antd";
 export const fileStatusBadge = (fileStatus, isUserAction) => {
+  console.log(fileStatus)
   if (isUserAction === true) {
     switch (fileStatus) {
       case "convert_failed":
-        return <Badge count={"Transformed Partially"} color="red" />;
+        return <Badge count={"Transformed Failed"} color="red" />;
       case "converted":
         return <Badge count={"Transformed Successfully"} color="green" />;
       case "validated":

@@ -129,6 +129,7 @@ const DashboardView = () => {
               dataIndex: "totalFiles",
               key: "totalFiles",
               sorter: (a, b) => a.totalFiles - b.totalFiles,
+              align: 'center'
             },
             {
               title: "Source Platform",
@@ -151,6 +152,7 @@ const DashboardView = () => {
                 </span>
               ),
               sorter: (a, b) => (Number(a.conversion) ? a.conversion : 0) - (Number(b.conversion) ? b.conversion : 0),
+              align: 'center'
             },
             {
               title: "Created Date",
@@ -202,6 +204,7 @@ const DashboardView = () => {
                   </Tooltip>
                 </Space>
               ),
+              align: 'center'
             },
           ]}
           dataSource={data}

@@ -433,16 +433,19 @@ export default function Design({ dataModernizationCss }) {
               title: "Workflows",
               dataIndex: "workflows",
               key: "workflows",
+              align: 'center'
             },
             {
               title: "Mappings",
               dataIndex: "mappings",
               key: "mappings",
+              align: 'center'
             },
             {
               title: "Transformations",
               dataIndex: "transformations",
               key: "transformations",
+              align: 'center'
             },
             {
               title: "Status",
@@ -503,6 +506,7 @@ export default function Design({ dataModernizationCss }) {
                     }
                 }
               },
+              align: 'center'
             },
           ]}
           dataSource={fileList.sort((a, b) => a.fileId - b.fileId)}
