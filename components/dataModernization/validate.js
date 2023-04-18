@@ -431,7 +431,7 @@ export default function Validate({ dataModernizationCss }) {
                       ) : (
                         <a style={{ color: "#adadad", cursor: "not-allowed" }}>
                           <GithubOutlined />
-                          {" Check-in (GitHub)"}
+                          {" Checked-in (GitHub)"}
                         </a>
                       )}
 
