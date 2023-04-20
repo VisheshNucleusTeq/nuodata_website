@@ -44,6 +44,7 @@ export default function Validate({ dataModernizationCss }) {
   const [complexityGraph, setComplexityGraph] = useState();
   const [selectedFile, setSelectedFile] = useState(0);
   const [selectedGitFile, setSelectedGitFile] = useState(0);
+  const [popupIp, setPopupIp] = useState(0);
   const [fileId, setFileId] = useState(0);
   const [mappingModelData, setMappingModelData] = useState({});
   const [mappingModelOpen, setMappingModelOpen] = useState(false);
@@ -110,12 +111,14 @@ export default function Validate({ dataModernizationCss }) {
     }
   };
 
-  const githubCheckIn = async (fileId) => {
-    setSelectedGitFile(fileId);
-    const data = await fetch_retry_post(`${GITHUBCHECKIN}${fileId}`);
-    if (data.success) {
-      getAnalyzeData();
-    }
+  const githubCheckIn = async (record) => {
+    setMappingModelData({ ...record.entitySummary, mappings: record.mappings });
+    setPopupIp(record.fileId);
+    setMappingModelOpen(true);
+    // const data = await fetch_retry_post(`${GITHUBCHECKIN}${fileId}`);
+    // if (data.success) {
+    //   getAnalyzeData();
+    // }
   };
 
   return (
@@ -146,9 +149,24 @@ export default function Validate({ dataModernizationCss }) {
         title="Mapping Status"
         centered
         open={mappingModelOpen}
-        okButtonProps={{ style: { display: "none" } }}
+        okButtonProps={{ style: { display: popupIp ? "" : "none" } }}
+        okText={"Check-in"}
         cancelText={"Close"}
-        onCancel={() => setMappingModelOpen(false)}
+        onCancel={() => {
+          setMappingModelOpen(false);
+          setPopupIp(0);
+        }}
+        onOk={async () => {
+          const fileId = JSON.parse(JSON.stringify(popupIp));
+          setSelectedGitFile(popupIp);
+          setMappingModelOpen(false);
+          setPopupIp(0);
+          const data = await fetch_retry_post(`${GITHUBCHECKIN}${fileId}`);
+          if (data.success) {
+            getAnalyzeData();
+          }
+          
+        }}
         width={"40vw"}
       >
         <Collapse accordion>
@@ -425,7 +443,7 @@ export default function Validate({ dataModernizationCss }) {
                       record.isUserAction ? (
                         <a
                           onClick={() => {
-                            githubCheckIn(record.fileId);
+                            githubCheckIn(record);
                           }}
                         >
                           {record.fileId === selectedGitFile ? (
