@@ -414,6 +414,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                                     onClick={() => {
                                       deleteFile(record);
                                     }}
+                                    style={{color : "red"}}
                                   >
                                     <DeleteOutlined /> Delete
                                   </a>
@@ -490,6 +491,11 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                           title: "comment",
                           dataIndex: "comment",
                           key: "comment",
+                          render : (_, record) => {
+                            return <ReadMore>
+                              {record.comment}
+                            </ReadMore>
+                          }
                         },
                         {
                           title: "Date",
@@ -561,6 +567,22 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
         </Col>
       </Row>
     </>
+  );
+};
+
+const ReadMore = ({ children }) => {
+  const text = children;
+  const [isReadMore, setIsReadMore] = useState(true);
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
+  return (
+    <p className="text">
+      {isReadMore ? text.slice(0, 50) : text}
+      <span onClick={toggleReadMore} style={{color : "blue", cursor : "pointer"}}>
+        {isReadMore ? "...read more" : " show less"}
+      </span>
+    </p>
   );
 };
 

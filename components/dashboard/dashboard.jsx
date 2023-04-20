@@ -57,8 +57,8 @@ const DashboardView = () => {
     router.push(`/data-modernization?id=${projectId}`);
   };
 
-  const showUpdatePageAnalyze = (projectId) => {
-    dispatch(SetTabTypeAction("Analyze"));
+  const showUpdatePageAnalyze = (projectId, totalFiles) => {
+    dispatch(SetTabTypeAction(totalFiles > 0 ? "Analyze" : "Connect"));
     router.push(`/data-modernization?id=${projectId}`);
   };
 
@@ -129,19 +129,21 @@ const DashboardView = () => {
               dataIndex: "totalFiles",
               key: "totalFiles",
               sorter: (a, b) => a.totalFiles - b.totalFiles,
-              align: 'center'
+              align: "center",
             },
             {
               title: "Source Platform",
               dataIndex: "sourcePlatform",
               key: "sourcePlatform",
-              sorter: (a, b) => a.sourcePlatform.localeCompare(b.sourcePlatform),
+              sorter: (a, b) =>
+                a.sourcePlatform.localeCompare(b.sourcePlatform),
             },
             {
               title: "Target",
               dataIndex: "targetPlatform",
               key: "targetPlatform",
-              sorter: (a, b) => a.targetPlatform.localeCompare(b.targetPlatform),
+              sorter: (a, b) =>
+                a.targetPlatform.localeCompare(b.targetPlatform),
             },
             {
               title: "Conversion",
@@ -151,8 +153,10 @@ const DashboardView = () => {
                   {Number(record.conversion) ? record.conversion : 0}%
                 </span>
               ),
-              sorter: (a, b) => (Number(a.conversion) ? a.conversion : 0) - (Number(b.conversion) ? b.conversion : 0),
-              align: 'center'
+              sorter: (a, b) =>
+                (Number(a.conversion) ? a.conversion : 0) -
+                (Number(b.conversion) ? b.conversion : 0),
+              align: "center",
             },
             {
               title: "Created Date",
@@ -184,7 +188,7 @@ const DashboardView = () => {
                         showUpdatePage(record.projectId);
                       }}
                     >
-                      <EditOutlined />
+                      <EditOutlined /> 
                     </a>
                   </Tooltip>
                   <Tooltip
@@ -196,7 +200,10 @@ const DashboardView = () => {
                       href={`/data-modernization?id=${record.projectId}`}
                       onClick={(e) => {
                         e.preventDefault();
-                        showUpdatePageAnalyze(record.projectId);
+                        showUpdatePageAnalyze(
+                          record.projectId,
+                          record.totalFiles
+                        );
                       }}
                     >
                       <EyeOutlined />
@@ -204,7 +211,7 @@ const DashboardView = () => {
                   </Tooltip>
                 </Space>
               ),
-              align: 'center'
+              align: "center",
             },
           ]}
           dataSource={data}

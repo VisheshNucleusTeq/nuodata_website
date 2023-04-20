@@ -43,6 +43,7 @@ export default function Validate({ dataModernizationCss }) {
   const [data, setData] = useState([]);
   const [complexityGraph, setComplexityGraph] = useState();
   const [selectedFile, setSelectedFile] = useState(0);
+  const [selectedGitFile, setSelectedGitFile] = useState(0);
   const [fileId, setFileId] = useState(0);
   const [mappingModelData, setMappingModelData] = useState({});
   const [mappingModelOpen, setMappingModelOpen] = useState(false);
@@ -88,6 +89,7 @@ export default function Validate({ dataModernizationCss }) {
       });
       setComplexityGraph(data?.data?.complexityGraph);
       setSelectedFile(0);
+      setSelectedGitFile(0);
       // await getFileStatusData(data?.data?.fileDetails);
     } else {
       // dispatch(SetProjectTransformDetailsAction({}));
@@ -109,6 +111,7 @@ export default function Validate({ dataModernizationCss }) {
   };
 
   const githubCheckIn = async (fileId) => {
+    setSelectedGitFile(fileId);
     const data = await fetch_retry_post(`${GITHUBCHECKIN}${fileId}`);
     if (data.success) {
       getAnalyzeData();
@@ -331,7 +334,7 @@ export default function Validate({ dataModernizationCss }) {
                 title: "Workflows",
                 dataIndex: "workflows",
                 key: "workflows",
-                align: 'center'
+                align: "center",
               },
               {
                 title: "Mappings",
@@ -341,7 +344,7 @@ export default function Validate({ dataModernizationCss }) {
                 render: (_, record) => {
                   return (
                     <Table
-                    className={`${"validatePopupTable"}`}
+                      className={`${"validatePopupTable"}`}
                       pagination={false}
                       dataSource={[
                         { ...record.entitySummary, mappings: record.mappings },
@@ -351,25 +354,25 @@ export default function Validate({ dataModernizationCss }) {
                           title: "Passed",
                           dataIndex: "passedCount",
                           key: "passedCount",
-                          align: 'center'
+                          align: "center",
                         },
                         {
                           title: "Failed",
                           dataIndex: "failedCount",
                           key: "failedCount",
-                          align: 'center'
+                          align: "center",
                         },
                         {
                           title: "Total",
                           dataIndex: "mappings",
                           key: "mappings",
-                          align: 'center'
+                          align: "center",
                         },
                         {
                           title: "Not Started",
                           dataIndex: "notStartedCount",
                           key: "notStartedCount",
-                          align: 'center'
+                          align: "center",
                         },
                         {
                           title: "Action",
@@ -386,7 +389,7 @@ export default function Validate({ dataModernizationCss }) {
                                 {" View"}
                               </a>
                             );
-                            align: 'center'
+                            align: "center";
                           },
                         },
                       ]}
@@ -398,7 +401,7 @@ export default function Validate({ dataModernizationCss }) {
                 title: "Transformations",
                 dataIndex: "transformations",
                 key: "transformations",
-                align: 'center'
+                align: "center",
               },
               {
                 title: "Status",
@@ -425,14 +428,33 @@ export default function Validate({ dataModernizationCss }) {
                             githubCheckIn(record.fileId);
                           }}
                         >
-                          <GithubOutlined />
-                          {" Check-in (GitHub)"}
+                          {record.fileId === selectedGitFile ? (
+                            <>
+                              <LoadingOutlined /> {"Wait..."}
+                            </>
+                          ) : (
+                            <>
+                              <GithubOutlined />
+                              {" Check-in (GitHub)"}
+                            </>
+                          )}
                         </a>
                       ) : (
-                        <a style={{ color: "#adadad", cursor: "not-allowed" }}>
-                          <GithubOutlined />
-                          {" Checked-in (GitHub)"}
-                        </a>
+                        <Tooltip
+                          placement="topRight"
+                          title={
+                            record.githubStatus === "not_uploaded"
+                              ? "Please transform this file."
+                              : "Already check-in"
+                          }
+                        >
+                          <a
+                            style={{ color: "#adadad", cursor: "not-allowed" }}
+                          >
+                            <GithubOutlined />
+                            {" Checked-in (GitHub)"}
+                          </a>
+                        </Tooltip>
                       )}
 
                       <br />
@@ -474,7 +496,7 @@ export default function Validate({ dataModernizationCss }) {
                           )
                         ) : (
                           <Tooltip
-                            placement="topLeft"
+                            placement="topRight"
                             title={"Please transform this file."}
                           >
                             <a
@@ -489,15 +511,22 @@ export default function Validate({ dataModernizationCss }) {
                           </Tooltip>
                         )
                       ) : (
-                        <a style={{ color: "#adadad", cursor: "not-allowed" }}>
-                          <CheckCircleOutlined />
-                          {" Validation Completed"}
-                        </a>
+                        <Tooltip
+                          placement="topRight"
+                          title={"Validation Completed."}
+                        >
+                          <a
+                            style={{ color: "#adadad", cursor: "not-allowed" }}
+                          >
+                            <CheckCircleOutlined />
+                            {" Validation Completed"}
+                          </a>
+                        </Tooltip>
                       )}
                     </>
                   );
                 },
-                align: 'center'
+                align: "center",
               },
             ]}
             // scroll={{
