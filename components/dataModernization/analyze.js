@@ -13,7 +13,7 @@ import {
   Modal,
 } from "antd";
 import { useRouter } from "next/router";
-import { ArrowRightOutlined,EyeOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined, EyeOutlined } from "@ant-design/icons";
 
 import {
   GETPROJECT,
@@ -213,8 +213,14 @@ const Analyze = ({ dataModernizationCss }) => {
                 </span>
               </Card.Grid>
 
-              <Card.Grid style={{ color: "#09bd21" }}>Hours Saved</Card.Grid>
-              <Card.Grid>
+              <Card.Grid
+                style={{ color: "#09bd21", backgroundColor: "#e3fcef" }}
+              >
+                Hours Saved
+              </Card.Grid>
+              <Card.Grid
+                style={{ color: "#09bd21", backgroundColor: "#e3fcef" }}
+              >
                 <span style={{ color: "#09bd21" }}>
                   {analyzeDetails && analyzeDetails.hoursSaved
                     ? parseFloat(analyzeDetails.hoursSaved).toFixed(2)
@@ -350,19 +356,19 @@ const Analyze = ({ dataModernizationCss }) => {
                     title: "Workflows",
                     dataIndex: "workflows",
                     key: "workflows",
-                    align: 'center'
+                    align: "center",
                   },
                   {
                     title: "Mappings",
                     dataIndex: "mappings",
                     key: "mappings",
-                    align: 'center'
+                    align: "center",
                   },
                   {
                     title: "Transformations",
                     dataIndex: "transformations",
                     key: "transformations",
-                    align: 'center'
+                    align: "center",
                   },
                   {
                     title: "Status",
@@ -395,6 +401,22 @@ const Analyze = ({ dataModernizationCss }) => {
                               </a>
                             </Space>
                           );
+                        case "convert_failed":
+                          return (
+                            <Space
+                              size="middle"
+                              style={{ cursor: "not-allowed-" }}
+                            >
+                              <a
+                                style={{ cursor: "not-allowed-" }}
+                                onClick={() => {
+                                  getErrorDetails(record.fileId);
+                                }}
+                              >
+                                Details
+                              </a>
+                            </Space>
+                          );
                         default:
                           return (
                             <Space size="middle">
@@ -410,7 +432,7 @@ const Analyze = ({ dataModernizationCss }) => {
                           );
                       }
                     },
-                    align: 'center'
+                    align: "center",
                   },
                 ]}
                 dataSource={data.sort((a, b) => a.fileId - b.fileId)}

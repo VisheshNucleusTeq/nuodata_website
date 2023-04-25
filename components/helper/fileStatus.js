@@ -4,7 +4,7 @@ export const fileStatusBadge = (fileStatus, isUserAction) => {
   if (isUserAction === true) {
     switch (fileStatus) {
       case "convert_failed":
-        return <Badge count={"Transformed Failed"} color="red" />;
+        return <Badge count={"Transformed Partially"} color="orange" />;
       case "converted":
         return <Badge count={"Transformed Successfully"} color="green" />;
       case "validated":

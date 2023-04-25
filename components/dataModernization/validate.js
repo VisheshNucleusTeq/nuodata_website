@@ -128,9 +128,11 @@ export default function Validate({ dataModernizationCss }) {
         centered
         open={open}
         onOk={() => {
+          getAnalyzeData();
           setOpen(false);
         }}
         onCancel={() => {
+          getAnalyzeData();
           setOpen(false);
         }}
         width={"100vw"}
@@ -146,7 +148,7 @@ export default function Validate({ dataModernizationCss }) {
       </Modal>
 
       <Modal
-        title="Mapping Status"
+        title={popupIp ? "Check-in Status" : "Mapping Status"}
         centered
         open={mappingModelOpen}
         okButtonProps={{ style: { display: popupIp ? "" : "none" } }}
@@ -165,7 +167,6 @@ export default function Validate({ dataModernizationCss }) {
           if (data.success) {
             getAnalyzeData();
           }
-          
         }}
         width={"40vw"}
       >
@@ -274,10 +275,14 @@ export default function Validate({ dataModernizationCss }) {
                       hours
                     </span>
                   </Card.Grid>
-                  <Card.Grid style={{ color: "#09bd21" }}>
+                  <Card.Grid
+                    style={{ color: "#09bd21", backgroundColor: "#e3fcef" }}
+                  >
                     Hours Saved
                   </Card.Grid>
-                  <Card.Grid>
+                  <Card.Grid
+                    style={{ color: "#09bd21", backgroundColor: "#e3fcef" }}
+                  >
                     <span style={{ color: "#09bd21" }}>
                       {analyzeDetails && analyzeDetails.hoursSaved
                         ? parseFloat(analyzeDetails.hoursSaved).toFixed(2)
@@ -353,6 +358,7 @@ export default function Validate({ dataModernizationCss }) {
                 dataIndex: "workflows",
                 key: "workflows",
                 align: "center",
+                width: "10vw",
               },
               {
                 title: "Mappings",
@@ -367,6 +373,7 @@ export default function Validate({ dataModernizationCss }) {
                       dataSource={[
                         { ...record.entitySummary, mappings: record.mappings },
                       ]}
+                      // scroll={{ x: "max-content" }}
                       columns={[
                         {
                           title: "Passed",
@@ -380,16 +387,17 @@ export default function Validate({ dataModernizationCss }) {
                           key: "failedCount",
                           align: "center",
                         },
-                        {
-                          title: "Total",
-                          dataIndex: "mappings",
-                          key: "mappings",
-                          align: "center",
-                        },
+
                         {
                           title: "Not Started",
                           dataIndex: "notStartedCount",
                           key: "notStartedCount",
+                          align: "center",
+                        },
+                        {
+                          title: "Total",
+                          dataIndex: "mappings",
+                          key: "mappings",
                           align: "center",
                         },
                         {
@@ -420,6 +428,7 @@ export default function Validate({ dataModernizationCss }) {
                 dataIndex: "transformations",
                 key: "transformations",
                 align: "center",
+                width: "10vw",
               },
               {
                 title: "Status",
@@ -502,15 +511,20 @@ export default function Validate({ dataModernizationCss }) {
                               )}
                             </a>
                           ) : (
-                            <a
-                              style={{
-                                color: "#adadad",
-                                cursor: "not-allowed",
-                              }}
+                            <Tooltip
+                              placement="topRight"
+                              title={"Please check-in this file."}
                             >
-                              <CheckCircleOutlined />
-                              {" Mark Validation Completed"}
-                            </a>
+                              <a
+                                style={{
+                                  color: "#adadad",
+                                  cursor: "not-allowed",
+                                }}
+                              >
+                                <CheckCircleOutlined />
+                                {" Mark Validation Completed"}
+                              </a>
+                            </Tooltip>
                           )
                         ) : (
                           <Tooltip
@@ -547,10 +561,11 @@ export default function Validate({ dataModernizationCss }) {
                 align: "center",
               },
             ]}
+            scroll={{ x: "max-content", y: 500 }}
             // scroll={{
-            //   x: 'calc(700px + 50%)',
+            //   x: 'calc(1200px + 100%)',
+            //   y: 500,
             // }}
-            scroll={{ x: "max-content" }}
             dataSource={data.sort((a, b) => a.fileId - b.fileId)}
           />
         </Col>

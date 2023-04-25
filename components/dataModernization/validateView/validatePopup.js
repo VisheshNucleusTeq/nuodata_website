@@ -8,7 +8,7 @@ import {
   Input,
   Tree,
   Divider,
-  List,
+  Modal,
   Button,
   Upload,
 } from "antd";
@@ -32,6 +32,7 @@ import {
   VALIDATEFILEDETAILS,
   ADDATTACHMENT,
   DELETEATTACHMENT,
+  VIEWATTACHMENT,
 } from "../../../network/apiConstants";
 import { useRef } from "react";
 
@@ -49,6 +50,10 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
   const [fileUploading, setFileUploading] = useState(false);
   const [comment, setComment] = useState("");
   const [addComment, setAddCommnet] = useState(false);
+  const [fileDetails, setFileDetails] = useState({});
+
+  const [modelOpen, setModelOpen] = useState(false);
+  const [modelLoader, setModelLoader] = useState(false);
 
   const getTreeData = async (fileId) => {
     const data = await fetch_retry_get(`${JSONSTRUCTURE}${fileId}`);
@@ -84,7 +89,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
     return array.reduce(getNodes, []);
   };
 
-  const getData = async (id,title) => {
+  const getData = async (id, title) => {
     if (id + "") {
       if (id + "" == selectedTree + "") {
         return true;
@@ -135,9 +140,13 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
           </span>
           <span>
             {record?.type === "status" &&
-              (record?.changed === "notStarted"
-                ? <span style={{color : "orange"}}>not started</span>
-                : record?.changed === "failed" ? <span style={{color : "red"}}>{record?.changed}</span> : <span style={{color : "green"}}>{record?.changed}</span>)}
+              (record?.changed === "notStarted" ? (
+                <span style={{ color: "orange" }}>not started</span>
+              ) : record?.changed === "failed" ? (
+                <span style={{ color: "red" }}>{record?.changed}</span>
+              ) : (
+                <span style={{ color: "green" }}>{record?.changed}</span>
+              ))}
           </span>
           <span style={{ color: "#0c3246" }}>
             {record?.type === "Added" && " add attachments "}
@@ -195,26 +204,60 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
     setAddCommnet(false);
   };
 
-  const deleteFile = async (fileDetails) => {
+  const viewFileData = async (fileDetails) => {
+    console.log(VIEWATTACHMENT);
+    console.log(fileDetails);
+  };
+
+  const deleteFileConfirmation = async (fileDetail) => {
+    setModelLoader(false);
+    setModelOpen(true);
+    setFileDetails(fileDetail);
+  };
+
+  const deleteFile = async () => {
+    setModelLoader(true);
     const dataId = (selectedTree + "").split("_")[2];
     const authData = JSON.parse(localStorage.getItem("authData"));
-
-    await fetch_retry_delete(`${DELETEATTACHMENT}`, {data : {
-      objId: modalData?.objId ? modalData.objId : null,
-      userId: authData?.userId,
-      attachmentId: fileDetails?.attachmentId,
-    }});
-
+    await fetch_retry_delete(`${DELETEATTACHMENT}`, {
+      data: {
+        objId: modalData?.objId ? modalData.objId : null,
+        userId: authData?.userId,
+        attachmentId: fileDetails?.attachmentId,
+      },
+    });
     const data = await fetch_retry_get(
       `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`
     );
     if (data.success) {
       setModalData(data.data);
     }
+    setModelOpen(false);
+    setModelLoader(false);
   };
 
   return (
     <>
+      <Modal
+        title="Delete Confirmation"
+        open={modelOpen}
+        onOk={() => {
+          deleteFile();
+        }}
+        confirmLoading={modelLoader}
+        onCancel={() => {
+          setModelOpen(false);
+        }}
+        okText={"Delete"}
+        okButtonProps={{
+          style: { backgroundColor: "red", border: "1px solid red" },
+        }}
+        cancelButtonProps={{
+          style: { display: modelLoader ? "none" : "" },
+        }}
+      >
+        Are you sure you want to delete this attachment
+      </Modal>
       <Row>
         <Col span={6} style={{ backgroundColor: "#0c3246", height: "85vh" }}>
           <Input
@@ -244,7 +287,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                     treeData={treeData}
                     onSelect={async (e, i) => {
                       if (i?.node?.title && (e + "").split("_")[2] > 0) {
-                        await getData(e,i?.node?.title);
+                        await getData(e, i?.node?.title);
                       }
                     }}
                   />
@@ -267,7 +310,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                     treeData={treeData}
                     onSelect={async (e, i) => {
                       if (i?.node?.title && (e + "").split("_")[2] > 0) {
-                        await getData(e,i?.node?.title);
+                        await getData(e, i?.node?.title);
                       }
                     }}
                   />
@@ -406,15 +449,19 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                             return (
                               <>
                                 <Space>
-                                  <a>
+                                  <a
+                                    onClick={() => {
+                                      viewFileData(record);
+                                    }}
+                                  >
                                     <EyeOutlined /> View
                                   </a>
                                   &nbsp;
                                   <a
                                     onClick={() => {
-                                      deleteFile(record);
+                                      deleteFileConfirmation(record);
                                     }}
-                                    style={{color : "red"}}
+                                    style={{ color: "red" }}
                                   >
                                     <DeleteOutlined /> Delete
                                   </a>
@@ -491,11 +538,9 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                           title: "comment",
                           dataIndex: "comment",
                           key: "comment",
-                          render : (_, record) => {
-                            return <ReadMore>
-                              {record.comment}
-                            </ReadMore>
-                          }
+                          render: (_, record) => {
+                            return <ReadMore>{record.comment}</ReadMore>;
+                          },
                         },
                         {
                           title: "Date",
@@ -579,7 +624,10 @@ const ReadMore = ({ children }) => {
   return (
     <p className="text">
       {isReadMore ? text.slice(0, 50) : text}
-      <span onClick={toggleReadMore} style={{color : "blue", cursor : "pointer"}}>
+      <span
+        onClick={toggleReadMore}
+        style={{ color: "blue", cursor: "pointer" }}
+      >
         {isReadMore ? "...read more" : " show less"}
       </span>
     </p>

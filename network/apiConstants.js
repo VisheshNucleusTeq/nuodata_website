@@ -34,4 +34,5 @@ export const GITHUBCHECKIN = "gitupload/v1/checkin/file/";
 export const VALIDATEENTITYSUMMARY = "process/v2/validate/entity/summary/file/"
 export const VALIDATEFILEDETAILS = "process/v2/validate/file/"
 export const ADDATTACHMENT = "process/v2/validate/add/attachment"
+export const VIEWATTACHMENT = "process/v2/validate/view/attachment"
 export const DELETEATTACHMENT = "process/v2/validate/delete/attachment"

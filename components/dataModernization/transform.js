@@ -284,28 +284,6 @@ const Transform = ({ dataModernizationCss }) => {
                   {
                     title: "Status",
                     key: "fileStatus",
-                    // render: (_, record) => {
-                    //   switch (record.fileStatus) {
-                    //     case "convert_failed":
-                    //       return (
-                    //         <Badge
-                    //           count={"Transformed Partially"}
-                    //           color="orange"
-                    //         />
-                    //       );
-                    //     case "converted":
-                    //       return (
-                    //         <Badge
-                    //           count={"Transformed Successfully"}
-                    //           color="green"
-                    //         />
-                    //       );
-                    //     default:
-                    //       return (
-                    //         <Badge count={"Analysis Completed"} color="green" />
-                    //       );
-                    //   }
-                    // },
                     render: (_, record) => {
                       return fileStatusBadge(
                         record.fileStatus,
