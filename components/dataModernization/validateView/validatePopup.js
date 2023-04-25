@@ -158,13 +158,15 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
             {record?.type === "comment" && " added comment "}
           </span>
           <span style={{ color: "#e74860" }}>
-            {record?.type === "comment" &&
-              record?.changed
-                .split("", 50)
-                .reduce(
-                  (o, c) => (o.length === 49 ? `${o}${c}...` : `${o}${c}`),
-                  ""
-                )}
+            {record?.type === "comment" && record?.changed.length > 50
+              ? '"' +
+                record?.changed
+                  .split("", 50)
+                  .reduce(
+                    (o, c) => (o.length === 49 ? `${o}${c}...` : `${o}${c}`),
+                    ""
+                  )
+              : '"' + record?.changed + '"'}
           </span>
           <span style={{ color: "#0c3246" }}>
             {record?.type === "deleted" && " deleted attachment "}
@@ -539,7 +541,11 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                           dataIndex: "comment",
                           key: "comment",
                           render: (_, record) => {
-                            return <ReadMore>{record.comment}</ReadMore>;
+                            return record.comment.length > 50 ? (
+                              <ReadMore>{record.comment}</ReadMore>
+                            ) : (
+                              record.comment
+                            );
                           },
                         },
                         {
