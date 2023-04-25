@@ -155,6 +155,12 @@ const Analyze = ({ dataModernizationCss }) => {
                 </li>
               );
             })}
+            <li style={{ color: "#e74860", marginBottom: "4px" }}>
+                  {"Custom Error"}
+                </li>
+                <li style={{ color: "#e74860", marginBottom: "4px" }}>
+                  {"Custom Error"}
+                </li>
         </ul>
       </Modal>
 

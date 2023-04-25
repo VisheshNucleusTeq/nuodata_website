@@ -373,7 +373,6 @@ export default function Validate({ dataModernizationCss }) {
                       dataSource={[
                         { ...record.entitySummary, mappings: record.mappings },
                       ]}
-                      // scroll={{ x: "max-content" }}
                       columns={[
                         {
                           title: "Passed",
@@ -561,11 +560,7 @@ export default function Validate({ dataModernizationCss }) {
                 align: "center",
               },
             ]}
-            scroll={{ x: "max-content", y: 500 }}
-            // scroll={{
-            //   x: 'calc(1200px + 100%)',
-            //   y: 500,
-            // }}
+            scroll={{ x: "max-content", y : 500 }}
             dataSource={data.sort((a, b) => a.fileId - b.fileId)}
           />
         </Col>

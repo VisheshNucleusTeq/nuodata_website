@@ -136,7 +136,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
         <span>
           <span style={{ color: "#e74860" }}>{record?.userName}</span>
           <span style={{ color: "#0c3246" }}>
-            {record?.type === "status" && " change status to "}
+            {record?.type === "status" && " changed status to "}
           </span>
           <span>
             {record?.type === "status" &&
@@ -149,13 +149,13 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
               ))}
           </span>
           <span style={{ color: "#0c3246" }}>
-            {record?.type === "Added" && " add attachments "}
+            {record?.type === "Added" && " added attachment "}
           </span>
           <span style={{ color: "blue" }}>
             {record?.type === "Added" && record?.changed}
           </span>
           <span style={{ color: "#0c3246" }}>
-            {record?.type === "comment" && " add comment "}
+            {record?.type === "comment" && " added comment "}
           </span>
           <span style={{ color: "#e74860" }}>
             {record?.type === "comment" &&
@@ -167,7 +167,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                 )}
           </span>
           <span style={{ color: "#0c3246" }}>
-            {record?.type === "deleted" && " deleted attachments "}
+            {record?.type === "deleted" && " deleted attachment "}
           </span>
         </span>
       </b>
