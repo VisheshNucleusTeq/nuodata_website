@@ -155,18 +155,26 @@ const Analyze = ({ dataModernizationCss }) => {
                 </li>
               );
             })}
-            <li style={{ color: "#e74860", marginBottom: "4px" }}>
-                  {"Custom Error"}
-                </li>
-                <li style={{ color: "#e74860", marginBottom: "4px" }}>
-                  {"Custom Error"}
-                </li>
+          <li style={{ color: "#e74860", marginBottom: "4px" }}>
+            {"Custom Error"}
+          </li>
+          <li style={{ color: "#e74860", marginBottom: "4px" }}>
+            {"Custom Error"}
+          </li>
         </ul>
       </Modal>
 
       {analyze ? (
         <Row>
-          <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+          <Col
+            xs={8}
+            sm={8}
+            md={8}
+            lg={8}
+            xl={8}
+            xxl={8}
+            style={{ paddingRight: ".5%" }}
+          >
             <Card className={dataModernizationCss.cardView}>
               <Card.Grid>Total Files</Card.Grid>
               <Card.Grid>
@@ -236,8 +244,15 @@ const Analyze = ({ dataModernizationCss }) => {
               </Card.Grid>
             </Card>
           </Col>
-          <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col>
-          <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15} style={{}}>
+          <Col
+            xs={16}
+            sm={16}
+            md={16}
+            lg={16}
+            xl={16}
+            xxl={16}
+            style={{ paddingLeft: ".5%" }}
+          >
             <Card className={dataModernizationCss.cardViewGraphs}>
               <Carousel
                 dots={false}
@@ -331,18 +346,6 @@ const Analyze = ({ dataModernizationCss }) => {
               </Carousel>
             </Card>
           </Col>
-
-          {/* <Col
-            xs={24}
-            sm={24}
-            md={24}
-            lg={24}
-            xl={24}
-            xxl={24}
-            className={`${dataModernizationCss.validateTab} ${dataModernizationCss.downloadData}`}
-          >
-            <Button type="default">Download all output .zip file</Button>
-          </Col> */}
 
           <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
             <div className={dataModernizationCss.analyzeMain}>

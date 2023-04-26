@@ -136,7 +136,15 @@ const Transform = ({ dataModernizationCss }) => {
           {data.length ? (
             <div className={dataModernizationCss.analyzeMain}>
               <Row>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                <Col
+                  xs={8}
+                  sm={8}
+                  md={8}
+                  lg={8}
+                  xl={8}
+                  xxl={8}
+                  style={{ paddingRight: ".5%" }}
+                >
                   <Card className={dataModernizationCss.cardView}>
                     <Card.Grid>Total Files</Card.Grid>
                     <Card.Grid>
@@ -188,15 +196,14 @@ const Transform = ({ dataModernizationCss }) => {
                     </Card.Grid>
                   </Card>
                 </Col>
-                <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
                 <Col
-                  xs={14}
-                  sm={14}
-                  md={14}
-                  lg={14}
-                  xl={14}
-                  xxl={14}
-                  style={{}}
+                  xs={16}
+                  sm={16}
+                  md={16}
+                  lg={16}
+                  xl={16}
+                  xxl={16}
+                  style={{ paddingLeft: ".5%" }}
                 >
                   <Card className={dataModernizationCss.cardViewGraphs}>
                     <Carousel
@@ -237,7 +244,7 @@ const Transform = ({ dataModernizationCss }) => {
               lg={24}
               xl={24}
               xxl={24}
-              className={dataModernizationCss.analyzeMainDetails}
+              // className={dataModernizationCss.analyzeMainDetails}
             >
               <Table
                 pagination={false}
@@ -267,19 +274,19 @@ const Transform = ({ dataModernizationCss }) => {
                     title: "Workflows",
                     dataIndex: "workflows",
                     key: "workflows",
-                    align: 'center'
+                    align: "center",
                   },
                   {
                     title: "Mappings",
                     dataIndex: "mappings",
                     key: "mappings",
-                    align: 'center'
+                    align: "center",
                   },
                   {
                     title: "Transformations",
                     dataIndex: "transformations",
                     key: "transformations",
-                    align: 'center'
+                    align: "center",
                   },
                   {
                     title: "Status",
@@ -353,7 +360,7 @@ const Transform = ({ dataModernizationCss }) => {
                           );
                       }
                     },
-                    align: 'center'
+                    align: "center",
                   },
                 ]}
                 dataSource={data

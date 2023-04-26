@@ -9,13 +9,13 @@ body {
 }
 
 ::-webkit-scrollbar {
-  background-color: gray;
+  background-color: rgb(222, 222, 222);
   width: 0.3vw;
   height: 0.3vw;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #e74860;
+  background-color: #ea919e;
   border-radius: 5px;
   height: 0.4vw;
 }
@@ -210,23 +210,27 @@ body {
 }
 
 .demo .ant-table-thead tr:first-child th:first-child {
-  border-radius: 20px 0px 0px 0px !important;
+  border-radius: 10px 0px 0px 0px !important;
 }
 .demo .ant-table-thead tr:first-child th:last-child {
-  border-radius: 0px 20px 0px 0px !important;
+  border-radius: 0px 10px 0px 0px !important;
 }
 .demo .ant-table-tbody > tr:last-child > td:first-child {
-  border-radius: 0px 0px 0px 20px !important;
+  border-radius: 0px 0px 0px 10px !important;
 }
 .demo .ant-table-tbody > tr:last-child > td:last-child {
-  border-radius: 0px 0px 20px 0px !important;
+  border-radius: 0px 0px 10px 0px !important;
 }
 .demo .ant-table-content {
   padding: 2% !important;
-  border-radius: 20px !important;
+  border-radius: 10px !important;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
+    rgba(14, 30, 37, 0.32) 0px 4px 6px 0px;
   background-color: #fff !important;
+}
+
+.demo div {
+  border-radius: 10px;
 }
 
 .demoCard {
@@ -353,7 +357,7 @@ html {
 
 .controls-node {
   position: absolute;
-  z-index: 5
+  z-index: 5;
 }
 
 .ant-tree-node-content-wrapper:hover {
@@ -398,9 +402,9 @@ html {
 }
 
 .validatePopupTable .ant-table-thead .ant-table-cell {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 
 .validatePopupTable .ant-table-thead .ant-table-cell {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }

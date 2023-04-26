@@ -237,7 +237,7 @@ export default function Validate({ dataModernizationCss }) {
         <Col span={24}>
           <div className={dataModernizationCss.analyzeMain}>
             <Row>
-              <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+              <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} style={{ paddingRight: ".5%" }}>
                 <Card className={dataModernizationCss.cardView}>
                   <Card.Grid>Total Files</Card.Grid>
                   <Card.Grid>
@@ -292,8 +292,8 @@ export default function Validate({ dataModernizationCss }) {
                   </Card.Grid>
                 </Card>
               </Col>
-              <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col>
-              <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15} style={{}}>
+              {/* <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col> */}
+              <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} style={{ paddingLeft: ".5%" }}>
                 <Card className={dataModernizationCss.cardViewGraphs}>
                   <Carousel
                     dots={false}
