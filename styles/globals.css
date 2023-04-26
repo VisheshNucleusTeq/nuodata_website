@@ -166,11 +166,7 @@ body {
   width: 100% !important;
   background-color: #fff !important;
   border-radius: 25px !important;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset !important;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
 }
 
 .defineTabs .ant-tabs-nav-list .ant-tabs-tab {
@@ -224,8 +220,7 @@ body {
 .demo .ant-table-content {
   padding: 2% !important;
   border-radius: 10px !important;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 4px 6px 0px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
   background-color: #fff !important;
 }
 
@@ -235,8 +230,7 @@ body {
 
 .demoCard {
   border-radius: 20px !important;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10) !important;
   background-color: #fff !important;
 }
 

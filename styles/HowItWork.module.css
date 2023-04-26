@@ -214,8 +214,7 @@
   color: #e74860;
   border: 1px solid #0c3246;
   border-radius: 50px;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
 }
 
 .launchYourFreeTrial {
