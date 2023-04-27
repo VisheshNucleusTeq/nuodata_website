@@ -669,10 +669,10 @@ export default function Design({ dataModernizationCss }) {
           danger
           className={dataModernizationCss.nextBtn}
           onClick={() => {
-            // updateFileRecord(true);
+            updateFileRecord(true);
           }}
-          // disabled={loading || versionListArr.length != version}
-          disabled={true}
+          disabled={loading || versionListArr.length != version}
+          // disabled={true}
         >
           Transform File
         </Button>

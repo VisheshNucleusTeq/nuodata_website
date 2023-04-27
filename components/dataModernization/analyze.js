@@ -90,7 +90,7 @@ const Analyze = ({ dataModernizationCss }) => {
       : modelVersionObj?.data?.version;
 
     const data = await fetch_retry_get(
-      `${GETANALYZEDATA}${analyzeDetailsId}?version=${version}`
+      `${GETANALYZEDATA}${analyzeDetailsId}` //?version=${version}
     );
     setErrorDetails(data.data);
     setModalOpen(true);

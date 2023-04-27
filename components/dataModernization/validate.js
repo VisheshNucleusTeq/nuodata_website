@@ -1,7 +1,7 @@
 import {
   Row,
   Col,
-  Badge,
+  Checkbox,
   Table,
   Modal,
   Card,
@@ -48,7 +48,12 @@ export default function Validate({ dataModernizationCss }) {
   const [fileId, setFileId] = useState(0);
   const [mappingModelData, setMappingModelData] = useState({});
   const [mappingModelOpen, setMappingModelOpen] = useState(false);
-
+  const [defaultColShow, setDefaultColShow] = useState([
+    "mappings",
+    "workflows",
+    "transformations",
+    "status",
+  ]);
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
@@ -237,7 +242,15 @@ export default function Validate({ dataModernizationCss }) {
         <Col span={24}>
           <div className={dataModernizationCss.analyzeMain}>
             <Row>
-              <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} style={{ paddingRight: ".5%" }}>
+              <Col
+                xs={8}
+                sm={8}
+                md={8}
+                lg={8}
+                xl={8}
+                xxl={8}
+                style={{ paddingRight: ".5%" }}
+              >
                 <Card className={dataModernizationCss.cardView}>
                   <Card.Grid>Total Files</Card.Grid>
                   <Card.Grid>
@@ -293,7 +306,15 @@ export default function Validate({ dataModernizationCss }) {
                 </Card>
               </Col>
               {/* <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col> */}
-              <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} style={{ paddingLeft: ".5%" }}>
+              <Col
+                xs={16}
+                sm={16}
+                md={16}
+                lg={16}
+                xl={16}
+                xxl={16}
+                style={{ paddingLeft: ".5%" }}
+              >
                 <Card className={dataModernizationCss.cardViewGraphs}>
                   <Carousel
                     dots={false}
@@ -327,6 +348,23 @@ export default function Validate({ dataModernizationCss }) {
         </Col>
 
         <Col span={24} style={{ marginTop: "2vh" }}>
+          {/* {JSON.stringify(defaultColShow)} */}
+          <b>Columns : &nbsp; &nbsp;</b>
+          <Checkbox.Group
+            options={[
+              { label: "Mappings", value: "mappings" },
+              { label: "Workflows", value: "workflows" },
+              { label: "Transformations", value: "transformations" },
+              { label: "Status", value: "status" },
+            ]}
+            defaultValue={defaultColShow}
+            onChange={(e) => {
+              setDefaultColShow(e);
+              getAnalyzeData();
+            }}
+          />
+        </Col>
+        <Col span={24} style={{ marginTop: "2vh" }}>
           <Table
             pagination={false}
             locale={{
@@ -353,14 +391,9 @@ export default function Validate({ dataModernizationCss }) {
                   );
                 },
               },
+
               {
-                title: "Workflows",
-                dataIndex: "workflows",
-                key: "workflows",
-                align: "center",
-                width: "10vw",
-              },
-              {
+                hidden : !defaultColShow.includes("mappings"),
                 title: "Mappings",
                 dataIndex: "mappings",
                 key: "mappings",
@@ -423,6 +456,15 @@ export default function Validate({ dataModernizationCss }) {
                 },
               },
               {
+                hidden : !defaultColShow.includes("workflows"),
+                title: "Workflows",
+                dataIndex: "workflows",
+                key: "workflows",
+                align: "center",
+                width: "10vw",
+              },
+              {
+                hidden : !defaultColShow.includes("transformations"),
                 title: "Transformations",
                 dataIndex: "transformations",
                 key: "transformations",
@@ -430,6 +472,7 @@ export default function Validate({ dataModernizationCss }) {
                 width: "10vw",
               },
               {
+                hidden : !defaultColShow.includes("status"),
                 title: "Status",
                 key: "fileStatus",
                 render: (_, record) => {
@@ -442,7 +485,7 @@ export default function Validate({ dataModernizationCss }) {
               {
                 title: "Action",
                 key: "action",
-                width: "data",
+                fixed: "right",
                 render: (_, record) => {
                   return (
                     <>
@@ -559,8 +602,8 @@ export default function Validate({ dataModernizationCss }) {
                 },
                 align: "center",
               },
-            ]}
-            scroll={{ x: "max-content", y : 500 }}
+            ].filter(item => !item.hidden)}
+            scroll={{ x: "max-content", y: 500 }}
             dataSource={data.sort((a, b) => a.fileId - b.fileId)}
           />
         </Col>
