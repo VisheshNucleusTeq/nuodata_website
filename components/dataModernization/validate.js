@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import {
   GithubOutlined,
@@ -30,14 +30,9 @@ import {
   VALIDATEENTITYSUMMARY,
 } from "../../network/apiConstants";
 import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
-import { SetTabTypeAction, loderShowHideAction } from "../../Redux/action";
 import { fileStatusBadge } from "../helper/fileStatus";
-import { render } from "react-dom";
 export default function Validate({ dataModernizationCss }) {
   const { query } = useRouter();
-  const dispatch = useDispatch();
-
-  const [selectedTab, setSelecterTab] = useState("uploadTestData");
   const [open, setOpen] = useState(false);
   const [analyzeDetails, setAnalyzeDetails] = useState();
   const [data, setData] = useState([]);
@@ -58,27 +53,6 @@ export default function Validate({ dataModernizationCss }) {
     (state) => state.projectDetails.projectDetails
   );
 
-  const getFileStatusData = async (fileDetails) => {
-    const files = JSON.parse(JSON.stringify(fileDetails));
-    const finalData = [];
-    const resultData = await Promise.all(
-      files.map(async (e) => {
-        return new Promise(async (resolve, reject) => {
-          const data = await fetch_retry_get(
-            `${VALIDATEENTITYSUMMARY}${e?.fileId}`
-          );
-          finalData.push({
-            ...e,
-            ...data?.data,
-          });
-          resolve(data);
-        });
-      })
-    );
-    if (resultData) {
-      setData(finalData);
-    }
-  };
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
@@ -96,7 +70,6 @@ export default function Validate({ dataModernizationCss }) {
       setComplexityGraph(data?.data?.complexityGraph);
       setSelectedFile(0);
       setSelectedGitFile(0);
-      // await getFileStatusData(data?.data?.fileDetails);
     } else {
       // dispatch(SetProjectTransformDetailsAction({}));
       // dispatch(SetTabTypeAction("Connect"));
@@ -120,10 +93,6 @@ export default function Validate({ dataModernizationCss }) {
     setMappingModelData({ ...record.entitySummary, mappings: record.mappings });
     setPopupIp(record.fileId);
     setMappingModelOpen(true);
-    // const data = await fetch_retry_post(`${GITHUBCHECKIN}${fileId}`);
-    // if (data.success) {
-    //   getAnalyzeData();
-    // }
   };
 
   return (
@@ -305,7 +274,6 @@ export default function Validate({ dataModernizationCss }) {
                   </Card.Grid>
                 </Card>
               </Col>
-              {/* <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col> */}
               <Col
                 xs={16}
                 sm={16}
@@ -348,7 +316,6 @@ export default function Validate({ dataModernizationCss }) {
         </Col>
 
         <Col span={24} style={{ marginTop: "2vh" }}>
-          {/* {JSON.stringify(defaultColShow)} */}
           <b>Columns : &nbsp; &nbsp;</b>
           <Checkbox.Group
             options={[
@@ -447,7 +414,6 @@ export default function Validate({ dataModernizationCss }) {
                                 {" View"}
                               </a>
                             );
-                            align: "center";
                           },
                         },
                       ]}

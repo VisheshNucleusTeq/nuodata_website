@@ -1,23 +1,15 @@
-import { Row, Col, message, Modal, Badge } from "antd";
-import { useEffect, useState } from "react";
+import { Row, Col, message, Badge } from "antd";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { DownloadOutlined } from "@ant-design/icons";
 
 import { fetch_retry_get } from "../../network/api-manager";
 import { GETANALYZEDATA, DOWNLOADZIP } from "../../network/apiConstants";
-import { DownloadOutlined } from "@ant-design/icons";
-import AnalyzeDetailPopup from "./graphView/analyzeDetailPopup";
 import { SetAnalyzeDetailAction } from "../../Redux/action";
 import AnalyzeDetail from "./analyzeDetail";
 
 const TransformDetails = ({ dataModernizationCss,setIsDetails }) => {
   const dispatch = useDispatch();
-
-  const [loading, setLoading] = useState(false);
-  const [outputFiles, setOutputFiles] = useState([]);
-  const [modalData, setModalData] = useState();
-  const [outputFileId, setOutputFileId] = useState();
-  const [open, setOpen] = useState(false);
-
   const analyzeDetail = useSelector(
     (state) => state.analyzeDetail.analyzeDetail
   );
@@ -27,11 +19,9 @@ const TransformDetails = ({ dataModernizationCss,setIsDetails }) => {
   );
 
   const getAnalyzeData = async (analyzeDetailsId, version) => {
-    setLoading(true);
     const data = await fetch_retry_get(
       `${GETANALYZEDATA}${analyzeDetailsId}?version=${version}`
     );
-    setLoading(false);
     if (data.success) {
       dispatch(SetAnalyzeDetailAction(data?.data));
     } else {
@@ -40,7 +30,6 @@ const TransformDetails = ({ dataModernizationCss,setIsDetails }) => {
   };
 
   useEffect(() => {
-    setOutputFiles(analyzeDetail?.outputFiles);
     if (
       projectTransformDetails &&
       projectTransformDetails.analyzeDetailsId &&
@@ -107,20 +96,6 @@ const TransformDetails = ({ dataModernizationCss,setIsDetails }) => {
         <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1} />
         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
           <div className={dataModernizationCss.analyzeMain}>
-            <Modal
-              destroyOnClose
-              centered
-              open={open}
-              onOk={() => setOpen(false)}
-              onCancel={() => setOpen(false)}
-              width={"100vw"}
-            >
-              <AnalyzeDetailPopup
-                outputFileId={outputFileId}
-                data={modalData}
-                showPopUp={true}
-              />
-            </Modal>
             <AnalyzeDetail
               analyzeDetailsId={projectTransformDetails?.analyzeDetailsId}
               dataModernizationCss={dataModernizationCss}

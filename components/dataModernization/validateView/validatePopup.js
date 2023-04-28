@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import axios from "axios";
 import {
   Row,
   Col,
@@ -11,15 +12,14 @@ import {
   Modal,
   Button,
   Upload,
+  Image,
 } from "antd";
 import {
   FileAddOutlined,
   EyeOutlined,
   LoadingOutlined,
-  ReloadOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
 import {
   fetch_retry_get,
   fetch_retry_post,
@@ -34,7 +34,7 @@ import {
   DELETEATTACHMENT,
   VIEWATTACHMENT,
 } from "../../../network/apiConstants";
-import { useRef } from "react";
+import { createLogs } from "../../helper/createLogs";
 
 const ValidatePopup = ({ fileId, dataModernizationCss }) => {
   const inputRef = useRef();
@@ -54,6 +54,11 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
 
   const [modelOpen, setModelOpen] = useState(false);
   const [modelLoader, setModelLoader] = useState(false);
+  const [extension, setExtension] = useState({});
+  const [attModelOpen, setAttModelOpen] = useState(false);
+  const [attData, setAttData] = useState("");
+  const [attXmlData, setXmlAttData] = useState("");
+  const [attFileName, setAttFileName] = useState("");
 
   const getTreeData = async (fileId) => {
     const data = await fetch_retry_get(`${JSONSTRUCTURE}${fileId}`);
@@ -130,57 +135,6 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
     }
   };
 
-  const createLogs = (record) => {
-    return (
-      <b>
-        <span>
-          <span style={{ color: "#e74860" }}>{record?.userName}</span>
-          <span style={{ color: "#0c3246" }}>
-            {record?.type === "status" && " changed status to "}
-          </span>
-          <span>
-            {record?.type === "status" &&
-              (record?.changed === "notStarted" ? (
-                <span style={{ color: "orange" }}>not started</span>
-              ) : record?.changed === "failed" ? (
-                <span style={{ color: "red" }}>{record?.changed}</span>
-              ) : (
-                <span style={{ color: "green" }}>{record?.changed}</span>
-              ))}
-          </span>
-          <span style={{ color: "#0c3246" }}>
-            {record?.type === "Added" && " added an attachment "}
-          </span>
-          <span style={{ color: "blue" }}>
-            {record?.type === "Added" && record?.changed}
-          </span>
-          <span style={{ color: "#0c3246" }}>
-            {record?.type === "comment" && " added comment "}
-          </span>
-          <span style={{ color: "#e74860" }}>
-            {record?.type === "comment"
-              ? record?.changed.length > 50
-                ? '"' +
-                  record?.changed
-                    .split("", 50)
-                    .reduce(
-                      (o, c) => (o.length === 49 ? `${o}${c}...` : `${o}${c}`),
-                      ""
-                    )
-                : '"' + record?.changed + '"'
-              : ""}
-          </span>
-          <span style={{ color: "#0c3246" }}>
-            {record?.type === "deleted" && " deleted attachment "}
-          </span>
-          <span style={{ color: "blue" }}>
-            {record?.type === "deleted" && record?.changed}
-          </span>
-        </span>
-      </b>
-    );
-  };
-
   const changeDateFormat = (date) => {
     const dt = new Date(date);
     const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
@@ -212,8 +166,20 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
   };
 
   const viewFileData = async (fileDetails) => {
-    console.log(VIEWATTACHMENT);
-    console.log(fileDetails);
+    setAttModelOpen(true);
+    const data = await fetch_retry_get(
+      `${VIEWATTACHMENT}/${fileDetails.attachmentId}`
+    );
+    if (data.success) {
+      const fileType = data?.data?.split(";")[0]?.split("/")[0]?.split(":")[1];
+      const fileExtension = data?.data?.split(";")[0].split("/")[1];
+      setAttData(data?.data);
+      setExtension({ fileType: fileType, fileExtension: fileExtension });
+      if (fileType == "application" && fileExtension == "xml") {
+        const response = await axios.get(data?.data, {});
+        setXmlAttData(response.data);
+      }
+    }
   };
 
   const deleteFileConfirmation = async (fileDetail) => {
@@ -265,6 +231,78 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
       >
         Are you sure you want to delete this attachment
       </Modal>
+
+      <Modal
+        centered
+        title={
+          <>
+            <span style={{ color: "#0c3246", fontWeight: "bold" }}>
+              Attachment
+            </span>
+            &nbsp;
+            <span style={{ color: "#e74860", fontWeight: "bold" }}>
+              ({attFileName})
+            </span>
+          </>
+        }
+        open={attModelOpen}
+        onOk={() => {
+          var a = document.createElement("a");
+          a.href = attData;
+          a.download = Date.now() + "_" + attFileName;
+          a.click();
+          // setAttModelOpen(false);
+          // setExtension({});
+          // setAttData("");
+        }}
+        onCancel={() => {
+          setAttModelOpen(false);
+          setExtension({});
+          setAttData("");
+          setXmlAttData("");
+        }}
+        okText={"Download"}
+        cancelText={"Hide"}
+        width={"90vw"}
+      >
+        <div
+          style={{
+            height: "75vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {!attData && (
+            <>
+              <LoadingOutlined /> &nbsp; <span>Loading...</span>
+            </>
+          )}
+          {extension?.fileType === "image" && (
+            <Image alt="NuoData" src={attData} preview={false} />
+          )}
+          {extension?.fileType === "text" && (
+            <iframe
+              style={{ width: "100%", height: "75vh", border: "none" }}
+              src={attData}
+            />
+          )}
+          {extension?.fileType === "application" &&
+            extension?.fileExtension === "pdf" && (
+              <iframe
+                style={{ width: "100%", height: "75vh", border: "none" }}
+                src={attData}
+              />
+            )}
+          {extension?.fileType === "application" &&
+            extension?.fileExtension === "xml" && (
+              <pre style={{ width: "100%", height: "75vh", border: "none" }}>
+                <code>{attXmlData}</code>
+              </pre>
+            )}
+        </div>
+      </Modal>
+
       <Row>
         <Col span={6} style={{ backgroundColor: "#0c3246", height: "85vh" }}>
           <Input
@@ -336,7 +374,6 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
           span={18}
           style={{ height: "85vh", padding: "1vw", overflow: "scroll" }}
         >
-          {/* {JSON.stringify(modalData.status)} */}
           {fileTitle ? (
             <Row style={{ padding: "0% 4% 0% 4%" }}>
               <Col span={24}>
@@ -420,7 +457,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                   </Col>
                   <Col span={24} style={{ marginTop: "2%" }}>
                     <Table
-                      scroll={{ y: "40vh" }}
+                      scroll={{ y: "50vh" }}
                       loading={fileUploading}
                       className={`${"validatePopupTable"}`}
                       pagination={false}
@@ -458,6 +495,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                                 <Space>
                                   <a
                                     onClick={() => {
+                                      setAttFileName(record?.fileName);
                                       viewFileData(record);
                                     }}
                                   >
@@ -489,7 +527,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                   </Col>
                   <Col span={24} style={{ marginTop: "2%" }}>
                     <Table
-                      scroll={{ y: "40vh" }}
+                      scroll={{ y: "50vh" }}
                       className={`${"validatePopupTable"}`}
                       pagination={false}
                       dataSource={modalData?.logs?.reverse()}
@@ -528,7 +566,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                   </Col>
                   <Col span={24} style={{ marginTop: "2%" }}>
                     <Table
-                      scroll={{ y: "40vh" }}
+                      scroll={{ y: "50vh" }}
                       className={`${"validatePopupTable"}`}
                       pagination={false}
                       dataSource={modalData?.comments?.reverse()}

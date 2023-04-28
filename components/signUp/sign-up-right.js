@@ -4,9 +4,8 @@ import { Button, Form, Input, Row, Col } from "antd";
 import Link from "next/link";
 
 function SignUpRight({ signUpCss }) {
-
   const onFinish = async (payload) => {
-    console.log(payload)
+    console.log(payload);
   };
 
   return (
@@ -15,10 +14,12 @@ function SignUpRight({ signUpCss }) {
         <h1 style={{ marginBottom: "25px" }}>
           <b>Sign-up for a free trial</b>
         </h1>
-        <Form layout="horizontal" autoComplete="off"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 24 }}
-        onFinish={onFinish}
+        <Form
+          layout="horizontal"
+          autoComplete="off"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 24 }}
+          onFinish={onFinish}
         >
           <Form.Item
             label={"Full Name"}

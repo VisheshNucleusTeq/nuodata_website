@@ -5,7 +5,7 @@ import "chart.js/auto";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = ({ complexityGraph, dataModernizationCss, labels, data }) => {
+const PieChart = ({ labels, data }) => {
   const [pieChart, setPieChart] = useState({
     labels,
     datasets: [

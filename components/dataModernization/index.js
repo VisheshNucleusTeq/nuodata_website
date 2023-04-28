@@ -47,7 +47,6 @@ export default function DataModernization() {
                 key={(Math.random() + 1).toString(36).substring(7)}
                 onClick={() => {
                   if (query?.id ? query?.id : projectDetails?.projectId) {
-                    // dispatch(SetProjectTransformDetailsAction({}));
                     dispatch(SetTabTypeAction(data));
                   }
                 }}

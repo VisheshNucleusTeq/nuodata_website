@@ -9,11 +9,14 @@ import {
   message,
   Carousel,
   Button,
-  Badge,
   Modal,
 } from "antd";
 import { useRouter } from "next/router";
-import { ArrowRightOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  ArrowRightOutlined,
+  EyeOutlined,
+  WarningOutlined,
+} from "@ant-design/icons";
 
 import {
   GETPROJECT,
@@ -41,7 +44,6 @@ const Analyze = ({ dataModernizationCss }) => {
 
   const [data, setData] = useState([]);
   const [analyzeDetails, setAnalyzeDetails] = useState();
-  const [loading, setLoading] = useState(false);
   const [complexityGraph, setComplexityGraph] = useState();
   const [analyze, setAnalyze] = useState(true);
   const [analyzeDetailsId, setAnalyzeDetailsId] = useState(0);
@@ -54,9 +56,8 @@ const Analyze = ({ dataModernizationCss }) => {
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}` //?type=analyze
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
     );
-    setLoading(false);
     if (data.success) {
       setData(data?.data?.fileDetails);
       setAnalyzeDetails(data?.data);
@@ -81,7 +82,6 @@ const Analyze = ({ dataModernizationCss }) => {
   }, [query.id]);
 
   const getErrorDetails = async (analyzeDetailsId) => {
-    setLoading(true);
     const modelVersionObj = await fetch_retry_get(
       `${VERSION}${analyzeDetailsId}`
     );
@@ -90,17 +90,16 @@ const Analyze = ({ dataModernizationCss }) => {
       : modelVersionObj?.data?.version;
 
     const data = await fetch_retry_get(
-      `${GETANALYZEDATA}${analyzeDetailsId}` //?version=${version}
+      `${GETANALYZEDATA}${analyzeDetailsId}`
     );
     setErrorDetails(data.data);
     setModalOpen(true);
-    setLoading(false);
   };
 
   const updateTransformStatus = async () => {
     dispatch(loderShowHideAction(true));
     const isUserActionData = data.filter((e) => e.isUserAction === false);
-    const resultData = await Promise.all(
+    await Promise.all(
       isUserActionData.map(async (e) => {
         return new Promise(async (resolve, reject) => {
           const data = await fetch_retry_post(
@@ -114,26 +113,6 @@ const Analyze = ({ dataModernizationCss }) => {
     dispatch(SetTabTypeAction("Transform"));
     dispatch(loderShowHideAction(false));
   };
-
-  // const getTrueStatus = (fileStatus) => {
-  //   switch (fileStatus) {
-  //     case "convert_failed":
-  //       return <Badge count={"Transformed Partially"} color="orange" />;
-  //     case "converted":
-  //       return <Badge count={"Transformed Successfully"} color="green" />;
-  //     default:
-  //       return <Badge count={"Analysis Completed"} color="green" />;
-  //   }
-  // };
-
-  // const gerFalseStatus = (fileStatus) => {
-  //   switch (fileStatus) {
-  //     case "analyze_failed":
-  //       return <Badge count={"Analysis Failed"} color="red" />;
-  //     default:
-  //       return <Badge count={"Analysis Completed"} color="green" />;
-  //   }
-  // };
 
   return (
     <div className={dataModernizationCss.analyzeMain}>
@@ -155,12 +134,6 @@ const Analyze = ({ dataModernizationCss }) => {
                 </li>
               );
             })}
-          <li style={{ color: "#e74860", marginBottom: "4px" }}>
-            {"Custom Error"}
-          </li>
-          <li style={{ color: "#e74860", marginBottom: "4px" }}>
-            {"Custom Error"}
-          </li>
         </ul>
       </Modal>
 
@@ -406,23 +379,20 @@ const Analyze = ({ dataModernizationCss }) => {
                                   getErrorDetails(record.fileId);
                                 }}
                               >
-                                Details
+                                <WarningOutlined /> Errors
                               </a>
                             </Space>
                           );
                         case "convert_failed":
                           return (
-                            <Space
-                              size="middle"
-                              style={{ cursor: "not-allowed-" }}
-                            >
+                            <Space size="middle">
                               <a
-                                style={{ cursor: "not-allowed-" }}
                                 onClick={() => {
-                                  getErrorDetails(record.fileId);
+                                  setAnalyzeDetailsId(record.fileId);
+                                  setAnalyze(false);
                                 }}
                               >
-                                Details
+                                <EyeOutlined /> View
                               </a>
                             </Space>
                           );
@@ -488,6 +458,7 @@ const Analyze = ({ dataModernizationCss }) => {
         </Row>
       ) : (
         <AnalyzeDetail
+          getErrorDetails={getErrorDetails}
           analyzeDetailsId={analyzeDetailsId}
           dataModernizationCss={dataModernizationCss}
           setAnalyze={() => {

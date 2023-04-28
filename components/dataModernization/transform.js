@@ -1,72 +1,34 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import {
-  Row,
-  Col,
-  Card,
-  Carousel,
-  Collapse,
-  Space,
-  Table,
-  Modal,
-  Tag,
-  message,
-  Badge,
-  Tooltip,
-} from "antd";
-const { Panel } = Collapse;
+import { useSelector, useDispatch } from "react-redux";
+import { Row, Col, Card, Carousel, Space, Table, Modal } from "antd";
 import { useRouter } from "next/router";
-import {
-  EyeOutlined,
-  DownloadOutlined,
-  CheckCircleOutlined,
-  ExclamationCircleOutlined,
-} from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { EyeOutlined } from "@ant-design/icons";
 
 import { fetch_retry_get } from "../../network/api-manager";
-import { ANALYZESUMMARY, DESIGN } from "../../network/apiConstants";
+import { ANALYZESUMMARY } from "../../network/apiConstants";
 import PieChart from "./charts/pieChart";
-import { DOWNLOADFILE } from "../../network/apiConstants";
-import AnalyzeDetailPopup from "./graphView/analyzeDetailPopup";
-import {
-  SetProjectTransformDetailsAction,
-  SetTabTypeAction,
-  SetProjectDetailsAction,
-} from "../../Redux/action";
+import { SetProjectTransformDetailsAction } from "../../Redux/action";
 import TransformDetails from "./transformDetails";
 import AnalyzeDetail from "./analyzeDetail";
 import { fileStatusBadge } from "../helper/fileStatus";
+
 const Transform = ({ dataModernizationCss }) => {
   const { query } = useRouter();
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [analyzeDetails, setAnalyzeDetails] = useState();
-  const [loading, setLoading] = useState(false);
   const [complexityGraph, setComplexityGraph] = useState();
-  const [modalData, setModalData] = useState();
-  const [open, setOpen] = useState(false);
   const [isDetails, setIsDetails] = useState(false);
-  const [fileId, setFileId] = useState(0);
 
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
-  );
-
-  const projectTransformDetails = useSelector(
-    (state) => state.projectTransformDetails.projectTransformDetails
-  );
-
-  const designDetails = useSelector(
-    (state) => state.designDetails.designDetails
   );
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
       `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
     );
-    setLoading(false);
     if (data.success) {
       setData(data?.data?.fileDetails);
       const failData = data?.data?.fileDetails.filter((e) => {
@@ -244,14 +206,12 @@ const Transform = ({ dataModernizationCss }) => {
               lg={24}
               xl={24}
               xxl={24}
-              // className={dataModernizationCss.analyzeMainDetails}
             >
               <Table
                 pagination={false}
                 rowKey="fileId"
                 expandable={{
                   expandedRowRender: (record) => (
-                    // record.fileStatus === true ? (
                     <AnalyzeDetail
                       analyzeDetailsId={record.fileId}
                       dataModernizationCss={dataModernizationCss}
@@ -260,9 +220,6 @@ const Transform = ({ dataModernizationCss }) => {
                       showPopUp={record?.isUserAction}
                     />
                   ),
-                  // ) : (
-                  //   <center style={{color : "#e74860"}}>Please transform this file</center>
-                  // ),
                 }}
                 columns={[
                   {
@@ -332,16 +289,6 @@ const Transform = ({ dataModernizationCss }) => {
                               </a>
                             </Space>
                           ) : (
-                            // <Tooltip placement="topLeft" title={"Please transform this file."}>
-                            //   <Space
-                            //     size="middle"
-                            //     style={{ cursor: "not-allowed" }}
-                            //   >
-                            //     <a style={{ cursor: "not-allowed" }}>
-                            //       <EyeOutlined /> View
-                            //     </a>
-                            //   </Space>
-                            // </Tooltip>
                             <Space size="middle">
                               <a
                                 onClick={() => {
@@ -366,26 +313,10 @@ const Transform = ({ dataModernizationCss }) => {
                 dataSource={data
                   .sort((a, b) => a.fileId - b.fileId)
                   .filter(
-                    (data) => data.fileStatus !== "analyze_failed"
-                    // && data.isUserAction === true
-                  )}
+                    (data) => data.fileStatus !== "analyze_failed")}
               />
             </Col>
           </Row>
-          <Modal
-            destroyOnClose
-            centered
-            open={open}
-            onOk={() => setOpen(false)}
-            onCancel={() => setOpen(false)}
-            width={"100vw"}
-          >
-            <AnalyzeDetailPopup
-              outputFileId={"outputFileId"}
-              data={modalData}
-              showPopUp={true}
-            />
-          </Modal>
         </>
       )}
     </>

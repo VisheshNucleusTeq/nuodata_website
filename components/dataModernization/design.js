@@ -10,7 +10,6 @@ import {
   Col,
   Select,
   Divider,
-  Badge,
   Modal,
   Tooltip,
 } from "antd";
@@ -23,7 +22,6 @@ import {
   ANALYZESUMMARY,
   VERSION,
   TABLE,
-  TABLEDATA,
   RELEASEVERSION,
   TABLECHANGELOGS,
   COLUMNCHANGELOGS,
@@ -58,11 +56,8 @@ export default function Design({ dataModernizationCss }) {
   const [fileId, setFileId] = useState();
   const [version, setVersion] = useState();
   const [childData, setChildData] = useState([]);
-  const [childTableData, setChildTableData] = useState([]);
-  const [preChildTableData, setPreChildTableData] = useState([]);
+
   const [tableId, setTableId] = useState([]);
-  const [tableName, setTableName] = useState("");
-  const [preTableName, setPreTableName] = useState("");
   const [versionListArr, setVersionListArr] = useState([]);
   const [isDraftState, setIsDraftState] = useState(false);
   const [open, setOpen] = useState(false);
@@ -213,19 +208,6 @@ export default function Design({ dataModernizationCss }) {
     myRef?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const getTableData = async (tableId, v = null) => {
-    setTableId(tableId);
-    const tableKeyData = await fetch_retry_get(
-      `${TABLEDATA}${fileId}?version=${v ? v : version}&tableId=${tableId}`,
-      {
-        version: v ? v : version,
-        tableId: tableId,
-      }
-    );
-    setChildTableData(tableKeyData?.data);
-    setPreChildTableData(tableKeyData?.data);
-  };
-
   const updateFinalFileRecord = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
     const _temp = JSON.parse(JSON.stringify(updatedTableDetails));
@@ -297,8 +279,7 @@ export default function Design({ dataModernizationCss }) {
       `${TABLE}${fileId}?version=${version}`
     );
     setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
-    getTableData(tableId, version);
-
+    setTableId(tableId);
     setUpdatedTableDetails([]);
     setUpdatedColumnDetails([]);
   };
@@ -672,7 +653,6 @@ export default function Design({ dataModernizationCss }) {
             updateFileRecord(true);
           }}
           disabled={loading || versionListArr.length != version}
-          // disabled={true}
         >
           Transform File
         </Button>

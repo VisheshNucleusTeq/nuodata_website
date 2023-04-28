@@ -1,6 +1,5 @@
 import { Badge } from "antd";
 export const fileStatusBadge = (fileStatus, isUserAction) => {
-  console.log(fileStatus)
   if (isUserAction === true) {
     switch (fileStatus) {
       case "convert_failed":

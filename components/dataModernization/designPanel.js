@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Input, Row, Col } from "antd";
-import { useEffect, useState } from "react";
 
 import { TABLEDATA } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
@@ -19,11 +18,8 @@ const DesignPanel = ({
   const [tableName, setTableName] = useState("");
   const [childTableData, setChildTableData] = useState([]);
   const [preChildTableData, setPreChildTableData] = useState([]);
-  const [tableId, setTableId] = useState([]);
 
   const getTableData = async (tableId, v = null) => {
-    setTableId(tableId);
-
     const tableKeyData = await fetch_retry_get(
       `${TABLEDATA}${fileId}?version=${v ? v : version}&tableId=${tableId}`,
       {
