@@ -655,7 +655,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                 display: "flex",
               }}
             >
-              <center>No Record Found</center>
+              <center>No Record Available</center>
             </div>
           )}
         </Col>

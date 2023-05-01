@@ -40,7 +40,7 @@ import {
   loderShowHideAction,
 } from "../../Redux/action";
 
-import { DownOutlined, UpOutlined,EyeOutlined } from "@ant-design/icons";
+import { DownOutlined, UpOutlined, EyeOutlined } from "@ant-design/icons";
 
 import DrawerView from "./drawerView";
 import DesignPanel from "./designPanel";
@@ -70,6 +70,8 @@ export default function Design({ dataModernizationCss }) {
   const [updatedColumnDetails, setUpdatedColumnDetails] = useState([]);
   const [finalDataForUpdate, setFinalDataForUpdate] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [tableType, setTableType] = useState("source");
+
   const dispatch = useDispatch();
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -190,7 +192,7 @@ export default function Design({ dataModernizationCss }) {
       `${TABLE}${fileId}?version=${version}`
     );
     setChildData([]);
-    setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
+    setChildData(tableData?.data ? tableData?.data : []);
 
     const versionList = [];
     for (let index = 1; index <= version; index++) {
@@ -245,10 +247,6 @@ export default function Design({ dataModernizationCss }) {
     setFinalDataForUpdate(_temp);
   };
 
-  useEffect(() => {
-    updateFinalFileRecord();
-  }, [updatedTableDetails, updatedColumnDetails]);
-
   const updateFileRecord = async (release = false) => {
     dispatch(loderShowHideAction(true));
 
@@ -278,7 +276,7 @@ export default function Design({ dataModernizationCss }) {
     const tableData = await fetch_retry_get(
       `${TABLE}${fileId}?version=${version}`
     );
-    setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
+    setChildData(tableData?.data ? tableData?.data : []);
     setTableId(tableId);
     setUpdatedTableDetails([]);
     setUpdatedColumnDetails([]);
@@ -343,6 +341,10 @@ export default function Design({ dataModernizationCss }) {
     setModalOpen(true);
     setLoading(false);
   };
+
+  useEffect(() => {
+    updateFinalFileRecord();
+  }, [updatedTableDetails, updatedColumnDetails]);
 
   const changeLogs = () => {
     return (
@@ -414,19 +416,19 @@ export default function Design({ dataModernizationCss }) {
               title: "Workflows",
               dataIndex: "workflows",
               key: "workflows",
-              align: 'center'
+              align: "center",
             },
             {
               title: "Mappings",
               dataIndex: "mappings",
               key: "mappings",
-              align: 'center'
+              align: "center",
             },
             {
               title: "Transformations",
               dataIndex: "transformations",
               key: "transformations",
-              align: 'center'
+              align: "center",
             },
             {
               title: "Status",
@@ -480,14 +482,21 @@ export default function Design({ dataModernizationCss }) {
                                 cursor: "not-allowed",
                               }}
                             >
-                              <a style={{ color: "#adadad",cursor: "not-allowed" }}><EyeOutlined /> View</a>
+                              <a
+                                style={{
+                                  color: "#adadad",
+                                  cursor: "not-allowed",
+                                }}
+                              >
+                                <EyeOutlined /> View
+                              </a>
                             </Space>
                           </Tooltip>
                         );
                     }
                 }
               },
-              align: 'center'
+              align: "center",
             },
           ]}
           dataSource={fileList.sort((a, b) => a.fileId - b.fileId)}
@@ -549,9 +558,42 @@ export default function Design({ dataModernizationCss }) {
               {isVisible ? <UpOutlined /> : <DownOutlined />}
             </div>
             <Row className={dataModernizationCss.detailsTitle}>
-              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                <h2>
-                  {fileName}{" "}
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Row align="middle" className={dataModernizationCss.designTabs}>
+                  {[
+                    { title: "Source DDL", value: "source" },
+                    { title: "Target DDL", value: "target" },
+                    {
+                      title: "Source & Target DDL",
+                      value: "source_and_target",
+                    },
+                  ].map((data, i) => {
+                    return (
+                      <Col
+                        key={(Math.random() + 1).toString(36).substring(7)}
+                        span={8}
+                        onClick={() => {
+                          setTableType(data?.value);
+                          // changeVersion(version);
+                        }}
+                      >
+                        <div
+                          className={`${dataModernizationCss.designTabsStep} ${
+                            tableType === data?.value
+                              ? dataModernizationCss.designTabsStepSelected
+                              : null
+                          } `}
+                        >
+                          {data?.title}
+                        </div>
+                      </Col>
+                    );
+                  })}
+                </Row>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={18} xl={18} xxl={18}>
+                <h3>
+                  {fileName}
                   <span>
                     (
                     <a
@@ -567,9 +609,9 @@ export default function Design({ dataModernizationCss }) {
                     </a>
                     )
                   </span>
-                </h2>
+                </h3>
               </Col>
-              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+              <Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
                 <Select
                   className="inputDesignSelect"
                   showSearch
@@ -591,38 +633,45 @@ export default function Design({ dataModernizationCss }) {
               </Col>
             </Row>
             <Divider />
-            <Collapse
-              defaultActiveKey={Array(childData.length)
-                .fill(undefined)
-                .map((a, b) => {
-                  return b + "panel";
-                })}
-              ghost
-            >
-              {childData
-                .sort((a, b) => a.tableId - b.tableId)
-                .map((e, i) => {
-                  return (
-                    <Panel
-                      header={`${e.tableName} (${e.baseTableName})`}
-                      key={i + "panel"}
-                      forceRender={true}
-                    >
-                      <DesignPanel
-                        dataModernizationCss={dataModernizationCss}
-                        e={e}
-                        versionListArr={versionListArr}
-                        version={version}
-                        fileId={fileId}
-                        showColumnLogs={showColumnLogs}
-                        updatedTableDetailsAction={updatedTableDetailsAction}
-                        updatedColumnDetailsAction={updatedColumnDetailsAction}
-                        showTableLogs={showTableLogs}
-                      />
-                    </Panel>
-                  );
-                })}
-            </Collapse>
+            {childData?.filter((e) => e.tableType === tableType).length > 0 ? (
+              <Collapse
+                defaultActiveKey={Array(childData.length)
+                  .fill(undefined)
+                  .map((a, b) => {
+                    return b + "panel";
+                  })}
+                ghost
+              >
+                {childData
+                  .sort((a, b) => a.tableId - b.tableId)
+                  .filter((e) => e.tableType === tableType)
+                  .map((e, i) => {
+                    return (
+                      <Panel
+                        header={`${e.tableName} (${e.baseTableName})`}
+                        key={i + "panel"}
+                        forceRender={true}
+                      >
+                        <DesignPanel
+                          dataModernizationCss={dataModernizationCss}
+                          e={e}
+                          versionListArr={versionListArr}
+                          version={version}
+                          fileId={fileId}
+                          showColumnLogs={showColumnLogs}
+                          updatedTableDetailsAction={updatedTableDetailsAction}
+                          updatedColumnDetailsAction={
+                            updatedColumnDetailsAction
+                          }
+                          showTableLogs={showTableLogs}
+                        />
+                      </Panel>
+                    );
+                  })}
+              </Collapse>
+            ) : (
+              <center>No Record Available</center>
+            )}
           </Card>
         )}
       </div>

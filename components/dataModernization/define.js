@@ -54,7 +54,7 @@ const Define = ({ dataModernizationCss }) => {
 
   const onUpdateProject = async (payload) => {
     setLoading(true);
-    const data = await fetch_retry_put(`${UPDATEPROJECT}${query.id}`, {
+    const data = await fetch_retry_put(`${UPDATEPROJECT}${query?.id ? query?.id : projectDetails?.projectId}`, {
       name: payload.name,
       businessUnit: payload.businessUnit,
       sourcePlatform: payload.sourcePlatform,
@@ -72,13 +72,13 @@ const Define = ({ dataModernizationCss }) => {
   };
 
   const getProjectData = async (projectId) => {
-    const data = await fetch_retry_get(`${GETPROJECT}${query.id}`);
+    const data = await fetch_retry_get(`${GETPROJECT}${query?.id ? query?.id : projectDetails?.projectId}`);
     dispatch(SetProjectDetailsAction(data.data));
   };
 
   useEffect(() => {
-    getProjectData(query.id);
-  }, [query.id]);
+    getProjectData(query?.id ? query?.id : projectDetails?.projectId);
+  }, [query?.id ? query?.id : projectDetails?.projectId]);
 
   return (
     <Row className={dataModernizationCss.defineForm}>
@@ -89,7 +89,7 @@ const Define = ({ dataModernizationCss }) => {
           autoComplete="on"
           labelCol={{ span: 7 }}
           wrapperCol={{ span: 18 }}
-          onFinish={query.id ? onUpdateProject : onFinishDefine}
+          onFinish={(query?.id ? query?.id : projectDetails?.projectId) ? onUpdateProject : onFinishDefine}
           initialValues={{
             businessUnit:
               projectDetails && projectDetails.businessUnit
@@ -354,7 +354,7 @@ const Define = ({ dataModernizationCss }) => {
               className={dataModernizationCss.nextBtn}
               htmlType="submit"
             >
-              {query.id ? "Update" : "Next"}
+              {(query?.id ? query?.id : projectDetails?.projectId) ? "Update" : "Next"}
             </Button>
 
             <Button

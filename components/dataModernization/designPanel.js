@@ -3,6 +3,7 @@ import { Table, Input, Row, Col } from "antd";
 
 import { TABLEDATA } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
+import { useQuery } from "react-query";
 
 const DesignPanel = ({
   dataModernizationCss,
@@ -31,9 +32,39 @@ const DesignPanel = ({
     setPreChildTableData(tableKeyData?.data);
   };
 
+  const getTableDataNew = async (tableId, v = null) => {
+    const tableKeyData = await fetch_retry_get(
+      `${TABLEDATA}${fileId}?version=${v ? v : version}&tableId=${tableId}`,
+      {
+        version: v ? v : version,
+        tableId: tableId,
+      }
+    );
+    return tableKeyData;
+  };
+
+  // useEffect(() => {
+  //   setTableName("");
+  //   setChildTableData([]);
+  //   setPreChildTableData([]);
+  //   getTableData(e.tableId);
+  // }, [e]);
+
+  const { status, data } = useQuery(
+    ["TABLEDATA", e.tableId],
+    () => getTableDataNew(e.tableId),
+    { refetchOnWindowFocus: false, enabled : true }
+  );
+
   useEffect(() => {
-    getTableData(e.tableId);
-  }, [e]);
+    if (status === "success") {
+      setTableName("");
+      setChildTableData([]);
+      setPreChildTableData([]);
+      setChildTableData(data?.data);
+      setPreChildTableData(data?.data);
+    }
+  }, [status, data]);
 
   return (
     <>
@@ -41,7 +72,7 @@ const DesignPanel = ({
         <Col span={11}>
           <Row>
             <Col className={dataModernizationCss.tableNameView} span={24}>
-              Target Table Plan
+              Target Table Plan {e?.dbType}
             </Col>
             <Col span={24}>
               <Input
@@ -58,9 +89,23 @@ const DesignPanel = ({
               />
             </Col>
           </Row>
+          
         </Col>
         <Col span={2} />
-        <Col span={11}></Col>
+        <Col span={11}>
+        <Row>
+            <Col className={dataModernizationCss.tableNameView} span={24}>
+              Database Type
+            </Col>
+            <Col span={24}>
+              <Input
+                value={e?.dbType}
+                style={{ borderRadius: "10px", height: "5vh" }}
+                // disabled={true}
+              />
+            </Col>
+          </Row>
+        </Col>
         <Col span={4} className="centerButton">
           <p
             style={{
