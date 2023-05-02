@@ -1,17 +1,17 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { Button, Row, Col, Form, message, Upload } from "antd";
 const { Dragger } = Upload;
 import { FileAddOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { useQueryClient } from "react-query";
 
-import {
-  fetch_retry_post,
-} from "../../network/api-manager";
+import { fetch_retry_post } from "../../network/api-manager";
 import { UPLOADFILE, ANALYZE, TRANSFORM } from "../../network/apiConstants";
 import { SetTabTypeAction } from "../../Redux/action";
 
 const Connect = ({ dataModernizationCss }) => {
+  const queryClient = useQueryClient()
   const { query } = useRouter();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -51,11 +51,11 @@ const Connect = ({ dataModernizationCss }) => {
             });
           })
         );
+        queryClient.refetchQueries({ queryKey: ['PROJECT_DATA'] })
         setLoading(false);
       }
     },
-    onDrop(e) {
-    },
+    onDrop(e) {},
   });
 
   return (

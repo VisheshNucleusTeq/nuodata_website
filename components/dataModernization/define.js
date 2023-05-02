@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Button, Row, Col, Form, Input, Select, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { useQueryClient } from "react-query";
+
 import {
   fetch_retry_post,
   fetch_retry_get,
@@ -12,6 +14,7 @@ import { DEFINE, GETPROJECT, UPDATEPROJECT } from "../../network/apiConstants";
 import { SetProjectDetailsAction, SetTabTypeAction } from "../../Redux/action";
 
 const Define = ({ dataModernizationCss }) => {
+  const queryClient = useQueryClient()
   const { query } = useRouter();
   const router = useRouter();
   const [form] = Form.useForm();
@@ -28,6 +31,7 @@ const Define = ({ dataModernizationCss }) => {
 
   const onFinishDefine = async (payload) => {
     if (projectDetails && projectDetails.name) {
+      queryClient.refetchQueries({ queryKey: ['PROJECT_DATA'] })
       dispatch(SetTabTypeAction("Connect"));
     } else {
       setLoading(true);
@@ -44,6 +48,7 @@ const Define = ({ dataModernizationCss }) => {
       });
       setLoading(false);
       if (data.success) {
+        queryClient.refetchQueries({ queryKey: ['PROJECT_DATA'] })
         dispatch(SetProjectDetailsAction(data.data));
         dispatch(SetTabTypeAction("Connect"));
       } else {
@@ -54,16 +59,20 @@ const Define = ({ dataModernizationCss }) => {
 
   const onUpdateProject = async (payload) => {
     setLoading(true);
-    const data = await fetch_retry_put(`${UPDATEPROJECT}${query?.id ? query?.id : projectDetails?.projectId}`, {
-      name: payload.name,
-      businessUnit: payload.businessUnit,
-      sourcePlatform: payload.sourcePlatform,
-      sourceLang: payload.sourceLang,
-      targetPlatform: payload.targetPlatform,
-      targetLang: payload.targetLang,
-    });
+    const data = await fetch_retry_put(
+      `${UPDATEPROJECT}${query?.id ? query?.id : projectDetails?.projectId}`,
+      {
+        name: payload.name,
+        businessUnit: payload.businessUnit,
+        sourcePlatform: payload.sourcePlatform,
+        sourceLang: payload.sourceLang,
+        targetPlatform: payload.targetPlatform,
+        targetLang: payload.targetLang,
+      }
+    );
     setLoading(false);
     if (data.success) {
+      queryClient.refetchQueries({ queryKey: ['PROJECT_DATA'] })
       dispatch(SetProjectDetailsAction(data.data));
       router.push(`/dashboard`);
     } else {
@@ -71,13 +80,17 @@ const Define = ({ dataModernizationCss }) => {
     }
   };
 
-  const getProjectData = async (projectId) => {
-    const data = await fetch_retry_get(`${GETPROJECT}${query?.id ? query?.id : projectDetails?.projectId}`);
+  const getProjectData = async () => {
+    const data = await fetch_retry_get(
+      `${GETPROJECT}${query?.id ? query?.id : projectDetails?.projectId}`
+    );
     dispatch(SetProjectDetailsAction(data.data));
   };
 
   useEffect(() => {
-    getProjectData(query?.id ? query?.id : projectDetails?.projectId);
+    if (query?.id ? query?.id : projectDetails?.projectId) {
+      getProjectData(query?.id ? query?.id : projectDetails?.projectId);
+    }
   }, [query?.id ? query?.id : projectDetails?.projectId]);
 
   return (
@@ -89,7 +102,11 @@ const Define = ({ dataModernizationCss }) => {
           autoComplete="on"
           labelCol={{ span: 7 }}
           wrapperCol={{ span: 18 }}
-          onFinish={(query?.id ? query?.id : projectDetails?.projectId) ? onUpdateProject : onFinishDefine}
+          onFinish={
+            (query?.id ? query?.id : projectDetails?.projectId)
+              ? onUpdateProject
+              : onFinishDefine
+          }
           initialValues={{
             businessUnit:
               projectDetails && projectDetails.businessUnit
@@ -354,7 +371,9 @@ const Define = ({ dataModernizationCss }) => {
               className={dataModernizationCss.nextBtn}
               htmlType="submit"
             >
-              {(query?.id ? query?.id : projectDetails?.projectId) ? "Update" : "Next"}
+              {(query?.id ? query?.id : projectDetails?.projectId)
+                ? "Update"
+                : "Next"}
             </Button>
 
             <Button

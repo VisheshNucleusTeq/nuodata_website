@@ -43,28 +43,28 @@ const DesignPanel = ({
     return tableKeyData;
   };
 
-  // useEffect(() => {
-  //   setTableName("");
-  //   setChildTableData([]);
-  //   setPreChildTableData([]);
-  //   getTableData(e.tableId);
-  // }, [e]);
-
-  const { status, data } = useQuery(
-    ["TABLEDATA", e.tableId],
-    () => getTableDataNew(e.tableId),
-    { refetchOnWindowFocus: false, enabled : true }
-  );
-
   useEffect(() => {
-    if (status === "success") {
-      setTableName("");
-      setChildTableData([]);
-      setPreChildTableData([]);
-      setChildTableData(data?.data);
-      setPreChildTableData(data?.data);
-    }
-  }, [status, data]);
+    setTableName("");
+    setChildTableData([]);
+    setPreChildTableData([]);
+    getTableData(e.tableId);
+  }, [e]);
+
+  // const { status, data } = useQuery(
+  //   ["TABLEDATA", e.tableId],
+  //   () => getTableDataNew(e.tableId),
+  //   { refetchOnWindowFocus: false, enabled: true }
+  // );
+
+  // useEffect(() => {
+  //   if (status === "success") {
+  //     setTableName("");
+  //     setChildTableData([]);
+  //     setPreChildTableData([]);
+  //     setChildTableData(data?.data);
+  //     setPreChildTableData(data?.data);
+  //   }
+  // }, [status, data]);
 
   return (
     <>
@@ -72,7 +72,7 @@ const DesignPanel = ({
         <Col span={11}>
           <Row>
             <Col className={dataModernizationCss.tableNameView} span={24}>
-              Target Table Plan {e?.dbType}
+              Target Table Plan
             </Col>
             <Col span={24}>
               <Input
@@ -89,19 +89,22 @@ const DesignPanel = ({
               />
             </Col>
           </Row>
-          
         </Col>
         <Col span={2} />
         <Col span={11}>
-        <Row>
+          <Row>
             <Col className={dataModernizationCss.tableNameView} span={24}>
               Database Type
             </Col>
             <Col span={24}>
               <Input
                 value={e?.dbType}
-                style={{ borderRadius: "10px", height: "5vh" }}
-                // disabled={true}
+                style={{
+                  borderRadius: "10px",
+                  height: "5vh",
+                  color: "#0c3246",
+                }}
+                disabled={true}
               />
             </Col>
           </Row>

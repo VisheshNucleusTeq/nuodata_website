@@ -561,10 +561,10 @@ export default function Design({ dataModernizationCss }) {
               <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                 <Row align="middle" className={dataModernizationCss.designTabs}>
                   {[
-                    { title: "Source DDL", value: "source" },
-                    { title: "Target DDL", value: "target" },
+                    { title: "Source Tables", value: "source" },
+                    { title: "Target Tables", value: "target" },
                     {
-                      title: "Source & Target DDL",
+                      title: "Source & Target Tables",
                       value: "source_and_target",
                     },
                   ].map((data, i) => {
@@ -574,7 +574,8 @@ export default function Design({ dataModernizationCss }) {
                         span={8}
                         onClick={() => {
                           setTableType(data?.value);
-                          // changeVersion(version);
+                          // setUpdatedTableDetails([]);
+                          // setUpdatedColumnDetails([]);
                         }}
                       >
                         <div
@@ -633,7 +634,10 @@ export default function Design({ dataModernizationCss }) {
               </Col>
             </Row>
             <Divider />
-            {childData?.filter((e) => e.tableType === tableType).length > 0 ? (
+            {childData?.filter(
+              (e) =>
+                e.tableType === tableType || e.tableType === "source_and_target"
+            ).length > 0 ? (
               <Collapse
                 defaultActiveKey={Array(childData.length)
                   .fill(undefined)
@@ -644,13 +648,19 @@ export default function Design({ dataModernizationCss }) {
               >
                 {childData
                   .sort((a, b) => a.tableId - b.tableId)
-                  .filter((e) => e.tableType === tableType)
                   .map((e, i) => {
                     return (
                       <Panel
                         header={`${e.tableName} (${e.baseTableName})`}
                         key={i + "panel"}
                         forceRender={true}
+                        style={{
+                          display:
+                            e.tableType === tableType ||
+                            e.tableType === "source_and_target"
+                              ? ""
+                              : "none",
+                        }}
                       >
                         <DesignPanel
                           dataModernizationCss={dataModernizationCss}

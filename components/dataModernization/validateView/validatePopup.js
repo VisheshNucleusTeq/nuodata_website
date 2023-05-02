@@ -171,8 +171,8 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
       `${VIEWATTACHMENT}/${fileDetails.attachmentId}`
     );
     if (data.success) {
-      const fileType = data?.data?.split(";")[0]?.split("/")[0]?.split(":")[1];
-      const fileExtension = data?.data?.split(";")[0].split("/")[1];
+      const fileType = data?.data?.replace(/ /g,'').split(";")[0]?.split("/")[0]?.split(":")[1];
+      const fileExtension = data?.data?.replace(/ /g,'').split(";")[0].split("/")[1];
       setAttData(data?.data);
       setExtension({ fileType: fileType, fileExtension: fileExtension });
       if (fileType == "application" && fileExtension == "xml") {
@@ -229,7 +229,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
           style: { display: modelLoader ? "none" : "" },
         }}
       >
-        Are you sure you want to delete this attachment
+        Are you sure you want to delete this attachment : <span style={{color : "#e74860"}}>{fileDetails?.fileName}</span>
       </Modal>
 
       <Modal
@@ -262,7 +262,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
           setXmlAttData("");
         }}
         okText={"Download"}
-        cancelText={"Hide"}
+        cancelText={"Close"}
         width={"90vw"}
       >
         <div
