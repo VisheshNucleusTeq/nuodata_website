@@ -1,7 +1,6 @@
-import dataModernizationCss from "../../styles/dataModernization.module.css";
-
 import { Row, Col } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 import Define from "./define";
 import Connect from "./connect";
@@ -10,16 +9,11 @@ import Transform from "./transform";
 import Design from "./design";
 import Validate from "./validate";
 import Rollout from "./rollout";
-
-import {
-  SetTabTypeAction,
-  SetProjectTransformDetailsAction,
-} from "../../Redux/action";
-import { useRouter } from "next/router";
+import { SetTabTypeAction } from "../../Redux/action";
+import dataModernizationCss from "../../styles/dataModernization.module.css";
 
 export default function DataModernization() {
   const { query } = useRouter();
-
   const dispatch = useDispatch();
   const tabType = useSelector((state) => state.tabType.tabType);
   const projectDetails = useSelector(
@@ -66,7 +60,7 @@ export default function DataModernization() {
           })}
         </Row>
       </div>
-      
+
       {tabType === "Define" && (
         <Define dataModernizationCss={dataModernizationCss} />
       )}
