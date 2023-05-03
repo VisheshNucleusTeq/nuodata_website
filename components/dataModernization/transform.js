@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Col, Card, Carousel, Space, Table, Modal } from "antd";
+import { Row, Col, Card, Carousel, Space, Table } from "antd";
 import { useRouter } from "next/router";
 import { EyeOutlined } from "@ant-design/icons";
 

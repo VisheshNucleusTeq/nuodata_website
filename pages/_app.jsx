@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 
 import { wrapper, store } from "../Redux/store";
 import { ProtectRoute } from "../contexts/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import FullPageLoader from "../components/common/fullPageLoader";
 
 function MyApp({ Component, pageProps }) {
