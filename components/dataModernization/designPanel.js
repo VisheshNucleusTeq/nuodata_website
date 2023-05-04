@@ -129,18 +129,18 @@ const DesignPanel = ({
         rowKey="columnId"
         columns={[
           {
-            title: "Base Column Name",
+            title: "Source Column Name",
             dataIndex: "baseColumnName",
             key: "baseColumnName",
           },
           {
-            title: "Base Column Type",
+            title: "Source Column Type",
             dataIndex: "baseColumnType",
             key: "baseColumnType",
           },
 
           {
-            title: "Column Name",
+            title: "New Column Name",
             dataIndex: "columnName",
             key: "columnName",
             render: (record, eData, index) => (
@@ -161,7 +161,7 @@ const DesignPanel = ({
             ),
           },
           {
-            title: "Column Type",
+            title: "New Column Type",
             dataIndex: "columnType",
             key: "columnType",
           },

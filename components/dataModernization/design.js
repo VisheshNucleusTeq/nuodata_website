@@ -38,6 +38,7 @@ import {
   SetTabTypeAction,
   SetProjectTransformDetailsAction,
   loderShowHideAction,
+  setOpenDetails,
 } from "../../Redux/action";
 
 import { DownOutlined, UpOutlined, EyeOutlined } from "@ant-design/icons";
@@ -49,8 +50,8 @@ import { fileStatusBadge } from "../helper/fileStatus";
 
 export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
+  const router = useRouter();
   const myRef = useRef(null);
-
   const [loading, setLoading] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [fileId, setFileId] = useState();
@@ -76,6 +77,7 @@ export default function Design({ dataModernizationCss }) {
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
+  const openDetails = useSelector((state) => state.openDetails.openDetails);
 
   const refs = useRef();
   const refBtn = useRef();
@@ -158,13 +160,21 @@ export default function Design({ dataModernizationCss }) {
 
   const getDesignData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${
-        query.id ? query.id : projectDetails.projectId
-      }?type=analyze`
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
     );
     setLoading(false);
     if (data.success) {
       setFileList(data?.data?.fileDetails);
+
+      const selectedFile = data?.data?.fileDetails.find(
+        (e) => e.fileId == openDetails?.detailId
+      );
+      console.log({ selectedFile, openDetails });
+      if (openDetails?.detailId) {
+        getFileData(selectedFile?.fileId);
+        setFileName(selectedFile?.fileName);
+        dispatch(setOpenDetails({}));
+      }
     } else {
       dispatch(SetProjectTransformDetailsAction({}));
       dispatch(SetTabTypeAction("Connect"));
@@ -264,6 +274,12 @@ export default function Design({ dataModernizationCss }) {
         SetProjectTransformDetailsAction({
           analyzeDetailsId: fileId,
           version: isDraftState ? version : version + 1,
+          isUserAction: true,
+        })
+      );
+      dispatch(
+        setOpenDetails({
+          detailId: fileId,
         })
       );
       dispatch(SetTabTypeAction("Transform"));
@@ -634,54 +650,50 @@ export default function Design({ dataModernizationCss }) {
               </Col>
             </Row>
             <Divider />
-            {childData?.filter(
+            <Collapse
+              defaultActiveKey={Array(childData.length)
+                .fill(undefined)
+                .map((a, b) => {
+                  return b + "panel";
+                })}
+              ghost
+            >
+              {childData
+                .sort((a, b) => a.tableId - b.tableId)
+                .map((e, i) => {
+                  return (
+                    <Panel
+                      header={`${e.tableName} (${e.baseTableName})`}
+                      key={i + "panel"}
+                      forceRender={true}
+                      style={{
+                        display:
+                          e.tableType === tableType ||
+                          e.tableType === "source_and_target"
+                            ? ""
+                            : "none",
+                      }}
+                    >
+                      <DesignPanel
+                        dataModernizationCss={dataModernizationCss}
+                        e={e}
+                        versionListArr={versionListArr}
+                        version={version}
+                        fileId={fileId}
+                        showColumnLogs={showColumnLogs}
+                        updatedTableDetailsAction={updatedTableDetailsAction}
+                        updatedColumnDetailsAction={updatedColumnDetailsAction}
+                        showTableLogs={showTableLogs}
+                      />
+                    </Panel>
+                  );
+                })}
+            </Collapse>
+
+            {!childData?.filter(
               (e) =>
                 e.tableType === tableType || e.tableType === "source_and_target"
-            ).length > 0 ? (
-              <Collapse
-                defaultActiveKey={Array(childData.length)
-                  .fill(undefined)
-                  .map((a, b) => {
-                    return b + "panel";
-                  })}
-                ghost
-              >
-                {childData
-                  .sort((a, b) => a.tableId - b.tableId)
-                  .map((e, i) => {
-                    return (
-                      <Panel
-                        header={`${e.tableName} (${e.baseTableName})`}
-                        key={i + "panel"}
-                        forceRender={true}
-                        style={{
-                          display:
-                            e.tableType === tableType ||
-                            e.tableType === "source_and_target"
-                              ? ""
-                              : "none",
-                        }}
-                      >
-                        <DesignPanel
-                          dataModernizationCss={dataModernizationCss}
-                          e={e}
-                          versionListArr={versionListArr}
-                          version={version}
-                          fileId={fileId}
-                          showColumnLogs={showColumnLogs}
-                          updatedTableDetailsAction={updatedTableDetailsAction}
-                          updatedColumnDetailsAction={
-                            updatedColumnDetailsAction
-                          }
-                          showTableLogs={showTableLogs}
-                        />
-                      </Panel>
-                    );
-                  })}
-              </Collapse>
-            ) : (
-              <center>No Record Available</center>
-            )}
+            ).length && <center>No Record Available</center>}
           </Card>
         )}
       </div>
@@ -691,7 +703,7 @@ export default function Design({ dataModernizationCss }) {
         className={dataModernizationCss.nextExitBtn}
         ref={refBtn}
       >
-        <Button
+        {/* <Button
           type="primary"
           style={{ marginRight: "1rem", color: "#fff" }}
           danger
@@ -703,7 +715,21 @@ export default function Design({ dataModernizationCss }) {
           disabled={loading || versionListArr.length != version}
         >
           Save
+        </Button> */}
+
+        <Button
+          style={{ marginRight: "1rem" }}
+          type="primary"
+          danger
+          className={dataModernizationCss.nextBtn}
+          onClick={() => {
+            updateFileRecord();
+          }}
+          disabled={loading || versionListArr.length != version}
+        >
+          Save
         </Button>
+
         <Button
           type="primary"
           danger
@@ -714,6 +740,16 @@ export default function Design({ dataModernizationCss }) {
           disabled={loading || versionListArr.length != version}
         >
           Transform File
+        </Button>
+        <Button
+          type="primary"
+          danger
+          className={dataModernizationCss.exitBtn}
+          onClick={() => {
+            router.push(`/dashboard`);
+          }}
+        >
+          Exit
         </Button>
       </div>
     </>

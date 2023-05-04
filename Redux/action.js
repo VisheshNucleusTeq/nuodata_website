@@ -7,6 +7,7 @@ import {
   PROJECTTRANSFORMDETAILS,
   DESIGNDETAILS,
   LOADER,
+  OPENDETAILS,
 } from "./type";
 
 export const UserDetailsAction = (data) => (dispatch) => {
@@ -61,6 +62,13 @@ export const SetDesignDetailsAction = (data) => (dispatch) => {
 export const loderShowHideAction = (data) => (dispatch) => {
   dispatch({
     type: LOADER,
+    payload: data,
+  });
+};
+
+export const setOpenDetails = (data) => (dispatch) => {
+  dispatch({
+    type: OPENDETAILS,
     payload: data,
   });
 };

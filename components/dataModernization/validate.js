@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   GithubOutlined,
@@ -21,6 +21,7 @@ import {
   EyeOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
+
 import PieChart from "./charts/pieChart";
 import ValidatePopup from "./validateView/validatePopup";
 import {
@@ -31,7 +32,10 @@ import {
 } from "../../network/apiConstants";
 import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
 import { fileStatusBadge } from "../helper/fileStatus";
+import { setOpenDetails } from "../../Redux/action";
+
 export default function Validate({ dataModernizationCss }) {
+  const dispatch = useDispatch();
   const { query } = useRouter();
   const [open, setOpen] = useState(false);
   const [analyzeDetails, setAnalyzeDetails] = useState();
@@ -49,10 +53,11 @@ export default function Validate({ dataModernizationCss }) {
     "transformations",
     "status",
   ]);
+
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
-
+  const openDetails = useSelector((state) => state.openDetails.openDetails);
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
@@ -94,6 +99,14 @@ export default function Validate({ dataModernizationCss }) {
     setPopupIp(record.fileId);
     setMappingModelOpen(true);
   };
+
+  useEffect(() => {
+    if (openDetails?.detailId) {
+      setFileId(openDetails?.detailId);
+      setOpen(true);
+      dispatch(setOpenDetails({}));
+    }
+  }, [openDetails?.detailId]);
 
   return (
     <>
@@ -360,7 +373,7 @@ export default function Validate({ dataModernizationCss }) {
               },
 
               {
-                hidden : !defaultColShow.includes("mappings"),
+                hidden: !defaultColShow.includes("mappings"),
                 title: "Mappings",
                 dataIndex: "mappings",
                 key: "mappings",
@@ -422,7 +435,7 @@ export default function Validate({ dataModernizationCss }) {
                 },
               },
               {
-                hidden : !defaultColShow.includes("workflows"),
+                hidden: !defaultColShow.includes("workflows"),
                 title: "Workflows",
                 dataIndex: "workflows",
                 key: "workflows",
@@ -430,7 +443,7 @@ export default function Validate({ dataModernizationCss }) {
                 width: "10vw",
               },
               {
-                hidden : !defaultColShow.includes("transformations"),
+                hidden: !defaultColShow.includes("transformations"),
                 title: "Transformations",
                 dataIndex: "transformations",
                 key: "transformations",
@@ -438,7 +451,7 @@ export default function Validate({ dataModernizationCss }) {
                 width: "10vw",
               },
               {
-                hidden : !defaultColShow.includes("status"),
+                hidden: !defaultColShow.includes("status"),
                 title: "Status",
                 key: "fileStatus",
                 render: (_, record) => {
@@ -568,7 +581,7 @@ export default function Validate({ dataModernizationCss }) {
                 },
                 align: "center",
               },
-            ].filter(item => !item.hidden)}
+            ].filter((item) => !item.hidden)}
             scroll={{ x: "max-content", y: 500 }}
             dataSource={data.sort((a, b) => a.fileId - b.fileId)}
           />

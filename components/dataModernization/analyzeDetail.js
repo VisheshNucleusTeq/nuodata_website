@@ -13,6 +13,7 @@ import {
   Badge,
 } from "antd";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import {
   GETANALYZEDATA,
   DOWNLOADFILE,
@@ -32,6 +33,7 @@ import {
   SetTabTypeAction,
   SetAnalyzeDetailAction,
   SetProjectTransformDetailsAction,
+  setOpenDetails,
 } from "../../Redux/action";
 
 import GraphView from "./analyzeDetail/graphView";
@@ -47,6 +49,7 @@ const AnalyzeDetail = ({
   showPopUp,
   isUserAction,
 }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [loadingView, setLoadingView] = useState(false);
@@ -521,52 +524,65 @@ const AnalyzeDetail = ({
                     );
                   })}
               </Collapse>
-              {showTop && (
-                <div className={dataModernizationCss.nextExitBtn}>
-                  <Button
-                    type="primary"
-                    danger
-                    className={dataModernizationCss.nextBtn}
-                    htmlType="submit"
-                    onClick={() => {
-                      dispatch(SetTabTypeAction("Design"));
-                    }}
-                    style={{ marginRight: "2%" }}
-                  >
-                    Design Workflow <ArrowRightOutlined />
-                  </Button>
-                  <Button
-                    type="primary"
-                    danger
-                    className={dataModernizationCss.nextBtn}
-                    htmlType="submit"
-                    onClick={async () => {
-                      await updateTransformStatus(analyzeDetailsId);
-                      dispatch(
-                        SetProjectTransformDetailsAction({
-                          analyzeDetailsId,
-                          isUserAction: true,
-                        })
-                      );
-                      dispatch(SetTabTypeAction("Transform"));
-                    }}
-                  >
-                    Transform
-                  </Button>
-                  <Button
-                    type="primary"
-                    danger
-                    className={dataModernizationCss.exitBtn}
-                    onClick={() => {
-                      router.push(`/dashboard`);
-                    }}
-                  >
-                    Exit
-                  </Button>
-                </div>
-              )}
             </Col>
           </Row>
+        </div>
+      )}
+      {!loading && showTop && (
+        <div className={dataModernizationCss.nextExitBtn}>
+          {isUserAction && (
+            <Button
+              type="primary"
+              danger
+              className={dataModernizationCss.nextBtn}
+              htmlType="submit"
+              onClick={() => {
+                dispatch(
+                  setOpenDetails({
+                    detailId: analyzeDetailsId,
+                  })
+                );
+                dispatch(SetTabTypeAction("Design"));
+              }}
+              style={{ marginRight: "2%" }}
+            >
+              Design Workflow <ArrowRightOutlined />
+            </Button>
+          )}
+
+          <Button
+            type="primary"
+            danger
+            className={dataModernizationCss.nextBtn}
+            htmlType="submit"
+            onClick={async () => {
+              await updateTransformStatus(analyzeDetailsId);
+              dispatch(
+                SetProjectTransformDetailsAction({
+                  analyzeDetailsId,
+                  isUserAction: true,
+                })
+              );
+              dispatch(
+                setOpenDetails({
+                  detailId: analyzeDetailsId,
+                })
+              );
+              dispatch(SetTabTypeAction("Transform"));
+            }}
+          >
+            Transform
+          </Button>
+          <Button
+            type="primary"
+            danger
+            className={dataModernizationCss.exitBtn}
+            onClick={() => {
+              router.push(`/dashboard`);
+            }}
+          >
+            Exit
+          </Button>
         </div>
       )}
     </>

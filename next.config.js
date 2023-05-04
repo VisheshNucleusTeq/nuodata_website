@@ -4,10 +4,7 @@ const nextConfig = {
   reactStrictMode: true,
   env: {
     BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
-  },
-  compiler: {
-    removeConsole: true,
-  },
+  }
 };
 
 

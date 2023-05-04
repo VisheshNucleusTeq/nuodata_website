@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Col, Card, Carousel, Space, Table } from "antd";
+import { Row, Col, Card, Carousel, Space, Table, Button } from "antd";
 import { useRouter } from "next/router";
 import { EyeOutlined } from "@ant-design/icons";
-
 import { fetch_retry_get } from "../../network/api-manager";
 import { ANALYZESUMMARY } from "../../network/apiConstants";
 import PieChart from "./charts/pieChart";
-import { SetProjectTransformDetailsAction } from "../../Redux/action";
+import {
+  SetProjectTransformDetailsAction,
+  setOpenDetails,
+  SetTabTypeAction,
+} from "../../Redux/action";
 import TransformDetails from "./transformDetails";
 import AnalyzeDetail from "./analyzeDetail";
 import { fileStatusBadge } from "../helper/fileStatus";
 
 const Transform = ({ dataModernizationCss }) => {
   const { query } = useRouter();
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
@@ -24,6 +28,8 @@ const Transform = ({ dataModernizationCss }) => {
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
+
+  const openDetails = useSelector((state) => state.openDetails.openDetails);
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
@@ -49,6 +55,13 @@ const Transform = ({ dataModernizationCss }) => {
   useEffect(() => {
     getAnalyzeData();
   }, [query.id]);
+
+  useEffect(() => {
+    if (openDetails?.detailId) {
+      setIsDetails(true);
+      dispatch(setOpenDetails({}));
+    }
+  }, [openDetails?.detailId]);
 
   return (
     <>
@@ -199,14 +212,7 @@ const Transform = ({ dataModernizationCss }) => {
             </div>
           ) : null}
           <Row className={dataModernizationCss.defineForm}>
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={24}
-              xl={24}
-              xxl={24}
-            >
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
               <Table
                 pagination={false}
                 rowKey="fileId"
@@ -312,11 +318,40 @@ const Transform = ({ dataModernizationCss }) => {
                 ]}
                 dataSource={data
                   .sort((a, b) => a.fileId - b.fileId)
-                  .filter(
-                    (data) => data.fileStatus !== "analyze_failed")}
+                  .filter((data) => data.fileStatus !== "analyze_failed")}
               />
             </Col>
           </Row>
+          <div
+            className={dataModernizationCss.nextExitBtn}
+            style={{ marginTop: "2%" }}
+          >
+            {data.length ? (
+              <>
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.nextBtn}
+                  htmlType="submit"
+                  onClick={() => {
+                    dispatch(SetTabTypeAction("Validate"));
+                  }}
+                >
+                  Validate
+                </Button>
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.exitBtn}
+                  onClick={() => {
+                    router.push(`/dashboard`);
+                  }}
+                >
+                  Exit
+                </Button>
+              </>
+            ) : null}
+          </div>
         </>
       )}
     </>

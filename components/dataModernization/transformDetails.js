@@ -1,15 +1,17 @@
-import { Row, Col, message, Badge } from "antd";
+import { Row, Col, message, Badge, Button } from "antd";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DownloadOutlined } from "@ant-design/icons";
-
+import { useRouter } from "next/router";
 import { fetch_retry_get } from "../../network/api-manager";
 import { GETANALYZEDATA, DOWNLOADZIP } from "../../network/apiConstants";
-import { SetAnalyzeDetailAction } from "../../Redux/action";
+import { SetAnalyzeDetailAction, SetTabTypeAction, setOpenDetails } from "../../Redux/action";
 import AnalyzeDetail from "./analyzeDetail";
 
-const TransformDetails = ({ dataModernizationCss,setIsDetails }) => {
+const TransformDetails = ({ dataModernizationCss, setIsDetails }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+
   const analyzeDetail = useSelector(
     (state) => state.analyzeDetail.analyzeDetail
   );
@@ -45,7 +47,7 @@ const TransformDetails = ({ dataModernizationCss,setIsDetails }) => {
   return (
     <>
       <Badge
-        style={{ cursor: "pointer", marginTop : "2vh", marginBottom : "-1vh" }}
+        style={{ cursor: "pointer", marginTop: "2vh", marginBottom: "-1vh" }}
         count={"< Go Back"}
         color="#0c3246"
         onClick={() => {
@@ -106,6 +108,39 @@ const TransformDetails = ({ dataModernizationCss,setIsDetails }) => {
           </div>
         </Col>
       </Row>
+      <div
+        className={dataModernizationCss.nextExitBtn}
+        style={{ marginTop: "2%" }}
+      >
+        <>
+          <Button
+            type="primary"
+            danger
+            className={dataModernizationCss.nextBtn}
+            htmlType="submit"
+            onClick={() => {
+              dispatch(
+                setOpenDetails({
+                  detailId: projectTransformDetails?.analyzeDetailsId,
+                })
+              );
+              dispatch(SetTabTypeAction("Validate"));
+            }}
+          >
+            Validate
+          </Button>
+          <Button
+            type="primary"
+            danger
+            className={dataModernizationCss.exitBtn}
+            onClick={() => {
+              router.push(`/dashboard`);
+            }}
+          >
+            Exit
+          </Button>
+        </>
+      </div>
     </>
   );
 };

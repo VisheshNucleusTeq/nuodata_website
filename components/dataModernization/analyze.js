@@ -41,6 +41,7 @@ import { fileStatusBadge } from "../helper/fileStatus";
 const Analyze = ({ dataModernizationCss }) => {
   const dispatch = useDispatch();
   const { query } = useRouter();
+  const router = useRouter();
 
   const [data, setData] = useState([]);
   const [analyzeDetails, setAnalyzeDetails] = useState();
@@ -49,6 +50,7 @@ const Analyze = ({ dataModernizationCss }) => {
   const [analyzeDetailsId, setAnalyzeDetailsId] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [errorDetails, setErrorDetails] = useState({});
+  const [isUserAction, setIsUserAction] = useState(false);
 
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -89,9 +91,7 @@ const Analyze = ({ dataModernizationCss }) => {
       ? modelVersionObj?.data?.version + 1
       : modelVersionObj?.data?.version;
 
-    const data = await fetch_retry_get(
-      `${GETANALYZEDATA}${analyzeDetailsId}`
-    );
+    const data = await fetch_retry_get(`${GETANALYZEDATA}${analyzeDetailsId}`);
     setErrorDetails(data.data);
     setModalOpen(true);
   };
@@ -388,6 +388,7 @@ const Analyze = ({ dataModernizationCss }) => {
                             <Space size="middle">
                               <a
                                 onClick={() => {
+                                  setIsUserAction(record?.isUserAction);
                                   setAnalyzeDetailsId(record.fileId);
                                   setAnalyze(false);
                                 }}
@@ -401,6 +402,7 @@ const Analyze = ({ dataModernizationCss }) => {
                             <Space size="middle">
                               <a
                                 onClick={() => {
+                                  setIsUserAction(record?.isUserAction);
                                   setAnalyzeDetailsId(record.fileId);
                                   setAnalyze(false);
                                 }}
@@ -415,6 +417,7 @@ const Analyze = ({ dataModernizationCss }) => {
                   },
                 ]}
                 dataSource={data.sort((a, b) => a.fileId - b.fileId)}
+                pagination={data?.length < 10 ? false : true}
               />
             </div>
             <div className={dataModernizationCss.nextExitBtn}>
@@ -466,6 +469,7 @@ const Analyze = ({ dataModernizationCss }) => {
           }}
           showTop={true}
           showPopUp={false}
+          isUserAction={isUserAction}
         />
       )}
     </div>
