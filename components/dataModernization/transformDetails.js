@@ -5,7 +5,11 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { fetch_retry_get } from "../../network/api-manager";
 import { GETANALYZEDATA, DOWNLOADZIP } from "../../network/apiConstants";
-import { SetAnalyzeDetailAction, SetTabTypeAction, setOpenDetails } from "../../Redux/action";
+import {
+  SetAnalyzeDetailAction,
+  SetTabTypeAction,
+  setOpenDetails,
+} from "../../Redux/action";
 import AnalyzeDetail from "./analyzeDetail";
 
 const TransformDetails = ({ dataModernizationCss, setIsDetails }) => {
