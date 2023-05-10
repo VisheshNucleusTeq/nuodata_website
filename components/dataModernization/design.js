@@ -580,7 +580,7 @@ export default function Design({ dataModernizationCss }) {
                     { title: "Source Tables", value: "source" },
                     { title: "Target Tables", value: "target" },
                     {
-                      title: "Source & Target Tables",
+                      title: "Common Source and Target Tables",
                       value: "source_and_target",
                     },
                   ].map((data, i) => {
@@ -668,8 +668,7 @@ export default function Design({ dataModernizationCss }) {
                       forceRender={true}
                       style={{
                         display:
-                          e.tableType === tableType ||
-                          e.tableType === "source_and_target"
+                          e.tableType === tableType 
                             ? ""
                             : "none",
                       }}
@@ -692,7 +691,7 @@ export default function Design({ dataModernizationCss }) {
 
             {!childData?.filter(
               (e) =>
-                e.tableType === tableType || e.tableType === "source_and_target"
+                e.tableType === tableType 
             ).length && <center>No Record Available</center>}
           </Card>
         )}
