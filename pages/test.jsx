@@ -7,7 +7,6 @@ const Test = () => {
   const [data, setData] = useState({});
 
   const handleMessageChange = (event) => {
-    console.log(event.target.value);
     setData(event.target.value);
   };
 

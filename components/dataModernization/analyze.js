@@ -9,11 +9,14 @@ import {
   message,
   Carousel,
   Button,
-  Badge,
   Modal,
 } from "antd";
 import { useRouter } from "next/router";
-import { ArrowRightOutlined } from "@ant-design/icons";
+import {
+  ArrowRightOutlined,
+  EyeOutlined,
+  WarningOutlined,
+} from "@ant-design/icons";
 
 import {
   GETPROJECT,
@@ -33,19 +36,21 @@ import {
   SetProjectTransformDetailsAction,
   loderShowHideAction,
 } from "../../Redux/action";
+import { fileStatusBadge } from "../helper/fileStatus";
 
 const Analyze = ({ dataModernizationCss }) => {
   const dispatch = useDispatch();
   const { query } = useRouter();
+  const router = useRouter();
 
   const [data, setData] = useState([]);
   const [analyzeDetails, setAnalyzeDetails] = useState();
-  const [loading, setLoading] = useState(false);
   const [complexityGraph, setComplexityGraph] = useState();
   const [analyze, setAnalyze] = useState(true);
   const [analyzeDetailsId, setAnalyzeDetailsId] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [errorDetails, setErrorDetails] = useState({});
+  const [isUserAction, setIsUserAction] = useState(false);
 
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -53,11 +58,8 @@ const Analyze = ({ dataModernizationCss }) => {
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${
-        query.id ? query.id : projectDetails.projectId
-      }` //?type=analyze
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
     );
-    setLoading(false);
     if (data.success) {
       setData(data?.data?.fileDetails);
       setAnalyzeDetails(data?.data);
@@ -82,7 +84,6 @@ const Analyze = ({ dataModernizationCss }) => {
   }, [query.id]);
 
   const getErrorDetails = async (analyzeDetailsId) => {
-    setLoading(true);
     const modelVersionObj = await fetch_retry_get(
       `${VERSION}${analyzeDetailsId}`
     );
@@ -90,18 +91,15 @@ const Analyze = ({ dataModernizationCss }) => {
       ? modelVersionObj?.data?.version + 1
       : modelVersionObj?.data?.version;
 
-    const data = await fetch_retry_get(
-      `${GETANALYZEDATA}${analyzeDetailsId}?version=${version}`
-    );
+    const data = await fetch_retry_get(`${GETANALYZEDATA}${analyzeDetailsId}`);
     setErrorDetails(data.data);
     setModalOpen(true);
-    setLoading(false);
   };
 
   const updateTransformStatus = async () => {
     dispatch(loderShowHideAction(true));
     const isUserActionData = data.filter((e) => e.isUserAction === false);
-    const resultData = await Promise.all(
+    await Promise.all(
       isUserActionData.map(async (e) => {
         return new Promise(async (resolve, reject) => {
           const data = await fetch_retry_post(
@@ -114,26 +112,6 @@ const Analyze = ({ dataModernizationCss }) => {
     dispatch(SetProjectTransformDetailsAction({}));
     dispatch(SetTabTypeAction("Transform"));
     dispatch(loderShowHideAction(false));
-  };
-
-  const getTrueStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "convert_failed":
-        return <Badge count={"Transformed Partially"} color="orange" />;
-      case "converted":
-        return <Badge count={"Transformed Successfully"} color="green" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
-  };
-
-  const gerFalseStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "analyze_failed":
-        return <Badge count={"Analysis Failed"} color="red" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
   };
 
   return (
@@ -161,7 +139,15 @@ const Analyze = ({ dataModernizationCss }) => {
 
       {analyze ? (
         <Row>
-          <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+          <Col
+            xs={8}
+            sm={8}
+            md={8}
+            lg={8}
+            xl={8}
+            xxl={8}
+            style={{ paddingRight: ".5%" }}
+          >
             <Card className={dataModernizationCss.cardView}>
               <Card.Grid>Total Files</Card.Grid>
               <Card.Grid>
@@ -214,8 +200,14 @@ const Analyze = ({ dataModernizationCss }) => {
                 </span>
               </Card.Grid>
 
-              <Card.Grid style={{ color: "#09bd21" }}>Hours Saved</Card.Grid>
-              <Card.Grid>
+              <Card.Grid
+                style={{ color: "#09bd21", backgroundColor: "#e3fcef" }}
+              >
+                Hours Saved
+              </Card.Grid>
+              <Card.Grid
+                style={{ color: "#09bd21", backgroundColor: "#e3fcef" }}
+              >
                 <span style={{ color: "#09bd21" }}>
                   {analyzeDetails && analyzeDetails.hoursSaved
                     ? parseFloat(analyzeDetails.hoursSaved).toFixed(2)
@@ -225,8 +217,15 @@ const Analyze = ({ dataModernizationCss }) => {
               </Card.Grid>
             </Card>
           </Col>
-          <Col xs={1} sm={1} md={1} lg={1} xl={1} xxl={1}></Col>
-          <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15} style={{}}>
+          <Col
+            xs={16}
+            sm={16}
+            md={16}
+            lg={16}
+            xl={16}
+            xxl={16}
+            style={{ paddingLeft: ".5%" }}
+          >
             <Card className={dataModernizationCss.cardViewGraphs}>
               <Carousel
                 dots={false}
@@ -321,18 +320,6 @@ const Analyze = ({ dataModernizationCss }) => {
             </Card>
           </Col>
 
-          {/* <Col
-            xs={24}
-            sm={24}
-            md={24}
-            lg={24}
-            xl={24}
-            xxl={24}
-            className={`${dataModernizationCss.validateTab} ${dataModernizationCss.downloadData}`}
-          >
-            <Button type="default">Download all output .zip file</Button>
-          </Col> */}
-
           <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
             <div className={dataModernizationCss.analyzeMain}>
               <Table
@@ -351,24 +338,28 @@ const Analyze = ({ dataModernizationCss }) => {
                     title: "Workflows",
                     dataIndex: "workflows",
                     key: "workflows",
+                    align: "center",
                   },
                   {
                     title: "Mappings",
                     dataIndex: "mappings",
                     key: "mappings",
+                    align: "center",
                   },
                   {
                     title: "Transformations",
                     dataIndex: "transformations",
                     key: "transformations",
+                    align: "center",
                   },
                   {
                     title: "Status",
                     key: "fileStatus",
                     render: (_, record) => {
-                      return record?.isUserAction
-                        ? getTrueStatus(record.fileStatus)
-                        : gerFalseStatus(record.fileStatus);
+                      return fileStatusBadge(
+                        record.fileStatus,
+                        record?.isUserAction
+                      );
                     },
                   },
                   {
@@ -388,7 +379,21 @@ const Analyze = ({ dataModernizationCss }) => {
                                   getErrorDetails(record.fileId);
                                 }}
                               >
-                                Details
+                                <WarningOutlined /> Errors
+                              </a>
+                            </Space>
+                          );
+                        case "convert_failed":
+                          return (
+                            <Space size="middle">
+                              <a
+                                onClick={() => {
+                                  setIsUserAction(record?.isUserAction);
+                                  setAnalyzeDetailsId(record.fileId);
+                                  setAnalyze(false);
+                                }}
+                              >
+                                <EyeOutlined /> View
                               </a>
                             </Space>
                           );
@@ -397,19 +402,22 @@ const Analyze = ({ dataModernizationCss }) => {
                             <Space size="middle">
                               <a
                                 onClick={() => {
+                                  setIsUserAction(record?.isUserAction);
                                   setAnalyzeDetailsId(record.fileId);
                                   setAnalyze(false);
                                 }}
                               >
-                                Details
+                                <EyeOutlined /> View
                               </a>
                             </Space>
                           );
                       }
                     },
+                    align: "center",
                   },
                 ]}
                 dataSource={data.sort((a, b) => a.fileId - b.fileId)}
+                pagination={data?.length < 10 ? false : true}
               />
             </div>
             <div className={dataModernizationCss.nextExitBtn}>
@@ -453,6 +461,7 @@ const Analyze = ({ dataModernizationCss }) => {
         </Row>
       ) : (
         <AnalyzeDetail
+          getErrorDetails={getErrorDetails}
           analyzeDetailsId={analyzeDetailsId}
           dataModernizationCss={dataModernizationCss}
           setAnalyze={() => {
@@ -460,6 +469,7 @@ const Analyze = ({ dataModernizationCss }) => {
           }}
           showTop={true}
           showPopUp={false}
+          isUserAction={isUserAction}
         />
       )}
     </div>

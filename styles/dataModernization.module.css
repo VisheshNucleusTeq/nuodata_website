@@ -6,14 +6,15 @@
 
 .defineSteps {
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .defineSteps .defineStepsRow {
   padding: 1%;
-  border: 1px solid rgb(196, 196, 196);
+  /* border: 1px solid rgb(196, 196, 196); */
   justify-content: center !important;
-  border-radius: 20px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
 }
 
 .defineStep {
@@ -34,12 +35,11 @@
 }
 
 .defineForm {
-  margin-top: 4%;
+  margin-top: 2%;
   background-color: #fff;
   padding: 2%;
   border-radius: 10px;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
   background-color: #fff;
 }
 
@@ -60,7 +60,7 @@
   margin: 0px 0px 2% 0px;
   padding: 1% 5% 1% 5%;
   border-radius: 10px;
-  margin-left: 2%;
+  margin-left: 1rem;
   background-color: #0c3246 !important;
   border: 1px solid #0c3246 !important;
 }
@@ -74,8 +74,7 @@
 .cardViewGraphs {
   height: 100%;
   border-radius: 10px;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
   align-items: center;
   justify-content: center;
   display: flex;
@@ -87,8 +86,7 @@
 
 .cardView {
   border-radius: 10px;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
 }
 
 .cardView div div {
@@ -98,22 +96,36 @@
   padding: 2.5vh !important;
 }
 
+.cardView div div:nth-child(1) {
+  border-radius: 10px 0px 0px 0px;
+}
+
+.cardView div div:nth-child(2) {
+  border-radius: 0px 10px 0px 0px;
+}
+.cardView div div:nth-last-child(1) {
+  border-radius: 0px 0px 10px 0px;
+}
+.cardView div div:nth-last-child(2) {
+  border-radius: 0px 0px 0px 10px;
+}
+
 .cardView div div:nth-child(odd) {
   width: 60% !important;
   color: #0c3246;
-  font-weight: bolder;
+  font-weight: bold !important;
 }
 
 .cardView div div:nth-child(even) {
   width: 40% !important;
   color: #e74860;
-  font-weight: 600 !important;
+  font-weight: bold !important;
 }
 
 .cardView div div:nth-child(even) span {
   width: 40% !important;
   color: #e74860;
-  font-weight: 900;
+  font-weight: bold !important;
 }
 
 .cardViewGrid div div {
@@ -296,8 +308,7 @@
 
 .designCard {
   border-radius: 20px;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
 }
 
 .tableNameView {
@@ -312,12 +323,12 @@
   margin: 2%;
 }
 
-.detailsTitle h2 {
+.detailsTitle h3 {
   color: #0c3246;
   font-weight: bold;
 }
 
-.detailsTitle h2 span {
+.detailsTitle h3 span {
   font-size: small;
 }
 
@@ -357,7 +368,7 @@
   color: #e74860;
 }
 
-.tabView{
+.tabView {
   transition-duration: 1000ms;
   border: 1px solid gray;
   text-align: center;
@@ -374,29 +385,29 @@
   color: #fff; */
 }
 
-.tabViewActive{
+.tabViewActive {
   transition-duration: 1000ms;
   background-color: #0c3246;
   color: #fff;
 }
 
-.tabViewPar{
-  justify-content: center; 
+.tabViewPar {
+  justify-content: center;
 }
 
 /* validate */
 
-.validateTab{
-  margin: 2% 0% 2% 0%;
+.validateTab {
+  /* margin: 2% 0% 2% 0%; */
 }
 
-.validateTab h1{
+.validateTab h1 {
   color: #e74860;
   font-weight: bold;
   font-size: 2vw;
 }
 
-.expandableTableCss{
+.expandableTableCss {
   margin: 1%;
   padding: 1%;
   justify-content: center;
@@ -409,12 +420,60 @@
   font-weight: bold;
 }
 
-.tabViewActiveValidation{
+.tabViewActiveValidation {
   background-color: #548135;
   color: #fff;
 }
 /* validate */
 
-.wordCss{
+.wordCss {
   word-wrap: break-word;
+}
+
+.addAttachment {
+  border-radius: 5px;
+  border: 1px dotted #0c3246;
+  color: #0c3246;
+}
+
+.addAttachment:hover {
+  border-radius: 5px;
+  border: 1px dotted #0c3246;
+  color: #0c3246 !important;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.validateFileName {
+  color: #0c3246;
+}
+
+.validateFileName:hover {
+  color: #e74860;
+}
+
+
+.designTabs {
+  margin-bottom: 4%;
+  border-radius: 10px;
+  /* padding: .5%; */
+  /* box-shadow: rgba(12, 50, 70, 0.27) 0px 0px 0.25em, rgba(12, 50, 70, 0.05) 0px 0.25em 1em; */
+}
+
+.designTabsStep {
+  border: 1px solid #0c3246;
+  border-radius: 10px;
+  margin: 3px 3px 3px 3px !important;
+  text-align: center;
+  background-color: #fff;
+  font-size :larger;
+  font-weight :bold;
+  cursor: pointer;
+  color: #0c3246;
+  padding: 8px;
+
+}
+
+.designTabsStepSelected{
+  background-color: #0c3246;
+  color: #fff;
 }

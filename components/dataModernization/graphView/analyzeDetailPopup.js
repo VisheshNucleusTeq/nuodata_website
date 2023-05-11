@@ -58,7 +58,6 @@ const getLayoutedElements = (nodes, edges, showPopUp, direction = "LR") => {
 };
 
 const AnalyzeDetailPopup = ({
-  outputFileId,
   data,
   showPopUp,
   showHide,

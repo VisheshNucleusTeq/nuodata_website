@@ -1,71 +1,40 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import {
-  Row,
-  Col,
-  Card,
-  Carousel,
-  Collapse,
-  Space,
-  Table,
-  Modal,
-  Tag,
-  message,
-  Badge,
-  Tooltip,
-} from "antd";
-const { Panel } = Collapse;
+import { useSelector, useDispatch } from "react-redux";
+import { Row, Col, Card, Carousel, Space, Table, Button } from "antd";
 import { useRouter } from "next/router";
-import {
-  EyeOutlined,
-  DownloadOutlined,
-  CheckCircleOutlined,
-  ExclamationCircleOutlined,
-} from "@ant-design/icons";
-import { useDispatch } from "react-redux";
-
+import { EyeOutlined } from "@ant-design/icons";
 import { fetch_retry_get } from "../../network/api-manager";
-import { ANALYZESUMMARY, DESIGN } from "../../network/apiConstants";
+import { ANALYZESUMMARY } from "../../network/apiConstants";
 import PieChart from "./charts/pieChart";
-import { DOWNLOADFILE } from "../../network/apiConstants";
-import AnalyzeDetailPopup from "./graphView/analyzeDetailPopup";
 import {
   SetProjectTransformDetailsAction,
+  setOpenDetails,
   SetTabTypeAction,
 } from "../../Redux/action";
 import TransformDetails from "./transformDetails";
 import AnalyzeDetail from "./analyzeDetail";
+import { fileStatusBadge } from "../helper/fileStatus";
 
 const Transform = ({ dataModernizationCss }) => {
   const { query } = useRouter();
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [analyzeDetails, setAnalyzeDetails] = useState();
-  const [loading, setLoading] = useState(false);
   const [complexityGraph, setComplexityGraph] = useState();
-  const [modalData, setModalData] = useState();
-  const [open, setOpen] = useState(false);
   const [isDetails, setIsDetails] = useState(false);
-  const [fileId, setFileId] = useState(0);
 
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
 
-  const projectTransformDetails = useSelector(
-    (state) => state.projectTransformDetails.projectTransformDetails
-  );
-
-  const designDetails = useSelector(
-    (state) => state.designDetails.designDetails
-  );
+  const openDetails = useSelector((state) => state.openDetails.openDetails);
 
   const getAnalyzeData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}` //?type=transform
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
     );
-    setLoading(false);
     if (data.success) {
       setData(data?.data?.fileDetails);
       const failData = data?.data?.fileDetails.filter((e) => {
@@ -87,62 +56,20 @@ const Transform = ({ dataModernizationCss }) => {
     getAnalyzeData();
   }, [query.id]);
 
-  const getProjectData = async (fileId) => {
-    const data = await fetch_retry_get(`${DESIGN}${fileId}`);
-    if (data.success) return data.data;
-  };
-
   useEffect(() => {
-    if (projectTransformDetails && projectTransformDetails.analyzeDetailsId) {
+    if (openDetails?.detailId) {
       setIsDetails(true);
-    } else {
-      setIsDetails(false);
+      dispatch(setOpenDetails({}));
     }
-  }, [projectTransformDetails.analyzeDetailsId]);
-
-  const getFileName = (e) => {
-    const getStatus = (record) => {
-      switch (record.fileStatus) {
-        case "convert_failed":
-          return <Badge count={"Transformed Partially"} color="red" />;
-        default:
-          return <Badge count={"Transformed Successfully"} color="green" />;
-      }
-    };
-    return (
-      <Row>
-        <Col span={10}>{e.fileName}</Col>
-        <Col span={10}>
-          <p>{getStatus(e)}</p>
-        </Col>
-      </Row>
-    );
-  };
-
-  const getTrueStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "convert_failed":
-        return <Badge count={"Transformed Partially"} color="orange" />;
-      case "converted":
-        return <Badge count={"Transformed Successfully"} color="green" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
-  };
-
-  const gerFalseStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "analyze_failed":
-        return <Badge count={"Analysis Failed"} color="red" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
-  };
+  }, [openDetails?.detailId]);
 
   return (
     <>
       {isDetails ? (
-        <TransformDetails dataModernizationCss={dataModernizationCss} />
+        <TransformDetails
+          dataModernizationCss={dataModernizationCss}
+          setIsDetails={setIsDetails}
+        />
       ) : (
         <>
           {data.length ? (
@@ -184,7 +111,15 @@ const Transform = ({ dataModernizationCss }) => {
           {data.length ? (
             <div className={dataModernizationCss.analyzeMain}>
               <Row>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                <Col
+                  xs={8}
+                  sm={8}
+                  md={8}
+                  lg={8}
+                  xl={8}
+                  xxl={8}
+                  style={{ paddingRight: ".5%" }}
+                >
                   <Card className={dataModernizationCss.cardView}>
                     <Card.Grid>Total Files</Card.Grid>
                     <Card.Grid>
@@ -236,15 +171,14 @@ const Transform = ({ dataModernizationCss }) => {
                     </Card.Grid>
                   </Card>
                 </Col>
-                <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
                 <Col
-                  xs={14}
-                  sm={14}
-                  md={14}
-                  lg={14}
-                  xl={14}
-                  xxl={14}
-                  style={{}}
+                  xs={16}
+                  sm={16}
+                  md={16}
+                  lg={16}
+                  xl={16}
+                  xxl={16}
+                  style={{ paddingLeft: ".5%" }}
                 >
                   <Card className={dataModernizationCss.cardViewGraphs}>
                     <Carousel
@@ -278,21 +212,12 @@ const Transform = ({ dataModernizationCss }) => {
             </div>
           ) : null}
           <Row className={dataModernizationCss.defineForm}>
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={24}
-              xl={24}
-              xxl={24}
-              className={dataModernizationCss.analyzeMainDetails}
-            >
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
               <Table
                 pagination={false}
                 rowKey="fileId"
                 expandable={{
                   expandedRowRender: (record) => (
-                    // record.fileStatus === true ? (
                     <AnalyzeDetail
                       analyzeDetailsId={record.fileId}
                       dataModernizationCss={dataModernizationCss}
@@ -301,9 +226,6 @@ const Transform = ({ dataModernizationCss }) => {
                       showPopUp={record?.isUserAction}
                     />
                   ),
-                  // ) : (
-                  //   <center style={{color : "#e74860"}}>Please transform this file</center>
-                  // ),
                 }}
                 columns={[
                   {
@@ -315,46 +237,28 @@ const Transform = ({ dataModernizationCss }) => {
                     title: "Workflows",
                     dataIndex: "workflows",
                     key: "workflows",
+                    align: "center",
                   },
                   {
                     title: "Mappings",
                     dataIndex: "mappings",
                     key: "mappings",
+                    align: "center",
                   },
                   {
                     title: "Transformations",
                     dataIndex: "transformations",
                     key: "transformations",
+                    align: "center",
                   },
                   {
                     title: "Status",
                     key: "fileStatus",
-                    // render: (_, record) => {
-                    //   switch (record.fileStatus) {
-                    //     case "convert_failed":
-                    //       return (
-                    //         <Badge
-                    //           count={"Transformed Partially"}
-                    //           color="orange"
-                    //         />
-                    //       );
-                    //     case "converted":
-                    //       return (
-                    //         <Badge
-                    //           count={"Transformed Successfully"}
-                    //           color="green"
-                    //         />
-                    //       );
-                    //     default:
-                    //       return (
-                    //         <Badge count={"Analysis Completed"} color="green" />
-                    //       );
-                    //   }
-                    // },
                     render: (_, record) => {
-                      return record?.isUserAction
-                        ? getTrueStatus(record.fileStatus)
-                        : gerFalseStatus(record.fileStatus);
+                      return fileStatusBadge(
+                        record.fileStatus,
+                        record?.isUserAction
+                      );
                     },
                   },
                   {
@@ -384,22 +288,13 @@ const Transform = ({ dataModernizationCss }) => {
                                       isUserAction: record.isUserAction,
                                     })
                                   );
+                                  setIsDetails(true);
                                 }}
                               >
                                 <EyeOutlined /> View
                               </a>
                             </Space>
                           ) : (
-                            // <Tooltip placement="topLeft" title={"Please transform this file."}>
-                            //   <Space
-                            //     size="middle"
-                            //     style={{ cursor: "not-allowed" }}
-                            //   >
-                            //     <a style={{ cursor: "not-allowed" }}>
-                            //       <EyeOutlined /> View
-                            //     </a>
-                            //   </Space>
-                            // </Tooltip>
                             <Space size="middle">
                               <a
                                 onClick={() => {
@@ -409,6 +304,7 @@ const Transform = ({ dataModernizationCss }) => {
                                       isUserAction: record.isUserAction,
                                     })
                                   );
+                                  setIsDetails(true);
                                 }}
                               >
                                 <EyeOutlined /> View
@@ -417,31 +313,45 @@ const Transform = ({ dataModernizationCss }) => {
                           );
                       }
                     },
+                    align: "center",
                   },
                 ]}
                 dataSource={data
                   .sort((a, b) => a.fileId - b.fileId)
-                  .filter(
-                    (data) => data.fileStatus !== "analyze_failed"
-                    // && data.isUserAction === true
-                  )}
+                  .filter((data) => data.fileStatus !== "analyze_failed")}
               />
             </Col>
           </Row>
-          <Modal
-            destroyOnClose
-            centered
-            open={open}
-            onOk={() => setOpen(false)}
-            onCancel={() => setOpen(false)}
-            width={"100vw"}
+          <div
+            className={dataModernizationCss.nextExitBtn}
+            style={{ marginTop: "2%" }}
           >
-            <AnalyzeDetailPopup
-              outputFileId={"outputFileId"}
-              data={modalData}
-              showPopUp={true}
-            />
-          </Modal>
+            {data.length ? (
+              <>
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.nextBtn}
+                  htmlType="submit"
+                  onClick={() => {
+                    dispatch(SetTabTypeAction("Validate"));
+                  }}
+                >
+                  Validate
+                </Button>
+                <Button
+                  type="primary"
+                  danger
+                  className={dataModernizationCss.exitBtn}
+                  onClick={() => {
+                    router.push(`/dashboard`);
+                  }}
+                >
+                  Exit
+                </Button>
+              </>
+            ) : null}
+          </div>
         </>
       )}
     </>

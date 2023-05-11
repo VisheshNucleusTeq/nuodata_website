@@ -8,7 +8,6 @@ import {
   DESIGN,
 } from "../../../network/apiConstants";
 import { fetch_retry_get } from "../../../network/api-manager";
-import AnalyzeDetailPopup from "../graphView/analyzeDetailPopup";
 import AnalyzeDetailGraphPopup from "../graphView/analyzeDetailGraphPopup";
 
 const SqlView = ({

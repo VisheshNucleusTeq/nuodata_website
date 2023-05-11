@@ -39,6 +39,7 @@ const AnalysisView = ({transformationSummary}) => {
               return <span>{value}</span>;
             }
           },
+          align: 'center'
         },
         {
           title: "Manual Effort Hours",
@@ -55,6 +56,7 @@ const AnalysisView = ({transformationSummary}) => {
               return <span>{value}</span>;
             }
           },
+          align: 'center'
         },
         {
           title: "Automated Effort Hours",
@@ -71,6 +73,7 @@ const AnalysisView = ({transformationSummary}) => {
               return <span>{value}</span>;
             }
           },
+          align: 'center'
         },
       ]}
     />

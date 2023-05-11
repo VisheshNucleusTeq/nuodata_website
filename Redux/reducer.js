@@ -8,6 +8,7 @@ import {
   PROJECTTRANSFORMDETAILS,
   DESIGNDETAILS,
   LOADER,
+  OPENDETAILS,
 } from "./type";
 import LocalData from "./LocalData";
 
@@ -25,6 +26,7 @@ const initialData = {
   projectTransform: {},
   projectTransformDetails: {},
   designDetails: {},
+  openDetails: {},
 };
 
 export const userDetailReducer = (state = initialState, action) => {
@@ -124,6 +126,18 @@ export const loderShowHideReducer = (state = initialData, action) => {
   }
 };
 
+export const openDetailsReducer = (state = initialData, action) => {
+  switch (action.type) {
+    case OPENDETAILS:
+      return {
+        ...state,
+        openDetails: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   userDetails: userDetailReducer,
   projectDetails: projectDetailsReducer,
@@ -133,4 +147,5 @@ export default combineReducers({
   projectTransformDetails: projectTransformDetailsReducer,
   designDetails: designDetailsReducer,
   loderShowHide: loderShowHideReducer,
+  openDetails : openDetailsReducer
 });

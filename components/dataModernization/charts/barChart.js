@@ -1,4 +1,4 @@
-import { Line, Bar, Pie } from "react-chartjs-2";
+import {  Bar } from "react-chartjs-2";
 import "chart.js/auto";
 import {
   Chart as ChartJS,
@@ -19,7 +19,7 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = ({ complexityGraph, dataModernizationCss, labels, data }) => {
+const BarChart = ({ labels, data }) => {
   const [pieChart, setPieChart] = useState({
     labels: labels,
     datasets: [

@@ -1,16 +1,14 @@
-import React, { Component, useState } from "react";
-import { Row, Col, Tree, Input, Space, Tooltip } from "antd";
-import { LoadingOutlined, DownloadOutlined } from "@ant-design/icons";
+import React, {  useState } from "react";
+import { Row, Col, Tree, Input} from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import AnalyzeDetailPopup from "../graphView/analyzeDetailPopup";
 import {
   JSONSTRUCTURE,
   DESIGN,
-  DOWNLOADZIP,
 } from "../../../network/apiConstants";
 import { fetch_retry_get } from "../../../network/api-manager";
 
 const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
-  const [outputFileId, setOutputFileId] = useState();
   const [treeData, setTreeData] = useState([]);
   const [treeDataDefault, setTreeDataDefault] = useState([]);
   const [showHide, setShowHide] = useState(true);
@@ -18,7 +16,6 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
   const [modalData, setModalData] = useState({});
   const [loading, setLoading] = useState(false);
   const [selectedTree, setSelectedTree] = useState();
-  const [parentArr, setParentArr] = useState([]);
 
   const addDownloadIcon = (treeDataObj) => {
     return treeDataObj
@@ -72,7 +69,6 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
     const data = await fetch_retry_get(`${DESIGN}${dataId}`);
     if (data.success) {
       setModalData(data.data);
-      if (!parentArr.includes(dataId)) setShowDownload(false);
     }
     setLoading(false);
   };
@@ -161,7 +157,6 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
             <AnalyzeDetailPopup
               showHide={showHide}
               setShowHide={setShowHide}
-              outputFileId={outputFileId}
               data={modalData}
               showPopUp={showPopUp}
             />

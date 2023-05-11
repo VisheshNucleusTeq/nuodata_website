@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Input, Row, Col } from "antd";
-import { useEffect, useState } from "react";
 
 import { TABLEDATA } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
+import { useQuery } from "react-query";
 
 const DesignPanel = ({
   dataModernizationCss,
@@ -19,11 +19,8 @@ const DesignPanel = ({
   const [tableName, setTableName] = useState("");
   const [childTableData, setChildTableData] = useState([]);
   const [preChildTableData, setPreChildTableData] = useState([]);
-  const [tableId, setTableId] = useState([]);
 
   const getTableData = async (tableId, v = null) => {
-    setTableId(tableId);
-
     const tableKeyData = await fetch_retry_get(
       `${TABLEDATA}${fileId}?version=${v ? v : version}&tableId=${tableId}`,
       {
@@ -35,9 +32,39 @@ const DesignPanel = ({
     setPreChildTableData(tableKeyData?.data);
   };
 
+  const getTableDataNew = async (tableId, v = null) => {
+    const tableKeyData = await fetch_retry_get(
+      `${TABLEDATA}${fileId}?version=${v ? v : version}&tableId=${tableId}`,
+      {
+        version: v ? v : version,
+        tableId: tableId,
+      }
+    );
+    return tableKeyData;
+  };
+
   useEffect(() => {
+    setTableName("");
+    setChildTableData([]);
+    setPreChildTableData([]);
     getTableData(e.tableId);
   }, [e]);
+
+  // const { status, data } = useQuery(
+  //   ["TABLEDATA", e.tableId],
+  //   () => getTableDataNew(e.tableId),
+  //   { refetchOnWindowFocus: false, enabled: true }
+  // );
+
+  // useEffect(() => {
+  //   if (status === "success") {
+  //     setTableName("");
+  //     setChildTableData([]);
+  //     setPreChildTableData([]);
+  //     setChildTableData(data?.data);
+  //     setPreChildTableData(data?.data);
+  //   }
+  // }, [status, data]);
 
   return (
     <>
@@ -64,7 +91,24 @@ const DesignPanel = ({
           </Row>
         </Col>
         <Col span={2} />
-        <Col span={11}></Col>
+        <Col span={11}>
+          <Row>
+            <Col className={dataModernizationCss.tableNameView} span={24}>
+              Database Type
+            </Col>
+            <Col span={24}>
+              <Input
+                value={e?.dbType}
+                style={{
+                  borderRadius: "10px",
+                  height: "5vh",
+                  color: "#0c3246",
+                }}
+                disabled={true}
+              />
+            </Col>
+          </Row>
+        </Col>
         <Col span={4} className="centerButton">
           <p
             style={{
@@ -85,18 +129,18 @@ const DesignPanel = ({
         rowKey="columnId"
         columns={[
           {
-            title: "Base Column Name",
+            title: "Source Column Name",
             dataIndex: "baseColumnName",
             key: "baseColumnName",
           },
           {
-            title: "Base Column Type",
+            title: "Source Column Type",
             dataIndex: "baseColumnType",
             key: "baseColumnType",
           },
 
           {
-            title: "Column Name",
+            title: "New Column Name",
             dataIndex: "columnName",
             key: "columnName",
             render: (record, eData, index) => (
@@ -117,7 +161,7 @@ const DesignPanel = ({
             ),
           },
           {
-            title: "Column Type",
+            title: "New Column Type",
             dataIndex: "columnType",
             key: "columnType",
           },

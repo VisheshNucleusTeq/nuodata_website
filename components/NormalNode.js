@@ -83,7 +83,6 @@ export default memo(({ data, isConnectable }) => {
         type="target"
         position="left"
         className={NormalNodeCss.nodePoint}
-        onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />
       <Popover

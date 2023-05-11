@@ -55,6 +55,24 @@ export const fetch_retry_put = async (endpoint, payload = {}) => {
   }
 };
 
+export const fetch_retry_delete = async (endpoint, payload = {}) => {
+  try {
+    return await retry(
+      async () => {
+        const response = await ApiInstance.delete(endpoint, payload);
+        if (response.status === 200) {
+          return { success: true, data: response.data };
+        }
+      },
+      {
+        retries: 0,
+      }
+    );
+  } catch (error) {
+    return { success: false, error: error?.response?.data?.errorMessages };
+  }
+};
+
 export const fetch_retry_post_with_file = async (endpoint, payload = {}) => {
   try {
     return await retry(

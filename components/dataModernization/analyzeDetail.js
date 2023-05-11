@@ -10,9 +10,10 @@ import {
   Button,
   Divider,
   Modal,
+  Badge,
 } from "antd";
-import { ArrowRightOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import {
   GETANALYZEDATA,
   DOWNLOADFILE,
@@ -25,13 +26,14 @@ import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
 import {
   DownloadOutlined,
   EyeOutlined,
-  ArrowLeftOutlined,
+  ArrowRightOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
 import {
   SetTabTypeAction,
   SetAnalyzeDetailAction,
   SetProjectTransformDetailsAction,
+  setOpenDetails,
 } from "../../Redux/action";
 
 import GraphView from "./analyzeDetail/graphView";
@@ -39,6 +41,7 @@ import AnalysisView from "./analyzeDetail/analysisView";
 import SqlView from "./analyzeDetail/sqlView";
 
 const AnalyzeDetail = ({
+  getErrorDetails,
   dataModernizationCss,
   analyzeDetailsId,
   setAnalyze,
@@ -46,11 +49,11 @@ const AnalyzeDetail = ({
   showPopUp,
   isUserAction,
 }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [loadingView, setLoadingView] = useState(false);
   const [data, setData] = useState([]);
-  const [modalData, setModalData] = useState();
   const [analyzeDetails, setAnalyzeDetails] = useState(null);
   const [outputFiles, setOutputFiles] = useState([]);
   const [transformationSummary, setTransformationSummary] = useState([]);
@@ -76,9 +79,12 @@ const AnalyzeDetail = ({
     );
     setLoading(false);
     if (data.success) {
-      console.log(data?.data);
       dispatch(SetAnalyzeDetailAction(data?.data));
-      setData({ fileName: data?.data?.fileName, ...data?.data?.analysis });
+      setData({
+        fileName: data?.data?.fileName,
+        ...data?.data?.analysis,
+        failureReasons: data?.data?.failureReasons,
+      });
       setAnalyzeDetails(data?.data?.complexity);
       setOutputFiles(data?.data?.outputFiles);
       setTransformationSummary(data?.data?.transformationSummary);
@@ -93,11 +99,6 @@ const AnalyzeDetail = ({
 
   useEffect(() => {
     outputFiles.forEach(async (e) => {
-      if (e.fileType == "graph_src") {
-        const data = await fetch_retry_get(`${DESIGN}${e?.outputFileId}`);
-        if (data.success) setModalData(data.data);
-      }
-
       if (e.fileType == "transform_sql") {
         const data = await fetch_retry_get(`${DOWNLOADFILE}${e?.outputFileId}`);
         if (data.success) setTransformSql(data.data);
@@ -131,7 +132,6 @@ const AnalyzeDetail = ({
   const getDataCall = async (id) => {
     setLoadingView(true);
     let datar = await getProjectData(id);
-    setModalData(datar);
     setTimeout(() => {
       setOpen(true);
       setLoadingView(false);
@@ -216,12 +216,32 @@ const AnalyzeDetail = ({
       </Modal>
 
       {showTop && (
-        <ArrowLeftOutlined
-          style={{ fontSize: "1.5vw" }}
-          onClick={() => {
-            setAnalyze(true);
-          }}
-        />
+        <Row>
+          <Col span={12}>
+            <Badge
+              style={{ cursor: "pointer" }}
+              count={"< Go Back"}
+              color="#0c3246"
+              onClick={() => {
+                setAnalyze(true);
+              }}
+            />
+          </Col>
+          <Col span={12} style={{ display: "flex", justifyContent: "end" }}>
+            {data?.failureReasons && data?.failureReasons.length > 0 ? (
+              <Badge
+                style={{ cursor: "pointer" }}
+                count={"! Errors"}
+                color="#e74860"
+                onClick={() => {
+                  getErrorDetails(analyzeDetailsId);
+                }}
+              />
+            ) : (
+              ""
+            )}
+          </Col>
+        </Row>
       )}
 
       {loading ? (
@@ -492,12 +512,6 @@ const AnalyzeDetail = ({
                                 transformationSummary={transformationSummary}
                               />
                             )}
-                            {/* {e.fileType.includes("_graph_src") && (
-                              <GraphView
-                                modalData={modalData}
-                                showPopUp={showPopUp}
-                              />
-                            )} */}
                             {e.fileType === "transform_sql" &&
                               preCodeView(transformSql)}
                             {e.fileType === "source_ddl" &&
@@ -510,49 +524,65 @@ const AnalyzeDetail = ({
                     );
                   })}
               </Collapse>
-              {showTop && (
-                <div className={dataModernizationCss.nextExitBtn}>
-                  <Button
-                    type="primary"
-                    danger
-                    className={dataModernizationCss.nextBtn}
-                    htmlType="submit"
-                    onClick={() => {
-                      dispatch(SetTabTypeAction("Design"));
-                    }}
-                    style={{ marginRight: "2%" }}
-                  >
-                    Design Workflow <ArrowRightOutlined />
-                  </Button>
-                  <Button
-                    type="primary"
-                    danger
-                    className={dataModernizationCss.nextBtn}
-                    htmlType="submit"
-                    onClick={async () => {
-                      await updateTransformStatus(analyzeDetailsId);
-                      dispatch(
-                        SetProjectTransformDetailsAction({ analyzeDetailsId })
-                      );
-                      dispatch(SetTabTypeAction("Transform"));
-                    }}
-                  >
-                    Transform
-                  </Button>
-                  <Button
-                    type="primary"
-                    danger
-                    className={dataModernizationCss.exitBtn}
-                    onClick={() => {
-                      router.push(`/dashboard`);
-                    }}
-                  >
-                    Exit
-                  </Button>
-                </div>
-              )}
             </Col>
           </Row>
+        </div>
+      )}
+      {!loading && showTop && (
+        <div className={dataModernizationCss.nextExitBtn}>
+          {isUserAction && (
+            <Button
+              type="primary"
+              danger
+              className={dataModernizationCss.nextBtn}
+              htmlType="submit"
+              onClick={() => {
+                dispatch(
+                  setOpenDetails({
+                    detailId: analyzeDetailsId,
+                  })
+                );
+                dispatch(SetTabTypeAction("Design"));
+              }}
+              style={{ marginRight: "2%" }}
+            >
+              Design Workflow <ArrowRightOutlined />
+            </Button>
+          )}
+
+          <Button
+            type="primary"
+            danger
+            className={dataModernizationCss.nextBtn}
+            htmlType="submit"
+            onClick={async () => {
+              await updateTransformStatus(analyzeDetailsId);
+              dispatch(
+                SetProjectTransformDetailsAction({
+                  analyzeDetailsId,
+                  isUserAction: true,
+                })
+              );
+              dispatch(
+                setOpenDetails({
+                  detailId: analyzeDetailsId,
+                })
+              );
+              dispatch(SetTabTypeAction("Transform"));
+            }}
+          >
+            Transform
+          </Button>
+          <Button
+            type="primary"
+            danger
+            className={dataModernizationCss.exitBtn}
+            onClick={() => {
+              router.push(`/dashboard`);
+            }}
+          >
+            Exit
+          </Button>
         </div>
       )}
     </>

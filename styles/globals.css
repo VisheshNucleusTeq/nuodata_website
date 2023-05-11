@@ -9,13 +9,13 @@ body {
 }
 
 ::-webkit-scrollbar {
-  background-color: #0c3246;
+  background-color: rgb(222, 222, 222);
   width: 0.3vw;
   height: 0.3vw;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #e74860;
+  background-color: #ea919e;
   border-radius: 5px;
   height: 0.4vw;
 }
@@ -59,11 +59,11 @@ body {
   display: flex !important;
 }
 
-.ant-select-dropdown-menu-item {
+.antdUpload .ant-select-dropdown-menu-item {
   line-height: 50px !important;
 }
 
-.ant-upload-select {
+.antdUpload .ant-upload-select {
   border: 1px dashed gray !important;
   width: 40vw !important;
   height: 30vh !important;
@@ -166,11 +166,7 @@ body {
   width: 100% !important;
   background-color: #fff !important;
   border-radius: 25px !important;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset !important;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
 }
 
 .defineTabs .ant-tabs-nav-list .ant-tabs-tab {
@@ -210,29 +206,31 @@ body {
 }
 
 .demo .ant-table-thead tr:first-child th:first-child {
-  border-radius: 20px 0px 0px 0px !important;
+  border-radius: 10px 0px 0px 0px !important;
 }
 .demo .ant-table-thead tr:first-child th:last-child {
-  border-radius: 0px 20px 0px 0px !important;
+  border-radius: 0px 10px 0px 0px !important;
 }
 .demo .ant-table-tbody > tr:last-child > td:first-child {
-  border-radius: 0px 0px 0px 20px !important;
+  border-radius: 0px 0px 0px 10px !important;
 }
 .demo .ant-table-tbody > tr:last-child > td:last-child {
-  border-radius: 0px 0px 20px 0px !important;
+  border-radius: 0px 0px 10px 0px !important;
 }
 .demo .ant-table-content {
   padding: 2% !important;
-  border-radius: 20px !important;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
   background-color: #fff !important;
+}
+
+.demo div {
+  border-radius: 10px;
 }
 
 .demoCard {
   border-radius: 20px !important;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10) !important;
   background-color: #fff !important;
 }
 
@@ -353,7 +351,7 @@ html {
 
 .controls-node {
   position: absolute;
-  z-index: 5
+  z-index: 5;
 }
 
 .ant-tree-node-content-wrapper:hover {
@@ -395,4 +393,12 @@ html {
 .downloadBtn:hover {
   border: 1px solid #fff;
   color: #fff !important;
+}
+
+.validatePopupTable .ant-table-thead .ant-table-cell {
+  background-color: #f2f2f2;
+}
+
+.validatePopupTable .ant-table-thead .ant-table-cell {
+  background-color: #f2f2f2;
 }

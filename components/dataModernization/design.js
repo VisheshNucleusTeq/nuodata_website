@@ -10,9 +10,8 @@ import {
   Col,
   Select,
   Divider,
-  Badge,
   Modal,
-  Tooltip
+  Tooltip,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -23,7 +22,6 @@ import {
   ANALYZESUMMARY,
   VERSION,
   TABLE,
-  TABLEDATA,
   RELEASEVERSION,
   TABLECHANGELOGS,
   COLUMNCHANGELOGS,
@@ -40,28 +38,27 @@ import {
   SetTabTypeAction,
   SetProjectTransformDetailsAction,
   loderShowHideAction,
+  setOpenDetails,
 } from "../../Redux/action";
 
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import { DownOutlined, UpOutlined, EyeOutlined } from "@ant-design/icons";
 
 import DrawerView from "./drawerView";
 import DesignPanel from "./designPanel";
 import { useIsVisible } from "../../hooks/useIsVisible";
+import { fileStatusBadge } from "../helper/fileStatus";
 
 export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
+  const router = useRouter();
   const myRef = useRef(null);
-
   const [loading, setLoading] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [fileId, setFileId] = useState();
   const [version, setVersion] = useState();
   const [childData, setChildData] = useState([]);
-  const [childTableData, setChildTableData] = useState([]);
-  const [preChildTableData, setPreChildTableData] = useState([]);
+
   const [tableId, setTableId] = useState([]);
-  const [tableName, setTableName] = useState("");
-  const [preTableName, setPreTableName] = useState("");
   const [versionListArr, setVersionListArr] = useState([]);
   const [isDraftState, setIsDraftState] = useState(false);
   const [open, setOpen] = useState(false);
@@ -74,10 +71,13 @@ export default function Design({ dataModernizationCss }) {
   const [updatedColumnDetails, setUpdatedColumnDetails] = useState([]);
   const [finalDataForUpdate, setFinalDataForUpdate] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [tableType, setTableType] = useState("source");
+
   const dispatch = useDispatch();
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
   );
+  const openDetails = useSelector((state) => state.openDetails.openDetails);
 
   const refs = useRef();
   const refBtn = useRef();
@@ -160,13 +160,21 @@ export default function Design({ dataModernizationCss }) {
 
   const getDesignData = async () => {
     const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${
-        query.id ? query.id : projectDetails.projectId
-      }?type=analyze`
+      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
     );
     setLoading(false);
     if (data.success) {
       setFileList(data?.data?.fileDetails);
+
+      const selectedFile = data?.data?.fileDetails.find(
+        (e) => e.fileId == openDetails?.detailId
+      );
+      console.log({ selectedFile, openDetails });
+      if (openDetails?.detailId) {
+        getFileData(selectedFile?.fileId);
+        setFileName(selectedFile?.fileName);
+        dispatch(setOpenDetails({}));
+      }
     } else {
       dispatch(SetProjectTransformDetailsAction({}));
       dispatch(SetTabTypeAction("Connect"));
@@ -194,7 +202,7 @@ export default function Design({ dataModernizationCss }) {
       `${TABLE}${fileId}?version=${version}`
     );
     setChildData([]);
-    setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
+    setChildData(tableData?.data ? tableData?.data : []);
 
     const versionList = [];
     for (let index = 1; index <= version; index++) {
@@ -210,19 +218,6 @@ export default function Design({ dataModernizationCss }) {
     }
     setVersionListArr(versionList);
     myRef?.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const getTableData = async (tableId, v = null) => {
-    setTableId(tableId);
-    const tableKeyData = await fetch_retry_get(
-      `${TABLEDATA}${fileId}?version=${v ? v : version}&tableId=${tableId}`,
-      {
-        version: v ? v : version,
-        tableId: tableId,
-      }
-    );
-    setChildTableData(tableKeyData?.data);
-    setPreChildTableData(tableKeyData?.data);
   };
 
   const updateFinalFileRecord = async () => {
@@ -262,10 +257,6 @@ export default function Design({ dataModernizationCss }) {
     setFinalDataForUpdate(_temp);
   };
 
-  useEffect(() => {
-    updateFinalFileRecord();
-  }, [updatedTableDetails, updatedColumnDetails]);
-
   const updateFileRecord = async (release = false) => {
     dispatch(loderShowHideAction(true));
 
@@ -283,6 +274,12 @@ export default function Design({ dataModernizationCss }) {
         SetProjectTransformDetailsAction({
           analyzeDetailsId: fileId,
           version: isDraftState ? version : version + 1,
+          isUserAction: true,
+        })
+      );
+      dispatch(
+        setOpenDetails({
+          detailId: fileId,
         })
       );
       dispatch(SetTabTypeAction("Transform"));
@@ -291,14 +288,12 @@ export default function Design({ dataModernizationCss }) {
     dispatch(loderShowHideAction(false));
   };
 
-
   const changeVersion = async (version) => {
     const tableData = await fetch_retry_get(
       `${TABLE}${fileId}?version=${version}`
     );
-    setChildData(tableData?.data?.tables ? tableData?.data?.tables : []);
-    getTableData(tableId, version);
-
+    setChildData(tableData?.data ? tableData?.data : []);
+    setTableId(tableId);
     setUpdatedTableDetails([]);
     setUpdatedColumnDetails([]);
   };
@@ -363,6 +358,10 @@ export default function Design({ dataModernizationCss }) {
     setLoading(false);
   };
 
+  useEffect(() => {
+    updateFinalFileRecord();
+  }, [updatedTableDetails, updatedColumnDetails]);
+
   const changeLogs = () => {
     return (
       <>
@@ -394,26 +393,6 @@ export default function Design({ dataModernizationCss }) {
         )}
       </>
     );
-  };
-
-  const getTrueStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "convert_failed":
-        return <Badge count={"Transformed Partially"} color="orange" />;
-      case "converted":
-        return <Badge count={"Transformed Successfully"} color="green" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
-  };
-
-  const gerFalseStatus = (fileStatus) => {
-    switch (fileStatus) {
-      case "analyze_failed":
-        return <Badge count={"Analysis Failed"} color="red" />;
-      default:
-        return <Badge count={"Analysis Completed"} color="green" />;
-    }
   };
 
   return (
@@ -453,24 +432,25 @@ export default function Design({ dataModernizationCss }) {
               title: "Workflows",
               dataIndex: "workflows",
               key: "workflows",
+              align: "center",
             },
             {
               title: "Mappings",
               dataIndex: "mappings",
               key: "mappings",
+              align: "center",
             },
             {
               title: "Transformations",
               dataIndex: "transformations",
               key: "transformations",
+              align: "center",
             },
             {
               title: "Status",
               key: "fileStatus",
               render: (_, record) => {
-                return record?.isUserAction
-                  ? getTrueStatus(record.fileStatus)
-                  : gerFalseStatus(record.fileStatus);
+                return fileStatusBadge(record.fileStatus, record?.isUserAction);
               },
             },
             {
@@ -487,7 +467,7 @@ export default function Design({ dataModernizationCss }) {
                             getErrorDetails(record.fileId);
                           }}
                         >
-                          Details
+                          <EyeOutlined /> View
                         </a>
                       </Space>
                     );
@@ -502,25 +482,37 @@ export default function Design({ dataModernizationCss }) {
                                 setFileName(record.fileName);
                               }}
                             >
-                              Details
+                              <EyeOutlined /> View
                             </a>
                           </Space>
                         );
                       default:
                         return (
-                          <Tooltip placement="topLeft" title={"Please transform this file."}>
-
-                          <Space
-                            size="middle"
-                            style={{ cursor: "not-allowed" }}
+                          <Tooltip
+                            placement="topLeft"
+                            title={"Please transform this file."}
                           >
-                            <a style={{ cursor: "not-allowed" }}>Details</a>
-                          </Space>
+                            <Space
+                              size="middle"
+                              style={{
+                                cursor: "not-allowed",
+                              }}
+                            >
+                              <a
+                                style={{
+                                  color: "#adadad",
+                                  cursor: "not-allowed",
+                                }}
+                              >
+                                <EyeOutlined /> View
+                              </a>
+                            </Space>
                           </Tooltip>
                         );
                     }
                 }
               },
+              align: "center",
             },
           ]}
           dataSource={fileList.sort((a, b) => a.fileId - b.fileId)}
@@ -582,9 +574,43 @@ export default function Design({ dataModernizationCss }) {
               {isVisible ? <UpOutlined /> : <DownOutlined />}
             </div>
             <Row className={dataModernizationCss.detailsTitle}>
-              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                <h2>
-                  {fileName}{" "}
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Row align="middle" className={dataModernizationCss.designTabs}>
+                  {[
+                    { title: "Source Tables", value: "source" },
+                    { title: "Target Tables", value: "target" },
+                    {
+                      title: "Common Source and Target Tables",
+                      value: "source_and_target",
+                    },
+                  ].map((data, i) => {
+                    return (
+                      <Col
+                        key={(Math.random() + 1).toString(36).substring(7)}
+                        span={8}
+                        onClick={() => {
+                          setTableType(data?.value);
+                          // setUpdatedTableDetails([]);
+                          // setUpdatedColumnDetails([]);
+                        }}
+                      >
+                        <div
+                          className={`${dataModernizationCss.designTabsStep} ${
+                            tableType === data?.value
+                              ? dataModernizationCss.designTabsStepSelected
+                              : null
+                          } `}
+                        >
+                          {data?.title}
+                        </div>
+                      </Col>
+                    );
+                  })}
+                </Row>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={18} xl={18} xxl={18}>
+                <h3>
+                  {fileName}
                   <span>
                     (
                     <a
@@ -600,9 +626,9 @@ export default function Design({ dataModernizationCss }) {
                     </a>
                     )
                   </span>
-                </h2>
+                </h3>
               </Col>
-              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+              <Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
                 <Select
                   className="inputDesignSelect"
                   showSearch
@@ -640,6 +666,12 @@ export default function Design({ dataModernizationCss }) {
                       header={`${e.tableName} (${e.baseTableName})`}
                       key={i + "panel"}
                       forceRender={true}
+                      style={{
+                        display:
+                          e.tableType === tableType 
+                            ? ""
+                            : "none",
+                      }}
                     >
                       <DesignPanel
                         dataModernizationCss={dataModernizationCss}
@@ -656,6 +688,11 @@ export default function Design({ dataModernizationCss }) {
                   );
                 })}
             </Collapse>
+
+            {!childData?.filter(
+              (e) =>
+                e.tableType === tableType 
+            ).length && <center>No Record Available</center>}
           </Card>
         )}
       </div>
@@ -665,7 +702,7 @@ export default function Design({ dataModernizationCss }) {
         className={dataModernizationCss.nextExitBtn}
         ref={refBtn}
       >
-        <Button
+        {/* <Button
           type="primary"
           style={{ marginRight: "1rem", color: "#fff" }}
           danger
@@ -677,18 +714,41 @@ export default function Design({ dataModernizationCss }) {
           disabled={loading || versionListArr.length != version}
         >
           Save
+        </Button> */}
+
+        <Button
+          style={{ marginRight: "1rem" }}
+          type="primary"
+          danger
+          className={dataModernizationCss.nextBtn}
+          onClick={() => {
+            updateFileRecord();
+          }}
+          disabled={loading || versionListArr.length != version}
+        >
+          Save
         </Button>
+
         <Button
           type="primary"
           danger
           className={dataModernizationCss.nextBtn}
           onClick={() => {
-            // updateFileRecord(true);
+            updateFileRecord(true);
           }}
-          // disabled={loading || versionListArr.length != version}
-          disabled={true}
+          disabled={loading || versionListArr.length != version}
         >
           Transform File
+        </Button>
+        <Button
+          type="primary"
+          danger
+          className={dataModernizationCss.exitBtn}
+          onClick={() => {
+            router.push(`/dashboard`);
+          }}
+        >
+          Exit
         </Button>
       </div>
     </>
