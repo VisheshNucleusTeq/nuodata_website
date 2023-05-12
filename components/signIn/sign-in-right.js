@@ -75,7 +75,7 @@ function SignInRight({ loginCss }) {
             name={"password"}
             rules={[{ required: true, message: "Password is required." }]}
           >
-            <Input
+            <Input.Password
               key={"input-password"}
               className={"input"}
               placeholder={"Enter password"}
