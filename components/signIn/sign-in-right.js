@@ -100,7 +100,7 @@ function SignInRight({ loginCss }) {
           >
             Login
           </Button>
-          <Divider plain></Divider>
+          {/* <Divider plain></Divider>
 
           <GoogleOAuthProvider clientId="995061213404-vbdmb63jpqa8ua22u5jhlc9t9f4r8h3m.apps.googleusercontent.com">
             <GoogleLogin
@@ -113,7 +113,7 @@ function SignInRight({ loginCss }) {
               useOneTap
               theme={"filled_blue"}
             />
-          </GoogleOAuthProvider>
+          </GoogleOAuthProvider> */}
 
           <Divider plain></Divider>
 
