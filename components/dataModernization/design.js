@@ -474,18 +474,44 @@ export default function Design({ dataModernizationCss }) {
                   default:
                     switch (record.isUserAction) {
                       case true:
-                        return (
-                          <Space size="middle">
-                            <a
-                              onClick={() => {
-                                getFileData(record.fileId);
-                                setFileName(record.fileName);
-                              }}
-                            >
-                              <EyeOutlined /> View
-                            </a>
-                          </Space>
-                        );
+                        switch (record.githubStatus) {
+                          case "uploaded":
+                            return (
+                              <Tooltip
+                                placement="topLeft"
+                                title={"This file alredy checked-in"}
+                              >
+                                <Space
+                                  size="middle"
+                                  style={{
+                                    cursor: "not-allowed",
+                                  }}
+                                >
+                                  <a
+                                    style={{
+                                      color: "#adadad",
+                                      cursor: "not-allowed",
+                                    }}
+                                  >
+                                    <EyeOutlined /> View
+                                  </a>
+                                </Space>
+                              </Tooltip>
+                            );
+                          default:
+                            return (
+                              <Space size="middle">
+                                <a
+                                  onClick={() => {
+                                    getFileData(record.fileId);
+                                    setFileName(record.fileName);
+                                  }}
+                                >
+                                  <EyeOutlined /> View
+                                </a>
+                              </Space>
+                            );
+                        }
                       default:
                         return (
                           <Tooltip
@@ -667,13 +693,16 @@ export default function Design({ dataModernizationCss }) {
                       key={i + "panel"}
                       forceRender={true}
                       style={{
-                        display:
-                          e.tableType === tableType 
-                            ? ""
-                            : "none",
+                        display: e.tableType === tableType ? "" : "none",
                       }}
-
-                      extra={<p><b>Database:{" "}<span style={{color : "#e74860"}}>{e.dbType}</span></b></p>}
+                      extra={
+                        <p>
+                          <b>
+                            Database:{" "}
+                            <span style={{ color: "#e74860" }}>{e.dbType}</span>
+                          </b>
+                        </p>
+                      }
                     >
                       <DesignPanel
                         dataModernizationCss={dataModernizationCss}
@@ -691,10 +720,9 @@ export default function Design({ dataModernizationCss }) {
                 })}
             </Collapse>
 
-            {!childData?.filter(
-              (e) =>
-                e.tableType === tableType 
-            ).length && <center>No Record Available</center>}
+            {!childData?.filter((e) => e.tableType === tableType).length && (
+              <center>No Record Available</center>
+            )}
           </Card>
         )}
       </div>

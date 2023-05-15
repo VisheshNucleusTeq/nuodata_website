@@ -48,6 +48,7 @@ const AnalyzeDetail = ({
   showTop,
   showPopUp,
   isUserAction,
+  analyzeDetailPageData
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -95,6 +96,7 @@ const AnalyzeDetail = ({
 
   useEffect(() => {
     getAnalyzeData();
+    console.log(analyzeDetailPageData)
   }, []);
 
   useEffect(() => {
@@ -530,7 +532,7 @@ const AnalyzeDetail = ({
       )}
       {!loading && showTop && (
         <div className={dataModernizationCss.nextExitBtn}>
-          {isUserAction && (
+          {isUserAction && analyzeDetailPageData.githubStatus !== "uploaded" && (
             <Button
               type="primary"
               danger
