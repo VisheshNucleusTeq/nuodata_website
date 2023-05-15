@@ -672,6 +672,8 @@ export default function Design({ dataModernizationCss }) {
                             ? ""
                             : "none",
                       }}
+
+                      extra={<p><b>Database:{" "}<span style={{color : "#e74860"}}>{e.dbType}</span></b></p>}
                     >
                       <DesignPanel
                         dataModernizationCss={dataModernizationCss}

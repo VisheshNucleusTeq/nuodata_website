@@ -92,7 +92,7 @@ const DesignPanel = ({
         </Col>
         <Col span={2} />
         <Col span={11}>
-          <Row>
+          {/* <Row>
             <Col className={dataModernizationCss.tableNameView} span={24}>
               Database Type
             </Col>
@@ -107,7 +107,7 @@ const DesignPanel = ({
                 disabled={true}
               />
             </Col>
-          </Row>
+          </Row> */}
         </Col>
         <Col span={4} className="centerButton">
           <p
