@@ -166,7 +166,7 @@ body {
   width: 100% !important;
   background-color: #fff !important;
   border-radius: 25px !important;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .defineTabs .ant-tabs-nav-list .ant-tabs-tab {
@@ -220,7 +220,7 @@ body {
 .demo .ant-table-content {
   padding: 2% !important;
   border-radius: 10px !important;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   background-color: #fff !important;
 }
 
@@ -230,7 +230,7 @@ body {
 
 .demoCard {
   border-radius: 20px !important;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10) !important;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1) !important;
   background-color: #fff !important;
 }
 
@@ -401,4 +401,19 @@ html {
 
 .validatePopupTable .ant-table-thead .ant-table-cell {
   background-color: #f2f2f2;
+}
+
+.ant-radio-checked .ant-radio-inner {
+  border-color: #e74860 !important ;
+}
+
+.ant-radio-checked .ant-radio-inner:after {
+  background-color: #e74860;
+}
+.ant-radio .ant-radio-inner {
+  border-color: #0c3246;
+}
+
+.ant-radio:hover .ant-radio-inner {
+  border-color: #e74860;
 }

@@ -12,6 +12,7 @@ import {
   Divider,
   Tooltip,
   Modal,
+  Radio,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -72,6 +73,9 @@ export default function Design({ dataModernizationCss }) {
   const [finalDataForUpdate, setFinalDataForUpdate] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [tableType, setTableType] = useState("source");
+  const [bothTableShow, setBothTableShow] = useState(false);
+  const [sourceTargetData, setSourceTargetData] = useState([]);
+  const [isRelease, setIsRelease] = useState(false);
 
   const dispatch = useDispatch();
   const projectDetails = useSelector(
@@ -187,6 +191,10 @@ export default function Design({ dataModernizationCss }) {
   }, []);
 
   const getFileData = async (fileId) => {
+    setUpdatedTableDetails([]);
+    setUpdatedColumnDetails([]);
+    setSourceTargetData([]);
+
     myRef?.current?.scrollIntoView({ behavior: "smooth" });
     setFileId(fileId);
 
@@ -233,6 +241,7 @@ export default function Design({ dataModernizationCss }) {
           _temp.push({
             tableId: e?.tableDetails?.tableId,
             tableName: e?.tableDetails?.tableName,
+            type: e?.tableDetails?.tableType,
             columns: [
               {
                 columnId: e.columnId,
@@ -258,6 +267,19 @@ export default function Design({ dataModernizationCss }) {
   };
 
   const updateFileRecord = async (release = false) => {
+    const sourceTargetDataArr = finalDataForUpdate.filter(
+      (e) => e.type === "source_and_target"
+    );
+    if (sourceTargetDataArr.length > 0) {
+      setIsRelease(release);
+      setSourceTargetData(sourceTargetDataArr);
+      setBothTableShow(true);
+    } else {
+      updateFileRecordAction(release);
+    }
+  };
+
+  const updateFileRecordAction = async (release = false) => {
     dispatch(loderShowHideAction(true));
 
     const authData = JSON.parse(localStorage.getItem("authData"));
@@ -288,6 +310,13 @@ export default function Design({ dataModernizationCss }) {
     dispatch(loderShowHideAction(false));
   };
 
+  const updatefinalData = (type, tableId) => {
+    const _temp = JSON.parse(JSON.stringify(finalDataForUpdate));
+    const index = _temp.findIndex((e) => e.tableId == tableId);
+    _temp[index].type = type;
+    setFinalDataForUpdate(_temp);
+  };
+
   const changeVersion = async (version) => {
     const tableData = await fetch_retry_get(
       `${TABLE}${fileId}?version=${version}`
@@ -305,6 +334,7 @@ export default function Design({ dataModernizationCss }) {
       _temp.push({
         tableId: data.tableId,
         tableName: data.newName,
+        type: data.tableType,
         columns: [],
       });
     } else {
@@ -416,6 +446,52 @@ export default function Design({ dataModernizationCss }) {
               );
             })}
         </ul>
+      </Modal>
+      <Modal
+        title={<h4 style={{ color: "#052b3b" }}>{errorDetails.fileName}</h4>}
+        centered
+        open={bothTableShow}
+        onOk={() => {
+          updateFileRecordAction(isRelease);
+          setBothTableShow(false);
+        }}
+        okText={"confirm"}
+        onCancel={() => setBothTableShow(false)}
+        cancelButtonProps={{ style: { display: "none" } }}
+        width={"60%"}
+      >
+        <Table
+          pagination={false}
+          dataSource={sourceTargetData}
+          columns={[
+            {
+              title: "Table Name",
+              dataIndex: "tableName",
+              key: "tableName",
+            },
+            {
+              title: "Update at",
+              dataIndex: "updateAt",
+              key: "tableName",
+              render: (_, record) => {
+                return (
+                  <Radio.Group
+                    name="radiogroup"
+                    defaultValue={"source_and_target"}
+                    onChange={(e) => {
+                      updatefinalData(e.target.value, record.tableId);
+                    }}
+                  >
+                    <Radio value={"source_and_target"}>Source & Target</Radio>
+                    <Radio value={"source"}>Source</Radio>
+                    <Radio value={"target"}>Target</Radio>
+                  </Radio.Group>
+                );
+              },
+            },
+          ]}
+        />
+        ;
       </Modal>
       <div className={dataModernizationCss.designMain}>
         <Table

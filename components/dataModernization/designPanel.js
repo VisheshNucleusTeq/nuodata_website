@@ -189,7 +189,7 @@ const DesignPanel = ({
             ),
           },
         ]}
-        dataSource={childTableData.sort((a, b) => a.columnId - b.columnId)}
+        dataSource={childTableData?.sort((a, b) => a.columnId - b.columnId)}
       />
     </>
   );
