@@ -76,6 +76,7 @@ export default function Design({ dataModernizationCss }) {
   const [bothTableShow, setBothTableShow] = useState(false);
   const [sourceTargetData, setSourceTargetData] = useState([]);
   const [isRelease, setIsRelease] = useState(false);
+  const [githubStatus, setGithubStatus] = useState(false);
 
   const dispatch = useDispatch();
   const projectDetails = useSelector(
@@ -557,21 +558,26 @@ export default function Design({ dataModernizationCss }) {
                                 placement="topLeft"
                                 title={"This file alredy checked-in"}
                               >
-                                <Space
-                                  size="middle"
-                                  style={{
-                                    cursor: "not-allowed",
+                              <Space
+                                size="middle"
+                                // style={{
+                                //   cursor: "not-allowed",
+                                // }}
+                              >
+                                <a
+                                  // style={{
+                                  //   color: "#adadad",
+                                  //   cursor: "not-allowed",
+                                  // }}
+                                  onClick={() => {
+                                    getFileData(record.fileId);
+                                    setFileName(record.fileName);
+                                    setGithubStatus(record.githubStatus);
                                   }}
                                 >
-                                  <a
-                                    style={{
-                                      color: "#adadad",
-                                      cursor: "not-allowed",
-                                    }}
-                                  >
-                                    <EyeOutlined /> View
-                                  </a>
-                                </Space>
+                                  <EyeOutlined /> View
+                                </a>
+                              </Space>
                               </Tooltip>
                             );
                           default:
@@ -581,6 +587,7 @@ export default function Design({ dataModernizationCss }) {
                                   onClick={() => {
                                     getFileData(record.fileId);
                                     setFileName(record.fileName);
+                                    setGithubStatus(record.githubStatus);
                                   }}
                                 >
                                   <EyeOutlined /> View
@@ -765,7 +772,9 @@ export default function Design({ dataModernizationCss }) {
                 .map((e, i) => {
                   return (
                     <Panel
-                      header={`${e.tableName} (${e?.baseTableName ? e.baseTableName : "Not Available"})`}
+                      header={`${e.tableName} (${
+                        e?.baseTableName ? e.baseTableName : "Not Available"
+                      })`}
                       key={i + "panel"}
                       forceRender={true}
                       style={{
@@ -808,20 +817,6 @@ export default function Design({ dataModernizationCss }) {
         className={dataModernizationCss.nextExitBtn}
         ref={refBtn}
       >
-        {/* <Button
-          type="primary"
-          style={{ marginRight: "1rem", color: "#fff" }}
-          danger
-          className={dataModernizationCss.exitBtn}
-          htmlType="submit"
-          onClick={() => {
-            updateFileRecord();
-          }}
-          disabled={loading || versionListArr.length != version}
-        >
-          Save
-        </Button> */}
-
         <Button
           style={{ marginRight: "1rem" }}
           type="primary"
@@ -830,7 +825,11 @@ export default function Design({ dataModernizationCss }) {
           onClick={() => {
             updateFileRecord();
           }}
-          disabled={loading || versionListArr.length != version}
+          disabled={
+            loading ||
+            versionListArr.length != version ||
+            githubStatus === "uploaded"
+          }
         >
           Save
         </Button>
@@ -842,10 +841,15 @@ export default function Design({ dataModernizationCss }) {
           onClick={() => {
             updateFileRecord(true);
           }}
-          disabled={loading || versionListArr.length != version}
+          disabled={
+            loading ||
+            versionListArr.length != version ||
+            githubStatus === "uploaded"
+          }
         >
           Transform File
         </Button>
+
         <Button
           type="primary"
           danger
