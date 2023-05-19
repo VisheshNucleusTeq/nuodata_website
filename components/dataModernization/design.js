@@ -765,7 +765,7 @@ export default function Design({ dataModernizationCss }) {
                 .map((e, i) => {
                   return (
                     <Panel
-                      header={`${e.tableName} (${e.baseTableName})`}
+                      header={`${e.tableName} (${e?.baseTableName ? e.baseTableName : "Not Available"})`}
                       key={i + "panel"}
                       forceRender={true}
                       style={{

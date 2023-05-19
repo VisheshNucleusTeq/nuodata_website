@@ -1,17 +1,12 @@
 import React from "react";
-import {
-  Row,
-  Col,
-  Timeline,
-  Divider,
-} from "antd";
+import { Row, Col, Timeline, Divider } from "antd";
 
 const DrawerView = ({
   tableNameLog,
   columnLog,
   tableColumnsChange,
   version,
-  dataModernizationCss
+  dataModernizationCss,
 }) => {
   const findCurrentTableName = (tableId, type) => {
     const oldName =
@@ -145,7 +140,11 @@ const DrawerView = ({
                           wordBreak: "break-all",
                         }}
                       >
-                        {e.tableName.toString()}
+                        {e?.tableName ? (
+                          e?.tableName?.toString()
+                        ) : (
+                          <i>Not Available</i>
+                        )}
                       </p>
                     </div>
                   </>
@@ -174,10 +173,10 @@ const DrawerView = ({
                         Version {e.version}
                       </h3>
                       <p style={{ color: "#0c3246", wordBreak: "break-all" }}>
-                        {e.columnName}
+                        {e?.columnName ? e.columnName : <i>Not Available</i>}
                       </p>
                       <h5 style={{ color: "#0c3246", wordBreak: "break-all" }}>
-                        {e.columnType}
+                        {e?.columnType ? e.columnType : <i>Not Available</i>}
                       </h5>
                     </div>
                   </>
@@ -251,13 +250,19 @@ const DrawerView = ({
                           key={(Math.random() + 1).toString(36).substring(7)}
                         >
                           <Col span={2}></Col>
-                          <Col span={9} className={dataModernizationCss.wordCss}>
+                          <Col
+                            span={9}
+                            className={dataModernizationCss.wordCss}
+                          >
                             {findCurrentColumnName(col.columnId, i, "OLD")}
                           </Col>
                           <Col span={2} style={{ textAlign: "center" }}>
                             -
                           </Col>
-                          <Col span={9} className={dataModernizationCss.wordCss}>
+                          <Col
+                            span={9}
+                            className={dataModernizationCss.wordCss}
+                          >
                             <p>
                               {findCurrentColumnName(col.columnId, i, "NEW")}
                             </p>
