@@ -325,6 +325,10 @@ const Define = ({ dataModernizationCss }) => {
                   value: "Snowflake",
                   label: "Snowflake",
                 },
+                {
+                  value: "IBM Watsonx.data",
+                  label: "IBM Watsonx.data",
+                },
               ]}
             />
           </Form.Item>
@@ -359,6 +363,10 @@ const Define = ({ dataModernizationCss }) => {
                 {
                   value: "sparkSql",
                   label: "Spark SQL",
+                },
+                {
+                  value: "presto",
+                  label: "Presto",
                 },
               ]}
             />
