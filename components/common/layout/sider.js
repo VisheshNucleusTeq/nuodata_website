@@ -15,6 +15,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
   const tabType = useSelector((state) => state.tabType.tabType);
 
   const [showDataModernization, setShowDataModernization] = useState(true);
+  const [showPlatform, setShowPlatform] = useState(false);
 
   const changePage = async (page, tab) => {
     router.push(page);
@@ -137,6 +138,53 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             Account & Settings
           </Col>
         </Col>
+
+        {/* <Col span={24} className={layoutCss.mainMenuCol}>
+          <Col
+            offset={2}
+            span={20}
+            style={{ height: height / 1.5 + "px" }}
+            className={layoutCss.mainMenu}
+            onClick={() => {
+              setShowPlatform(!showPlatform);
+            }}
+          >
+            Select Platform &nbsp;{" "}
+            {showPlatform ? (
+              <CaretDownOutlined style={{ color: "#e74860" }} />
+            ) : (
+              <CaretLeftOutlined style={{ color: "#e74860" }} />
+            )}
+          </Col>
+        </Col>
+
+        {[
+          {
+            name: "DataHub",
+            link: "https://governance.dev.nuodata.io/",
+          },
+        ].map((data, i) => {
+          return (
+            showPlatform && (
+              <Col
+                key={(Math.random() + 1).toString(36).substring(7)}
+                span={24}
+                className={`${layoutCss.mainMenuCol}`}
+              >
+                <a onClick={() => window.open(data?.link, "_blank")}>
+                  <Col
+                    offset={2}
+                    span={20}
+                    style={{ height: height / 2 + "px" }}
+                    className={layoutCss.subMainMenuSelect}
+                  >
+                    {data?.name}
+                  </Col>
+                </a>
+              </Col>
+            )
+          );
+        })} */}
       </Row>
     </Sider>
   );

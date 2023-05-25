@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Col, Row, Menu, Image, Tag } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import { Col, Row, Menu, Image, Tag, Dropdown, Space, Badge } from "antd";
+import { MenuOutlined, BranchesOutlined } from "@ant-design/icons";
 import Router, { useRouter } from "next/router";
 
 import HeaderCss from "../../styles/Header.module.css";
@@ -61,6 +61,37 @@ export default function Header() {
                   router.push("/data-management");
                 },
               },
+              // {
+              //   key: "4",
+              //   label: (
+              //     <Dropdown
+              //       menu={{
+              //         items: [
+              //           {
+              //             label: (
+              //               <a
+              //                 target="_blank"
+              //                 rel="noopener noreferrer"
+              //                 href="https://governance.dev.nuodata.io/"
+              //               >
+              //                 <Badge count={'D'} color="#e74860"/>&nbsp; DataHub
+              //                 {/* <p><span className={HeaderCss.nameIcon}>D</span>DataHub</p> */}
+              //               </a>
+              //             ),
+              //             key: "0",
+              //           },
+              //         ],
+              //       }}
+              //     >
+              //       <a onClick={(e) => e.preventDefault()}>
+              //         <Space className={HeaderCss.hoverEffect}>
+              //           <BranchesOutlined />
+              //           Select Platform
+              //         </Space>
+              //       </a>
+              //     </Dropdown>
+              //   ),
+              // },
               {
                 key: "TEST",
                 label: "SPACEMENU",

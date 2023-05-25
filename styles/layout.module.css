@@ -50,6 +50,14 @@
   padding-left: 5%;
 }
 
+.subMainMenuSelect {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  /* border-left: 1px solid #fff; */
+  padding-left: 5%;
+}
+
 .mainMenuCol {
   border-left: 4px solid #0c3246;
 }

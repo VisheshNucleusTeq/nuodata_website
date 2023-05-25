@@ -417,3 +417,11 @@ html {
 .ant-radio:hover .ant-radio-inner {
   border-color: #e74860;
 }
+
+
+.homepageselectoption .ant-select-selector {
+  border: 1px solid green;
+  background-color: transparent !important;
+  color: red;
+}
+

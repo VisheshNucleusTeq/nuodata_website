@@ -29,6 +29,7 @@ import {
   CHANGELOGS,
   GETANALYZEDATA,
   UPDATEDESIGN,
+  DISCARD,
 } from "../../network/apiConstants";
 import {
   fetch_retry_post,
@@ -42,7 +43,12 @@ import {
   setOpenDetails,
 } from "../../Redux/action";
 
-import { DownOutlined, UpOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  UpOutlined,
+  EyeOutlined,
+  UndoOutlined,
+} from "@ant-design/icons";
 
 import DrawerView from "./drawerView";
 import DesignPanel from "./designPanel";
@@ -426,6 +432,13 @@ export default function Design({ dataModernizationCss }) {
     );
   };
 
+  const discardAllChanges = async (fileId, tableId = 0) => {
+    dispatch(loderShowHideAction(true));
+    await fetch_retry_post(`${DISCARD}${fileId}?tableId=${tableId}`);
+    await getFileData(fileId);
+    dispatch(loderShowHideAction(false));
+  };
+
   return (
     <>
       <Modal
@@ -492,7 +505,6 @@ export default function Design({ dataModernizationCss }) {
             },
           ]}
         />
-        ;
       </Modal>
       <div className={dataModernizationCss.designMain}>
         <Table
@@ -558,26 +570,26 @@ export default function Design({ dataModernizationCss }) {
                                 placement="topLeft"
                                 title={"This file alredy checked-in"}
                               >
-                              <Space
-                                size="middle"
-                                // style={{
-                                //   cursor: "not-allowed",
-                                // }}
-                              >
-                                <a
+                                <Space
+                                  size="middle"
                                   // style={{
-                                  //   color: "#adadad",
                                   //   cursor: "not-allowed",
                                   // }}
-                                  onClick={() => {
-                                    getFileData(record.fileId);
-                                    setFileName(record.fileName);
-                                    setGithubStatus(record.githubStatus);
-                                  }}
                                 >
-                                  <EyeOutlined /> View
-                                </a>
-                              </Space>
+                                  <a
+                                    // style={{
+                                    //   color: "#adadad",
+                                    //   cursor: "not-allowed",
+                                    // }}
+                                    onClick={() => {
+                                      getFileData(record.fileId);
+                                      setFileName(record.fileName);
+                                      setGithubStatus(record.githubStatus);
+                                    }}
+                                  >
+                                    <EyeOutlined /> View
+                                  </a>
+                                </Space>
                               </Tooltip>
                             );
                           default:
@@ -683,40 +695,6 @@ export default function Design({ dataModernizationCss }) {
               {isVisible ? <UpOutlined /> : <DownOutlined />}
             </div>
             <Row className={dataModernizationCss.detailsTitle}>
-              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                <Row align="middle" className={dataModernizationCss.designTabs}>
-                  {[
-                    { title: "Source Tables", value: "source" },
-                    { title: "Target Tables", value: "target" },
-                    {
-                      title: "Common Source and Target Tables",
-                      value: "source_and_target",
-                    },
-                  ].map((data, i) => {
-                    return (
-                      <Col
-                        key={(Math.random() + 1).toString(36).substring(7)}
-                        span={8}
-                        onClick={() => {
-                          setTableType(data?.value);
-                          // setUpdatedTableDetails([]);
-                          // setUpdatedColumnDetails([]);
-                        }}
-                      >
-                        <div
-                          className={`${dataModernizationCss.designTabsStep} ${
-                            tableType === data?.value
-                              ? dataModernizationCss.designTabsStepSelected
-                              : null
-                          } `}
-                        >
-                          {data?.title}
-                        </div>
-                      </Col>
-                    );
-                  })}
-                </Row>
-              </Col>
               <Col xs={24} sm={24} md={24} lg={18} xl={18} xxl={18}>
                 <h3>
                   {fileName}
@@ -737,7 +715,37 @@ export default function Design({ dataModernizationCss }) {
                   </span>
                 </h3>
               </Col>
-              <Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={1}
+                xl={1}
+                xxl={1}
+                style={{
+                  justifyContent: "center",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {isDraftState && (
+                  <Tooltip placement="top" title={"Discard All Changes"}>
+                    <Button
+                      style={{ backgroundColor: "#0c3246" }}
+                      shape="circle"
+                      icon={
+                        <UndoOutlined
+                          style={{ fontSize: "large", color: "#FFF" }}
+                        />
+                      }
+                      onClick={() => {
+                        discardAllChanges(fileId);
+                      }}
+                    />
+                  </Tooltip>
+                )}
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={5} xl={5} xxl={5}>
                 <Select
                   className="inputDesignSelect"
                   showSearch
@@ -756,6 +764,39 @@ export default function Design({ dataModernizationCss }) {
                   }}
                   options={versionListArr}
                 />
+              </Col>
+
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Row align="middle" className={dataModernizationCss.designTabs}>
+                  {[
+                    { title: "Source Tables", value: "source" },
+                    { title: "Target Tables", value: "target" },
+                    {
+                      title: "Common Source and Target Tables",
+                      value: "source_and_target",
+                    },
+                  ].map((data, i) => {
+                    return (
+                      <Col
+                        key={(Math.random() + 1).toString(36).substring(7)}
+                        span={8}
+                        onClick={() => {
+                          setTableType(data?.value);
+                        }}
+                      >
+                        <div
+                          className={`${dataModernizationCss.designTabsStep} ${
+                            tableType === data?.value
+                              ? dataModernizationCss.designTabsStepSelected
+                              : null
+                          } `}
+                        >
+                          {data?.title}
+                        </div>
+                      </Col>
+                    );
+                  })}
+                </Row>
               </Col>
             </Row>
             <Divider />
@@ -781,12 +822,41 @@ export default function Design({ dataModernizationCss }) {
                         display: e.tableType === tableType ? "" : "none",
                       }}
                       extra={
-                        <p>
-                          <b>
-                            Database:{" "}
-                            <span style={{ color: "#e74860" }}>{e.dbType}</span>
-                          </b>
-                        </p>
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <p>
+                            <b>
+                              Database:{" "}
+                              <span style={{ color: "#e74860" }}>
+                                {e.dbType}{" "}
+                              </span>
+                            </b>
+                            {isDraftState && (
+                              <span>
+                                <Tooltip
+                                  placement="top"
+                                  title={"Discard Changes"}
+                                >
+                                  <Button
+                                    style={{ backgroundColor: "#0c3246" }}
+                                    size="small"
+                                    shape="circle"
+                                    icon={
+                                      <UndoOutlined
+                                        style={{
+                                          fontSize: "small",
+                                          color: "#FFF",
+                                        }}
+                                      />
+                                    }
+                                    onClick={() => {
+                                      discardAllChanges(fileId, e.tableId);
+                                    }}
+                                  />
+                                </Tooltip>
+                              </span>
+                            )}
+                          </p>
+                        </div>
                       }
                     >
                       <DesignPanel

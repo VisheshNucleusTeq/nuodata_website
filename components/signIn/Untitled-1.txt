@@ -1,0 +1,1 @@
+https://governance.dev.nuodata.io/callback/oidc?state=60d235ddb3&code=4%2F0AbUR2VNDO3kpjjK9NJ3OmAy-NeyW8dmnrv8hPtOJ2zlddTFV6tjq8UJVMsnqb43a47mngQ&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=0&hd=nucleusteq.com&prompt=none
