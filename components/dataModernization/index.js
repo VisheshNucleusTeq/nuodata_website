@@ -1,14 +1,39 @@
 import { Row, Col } from "antd";
+import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
-import Define from "./define";
-import Connect from "./connect";
-import Analyze from "./analyze";
-import Transform from "./transform";
-import Design from "./design";
-import Validate from "./validate";
-import Rollout from "./rollout";
+// import Define from "./define";
+// import Connect from "./connect";
+// import Analyze from "./analyze";
+// import Transform from "./transform";
+// import Design from "./design";
+// import Validate from "./validate";
+// import Rollout from "./rollout";
+
+import Loading from "./loading";
+const Define = dynamic(() => import("./define"), {
+  loading: () => <Loading />,
+});
+const Connect = dynamic(() => import("./connect"), {
+  loading: () => <Loading />,
+});
+const Analyze = dynamic(() => import("./analyze"), {
+  loading: () => <Loading />,
+});
+const Transform = dynamic(() => import("./transform"), {
+  loading: () => <Loading />,
+});
+const Design = dynamic(() => import("./design"), {
+  loading: () => <Loading />,
+});
+const Validate = dynamic(() => import("./validate"), {
+  loading: () => <Loading />,
+});
+const Rollout = dynamic(() => import("./rollout"), {
+  loading: () => <Loading />,
+});
+
 import { SetTabTypeAction } from "../../Redux/action";
 import dataModernizationCss from "../../styles/dataModernization.module.css";
 

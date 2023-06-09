@@ -1,12 +1,12 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useState } from "react";
 import { Pie } from "react-chartjs-2";
 import "chart.js/auto";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+// ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({ labels, data }) => {
-  const [pieChart, setPieChart] = useState({
+  const [pieChart] = useState({
     labels: labels,
     datasets: [
       {
@@ -36,10 +36,10 @@ const PieChart = ({ labels, data }) => {
       options={{
         responsive: true,
         plugins: {
-            legend: {
-              position: 'top',
-            }
+          legend: {
+            position: "top",
           },
+        },
       }}
       data={pieChart}
     />

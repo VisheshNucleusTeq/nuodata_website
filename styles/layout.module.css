@@ -5,6 +5,7 @@
 .mainLayoutSider {
   height: 100%;
   background-color: #0c3246;
+  overflow-y: scroll;
 }
 
 .logoImage {

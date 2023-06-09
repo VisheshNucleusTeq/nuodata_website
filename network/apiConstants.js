@@ -36,4 +36,5 @@ export const VALIDATEFILEDETAILS = "process/v2/validate/file/";
 export const ADDATTACHMENT = "process/v2/validate/add/attachment";
 export const VIEWATTACHMENT = "process/v2/validate/view/attachment";
 export const DELETEATTACHMENT = "process/v2/validate/delete/attachment";
-export const DISCARD = "/process/v2/design/discard/changelog/file/";
+export const DISCARD = "process/v2/design/discard/changelog/file/";
+export const GETACCESSTOKEN = "token/v1/generateFromRefreshToken";

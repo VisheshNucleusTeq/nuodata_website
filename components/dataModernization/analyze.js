@@ -17,7 +17,6 @@ import {
   EyeOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
-
 import {
   GETPROJECT,
   ANALYZESUMMARY,

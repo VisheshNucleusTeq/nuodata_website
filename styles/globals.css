@@ -418,10 +418,12 @@ html {
   border-color: #e74860;
 }
 
-
-.homepageselectoption .ant-select-selector {
+/* .homepageselectoption .ant-select-selector {
   border: 1px solid green;
   background-color: transparent !important;
   color: red;
-}
+} */
 
+.ant-spin-dot-item {
+  background-color: #0c3246;
+}

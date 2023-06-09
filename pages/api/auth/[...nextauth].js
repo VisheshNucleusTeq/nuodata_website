@@ -9,10 +9,10 @@ export default NextAuth({
       clientSecret: "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", //process.env.GOOGLE_CLIENT_SECRET
     }),
   ],
-  secret : "nuodata@123#",
+  secret: "nuodata@123#",
   callbacks: {
     async session({ session, token, user }) {
-      console.log({ session, token, user })
+      console.log({ session, token, user });
       session.jti = token.jti;
       return session;
     },
@@ -25,5 +25,8 @@ export default NextAuth({
     //   }
     //   return token;
     // },
+  },
+  session: {
+    strategy: "jwt",
   },
 });

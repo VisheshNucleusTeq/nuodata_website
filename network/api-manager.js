@@ -25,7 +25,11 @@ export const fetch_retry_post = async (endpoint, payload = {}) => {
       async () => {
         const response = await ApiInstance.post(endpoint, payload);
         if (response.status === 200) {
-          return { success: true, data: response.data };
+          return {
+            success: true,
+            data: response.data,
+            headers: response?.headers,
+          };
         }
       },
       {
