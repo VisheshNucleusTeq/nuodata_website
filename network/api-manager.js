@@ -79,11 +79,13 @@ export const fetch_retry_delete = async (endpoint, payload = {}) => {
 
 export const fetch_retry_post_with_file = async (endpoint, payload = {}) => {
   try {
+    const token = localStorage.getItem("authToken");
     return await retry(
       async () => {
         const response = await ApiInstance.post(endpoint, payload, {
           headers: {
             "content-type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         });
         if (response.status === 200) {

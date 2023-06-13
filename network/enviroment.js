@@ -28,6 +28,7 @@ BaseURL.interceptors.request.use(
 
 BaseURL.interceptors.response.use(
   (response) => {
+    console.log(response)
     return response;
   },
   async function (error) {

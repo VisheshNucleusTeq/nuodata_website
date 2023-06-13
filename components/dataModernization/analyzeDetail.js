@@ -39,6 +39,7 @@ import {
 import GraphView from "./analyzeDetail/graphView";
 import AnalysisView from "./analyzeDetail/analysisView";
 import SqlView from "./analyzeDetail/sqlView";
+import axios from "axios";
 
 const AnalyzeDetail = ({
   getErrorDetails,
@@ -48,7 +49,7 @@ const AnalyzeDetail = ({
   showTop,
   showPopUp,
   isUserAction,
-  analyzeDetailPageData
+  analyzeDetailPageData,
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -96,7 +97,7 @@ const AnalyzeDetail = ({
 
   useEffect(() => {
     getAnalyzeData();
-    console.log(analyzeDetailPageData)
+    console.log(analyzeDetailPageData);
   }, []);
 
   useEffect(() => {
@@ -460,18 +461,52 @@ const AnalyzeDetail = ({
                         extra={
                           !e.fileType.includes("_graph_src") ? (
                             <div onClick={(e) => e.stopPropagation()}>
-                              <a
+                              {/* <a
                                 href={`${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`}
+                              > */}
+                              <Space
+                                size="middle"
+                                className={
+                                  dataModernizationCss.downloadBtnSpace
+                                }
+                                onClick={async () => {
+                                  // alert(`${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`)
+
+                                  const modelVersionObj = await fetch_retry_get(`${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`);
+                                  console.log(modelVersionObj);
+                                  return;
+                                  axios({
+                                    url: `${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`, //your url
+                                    method: "GET",
+                                    responseType: "blob", // important
+                                    headers: {
+                                      Authorization: `Bearer ${localStorage.getItem(
+                                        "authToken"
+                                      )}`,
+                                      "Access-Control-Expose-Headers": "*"
+
+                                    },
+                                    
+                                  }).then((response) => {
+                                    // window.location.href = response
+                                    console.log(response.request.getResponseHeader('Content-Disposition'))
+                                    console.log(response.headers)
+                                    // const href = URL.createObjectURL(
+                                    //   response.data
+                                    // );
+                                    // const link = document.createElement("a");
+                                    // link.href = href;
+                                    // link.setAttribute("download", "file"); //or any other extension
+                                    // document.body.appendChild(link);
+                                    // link.click();
+                                    // document.body.removeChild(link);
+                                    // URL.revokeObjectURL(href);
+                                  });
+                                }}
                               >
-                                <Space
-                                  size="middle"
-                                  className={
-                                    dataModernizationCss.downloadBtnSpace
-                                  }
-                                >
-                                  <DownloadOutlined /> Download
-                                </Space>
-                              </a>
+                                <DownloadOutlined /> Download
+                              </Space>
+                              {/* </a> */}
                             </div>
                           ) : (
                             <div onClick={(e) => e.stopPropagation()}>
@@ -532,25 +567,26 @@ const AnalyzeDetail = ({
       )}
       {!loading && showTop && (
         <div className={dataModernizationCss.nextExitBtn}>
-          {isUserAction && analyzeDetailPageData.githubStatus !== "uploaded" && (
-            <Button
-              type="primary"
-              danger
-              className={dataModernizationCss.nextBtn}
-              htmlType="submit"
-              onClick={() => {
-                dispatch(
-                  setOpenDetails({
-                    detailId: analyzeDetailsId,
-                  })
-                );
-                dispatch(SetTabTypeAction("Design"));
-              }}
-              style={{ marginRight: "2%" }}
-            >
-              Design Workflow <ArrowRightOutlined />
-            </Button>
-          )}
+          {isUserAction &&
+            analyzeDetailPageData.githubStatus !== "uploaded" && (
+              <Button
+                type="primary"
+                danger
+                className={dataModernizationCss.nextBtn}
+                htmlType="submit"
+                onClick={() => {
+                  dispatch(
+                    setOpenDetails({
+                      detailId: analyzeDetailsId,
+                    })
+                  );
+                  dispatch(SetTabTypeAction("Design"));
+                }}
+                style={{ marginRight: "2%" }}
+              >
+                Design Workflow <ArrowRightOutlined />
+              </Button>
+            )}
 
           <Button
             type="primary"
