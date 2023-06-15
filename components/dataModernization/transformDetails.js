@@ -35,6 +35,27 @@ const TransformDetails = ({ dataModernizationCss, setIsDetails }) => {
     }
   };
 
+  const downloadFile = async (url) => {
+    const response = await fetch_retry_get(url, { responseType: "blob" });
+    const fileNameData = response?.headers["content-disposition"];
+    const filename = fileNameData
+      .split(";")
+      .find((n) => n.includes("fileName=") || n.includes("filename="))
+      .replace('fileName="', "")
+      .replace("filename=", "")
+      .replace('"', "")
+      .trim();
+
+    const href = URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = href;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(href);
+  };
+
   useEffect(() => {
     if (
       projectTransformDetails &&
@@ -70,11 +91,14 @@ const TransformDetails = ({ dataModernizationCss, setIsDetails }) => {
         >
           <h1>
             Congratulations !
-            <a
-              className={dataModernizationCss.downloadIcon}
-              href={`${process.env.BASE_URL}${DOWNLOADZIP}${analyzeDetail?.fileId}?type=xml&workflowId=0`}
-            >
-              <span>
+            <a className={dataModernizationCss.downloadIcon}>
+              <span
+                onClick={() => {
+                  downloadFile(
+                    `${process.env.BASE_URL}${DOWNLOADZIP}${analyzeDetail?.fileId}?type=xml&workflowId=0`
+                  );
+                }}
+              >
                 <DownloadOutlined /> Download
               </span>
             </a>

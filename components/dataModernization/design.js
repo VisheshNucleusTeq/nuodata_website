@@ -180,7 +180,6 @@ export default function Design({ dataModernizationCss }) {
       const selectedFile = data?.data?.fileDetails.find(
         (e) => e.fileId == openDetails?.detailId
       );
-      console.log({ selectedFile, openDetails });
       if (openDetails?.detailId) {
         getFileData(selectedFile?.fileId);
         setFileName(selectedFile?.fileName);

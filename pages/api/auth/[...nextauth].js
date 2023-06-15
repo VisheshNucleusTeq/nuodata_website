@@ -12,7 +12,6 @@ export default NextAuth({
   secret: "nuodata@123#",
   callbacks: {
     async session({ session, token, user }) {
-      console.log({ session, token, user });
       session.jti = token.jti;
       return session;
     },

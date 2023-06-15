@@ -143,7 +143,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
         </Col> */}
 
         {/* accountAndSettings, setAccountAndSettings */}
-        {/* <Col span={24} className={layoutCss.mainMenuCol}>
+        <Col span={24} className={layoutCss.mainMenuCol}>
           <Col
             offset={2}
             span={20}
@@ -162,9 +162,9 @@ const SiderView = ({ layoutCss, height, componentName }) => {
               <CaretLeftOutlined style={{ color: "#e74860" }} />
             )}
           </Col>
-        </Col> */}
+        </Col>
 
-        {/* {[
+        {[
           { title: "GitHub", link: "/account-and-settings/github-check-in" },
         ].map((data, i) => {
           return (
@@ -193,7 +193,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
               </Col>
             )
           );
-        })} */}
+        })}
 
         {/* <Col span={24} className={layoutCss.mainMenuCol}>
           <Col

@@ -97,7 +97,6 @@ const AnalyzeDetail = ({
 
   useEffect(() => {
     getAnalyzeData();
-    console.log(analyzeDetailPageData);
   }, []);
 
   useEffect(() => {
@@ -144,6 +143,27 @@ const AnalyzeDetail = ({
   const updateTransformStatus = async (id) => {
     const data = await fetch_retry_post(`${CONVERTTRANSFORN}${id}`);
     return data;
+  };
+
+  const downloadFile = async (url) => {
+    const response = await fetch_retry_get(url, { responseType: "blob" });
+    const fileNameData = response?.headers["content-disposition"];
+    const filename = fileNameData
+      .split(";")
+      .find((n) => n.includes("fileName=") || n.includes("filename="))
+      .replace('fileName="', "")
+      .replace("filename=", "")
+      .replace('"', "")
+      .trim();
+
+    const href = URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = href;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(href);
   };
 
   return (
@@ -407,15 +427,16 @@ const AnalyzeDetail = ({
                     extra={
                       <div onClick={(e) => e.stopPropagation()}>
                         <Space size="middle" style={{ cursor: "pointer" }}>
-                          <a
-                            href={`${process.env.BASE_URL}${DOWNLOADZIP}${analyzeDetailsId}?type=pyspark&workflowId=0`}
+                          <span
+                            className={dataModernizationCss.downloadBtnSpace}
+                            onClick={() => {
+                              downloadFile(
+                                `${process.env.BASE_URL}${DOWNLOADZIP}${analyzeDetailsId}?type=pyspark&workflowId=0`
+                              );
+                            }}
                           >
-                            <span
-                              className={dataModernizationCss.downloadBtnSpace}
-                            >
-                              <DownloadOutlined /> Download
-                            </span>
-                          </a>
+                            <DownloadOutlined /> Download
+                          </span>
 
                           <span
                             className={dataModernizationCss.downloadBtnSpace}
@@ -469,39 +490,10 @@ const AnalyzeDetail = ({
                                 className={
                                   dataModernizationCss.downloadBtnSpace
                                 }
-                                onClick={async () => {
-                                  // alert(`${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`)
-
-                                  const modelVersionObj = await fetch_retry_get(`${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`);
-                                  console.log(modelVersionObj);
-                                  return;
-                                  axios({
-                                    url: `${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`, //your url
-                                    method: "GET",
-                                    responseType: "blob", // important
-                                    headers: {
-                                      Authorization: `Bearer ${localStorage.getItem(
-                                        "authToken"
-                                      )}`,
-                                      "Access-Control-Expose-Headers": "*"
-
-                                    },
-                                    
-                                  }).then((response) => {
-                                    // window.location.href = response
-                                    console.log(response.request.getResponseHeader('Content-Disposition'))
-                                    console.log(response.headers)
-                                    // const href = URL.createObjectURL(
-                                    //   response.data
-                                    // );
-                                    // const link = document.createElement("a");
-                                    // link.href = href;
-                                    // link.setAttribute("download", "file"); //or any other extension
-                                    // document.body.appendChild(link);
-                                    // link.click();
-                                    // document.body.removeChild(link);
-                                    // URL.revokeObjectURL(href);
-                                  });
+                                onClick={() => {
+                                  downloadFile(
+                                    `${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`
+                                  );
                                 }}
                               >
                                 <DownloadOutlined /> Download

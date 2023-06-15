@@ -52,7 +52,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
               <Form.Item
                 label={"First Name"}
                 labelAlign={"left"}
-                name={"first_name"}
+                name={"firstName"}
                 rules={[
                   {
                     required: true,
@@ -64,7 +64,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   key={"input-first-name"}
                   className={"input"}
                   placeholder={"First Name"}
-                  name={"first_name"}
+                  name={"firstName"}
                   type={"text"}
                 />
               </Form.Item>
@@ -74,7 +74,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
               <Form.Item
                 label={"Last Name"}
                 labelAlign={"left"}
-                name={"last_name"}
+                name={"lastName"}
                 rules={[
                   {
                     required: true,
@@ -86,7 +86,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   key={"input-last-name"}
                   className={"input"}
                   placeholder={"Last Name"}
-                  name={"last_name"}
+                  name={"lastName"}
                   type={"text"}
                 />
               </Form.Item>
@@ -145,7 +145,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   >
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                       <Form.Item
-                        name={"ctry_code"}
+                        name={"ctryCode"}
                         rules={[
                           {
                             required: true,
@@ -154,7 +154,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                         ]}
                       >
                         <Select
-                          name={"ctry_code"}
+                          name={"ctryCode"}
                           className="inputSelectGroup"
                           placeholder="Country Code"
                           optionFilterProp="children"
@@ -212,7 +212,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
               <Form.Item
                 label={"Source Platform"}
                 labelAlign={"left"}
-                name={"source_platform"}
+                name={"sourcePlatform"}
                 rules={[
                   {
                     required: true,
@@ -257,7 +257,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   key={"input-source-platform"}
                   className={"input"}
                   placeholder={"Source platform"}
-                  name={"source_platform"}
+                  name={"sourcePlatform"}
                   type={"text"}
                 />
               </Form.Item>
@@ -267,7 +267,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
               <Form.Item
                 label={"Target Platform"}
                 labelAlign={"left"}
-                name={"target_platform"}
+                name={"targetPlatform"}
                 rules={[
                   {
                     required: true,
@@ -308,7 +308,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   key={"input-target-platform"}
                   className={"input"}
                   placeholder={"Target platform"}
-                  name={"target_platform"}
+                  name={"targetPlatform"}
                   type={"text"}
                 />
               </Form.Item>
@@ -320,7 +320,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
               <Form.Item
                 label={"Source File Type"}
                 labelAlign={"left"}
-                name={"source_lang"}
+                name={"sourceLang"}
                 rules={[
                   {
                     required: true,
@@ -345,7 +345,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   key={"input-source-platform"}
                   className={"input"}
                   placeholder={"Source language Ex. xml"}
-                  name={"source_lang"}
+                  name={"sourceLang"}
                   type={"text"}
                 />
               </Form.Item>
@@ -355,7 +355,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
               <Form.Item
                 label={"Target Language"}
                 labelAlign={"left"}
-                name={"target_lang"}
+                name={"targetLang"}
                 rules={[
                   {
                     required: true,
@@ -381,7 +381,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   key={"input-target-platform"}
                   className={"input"}
                   placeholder={"Target language Ex. Spark SQL"}
-                  name={"target_lang"}
+                  name={"targetLang"}
                   type={"text"}
                 />
               </Form.Item>
@@ -393,7 +393,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
               <Form.Item
                 label={"Organization Name"}
                 labelAlign={"left"}
-                name={"org_name"}
+                name={"orgName"}
                 rules={[
                   {
                     required: true,
@@ -405,7 +405,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   key={"input-organization-name"}
                   className={"input"}
                   placeholder={"Your Organization Name"}
-                  name={"org_name"}
+                  name={"orgName"}
                   type={"text"}
                 />
               </Form.Item>
@@ -415,7 +415,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
               <Form.Item
                 label={"Job Title"}
                 labelAlign={"left"}
-                name={"job_title"}
+                name={"jobTitle"}
                 rules={[
                   {
                     required: true,
@@ -427,7 +427,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   key={"input-job-title"}
                   className={"input"}
                   placeholder={"CEO , Product Owner , Manager , Developer "}
-                  name={"job_title"}
+                  name={"jobTitle"}
                   type={"text"}
                 />
               </Form.Item>

@@ -38,3 +38,10 @@ export const VIEWATTACHMENT = "process/v2/validate/view/attachment";
 export const DELETEATTACHMENT = "process/v2/validate/delete/attachment";
 export const DISCARD = "process/v2/design/discard/changelog/file/";
 export const GETACCESSTOKEN = "token/v1/generateFromRefreshToken";
+
+export const ADDGITDATA = "gitupload/v1/config";
+export const UPDATEGITDATA = "gitupload/v1/config";
+export const GETGITDATA = "gitupload/v1/config/";
+
+
+
