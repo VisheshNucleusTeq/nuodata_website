@@ -173,13 +173,14 @@ const AnalyzeDetail = ({
         centered
         open={open}
         onOk={() => {
-          const file_path = `${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`;
-          const a = document.createElement("A");
-          a.href = file_path;
-          a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
+          downloadFile(`${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`)
+          // const file_path = `${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`;
+          // const a = document.createElement("A");
+          // a.href = file_path;
+          // a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
+          // document.body.appendChild(a);
+          // a.click();
+          // document.body.removeChild(a);
         }}
         onCancel={() => {
           setOpen(false);
@@ -203,13 +204,14 @@ const AnalyzeDetail = ({
         centered
         open={sqlOpen}
         onOk={() => {
-          const file_path = `${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`;
-          const a = document.createElement("A");
-          a.href = file_path;
-          a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
+          downloadFile(`${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`)
+          // const file_path = `${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`;
+          // const a = document.createElement("A");
+          // a.href = file_path;
+          // a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
+          // document.body.appendChild(a);
+          // a.click();
+          // document.body.removeChild(a);
         }}
         onCancel={() => {
           setSqlOpen(false);

@@ -44,10 +44,12 @@ const GithubCheckIn = () => {
         .filter((e) => e.value),
     });
     message.success(data?.data?.message);
+    await gitConfigData();
     dispatch(loderShowHideAction(false));
   };
 
   const gitConfigData = async () => {
+    console.log(111)
     const authData = JSON.parse(localStorage.getItem("authData"));
     const resData = await fetch_retry_get(
       `${GETGITDATA}${authData?.userId}?type=github`

@@ -474,6 +474,7 @@ export default function Design({ dataModernizationCss }) {
         width={"60%"}
       >
         <Table
+          rowKey="tableName"
           pagination={false}
           dataSource={sourceTargetData}
           columns={[
@@ -485,7 +486,7 @@ export default function Design({ dataModernizationCss }) {
             {
               title: "Update at",
               dataIndex: "updateAt",
-              key: "tableName",
+              key: "updateAt",
               render: (_, record) => {
                 return (
                   <Radio.Group

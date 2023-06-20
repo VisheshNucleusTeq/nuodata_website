@@ -386,6 +386,9 @@ export default function Validate({ dataModernizationCss }) {
                       dataSource={[
                         { ...record.entitySummary, mappings: record.mappings },
                       ]}
+                      rowKey={({ record }) =>
+                        (Math.random() + 1).toString(36).substring(7)
+                      }
                       columns={[
                         {
                           title: "Passed",
