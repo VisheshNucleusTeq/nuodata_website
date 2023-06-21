@@ -125,6 +125,7 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                 style={{
                   marginBottom: "0px !important",
                   paddingBottom: "0px !important",
+                  height: "2.8vw",
                 }}
                 label={"Phone Number"}
                 labelAlign={"left"}

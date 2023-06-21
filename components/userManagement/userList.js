@@ -2,103 +2,103 @@ import React, { useEffect, useState } from "react";
 import {
   Table,
   Space,
-  Tooltip,
   Button,
-  message,
   Card,
   Row,
   Col,
   Input,
   Select,
-  Form,
+  Modal,
+  Badge,
+  Tag,
 } from "antd";
-import userManagementCss from "../../styles/userManagment.module.css";
-import { FiFilter, FiSearch } from "react-icons/fi";
-import { PlusOutlined } from "@ant-design/icons";
-import CommonModal from "../common/CommonModal";
 
-const UserList = () => {
+import {
+  SearchOutlined,
+  FilterOutlined,
+  DownOutlined,
+  PlusOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
+
+import AddUser from "./addUser";
+import AddOrganization from "./addOrganization";
+import { GETUSERLIST, GETORGANIZATION } from "../../network/apiConstants";
+import { fetch_retry_get } from "../../network/api-manager";
+
+const UserList = ({ userManagementCss }) => {
   const [search, setSearch] = useState("");
-  const [organizationModal, setOrganizationModal] = useState(false);
+  const [orgId, setOrgId] = useState(0);
+  const [showAddModel, setShowAddModel] = useState(false);
+  const [addType, setAddType] = useState("");
+  const [userData, setUserData] = useState([]);
+  const [organization, setOrganization] = useState([]);
+  const [updateUserData, setUpdateUserData] = useState({});
 
-  const fetchUserData = () => {
-    fetch("https://randomuser.me/api/")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data?.results[0]);
-        console.log(data?.results[0]?.email);
-      });
+  const getOrganization = async () => {
+    const data = await fetch_retry_get(`${GETORGANIZATION}`);
+    setOrganization([
+      {
+        value: 0,
+        label: <span style={{ color: "#e74860" }}>All Data</span>,
+      },
+      ...data?.data?.map((e) => {
+        return {
+          value: e?.orgId,
+          label: e?.orgName,
+        };
+      }),
+    ]);
+  };
+
+  const getUserList = async () => {
+    const data = await fetch_retry_get(
+      `${GETUSERLIST}${orgId}/?search=${search}`
+    );
+    setUserData(data?.data);
   };
 
   useEffect(() => {
-    fetchUserData();
+    getOrganization();
   }, []);
 
-  const dataSource = [
-    {
-      key: "1",
-      name: "Ashish Baghel",
-      email: "Test@gmail.com",
-      user_type: "Business",
-      address: "Active",
-      addedDate: "20/06/2019",
-      organization: "NucleusTeq",
-      role: "Biz-Master-Admin",
-      action: "Edit",
-    },
-    {
-      key: "2",
-      name: "Mike",
-      email: "Test@gmail.com",
-      user_type: "Business",
-      address: "Active",
-      addedDate: "20/06/2019",
-      organization: "NucleusTeq",
-      role: "Biz-Master-Admin",
-      action: "Edit",
-    },
-    {
-      key: "3",
-      name: "Mike",
-      email: "Test@gmail.com",
-      user_type: "Business",
-      address: "Active",
-      addedDate: "20/06/2019",
-      organization: "NucleusTeq",
-      role: "Biz-Master-Admin",
-      action: "Edit",
-    },
-    {
-      key: "4",
-      name: "Mike",
-      email: "Test@gmail.com",
-      user_type: "Business",
-      address: "Active",
-      addedDate: "20/06/2019",
-      organization: "NucleusTeq",
-      role: "Biz-Master-Admin",
-      action: "Edit",
-    },
-    {
-      key: "5",
-      name: "Mike",
-      email: "Test@gmail.com",
-      user_type: "Business",
-      address: "Active",
-      addedDate: "20/06/2019",
-      organization: "NucleusTeq",
-      role: "Biz-Master-Admin",
-      action: "Edit",
-    },
-  ];
+  useEffect(() => {
+    getUserList();
+  }, [search, orgId]);
 
   return (
     <div className={userManagementCss.main}>
-      <h1>
-        Account & Settings / <u>Roles & Permissions</u>{" "}
-      </h1>
+      <Modal
+        title={addType === "user" ? "Add User" : "Add Organization"}
+        open={showAddModel}
+        okButtonProps={{ style: { display: "none" } }}
+        cancelButtonProps={{ style: { display: "none" } }}
+        closeIcon={<CloseCircleOutlined />}
+        onCancel={() => {
+          setUpdateUserData({})
+          setAddType(null);
+          setShowAddModel(false);
+        }}
+      >
+        {addType === "user" && (
+          <AddUser
+            userManagementCss={userManagementCss}
+            setShowAddModel={setShowAddModel}
+            setAddType={setAddType}
+            updateUserData={updateUserData}
+            getUserList={getUserList}
+          />
+        )}
+        {addType === "organization" && (
+          <AddOrganization
+            userManagementCss={userManagementCss}
+            setShowAddModel={setShowAddModel}
+            setAddType={setAddType}
+          />
+        )}
+      </Modal>
+
+      <h1>User Management</h1>
       <Row style={{ marginBottom: "24px" }}>
         <Col span="12">
           <Space direction="horizontal" size={"large"}>
@@ -112,44 +112,27 @@ const UserList = () => {
               className={userManagementCss.input}
               placeholder="Find By Name"
               suffix={
-                <img src="/user_management/search.svg" alt="SearchIcon" />
+                <SearchOutlined
+                  style={{ fontSize: "1.2vw", color: "#a9a9a9" }}
+                />
               }
             />
-
             <Select
               onChange={(e) => {
-                const delayDebounceFn = setTimeout(() => {
-                  setSearch(e.target.value);
-                }, 1000);
-                return () => clearTimeout(delayDebounceFn);
+                setOrgId(e);
               }}
-              className="custom-select"
-              options={[
-                {
-                  value: "Organization",
-                  label: "Organization",
-                },
-                {
-                  value: "Name/ID",
-                  label: "Name/ID",
-                },
-              ]}
-              style={{ width: "166px" }}
+              className={userManagementCss.inputSelectSearch}
+              options={organization}
               placeholder={
-                <Row>
-                  <Col span={4}>
-                    <img src="/user_management/filter.svg" alt="Filter" />
-                  </Col>
-                  <Col
-                    span={20}
-                    style={{ display: "flex", justifyContent: "center" }}
-                  >
-                    Filter{" "}
-                  </Col>
-                </Row>
+                <span style={{ fontSize: "1.2vw" }}>
+                  <FilterOutlined
+                    style={{ fontSize: "1.2vw", color: "#a9a9a9" }}
+                  />{" "}
+                  Filter
+                </span>
               }
               suffixIcon={
-                <img src="/user_management/drop-down.svg" alt="dropdown" />
+                <DownOutlined style={{ fontSize: "1.2vw", color: "#a9a9a9" }} />
               }
             />
           </Space>
@@ -157,27 +140,31 @@ const UserList = () => {
 
         <Col span="12" align={"right"}>
           <Space direction="horizontal" size={"large"}>
-            <button
+            <Button
               className={userManagementCss.button}
               onClick={() => {
-                setOrganizationModal(true);
+                setUpdateUserData({})
+                setAddType("organization");
+                setShowAddModel(true);
               }}
             >
-              <img
-                src="/user_management/plus.svg"
-                alt="plus"
-                style={{ marginRight: "10px" }}
-              />
-              Add Organization
-            </button>
-            <button className={userManagementCss.button}>
-              <img
-                src="/user_management/plus.svg"
-                alt="plus"
-                style={{ marginRight: "10px" }}
-              />
-              Add User
-            </button>
+              <span style={{ fontSize: "1.2vw" }}>
+                <PlusOutlined /> Add Organization
+              </span>
+            </Button>
+
+            <Button
+              className={userManagementCss.button}
+              onClick={() => {
+                setUpdateUserData({})
+                setAddType("user");
+                setShowAddModel(true);
+              }}
+            >
+              <span style={{ fontSize: "1.2vw" }}>
+                <PlusOutlined /> Add User
+              </span>
+            </Button>
           </Space>
         </Col>
       </Row>
@@ -185,139 +172,98 @@ const UserList = () => {
         <Row>
           <Col span={24}>
             <Table
-              dataSource={dataSource}
+              scroll={{
+                x: "100vw",
+              }}
+              rowKey={"userId"}
+              dataSource={userData?.sort((a, b) => b.userId - a.userId)}
               columns={[
                 {
                   title: "Name",
                   dataIndex: "name",
                   key: "name",
+                  render: (_, record) => (
+                    <span>{`${record.firstName} ${record.lastName}`}</span>
+                  ),
                 },
                 {
                   title: "Email",
                   dataIndex: "email",
                   key: "email",
                 },
+
                 {
-                  title: "User type",
-                  dataIndex: "user_type",
-                  key: "userType",
+                  title: "Mobile No.",
+                  dataIndex: "mobileNo",
+                  key: "mobileNo",
                 },
                 {
-                  title: "Status",
-                  dataIndex: "address",
-                  key: "address",
-                },
-                {
-                  title: "Added Date",
-                  dataIndex: "addedDate",
-                  key: "addedDate",
+                  title: "Job Title",
+                  dataIndex: "jobTitle",
+                  key: "jobTitle",
                 },
                 {
                   title: "Organization",
-                  dataIndex: "organization",
-                  key: "organization",
+                  dataIndex: "orgName",
+                  key: "orgName",
+                },
+                {
+                  title: "Role",
+                  dataIndex: "roleName",
+                  key: "roleName",
+                },
+                {
+                  title: "User Type",
+                  dataIndex: "userType",
+                  key: "userType",
+                },
+                {
+                  title: "Modules",
+                  dataIndex: "modules",
+                  key: "modules",
+                  render: (_, record) =>
+                  record?.modules?.length ?  record?.modules.map((e) => {
+                      return (
+                        <Tag color="blue" key={e}>
+                          {e}
+                        </Tag>
+                      );
+                    }) : "NA",
+                },
+                {
+                  title: "Status",
+                  dataIndex: "status",
+                  key: "status",
+                  render: (_, record) =>
+                    record.status === "active" ? (
+                      <Badge count={"Active"} color="green" />
+                    ) : (
+                      <Badge count={"Inactive"} color="red" />
+                    ),
                 },
                 {
                   title: "Action",
-                  dataIndex: "action",
-                  key: "action",
+                  key: "operation",
+                  fixed: "right",
+                  width: 100,
+                  render: (_, record) => (
+                    <a
+                      onClick={() => {
+                        setUpdateUserData(record);
+                        setAddType("user");
+                        setShowAddModel(true);
+                      }}
+                      style={{ color: "#e74860" }}
+                    >
+                      Edit
+                    </a>
+                  ),
                 },
               ]}
             />
           </Col>
         </Row>
       </Card>
-      <CommonModal
-        title="Add Organization"
-        visible={organizationModal}
-        footer={null}
-        onCancel={() => {
-          setOrganizationModal(false);
-        }}
-        content={
-          <div>
-            <Form>
-              <Form.Item
-                name="organization"
-                rules={[
-                  { required: true, message: "Organization name is required" },
-                ]}
-              >
-                <Input
-                  style={{ width: "100%" }}
-                  placeholder="Organization Name"
-                />
-              </Form.Item>
-              <Form.Item
-                name="firstName"
-                rules={[{ required: true, message: "First name is required" }]}
-              >
-                <Input
-                  style={{ width: "100%" }}
-                  placeholder="Primary Contact First Name"
-                />
-              </Form.Item>
-              <Form.Item
-                name="lastName"
-                rules={[{ required: true, message: "Last name is required" }]}
-              >
-                <Input
-                  style={{ width: "100%" }}
-                  placeholder="Primary Contact Last Name"
-                />
-              </Form.Item>
-
-              <Form.Item
-                name="email"
-                rules={[{ required: true, message: "Email is required" }]}
-              >
-                <Input style={{ width: "100%" }} placeholder="Email Address" />
-              </Form.Item>
-              <Form.Item
-                name="role"
-                rules={[{ required: true }]}
-                style={{ display: "inline-block", width: "calc(50% - 12px)" }}
-              >
-                <Input placeholder="Role" />
-              </Form.Item>
-              <Form.Item
-                name="contact"
-                rules={[{ required: true }]}
-                style={{
-                  display: "inline-block",
-                  width: "50%",
-                  marginLeft: "12px",
-                }}
-              >
-                <Input placeholder="Contact Number" />
-              </Form.Item>
-              <Form.Item
-                name="domain"
-                rules={[
-                  { required: true, message: "Allowed domains is required" },
-                ]}
-              >
-                <Input
-                  style={{ width: "100%" }}
-                  placeholder="Allowed Domains"
-                />
-              </Form.Item>
-              <Form.Item label=" " colon={false}>
-                <Button
-                  className={userManagementCss.button}
-                  onClick={() => {
-                    setOrganizationModal(false);
-                  }}
-                  htmlType="submit"
-                  style={{ width: "100%" }}
-                >
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
-        }
-      />
     </div>
   );
 };

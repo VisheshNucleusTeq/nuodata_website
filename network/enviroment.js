@@ -59,7 +59,7 @@ const refreshToken = async () => {
     } else {
       localStorage.clear();
       message.error({
-        key: (Math.random() + 1).toString(36).substring(7),
+        key: "sessionExpired",
         content:
           "Your session has expired. Please login to pick up where you left off.",
         duration: 2,

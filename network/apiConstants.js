@@ -42,6 +42,11 @@ export const GETACCESSTOKEN = "token/v1/generateFromRefreshToken";
 export const ADDGITDATA = "gitupload/v1/config";
 export const UPDATEGITDATA = "gitupload/v1/config";
 export const GETGITDATA = "gitupload/v1/config/";
+export const ADDORGANIZATION = "core/v1/organization";
+export const GETROLES = "usermgmt/v1/admin/roles?userType=";
+export const GETORGANIZATION = "usermgmt/v1/admin/organizations";
+export const SIGNUP = "usermgmt/v1/signup";
+export const GETUSERLIST = "usermgmt/v1/admin/users/org/";
 
 
-
+// usermgmt/v1/admin/users/org/0/?search=

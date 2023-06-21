@@ -1,16 +1,35 @@
-.main h1{
-    color : #e74860;
-    font-size: 28px;
-    font-weight: bold;
+.main h1 {
+  color: #e74860;
+  font-size: 2vw;
+  font-weight: bold;
 }
 
-.main p{
-    font-size: 16px;
-    font-weight: bold;
+.input {
+  height: 2.5vw;
+  width: 20vw;
+  background: #ffffff;
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  resize: vertical !important;
 }
 
-.newProjectBtn {
-    height: 5vh !important;
-    margin: 0px 0px 2% 0px;
-    border-radius: 10px;
+.input input::placeholder {
+  font-size: 1.2vw;
+}
+
+.button {
+  height: 2.5vw;
+  background: #e74860;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 0vw 1vw 0vw 1vw;
+  cursor: pointer;
+  border: 1px solid #d6d6d6;
+}
+
+.button:hover {
+  background: #e74860;
+  color: #ffffff;
+  border: 1px solid #d6d6d6;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.5%), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
 }
