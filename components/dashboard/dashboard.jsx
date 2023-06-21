@@ -55,6 +55,7 @@ const DashboardView = () => {
       dispatch(loderShowHideAction(false));
       if (data.success) {
         setData(data.data);
+        console.log(data.data);
         return data;
       } else {
         setData([]);
@@ -79,6 +80,7 @@ const DashboardView = () => {
       dispatch(loderShowHideAction(false));
       if (projectData?.success) {
         setData(projectData.data);
+        console.log(projectData.data);
       } else {
         setData([]);
         search === "" ?? message.error([projectData?.error]);

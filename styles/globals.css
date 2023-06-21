@@ -427,3 +427,36 @@ html {
 .ant-spin-dot-item {
   background-color: #0c3246;
 }
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  background: #ffffff;
+  height: 46px;
+  padding: 8px 24px;
+}
+
+.custom-select .ant-select-selection-placeholder {
+  color: #000000;
+  vertical-align: middle !important;
+  font-size: 18px;
+}
+
+.CustomizedModal .ant-modal-header {
+  border-radius: 10px 10px 0px 0px;
+  border-bottom: 1px solid #d3d6e1;
+  padding: 24px;
+}
+.CustomizedModal .ant-modal-title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 100%;
+  color: #000000;
+}
+.CustomizedModal .ant-modal-content {
+  border-radius: 0.625rem;
+}
+.CustomizedModal .ant-modal-body {
+  /* width: 35.25rem; */
+}
