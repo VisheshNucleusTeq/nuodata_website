@@ -79,6 +79,7 @@ const UserList = ({ userManagementCss }) => {
           setAddType(null);
           setShowAddModel(false);
         }}
+        destroyOnClose={true}
       >
         {addType === "user" && (
           <AddUser
@@ -94,6 +95,7 @@ const UserList = ({ userManagementCss }) => {
             userManagementCss={userManagementCss}
             setShowAddModel={setShowAddModel}
             setAddType={setAddType}
+            getOrganization={getOrganization}
           />
         )}
       </Modal>

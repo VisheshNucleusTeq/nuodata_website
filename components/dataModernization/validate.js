@@ -509,7 +509,7 @@ export default function Validate({ dataModernizationCss }) {
                       )}
 
                       <br />
-                      <a style={{ cursor: "not-allowed" }}>
+                      <a href="https://accounts.cloud.databricks.com/login" target="_blank">
                         <DatabaseOutlined />
                         {" Launch Databricks"}
                       </a>

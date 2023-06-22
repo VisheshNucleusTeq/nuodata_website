@@ -10,6 +10,7 @@ const AddOrganization = ({
   userManagementCss,
   setShowAddModel,
   setAddType,
+  getOrganization
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const AddOrganization = ({
       setTimeout(() => {
         setAddType(null);
         setShowAddModel(false);
+        getOrganization()
       }, 1000);
     } else {
       message.error([data?.error]);

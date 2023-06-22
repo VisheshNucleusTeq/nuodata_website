@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Form, message, Row, Col, Select } from "antd";
 import { useDispatch } from "react-redux";
-import { GETROLES, GETORGANIZATION, SIGNUP } from "../../network/apiConstants";
+import {
+  GETROLES,
+  GETORGANIZATION,
+  SIGNUP,
+  UPDATEUSER,
+} from "../../network/apiConstants";
 import { loderShowHideAction } from "../../Redux/action";
-import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
+import {
+  fetch_retry_get,
+  fetch_retry_post,
+  fetch_retry_put,
+} from "../../network/api-manager";
 import country from "../helper/country";
 
 const AddUser = ({
@@ -34,7 +43,27 @@ const AddUser = ({
     dispatch(loderShowHideAction(false));
   };
 
-  const onFinish = async (payload) => {
+  const updateUserAction = async (payload) => {
+    dispatch(loderShowHideAction(true));
+    const data = await fetch_retry_put(
+      `${UPDATEUSER}${updateUserData?.userId}`,
+      {
+        ...payload,
+      }
+    );
+    if (data.success) {
+      getUserList();
+      message.success([data?.data?.message]);
+      form.resetFields();
+      setAddType(null);
+      setShowAddModel(false);
+    } else {
+      message.error([data?.error]);
+    }
+    dispatch(loderShowHideAction(false));
+  };
+
+  const addUserAction = async (payload) => {
     dispatch(loderShowHideAction(true));
     const data = await fetch_retry_post(SIGNUP, {
       ...payload,
@@ -52,9 +81,16 @@ const AddUser = ({
     dispatch(loderShowHideAction(false));
   };
 
+  const onFinish = async (payload) => {
+    if (updateUserData?.firstName) {
+      updateUserAction(payload);
+    } else {
+      addUserAction(payload);
+    }
+  };
+
   const getOrganization = async () => {
     const data = await fetch_retry_get(`${GETORGANIZATION}`);
-    console.log(data);
     setOrganization(
       data?.data?.map((e) => {
         return {
@@ -65,14 +101,13 @@ const AddUser = ({
     );
   };
 
-  useEffect(() => {
-    getOrganization();
+  const addUpdateData = async () => {
     if (updateUserData?.firstName) {
       let initialValues = {
         ...updateUserData,
         phone: updateUserData?.mobileNo,
       };
-      getRoles(
+      await getRoles(
         updateUserData?.userType == "Nuodata"
           ? "nuodata"
           : updateUserData?.userType == "Business"
@@ -81,6 +116,7 @@ const AddUser = ({
           ? "ind"
           : ""
       );
+
       let objRoleId = roles.find((o) => o.label === updateUserData?.roleName);
       if (objRoleId?.value) {
         initialValues = {
@@ -102,7 +138,21 @@ const AddUser = ({
     } else {
       form.resetFields();
     }
+  };
+
+  useEffect(() => {
+    getOrganization();
+    addUpdateData();
   }, [updateUserData, form]);
+
+  useEffect(() => {
+    if (roles.length && updateUserData?.userType) {
+      let objRoleId = roles.find((o) => o.label === updateUserData?.roleName);
+      form.setFieldsValue({
+        roleId: objRoleId?.value,
+      });
+    }
+  }, [roles]);
 
   return (
     <div>
@@ -150,10 +200,10 @@ const AddUser = ({
                     value: "biz",
                     label: "Company User",
                   },
-                  {
-                    value: "ind",
-                    label: "Individual User",
-                  },
+                  // {
+                  //   value: "ind",
+                  //   label: "Individual User",
+                  // },
                 ]}
                 onChange={(e) => {
                   getRoles(e);
@@ -181,218 +231,240 @@ const AddUser = ({
               />
             </Form.Item>
           </Col>
-          <Col span={12} align="left">
-            <Form.Item
-              label={"First Name"}
-              labelAlign={"left"}
-              name={"firstName"}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input first name.",
-                },
-              ]}
-            >
-              <Input
-                key={"input-first-name"}
-                className={"input"}
-                placeholder={"First Name"}
-                name={"firstName"}
-                type={"text"}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12} align="right">
-            <Form.Item
-              label={"Last Name"}
-              labelAlign={"left"}
-              name={"lastName"}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input last name.",
-                },
-              ]}
-            >
-              <Input
-                key={"input-last-name"}
-                className={"input"}
-                placeholder={"Last Name"}
-                name={"lastName"}
-                type={"text"}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              key={"input-email"}
-              label={"Email"}
-              labelAlign={"left"}
-              name={"email"}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input email.",
-                },
-                {
-                  type: "email",
-                  message: "Email is not valid.",
-                },
-              ]}
-            >
-              <Input
-                key={"input-email"}
-                className={"input"}
-                placeholder={"Email "}
-                name={"email"}
-                type={"text"}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              label={"Password"}
-              labelAlign={"left"}
-              name={"password"}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input password.",
-                },
-              ]}
-            >
-              <Input
-                key={"input-password"}
-                className={"input"}
-                placeholder={"Password"}
-                name={"password"}
-                type={"text"}
-              />
-            </Form.Item>
-          </Col>
+          {!updateUserData?.firstName && (
+            <>
+              <Col span={12} align="left">
+                <Form.Item
+                  label={"First Name"}
+                  labelAlign={"left"}
+                  name={"firstName"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input first name.",
+                    },
+                  ]}
+                >
+                  <Input
+                    key={"input-first-name"}
+                    className={"input"}
+                    placeholder={"First Name"}
+                    name={"firstName"}
+                    type={"text"}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12} align="right">
+                <Form.Item
+                  label={"Last Name"}
+                  labelAlign={"left"}
+                  name={"lastName"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input last name.",
+                    },
+                  ]}
+                >
+                  <Input
+                    key={"input-last-name"}
+                    className={"input"}
+                    placeholder={"Last Name"}
+                    name={"lastName"}
+                    type={"text"}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  key={"input-email"}
+                  label={"Email"}
+                  labelAlign={"left"}
+                  name={"email"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input email.",
+                    },
+                    {
+                      type: "email",
+                      message: "Email is not valid.",
+                    },
+                  ]}
+                >
+                  <Input
+                    key={"input-email"}
+                    className={"input"}
+                    placeholder={"Email "}
+                    name={"email"}
+                    type={"text"}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label={"Password"}
+                  labelAlign={"left"}
+                  name={"password"}
+                  rules={
+                    updateUserData?.firstName
+                      ? []
+                      : [
+                          {
+                            required: true,
+                            message: "Please input password.",
+                          },
+                        ]
+                  }
+                >
+                  <Input
+                    key={"input-password"}
+                    className={"input"}
+                    placeholder={"Password"}
+                    name={"password"}
+                    type={"text"}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12} align="left">
+                <Form.Item
+                  name={"orgId"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select organization",
+                    },
+                  ]}
+                  label={"Organization"}
+                  labelAlign={"left"}
+                >
+                  <Select
+                    name={"orgId"}
+                    className="inputSelect"
+                    placeholder="Select Organization"
+                    options={organization}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label={"Job Title"}
+                  labelAlign={"left"}
+                  name={"jobTitle"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input job Title",
+                    },
+                  ]}
+                >
+                  <Input
+                    key={"input-job-title"}
+                    className={"input"}
+                    placeholder={"CEO , Product Owner , Manager , Developer "}
+                    name={"jobTitle"}
+                    type={"text"}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={24}>
+                <Form.Item
+                  style={{
+                    height: "2.8vw",
+                    marginBottom: "4vw",
+                  }}
+                  label={"Contact Number"}
+                  labelAlign={"left"}
+                  name={"phone"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "",
+                    },
+                  ]}
+                >
+                  <Input.Group>
+                    <Row>
+                      <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item
+                          name={"ctryCode"}
+                          rules={
+                            updateUserData?.firstName
+                              ? []
+                              : [
+                                  {
+                                    required: true,
+                                    message: "Please select country",
+                                  },
+                                ]
+                          }
+                        >
+                          <Select
+                            name={"ctryCode"}
+                            className="inputSelectGroup"
+                            placeholder="Country Code"
+                            optionFilterProp="children"
+                            initialvalues={""}
+                            options={country}
+                            showSearch
+                            filterOption={(input, option) =>
+                              (option?.label ?? "")
+                                .toLowerCase()
+                                .includes(input.toLowerCase())
+                            }
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                        <Form.Item
+                          name={"phone"}
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please input phone number",
+                            },
+                          ]}
+                        >
+                          <Input
+                            key={"input-phone-number"}
+                            className={"inputGroup inputGroupNumber"}
+                            placeholder={"Phone Number"}
+                            name={"phone"}
+                            type={"number"}
+                            onKeyDown={(e) => {
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
+                            }}
+                            onKeyUp={(e) => {
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
+                            }}
+                            onChange={(e) => {
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
+                            }}
+                            onBlur={(e) => {
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
+                            }}
+                          />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </Input.Group>
+                </Form.Item>
+              </Col>
+            </>
+          )}
 
-          <Col span={12} align="left">
-            <Form.Item
-              name={"orgId"}
-              rules={[
-                {
-                  required: true,
-                  message: "Please select organization",
-                },
-              ]}
-              label={"Organization"}
-              labelAlign={"left"}
-            >
-              <Select
-                name={"orgId"}
-                className="inputSelect"
-                placeholder="Select Organization"
-                options={organization}
-              />
-            </Form.Item>
-          </Col>
-
-          <Col span={12}>
-            <Form.Item
-              label={"Job Title"}
-              labelAlign={"left"}
-              name={"jobTitle"}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input job Title",
-                },
-              ]}
-            >
-              <Input
-                key={"input-job-title"}
-                className={"input"}
-                placeholder={"CEO , Product Owner , Manager , Developer "}
-                name={"jobTitle"}
-                type={"text"}
-              />
-            </Form.Item>
-          </Col>
-
-          <Col span={24}>
-            <Form.Item
-              style={{
-                height: "2.8vw",
-                marginBottom: "4vw",
-              }}
-              label={"Contact Number"}
-              labelAlign={"left"}
-              name={"phone"}
-              rules={[
-                {
-                  required: true,
-                  message: "",
-                },
-              ]}
-            >
-              <Input.Group>
-                <Row>
-                  <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item
-                      name={"ctryCode"}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please select country",
-                        },
-                      ]}
-                    >
-                      <Select
-                        name={"ctryCode"}
-                        className="inputSelectGroup"
-                        placeholder="Country Code"
-                        optionFilterProp="children"
-                        initialvalues={""}
-                        options={country}
-                        showSearch
-                        filterOption={(input, option) =>
-                          (option?.label ?? "")
-                            .toLowerCase()
-                            .includes(input.toLowerCase())
-                        }
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                    <Form.Item
-                      name={"phone"}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input phone number",
-                        },
-                      ]}
-                    >
-                      <Input
-                        key={"input-phone-number"}
-                        className={"inputGroup inputGroupNumber"}
-                        placeholder={"Phone Number"}
-                        name={"phone"}
-                        type={"number"}
-                        onKeyDown={(e) => {
-                          e.target.value = e.target.value.replace(/\D/g, "");
-                        }}
-                        onKeyUp={(e) => {
-                          e.target.value = e.target.value.replace(/\D/g, "");
-                        }}
-                        onChange={(e) => {
-                          e.target.value = e.target.value.replace(/\D/g, "");
-                        }}
-                        onBlur={(e) => {
-                          e.target.value = e.target.value.replace(/\D/g, "");
-                        }}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Input.Group>
-            </Form.Item>
-          </Col>
           <Col span={24} align="left">
             <Form.Item
               name={"modules"}

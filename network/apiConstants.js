@@ -47,6 +47,6 @@ export const GETROLES = "usermgmt/v1/admin/roles?userType=";
 export const GETORGANIZATION = "usermgmt/v1/admin/organizations";
 export const SIGNUP = "usermgmt/v1/signup";
 export const GETUSERLIST = "usermgmt/v1/admin/users/org/";
+export const UPDATEUSER = "usermgmt/v1/update/user/";
 
 
-// usermgmt/v1/admin/users/org/0/?search=
