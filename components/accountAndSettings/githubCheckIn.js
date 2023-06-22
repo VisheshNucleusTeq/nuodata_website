@@ -120,7 +120,7 @@ const GithubCheckIn = () => {
               </Form.Item>
 
               <Form.Item
-                label={"Personal Access Tokan"}
+                label={"Personal Access Token"}
                 labelAlign={"left"}
                 name={"github_personal_access_token"}
                 rules={
@@ -136,11 +136,11 @@ const GithubCheckIn = () => {
                 }
               >
                 <Input
-                  key={"input-access-tokan"}
+                  key={"input-access-token"}
                   className={"input"}
                   name={"github_personal_access_token"}
                   type={"text"}
-                  placeholder={"Access Tokan"}
+                  placeholder={"Access Token"}
                 />
               </Form.Item>
 

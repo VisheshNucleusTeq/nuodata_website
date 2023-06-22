@@ -75,7 +75,7 @@ const UserList = ({ userManagementCss }) => {
         cancelButtonProps={{ style: { display: "none" } }}
         closeIcon={<CloseCircleOutlined />}
         onCancel={() => {
-          setUpdateUserData({})
+          setUpdateUserData({});
           setAddType(null);
           setShowAddModel(false);
         }}
@@ -145,7 +145,7 @@ const UserList = ({ userManagementCss }) => {
             <Button
               className={userManagementCss.button}
               onClick={() => {
-                setUpdateUserData({})
+                setUpdateUserData({});
                 setAddType("organization");
                 setShowAddModel(true);
               }}
@@ -158,7 +158,7 @@ const UserList = ({ userManagementCss }) => {
             <Button
               className={userManagementCss.button}
               onClick={() => {
-                setUpdateUserData({})
+                setUpdateUserData({});
                 setAddType("user");
                 setShowAddModel(true);
               }}
@@ -224,13 +224,15 @@ const UserList = ({ userManagementCss }) => {
                   dataIndex: "modules",
                   key: "modules",
                   render: (_, record) =>
-                  record?.modules?.length ?  record?.modules.map((e) => {
-                      return (
-                        <Tag color="blue" key={e}>
-                          {e}
-                        </Tag>
-                      );
-                    }) : "NA",
+                    record?.modules?.length
+                      ? record?.modules.map((e) => {
+                          return (
+                            <Tag color="blue" key={e}>
+                              {e}
+                            </Tag>
+                          );
+                        })
+                      : "NA",
                 },
                 {
                   title: "Status",

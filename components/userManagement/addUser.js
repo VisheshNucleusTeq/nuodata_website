@@ -465,6 +465,38 @@ const AddUser = ({
             </>
           )}
 
+          {updateUserData?.firstName && (
+            <Col span={24}>
+              <Form.Item
+                name={"status"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select status",
+                  },
+                ]}
+                label={"User Status"}
+                labelAlign={"left"}
+              >
+                <Select
+                  name={"status"}
+                  className="inputSelect"
+                  placeholder="Select status"
+                  options={[
+                    {
+                      value: "active",
+                      label: "Active",
+                    },
+                    {
+                      value: "inactive",
+                      label: "Inactive",
+                    },
+                  ]}
+                />
+              </Form.Item>
+            </Col>
+          )}
+
           <Col span={24} align="left">
             <Form.Item
               name={"modules"}

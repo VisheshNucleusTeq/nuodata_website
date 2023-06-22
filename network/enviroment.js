@@ -1,6 +1,6 @@
 import axios from "axios";
 import { message } from "antd";
-import { GETACCESSTOKEN } from "./apiConstants";
+import { GETACCESSTOKEN, LOGIN } from "./apiConstants";
 let isRefreshing = true;
 
 export const BaseURL = axios.create({
@@ -10,6 +10,7 @@ export const BaseURL = axios.create({
 
 BaseURL.interceptors.request.use(
   async (config) => {
+    if (LOGIN === config?.url) return config;
     const expiryTime = localStorage.getItem("expiryTime");
     if (expiryTime && expiryTime <= Date.now() && isRefreshing) {
       isRefreshing = false;
@@ -32,7 +33,11 @@ BaseURL.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      LOGIN != originalRequest?.url
+    ) {
       originalRequest._retry = true;
       await refreshToken();
       const token = localStorage.getItem("authToken");
@@ -69,6 +74,7 @@ const refreshToken = async () => {
       });
     }
   } catch (e) {
+    console.log(e);
     localStorage.clear();
     message.error({
       key: (Math.random() + 1).toString(36).substring(7),
