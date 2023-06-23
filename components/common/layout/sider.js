@@ -152,7 +152,6 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             onClick={() => {
               setAccountAndSettings(!accountAndSettings);
               // setShowDataModernization(false)
-              
             }}
           >
             Account & Settings &nbsp;{" "}
@@ -165,7 +164,11 @@ const SiderView = ({ layoutCss, height, componentName }) => {
         </Col>
 
         {[
-          { title: "GitHub", link: "/account-and-settings/github-check-in" },
+          { title: "Roles & permission", link: "/user-management" },
+          {
+            title: "Repo settings",
+            link: "/account-and-settings/repo-settings",
+          },
         ].map((data, i) => {
           return (
             accountAndSettings && (
@@ -187,7 +190,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
                     style={{ height: height / 2 + "px" }}
                     className={layoutCss.subMainMenu}
                   >
-                    {data?.title} 
+                    {data?.title}
                   </Col>
                 </a>
               </Col>

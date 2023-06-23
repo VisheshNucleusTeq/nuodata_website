@@ -1,0 +1,32 @@
+.main h1 {
+  color: #e74860;
+  font-size: 2vw;
+  font-weight: bold;
+}
+
+.notClickDiv,
+.clickDiv {
+  padding: 1.5vw;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.clickDiv div{
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.clickDiv img {
+  border-radius: 10px;
+  cursor: pointer;
+  
+}
+
+.notClickDiv img {
+  border-radius: 10px;
+  /* opacity: 0.8; */
+  cursor: not-allowed;
+}
