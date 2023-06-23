@@ -10,7 +10,7 @@ import {
   Col,
   Input,
 } from "antd";
-import { EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeOutlined, SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { useQuery } from "react-query";
@@ -55,6 +55,7 @@ const DashboardView = () => {
       dispatch(loderShowHideAction(false));
       if (data.success) {
         setData(data.data);
+        console.log(data.data);
         return data;
       } else {
         setData([]);
@@ -79,6 +80,7 @@ const DashboardView = () => {
       dispatch(loderShowHideAction(false));
       if (projectData?.success) {
         setData(projectData.data);
+        console.log(projectData.data);
       } else {
         setData([]);
         search === "" ?? message.error([projectData?.error]);
@@ -88,22 +90,10 @@ const DashboardView = () => {
 
   return (
     <div className={dashboardCss.main}>
-      <Button
-        type="primary"
-        onClick={() => {
-          dispatch(SetTabTypeAction("Define"));
-          router.push(`/data-modernization`);
-        }}
-        danger
-        className={dashboardCss.newProjectBtn}
-      >
-        New Project +
-      </Button>
       <h1>Data Modernization</h1>
-      <Card className="demoCard">
-        <Row style={{ marginBottom: "2%" }}>
-          <Col span={16}></Col>
-          <Col span={8}>
+      <Row style={{ marginBottom: "24px" }}>
+        <Col span="12">
+          <Space direction="horizontal" size={"large"}>
             <Input
               onChange={(e) => {
                 const delayDebounceFn = setTimeout(() => {
@@ -111,11 +101,33 @@ const DashboardView = () => {
                 }, 1000);
                 return () => clearTimeout(delayDebounceFn);
               }}
-              className="input search"
-              placeholder="Search..."
-              style={{ border: "1px solid #0c3246 !important" }}
+              className={dashboardCss.input}
+              placeholder="Search"
+              suffix={
+                <SearchOutlined
+                  style={{ fontSize: "1.2vw", color: "#a9a9a9" }}
+                />
+              }
             />
-          </Col>
+          </Space>
+        </Col>
+        <Col span="12" align={"right"}>
+          <Space direction="horizontal" size={"large"}>
+            <Button className={dashboardCss.button}>
+              <span style={{ fontSize: "1.2vw" }}
+              onClick={() => {
+                dispatch(SetTabTypeAction("Define"));
+                router.push(`/data-modernization`);
+              }}
+              >
+                <PlusOutlined /> New Project
+              </span>
+            </Button>
+          </Space>
+        </Col>
+      </Row>
+      <Card className="demoCard">
+        <Row style={{ marginBottom: "2%" }}>
           <Col span={24}>
             <Table
               rowKey="projectId"

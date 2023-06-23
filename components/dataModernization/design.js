@@ -10,8 +10,9 @@ import {
   Col,
   Select,
   Divider,
-  Modal,
   Tooltip,
+  Modal,
+  Radio,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -28,6 +29,7 @@ import {
   CHANGELOGS,
   GETANALYZEDATA,
   UPDATEDESIGN,
+  DISCARD,
 } from "../../network/apiConstants";
 import {
   fetch_retry_post,
@@ -41,7 +43,12 @@ import {
   setOpenDetails,
 } from "../../Redux/action";
 
-import { DownOutlined, UpOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  UpOutlined,
+  EyeOutlined,
+  UndoOutlined,
+} from "@ant-design/icons";
 
 import DrawerView from "./drawerView";
 import DesignPanel from "./designPanel";
@@ -72,6 +79,10 @@ export default function Design({ dataModernizationCss }) {
   const [finalDataForUpdate, setFinalDataForUpdate] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [tableType, setTableType] = useState("source");
+  const [bothTableShow, setBothTableShow] = useState(false);
+  const [sourceTargetData, setSourceTargetData] = useState([]);
+  const [isRelease, setIsRelease] = useState(false);
+  const [githubStatus, setGithubStatus] = useState(false);
 
   const dispatch = useDispatch();
   const projectDetails = useSelector(
@@ -169,7 +180,6 @@ export default function Design({ dataModernizationCss }) {
       const selectedFile = data?.data?.fileDetails.find(
         (e) => e.fileId == openDetails?.detailId
       );
-      console.log({ selectedFile, openDetails });
       if (openDetails?.detailId) {
         getFileData(selectedFile?.fileId);
         setFileName(selectedFile?.fileName);
@@ -187,6 +197,10 @@ export default function Design({ dataModernizationCss }) {
   }, []);
 
   const getFileData = async (fileId) => {
+    setUpdatedTableDetails([]);
+    setUpdatedColumnDetails([]);
+    setSourceTargetData([]);
+
     myRef?.current?.scrollIntoView({ behavior: "smooth" });
     setFileId(fileId);
 
@@ -233,6 +247,7 @@ export default function Design({ dataModernizationCss }) {
           _temp.push({
             tableId: e?.tableDetails?.tableId,
             tableName: e?.tableDetails?.tableName,
+            type: e?.tableDetails?.tableType,
             columns: [
               {
                 columnId: e.columnId,
@@ -258,6 +273,19 @@ export default function Design({ dataModernizationCss }) {
   };
 
   const updateFileRecord = async (release = false) => {
+    const sourceTargetDataArr = finalDataForUpdate.filter(
+      (e) => e.type === "source_and_target"
+    );
+    if (sourceTargetDataArr.length > 0) {
+      setIsRelease(release);
+      setSourceTargetData(sourceTargetDataArr);
+      setBothTableShow(true);
+    } else {
+      updateFileRecordAction(release);
+    }
+  };
+
+  const updateFileRecordAction = async (release = false) => {
     dispatch(loderShowHideAction(true));
 
     const authData = JSON.parse(localStorage.getItem("authData"));
@@ -288,6 +316,13 @@ export default function Design({ dataModernizationCss }) {
     dispatch(loderShowHideAction(false));
   };
 
+  const updatefinalData = (type, tableId) => {
+    const _temp = JSON.parse(JSON.stringify(finalDataForUpdate));
+    const index = _temp.findIndex((e) => e.tableId == tableId);
+    _temp[index].type = type;
+    setFinalDataForUpdate(_temp);
+  };
+
   const changeVersion = async (version) => {
     const tableData = await fetch_retry_get(
       `${TABLE}${fileId}?version=${version}`
@@ -305,6 +340,7 @@ export default function Design({ dataModernizationCss }) {
       _temp.push({
         tableId: data.tableId,
         tableName: data.newName,
+        type: data.tableType,
         columns: [],
       });
     } else {
@@ -395,6 +431,13 @@ export default function Design({ dataModernizationCss }) {
     );
   };
 
+  const discardAllChanges = async (fileId, tableId = 0) => {
+    dispatch(loderShowHideAction(true));
+    await fetch_retry_post(`${DISCARD}${fileId}?tableId=${tableId}`);
+    await getFileData(fileId);
+    dispatch(loderShowHideAction(false));
+  };
+
   return (
     <>
       <Modal
@@ -416,6 +459,52 @@ export default function Design({ dataModernizationCss }) {
               );
             })}
         </ul>
+      </Modal>
+      <Modal
+        title={<h4 style={{ color: "#052b3b" }}>{errorDetails.fileName}</h4>}
+        centered
+        open={bothTableShow}
+        onOk={() => {
+          updateFileRecordAction(isRelease);
+          setBothTableShow(false);
+        }}
+        okText={"confirm"}
+        onCancel={() => setBothTableShow(false)}
+        cancelButtonProps={{ style: { display: "none" } }}
+        width={"60%"}
+      >
+        <Table
+          rowKey="tableName"
+          pagination={false}
+          dataSource={sourceTargetData}
+          columns={[
+            {
+              title: "Table Name",
+              dataIndex: "tableName",
+              key: "tableName",
+            },
+            {
+              title: "Update at",
+              dataIndex: "updateAt",
+              key: "updateAt",
+              render: (_, record) => {
+                return (
+                  <Radio.Group
+                    name="radiogroup"
+                    defaultValue={"source_and_target"}
+                    onChange={(e) => {
+                      updatefinalData(e.target.value, record.tableId);
+                    }}
+                  >
+                    <Radio value={"source_and_target"}>Source & Target</Radio>
+                    <Radio value={"source"}>Source</Radio>
+                    <Radio value={"target"}>Target</Radio>
+                  </Radio.Group>
+                );
+              },
+            },
+          ]}
+        />
       </Modal>
       <div className={dataModernizationCss.designMain}>
         <Table
@@ -474,18 +563,50 @@ export default function Design({ dataModernizationCss }) {
                   default:
                     switch (record.isUserAction) {
                       case true:
-                        return (
-                          <Space size="middle">
-                            <a
-                              onClick={() => {
-                                getFileData(record.fileId);
-                                setFileName(record.fileName);
-                              }}
-                            >
-                              <EyeOutlined /> View
-                            </a>
-                          </Space>
-                        );
+                        switch (record.githubStatus) {
+                          case "uploaded":
+                            return (
+                              <Tooltip
+                                placement="topLeft"
+                                title={"This file alredy checked-in"}
+                              >
+                                <Space
+                                  size="middle"
+                                  // style={{
+                                  //   cursor: "not-allowed",
+                                  // }}
+                                >
+                                  <a
+                                    // style={{
+                                    //   color: "#adadad",
+                                    //   cursor: "not-allowed",
+                                    // }}
+                                    onClick={() => {
+                                      getFileData(record.fileId);
+                                      setFileName(record.fileName);
+                                      setGithubStatus(record.githubStatus);
+                                    }}
+                                  >
+                                    <EyeOutlined /> View
+                                  </a>
+                                </Space>
+                              </Tooltip>
+                            );
+                          default:
+                            return (
+                              <Space size="middle">
+                                <a
+                                  onClick={() => {
+                                    getFileData(record.fileId);
+                                    setFileName(record.fileName);
+                                    setGithubStatus(record.githubStatus);
+                                  }}
+                                >
+                                  <EyeOutlined /> View
+                                </a>
+                              </Space>
+                            );
+                        }
                       default:
                         return (
                           <Tooltip
@@ -574,40 +695,6 @@ export default function Design({ dataModernizationCss }) {
               {isVisible ? <UpOutlined /> : <DownOutlined />}
             </div>
             <Row className={dataModernizationCss.detailsTitle}>
-              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                <Row align="middle" className={dataModernizationCss.designTabs}>
-                  {[
-                    { title: "Source Tables", value: "source" },
-                    { title: "Target Tables", value: "target" },
-                    {
-                      title: "Common Source and Target Tables",
-                      value: "source_and_target",
-                    },
-                  ].map((data, i) => {
-                    return (
-                      <Col
-                        key={(Math.random() + 1).toString(36).substring(7)}
-                        span={8}
-                        onClick={() => {
-                          setTableType(data?.value);
-                          // setUpdatedTableDetails([]);
-                          // setUpdatedColumnDetails([]);
-                        }}
-                      >
-                        <div
-                          className={`${dataModernizationCss.designTabsStep} ${
-                            tableType === data?.value
-                              ? dataModernizationCss.designTabsStepSelected
-                              : null
-                          } `}
-                        >
-                          {data?.title}
-                        </div>
-                      </Col>
-                    );
-                  })}
-                </Row>
-              </Col>
               <Col xs={24} sm={24} md={24} lg={18} xl={18} xxl={18}>
                 <h3>
                   {fileName}
@@ -628,7 +715,37 @@ export default function Design({ dataModernizationCss }) {
                   </span>
                 </h3>
               </Col>
-              <Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={1}
+                xl={1}
+                xxl={1}
+                style={{
+                  justifyContent: "center",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {isDraftState && (
+                  <Tooltip placement="top" title={"Discard All Changes"}>
+                    <Button
+                      style={{ backgroundColor: "#0c3246" }}
+                      shape="circle"
+                      icon={
+                        <UndoOutlined
+                          style={{ fontSize: "large", color: "#FFF" }}
+                        />
+                      }
+                      onClick={() => {
+                        discardAllChanges(fileId);
+                      }}
+                    />
+                  </Tooltip>
+                )}
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={5} xl={5} xxl={5}>
                 <Select
                   className="inputDesignSelect"
                   showSearch
@@ -648,6 +765,39 @@ export default function Design({ dataModernizationCss }) {
                   options={versionListArr}
                 />
               </Col>
+
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Row align="middle" className={dataModernizationCss.designTabs}>
+                  {[
+                    { title: "Source Tables", value: "source" },
+                    { title: "Target Tables", value: "target" },
+                    {
+                      title: "Common Source and Target Tables",
+                      value: "source_and_target",
+                    },
+                  ].map((data, i) => {
+                    return (
+                      <Col
+                        key={(Math.random() + 1).toString(36).substring(7)}
+                        span={8}
+                        onClick={() => {
+                          setTableType(data?.value);
+                        }}
+                      >
+                        <div
+                          className={`${dataModernizationCss.designTabsStep} ${
+                            tableType === data?.value
+                              ? dataModernizationCss.designTabsStepSelected
+                              : null
+                          } `}
+                        >
+                          {data?.title}
+                        </div>
+                      </Col>
+                    );
+                  })}
+                </Row>
+              </Col>
             </Row>
             <Divider />
             <Collapse
@@ -663,15 +813,51 @@ export default function Design({ dataModernizationCss }) {
                 .map((e, i) => {
                   return (
                     <Panel
-                      header={`${e.tableName} (${e.baseTableName})`}
+                      header={`${e.tableName} (${
+                        e?.baseTableName ? e.baseTableName : "Not Available"
+                      })`}
                       key={i + "panel"}
                       forceRender={true}
                       style={{
-                        display:
-                          e.tableType === tableType 
-                            ? ""
-                            : "none",
+                        display: e.tableType === tableType ? "" : "none",
                       }}
+                      extra={
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <p>
+                            <b>
+                              Database:{" "}
+                              <span style={{ color: "#e74860" }}>
+                                {e.dbType}{" "}
+                              </span>
+                            </b>
+                            {isDraftState && (
+                              <span>
+                                <Tooltip
+                                  placement="top"
+                                  title={"Discard Changes"}
+                                >
+                                  <Button
+                                    style={{ backgroundColor: "#0c3246" }}
+                                    size="small"
+                                    shape="circle"
+                                    icon={
+                                      <UndoOutlined
+                                        style={{
+                                          fontSize: "small",
+                                          color: "#FFF",
+                                        }}
+                                      />
+                                    }
+                                    onClick={() => {
+                                      discardAllChanges(fileId, e.tableId);
+                                    }}
+                                  />
+                                </Tooltip>
+                              </span>
+                            )}
+                          </p>
+                        </div>
+                      }
                     >
                       <DesignPanel
                         dataModernizationCss={dataModernizationCss}
@@ -689,10 +875,9 @@ export default function Design({ dataModernizationCss }) {
                 })}
             </Collapse>
 
-            {!childData?.filter(
-              (e) =>
-                e.tableType === tableType 
-            ).length && <center>No Record Available</center>}
+            {!childData?.filter((e) => e.tableType === tableType).length && (
+              <center>No Record Available</center>
+            )}
           </Card>
         )}
       </div>
@@ -702,20 +887,6 @@ export default function Design({ dataModernizationCss }) {
         className={dataModernizationCss.nextExitBtn}
         ref={refBtn}
       >
-        {/* <Button
-          type="primary"
-          style={{ marginRight: "1rem", color: "#fff" }}
-          danger
-          className={dataModernizationCss.exitBtn}
-          htmlType="submit"
-          onClick={() => {
-            updateFileRecord();
-          }}
-          disabled={loading || versionListArr.length != version}
-        >
-          Save
-        </Button> */}
-
         <Button
           style={{ marginRight: "1rem" }}
           type="primary"
@@ -724,7 +895,11 @@ export default function Design({ dataModernizationCss }) {
           onClick={() => {
             updateFileRecord();
           }}
-          disabled={loading || versionListArr.length != version}
+          disabled={
+            loading ||
+            versionListArr.length != version ||
+            githubStatus === "uploaded"
+          }
         >
           Save
         </Button>
@@ -736,10 +911,15 @@ export default function Design({ dataModernizationCss }) {
           onClick={() => {
             updateFileRecord(true);
           }}
-          disabled={loading || versionListArr.length != version}
+          disabled={
+            loading ||
+            versionListArr.length != version ||
+            githubStatus === "uploaded"
+          }
         >
           Transform File
         </Button>
+
         <Button
           type="primary"
           danger

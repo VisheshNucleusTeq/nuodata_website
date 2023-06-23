@@ -1,26 +1,26 @@
-import {  Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import "chart.js/auto";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+// import {
+//   Chart as ChartJS,
+//   CategoryScale,
+//   LinearScale,
+//   BarElement,
+//   Title,
+//   Tooltip,
+//   Legend,
+// } from "chart.js";
 import { useState } from "react";
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   BarElement,
+//   Title,
+//   Tooltip,
+//   Legend
+// );
 
 const BarChart = ({ labels, data }) => {
-  const [pieChart, setPieChart] = useState({
+  const [pieChart] = useState({
     labels: labels,
     datasets: [
       {
@@ -44,7 +44,6 @@ const BarChart = ({ labels, data }) => {
       },
     ],
   });
-  
 
   return (
     <Bar

@@ -74,3 +74,15 @@
     margin-left: 0%;
   }
 }
+
+.nameIcon {
+  margin-right: 0.5em;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 5vh;
+  width: 5vh;
+  background: #fc7d0d;
+  border-radius: 50%;
+  color: #fff;
+}

@@ -28,6 +28,27 @@ const SqlView = ({
   const [parentArr, setParentArr] = useState([]);
   const [modalData, setModalData] = useState({});
 
+  const downloadFile = async (url) => {
+    const response = await fetch_retry_get(url, { responseType: "blob" });
+    const fileNameData = response?.headers["content-disposition"];
+    const filename = fileNameData
+      .split(";")
+      .find((n) => n.includes("fileName=") || n.includes("filename="))
+      .replace('fileName="', "")
+      .replace("filename=", "")
+      .replace('"', "")
+      .trim();
+
+    const href = URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = href;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(href);
+  };
+
   const addDownloadIcon = (treeDataObj) => {
     treeDataObj?.children.forEach((elementP, i) => {
       if (elementP?.children) {
@@ -43,11 +64,13 @@ const SqlView = ({
                 <span onClick={(e) => e.stopPropagation()}>
                   <Tooltip placement="right" title={"Download"}>
                     <a
-                      href={`${process.env.BASE_URL}${DOWNLOADZIP}${analyzeDetailsId}?type=workflow&workflowId=${
-                        (treeDataObj.children[i].children[j].key + "").split(
-                          "_"
-                        )[0]
-                      }`}
+                      onClick={()=>{
+                        downloadFile(`${process.env.BASE_URL}${DOWNLOADZIP}${analyzeDetailsId}?type=workflow&workflowId=${
+                          (treeDataObj.children[i].children[j].key + "").split(
+                            "_"
+                          )[0]
+                        }`)
+                      }}
                       className="downloadBtn"
                     >
                       <Space size="middle" style={{ cursor: "pointer" }} info>

@@ -15,6 +15,8 @@ const SiderView = ({ layoutCss, height, componentName }) => {
   const tabType = useSelector((state) => state.tabType.tabType);
 
   const [showDataModernization, setShowDataModernization] = useState(true);
+  const [showPlatform, setShowPlatform] = useState(false);
+  const [accountAndSettings, setAccountAndSettings] = useState(false);
 
   const changePage = async (page, tab) => {
     router.push(page);
@@ -50,6 +52,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             className={layoutCss.mainMenu}
             onClick={() => {
               setShowDataModernization(!showDataModernization);
+              // setAccountAndSettings(false)
             }}
           >
             Data Modernization &nbsp;{" "}
@@ -117,6 +120,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             )
           );
         })}
+
         <Col span={24} className={layoutCss.mainMenuCol}>
           <Col
             offset={2}
@@ -127,7 +131,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             Data Management
           </Col>
         </Col>
-        <Col span={24} className={layoutCss.mainMenuCol}>
+        {/* <Col span={24} className={layoutCss.mainMenuCol}>
           <Col
             offset={2}
             span={20}
@@ -136,7 +140,110 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           >
             Account & Settings
           </Col>
+        </Col> */}
+
+        {/* accountAndSettings, setAccountAndSettings */}
+        <Col span={24} className={layoutCss.mainMenuCol}>
+          <Col
+            offset={2}
+            span={20}
+            style={{ height: height / 1.5 + "px" }}
+            className={layoutCss.mainMenu}
+            onClick={() => {
+              setAccountAndSettings(!accountAndSettings);
+              // setShowDataModernization(false)
+            }}
+          >
+            Account & Settings &nbsp;{" "}
+            {accountAndSettings ? (
+              <CaretDownOutlined style={{ color: "#e74860" }} />
+            ) : (
+              <CaretLeftOutlined style={{ color: "#e74860" }} />
+            )}
+          </Col>
         </Col>
+
+        {[
+          { title: "Roles & permission", link: "/user-management" },
+          // {
+          //   title: "Repo settings",
+          //   link: "/account-and-settings/repo-settings",
+          // },
+        ].map((data, i) => {
+          return (
+            accountAndSettings && (
+              <Col
+                key={(Math.random() + 1).toString(36).substring(7)}
+                span={24}
+                className={`${layoutCss.mainMenuCol} ${
+                  router.pathname === data?.link ? layoutCss.activeMenu : null
+                }`}
+              >
+                <a
+                  onClick={() => {
+                    changePage(data?.link);
+                  }}
+                >
+                  <Col
+                    offset={4}
+                    span={20}
+                    style={{ height: height / 2 + "px" }}
+                    className={layoutCss.subMainMenu}
+                  >
+                    {data?.title}
+                  </Col>
+                </a>
+              </Col>
+            )
+          );
+        })}
+
+        {/* <Col span={24} className={layoutCss.mainMenuCol}>
+          <Col
+            offset={2}
+            span={20}
+            style={{ height: height / 1.5 + "px" }}
+            className={layoutCss.mainMenu}
+            onClick={() => {
+              setShowPlatform(!showPlatform);
+            }}
+          >
+            Select Platform &nbsp;{" "}
+            {showPlatform ? (
+              <CaretDownOutlined style={{ color: "#e74860" }} />
+            ) : (
+              <CaretLeftOutlined style={{ color: "#e74860" }} />
+            )}
+          </Col>
+        </Col>
+
+        {[
+          {
+            name: "DataHub",
+            link: "https://governance.dev.nuodata.io/",
+          },
+        ].map((data, i) => {
+          return (
+            showPlatform && (
+              <Col
+                key={(Math.random() + 1).toString(36).substring(7)}
+                span={24}
+                className={`${layoutCss.mainMenuCol}`}
+              >
+                <a onClick={() => window.open(data?.link, "_blank")}>
+                  <Col
+                    offset={2}
+                    span={20}
+                    style={{ height: height / 2 + "px" }}
+                    className={layoutCss.subMainMenuSelect}
+                  >
+                    {data?.name}
+                  </Col>
+                </a>
+              </Col>
+            )
+          );
+        })} */}
       </Row>
     </Sider>
   );

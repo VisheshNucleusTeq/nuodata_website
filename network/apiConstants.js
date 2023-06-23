@@ -31,8 +31,22 @@ export const DOWNLOADFILE = "core/v1/download/file/";
 export const DOWNLOADZIP = "core/v1/download/zip/file/";
 export const VALIDATEFILE = "process/v2/validate/file/";
 export const GITHUBCHECKIN = "gitupload/v1/checkin/file/";
-export const VALIDATEENTITYSUMMARY = "process/v2/validate/entity/summary/file/"
-export const VALIDATEFILEDETAILS = "process/v2/validate/file/"
-export const ADDATTACHMENT = "process/v2/validate/add/attachment"
-export const VIEWATTACHMENT = "process/v2/validate/view/attachment"
-export const DELETEATTACHMENT = "process/v2/validate/delete/attachment"
+export const VALIDATEENTITYSUMMARY = "process/v2/validate/entity/summary/file/";
+export const VALIDATEFILEDETAILS = "process/v2/validate/file/";
+export const ADDATTACHMENT = "process/v2/validate/add/attachment";
+export const VIEWATTACHMENT = "process/v2/validate/view/attachment";
+export const DELETEATTACHMENT = "process/v2/validate/delete/attachment";
+export const DISCARD = "process/v2/design/discard/changelog/file/";
+export const GETACCESSTOKEN = "token/v1/generateFromRefreshToken";
+
+export const ADDGITDATA = "gitupload/v1/config";
+export const UPDATEGITDATA = "gitupload/v1/config";
+export const GETGITDATA = "gitupload/v1/config/";
+export const ADDORGANIZATION = "core/v1/organization";
+export const GETROLES = "usermgmt/v1/admin/roles?userType=";
+export const GETORGANIZATION = "usermgmt/v1/admin/organizations";
+export const SIGNUP = "usermgmt/v1/signup";
+export const GETUSERLIST = "usermgmt/v1/admin/users/org/";
+export const UPDATEUSER = "usermgmt/v1/update/user/";
+
+

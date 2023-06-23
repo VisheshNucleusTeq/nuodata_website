@@ -27,6 +27,14 @@ function SignInRight({ loginCss }) {
     const data = await fetch_retry_post(LOGIN, payload);
     setLoading(false);
     if (data.success) {
+      const expiryTime =
+        Date.now() + data?.headers["x-auth-nuodata-expiry"] * 1000;
+      localStorage.setItem("authToken", data?.headers["x-auth-nuodata-code"]);
+      localStorage.setItem(
+        "refreshToken",
+        data?.headers["x-auth-nuodata-refresh-code"]
+      );
+      localStorage.setItem("expiryTime", expiryTime);
       localStorage.setItem("authData", JSON.stringify(data.data));
       dispatch(UserDetailsAction(true));
       router.push("dashboard");

@@ -17,7 +17,6 @@ import {
   EyeOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
-
 import {
   GETPROJECT,
   ANALYZESUMMARY,
@@ -45,6 +44,8 @@ const Analyze = ({ dataModernizationCss }) => {
 
   const [data, setData] = useState([]);
   const [analyzeDetails, setAnalyzeDetails] = useState();
+  const [analyzeDetailPageData, setAnalyzeDetailPageData] = useState();
+  
   const [complexityGraph, setComplexityGraph] = useState();
   const [analyze, setAnalyze] = useState(true);
   const [analyzeDetailsId, setAnalyzeDetailsId] = useState(0);
@@ -390,6 +391,7 @@ const Analyze = ({ dataModernizationCss }) => {
                                 onClick={() => {
                                   setIsUserAction(record?.isUserAction);
                                   setAnalyzeDetailsId(record.fileId);
+                                  setAnalyzeDetailPageData(record);
                                   setAnalyze(false);
                                 }}
                               >
@@ -404,6 +406,7 @@ const Analyze = ({ dataModernizationCss }) => {
                                 onClick={() => {
                                   setIsUserAction(record?.isUserAction);
                                   setAnalyzeDetailsId(record.fileId);
+                                  setAnalyzeDetailPageData(record);
                                   setAnalyze(false);
                                 }}
                               >
@@ -470,6 +473,7 @@ const Analyze = ({ dataModernizationCss }) => {
           showTop={true}
           showPopUp={false}
           isUserAction={isUserAction}
+          analyzeDetailPageData={analyzeDetailPageData}
         />
       )}
     </div>

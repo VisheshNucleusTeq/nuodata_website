@@ -5,6 +5,7 @@
 .mainLayoutSider {
   height: 100%;
   background-color: #0c3246;
+  overflow-y: scroll;
 }
 
 .logoImage {
@@ -47,6 +48,14 @@
   align-items: center;
   color: #fff;
   border-left: 1px solid #fff;
+  padding-left: 5%;
+}
+
+.subMainMenuSelect {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  /* border-left: 1px solid #fff; */
   padding-left: 5%;
 }
 

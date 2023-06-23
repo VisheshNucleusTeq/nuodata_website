@@ -11,7 +11,7 @@ import { UPLOADFILE, ANALYZE, TRANSFORM } from "../../network/apiConstants";
 import { SetTabTypeAction } from "../../Redux/action";
 
 const Connect = ({ dataModernizationCss }) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const { query } = useRouter();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -31,6 +31,9 @@ const Connect = ({ dataModernizationCss }) => {
     action: `${process.env.BASE_URL}${UPLOADFILE}/project/${
       query.id ? query.id : projectDetails.projectId
     }/user/${authData.userId}`,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
     async onChange(info, i) {
       setLoading(true);
       if (
@@ -51,7 +54,7 @@ const Connect = ({ dataModernizationCss }) => {
             });
           })
         );
-        queryClient.refetchQueries({ queryKey: ['PROJECT_DATA'] })
+        queryClient.refetchQueries({ queryKey: ["PROJECT_DATA"] });
         setLoading(false);
       }
     },

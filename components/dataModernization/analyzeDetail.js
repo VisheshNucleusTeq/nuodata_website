@@ -39,6 +39,7 @@ import {
 import GraphView from "./analyzeDetail/graphView";
 import AnalysisView from "./analyzeDetail/analysisView";
 import SqlView from "./analyzeDetail/sqlView";
+import axios from "axios";
 
 const AnalyzeDetail = ({
   getErrorDetails,
@@ -48,6 +49,7 @@ const AnalyzeDetail = ({
   showTop,
   showPopUp,
   isUserAction,
+  analyzeDetailPageData,
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -143,6 +145,27 @@ const AnalyzeDetail = ({
     return data;
   };
 
+  const downloadFile = async (url) => {
+    const response = await fetch_retry_get(url, { responseType: "blob" });
+    const fileNameData = response?.headers["content-disposition"];
+    const filename = fileNameData
+      .split(";")
+      .find((n) => n.includes("fileName=") || n.includes("filename="))
+      .replace('fileName="', "")
+      .replace("filename=", "")
+      .replace('"', "")
+      .trim();
+
+    const href = URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = href;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(href);
+  };
+
   return (
     <>
       <Modal
@@ -150,13 +173,7 @@ const AnalyzeDetail = ({
         centered
         open={open}
         onOk={() => {
-          const file_path = `${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`;
-          const a = document.createElement("A");
-          a.href = file_path;
-          a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
+          downloadFile(`${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`)
         }}
         onCancel={() => {
           setOpen(false);
@@ -180,13 +197,7 @@ const AnalyzeDetail = ({
         centered
         open={sqlOpen}
         onOk={() => {
-          const file_path = `${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`;
-          const a = document.createElement("A");
-          a.href = file_path;
-          a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
+          downloadFile(`${process.env.BASE_URL}${DOWNLOADFILE}${showDownload}`)
         }}
         onCancel={() => {
           setSqlOpen(false);
@@ -404,15 +415,16 @@ const AnalyzeDetail = ({
                     extra={
                       <div onClick={(e) => e.stopPropagation()}>
                         <Space size="middle" style={{ cursor: "pointer" }}>
-                          <a
-                            href={`${process.env.BASE_URL}${DOWNLOADZIP}${analyzeDetailsId}?type=pyspark&workflowId=0`}
+                          <span
+                            className={dataModernizationCss.downloadBtnSpace}
+                            onClick={() => {
+                              downloadFile(
+                                `${process.env.BASE_URL}${DOWNLOADZIP}${analyzeDetailsId}?type=pyspark&workflowId=0`
+                              );
+                            }}
                           >
-                            <span
-                              className={dataModernizationCss.downloadBtnSpace}
-                            >
-                              <DownloadOutlined /> Download
-                            </span>
-                          </a>
+                            <DownloadOutlined /> Download
+                          </span>
 
                           <span
                             className={dataModernizationCss.downloadBtnSpace}
@@ -458,18 +470,19 @@ const AnalyzeDetail = ({
                         extra={
                           !e.fileType.includes("_graph_src") ? (
                             <div onClick={(e) => e.stopPropagation()}>
-                              <a
-                                href={`${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`}
+                              <Space
+                                size="middle"
+                                className={
+                                  dataModernizationCss.downloadBtnSpace
+                                }
+                                onClick={() => {
+                                  downloadFile(
+                                    `${process.env.BASE_URL}${DOWNLOADFILE}${e.outputFileId}`
+                                  );
+                                }}
                               >
-                                <Space
-                                  size="middle"
-                                  className={
-                                    dataModernizationCss.downloadBtnSpace
-                                  }
-                                >
-                                  <DownloadOutlined /> Download
-                                </Space>
-                              </a>
+                                <DownloadOutlined /> Download
+                              </Space>
                             </div>
                           ) : (
                             <div onClick={(e) => e.stopPropagation()}>
@@ -530,25 +543,26 @@ const AnalyzeDetail = ({
       )}
       {!loading && showTop && (
         <div className={dataModernizationCss.nextExitBtn}>
-          {isUserAction && (
-            <Button
-              type="primary"
-              danger
-              className={dataModernizationCss.nextBtn}
-              htmlType="submit"
-              onClick={() => {
-                dispatch(
-                  setOpenDetails({
-                    detailId: analyzeDetailsId,
-                  })
-                );
-                dispatch(SetTabTypeAction("Design"));
-              }}
-              style={{ marginRight: "2%" }}
-            >
-              Design Workflow <ArrowRightOutlined />
-            </Button>
-          )}
+          {isUserAction &&
+            analyzeDetailPageData.githubStatus !== "uploaded" && (
+              <Button
+                type="primary"
+                danger
+                className={dataModernizationCss.nextBtn}
+                htmlType="submit"
+                onClick={() => {
+                  dispatch(
+                    setOpenDetails({
+                      detailId: analyzeDetailsId,
+                    })
+                  );
+                  dispatch(SetTabTypeAction("Design"));
+                }}
+                style={{ marginRight: "2%" }}
+              >
+                Design Workflow <ArrowRightOutlined />
+              </Button>
+            )}
 
           <Button
             type="primary"
