@@ -11,7 +11,7 @@ import ReactFlow, {
 } from "reactflow";
 import dagre from "dagre";
 import NormalNode from "../../NormalNode";
-import { RightOutlined,LeftOutlined, DownOutlined } from "@ant-design/icons";
+import { RightOutlined,LeftOutlined } from "@ant-design/icons";
 
 const nodeTypes = {
   normalNode: NormalNode,
