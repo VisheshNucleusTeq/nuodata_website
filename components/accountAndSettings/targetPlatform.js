@@ -14,7 +14,7 @@ const TargetPlatform = ({ RepoSettingsCss }) => {
     },
     {
       name: "Google Cloud Platform",
-      image: "/account_and_settings/Google-cloud.svg",
+      image: "/account_and_settings/google-cloud.svg",
       url: "#",
       isDisable: true,
     },
@@ -26,13 +26,13 @@ const TargetPlatform = ({ RepoSettingsCss }) => {
     },
     {
       name: "Azure",
-      image: "/account_and_settings/azure.svg",
+      image: "/account_and_settings/Azure.svg",
       url: "#",
       isDisable: true,
     },
     {
       name: "Snowflake",
-      image: "/account_and_settings/snowflake.svg",
+      image: "/account_and_settings/Snowflake.svg",
       url: "#",
       isDisable: true,
     },
@@ -62,7 +62,7 @@ const TargetPlatform = ({ RepoSettingsCss }) => {
                   <div>
                     <Tooltip title={e.name} color="#0c3246">
                       <Image
-                        alt="sdfsdf"
+                        alt={e.name}
                         onClick={() => {
                           !e.isDisable ? router.push(e.url) : null;
                         }}

@@ -44,7 +44,7 @@ const RepoSettings = ({ RepoSettingsCss }) => {
                   <div>
                   <Tooltip title={e.name} color="#0c3246">
                       <Image
-                        alt="sdfsdf"
+                        alt={e.name}
                         onClick={() => {
                           !e.isDisable ? router.push(e.url) : null;
                         }}
