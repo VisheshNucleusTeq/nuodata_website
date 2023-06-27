@@ -14,7 +14,7 @@ const TargetPlatform = ({ RepoSettingsCss }) => {
     },
     {
       name: "Google Cloud Platform",
-      image: "/account_and_settings/google-cloud.svg",
+      image: "/account_and_settings/googlecloud.svg",
       url: "#",
       isDisable: true,
     },
@@ -26,19 +26,19 @@ const TargetPlatform = ({ RepoSettingsCss }) => {
     },
     {
       name: "Azure",
-      image: "/account_and_settings/Azure.svg",
+      image: "/account_and_settings/azure.svg",
       url: "#",
       isDisable: true,
     },
     {
       name: "Snowflake",
-      image: "/account_and_settings/Snowflake.svg",
+      image: "/account_and_settings/snowflake.svg",
       url: "#",
       isDisable: true,
     },
     {
       name: "IBM Watsonx.data",
-      image: "/account_and_settings/IBM.svg",
+      image: "/account_and_settings/ibm.svg",
       url: "#",
       isDisable: true,
     },
