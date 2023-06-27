@@ -5,12 +5,13 @@ import { ADDORGANIZATION } from "../../network/apiConstants";
 import { loderShowHideAction } from "../../Redux/action";
 import { fetch_retry_post } from "../../network/api-manager";
 import country from "../helper/country";
+import { InfoCircleTwoTone } from "@ant-design/icons";
 
 const AddOrganization = ({
   userManagementCss,
   setShowAddModel,
   setAddType,
-  getOrganization
+  getOrganization,
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const AddOrganization = ({
       setTimeout(() => {
         setAddType(null);
         setShowAddModel(false);
-        getOrganization()
+        getOrganization();
       }, 1000);
     } else {
       message.error([data?.error]);
@@ -95,6 +96,10 @@ const AddOrganization = ({
           />
         </Form.Item>
         <Form.Item
+          tooltip={{
+            title: "icon msg",
+            icon: <InfoCircleTwoTone />
+          }}
           name="email"
           rules={[
             { required: true, message: "Email is required." },

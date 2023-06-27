@@ -130,7 +130,7 @@ const UserList = ({ userManagementCss }) => {
                   <FilterOutlined
                     style={{ fontSize: "1.2vw", color: "#a9a9a9" }}
                   />{" "}
-                  Filter
+                  Organization
                 </span>
               }
               suffixIcon={

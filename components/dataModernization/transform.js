@@ -63,6 +63,16 @@ const Transform = ({ dataModernizationCss }) => {
     }
   }, [openDetails?.detailId]);
 
+  const changeDateFormat = (date) => {
+    const dt = new Date(date);
+    const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
+    return `${padL(dt.getMonth() + 1)}/${padL(
+      dt.getDate()
+    )}/${dt.getFullYear()} ${padL(dt.getHours())}:${padL(
+      dt.getMinutes()
+    )}:${padL(dt.getSeconds())}`;
+  };
+
   return (
     <>
       {isDetails ? (
@@ -259,6 +269,13 @@ const Transform = ({ dataModernizationCss }) => {
                         record.fileStatus,
                         record?.isUserAction
                       );
+                    },
+                  },
+                  {
+                    title: "Created Date",
+                    key: "createDateTime",
+                    render: (_, record) => {
+                      return changeDateFormat(record.createDateTime)
                     },
                   },
                   {

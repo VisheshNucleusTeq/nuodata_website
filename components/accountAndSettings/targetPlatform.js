@@ -2,26 +2,44 @@ import { Card, Col, Row, Image, Tooltip } from "antd";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-const RepoSettings = ({ RepoSettingsCss }) => {
+const TargetPlatform = ({ RepoSettingsCss }) => {
   const router = useRouter();
 
   const [accountList, setAccountList] = useState([
     {
-      name: "Github",
-      image: "/account_and_settings/Github.svg",
-      url: "http://localhost:4000/account-and-settings/github-check-in/",
-      isDisable: false,
-    },
-    {
-      name: "GitLab",
-      image: "/account_and_settings/gitLab.svg",
-      url: "http://localhost:4000/account-and-settings/github-check-in/",
+      name: "Databricks-Lakehouse",
+      image: "/account_and_settings/databricks.png",
+      url: "#",
       isDisable: true,
     },
     {
-      name: "BitBucket",
-      image: "/account_and_settings/BitBucket.svg",
-      url: "http://localhost:4000/account-and-settings/github-check-in/",
+      name: "Google Cloud Platform",
+      image: "/account_and_settings/Google-cloud.png",
+      url: "#",
+      isDisable: true,
+    },
+    {
+      name: "AWS",
+      image: "/account_and_settings/aws.png",
+      url: "#",
+      isDisable: true,
+    },
+    {
+      name: "Azure",
+      image: "/account_and_settings/azure.png",
+      url: "#",
+      isDisable: true,
+    },
+    {
+      name: "Snowflake",
+      image: "/account_and_settings/snowflake.png",
+      url: "#",
+      isDisable: true,
+    },
+    {
+      name: "IBM Watsonx.data",
+      image: "/account_and_settings/IBM-watsonx.data.png",
+      url: "#",
       isDisable: true,
     },
   ]);
@@ -42,7 +60,7 @@ const RepoSettings = ({ RepoSettingsCss }) => {
                   }
                 >
                   <div>
-                  <Tooltip title={e.name} color="#0c3246">
+                    <Tooltip title={e.name} color="#0c3246">
                       <Image
                         alt="sdfsdf"
                         onClick={() => {
@@ -63,4 +81,4 @@ const RepoSettings = ({ RepoSettingsCss }) => {
   );
 };
 
-export default RepoSettings;
+export default TargetPlatform;

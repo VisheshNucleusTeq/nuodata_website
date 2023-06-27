@@ -165,10 +165,14 @@ const SiderView = ({ layoutCss, height, componentName }) => {
 
         {[
           { title: "Roles & permission", link: "/user-management" },
-          // {
-          //   title: "Repo settings",
-          //   link: "/account-and-settings/repo-settings",
-          // },
+          {
+            title: "Repo settings",
+            link: "/account-and-settings/repo-settings",
+          },
+          {
+            title: "Target Platforms",
+            link: "/account-and-settings/target-platform",
+          },
         ].map((data, i) => {
           return (
             accountAndSettings && (

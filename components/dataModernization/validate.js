@@ -52,6 +52,7 @@ export default function Validate({ dataModernizationCss }) {
     "workflows",
     "transformations",
     "status",
+    "createDateTime",
   ]);
 
   const projectDetails = useSelector(
@@ -107,6 +108,16 @@ export default function Validate({ dataModernizationCss }) {
       dispatch(setOpenDetails({}));
     }
   }, [openDetails?.detailId]);
+
+  const changeDateFormat = (date) => {
+    const dt = new Date(date);
+    const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
+    return `${padL(dt.getMonth() + 1)}/${padL(
+      dt.getDate()
+    )}/${dt.getFullYear()} ${padL(dt.getHours())}:${padL(
+      dt.getMinutes()
+    )}:${padL(dt.getSeconds())}`;
+  };
 
   return (
     <>
@@ -336,6 +347,7 @@ export default function Validate({ dataModernizationCss }) {
               { label: "Workflows", value: "workflows" },
               { label: "Transformations", value: "transformations" },
               { label: "Status", value: "status" },
+              { label: "Created Date", value: "createDateTime" },
             ]}
             defaultValue={defaultColShow}
             onChange={(e) => {
@@ -465,6 +477,14 @@ export default function Validate({ dataModernizationCss }) {
                 },
               },
               {
+                hidden: !defaultColShow.includes("createDateTime"),
+                title: "Created Date",
+                key: "createDateTime",
+                render: (_, record) => {
+                  return changeDateFormat(record.createDateTime);
+                },
+              },
+              {
                 title: "Action",
                 key: "action",
                 fixed: "right",
@@ -509,7 +529,10 @@ export default function Validate({ dataModernizationCss }) {
                       )}
 
                       <br />
-                      <a href="https://accounts.cloud.databricks.com/login" target="_blank">
+                      <a
+                        href="https://accounts.cloud.databricks.com/login"
+                        target="_blank"
+                      >
                         <DatabaseOutlined />
                         {" Launch Databricks"}
                       </a>
