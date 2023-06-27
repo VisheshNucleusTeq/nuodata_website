@@ -8,37 +8,37 @@ const TargetPlatform = ({ RepoSettingsCss }) => {
   const [accountList, setAccountList] = useState([
     {
       name: "Databricks-Lakehouse",
-      image: "/account_and_settings/databricks.png",
+      image: "/account_and_settings/databricks.svg",
       url: "#",
       isDisable: true,
     },
     {
       name: "Google Cloud Platform",
-      image: "/account_and_settings/Google-cloud.png",
+      image: "/account_and_settings/Google-cloud.svg",
       url: "#",
       isDisable: true,
     },
     {
       name: "AWS",
-      image: "/account_and_settings/aws.png",
+      image: "/account_and_settings/aws.svg",
       url: "#",
       isDisable: true,
     },
     {
       name: "Azure",
-      image: "/account_and_settings/azure.png",
+      image: "/account_and_settings/azure.svg",
       url: "#",
       isDisable: true,
     },
     {
       name: "Snowflake",
-      image: "/account_and_settings/snowflake.png",
+      image: "/account_and_settings/snowflake.svg",
       url: "#",
       isDisable: true,
     },
     {
       name: "IBM Watsonx.data",
-      image: "/account_and_settings/IBM-watsonx.data.png",
+      image: "/account_and_settings/IBM.svg",
       url: "#",
       isDisable: true,
     },
