@@ -8,6 +8,7 @@ import {
   Carousel,
   Tooltip,
   Collapse,
+  message,
 } from "antd";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -164,6 +165,9 @@ export default function Validate({ dataModernizationCss }) {
           const data = await fetch_retry_post(`${GITHUBCHECKIN}${fileId}`);
           if (data.success) {
             getAnalyzeData();
+          } else {
+            message.error("Something went wrong please try again after sometime")
+            setSelectedGitFile(0);
           }
         }}
         width={"40vw"}
@@ -496,7 +500,9 @@ export default function Validate({ dataModernizationCss }) {
                       record.isUserAction ? (
                         <a
                           onClick={() => {
-                            githubCheckIn(record);
+                            record.fileId != selectedGitFile
+                              ? githubCheckIn(record)
+                              : null;
                           }}
                         >
                           {record.fileId === selectedGitFile ? (
