@@ -27,6 +27,7 @@ const AddUser = ({
 
   const [roles, setRoles] = useState([]);
   const [organization, setOrganization] = useState([]);
+  const [addOrgBtn, setAddOrgBtn] = useState(false);
 
   const getRoles = async (type) => {
     dispatch(loderShowHideAction(true));
@@ -141,7 +142,6 @@ const AddUser = ({
   };
 
   useEffect(() => {
-    getOrganization();
     addUpdateData();
   }, [updateUserData, form]);
 
@@ -153,6 +153,30 @@ const AddUser = ({
       });
     }
   }, [roles]);
+
+  useEffect(() => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    if (["nuodata_admin"].includes(authData?.roleName)) {
+      getOrganization();
+      setAddOrgBtn(true);
+    }
+
+    if (["biz_master_admin"].includes(authData?.roleName)) {
+      getRoles("biz");
+      form.setFieldsValue({
+        userType: "biz",
+      });
+      setOrganization([
+        {
+          value: authData?.orgId,
+          label: authData?.orgName,
+        },
+      ]);
+      form.setFieldsValue({
+        orgId: authData?.orgId,
+      });
+    }
+  }, []);
 
   return (
     <div>
@@ -188,7 +212,8 @@ const AddUser = ({
               labelAlign={"left"}
             >
               <Select
-                name={"ctryCode"}
+                disabled={true}
+                name={"userType"}
                 className="inputSelect"
                 placeholder="Select user type"
                 options={[

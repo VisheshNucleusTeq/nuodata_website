@@ -34,6 +34,8 @@ const UserList = ({ userManagementCss }) => {
   const [userData, setUserData] = useState([]);
   const [organization, setOrganization] = useState([]);
   const [updateUserData, setUpdateUserData] = useState({});
+  const [addOrgBtn, setAddOrgBtn] = useState(false);
+  const [addUserBtn, setAddUserBtn] = useState(false);
 
   const getOrganization = async () => {
     const data = await fetch_retry_get(`${GETORGANIZATION}`);
@@ -59,7 +61,19 @@ const UserList = ({ userManagementCss }) => {
   };
 
   useEffect(() => {
-    getOrganization();
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    if (["nuodata_admin"].includes(authData?.roleName)) {
+      getOrganization();
+      setAddOrgBtn(true);
+    } else {
+      setOrgId(authData?.orgId);
+    }
+
+    if (["nuodata_admin", "biz_master_admin"].includes(authData?.roleName)) {
+      setAddUserBtn(true);
+    }
+
+    // setAddUserBtn
   }, []);
 
   useEffect(() => {
@@ -119,54 +133,61 @@ const UserList = ({ userManagementCss }) => {
                 />
               }
             />
-            <Select
-              onChange={(e) => {
-                setOrgId(e);
-              }}
-              className={userManagementCss.inputSelectSearch}
-              options={organization}
-              placeholder={
-                <span style={{ fontSize: "1.2vw" }}>
-                  <FilterOutlined
+            {addOrgBtn && (
+              <Select
+                onChange={(e) => {
+                  setOrgId(e);
+                }}
+                className={userManagementCss.inputSelectSearch}
+                options={organization}
+                placeholder={
+                  <span style={{ fontSize: "1.2vw" }}>
+                    <FilterOutlined
+                      style={{ fontSize: "1.2vw", color: "#a9a9a9" }}
+                    />{" "}
+                    Organization
+                  </span>
+                }
+                suffixIcon={
+                  <DownOutlined
                     style={{ fontSize: "1.2vw", color: "#a9a9a9" }}
-                  />{" "}
-                  Organization
-                </span>
-              }
-              suffixIcon={
-                <DownOutlined style={{ fontSize: "1.2vw", color: "#a9a9a9" }} />
-              }
-            />
+                  />
+                }
+              />
+            )}
           </Space>
         </Col>
 
         <Col span="12" align={"right"}>
           <Space direction="horizontal" size={"large"}>
-            <Button
-              className={userManagementCss.button}
-              onClick={() => {
-                setUpdateUserData({});
-                setAddType("organization");
-                setShowAddModel(true);
-              }}
-            >
-              <span style={{ fontSize: "1.2vw" }}>
-                <PlusOutlined /> Add Organization
-              </span>
-            </Button>
-
-            <Button
-              className={userManagementCss.button}
-              onClick={() => {
-                setUpdateUserData({});
-                setAddType("user");
-                setShowAddModel(true);
-              }}
-            >
-              <span style={{ fontSize: "1.2vw" }}>
-                <PlusOutlined /> Add User
-              </span>
-            </Button>
+            {addOrgBtn && (
+              <Button
+                className={userManagementCss.button}
+                onClick={() => {
+                  setUpdateUserData({});
+                  setAddType("organization");
+                  setShowAddModel(true);
+                }}
+              >
+                <span style={{ fontSize: "1.2vw" }}>
+                  <PlusOutlined /> Add Organization
+                </span>
+              </Button>
+            )}
+            {addUserBtn && (
+              <Button
+                className={userManagementCss.button}
+                onClick={() => {
+                  setUpdateUserData({});
+                  setAddType("user");
+                  setShowAddModel(true);
+                }}
+              >
+                <span style={{ fontSize: "1.2vw" }}>
+                  <PlusOutlined /> Add User
+                </span>
+              </Button>
+            )}
           </Space>
         </Col>
       </Row>

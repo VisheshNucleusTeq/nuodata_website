@@ -17,6 +17,18 @@ const SiderView = ({ layoutCss, height, componentName }) => {
   const [showDataModernization, setShowDataModernization] = useState(true);
   const [showPlatform, setShowPlatform] = useState(false);
   const [accountAndSettings, setAccountAndSettings] = useState(false);
+  const [dataModernization] = useState([
+    "Dashboard",
+    "Define",
+    "Connect",
+    "Analyze",
+    "Design",
+    "Transform",
+    "Validate",
+    "Rollout",
+  ]);
+
+  const [accountAndSettingsArr, setAccountAndSettingsArr] = useState([]);
 
   const changePage = async (page, tab) => {
     router.push(page);
@@ -34,6 +46,30 @@ const SiderView = ({ layoutCss, height, componentName }) => {
       dispatch(SetTabTypeAction("Dashboard"));
     }
   }, [componentName]);
+
+  useEffect(() => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    
+    let accountAndSettingsArrData = [];
+    if (["nuodata_admin", "biz_master_admin"].includes(authData?.roleName)) {
+      accountAndSettingsArrData.push({
+        title: "Roles & permission",
+        link: "/user-management",
+      });
+    }
+
+    accountAndSettingsArrData.push({
+      title: "Repo settings",
+      link: "/account-and-settings/repo-settings",
+    });
+
+    accountAndSettingsArrData.push({
+      title: "Target Platforms",
+      link: "/account-and-settings/target-platform",
+    });
+
+    setAccountAndSettingsArr(accountAndSettingsArrData);
+  }, []);
 
   return (
     <Sider className={layoutCss.mainLayoutSider}>
@@ -64,16 +100,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           </Col>
         </Col>
 
-        {[
-          "Dashboard",
-          "Define",
-          "Connect",
-          "Analyze",
-          "Design",
-          "Transform",
-          "Validate",
-          "Rollout",
-        ].map((data, i) => {
+        {dataModernization.map((data, i) => {
           return (
             showDataModernization && (
               <Col
@@ -162,18 +189,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             )}
           </Col>
         </Col>
-
-        {[
-          { title: "Roles & permission", link: "/user-management" },
-          {
-            title: "Repo settings",
-            link: "/account-and-settings/repo-settings",
-          },
-          {
-            title: "Target Platforms",
-            link: "/account-and-settings/target-platform",
-          },
-        ].map((data, i) => {
+        {accountAndSettingsArr.map((data, i) => {
           return (
             accountAndSettings && (
               <Col
