@@ -28,6 +28,7 @@ const AddUser = ({
   const [roles, setRoles] = useState([]);
   const [organization, setOrganization] = useState([]);
   const [addOrgBtn, setAddOrgBtn] = useState(false);
+  const [bizStatus, setBizStatus] = useState(false);
 
   const getRoles = async (type) => {
     dispatch(loderShowHideAction(true));
@@ -175,6 +176,7 @@ const AddUser = ({
       form.setFieldsValue({
         orgId: authData?.orgId,
       });
+      setBizStatus(true)
     }
   }, []);
 
@@ -212,7 +214,7 @@ const AddUser = ({
               labelAlign={"left"}
             >
               <Select
-                disabled={true}
+                disabled={bizStatus}
                 name={"userType"}
                 className="inputSelect"
                 placeholder="Select user type"
@@ -256,6 +258,49 @@ const AddUser = ({
               />
             </Form.Item>
           </Col>
+
+          <Col span={12} align="left">
+                <Form.Item
+                  name={"orgId"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select organization",
+                    },
+                  ]}
+                  label={"Organization"}
+                  labelAlign={"left"}
+                >
+                  <Select
+                    name={"orgId"}
+                    className="inputSelect"
+                    placeholder="Select Organization"
+                    options={organization}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label={"Job Title"}
+                  labelAlign={"left"}
+                  name={"jobTitle"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input job Title",
+                    },
+                  ]}
+                >
+                  <Input
+                    key={"input-job-title"}
+                    className={"input"}
+                    placeholder={"CEO , Product Owner , Manager , Developer "}
+                    name={"jobTitle"}
+                    type={"text"}
+                  />
+                </Form.Item>
+              </Col>
+
           {!updateUserData?.firstName && (
             <>
               <Col span={12} align="left">
@@ -351,47 +396,7 @@ const AddUser = ({
                   />
                 </Form.Item>
               </Col>
-              <Col span={12} align="left">
-                <Form.Item
-                  name={"orgId"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select organization",
-                    },
-                  ]}
-                  label={"Organization"}
-                  labelAlign={"left"}
-                >
-                  <Select
-                    name={"orgId"}
-                    className="inputSelect"
-                    placeholder="Select Organization"
-                    options={organization}
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label={"Job Title"}
-                  labelAlign={"left"}
-                  name={"jobTitle"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input job Title",
-                    },
-                  ]}
-                >
-                  <Input
-                    key={"input-job-title"}
-                    className={"input"}
-                    placeholder={"CEO , Product Owner , Manager , Developer "}
-                    name={"jobTitle"}
-                    type={"text"}
-                  />
-                </Form.Item>
-              </Col>
+             
               <Col span={24}>
                 <Form.Item
                   style={{
