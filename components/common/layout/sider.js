@@ -68,6 +68,11 @@ const SiderView = ({ layoutCss, height, componentName }) => {
       link: "/account-and-settings/target-platform",
     });
 
+    accountAndSettingsArrData.push({
+      title: "Events",
+      link: "/event-management",
+    });
+
     setAccountAndSettingsArr(accountAndSettingsArrData);
   }, []);
 

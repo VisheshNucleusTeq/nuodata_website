@@ -92,19 +92,31 @@ const AddUser = ({
   };
 
   const getOrganization = async () => {
+    const delay = (delayInms) => {
+      return new Promise((resolve) => setTimeout(resolve, delayInms));
+    };
+
     const data = await fetch_retry_get(`${GETORGANIZATION}`);
-    setOrganization(
-      data?.data?.map((e) => {
-        return {
-          value: e?.orgId,
-          label: e?.orgName,
+    let orgData = data?.data?.map((e) => {
+      return {
+        value: e?.orgId,
+        label: e?.orgName,
+      };
+    });
+    setOrganization(orgData);
+    let initialValues = {};
+    if (updateUserData?.firstName) {
+      let objOrgId = orgData.find((o) => o.label === updateUserData?.orgName);
+      if (objOrgId?.value) {
+        initialValues = {
+          orgId: objOrgId?.value,
         };
-      })
-    );
+      }
+      form.setFieldsValue(initialValues);
+    }
   };
 
   const addUpdateData = async () => {
-    console.log(updateUserData);
     if (updateUserData?.firstName) {
       let initialValues = {
         ...updateUserData,
@@ -144,13 +156,9 @@ const AddUser = ({
       }
       form.setFieldsValue(initialValues);
     } else {
-      form.resetFields();
+      // form.resetFields();
     }
   };
-
-  useEffect(() => {
-    addUpdateData();
-  }, [updateUserData, form]);
 
   useEffect(() => {
     if (roles.length && updateUserData?.userType) {
@@ -185,6 +193,10 @@ const AddUser = ({
       setBizStatus(true);
     }
   }, []);
+
+  useEffect(() => {
+    addUpdateData();
+  }, [updateUserData, form]);
 
   return (
     <div>

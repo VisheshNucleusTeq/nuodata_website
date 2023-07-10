@@ -1,0 +1,130 @@
+.main h1 {
+  color: #e74860;
+  font-size: 2vw;
+  font-weight: bold;
+}
+
+.defineSteps {
+  background-color: #fff;
+  border-radius: 10px;
+  width: 50%;
+}
+
+.defineSteps .defineStepsRow {
+  padding: 1%;
+  justify-content: center !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.defineStep {
+  border: 1px solid rgb(232, 232, 232);
+  border-radius: 10px;
+  margin: 3px 3px 3px 3px !important;
+  text-align: center;
+  background-color: #fff;
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+  color: #0c3246;
+}
+
+.defineStepSelect {
+  background-color: #0c3246;
+  color: #fff;
+}
+
+.textHeading {
+  color: #e74860;
+  font-weight: bold;
+  height: 4vh;
+}
+
+.topEventView {
+  height: 18vh;
+  /* border: 1px solid red; */
+  display: flex;
+}
+
+.textArea,
+.textArea:hover .textArea:active {
+  border-radius: 10px;
+  resize: none;
+  border-color: transparent;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  width: 100vw !important;
+  height: 15vh !important;
+  height: auto;
+  line-height: 4;
+}
+
+.textInput {
+  height: 6vh;
+  border-radius: 10px;
+  resize: none;
+  border-color: transparent;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.textAreaHeight {
+  height: 25vh !important;
+}
+
+.demo {
+  height: 25vh !important;
+  border-radius: 10px !important;
+  background-color: #fff !important;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.demo span {
+  border-radius: 10px !important;
+  background-color: #fff !important;
+}
+
+.listDiv {
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  height: 66vh;
+  overflow: scroll;
+  border-radius: 10px;
+}
+
+.listData {
+  height: 20vh;
+  margin: 1.5vh;
+  border-radius: 10px;
+  box-shadow: 4px 4px 10px 4px rgb(0, 0, 0, 0.1%),
+    4px 4px 10px 04px rgba(0, 0, 0, 0.1);
+}
+
+.listData img {
+  border-radius: 10px;
+  padding: 1vh;
+}
+
+.deleteBtn {
+  height: 20vh;
+  border-radius: 0px 10px 10px 0px;
+  float: right;
+}
+
+
+.eventTitle{
+    color: #0c3246;
+    font-weight: bold;
+}
+
+.imageDiv{
+    position: relative;
+}
+
+.imageDiv p{
+    position: absolute;
+    top : 0;
+    right: 0;
+    margin-right: 2.5vh;
+    margin-top: 2vh;
+    color: #fff;
+    cursor: pointer;
+}

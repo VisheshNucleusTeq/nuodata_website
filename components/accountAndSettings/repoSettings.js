@@ -1,4 +1,4 @@
-import { Card, Col, Row, Image, Tooltip } from "antd";
+import { Card, Col, Row, Image, Tooltip, message } from "antd";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -26,6 +26,20 @@ const RepoSettings = ({ RepoSettingsCss }) => {
     },
   ]);
 
+  const redirectFun = (url) => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    if (["nuodata_admin", "biz_master_admin"].includes(authData?.roleName)) {
+      router.push(url);
+    } else {
+      message.info({
+        key: "permission",
+        content:
+          "You don't have permission, Please contact your admin!",
+        duration: 10,
+      });
+    }
+  };
+
   return (
     <div className={RepoSettingsCss.main}>
       <h1>Repo Settings</h1>
@@ -42,11 +56,11 @@ const RepoSettings = ({ RepoSettingsCss }) => {
                   }
                 >
                   <div>
-                  <Tooltip title={e.name} color="#0c3246">
+                    <Tooltip title={e.name} color="#0c3246">
                       <Image
                         alt={e.name}
                         onClick={() => {
-                          !e.isDisable ? router.push(e.url) : null;
+                          !e.isDisable ? redirectFun(e?.url) : null;
                         }}
                         src={e.image}
                         preview={false}
