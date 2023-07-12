@@ -48,5 +48,7 @@ export const GETORGANIZATION = "usermgmt/v1/admin/organizations";
 export const SIGNUP = "usermgmt/v1/signup";
 export const GETUSERLIST = "usermgmt/v1/admin/users/org/";
 export const UPDATEUSER = "usermgmt/v1/admin/update/user/";
-
+export const ADDEVENT = "core/v1/event/create";
+export const GETEVENT = "core/v1/event/?pastEvents=";
+export const UPDATEEVENT = "core/v1/event/update/";
 

@@ -9,18 +9,27 @@ import {
   Upload,
   Image,
   Tag,
+  message,
 } from "antd";
 const { Dragger } = Upload;
 import ImgCrop from "antd-img-crop";
-
 import React, { use, useState } from "react";
+import moment from "moment";
+import { useDispatch } from "react-redux";
 
-const AddEvent = ({ eventManagementCss }) => {
+import { ADDEVENT } from "../../network/apiConstants";
+import { fetch_retry_post_with_file } from "../../network/api-manager";
+import { loderShowHideAction } from "../../Redux/action";
+import { useEffect } from "react";
+
+const AddEvent = ({ eventManagementCss, setTabType, updateData }) => {
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
+
   const [drawerViewProp] = useState({
     className: eventManagementCss.demo,
-    name: "file",
     multiple: false,
-    name: "image",
+    name: "file",
     showUploadList: false,
   });
 
@@ -28,14 +37,69 @@ const AddEvent = ({ eventManagementCss }) => {
     "https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg"
   );
 
+  const [dateFormat] = useState("YYYY-MM-DD");
+  const [timeFormat] = useState("HH:mm:ss");
+
+  const addEventFun = async (data) => {
+    dispatch(loderShowHideAction(true));
+    let postData = {};
+    postData.eventHeading = data?.heading;
+    postData.contactEmail = data?.email;
+    postData.contactNumber = data?.contactNumber;
+    postData.content = data?.content;
+    postData.file = data?.file;
+    postData.startDateTime = moment(
+      data?.startDate.format(dateFormat) +
+        " " +
+        data?.startTime.format(timeFormat)
+    ).format("yyyy-MM-DDTHH:mm:ss.SSSZ");
+
+    postData.endDateTime = moment(
+      data?.endDate.format(dateFormat) + " " + data?.endTime.format(timeFormat)
+    ).format("yyyy-MM-DDTHH:mm:ss.SSSZ");
+
+    const resData = await fetch_retry_post_with_file(
+      `${process.env.BASE_URL}${ADDEVENT}`,
+      postData
+    );
+    dispatch(loderShowHideAction(false));
+    message.success(resData?.data?.message);
+  };
+
+  useEffect(() => {
+    setImage(updateData?.image);
+    form.setFieldsValue({
+      heading: updateData?.eventHeading,
+      email: updateData?.contactEmail,
+      contactNumber: updateData?.contactNumber,
+      content: updateData?.content,
+      startDate: moment(updateData?.startDateTime, dateFormat),
+      startTime: moment(updateData?.startDateTime, timeFormat),
+      endDate: moment(updateData?.endDateTime, dateFormat),
+      endTime: moment(updateData?.endDateTime, timeFormat),
+    });
+  }, [updateData]);
+
   return (
     <div style={{ marginTop: "4vh" }}>
+      {JSON.stringify(updateData?.eventId)}
       <Form
+        form={form}
         layout="vertical"
         onFinish={(e) => {
-          console.log(e);
+          updateData?.eventId ? updateEvnetFun(e) : addEventFun(e);
         }}
         autoComplete="off"
+        // initialValues={{
+        //   heading: "demo",
+        //   email: "demo@gmail.com",
+        //   contactNumber: "+918982077519",
+        //   startDate: moment(new Date(), dateFormat),
+        //   startTime: moment(new Date(), timeFormat),
+        //   endDate: moment(new Date(), dateFormat),
+        //   endTime: moment(new Date(), timeFormat),
+        //   contect: "sdfdsfsd",
+        // }}
       >
         <Row gutter={[16, 16]}>
           <Col span={7} className={eventManagementCss.topEventView}>
@@ -103,15 +167,16 @@ const AddEvent = ({ eventManagementCss }) => {
               </Col>
               <Col span={24}>
                 <Form.Item
-                  name={"startData"}
+                  name={"startDate"}
                   rules={[
                     { required: true, message: "Start date is required." },
                   ]}
                 >
                   <DatePicker
-                    name="startData"
+                    name="startDate"
                     className={eventManagementCss.textInput}
                     disabledDate={(d) => !d || d.isSameOrBefore(Date())}
+                    format={dateFormat}
                   />
                 </Form.Item>
               </Col>
@@ -125,6 +190,8 @@ const AddEvent = ({ eventManagementCss }) => {
                   <TimePicker
                     name="startTime"
                     className={eventManagementCss.textInput}
+                    minuteStep={5}
+                    format={timeFormat}
                   />
                 </Form.Item>
               </Col>
@@ -137,13 +204,14 @@ const AddEvent = ({ eventManagementCss }) => {
               </Col>
               <Col span={24}>
                 <Form.Item
-                  name={"endData"}
+                  name={"endDate"}
                   rules={[{ required: true, message: "End date is required." }]}
                 >
                   <DatePicker
-                    name="endData"
+                    name="endDate"
                     className={eventManagementCss.textInput}
                     disabledDate={(d) => !d || d.isSameOrBefore(Date())}
+                    format={dateFormat}
                   />
                 </Form.Item>
               </Col>
@@ -155,6 +223,7 @@ const AddEvent = ({ eventManagementCss }) => {
                   <TimePicker
                     name="endTime"
                     className={eventManagementCss.textInput}
+                    format={timeFormat}
                   />
                 </Form.Item>
               </Col>
@@ -164,15 +233,15 @@ const AddEvent = ({ eventManagementCss }) => {
           <Col span={14}>
             <Row>
               <Col span={24} className={eventManagementCss.textHeading}>
-                {"Add contect (max 300 characters)"}
+                {"Add content (max 300 characters)"}
               </Col>
               <Col span={24}>
                 <Form.Item
-                  name={"contect"}
-                  rules={[{ required: true, message: "Contect is required." }]}
+                  name={"content"}
+                  rules={[{ required: true, message: "Content is required." }]}
                 >
                   <Input.TextArea
-                    name="contect"
+                    name="content"
                     className={`${eventManagementCss.textArea} ${eventManagementCss.textAreaHeight}`}
                     placeholder="Heading"
                     maxLength={300}
@@ -188,19 +257,24 @@ const AddEvent = ({ eventManagementCss }) => {
               </Col>
               <Col span={24}>
                 <Form.Item
-                  name={"image"}
-                  rules={[{ required: true, message: "Contect is required." }]}
+                  name={"file"}
+                  rules={[
+                    updateData?.eventId
+                      ? {}
+                      : { required: true, message: "Image is required." },
+                  ]}
                 >
                   <ImgCrop
                     showReset
                     rotationSlider
                     showGrid
                     quality={0.5}
-                    aspect={16/9}
+                    aspect={16 / 9}
                     modalTitle={"Crop Image"}
                     modalOk={"Crop"}
                     modalWidth={"70vw"}
                     onModalOk={(e) => {
+                      form.setFieldsValue({ file: e });
                       function getBase64(file) {
                         var reader = new FileReader();
                         reader.readAsDataURL(file);
@@ -214,12 +288,12 @@ const AddEvent = ({ eventManagementCss }) => {
                       }
                       getBase64(e);
                     }}
-                    name={"image"}
+                    name={"file"}
                   >
                     <Dragger {...drawerViewProp}>
                       <Row>
                         <Col span={24} style={{ marginTop: "4%" }}>
-                          <Image src={image} width={120} preview={false} />
+                          <Image src={image} width={130} preview={false} />
                         </Col>
                         <Col span={24} style={{ marginTop: "4%" }}>
                           <Tag style={{ color: "#0c3246" }}>
@@ -240,9 +314,9 @@ const AddEvent = ({ eventManagementCss }) => {
           type="primary"
           block
           htmlType="submit"
-          style={{ marginTop: "2vh" }}
+          style={{ marginTop: "2vh", width: "10vw" }}
         >
-          Login
+          Add Event
         </Button>
       </Form>
     </div>

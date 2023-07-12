@@ -4,6 +4,7 @@ import AddEvent from "./addEvent";
 import EventList from "./eventList";
 const EventManagement = ({ eventManagementCss }) => {
   const [tabType, setTabType] = useState("Add Event");
+  const [updateData, setUpdateData] = useState({});
 
   return (
     <div className={eventManagementCss.main}>
@@ -39,18 +40,23 @@ const EventManagement = ({ eventManagementCss }) => {
         <AddEvent
           eventManagementCss={eventManagementCss}
           setTabType={setTabType}
+          updateData={updateData}
         />
       )}
       {tabType === "Past Events" && (
         <EventList
           eventManagementCss={eventManagementCss}
           setTabType={setTabType}
+          setUpdateData={setUpdateData}
+          pastEvents={"true"}
         />
       )}
       {tabType === "Manage Events" && (
         <EventList
           eventManagementCss={eventManagementCss}
           setTabType={setTabType}
+          setUpdateData={setUpdateData}
+          pastEvents={"false"}
         />
       )}
     </div>
