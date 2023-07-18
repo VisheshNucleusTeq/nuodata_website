@@ -17,12 +17,22 @@ import React, { use, useState } from "react";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 
-import { ADDEVENT } from "../../network/apiConstants";
-import { fetch_retry_post_with_file } from "../../network/api-manager";
+import { ADDEVENT, UPDATEEVENT } from "../../network/apiConstants";
+import {
+  fetch_retry_post_with_file,
+  fetch_retry_put_with_file,
+} from "../../network/api-manager";
 import { loderShowHideAction } from "../../Redux/action";
 import { useEffect } from "react";
+import { useQueryClient } from "react-query";
 
-const AddEvent = ({ eventManagementCss, setTabType, updateData }) => {
+const AddEvent = ({
+  eventManagementCss,
+  setTabType,
+  updateData,
+  setUpdateData,
+}) => {
+  const queryClient = useQueryClient();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -33,9 +43,7 @@ const AddEvent = ({ eventManagementCss, setTabType, updateData }) => {
     showUploadList: false,
   });
 
-  const [image, setImage] = useState(
-    "https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg"
-  );
+  const [image, setImage] = useState("/events/placeholder.jpg");
 
   const [dateFormat] = useState("YYYY-MM-DD");
   const [timeFormat] = useState("HH:mm:ss");
@@ -47,7 +55,7 @@ const AddEvent = ({ eventManagementCss, setTabType, updateData }) => {
     postData.contactEmail = data?.email;
     postData.contactNumber = data?.contactNumber;
     postData.content = data?.content;
-    postData.file = data?.file;
+    postData.file = data?.file ? data?.file : "";
     postData.startDateTime = moment(
       data?.startDate.format(dateFormat) +
         " " +
@@ -62,22 +70,75 @@ const AddEvent = ({ eventManagementCss, setTabType, updateData }) => {
       `${process.env.BASE_URL}${ADDEVENT}`,
       postData
     );
-    dispatch(loderShowHideAction(false));
+
+
+
+    setUpdateData({});
+    form.resetFields();
+    setImage("/events/placeholder.jpg");
+    
+    await queryClient.refetchQueries({
+      queryKey: ["EVENT_DATA", "false"],
+    });
+    setTabType("Manage Events");
     message.success(resData?.data?.message);
+    dispatch(loderShowHideAction(false));
+
+
+    // dispatch(loderShowHideAction(false));
+    // message.success(resData?.data?.message);
+  };
+
+  const updateEvnetFun = async (data) => {
+    console.log(data);
+    dispatch(loderShowHideAction(true));
+    let postData = {};
+    postData.eventHeading = data?.heading;
+    postData.contactEmail = data?.email;
+    postData.contactNumber = data?.contactNumber;
+    postData.content = data?.content;
+    postData.file = data.file ? data?.file : undefined;
+    postData.startDateTime = moment(
+      data?.startDate.format(dateFormat) +
+        " " +
+        data?.startTime.format(timeFormat)
+    ).format("yyyy-MM-DDTHH:mm:ss.SSSZ");
+
+    postData.endDateTime = moment(
+      data?.endDate.format(dateFormat) + " " + data?.endTime.format(timeFormat)
+    ).format("yyyy-MM-DDTHH:mm:ss.SSSZ");
+
+    const resData = await fetch_retry_put_with_file(
+      `${UPDATEEVENT}${updateData?.eventId}`,
+      postData
+    );
+
+    setUpdateData({});
+    form.resetFields();
+    setImage("/events/placeholder.jpg");
+    
+    await queryClient.refetchQueries({
+      queryKey: ["EVENT_DATA", "false"],
+    });
+    setTabType("Manage Events");
+    message.success(resData?.data?.message);
+    dispatch(loderShowHideAction(false));
   };
 
   useEffect(() => {
-    setImage(updateData?.image);
-    form.setFieldsValue({
-      heading: updateData?.eventHeading,
-      email: updateData?.contactEmail,
-      contactNumber: updateData?.contactNumber,
-      content: updateData?.content,
-      startDate: moment(updateData?.startDateTime, dateFormat),
-      startTime: moment(updateData?.startDateTime, timeFormat),
-      endDate: moment(updateData?.endDateTime, dateFormat),
-      endTime: moment(updateData?.endDateTime, timeFormat),
-    });
+    if (updateData?.eventId) {
+      setImage(updateData?.image);
+      form.setFieldsValue({
+        heading: updateData?.eventHeading,
+        email: updateData?.contactEmail,
+        contactNumber: updateData?.contactNumber,
+        content: updateData?.content,
+        startDate: moment(updateData?.startDateTime, dateFormat),
+        startTime: moment(updateData?.startDateTime, timeFormat),
+        endDate: moment(updateData?.endDateTime, dateFormat),
+        endTime: moment(updateData?.endDateTime, timeFormat),
+      });
+    }
   }, [updateData]);
 
   return (
@@ -260,7 +321,7 @@ const AddEvent = ({ eventManagementCss, setTabType, updateData }) => {
                   name={"file"}
                   rules={[
                     updateData?.eventId
-                      ? {}
+                      ? null
                       : { required: true, message: "Image is required." },
                   ]}
                 >

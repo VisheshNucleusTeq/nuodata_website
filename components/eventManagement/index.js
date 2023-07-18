@@ -12,7 +12,11 @@ const EventManagement = ({ eventManagementCss }) => {
 
       <div className={eventManagementCss.defineSteps}>
         <Row align="middle" className={eventManagementCss.defineStepsRow}>
-          {["Add Event", "Past Events", "Manage Events"].map((data, i) => {
+          {[
+            updateData?.eventId ? "Update Event" : "Add Event",
+            "Past Events",
+            "Manage Events",
+          ].map((data, i) => {
             return (
               <Col
                 key={(Math.random() + 1).toString(36).substring(7)}
@@ -41,6 +45,7 @@ const EventManagement = ({ eventManagementCss }) => {
           eventManagementCss={eventManagementCss}
           setTabType={setTabType}
           updateData={updateData}
+          setUpdateData={setUpdateData}
         />
       )}
       {tabType === "Past Events" && (

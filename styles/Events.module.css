@@ -1,8 +1,137 @@
 .mainDiv {
+  /* background: url("/home/sequence.gif") no-repeat center center; */
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+}
+
+.detailsDiv {
+  height: 90%;
+}
+
+.infoRow {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+/* style={{ border: "1px solid green", height: "100%" }} */
+.leftEvent {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6vw;
+}
+
+.leftEventFirstDiv {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftEventSecondDiv {
+  width: 100%;
+  height: 20vh;
+}
+
+.leftEvent h1 {
+  /* color: aliceblue; */
+  font-size: 3vw;
+  font-weight: bolder;
+  width: 100%;
+  text-align: center;
+  color: rgb(255, 255, 255, 0.6);
+  /* -webkit-text-stroke: .2px rgb(255, 255, 255, .6); */
+}
+
+.leftEvent p {
+  color: aliceblue;
+  font-size: 2vw;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
+.leftEventBottom {
+  height: 8vh;
+  border-radius: 100px;
+  background-color: rgb(255, 255, 255, 0.1);
+}
+
+.leftEventBottomBadge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftEventBottomBadge button {
+  width: 90%;
+  border-radius: 50px;
+  color: #fff;
+  background-color: red;
+  font-size: 2vh;
+}
+
+.bottomText {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  cursor: pointer;
+  font-size: 2vh;
+}
+
+.drawer {
+  margin-top: 10vh;
+}
+
+.drawer div {
+  border-radius: 0px 200px 0px 0px;
+}
+
+.drawer > div > div > .ant-drawer-content {
+  background-color: gray !important;
+  border: 1px solid #e74860;
+}
+
+.modelButonClose,
+.modelButonOpen {
+  transition-delay: 0.5s;
+  position: absolute;
+  z-index: 999999;
+  background-color: #e74860;
+  color: #fff;
+  padding: 6px;
+  border-radius: 0px 10px 10px 0px;
+  cursor: pointer;
+  margin-top: 20vh;
+  font-size: 0.7vw;
+}
+
+.modelButonOpen {
+  margin-left: 33.6vw;
+  margin-top: 23vh;
+}
+
+.displayDivShow {
+  display: block;
+  opacity: 1;
+  transition: opacity 5s;
+}
+
+.displayDivHide {
+  opacity: 0;
+  display: none;
+}
+
+/* .mainDiv {
   background: url("/events/events-banner.jpg") no-repeat center center;
   width: 100%;
   height: 100vh;
   background-size: cover;
+  padding-top: 4.5rem;
 }
 
 .collapseDiv {
@@ -29,7 +158,7 @@
 }
 
 .detailsDiv h1 {
-  font-size: 5.25rem;
+  font-size: 4rem;
   font-weight: 600;
   text-align: center;
   background: linear-gradient(
@@ -44,8 +173,8 @@
 }
 
 .detailsDiv h2 {
-  /* font-size: 2.25rem; */
-  font-weight: bolder;
+  font-size: 1.8rem;
+  font-weight: 600;
   text-align: center;
   color: #cfcfcf;
 }
@@ -65,7 +194,6 @@
 
 .contactBar h3 {
   color: #fff;
-  font-size: 1.25rem;
   font-weight: 500;
   padding: 0 1rem;
   margin-bottom: 0em;
@@ -95,8 +223,6 @@
   background: #e74860;
   border: none;
   color: #fff;
-  font-size: 1.25rem;
-  font-weight: 500;
   margin: 0;
   vertical-align: 0;
 }
@@ -106,11 +232,28 @@
   background-color: #ffffff;
 }
 
-.collapseDiv1 {
-  display: block;
-  height: 75%;
+
+.bigDataMainDiv {
+  background: url("/events/big-data-banner.jpg") no-repeat center center;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  padding-top: 4.8rem;
 }
 
-.collapseDiv2 {
-  display: none;
+.bdDetailsDiv h1 {
+  font-size: 4rem;
+  font-weight: 600;
+  text-align: center;
+  background: linear-gradient(90deg, #0002e0 0%, #b87c99 40.63%, #9a4b26 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+
+.bdDetailsDiv h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  color: #cfcfcf;
+} */

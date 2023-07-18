@@ -49,6 +49,6 @@ export const SIGNUP = "usermgmt/v1/signup";
 export const GETUSERLIST = "usermgmt/v1/admin/users/org/";
 export const UPDATEUSER = "usermgmt/v1/admin/update/user/";
 export const ADDEVENT = "core/v1/event/create";
-export const GETEVENT = "core/v1/event/?pastEvents=";
+export const GETEVENT = "core/v1/event/";
 export const UPDATEEVENT = "core/v1/event/update/";
-
+export const EVENTUSERS = "core/v1/event/users/";

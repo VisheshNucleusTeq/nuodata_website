@@ -71,7 +71,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
     if (["nuodata_admin"].includes(authData?.roleName)) {
       accountAndSettingsArrData.push({
         title: "Events",
-        link: "/event-management",
+        link: "/event/event-management",
       });
     }
 

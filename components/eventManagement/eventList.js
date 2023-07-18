@@ -1,27 +1,37 @@
-import { Button, Col, Image, Row, Switch, Modal } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Button, Col, Image, Row, Switch, Modal, Pagination } from "antd";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { GETEVENT, UPDATEEVENT } from "../../network/apiConstants";
-import {
-  fetch_retry_get,
-  fetch_retry_put_with_file,
-} from "../../network/api-manager";
+import { fetch_retry_get, fetch_retry_put } from "../../network/api-manager";
 import { loderShowHideAction } from "../../Redux/action";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
+import EventUsersList from "./eventUsersList";
 
-const EventList = ({ eventManagementCss, setTabType, setUpdateData, pastEvents }) => {
+const EventList = ({
+  eventManagementCss,
+  setTabType,
+  setUpdateData,
+  pastEvents,
+}) => {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const [modelOpen, setModelOpen] = useState(false);
   const [eventData, setEventData] = useState([]);
+  const [eventId, setEventId] = useState(null);
+
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
 
   const getData = async () => {
-    const data = await fetch_retry_get(`${GETEVENT}${pastEvents}`);
+    const data = await fetch_retry_get(
+      `${GETEVENT}pageNo/${page}/records/${pageSize}?pastEvents=${pastEvents}`
+    );
     if (data.success) {
-      setEventData(data.data);
+      setEventData(data.data?.eventDetails);
       return data;
     } else {
       setEventData([]);
@@ -29,15 +39,15 @@ const EventList = ({ eventManagementCss, setTabType, setUpdateData, pastEvents }
     }
   };
 
-  const { status, data: eventDataArr, refetch } = useQuery(
-    ["EVENT_DATA", pastEvents],
-    () => getData(),
-    {
-      refetchOnWindowFocus: false,
-      enabled: true,
-      staleTime: 10 * (60 * 1000),
-    }
-  );
+  const {
+    status,
+    data: eventDataArr,
+    refetch,
+  } = useQuery(["EVENT_DATA", pastEvents, page, pageSize], () => getData(), {
+    refetchOnWindowFocus: false,
+    enabled: true,
+    staleTime: 10 * (60 * 1000),
+  });
 
   useEffect(() => {
     dispatch(loderShowHideAction(true));
@@ -47,25 +57,24 @@ const EventList = ({ eventManagementCss, setTabType, setUpdateData, pastEvents }
         setEventData(eventDataArr.data);
       } else {
         setEventData([]);
-        search === "" ?? message.error([eventDataArr?.error]);
       }
     }
   }, [status, eventDataArr]);
 
-  const updateEventStatus = async (updateData, eventId) => {
-    refetch()
-    // console.log(status, eventId);
-    // ${process.env.BASE_URL}
-    // const resData = await fetch_retry_put_with_file(
-    //   `${UPDATEEVENT}${eventId}`,
-    //   updateData
-    // );
+  const updateEventStatus = async (status, eventId) => {
+    dispatch(loderShowHideAction(true));
+    await fetch_retry_put(`${UPDATEEVENT}${eventId}/status/${status}`);
+    await refetch();
+    dispatch(loderShowHideAction(false));
+    queryClient.refetchQueries({
+      queryKey: ["EVENT_DATA", pastEvents == "true" ? "false" : "true"],
+    });
   };
 
   return (
     <>
       <Modal
-        title="Delete Confirmation"
+        title="Registered Users"
         open={modelOpen}
         onOk={() => {
           setModelOpen(false);
@@ -75,14 +84,20 @@ const EventList = ({ eventManagementCss, setTabType, setUpdateData, pastEvents }
         }}
         okText={"Delete"}
         okButtonProps={{
-          style: { backgroundColor: "red", border: "1px solid red" },
+          style: { display: "none" },
         }}
+        width={"90vw"}
+        cancelText={"Close"}
+        destroyOnClose
       >
-        Are you sure you want to delete this event
+        <EventUsersList
+          eventManagementCss={eventManagementCss}
+          eventId={eventId}
+        />
       </Modal>
 
       <div style={{ marginTop: "4vh" }} className={eventManagementCss.listDiv}>
-        {eventData.map((e, i) => {
+        {eventData?.eventDetails?.map((e, i) => {
           return (
             <div className={eventManagementCss.listData}>
               <Row>
@@ -96,7 +111,7 @@ const EventList = ({ eventManagementCss, setTabType, setUpdateData, pastEvents }
                     />
                     <p
                       onClick={() => {
-                        setUpdateData(e)
+                        setUpdateData(e);
                         setTabType("Add Event");
                       }}
                     >
@@ -111,11 +126,14 @@ const EventList = ({ eventManagementCss, setTabType, setUpdateData, pastEvents }
                         <Col span={24}>
                           <h2>
                             <span className={eventManagementCss.eventTitle}>
-                              {e?.eventHeading} {e?.status}
-                            </span>{" "}
+                              {e?.eventHeading}
+                            </span>
                             &nbsp; &nbsp;
                             <span>
                               <Switch
+                                key={(Math.random() + 1)
+                                  .toString(36)
+                                  .substring(7)}
                                 checkedChildren="Active"
                                 unCheckedChildren={e?.status}
                                 defaultChecked={e?.status === "active"}
@@ -129,12 +147,10 @@ const EventList = ({ eventManagementCss, setTabType, setUpdateData, pastEvents }
                                 }}
                                 disabled={e?.status === "expired"}
                                 onChange={(ee) => {
-                                  let updateData = {
-                                    ...e,
-                                    status: ee ? "active" : "inactive",
-                                  };
-                                  delete updateData.image;
-                                  updateEventStatus(updateData, e?.eventId);
+                                  updateEventStatus(
+                                    ee ? "ACTIVE" : "INACTIVE",
+                                    e?.eventId
+                                  );
                                 }}
                               />
                             </span>
@@ -145,16 +161,17 @@ const EventList = ({ eventManagementCss, setTabType, setUpdateData, pastEvents }
                       </Row>
                     </Col>
                     <Col span={1}>
-                      {/* <Button
-                          onClick={() => {
-                            setModelOpen(true);
-                          }}
-                          type="primary"
-                          danger
-                          className={eventManagementCss.deleteBtn}
-                        >
-                          <DeleteOutlined />
-                        </Button> */}
+                      <Button
+                        onClick={() => {
+                          setEventId(e?.eventId);
+                          setModelOpen(true);
+                        }}
+                        type="primary"
+                        // danger
+                        className={eventManagementCss.deleteBtn}
+                      >
+                        <EyeOutlined />
+                      </Button>
                     </Col>
                   </Row>
                 </Col>
@@ -163,6 +180,20 @@ const EventList = ({ eventManagementCss, setTabType, setUpdateData, pastEvents }
           );
         })}
       </div>
+      <Row>
+        <Col span={24} className={eventManagementCss.paginationCss}>
+          <Pagination
+            current={page + 1}
+            total={eventData?.totalCount}
+            defaultPageSize={pageSize}
+            hideOnSinglePage
+            onChange={(page, pageSize) => {
+              setPage(page - 1);
+              setPageSize(pageSize);
+            }}
+          />
+        </Col>
+      </Row>
     </>
   );
 };

@@ -1,3 +1,12 @@
+.input {
+  height: 2.5vw;
+  width: 20vw;
+  background: #ffffff;
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  resize: vertical !important;
+}
+
 .main h1 {
   color: #e74860;
   font-size: 2vw;
@@ -85,7 +94,7 @@
 
 .listDiv {
   box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
-  height: 66vh;
+  height: 60vh;
   overflow: scroll;
   border-radius: 10px;
 }
@@ -109,22 +118,27 @@
   float: right;
 }
 
-
-.eventTitle{
-    color: #0c3246;
-    font-weight: bold;
+.eventTitle {
+  color: #0c3246;
+  font-weight: bold;
 }
 
-.imageDiv{
-    position: relative;
+.imageDiv {
+  position: relative;
 }
 
-.imageDiv p{
-    position: absolute;
-    top : 0;
-    right: 0;
-    margin-right: 2.5vh;
-    margin-top: 2vh;
-    color: #fff;
-    cursor: pointer;
+.imageDiv p {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 2.5vh;
+  margin-top: 2vh;
+  color: #fff;
+  cursor: pointer;
+}
+
+.paginationCss{
+  margin: 2vh 0vh 2vh 0vh;
+  justify-content: right;
+  display: flex;
 }

@@ -452,3 +452,16 @@ html {
 .ant-spin-dot-item {
   background-color: #0c3246;
 }
+
+
+
+.title{
+  border : 1px solid #e74860 !important;
+  width: 50vh;
+}
+
+
+.drawer > .ant-drawer-content {
+  background-color: gray !important;
+  border: 1px solid #e74860;
+}
