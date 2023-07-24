@@ -1,20 +1,35 @@
 import React from "react";
-import {
-    Col,
-    Row,
-    Button,
-    Form,
-    Input,
-    Select,
-    Image,
-  } from "antd";
+import { Col, Row, Button, Form, Input, Select, Image, message } from "antd";
+import { useDispatch } from "react-redux";
 
-  import country from "../helper/country";
+import country from "../helper/country";
+import { EVENTREGISTER } from "../../network/apiConstants";
+import { fetch_retry_post } from "../../network/api-manager";
+import { loderShowHideAction } from "../../Redux/action";
 
+const DrawerView = ({ EventsCss, singleEventData, setOpen }) => {
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
-const DrawerView = ({EventsCss}) => {
-    const [form] = Form.useForm();
-    const onFinish = async (payload) => {};
+  const onFinish = async (payload) => {
+    dispatch(loderShowHideAction(true));
+    const postData = {
+      eventId: singleEventData?.eventId,
+      userName: payload?.firstName + " " + payload?.lastName,
+      email: payload?.email,
+      mobileNo: payload?.ctryCode + "" + payload?.phone,
+      orgName: payload?.orgName,
+      designation: payload?.jobTitle,
+    };
+    const resData = await fetch_retry_post(`${EVENTREGISTER}`, postData);
+    if (resData?.data?.message) {
+      message.success(resData?.data?.message);
+      setOpen(false)
+    } else {
+      message.error(resData?.error);
+    }
+    dispatch(loderShowHideAction(false));
+  };
 
   return (
     <div
@@ -22,6 +37,7 @@ const DrawerView = ({EventsCss}) => {
         width: "30vw",
       }}
     >
+      {/* {JSON.stringify(singleEventData)} eventId */}
       <div>
         <div
           style={{
@@ -267,7 +283,7 @@ const DrawerView = ({EventsCss}) => {
             htmlType="submit"
             style={{ marginBottom: "5%" }}
           >
-            {"buttonText"}
+            {"Register"}
           </Button>
         </Form>
       </div>

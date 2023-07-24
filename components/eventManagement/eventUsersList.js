@@ -36,7 +36,7 @@ const EventUsersList = ({ eventManagementCss, eventId }) => {
     {
       refetchOnWindowFocus: false,
       enabled: true,
-      staleTime: 10 * (60 * 1000),
+      staleTime: 1//10 * (60 * 1000),
     }
   );
 

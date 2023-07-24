@@ -3,13 +3,51 @@ import Link from "next/link";
 import { Col, Row, Menu, Image, Tag, Dropdown, Space, Badge } from "antd";
 import { MenuOutlined, BranchesOutlined } from "@ant-design/icons";
 import Router, { useRouter } from "next/router";
+import { useQuery } from "react-query";
 
 import HeaderCss from "../../styles/Header.module.css";
 import { scroll } from "../../hooks/scroll";
+import { fetch_retry_get } from "../../network/api-manager";
+import { GETEVENT } from "../../network/apiConstants";
 
 export default function Header() {
   const router = useRouter();
   const data = scroll();
+  const [eventData, setEventData] = useState([]);
+
+  const getData = async () => {
+    const data = await fetch_retry_get(
+      `${GETEVENT}pageNo/0/records/4?pastEvents=false`
+    );
+    if (data.success) {
+      setEventData(data.data?.eventDetails);
+      return data;
+    } else {
+      setEventData([]);
+      return [];
+    }
+  };
+
+  const {
+    status,
+    data: eventDataArr,
+    refetch,
+  } = useQuery(["EVENT_DATA_HOME"], () => getData(), {
+    refetchOnWindowFocus: false,
+    enabled: true,
+    staleTime: 10 * (60 * 1000),
+  });
+
+  useEffect(() => {
+    getData();
+    if (status === "success") {
+      if (eventDataArr?.success) {
+        setEventData(eventDataArr.data?.eventDetails);
+      } else {
+        setEventData([]);
+      }
+    }
+  }, [status, eventDataArr]);
 
   return (
     <div
@@ -19,8 +57,9 @@ export default function Header() {
           : null
       }`}
     >
+      {/* <p style={{ color: "red" }}>{eventData.length}</p> */}
       <Row className={HeaderCss.infoRow}>
-        <Col offset={2} span={4}>
+        <Col offset={eventData.length > 0 ? 1 : 2} span={4}>
           <div className={HeaderCss.infoColImage}>
             <Link href="/">
               <Image preview={false} src={"/logo.png"} />
@@ -28,7 +67,7 @@ export default function Header() {
           </div>
         </Col>
 
-        <Col offset={2} className={HeaderCss.infoColManu} span={16}>
+        <Col offset={eventData.length > 0 ? 1 : 2} className={HeaderCss.infoColManu} span={eventData.length > 0 ? 18 : 16}>
           <Menu
             className={HeaderCss.menu}
             mode="horizontal"
@@ -105,6 +144,20 @@ export default function Header() {
               },
               {
                 key: "4",
+                label: (
+                  <Tag
+                    onClick={() => {
+                      router.push("/events/");
+                    }}
+                    className={HeaderCss.tryNowTag}
+                    color="#E74860"
+                  >
+                    Events
+                  </Tag>
+                ),
+              },
+              {
+                key: "event",
                 label: (
                   <Tag
                     onClick={() => {

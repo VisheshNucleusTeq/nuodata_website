@@ -143,7 +143,7 @@ const AddEvent = ({
 
   return (
     <div style={{ marginTop: "4vh" }}>
-      {JSON.stringify(updateData?.eventId)}
+      {/* {JSON.stringify(updateData?.eventId)} */}
       <Form
         form={form}
         layout="vertical"
@@ -377,7 +377,7 @@ const AddEvent = ({
           htmlType="submit"
           style={{ marginTop: "2vh", width: "10vw" }}
         >
-          Add Event
+          {updateData?.eventId ? "Update" : "Add"} Event
         </Button>
       </Form>
     </div>

@@ -52,3 +52,4 @@ export const ADDEVENT = "core/v1/event/create";
 export const GETEVENT = "core/v1/event/";
 export const UPDATEEVENT = "core/v1/event/update/";
 export const EVENTUSERS = "core/v1/event/users/";
+export const EVENTREGISTER = "core/v1/event/register/user";

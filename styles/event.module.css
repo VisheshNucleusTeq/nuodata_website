@@ -1,4 +1,10 @@
 .mainDiv {
+  width: 100%;
+  height: 100vh;
+  background-size: cover !important;
+}
+
+.mainDivLoad {
   background: url("/home/sequence.gif") no-repeat center center;
   width: 100%;
   height: 100vh;
@@ -14,7 +20,7 @@
   height: 100%;
   align-items: center;
 }
-/* style={{ border: "1px solid green", height: "100%" }} */
+
 .leftEvent {
   height: 90vh;
   display: flex;
@@ -29,11 +35,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* margin-top: -10vh; */
 }
 
 .leftEventSecondDiv {
   width: 100%;
   height: 20vh;
+  padding-top: 4vh;
+  /* border: 1px solid red; */
 }
 
 .leftEvent h1 {
@@ -42,17 +51,24 @@
   font-weight: bolder;
   width: 100%;
   text-align: center;
-  color: rgb(255, 255, 255, 0.6);
+  color: rgb(255, 255, 255, 1);
   /* -webkit-text-stroke: .2px rgb(255, 255, 255, .6); */
 }
 
 .leftEvent p {
   color: aliceblue;
-  font-size: 2vw;
+  font-size: 1.6vw;
   font-weight: bold;
   width: 100%;
   text-align: center;
 }
+
+.leftEvent h6 {
+  text-align: center;
+  color: #fff;
+  font-size: 1vw;
+}
+
 
 .leftEventBottom {
   height: 8vh;
@@ -66,11 +82,11 @@
   align-items: center;
 }
 
-.leftEventBottomBadge button {
+.leftEventBottomBadge button, .leftEventBottomBadge button:hover {
   width: 90%;
   border-radius: 50px;
   color: #fff;
-  background-color: red;
+  background-color: #e74860;
   font-size: 2vh;
 }
 
@@ -110,6 +126,7 @@
   font-size: 0.7vw;
 }
 
+
 .modelButonOpen {
   margin-left: 33.2vw;
   margin-top: 23vh;
@@ -126,77 +143,73 @@
   display: none;
 }
 
-/* .mainDiv {
-  background: url("/events/events-banner.jpg") no-repeat center center;
-  width: 100%;
-  height: 100vh;
-  background-size: cover;
-  padding-top: 4.5rem;
+.rightIcon {
+  height: 10vh;
 }
 
-.collapseDiv {
-  padding: 0.4rem;
-  border-radius: 3.75rem;
-  background: #ffffff4d;
-  align-items: center !important;
-}
-
-.collapseDiv h3 {
-  color: #fff;
-  font-size: 1.25rem;
-  font-weight: 500;
-  padding: 0 1rem;
-  margin-bottom: 0em;
-}
-
-.detailsDiv {
+.rightTimelineName,
+.rightTimelineDate {
+  height: 18vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Poppins;
-  margin-top: 0.5rem;
+  color: gray;
+  cursor: pointer;
 }
 
-.detailsDiv h1 {
-  font-size: 4rem;
-  font-weight: 600;
-  text-align: center;
-  background: linear-gradient(
-    90deg,
-    #e74860 0%,
-    #006357 0.01%,
-    #b0d3da 40.62%,
-    #007172 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.detailsDiv h2 {
-  font-size: 1.8rem;
-  font-weight: 600;
-  text-align: center;
-  color: #cfcfcf;
-}
-
-.contactBarCol {
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-.contactBar {
-  height: 3.875rem;
-  border-radius: 3.75rem;
-  background: #ffffff4d;
-  align-items: center !important;
-}
-
-.contactBar h3 {
+.rightTimelineNameActive,
+.rightTimelineDateActive {
   color: #fff;
-  font-weight: 500;
-  padding: 0 1rem;
-  margin-bottom: 0em;
+  font-weight: bold;
+  cursor: default;
+}
+
+.rightTimelineName div {
+  padding: 5px;
+  width: 80%;
+  text-align: end;
+  border-radius: 10px;
+  font-weight: bolder;
+  border: 2px solid gray;
+}
+
+.rightTimelineNameActive div {
+  border: 2px solid #fff;
+}
+
+.rightTimelineDate {
+  background-image: linear-gradient(gray 33%, rgba(255, 255, 255, 0) 0%);
+  background-position: left;
+  background-size: 1vh 0.4vh;
+  background-repeat: repeat-y;
+}
+
+.rightTimelineDateActive {
+  background-image: linear-gradient(#fff 33%, rgba(255, 255, 255, 0) 0%);
+}
+
+.dot {
+  height: 1.4vw;
+  width: 1.4vw;
+  background-color: gray;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: -9.8vw !important;
+  position: absolute;
+}
+
+.dotLine {
+  height: 0.15vw;
+  width: 2.5vw;
+  background-color: gray;
+  display: inline-block;
+  margin-left: -10.6vw !important;
+  position: absolute;
+}
+
+.dotActive,
+.dotLineActive {
+  background-color: #fff;
 }
 
 .collapsetBtn {
@@ -216,44 +229,49 @@
   color: #fff;
 }
 
-.reachAtBtn {
-  height: 2.625rem;
-  padding: 0 1.5rem;
-  border-radius: 40px;
-  background: #e74860;
-  border: none;
+.collapseDiv {
+  padding: 0.4rem;
+  border-radius: 3.75rem;
+  background: #ffffff4d;
+  align-items: center !important;
+  margin-right: -18vw;
+  z-index: 99999999999
+}
+
+.collapseDiv h3 {
   color: #fff;
-  margin: 0;
-  vertical-align: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 0 1rem;
+  margin-bottom: 0em;
 }
 
-.reachAtDivider {
-  margin: 0;
-  background-color: #ffffff;
+.relativeDiv{
+  position: relative;
 }
 
-
-.bigDataMainDiv {
-  background: url("/events/big-data-banner.jpg") no-repeat center center;
-  width: 100%;
-  height: 100vh;
-  background-size: cover;
-  padding-top: 4.8rem;
+.relativeDiv .collapseDiv{
+  position: absolute;
+  top: 0vw;
+  right: 35vw;
 }
 
-.bdDetailsDiv h1 {
-  font-size: 4rem;
-  font-weight: 600;
-  text-align: center;
-  background: linear-gradient(90deg, #0002e0 0%, #b87c99 40.63%, #9a4b26 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.signUpBtn {
+  height: 50px;
+  border-radius: 15px;
+  background: #0c3246;
+  width: 70% !important;
+  margin-left: 15%;
 }
 
-.bdDetailsDiv h2 {
-  font-size: 1.8rem;
-  font-weight: 600;
-  text-align: center;
-  color: #cfcfcf;
-} */
+.signUpBtn:hover {
+  height: 50px;
+  border-radius: 15px;
+  background: #14394d;
+}
+
+.signUpBtn:focus {
+  height: 50px;
+  border-radius: 15px;
+  background: #14394d;
+}
