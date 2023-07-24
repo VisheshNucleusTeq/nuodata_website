@@ -17,7 +17,7 @@ export default function Header() {
 
   const getData = async () => {
     const data = await fetch_retry_get(
-      `${GETEVENT}pageNo/0/records/4?pastEvents=false`
+      `${GETEVENT}pageNo/0/records/1?pastEvents=false`
     );
     if (data.success) {
       setEventData(data.data?.eventDetails);
@@ -32,7 +32,7 @@ export default function Header() {
     status,
     data: eventDataArr,
     refetch,
-  } = useQuery(["EVENT_DATA_HOME"], () => getData(), {
+  } = useQuery(["EVENT_DATA_HOME_CHECK"], () => getData(), {
     refetchOnWindowFocus: false,
     enabled: true,
     staleTime: 10 * (60 * 1000),
@@ -67,7 +67,11 @@ export default function Header() {
           </div>
         </Col>
 
-        <Col offset={eventData.length > 0 ? 1 : 2} className={HeaderCss.infoColManu} span={eventData.length > 0 ? 18 : 16}>
+        <Col
+          offset={eventData.length > 0 ? 1 : 2}
+          className={HeaderCss.infoColManu}
+          span={eventData.length > 0 ? 18 : 16}
+        >
           <Menu
             className={HeaderCss.menu}
             mode="horizontal"
@@ -142,22 +146,39 @@ export default function Header() {
                 },
                 className: "SPACEMENU",
               },
+              eventData.length > 0
+                ? {
+                    key: "event",
+                    label: (
+                      <Tag
+                        onClick={() => {
+                          router.push("/events/");
+                        }}
+                        className={HeaderCss.tryNowTag}
+                        color="#E74860"
+                      >
+                        Events
+                      </Tag>
+                    ),
+                  }
+                : null,
+              // { eventTab, setEventTab
+              //   key: "event",
+              //   label: (
+              //     <Tag
+              //       onClick={() => {
+              //         router.push("/events/");
+              //       }}
+              //       className={HeaderCss.tryNowTag}
+              //       color="#E74860"
+              //     >
+              //       Events
+              //     </Tag>
+              //   ),
+              // },
+              // null,
               {
                 key: "4",
-                label: (
-                  <Tag
-                    onClick={() => {
-                      router.push("/events/");
-                    }}
-                    className={HeaderCss.tryNowTag}
-                    color="#E74860"
-                  >
-                    Events
-                  </Tag>
-                ),
-              },
-              {
-                key: "event",
                 label: (
                   <Tag
                     onClick={() => {

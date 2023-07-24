@@ -76,7 +76,7 @@ const Event = ({ EventsCss }) => {
   });
 
   useEffect(() => {
-    getData();
+    // getData();
     dispatch(loderShowHideAction(true));
     if (status === "success") {
       dispatch(loderShowHideAction(false));
