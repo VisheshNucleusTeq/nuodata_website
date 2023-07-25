@@ -1,17 +1,8 @@
-import {
-  Col,
-  Row,
-  Badge,
-  Button,
-  Divider,
-  Drawer,
-  Space,
-  Form,
-  Input,
-  Select,
-  Image,
-} from "antd";
+import { Col, Row, Button, Divider, Drawer, Space, Modal, message } from "antd";
 import React, { useState, useEffect } from "react";
+import { RWebShare } from "react-web-share";
+import { useRouter } from "next/router";
+
 import Header from "../common/header";
 import {
   MailOutlined,
@@ -24,6 +15,7 @@ import {
   PhoneOutlined,
   CalendarOutlined,
   ClockCircleOutlined,
+  ShareAltOutlined,
 } from "@ant-design/icons";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
@@ -34,6 +26,8 @@ import { fetch_retry_get } from "../../network/api-manager";
 import { GETEVENT } from "../../network/apiConstants";
 import DrawerView from "./drawerView";
 const Event = ({ EventsCss }) => {
+  const router = useRouter();
+  const { pathname, query, isReady } = useRouter();
   const dispatch = useDispatch();
   const [isExpanded, setIsExpanded] = useState(false);
   const [icon, setIcon] = useState(
@@ -44,61 +38,35 @@ const Event = ({ EventsCss }) => {
   const [displayDiv, setDisplayDiv] = useState(true);
   const [eventData, setEventData] = useState([]);
   const [singleEventData, setSingleEventData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pageUrl, setPageUrl] = useState("https://nuodata.io/");
 
   const getData = async () => {
     const data = await fetch_retry_get(
-      `${GETEVENT}pageNo/0/records/4?pastEvents=false`
+      `${GETEVENT}pageNo/0/records/40?pastEvents=false`
     );
     if (data.success) {
-      setEventData(
-        data.data?.eventDetails?.sort(
-          (date1, date2) =>
-            moment(date1?.startDateTime).unix() -
-            moment(date2?.startDateTime).unix()
-        )
-      );
-      setSingleEventData(data.data?.eventDetails[0]);
-      return data;
+      if (data.data?.eventDetails && data.data?.eventDetails.length) {
+        return data;
+      } else {
+        setEventData([]);
+        router.push("/");
+      }
     } else {
       setEventData([]);
-      return [];
+      router.push("/");
     }
   };
 
-  const {
-    status,
-    data: eventDataArr,
-    refetch,
-  } = useQuery(["EVENT_DATA_HOME"], () => getData(), {
-    refetchOnWindowFocus: false,
-    enabled: true,
-    staleTime: 10 * (60 * 1000),
-  });
-
-  useEffect(() => {
-    // getData();
-    dispatch(loderShowHideAction(true));
-    if (status === "success") {
-      dispatch(loderShowHideAction(false));
-      if (eventDataArr?.success) {
-        setEventData(
-          eventDataArr.data?.eventDetails?.sort(
-            (date1, date2) =>
-              moment(date1?.startDateTime).unix() -
-              moment(date2?.startDateTime).unix()
-          )
-        );
-        if (
-          eventDataArr.data?.eventDetails &&
-          eventDataArr.data?.eventDetails.length
-        ) {
-          setSingleEventData(eventDataArr.data?.eventDetails[0]);
-        }
-      } else {
-        setEventData([]);
-      }
+  const { status, data: eventDataArr } = useQuery(
+    ["EVENT_DATA_HOME"],
+    () => getData(),
+    {
+      refetchOnWindowFocus: false,
+      enabled: true,
+      staleTime: 10 * (60 * 1000),
     }
-  }, [status, eventDataArr]);
+  );
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
@@ -149,12 +117,12 @@ const Event = ({ EventsCss }) => {
   };
 
   const getSingleTime = () => {
-    const start = moment(singleEventData?.startDateTime).format("HH:mm a");
+    const start = moment(singleEventData?.startDateTime).format("HH:mm A");
     const end = moment(singleEventData?.endDateTime).format("HH:mm A");
     return (
       <>
         {start}
-        {end && start != end && (
+        {end && (
           <>
             &nbsp;&nbsp;
             {"-"}
@@ -166,20 +134,104 @@ const Event = ({ EventsCss }) => {
     );
   };
 
-  return singleEventData && singleEventData.image ? (
+  useEffect(() => {
+    setPageUrl(
+      typeof window !== "undefined" && window.location.origin
+        ? window.location.origin + pathname
+        : "nuodata.io"
+    );
+  }, [typeof window === "undefined"]);
+
+  useEffect(() => {
+    if (query.eventId && eventData && eventData.length) {
+      const eventId = query?.eventId;
+      if (eventId) {
+        const findIndex = eventData.findIndex(
+          (e) => Number(e?.eventId) === Number(eventId)
+        );
+        if (findIndex >= 0) {
+          setSingleEventData(eventData[findIndex]);
+          setTimeout(() => {
+            const element = document.getElementById("eventView" + eventId);
+            if (element) {
+              element.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 1000);
+        } else {
+          message.info({
+            content: "Link expired.",
+            key: "EVENTERROR",
+          });
+          setEventData([]);
+          router.push("/");
+        }
+      } else {
+        setSingleEventData(eventData[0]);
+      }
+    } else {
+      if (eventData && eventData.length) {
+        setSingleEventData(eventData[0]);
+      }
+    }
+  }, [isReady, eventData]);
+
+  useEffect(() => {
+    dispatch(loderShowHideAction(true));
+    if (status === "success") {
+      dispatch(loderShowHideAction(false));
+      if (eventDataArr?.success) {
+        setEventData(
+          eventDataArr.data?.eventDetails?.sort(
+            (date1, date2) =>
+              moment(date1?.startDateTime).unix() -
+              moment(date2?.startDateTime).unix()
+          )
+        );
+      } else {
+        setEventData([]);
+        router.push("/");
+      }
+    }
+  }, [status, eventDataArr]);
+
+  return singleEventData && singleEventData.imagePublicURL ? (
     <>
+      <Modal
+        style={{ zIndex: 999999 }}
+        width={"45vw"}
+        open={isModalOpen}
+        onOk={() => {
+          setIsModalOpen(false);
+        }}
+        onCancel={() => {
+          setIsModalOpen(false);
+        }}
+        destroyOnClose={true}
+        okButtonProps={{ style: { display: "none" } }}
+        cancelButtonProps={{
+          style: { backgroundColor: "#0c3246", color: "#FFF" },
+        }}
+      >
+        <DrawerView
+          EventsCss={EventsCss}
+          singleEventData={singleEventData}
+          setOpen={setOpen}
+          setDisplayDiv={setDisplayDiv}
+          width={"100%"}
+        />
+      </Modal>
       <div
         className={EventsCss.mainDiv}
         style={{
           background: `url("${
-            singleEventData && singleEventData?.image
-              ? singleEventData?.image
+            singleEventData && singleEventData?.imagePublicURL
+              ? singleEventData?.imagePublicURL
               : "/home/sequence.gif"
           }") no-repeat center center`,
           backgroundSize: "cover",
         }}
       >
-        <div style={{ backgroundColor: "rgb(0, 0, 0, 0.9)" }}>
+        <div style={{ backgroundColor: "rgb(0, 0, 0, 0.8)" }}>
           <Drawer
             contentWrapperStyle={{
               borderRight: ".5vw solid #e74860",
@@ -263,11 +315,18 @@ const Event = ({ EventsCss }) => {
                     <Col span={24} className={EventsCss.leftEventFirstDiv}>
                       <div>
                         <h1>{singleEventData?.eventHeading}</h1>
-                        <p>{singleEventData?.content}</p>
+                        <p
+                          style={{
+                            height: "25vh",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          {singleEventData?.content}
+                        </p>
                         <h6>
                           <CalendarOutlined /> &nbsp; {getSingleDate()}
                         </h6>
-                        {/* <h6><CalendarOutlined /> &nbsp; 2023-08-01 - 2023-08-01</h6> */}
                         <h6>
                           <ClockCircleOutlined /> &nbsp; {getSingleTime()}{" "}
                         </h6>
@@ -277,6 +336,34 @@ const Event = ({ EventsCss }) => {
                       <Row>
                         <Col span={2}></Col>
                         <Col span={20}>
+                          <div className={EventsCss.registerNowBtn}>
+                            <Button
+                              onClick={() => {
+                                setIsModalOpen(true);
+                              }}
+                            >
+                              Register Now
+                            </Button>
+                            &nbsp; &nbsp;
+                            <RWebShare
+                              data={{
+                                text: singleEventData?.eventHeading,
+                                url:
+                                  pageUrl +
+                                  "?eventId=" +
+                                  singleEventData?.eventId,
+                                title: "NuoData",
+                              }}
+                              onClick={() =>
+                                console.log("shared successfully!")
+                              }
+                            >
+                              <Button>
+                                Share <ShareAltOutlined />
+                              </Button>
+                            </RWebShare>
+                          </div>
+
                           <Row className={EventsCss.leftEventBottom}>
                             <Col
                               span={6}
@@ -286,7 +373,6 @@ const Event = ({ EventsCss }) => {
                                 onClick={() => {
                                   setOpen(true);
                                 }}
-                                // danger
                               >
                                 Reach Us At
                               </Button>
@@ -354,6 +440,7 @@ const Event = ({ EventsCss }) => {
                                 onClick={() => {
                                   setSingleEventData(e);
                                 }}
+                                id={"eventView" + e?.eventId}
                               >
                                 <Col
                                   span={14}

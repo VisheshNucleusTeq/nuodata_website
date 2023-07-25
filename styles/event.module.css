@@ -31,44 +31,39 @@
 
 .leftEventFirstDiv {
   width: 100%;
-  height: 60vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-top: -10vh; */
 }
 
 .leftEventSecondDiv {
   width: 100%;
-  height: 20vh;
-  padding-top: 4vh;
-  /* border: 1px solid red; */
+  margin-top: 2vh;
+}
+
+.leftEvent h1,
+.leftEvent p,
+.leftEvent h6 {
+  width: 100%;
+  text-align: center;
+  color: white;
+  mix-blend-mode: difference;
 }
 
 .leftEvent h1 {
-  /* color: aliceblue; */
   font-size: 3vw;
   font-weight: bolder;
-  width: 100%;
-  text-align: center;
-  color: rgb(255, 255, 255, 1);
-  /* -webkit-text-stroke: .2px rgb(255, 255, 255, .6); */
 }
 
 .leftEvent p {
-  color: aliceblue;
   font-size: 1.6vw;
   font-weight: bold;
-  width: 100%;
-  text-align: center;
 }
 
 .leftEvent h6 {
-  text-align: center;
-  color: #fff;
   font-size: 1vw;
+  line-height: 1.5;
 }
-
 
 .leftEventBottom {
   height: 8vh;
@@ -82,12 +77,14 @@
   align-items: center;
 }
 
-.leftEventBottomBadge button, .leftEventBottomBadge button:hover {
+.leftEventBottomBadge button,
+.leftEventBottomBadge button:hover {
   width: 90%;
   border-radius: 50px;
   color: #fff;
   background-color: #e74860;
   font-size: 2vh;
+  height: 70%;
 }
 
 .bottomText {
@@ -116,7 +113,7 @@
 .modelButonOpen {
   transition-delay: 0.5s;
   position: absolute;
-  z-index: 999999;
+  z-index: 9999;
   background-color: #e74860;
   color: #fff;
   padding: 6px;
@@ -125,7 +122,6 @@
   margin-top: 20vh;
   font-size: 0.7vw;
 }
-
 
 .modelButonOpen {
   margin-left: 33.2vw;
@@ -235,7 +231,7 @@
   background: #ffffff4d;
   align-items: center !important;
   margin-right: -18vw;
-  z-index: 99999999999
+  z-index: 99999999999;
 }
 
 .collapseDiv h3 {
@@ -246,17 +242,36 @@
   margin-bottom: 0em;
 }
 
-.relativeDiv{
+.relativeDiv {
   position: relative;
 }
 
-.relativeDiv .collapseDiv{
+.relativeDiv .collapseDiv {
   position: absolute;
   top: 0vw;
   right: 35vw;
+  z-index: 99;
 }
 
-.signUpBtn {
+.registerBtn{
+  display: flex;
+  justify-content: center;
+}
+
+.registerBtn button{
+  background-color: #e74860 !important;
+  color: #fff !important;
+  border-radius: 25px;
+  border: #0c3246;
+  font-size: 1.2rem;
+  height: 100%;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  box-shadow: rgba(0, 0, 0, 0.50) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.50) 0px 2px 16px 0px;
+}
+
+/* .signUpBtn {
   height: 50px;
   border-radius: 15px;
   background: #0c3246;
@@ -274,4 +289,30 @@
   height: 50px;
   border-radius: 15px;
   background: #14394d;
+} */
+
+.registerNowBtn {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 4vh;
+}
+
+.registerNowBtn button,
+.registerNowBtn button:hover {
+  background-color: #e74860 !important;
+  color: #fff !important;
+  border-radius: 25px;
+  border: #0c3246;
+  font-size: 1.5rem;
+  height: 100%;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  box-shadow: rgba(255, 255, 255, 0.12) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.32) 0px 2px 16px 0px;
+}
+
+.registerNowBtn button:hover {
+  box-shadow: rgba(255, 255, 255, 0.50) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.50) 0px 2px 16px 0px;
 }

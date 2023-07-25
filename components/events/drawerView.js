@@ -7,7 +7,7 @@ import { EVENTREGISTER } from "../../network/apiConstants";
 import { fetch_retry_post } from "../../network/api-manager";
 import { loderShowHideAction } from "../../Redux/action";
 
-const DrawerView = ({ EventsCss, singleEventData, setOpen }) => {
+const DrawerView = ({ EventsCss, singleEventData, setOpen, width }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ const DrawerView = ({ EventsCss, singleEventData, setOpen }) => {
     const resData = await fetch_retry_post(`${EVENTREGISTER}`, postData);
     if (resData?.data?.message) {
       message.success(resData?.data?.message);
-      setOpen(false)
+      setOpen(false);
     } else {
       message.error(resData?.error);
     }
@@ -34,10 +34,9 @@ const DrawerView = ({ EventsCss, singleEventData, setOpen }) => {
   return (
     <div
       style={{
-        width: "30vw",
+        width: width ? width : "30vw",
       }}
     >
-      {/* {JSON.stringify(singleEventData)} eventId */}
       <div>
         <div
           style={{
@@ -46,9 +45,18 @@ const DrawerView = ({ EventsCss, singleEventData, setOpen }) => {
             display: "flex",
           }}
         >
-          <Image src="/events/regImage.png" width={"30%"} />
+          <Image
+            src="/events/regImage.png"
+            width={width ? "20%" : "30%"}
+            style={{ marginTop: "-1vh" }}
+          />
         </div>
-        <h1 style={{ textAlign: "center" }}>Register Now</h1>
+        <h1 style={{ textAlign: "center", fontWeight: "bold" }}>
+          Register for{" "}
+          <span style={{ color: "#e74860" }}>
+            {singleEventData?.eventHeading}
+          </span>
+        </h1>
 
         <Form
           form={form}
@@ -176,6 +184,7 @@ const DrawerView = ({ EventsCss, singleEventData, setOpen }) => {
                         ]}
                       >
                         <Select
+                          dropdownStyle={{ minWidth: "12%" }}
                           name={"ctryCode"}
                           className="inputSelectGroup"
                           placeholder="Country Code"
@@ -275,16 +284,20 @@ const DrawerView = ({ EventsCss, singleEventData, setOpen }) => {
             </Col>
           </Row>
 
-          <Button
+          <div className={EventsCss.registerBtn}>
+            <Button htmlType="submit">Register</Button>
+          </div>
+
+          {/* <Button
             size={"large"}
             className={EventsCss.signUpBtn}
             type="primary"
             block
             htmlType="submit"
-            style={{ marginBottom: "5%" }}
+            style={{ marginBottom: "5%", width : width ? "50%" : "70%" }}
           >
             {"Register"}
-          </Button>
+          </Button> */}
         </Form>
       </div>
     </div>

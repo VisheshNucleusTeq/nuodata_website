@@ -1,5 +1,11 @@
 import { Button, Col, Image, Row, Switch, Modal, Pagination } from "antd";
-import { EyeOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  EditOutlined,
+  CalendarOutlined,
+  ClockCircleOutlined,
+} from "@ant-design/icons";
+import moment from "moment";
 
 import React, { useState } from "react";
 import { useEffect } from "react";
@@ -71,6 +77,42 @@ const EventList = ({
     });
   };
 
+  const getSingleDate = (singleEventData) => {
+    const start = moment(singleEventData?.startDateTime).format("YYYY-MM-DD");
+    const end = moment(singleEventData?.endDateTime).format("YYYY-MM-DD");
+    return (
+      <>
+        {start}
+        {end && start != end && (
+          <>
+            &nbsp;
+            {"-"}
+            &nbsp;
+            {end}
+          </>
+        )}
+      </>
+    );
+  };
+
+  const getSingleTime = (singleEventData) => {
+    const start = moment(singleEventData?.startDateTime).format("HH:mm A");
+    const end = moment(singleEventData?.endDateTime).format("HH:mm A");
+    return (
+      <>
+        {start}
+        {end && (
+          <>
+            &nbsp;
+            {"-"}
+            &nbsp;
+            {end}
+          </>
+        )}
+      </>
+    );
+  };
+
   return (
     <>
       <Modal
@@ -104,8 +146,8 @@ const EventList = ({
                 <Col span={6}>
                   <div className={eventManagementCss.imageDiv}>
                     <Image
-                      src={e?.image}
-                      height={"19.8vh"}
+                      src={e?.imagePublicURL}
+                      height={"21.8vh"}
                       width={"100%"}
                       preview={false}
                     />
@@ -115,7 +157,8 @@ const EventList = ({
                         setTabType("Add Event");
                       }}
                     >
-                      <EditOutlined />
+                      <EditOutlined style={{backgroundColor : "rgb(0, 0, 0, 0.5)", padding : "5px", borderRadius : "25px"}} /> 
+                      
                     </p>
                   </div>
                 </Col>
@@ -155,7 +198,24 @@ const EventList = ({
                               />
                             </span>
                           </h2>
-                          <p>{e?.content}</p>
+                          <p
+                            style={{
+                              height: "8vh",
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            {e?.content}
+                          </p>
+                          <span>
+                            <CalendarOutlined style={{ color: "#e74860" }} />{" "}
+                            &nbsp; {getSingleDate(e)}
+                          </span>
+                          &nbsp; &nbsp; &nbsp;
+                          <span>
+                            <ClockCircleOutlined style={{ color: "#e74860" }} />{" "}
+                            &nbsp; {getSingleTime(e)}
+                          </span>
                         </Col>
                         <Col span={24}></Col>
                       </Row>

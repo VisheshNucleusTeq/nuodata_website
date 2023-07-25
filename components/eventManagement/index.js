@@ -40,7 +40,7 @@ const EventManagement = ({ eventManagementCss }) => {
         </Row>
       </div>
 
-      {tabType === "Add Event" && (
+      {(tabType === "Add Event" || tabType === "Update Event") && (
         <AddEvent
           eventManagementCss={eventManagementCss}
           setTabType={setTabType}

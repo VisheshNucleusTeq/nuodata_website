@@ -127,7 +127,7 @@ const AddEvent = ({
 
   useEffect(() => {
     if (updateData?.eventId) {
-      setImage(updateData?.image);
+      setImage(updateData?.imagePublicURL);
       form.setFieldsValue({
         heading: updateData?.eventHeading,
         email: updateData?.contactEmail,

@@ -9,19 +9,19 @@ const RepoSettings = ({ RepoSettingsCss }) => {
     {
       name: "Github",
       image: "/account_and_settings/github.svg",
-      url: "http://localhost:4000/account-and-settings/github-check-in/",
+      url: "/account-and-settings/github-check-in/",
       isDisable: false,
     },
     {
       name: "GitLab",
       image: "/account_and_settings/gitlab.svg",
-      url: "http://localhost:4000/account-and-settings/github-check-in/",
+      url: "/account-and-settings/github-check-in/",
       isDisable: true,
     },
     {
       name: "BitBucket",
       image: "/account_and_settings/bitbucket.svg",
-      url: "http://localhost:4000/account-and-settings/github-check-in/",
+      url: "/account-and-settings/github-check-in/",
       isDisable: true,
     },
   ]);

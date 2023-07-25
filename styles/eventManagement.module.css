@@ -100,7 +100,7 @@
 }
 
 .listData {
-  height: 20vh;
+  height: 22vh;
   margin: 1.5vh;
   border-radius: 10px;
   box-shadow: 4px 4px 10px 4px rgb(0, 0, 0, 0.1%),
@@ -113,7 +113,7 @@
 }
 
 .deleteBtn {
-  height: 20vh;
+  height: 22vh;
   border-radius: 0px 10px 10px 0px;
   float: right;
 }
@@ -137,7 +137,7 @@
   cursor: pointer;
 }
 
-.paginationCss{
+.paginationCss {
   margin: 2vh 0vh 2vh 0vh;
   justify-content: right;
   display: flex;
