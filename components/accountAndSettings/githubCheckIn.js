@@ -52,7 +52,7 @@ const GithubCheckIn = () => {
     console.log(111)
     const authData = JSON.parse(localStorage.getItem("authData"));
     const resData = await fetch_retry_get(
-      `${GETGITDATA}${authData?.userId}?type=github`
+      `${GETGITDATA}${authData?.orgId}?type=github`
     );
     resData?.data?.configs ? setInitialValues(resData?.data?.configs) : null;
     setShowForm(true);

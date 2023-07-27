@@ -1,4 +1,4 @@
-import { Col, Row, Button, Divider, Drawer, Space, Modal, message } from "antd";
+import { Col, Row, Button, Divider, Drawer, Space, Modal, message, Image } from "antd";
 import React, { useState, useEffect } from "react";
 import { RWebShare } from "react-web-share";
 import { useRouter } from "next/router";
@@ -25,7 +25,7 @@ import { loderShowHideAction } from "../../Redux/action";
 import { fetch_retry_get } from "../../network/api-manager";
 import { GETEVENT } from "../../network/apiConstants";
 import DrawerView from "./drawerView";
-const Event = ({ EventsCss }) => {
+const EventNew = ({ EventsCss }) => {
   const router = useRouter();
   const { pathname, query, isReady } = useRouter();
   const dispatch = useDispatch();
@@ -106,9 +106,9 @@ const Event = ({ EventsCss }) => {
         {start}
         {end && start != end && (
           <>
-            &nbsp;&nbsp;
-            {"-"}
-            &nbsp; &nbsp;
+            &nbsp;
+            <span style={{color : "#e74860"}}>{"-"}</span>
+            &nbsp;
             {end}
           </>
         )}
@@ -124,9 +124,9 @@ const Event = ({ EventsCss }) => {
         {start}
         {end && (
           <>
-            &nbsp;&nbsp;
-            {"-"}
-            &nbsp; &nbsp;
+            &nbsp;
+            <span style={{color : "#e74860"}}>{"-"}</span>
+            &nbsp;
             {end}
           </>
         )}
@@ -211,7 +211,6 @@ const Event = ({ EventsCss }) => {
         cancelButtonProps={{
           style: { backgroundColor: "#0c3246", color: "#FFF" },
         }}
-        centered
       >
         <DrawerView
           EventsCss={EventsCss}
@@ -233,7 +232,7 @@ const Event = ({ EventsCss }) => {
           backgroundSize: "cover",
         }}
       >
-        <div style={{ backgroundColor: "rgb(0, 0, 0, 0.8)" }}>
+        <div style={{ backgroundColor: "rgb(0, 0, 0, 0.95)" }}>
           <Drawer
             contentWrapperStyle={{
               borderRight: ".5vw solid #e74860",
@@ -317,6 +316,16 @@ const Event = ({ EventsCss }) => {
                     <Col span={24} className={EventsCss.leftEventFirstDiv}>
                       <div>
                         <h1>{singleEventData?.eventHeading}</h1>
+                        <div className={EventsCss.imageCss}>
+                        <Image src={singleEventData?.imagePublicURL}  preview={false} />
+                        </div>
+                        
+                        <h6>
+                          <CalendarOutlined /> &nbsp; {getSingleDate()} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ClockCircleOutlined /> &nbsp; {getSingleTime()}{" "}
+                        </h6>
+                        {/* <h6>
+                          <ClockCircleOutlined /> &nbsp; {getSingleTime()}{" "}
+                        </h6> */}
                         <p
                           style={{
                             height: "25vh",
@@ -326,12 +335,6 @@ const Event = ({ EventsCss }) => {
                         >
                           {singleEventData?.content}
                         </p>
-                        <h6>
-                          <CalendarOutlined /> &nbsp; {getSingleDate()}
-                        </h6>
-                        <h6>
-                          <ClockCircleOutlined /> &nbsp; {getSingleTime()}{" "}
-                        </h6>
                       </div>
                     </Col>
                     <Col span={24} className={EventsCss.leftEventSecondDiv}>
@@ -423,12 +426,12 @@ const Event = ({ EventsCss }) => {
                   </Row>
                 </Col>
                 <Col span={6}>
-                  <Row style={{ height: "90vh" }}>
+                  <Row style={{ height: "100%" }}>
                     <Col span={24} className={EventsCss.rightIcon1}></Col>
                     <Col span={24}>
                       <Row
                         style={{
-                          height: "70vh",
+                          height: "90vh",
                           display: "flex",
                           alignItems: "center",
                           overflowY: "scroll",
@@ -521,4 +524,4 @@ const Event = ({ EventsCss }) => {
   );
 };
 
-export default Event;
+export default EventNew;

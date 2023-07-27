@@ -36,7 +36,7 @@ const EventUsersList = ({ eventManagementCss, eventId }) => {
     {
       refetchOnWindowFocus: false,
       enabled: true,
-      staleTime: 1//10 * (60 * 1000),
+      staleTime: 1, //10 * (60 * 1000),
     }
   );
 
@@ -76,13 +76,19 @@ const EventUsersList = ({ eventManagementCss, eventId }) => {
             />
           </Space>
         </Col>
+        <Col span={11} style={{ float: "right", textAlign: "end" }}>
+          <p style={{ color: "#0c3246", fontWeight: "bold" }}>
+            Registered Users Count :
+            <span style={{ color: "#e74860" }}> {data?.usersCount}</span>
+          </p>
+        </Col>
       </Row>
       <Card className="demoCard">
         <Row>
           <Col span={24}>
             <Table
               scroll={{
-                x: "100vw",
+                y: "40vh",
               }}
               rowKey={"userId"}
               dataSource={data?.userDetails?.sort(

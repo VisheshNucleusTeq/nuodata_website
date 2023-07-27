@@ -1,9 +1,6 @@
-/* @import url("./color.css");  */
-
-
 .mainDiv {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-size: cover !important;
 }
 
@@ -15,7 +12,7 @@
 }
 
 .detailsDiv {
-  height: 90%;
+  height: 100%;
 }
 
 .infoRow {
@@ -25,7 +22,7 @@
 }
 
 .leftEvent {
-  height: 90vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -256,12 +253,12 @@
   z-index: 99;
 }
 
-.registerBtn{
+.registerBtn {
   display: flex;
   justify-content: center;
 }
 
-.registerBtn button{
+.registerBtn button {
   background-color: #e74860 !important;
   color: #fff !important;
   border-radius: 25px;
@@ -270,29 +267,29 @@
   height: 100%;
   padding-left: 2vw;
   padding-right: 2vw;
-  box-shadow: rgba(0, 0, 0, 0.50) 0px 2px 4px 0px,
-    rgba(0, 0, 0, 0.50) 0px 2px 16px 0px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.5) 0px 2px 16px 0px;
 }
 
 /* .signUpBtn {
-  height: 50px;
-  border-radius: 15px;
-  background: #0c3246;
-  width: 70% !important;
-  margin-left: 15%;
-}
-
-.signUpBtn:hover {
-  height: 50px;
-  border-radius: 15px;
-  background: #14394d;
-}
-
-.signUpBtn:focus {
-  height: 50px;
-  border-radius: 15px;
-  background: #14394d;
-} */
+    height: 50px;
+    border-radius: 15px;
+    background: #0c3246;
+    width: 70% !important;
+    margin-left: 15%;
+  }
+  
+  .signUpBtn:hover {
+    height: 50px;
+    border-radius: 15px;
+    background: #14394d;
+  }
+  
+  .signUpBtn:focus {
+    height: 50px;
+    border-radius: 15px;
+    background: #14394d;
+  } */
 
 .registerNowBtn {
   align-items: center;
@@ -316,6 +313,28 @@
 }
 
 .registerNowBtn button:hover {
-  box-shadow: rgba(255, 255, 255, 0.50) 0px 2px 4px 0px,
-    rgba(255, 255, 255, 0.50) 0px 2px 16px 0px;
+  box-shadow: rgba(255, 255, 255, 0.5) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.5) 0px 2px 16px 0px;
+}
+
+.imageCss {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 4vh;
+}
+
+.imageCss img {
+  width: 50vw;
+  /* border: 2px solid #e74860; */
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ccc;
+
+}
+
+.imageCss img:hover {
+  /* transition: transform 1s ease-in-out;
+  transform: scale(1.01); */
+  transition: box-shadow 333ms ease-in-out;
+  box-shadow: 0 0 20px #ccc;
 }

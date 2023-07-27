@@ -131,6 +131,7 @@ const EventList = ({
         width={"90vw"}
         cancelText={"Close"}
         destroyOnClose
+        centered
       >
         <EventUsersList
           eventManagementCss={eventManagementCss}
