@@ -20,6 +20,7 @@ export const ProtectRoute = ({ children }) => {
     "/data-management",
     "/sso",
     "/events",
+    "/test",
   ];
   const user = useSelector((state) => state.userDetails.isLogged);
 

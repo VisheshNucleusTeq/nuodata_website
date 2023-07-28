@@ -1,0 +1,99 @@
+.mainDiv {
+  height: 100vh;
+  width: 100vh;
+  background-color: gray;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.childDiv {
+  background-color: green;
+  width: 78vh;
+  height: 78vh;
+}
+
+.childDiv1,
+.childDiv2,
+.childDiv3 {
+  height: 26vh;
+}
+
+.childDiv1,
+.childDiv3 {
+  display: flex;
+  justify-content: end;
+}
+
+.childDiv2 {
+  display: flex;
+  align-items: center;
+}
+
+.childDiv3 {
+  align-items: end;
+}
+
+.childDivData {
+  border: 1px solid red;
+  height: 13vh;
+  width: 26vh;
+}
+
+.childDivData1 {
+  margin-top: -6.5vh;
+}
+
+.childDivData2 {
+  margin-left: -10vh;
+}
+
+.childDivData3 {
+  margin-bottom: -6.5vh;
+  margin-right: -10vh;
+}
+
+@media (min-width: 576px) {
+}
+
+@media (max-width: 576px) {
+  .mainDivMobile {
+    width: 100vh;
+    background-color: gray;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .childDiv11 {
+    border: 1px solid green;
+    height: 20vh;
+    width: 100vh;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .childDivData111 {
+    border: 1px solid green;
+    height: 20vh;
+    width: 78vh;
+  }
+
+  /* .childDivData111 {
+    border: 1px solid red;
+    height: 26vh;
+    width: 100vw;
+  }
+
+  .childDiv11,
+  .childDiv22,
+  .childDiv33 {
+    height: 26vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+    width: 100vw;
+  } */
+}
