@@ -219,7 +219,6 @@ const EventNew = ({ EventsCss }) => {
           setDisplayDiv={setDisplayDiv}
           setIsModalOpen={setIsModalOpen}
           width={"100%"}
-          setIsModalOpen={setIsModalOpen}
         />
       </Modal>
       <div

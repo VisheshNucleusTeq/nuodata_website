@@ -5,7 +5,7 @@ import { MenuOutlined, BranchesOutlined } from "@ant-design/icons";
 import Router, { useRouter } from "next/router";
 import { useQuery } from "react-query";
 
-import HeaderCss from "../../../styles/newStyles/header.module.css";
+import HeaderCss from "../../../styles/newStyles/Header.module.css";
 import { scroll } from "../../../hooks/scroll";
 import { fetch_retry_get } from "../../../network/api-manager";
 import { GETEVENT } from "../../../network/apiConstants";
