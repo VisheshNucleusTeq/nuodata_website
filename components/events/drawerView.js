@@ -7,7 +7,13 @@ import { EVENTREGISTER } from "../../network/apiConstants";
 import { fetch_retry_post } from "../../network/api-manager";
 import { loderShowHideAction } from "../../Redux/action";
 
-const DrawerView = ({ EventsCss, singleEventData, setOpen, width }) => {
+const DrawerView = ({
+  EventsCss,
+  singleEventData,
+  setOpen,
+  width,
+  setIsModalOpen,
+}) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -286,6 +292,14 @@ const DrawerView = ({ EventsCss, singleEventData, setOpen, width }) => {
 
           <div className={EventsCss.registerBtn}>
             <Button htmlType="submit">Register</Button>
+            &nbsp; &nbsp;
+            <Button
+              onClick={() => {
+                setIsModalOpen(false);
+              }}
+            >
+              Cancel
+            </Button>
           </div>
 
           {/* <Button

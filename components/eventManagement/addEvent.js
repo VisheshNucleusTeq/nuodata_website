@@ -329,7 +329,7 @@ const AddEvent = ({
                     showReset
                     rotationSlider
                     showGrid
-                    quality={0.1}
+                    quality={1}
                     aspect={16 / 9}
                     modalTitle={"Crop Image"}
                     modalOk={"Crop"}

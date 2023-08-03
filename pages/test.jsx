@@ -10,7 +10,20 @@ const Test = () => {
             <Col span={24} className={testCss.childDiv1}>
               <div
                 className={`${testCss.childDivData} ${testCss.childDivData1}`}
-              ></div>
+              >
+                <div className={testCss.dataView}>
+                  <div className={testCss.dataViewImage}>
+                    <div className={testCss.iconView}>5</div>
+                  </div>
+                  <div className={testCss.iconViewText}>
+                    <div>
+                      <h1 className={testCss.h1text}>Title title</h1>
+              
+                      <p className={testCss.ptext}>Title title title</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </Col>
             <Col span={24} className={testCss.childDiv2}>
               <div
@@ -26,11 +39,11 @@ const Test = () => {
         </div>
       </div>
 
-      <div className={testCss.mainDiv}>
+      {/* <div className={testCss.mainDiv}>
         <div className={testCss.childDiv}></div>
-      </div>
+      </div> */}
 
-      <div className={testCss.mainDivMobile}>
+      {/* <div className={testCss.mainDivMobile}>
         <Row>
           <Col span={24} className={testCss.childDiv11}>
             <div
@@ -51,7 +64,7 @@ const Test = () => {
           </Col>
           
         </Row>
-      </div>
+      </div> */}
     </>
   );
 };

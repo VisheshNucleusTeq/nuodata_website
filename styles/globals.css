@@ -44,9 +44,9 @@ body {
   align-items: center !important;
 }
 
-.inputSelectMultiple div{
+.inputSelectMultiple div {
   border-radius: 10px !important;
-  padding: .14vw;
+  padding: 0.14vw;
 }
 
 .inputDesignSelect div {
@@ -453,15 +453,16 @@ html {
   background-color: #0c3246;
 }
 
-
-
-.title{
-  border : 1px solid #e74860 !important;
+.title {
+  border: 1px solid #e74860 !important;
   width: 50vh;
 }
-
 
 .drawer > .ant-drawer-content {
   background-color: gray !important;
   border: 1px solid #e74860;
+}
+
+.ant-menu-vertical .ant-menu-item-only-child span > .tryNowBtn {
+  background-color: #e74860;
 }

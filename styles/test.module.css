@@ -1,4 +1,104 @@
 .mainDiv {
+  width: 46vw;
+  height: 46vw;
+  background-color: gray;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.childDiv {
+  background-color: green;
+  width: 36vw;
+  height: 36vw;
+}
+
+.childDiv1,
+.childDiv2,
+.childDiv3 {
+  height: 12vw;
+}
+
+.childDiv1,
+.childDiv3 {
+  display: flex;
+  justify-content: end;
+}
+
+.childDiv2 {
+  display: flex;
+  align-items: center;
+}
+
+.childDiv3 {
+  align-items: end;
+}
+
+.childDivData {
+  border: 1px solid red;
+  height: 5vw;
+  width: 15vw;
+  border-radius: 10vw;
+}
+
+.childDivData1 {
+  margin-top: -2.5vw;
+}
+
+.childDivData2 {
+  margin-left: -5vw;
+}
+
+.childDivData3 {
+  margin-bottom: -2.5vw;
+  margin-right: -5vw;
+}
+
+.dataView {
+  height: 5vw;
+  width: 15vw;
+  display: flex;
+}
+
+.dataViewImage {
+  height: 5vw;
+  width: 5vw;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.iconView {
+  border: 1px solid red;
+  height: 4.5vw !important;
+  width: 4.5vw !important;
+  border-radius: 10vw;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.iconViewText {
+  width: 10vw;
+  height: 5vw;
+  display: flex;
+
+}
+
+.h1text {
+  font-size: 1.5vw;
+  line-height: 1.5vw;
+  border: 1px solid red;
+}
+
+.ptext {
+  font-size: 1.5vw;
+  line-height: 1.5vw;
+  border: 1px solid red;
+}
+
+/* .mainDiv {
   height: 100vh;
   width: 100vh;
   background-color: gray;
@@ -80,20 +180,4 @@
     width: 78vh;
   }
 
-  /* .childDivData111 {
-    border: 1px solid red;
-    height: 26vh;
-    width: 100vw;
-  }
-
-  .childDiv11,
-  .childDiv22,
-  .childDiv33 {
-    height: 26vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid red;
-    width: 100vw;
-  } */
-}
+} */

@@ -1,0 +1,65 @@
+.menuDiv {
+  height: 15vh;
+  border-bottom: 1px solid #e74860;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.menu {
+  height: 14vh;
+  background-color: transparent;
+  color: #fff;
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+}
+
+.hoverEffectDiv,
+.hoverEffect {
+  /* font-size: 1.1vw; */
+  color: #fff !important;
+  /* transform: scale(1.1) */
+
+}
+
+.hoverEffectDivActive {
+  height: 12.5vh;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-bottom: 0.5vh solid #e74860;
+  margin-top: 1.1vh !important;
+}
+
+.tryNowBtn,
+.tryNowBtn:hover {
+  background-color: transparent;
+  /* height: 6vh;
+  width: 8vw; */
+  color: #fff;
+  border-color: #fff;
+  transform: scale(1.2)
+}
+
+.contactUs,
+.contactUs:hover {
+  background-color: #e74860;
+  /* height: 6vh;
+  width: 8vw; */
+  color: #fff;
+  border-color: #e74860;
+  transform: scale(1.2)
+
+}
+
+@media (min-width: 1200px) {
+  .hoverEffectDiv,
+  .hoverEffect {
+    font-size: 1.1vw;
+    color: #fff !important;
+  }
+}

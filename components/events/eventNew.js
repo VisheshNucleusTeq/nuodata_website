@@ -209,7 +209,7 @@ const EventNew = ({ EventsCss }) => {
         destroyOnClose={true}
         okButtonProps={{ style: { display: "none" } }}
         cancelButtonProps={{
-          style: { backgroundColor: "#0c3246", color: "#FFF" },
+          style: { backgroundColor: "#0c3246", color: "#FFF", display: "none" },
         }}
       >
         <DrawerView
@@ -219,6 +219,7 @@ const EventNew = ({ EventsCss }) => {
           setDisplayDiv={setDisplayDiv}
           setIsModalOpen={setIsModalOpen}
           width={"100%"}
+          setIsModalOpen={setIsModalOpen}
         />
       </Modal>
       <div
@@ -261,7 +262,7 @@ const EventNew = ({ EventsCss }) => {
 
           <Header />
           <div className={EventsCss.detailsDiv}>
-            <div
+            {/* <div
               className={`${
                 open ? EventsCss.modelButonOpen : EventsCss.modelButonClose
               } ${
@@ -289,7 +290,7 @@ const EventNew = ({ EventsCss }) => {
                   {open ? <LeftOutlined /> : <RightOutlined />}
                 </p>
               </div>
-            </div>
+            </div> */}
 
             <div className={EventsCss.relativeDiv}>
               <Space direction="horizontal" className={EventsCss.collapseDiv}>
@@ -376,7 +377,7 @@ const EventNew = ({ EventsCss }) => {
                             >
                               <Button
                                 onClick={() => {
-                                  setOpen(true);
+                                  // setOpen(true);
                                 }}
                               >
                                 Reach Us At

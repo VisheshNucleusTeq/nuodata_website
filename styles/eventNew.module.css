@@ -78,7 +78,8 @@
 }
 
 .leftEventBottomBadge button,
-.leftEventBottomBadge button:hover {
+.leftEventBottomBadge button:hover,
+.leftEventBottomBadge button:active {
   width: 90%;
   border-radius: 50px;
   color: #fff;
@@ -258,8 +259,21 @@
   justify-content: center;
 }
 
-.registerBtn button {
+.registerBtn button:first-child {
   background-color: #e74860 !important;
+  color: #fff !important;
+  border-radius: 25px;
+  border: #0c3246;
+  font-size: 1.2rem;
+  height: 100%;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.5) 0px 2px 16px 0px;
+}
+
+.registerBtn button:last-child {
+  background-color: #0c3246 !important;
   color: #fff !important;
   border-radius: 25px;
   border: #0c3246;
@@ -329,7 +343,6 @@
   /* border: 2px solid #e74860; */
   border-radius: 10px;
   box-shadow: 0 0 10px #ccc;
-
 }
 
 .imageCss img:hover {

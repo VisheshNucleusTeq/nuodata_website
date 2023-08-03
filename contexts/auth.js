@@ -21,6 +21,7 @@ export const ProtectRoute = ({ children }) => {
     "/sso",
     "/events",
     "/test",
+    "/new-pages",
   ];
   const user = useSelector((state) => state.userDetails.isLogged);
 
