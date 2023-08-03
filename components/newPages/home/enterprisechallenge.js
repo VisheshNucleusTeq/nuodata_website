@@ -1,6 +1,6 @@
 import { Col, Row, Tabs, Image, Space } from "antd";
 import { useState } from "react";
-export default function EnterpriseChallenge({ HomeCss }) {
+export default function EnterpriseChallengeNew({ HomeCss }) {
   const [activeTab, setActiveTab] = useState(1);
   const [activeTabData, setActiveTabData] = useState({
     image: "/all-graph/home/enterprise-section/ECImage1.html",
@@ -124,6 +124,7 @@ export default function EnterpriseChallenge({ HomeCss }) {
           {tabData.map((data, index) => {
             return (
               <Col
+              key={index + "enterprisechallenge"}
                 xs={24}
                 sm={12}
                 md={8}

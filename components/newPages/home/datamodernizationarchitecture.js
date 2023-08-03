@@ -2,7 +2,7 @@ import { Button, Col, Row, Image } from "antd";
 import Link from "next/link";
 import { RiseOutlined } from "@ant-design/icons";
 
-export default function DataModernizationArchitecture({ HomeCss }) {
+export default function DataModernizationArchitectureNew({ HomeCss }) {
   return (
     <Row className={HomeCss.dataModernizationArchitecture}>
       <Col

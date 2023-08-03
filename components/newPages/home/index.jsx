@@ -1,10 +1,12 @@
-import HomeCss from "../../../styles/newStyles/home.module.css";
+import HomeCss from "../../../styles/newStyles/homeNew.module.css";
 import Info from "./info";
 import ThinkBig from "./thinkbig";
 import EnterpriseChallenge from "./enterprisechallenge";
 import ModernizeWithConfidence from "./modernizewithconfidence";
-// import Footer from "../common/footer";
 import DataModernizationArchitecture from "./datamodernizationarchitecture";
+
+// import Footer from "../common/footer";
+
 
 export default function Home() {
   return (
@@ -15,6 +17,8 @@ export default function Home() {
       <div className={HomeCss.space} />
       <ModernizeWithConfidence HomeCss={HomeCss} />
       <DataModernizationArchitecture HomeCss={HomeCss} />
+
+
       {/* <div className={HomeCss.space} />
       <DataModernizationArchitecture HomeCss={HomeCss} />
       <Footer HomeCss={HomeCss} /> */}

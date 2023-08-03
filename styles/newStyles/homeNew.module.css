@@ -56,8 +56,8 @@
 .infoPipeline {
   height: 100%;
   display: flex;
-  justify-content: end;
-  align-items: end;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 /* INFO */
 
@@ -148,7 +148,7 @@
 .ECImage {
   height: 60vh;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -413,9 +413,9 @@
 .thirdViewText,
 .fifthViewText {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
-  text-align: end;
+  text-align: flex-end;
   font-size: large;
 }
 
@@ -451,7 +451,7 @@
 .secondViewText,
 .fourthViewText {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   text-align: start;
   font-size: large;

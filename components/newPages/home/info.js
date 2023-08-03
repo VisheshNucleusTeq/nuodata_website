@@ -3,7 +3,7 @@ import { AnimationOnScroll } from "react-animation-on-scroll";
 import ReactFlowInfo from "./reactflowinfo";
 import Header from "../../common/newLayout/header";
 
-export default function Info({ HomeCss }) {
+export default function InfoNew({ HomeCss }) {
   return (
     <div className={HomeCss.mainDiv}>
       <Header />

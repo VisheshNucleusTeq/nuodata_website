@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import { useEffect, useState } from "react";
 
-export default function ModernizeWithConfidence({ HomeCss }) {
+export default function ModernizeWithConfidenceNew({ HomeCss }) {
   const [isDivShow, setIsDivShow] = useState(true);
 
   const getCircle = (colorStart, colorEnd, id) => {
@@ -30,7 +30,7 @@ export default function ModernizeWithConfidence({ HomeCss }) {
                 cy="27.5"
                 r="24"
                 stroke={`url(#paint0_linear_1638_11286${id})`}
-                stroke-width="7"
+                strokeWidth="7"
               />
               <defs>
                 <linearGradient
@@ -41,8 +41,8 @@ export default function ModernizeWithConfidence({ HomeCss }) {
                   y2="55"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stop-color={colorStart} />
-                  <stop offset="1" stop-color={colorEnd} />
+                  <stop stopColor={colorStart} />
+                  <stop offset="1" stopColor={colorEnd} />
                 </linearGradient>
               </defs>
             </svg>

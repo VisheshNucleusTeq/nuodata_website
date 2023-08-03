@@ -1,6 +1,6 @@
 import { Col, Row, Image, Space } from "antd";
 import { AnimationOnScroll } from "react-animation-on-scroll";
-export default function ThinkBig({ HomeCss }) {
+export default function ThinkBigNew({ HomeCss }) {
   return (
     <div id="dataManagement" className={HomeCss.thinkBigMainDiv}>
       <Row className={HomeCss.thinkBigChild}>
