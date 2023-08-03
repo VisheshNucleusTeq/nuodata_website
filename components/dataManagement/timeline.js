@@ -41,7 +41,7 @@ export default function Timeline({ DataManagementCss }) {
       ],
     },
     {
-      titleText: "Data Governanace",
+      titleText: "Data Governance",
       titleImage: "/data_management/title_icons/3rd.png",
       data: [
         {
