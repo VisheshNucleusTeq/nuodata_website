@@ -1,4 +1,14 @@
-import { Col, Row, Button, Divider, Drawer, Space, Modal, message, Image } from "antd";
+import {
+  Col,
+  Row,
+  Button,
+  Divider,
+  Drawer,
+  Space,
+  Modal,
+  message,
+  Image,
+} from "antd";
 import React, { useState, useEffect } from "react";
 import { RWebShare } from "react-web-share";
 import { useRouter } from "next/router";
@@ -8,14 +18,16 @@ import {
   MailOutlined,
   MobileOutlined,
   GlobalOutlined,
-  RightOutlined,
-  LeftOutlined,
+  // RightOutlined,
+  // LeftOutlined,
   CloseOutlined,
   BellOutlined,
   PhoneOutlined,
   CalendarOutlined,
   ClockCircleOutlined,
   ShareAltOutlined,
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
 } from "@ant-design/icons";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
@@ -40,6 +52,9 @@ const EventNew = ({ EventsCss }) => {
   const [singleEventData, setSingleEventData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pageUrl, setPageUrl] = useState("https://nuodata.io/");
+  const [innerWidth, setInnerWidth] = useState(0);
+  const [innerHeight, setInnerHeight] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const getData = async () => {
     const data = await fetch_retry_get(
@@ -107,7 +122,7 @@ const EventNew = ({ EventsCss }) => {
         {end && start != end && (
           <>
             &nbsp;
-            <span style={{color : "#e74860"}}>{"-"}</span>
+            <span style={{ color: "#e74860" }}>{"-"}</span>
             &nbsp;
             {end}
           </>
@@ -125,7 +140,7 @@ const EventNew = ({ EventsCss }) => {
         {end && (
           <>
             &nbsp;
-            <span style={{color : "#e74860"}}>{"-"}</span>
+            <span style={{ color: "#e74860" }}>{"-"}</span>
             &nbsp;
             {end}
           </>
@@ -149,7 +164,9 @@ const EventNew = ({ EventsCss }) => {
         const findIndex = eventData.findIndex(
           (e) => Number(e?.eventId) === Number(eventId)
         );
+
         if (findIndex >= 0) {
+          setSelectedIndex(findIndex);
           setSingleEventData(eventData[findIndex]);
           setTimeout(() => {
             const element = document.getElementById("eventView" + eventId);
@@ -193,6 +210,18 @@ const EventNew = ({ EventsCss }) => {
       }
     }
   }, [status, eventDataArr]);
+
+  useEffect(() => {
+    const updateDimension = async () => {
+      setInnerWidth(window.innerWidth);
+      setInnerHeight(window.innerHeight);
+    };
+    window.addEventListener("resize", updateDimension);
+    updateDimension();
+    return () => {
+      window.removeEventListener("resize", updateDimension);
+    };
+  }, []);
 
   return singleEventData && singleEventData.imagePublicURL ? (
     <>
@@ -311,32 +340,100 @@ const EventNew = ({ EventsCss }) => {
                 </Button>
               </Space>
               <Row className={EventsCss.infoRow}>
-                <Col span={18} className={EventsCss.leftEvent}>
+                <Col
+                  xs={24}
+                  sm={24}
+                  md={24}
+                  lg={24}
+                  xl={18}
+                  xxl={18}
+                  className={EventsCss.leftEvent}
+                >
                   <Row>
                     <Col span={24} className={EventsCss.leftEventFirstDiv}>
                       <div>
                         <h1>{singleEventData?.eventHeading}</h1>
                         <div className={EventsCss.imageCss}>
-                        <Image src={singleEventData?.imagePublicURL}  preview={false} />
+                          <Image
+                            src={singleEventData?.imagePublicURL}
+                            preview={false}
+                          />
                         </div>
-                        
-                        <h6>
-                          <CalendarOutlined /> &nbsp; {getSingleDate()} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ClockCircleOutlined /> &nbsp; {getSingleTime()}{" "}
-                        </h6>
-                        {/* <h6>
-                          <ClockCircleOutlined /> &nbsp; {getSingleTime()}{" "}
-                        </h6> */}
+                        {eventData.length > 1 && innerWidth <= 1200 ? (
+                          <Row className={EventsCss.nextPrevBtn}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={0} xxl={0}>
+                              <Space>
+                                <Button
+                                  className={`${
+                                    eventData[0].eventId ===
+                                    singleEventData.eventId
+                                      ? EventsCss.disabledBtn
+                                      : null
+                                  }`}
+                                  onClick={() => {
+                                    if (
+                                      eventData[0].eventId !=
+                                      singleEventData.eventId
+                                    ) {
+                                      setSelectedIndex(selectedIndex - 1);
+                                      setSingleEventData(
+                                        eventData[selectedIndex - 1]
+                                      );
+                                    }
+                                  }}
+                                >
+                                  <ArrowLeftOutlined /> Prev
+                                </Button>
+                                {/* {selectedIndex} */}
+                                <Button
+                                  className={`${
+                                    eventData[eventData.length - 1].eventId ===
+                                    singleEventData.eventId
+                                      ? EventsCss.disabledBtn
+                                      : null
+                                  }`}
+                                  onClick={() => {
+                                    if (
+                                      eventData[eventData.length - 1].eventId !=
+                                      singleEventData.eventId
+                                    ) {
+                                      setSelectedIndex(selectedIndex + 1);
+                                      setSingleEventData(
+                                        eventData[selectedIndex + 1]
+                                      );
+                                    }
+                                  }}
+                                >
+                                  Next <ArrowRightOutlined />
+                                </Button>
+                              </Space>
+                            </Col>
+                          </Row>
+                        ) : null}
+
+                        <p></p>
+                        <Row>
+                          <Col span={24}>
+                            <h6>
+                              <CalendarOutlined /> &nbsp; {getSingleDate()}{" "}
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              <p className={EventsCss.lineChange}></p>
+                              <ClockCircleOutlined /> &nbsp; {getSingleTime()}{" "}
+                            </h6>
+                          </Col>
+                        </Row>
+                        <p></p>
                         <p
                           style={{
-                            height: "25vh",
-                            display: "flex",
                             alignItems: "center",
+                            textAlign: "center",
                           }}
                         >
                           {singleEventData?.content}
                         </p>
                       </div>
                     </Col>
+
                     <Col span={24} className={EventsCss.leftEventSecondDiv}>
                       <Row>
                         <Col span={2}></Col>
@@ -369,9 +466,79 @@ const EventNew = ({ EventsCss }) => {
                             </RWebShare>
                           </div>
 
-                          <Row className={EventsCss.leftEventBottom}>
+                          <Row align={"center"}>
+                            <Col xs={16} sm={12} md={12} lg={12} xl={6} xxl={6}>
+                              <div
+                                className={`${EventsCss.connectView1} ${EventsCss.leftEventBottomBadge}`}
+                              >
+                                <Button>Reach Us At</Button>
+                              </div>
+                            </Col>
+
                             <Col
-                              span={6}
+                              xs={24}
+                              sm={24}
+                              md={24}
+                              lg={24}
+                              xl={0}
+                              xxl={0}
+                            />
+
+                            <Col xs={20} sm={16} md={16} lg={6} xl={6} xxl={6}>
+                              <div className={EventsCss.connectView2}>
+                                <span>
+                                  <MailOutlined />
+                                  &nbsp;&nbsp; info@nucleusteq.com
+                                </span>
+                              </div>
+                            </Col>
+                            <Col
+                              xs={0}
+                              sm={0}
+                              md={24}
+                              lg={1}
+                              xl={1}
+                              xxl={1}
+                              className={EventsCss.bottomText}
+                            >
+                              {innerWidth > 992 ? (
+                                <span style={{ fontSize: "4vh" }}>|</span>
+                              ) : null}
+                            </Col>
+                            <Col xs={20} sm={10} md={10} lg={6} xl={5} xxl={5}>
+                              <div className={EventsCss.connectView3}>
+                                <span>
+                                  <MobileOutlined />
+                                  &nbsp;&nbsp;+91 9876543210
+                                </span>
+                              </div>
+                            </Col>
+                            <Col
+                              xs={0}
+                              sm={1}
+                              md={1}
+                              lg={1}
+                              xl={1}
+                              xxl={1}
+                              className={EventsCss.bottomText}
+                            >
+                              {innerWidth > 576 ? (
+                                <span style={{ fontSize: "4vh" }}>|</span>
+                              ) : null}
+                            </Col>
+                            <Col xs={20} sm={10} md={10} lg={6} xl={5} xxl={5}>
+                              <div className={EventsCss.connectView4}>
+                                <span>
+                                  <GlobalOutlined />
+                                  &nbsp;&nbsp;nucleusteq.com
+                                </span>
+                              </div>
+                            </Col>
+                          </Row>
+
+                          {/* <Row className={EventsCss.leftEventBottom}>
+                            <Col
+                              span={24}
                               className={EventsCss.leftEventBottomBadge}
                             >
                               <Button
@@ -418,26 +585,18 @@ const EventNew = ({ EventsCss }) => {
                                 &nbsp;&nbsp;nucleusteq.com
                               </span>
                             </Col>
-                          </Row>
+                          </Row> */}
                         </Col>
                         <Col span={2}></Col>
                       </Row>
                     </Col>
                   </Row>
                 </Col>
-                <Col span={6}>
-                  <Row style={{ height: "100%" }}>
-                    <Col span={24} className={EventsCss.rightIcon1}></Col>
+                <Col xs={0} sm={0} md={0} lg={0} xl={6} xxl={6}>
+                  {innerWidth > 1200 && 
+                  <Row className={EventsCss.leftEventChildRow}>
                     <Col span={24}>
-                      <Row
-                        style={{
-                          height: "90vh",
-                          display: "flex",
-                          alignItems: "center",
-                          overflowY: "scroll",
-                          backgroundColor: "rgb(0, 0, 0, 0.1)",
-                        }}
-                      >
+                      <Row>
                         <Col span={24}>
                           {[...eventData]?.map((e, i) => {
                             return (
@@ -510,6 +669,7 @@ const EventNew = ({ EventsCss }) => {
                       </Row>
                     </Col>
                   </Row>
+                  }
                 </Col>
               </Row>
             </div>

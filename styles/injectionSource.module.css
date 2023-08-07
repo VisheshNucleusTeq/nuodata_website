@@ -1,0 +1,15 @@
+.main h1 {
+  color: #e74860;
+  font-size: 2vw;
+  font-weight: bold;
+}
+
+.dashedLines:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -50px;
+  bottom: -50px;
+  left: 50%;
+  border-left: 2px dotted #ce9b3a;
+}

@@ -1,0 +1,10 @@
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconImage{
+    width: 3vw;
+    border-radius: 25px;
+}
