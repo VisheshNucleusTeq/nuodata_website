@@ -369,16 +369,15 @@
 }
 
 .leftEventChildRow {
-  top: 0;
   position: fixed;
   width: 25vw;
   top: 20vh;
-  height: 70vh;
+  height: 75vh;
   overflow-y: scroll !important;
-  /* background-color: rgb(0, 0, 0, 0.1);
-  position: fixed;
-  top: 20vh;
-  width: 25vw */
+  background-color: rgb(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .lineChange {
