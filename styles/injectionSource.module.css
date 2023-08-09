@@ -4,12 +4,127 @@
   font-weight: bold;
 }
 
-.dashedLines:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: -50px;
-  bottom: -50px;
-  left: 50%;
-  border-left: 2px dotted #ce9b3a;
+.input {
+  height: 2.5vw;
+  width: 20vw;
+  background: #ffffff;
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  resize: vertical !important;
+}
+
+.input input::placeholder {
+  font-size: 1.2vw;
+}
+
+.button {
+  height: 2.5vw;
+  background: #e74860;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 0vw 1vw 0vw 1vw;
+  cursor: pointer;
+  border: 1px solid #d6d6d6;
+}
+
+.button:hover {
+  background: #e74860;
+  color: #ffffff;
+  border: 1px solid #d6d6d6;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.5%), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.notClickDiv,
+.clickDiv {
+  padding: 1.5vw;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.notClickDiv div,
+.clickDiv div {
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.clickDiv img {
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.notClickDiv img {
+  border-radius: 10px;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.addSourceImage img {
+  width: 3vw;
+  box-shadow: 1px 1px 2px 1px #bebebe, -1px -1px 2px #bebebe;
+  border-radius: 10px;
+}
+
+.addSourceImage span {
+  font-size: 1.5vw;
+}
+
+.addSourceBtn {
+  height: 2.8vw !important;
+  color: #0c3246 !important;
+  font-weight: bold !important;
+  border: none !important;
+}
+
+.addSourceBtnActive {
+  height: 2.8vw !important;
+  background-color: #e74860 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px;
+}
+
+.nextExitBtn {
+  justify-content: center;
+  display: flex;
+}
+
+.nextBtn {
+  height: 8%;
+  margin: 0px 0px 2% 0px;
+  padding: 1% 5% 1% 5%;
+  border-radius: 10px;
+}
+
+.exitBtn {
+  height: 8%;
+  margin: 0px 0px 2% 0px;
+  padding: 1% 5% 1% 5%;
+  border-radius: 10px;
+  margin-left: 1rem;
+  background-color: #0c3246 !important;
+  border: 1px solid #0c3246 !important;
+}
+
+.formHeight {
+  /* border: 1px solid rebeccapurple; */
+  /* height: 50vh;
+  overflow-y: scroll; */
+  margin-bottom: 1.5vw;
+}
+
+.bgLine {
+  border: 1px solid red;
+  height: 6vh;
+  /* position: relative;
+  margin-top: 10vw; */
+}
+
+.iconImage {
+  width: 3vw;
+  border-radius: 2px;
 }

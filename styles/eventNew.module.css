@@ -254,8 +254,7 @@
 
 .collapseDiv h3 {
   color: #fff;
-  font-size: 1.25rem;
-  font-weight: 500;
+  font-size: 1vw;
   padding: 0 1rem;
   margin-bottom: 0em;
 }
@@ -267,7 +266,7 @@
 .relativeDiv .collapseDiv {
   position: absolute;
   top: 0vw;
-  right: 35vw;
+  right: 25vw;
   z-index: 99;
 }
 
@@ -420,6 +419,10 @@
   .connectView2 {
     border-radius: 25px 0px 0px 25px;
   }
+
+  .collapseDiv h3 {
+    font-size: 1.5vw;
+  }
 }
 @media (max-width: 992px) {
   .leftEvent h1 {
@@ -448,6 +451,10 @@
   .connectView3 {
     border-radius: 25px 0px 0px 25px;
   }
+
+  .collapseDiv h3 {
+    font-size: 2vw;
+  }
 }
 @media (max-width: 768px) {
   .leftEvent {
@@ -475,6 +482,9 @@
     padding-left: 5vw;
     padding-right: 5vw;
     margin-top: 1vw;
+  }
+  .collapseDiv h3 {
+    font-size: 2.5vw;
   }
 }
 
@@ -513,6 +523,10 @@
 
   .connectView4 {
     border-radius: 0px 0px 25px 25px;
+  }
+
+  .collapseDiv h3 {
+    font-size: 3.2vw;
   }
 }
 

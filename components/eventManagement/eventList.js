@@ -189,7 +189,7 @@ const EventList = ({
                                       ? "orange"
                                       : "red",
                                 }}
-                                disabled={e?.status === "expired"}
+                                // disabled={e?.status === "expired"}
                                 onChange={(ee) => {
                                   updateEventStatus(
                                     ee ? "ACTIVE" : "INACTIVE",
