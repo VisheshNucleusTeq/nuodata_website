@@ -49,7 +49,6 @@ const GithubCheckIn = () => {
   };
 
   const gitConfigData = async () => {
-    console.log(111)
     const authData = JSON.parse(localStorage.getItem("authData"));
     const resData = await fetch_retry_get(
       `${GETGITDATA}${authData?.orgId}?type=github`

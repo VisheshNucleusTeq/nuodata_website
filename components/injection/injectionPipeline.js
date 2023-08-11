@@ -291,7 +291,7 @@ const InjectionPipeline = () => {
                         onChange={(e) => {
                         //   alert(e);
                         }}
-                        // value={1}
+                        value={1}
                         style={{ height: "10%" }}
                       >
                         <Radio value={1}>10</Radio>

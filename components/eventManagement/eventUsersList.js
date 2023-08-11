@@ -46,7 +46,6 @@ const EventUsersList = ({ eventManagementCss, eventId }) => {
       dispatch(loderShowHideAction(false));
       if (eventUsers?.success) {
         setData(eventUsers.data);
-        console.log(eventUsers.data);
       } else {
         setData([]);
         search === "" ?? message.error([eventUsers?.error]);

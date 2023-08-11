@@ -4,7 +4,39 @@ import { Col, Row } from "antd";
 const Test = () => {
   return (
     <>
-      <div className={testCss.mainDiv}>
+      <Row align={"center"}>
+        {Array(3)
+          .fill(undefined)
+          .map((data, i) => {
+            return (
+              <Col span={8} style={{ height: "36vw", border: "1px solid red", paddingLeft: "4vw",
+              paddingRight: "4vw", }}>
+                <Row
+                  style={{
+                    
+                    border: "1px solid red",
+                  }}
+                  className={testCss.bgImage}
+                >
+                  {/* <Col
+                    span={24}
+                    style={{ height: "20vw", backgroundColor: "" }}
+                  >
+                    blank
+                  </Col> */}
+                  <Col
+                    span={24}
+                    style={{ height: "16vw", backgroundColor: "red", marginTop : "20vw" }}
+                    className={testCss.textcssView}
+                  >
+                    text
+                  </Col>
+                </Row>
+              </Col>
+            );
+          })}
+      </Row>
+      {/* <div className={testCss.mainDiv}>
         <div className={testCss.childDiv}>
           <Row>
             <Col span={24} className={testCss.childDiv1}>
@@ -37,7 +69,7 @@ const Test = () => {
             </Col>
           </Row>
         </div>
-      </div>
+      </div> */}
 
       {/* <div className={testCss.mainDiv}>
         <div className={testCss.childDiv}></div>

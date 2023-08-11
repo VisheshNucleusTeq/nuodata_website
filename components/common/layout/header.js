@@ -6,10 +6,12 @@ import { BellOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { useQueryClient } from "react-query";
 
 import { UserDetailsAction } from "../../../Redux/action";
 
 const HeaderView = ({ layoutCss, ref }) => {
+  const queryClient = useQueryClient()
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -22,6 +24,7 @@ const HeaderView = ({ layoutCss, ref }) => {
         <a
           rel="noopener noreferrer"
           onClick={() => {
+            queryClient.clear()
             localStorage.clear();
             dispatch(UserDetailsAction(false));
             router.push("/");

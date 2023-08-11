@@ -6,6 +6,8 @@ import { fetch_retry_post } from "../../network/api-manager";
 import { LOGIN } from "../../network/apiConstants";
 import { UserDetailsAction, loderShowHideAction } from "../../Redux/action";
 import { useDispatch } from "react-redux";
+import { useQueryClient } from "react-query";
+
 import {
   GoogleLogin,
   GoogleOAuthProvider,
@@ -13,6 +15,7 @@ import {
 } from "@react-oauth/google";
 
 function SignInRight({ loginCss }) {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
@@ -36,6 +39,7 @@ function SignInRight({ loginCss }) {
       );
       localStorage.setItem("expiryTime", expiryTime);
       localStorage.setItem("authData", JSON.stringify(data.data));
+      queryClient.clear();
       dispatch(UserDetailsAction(true));
       router.push("dashboard");
     } else {

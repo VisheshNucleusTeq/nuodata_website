@@ -10,7 +10,12 @@ import {
   Col,
   Input,
 } from "antd";
-import { EditOutlined, EyeOutlined, SearchOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  EyeOutlined,
+  SearchOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { useQuery } from "react-query";
@@ -55,7 +60,6 @@ const DashboardView = () => {
       dispatch(loderShowHideAction(false));
       if (data.success) {
         setData(data.data);
-        console.log(data.data);
         return data;
       } else {
         setData([]);
@@ -80,7 +84,6 @@ const DashboardView = () => {
       dispatch(loderShowHideAction(false));
       if (projectData?.success) {
         setData(projectData.data);
-        console.log(projectData.data);
       } else {
         setData([]);
         search === "" ?? message.error([projectData?.error]);
@@ -114,11 +117,12 @@ const DashboardView = () => {
         <Col span="12" align={"right"}>
           <Space direction="horizontal" size={"large"}>
             <Button className={dashboardCss.button}>
-              <span style={{ fontSize: "1.2vw" }}
-              onClick={() => {
-                dispatch(SetTabTypeAction("Define"));
-                router.push(`/data-modernization`);
-              }}
+              <span
+                style={{ fontSize: "1.2vw" }}
+                onClick={() => {
+                  dispatch(SetTabTypeAction("Define"));
+                  router.push(`/data-modernization`);
+                }}
               >
                 <PlusOutlined /> New Project
               </span>

@@ -90,7 +90,6 @@ const AddEvent = ({
   };
 
   const updateEvnetFun = async (data) => {
-    console.log(data);
     dispatch(loderShowHideAction(true));
     let postData = {};
     postData.eventHeading = data?.heading;
@@ -340,7 +339,6 @@ const AddEvent = ({
                         var reader = new FileReader();
                         reader.readAsDataURL(file);
                         reader.onload = function () {
-                          console.log(reader.result);
                           setImage(reader.result);
                         };
                         reader.onerror = function (error) {

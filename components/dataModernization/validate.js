@@ -529,7 +529,10 @@ export default function Validate({ dataModernizationCss }) {
                             style={{ color: "#adadad", cursor: "not-allowed" }}
                           >
                             <GithubOutlined />
-                            {" Checked-in (GitHub)"}
+                            {/* {" Checked-in (GitHub)"} */}
+                            {record.githubStatus === "not_uploaded"
+                              ? " Please transform this file."
+                              : " Already check-in"}
                           </a>
                         </Tooltip>
                       )}
