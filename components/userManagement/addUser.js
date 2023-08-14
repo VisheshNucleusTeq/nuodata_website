@@ -307,6 +307,10 @@ const AddUser = ({
                   required: true,
                   message: "Please input job Title",
                 },
+                {
+                  max: 30,
+                  message: "Job title cannot be more than 30 character.",
+                },
               ]}
             >
               <Input
@@ -331,6 +335,10 @@ const AddUser = ({
                       required: true,
                       message: "Please input first name.",
                     },
+                    {
+                      max: 20,
+                      message: "First name cannot be more than 20 characters.",
+                    },
                   ]}
                 >
                   <Input
@@ -342,7 +350,7 @@ const AddUser = ({
                   />
                 </Form.Item>
               </Col>
-              <Col span={12} align="right">
+              <Col span={12} align="">
                 <Form.Item
                   label={"Last Name"}
                   labelAlign={"left"}
@@ -351,6 +359,10 @@ const AddUser = ({
                     {
                       required: true,
                       message: "Please input last name.",
+                    },
+                    {
+                      max: 20,
+                      message: "Last name cannot be more than 20 characters.",
                     },
                   ]}
                 >
@@ -377,6 +389,10 @@ const AddUser = ({
                     {
                       type: "email",
                       message: "Email is not valid.",
+                    },
+                    {
+                      max: 80,
+                      message: "Email cannot be more than 80 characters.",
                     },
                   ]}
                 >
@@ -470,6 +486,10 @@ const AddUser = ({
                             {
                               required: true,
                               message: "Please input phone number",
+                            },
+                            {
+                              min: 10,
+                              message: "phone number must be 10 digit",
                             },
                           ]}
                         >

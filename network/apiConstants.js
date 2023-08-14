@@ -45,7 +45,7 @@ export const GETGITDATA = "gitupload/v1/config/";
 export const ADDORGANIZATION = "core/v1/organization";
 export const GETROLES = "usermgmt/v1/admin/roles?userType=";
 export const GETORGANIZATION = "usermgmt/v1/admin/organizations";
-export const SIGNUP = "usermgmt/v1/signup";
+export const SIGNUP = "usermgmt/v1/admin/add/user"; //"usermgmt/v1/signup";
 export const GETUSERLIST = "usermgmt/v1/admin/users/org/";
 export const UPDATEUSER = "usermgmt/v1/admin/update/user/";
 export const ADDEVENT = "core/v1/event/create";

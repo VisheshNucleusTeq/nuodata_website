@@ -9,12 +9,14 @@ import {
   Row,
   Col,
   Input,
+  Modal,
 } from "antd";
 import {
   EditOutlined,
   EyeOutlined,
   SearchOutlined,
   PlusOutlined,
+  WarningOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -22,7 +24,7 @@ import { useQuery } from "react-query";
 
 import dashboardCss from "../../styles/dashboard.module.css";
 import { fetch_retry_get } from "../../network/api-manager";
-import { GETALLPROJECT } from "../../network/apiConstants";
+import { GETALLPROJECT, GETGITDATA } from "../../network/apiConstants";
 import { SetTabTypeAction, loderShowHideAction } from "../../Redux/action";
 
 const DashboardView = () => {
@@ -30,6 +32,7 @@ const DashboardView = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
+  const [modal2Open, setModal2Open] = useState(false);
 
   const showUpdatePage = (projectId) => {
     dispatch(SetTabTypeAction("Define"));
@@ -78,7 +81,24 @@ const DashboardView = () => {
     }
   );
 
+  const checkGitConfigration = async () => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    const resData = await fetch_retry_get(
+      `${GETGITDATA}${authData?.orgId}?type=github`
+    );
+    console.log(resData);
+    if (
+      !resData?.data?.configs?.github_url ||
+      !resData?.data?.configs?.github_username
+    ) {
+      // alert(1);
+    } else {
+      // setModal2Open(true);
+    }
+  };
+
   useEffect(() => {
+    checkGitConfigration();
     dispatch(loderShowHideAction(true));
     if (status === "success") {
       dispatch(loderShowHideAction(false));
@@ -92,159 +112,184 @@ const DashboardView = () => {
   }, [status, projectData]);
 
   return (
-    <div className={dashboardCss.main}>
-      <h1>Data Modernization</h1>
-      <Row style={{ marginBottom: "24px" }}>
-        <Col span="12">
-          <Space direction="horizontal" size={"large"}>
-            <Input
-              onChange={(e) => {
-                const delayDebounceFn = setTimeout(() => {
-                  setSearch(e.target.value);
-                }, 1000);
-                return () => clearTimeout(delayDebounceFn);
-              }}
-              className={dashboardCss.input}
-              placeholder="Search"
-              suffix={
-                <SearchOutlined
-                  style={{ fontSize: "1.2vw", color: "#a9a9a9" }}
-                />
-              }
-            />
-          </Space>
-        </Col>
-        <Col span="12" align={"right"}>
-          <Space direction="horizontal" size={"large"}>
-            <Button className={dashboardCss.button}>
-              <span
-                style={{ fontSize: "1.2vw" }}
-                onClick={() => {
-                  dispatch(SetTabTypeAction("Define"));
-                  router.push(`/data-modernization`);
+    <>
+      <Modal
+        title={
+          <>
+            <p style={{ color: "#0c3246" }}>
+              <WarningOutlined /> <b> Warning</b>
+            </p>
+          </>
+        }
+        centered
+        open={modal2Open}
+        onOk={() => {
+          setModal2Open(false);
+          router.push(`/account-and-settings/repo-settings/`);
+        }}
+        closable={false}
+        cancelButtonProps={{ style: { display: "none" } }}
+        maskClosable={false}
+        okButtonProps={{ style: { background: "#e74860", border: "none" } }}
+        okText={"Repo configuration"}
+      >
+        <p>Please configure github settings before proceeding.</p>
+      </Modal>
+
+      <div className={dashboardCss.main}>
+        <h1>Data Modernization</h1>
+        <Row style={{ marginBottom: "24px" }}>
+          <Col span="12">
+            <Space direction="horizontal" size={"large"}>
+              <Input
+                onChange={(e) => {
+                  const delayDebounceFn = setTimeout(() => {
+                    setSearch(e.target.value);
+                  }, 1000);
+                  return () => clearTimeout(delayDebounceFn);
                 }}
-              >
-                <PlusOutlined /> New Project
-              </span>
-            </Button>
-          </Space>
-        </Col>
-      </Row>
-      <Card className="demoCard">
-        <Row style={{ marginBottom: "2%" }}>
-          <Col span={24}>
-            <Table
-              rowKey="projectId"
-              columns={[
-                {
-                  title: "Business Unit",
-                  dataIndex: "businessUnit",
-                  key: "businessUnit",
-                  sorter: (a, b) =>
-                    a.businessUnit.localeCompare(b.businessUnit),
-                },
-                {
-                  title: "Project",
-                  dataIndex: "name",
-                  key: "name",
-                  sorter: (a, b) => a.name.localeCompare(b.name),
-                },
-                {
-                  title: "Total Files",
-                  dataIndex: "totalFiles",
-                  key: "totalFiles",
-                  sorter: (a, b) => a.totalFiles - b.totalFiles,
-                  align: "center",
-                },
-                {
-                  title: "Source Platform",
-                  dataIndex: "sourcePlatform",
-                  key: "sourcePlatform",
-                  sorter: (a, b) =>
-                    a.sourcePlatform.localeCompare(b.sourcePlatform),
-                },
-                {
-                  title: "Target",
-                  dataIndex: "targetPlatform",
-                  key: "targetPlatform",
-                  sorter: (a, b) =>
-                    a.targetPlatform.localeCompare(b.targetPlatform),
-                },
-                {
-                  title: "Conversion",
-                  key: "conversion",
-                  render: (_, record) => (
-                    <span>
-                      {Number(record.conversion) ? record.conversion : 0}%
-                    </span>
-                  ),
-                  sorter: (a, b) =>
-                    (Number(a.conversion) ? a.conversion : 0) -
-                    (Number(b.conversion) ? b.conversion : 0),
-                  align: "center",
-                },
-                {
-                  title: "Created Date",
-                  key: "creationDateTime",
-                  render: (_, record) => (
-                    <span>{changeDateFormat(record.creationDateTime)}</span>
-                  ),
-                  sorter: (a, b) =>
-                    new Date(a.creationDateTime).getTime() -
-                    new Date(b.creationDateTime).getTime(),
-                },
-                {
-                  title: "Action",
-                  key: "action",
-                  render: (_, record) => (
-                    <Space
-                      size="middle"
-                      key={(Math.random() + 1).toString(36).substring(7)}
-                    >
-                      <Tooltip
-                        placement="top"
-                        title={"Edit"}
-                        key={(Math.random() + 1).toString(36).substring(7)}
-                      >
-                        <a
-                          href={`/data-modernization?id=${record.projectId}`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            showUpdatePage(record.projectId);
-                          }}
-                        >
-                          <EditOutlined />
-                        </a>
-                      </Tooltip>
-                      <Tooltip
-                        placement="top"
-                        title={"Details"}
-                        key={(Math.random() + 1).toString(36).substring(7)}
-                      >
-                        <a
-                          href={`/data-modernization?id=${record.projectId}`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            showUpdatePageAnalyze(
-                              record.projectId,
-                              record.totalFiles
-                            );
-                          }}
-                        >
-                          <EyeOutlined />
-                        </a>
-                      </Tooltip>
-                    </Space>
-                  ),
-                  align: "center",
-                },
-              ]}
-              dataSource={data}
-            />
+                className={dashboardCss.input}
+                placeholder="Search"
+                suffix={
+                  <SearchOutlined
+                    style={{ fontSize: "1.2vw", color: "#a9a9a9" }}
+                  />
+                }
+              />
+            </Space>
+          </Col>
+          <Col span="12" align={"right"}>
+            <Space direction="horizontal" size={"large"}>
+              <Button className={dashboardCss.button}>
+                <span
+                  style={{ fontSize: "1.2vw" }}
+                  onClick={() => {
+                    dispatch(SetTabTypeAction("Define"));
+                    router.push(`/data-modernization`);
+                  }}
+                >
+                  <PlusOutlined /> New Project
+                </span>
+              </Button>
+            </Space>
           </Col>
         </Row>
-      </Card>
-    </div>
+        <Card className="demoCard">
+          <Row style={{ marginBottom: "2%" }}>
+            <Col span={24}>
+              <Table
+                rowKey="projectId"
+                columns={[
+                  {
+                    title: "Business Unit",
+                    dataIndex: "businessUnit",
+                    key: "businessUnit",
+                    sorter: (a, b) =>
+                      a.businessUnit.localeCompare(b.businessUnit),
+                  },
+                  {
+                    title: "Project",
+                    dataIndex: "name",
+                    key: "name",
+                    sorter: (a, b) => a.name.localeCompare(b.name),
+                  },
+                  {
+                    title: "Total Files",
+                    dataIndex: "totalFiles",
+                    key: "totalFiles",
+                    sorter: (a, b) => a.totalFiles - b.totalFiles,
+                    align: "center",
+                  },
+                  {
+                    title: "Source Platform",
+                    dataIndex: "sourcePlatform",
+                    key: "sourcePlatform",
+                    sorter: (a, b) =>
+                      a.sourcePlatform.localeCompare(b.sourcePlatform),
+                  },
+                  {
+                    title: "Target",
+                    dataIndex: "targetPlatform",
+                    key: "targetPlatform",
+                    sorter: (a, b) =>
+                      a.targetPlatform.localeCompare(b.targetPlatform),
+                  },
+                  {
+                    title: "Conversion",
+                    key: "conversion",
+                    render: (_, record) => (
+                      <span>
+                        {Number(record.conversion) ? record.conversion : 0}%
+                      </span>
+                    ),
+                    sorter: (a, b) =>
+                      (Number(a.conversion) ? a.conversion : 0) -
+                      (Number(b.conversion) ? b.conversion : 0),
+                    align: "center",
+                  },
+                  {
+                    title: "Created Date",
+                    key: "creationDateTime",
+                    render: (_, record) => (
+                      <span>{changeDateFormat(record.creationDateTime)}</span>
+                    ),
+                    sorter: (a, b) =>
+                      new Date(a.creationDateTime).getTime() -
+                      new Date(b.creationDateTime).getTime(),
+                  },
+                  {
+                    title: "Action",
+                    key: "action",
+                    render: (_, record) => (
+                      <Space
+                        size="middle"
+                        key={(Math.random() + 1).toString(36).substring(7)}
+                      >
+                        <Tooltip
+                          placement="top"
+                          title={"Edit"}
+                          key={(Math.random() + 1).toString(36).substring(7)}
+                        >
+                          <a
+                            href={`/data-modernization?id=${record.projectId}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              showUpdatePage(record.projectId);
+                            }}
+                          >
+                            <EditOutlined />
+                          </a>
+                        </Tooltip>
+                        <Tooltip
+                          placement="top"
+                          title={"Details"}
+                          key={(Math.random() + 1).toString(36).substring(7)}
+                        >
+                          <a
+                            href={`/data-modernization?id=${record.projectId}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              showUpdatePageAnalyze(
+                                record.projectId,
+                                record.totalFiles
+                              );
+                            }}
+                          >
+                            <EyeOutlined />
+                          </a>
+                        </Tooltip>
+                      </Space>
+                    ),
+                    align: "center",
+                  },
+                ]}
+                dataSource={data}
+              />
+            </Col>
+          </Row>
+        </Card>
+      </div>
+    </>
   );
 };
 
