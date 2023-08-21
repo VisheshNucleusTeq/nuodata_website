@@ -14,7 +14,7 @@ import { DEFINE, GETPROJECT, UPDATEPROJECT } from "../../network/apiConstants";
 import { SetProjectDetailsAction, SetTabTypeAction } from "../../Redux/action";
 
 const Define = ({ dataModernizationCss }) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const { query } = useRouter();
   const router = useRouter();
   const [form] = Form.useForm();
@@ -31,7 +31,7 @@ const Define = ({ dataModernizationCss }) => {
 
   const onFinishDefine = async (payload) => {
     if (projectDetails && projectDetails.name) {
-      queryClient.refetchQueries({ queryKey: ['PROJECT_DATA'] })
+      queryClient.refetchQueries({ queryKey: ["PROJECT_DATA"] });
       dispatch(SetTabTypeAction("Connect"));
     } else {
       setLoading(true);
@@ -48,7 +48,7 @@ const Define = ({ dataModernizationCss }) => {
       });
       setLoading(false);
       if (data.success) {
-        queryClient.refetchQueries({ queryKey: ['PROJECT_DATA'] })
+        queryClient.refetchQueries({ queryKey: ["PROJECT_DATA"] });
         dispatch(SetProjectDetailsAction(data.data));
         dispatch(SetTabTypeAction("Connect"));
       } else {
@@ -72,7 +72,7 @@ const Define = ({ dataModernizationCss }) => {
     );
     setLoading(false);
     if (data.success) {
-      queryClient.refetchQueries({ queryKey: ['PROJECT_DATA'] })
+      queryClient.refetchQueries({ queryKey: ["PROJECT_DATA"] });
       dispatch(SetProjectDetailsAction(data.data));
       router.push(`/dashboard`);
     } else {
@@ -172,6 +172,10 @@ const Define = ({ dataModernizationCss }) => {
               {
                 required: true,
                 message: "Project name is required.",
+              },
+              {
+                max: 100,
+                message: "Project name cannot be more than 100 characters.",
               },
             ]}
           >

@@ -22,11 +22,18 @@ import {
   PlusOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-
+import {
+  SqlEditor,
+  READ_VALIDATORS,
+  copyToClipboard,
+  formatSql,
+} from "react-sql-editor";
 import AddSource from "./model/addSource";
 import injectionSourceCss from "../../styles/injectionSource.module.css";
 
 const InjectionPipeline = () => {
+  const [displaySql, setDisplaySql] = useState("");
+  const [copyTips, setCopyTips] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [accountList, setAccountList] = useState([
@@ -174,9 +181,9 @@ const InjectionPipeline = () => {
                     }}
                     value={1}
                   >
-                    <Radio value={1}>Both</Radio>
-                    <Radio value={2}>Source Schema</Radio>
-                    <Radio value={3}>
+                    {/* <Radio value={1}>Both</Radio> */}
+                    <Radio value={1}>Source Schema</Radio>
+                    <Radio value={2}>
                       Source Schema by query {"(PySpark)"}
                     </Radio>
                   </Radio.Group>
@@ -240,7 +247,7 @@ const InjectionPipeline = () => {
 
                 <Col span={24} style={{ height: "100%", marginTop: "2vh" }}>
                   <Row>
-                    <Col span={11}>
+                    <Col span={24}>
                       <Table
                         className="demo"
                         dataSource={[
@@ -284,12 +291,12 @@ const InjectionPipeline = () => {
                         pagination={false}
                       />
                     </Col>
-                    <Col span={1} />
-                    <Col span={11}>
+                    {/* <Col span={1} /> */}
+                    <Col span={24} style={{marginTop : "2vw"}}>
                       <b>Display Row </b> &nbsp;
                       <Radio.Group
                         onChange={(e) => {
-                        //   alert(e);
+                          //   alert(e);
                         }}
                         value={1}
                         style={{ height: "10%" }}
@@ -298,7 +305,7 @@ const InjectionPipeline = () => {
                         <Radio value={2}>20</Radio>
                       </Radio.Group>
                       <p></p>
-                      <Input.TextArea
+                      {/* <Input.TextArea
                         rows={4}
                         placeholder=""
                         // maxLength={6}
@@ -309,6 +316,39 @@ const InjectionPipeline = () => {
                           color: "#FFF",
                         }}
                         value={"SELECT * FROM table WHERE condition"}
+                      /> */}
+                      <SqlEditor
+                        defaultValue={displaySql}
+                        title="Sql Editor"
+                        width="auto"
+                        height="50vh"
+                        onChange={(data) => {
+                          console.log("onChange", data);
+                          setDisplaySql(data.value);
+                        }}
+                        onClickFormat={() => {
+                          formatSql({
+                            value: displaySql,
+                            callback: (formatData) => {
+                              setDisplaySql(formatData.value);
+                            },
+                          });
+                        }}
+                        onClickDelete={() => {
+                          setDisplaySql("");
+                        }}
+                        onClickCopy={() => {
+                          copyToClipboard({
+                            value: displaySql,
+                            callback: setCopyTips,
+                          });
+                        }}
+                        validatorConfig={{
+                          maxSqlNum: 1000,
+                          // validators: READ_VALIDATORS,
+                        }}
+                        isShowHeader={true}
+
                       />
                     </Col>
                   </Row>

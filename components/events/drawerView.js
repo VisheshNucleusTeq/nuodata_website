@@ -93,6 +93,10 @@ const DrawerView = ({
                     required: true,
                     message: "Please input your first name.",
                   },
+                  {
+                    max: 40,
+                    message: "First Name cannot be more than 40 characters.",
+                  },
                 ]}
               >
                 <Input
@@ -114,6 +118,10 @@ const DrawerView = ({
                   {
                     required: true,
                     message: "Please input your last name.",
+                  },
+                  {
+                    max: 40,
+                    message: "Last Name cannot be more than 40 characters.",
                   },
                 ]}
               >
@@ -142,6 +150,10 @@ const DrawerView = ({
                   {
                     required: true,
                     message: "Please input your E-mail!",
+                  },
+                  {
+                    max: 80,
+                    message: "Email cannot be more than 80 characters.",
                   },
                 ]}
               >
@@ -214,6 +226,16 @@ const DrawerView = ({
                             required: true,
                             message: "Please input your phone number",
                           },
+                          {
+                            max: 15,
+                            message:
+                              "Contact number must be between 8-15 digit",
+                          },
+                          {
+                            min: 8,
+                            message:
+                              "Contact number must be between 8-15 digit",
+                          },
                         ]}
                       >
                         <Input
@@ -255,6 +277,11 @@ const DrawerView = ({
                     required: true,
                     message: "Please input your organization Name",
                   },
+                  {
+                    max: 80,
+                    message:
+                      "Organization name cannot be more than 80 characters.",
+                  },
                 ]}
               >
                 <Input
@@ -275,8 +302,12 @@ const DrawerView = ({
                 rules={[
                   {
                     required: true,
-                    message: "Please input your Title",
+                    message: "Please input your job title",
                   },
+                  {
+                    max : 50,
+                    message : "Job Title cannot be more than 50 characters."
+                  }
                 ]}
               >
                 <Input

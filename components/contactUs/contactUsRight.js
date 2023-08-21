@@ -58,6 +58,10 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                     required: true,
                     message: "Please input your first name.",
                   },
+                  {
+                    max: 20,
+                    message: "First name cannot be more than 20 characters.",
+                  },
                 ]}
               >
                 <Input
@@ -79,6 +83,10 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   {
                     required: true,
                     message: "Please input your last name.",
+                  },
+                  {
+                    max: 20,
+                    message: "Last name cannot be more than 20 characters.",
                   },
                 ]}
               >
@@ -107,6 +115,10 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   {
                     required: true,
                     message: "Please input your E-mail!",
+                  },
+                  {
+                    max: 80,
+                    message: "Email cannot be more than 80 characters.",
                   },
                 ]}
               >
@@ -178,6 +190,14 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                             required: true,
                             message: "Please input your phone number",
                           },
+                          {
+                            min: 8,
+                            message: "phone number must be between 8-15 digit.",
+                          },
+                          {
+                            max: 15,
+                            message: "phone number must be between 8-15 digit.",
+                          },
                         ]}
                       >
                         <Input
@@ -218,6 +238,11 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   {
                     required: true,
                     message: "Source platform is required.",
+                  },
+                  {
+                    max: 40,
+                    message:
+                      "Source platform name cannot be more than 40 characters.",
                   },
                 ]}
               >
@@ -274,6 +299,11 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                     required: true,
                     message: "Target platform is required.",
                   },
+                  {
+                    max: 40,
+                    message:
+                      "Target platform name cannot be more than 40 characters.",
+                  },
                 ]}
               >
                 {/* <Select
@@ -327,6 +357,11 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                     required: true,
                     message: "Source File Type is required.",
                   },
+                  {
+                    max: 40,
+                    message:
+                      "Source langauge cannot be more than 40 characters.",
+                  },
                 ]}
               >
                 {/* <Select
@@ -361,6 +396,11 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   {
                     required: true,
                     message: "Target language is required.",
+                  },
+                  {
+                    max: 40,
+                    message:
+                      "Target language cannot be more than 40 characters.",
                   },
                 ]}
               >
@@ -400,6 +440,11 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                     required: true,
                     message: "Please input your organization Name",
                   },
+                  {
+                    max: 80,
+                    message:
+                      "Organization name cannot be more than 80 characters.",
+                  },
                 ]}
               >
                 <Input
@@ -421,6 +466,10 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
                   {
                     required: true,
                     message: "Please input your Title",
+                  },
+                  {
+                    max: 30,
+                    message: "Job title cannot be more than 30 characters.",
                   },
                 ]}
               >

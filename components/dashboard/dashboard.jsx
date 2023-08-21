@@ -91,8 +91,10 @@ const DashboardView = () => {
       !resData?.data?.configs?.github_url ||
       !resData?.data?.configs?.github_username
     ) {
+      setModal2Open(true);
       // alert(1);
     } else {
+      setModal2Open(false);
       // setModal2Open(true);
     }
   };
@@ -160,17 +162,19 @@ const DashboardView = () => {
           </Col>
           <Col span="12" align={"right"}>
             <Space direction="horizontal" size={"large"}>
-              <Button className={dashboardCss.button}>
-                <span
-                  style={{ fontSize: "1.2vw" }}
-                  onClick={() => {
-                    dispatch(SetTabTypeAction("Define"));
-                    router.push(`/data-modernization`);
-                  }}
-                >
-                  <PlusOutlined /> New Project
-                </span>
-              </Button>
+              {!modal2Open && (
+                <Button className={dashboardCss.button}>
+                  <span
+                    style={{ fontSize: "1.2vw" }}
+                    onClick={() => {
+                      dispatch(SetTabTypeAction("Define"));
+                      router.push(`/data-modernization`);
+                    }}
+                  >
+                    <PlusOutlined /> New Project
+                  </span>
+                </Button>
+              )}
             </Space>
           </Col>
         </Row>

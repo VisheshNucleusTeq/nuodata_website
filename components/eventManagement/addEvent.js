@@ -71,19 +71,16 @@ const AddEvent = ({
       postData
     );
 
-
-
     setUpdateData({});
     form.resetFields();
     setImage("/events/placeholder.jpg");
-    
+
     await queryClient.refetchQueries({
       queryKey: ["EVENT_DATA", "false"],
     });
     setTabType("Manage Events");
     message.success(resData?.data?.message);
     dispatch(loderShowHideAction(false));
-
 
     // dispatch(loderShowHideAction(false));
     // message.success(resData?.data?.message);
@@ -115,7 +112,7 @@ const AddEvent = ({
     setUpdateData({});
     form.resetFields();
     setImage("/events/placeholder.jpg");
-    
+
     await queryClient.refetchQueries({
       queryKey: ["EVENT_DATA", "false"],
     });
@@ -170,7 +167,14 @@ const AddEvent = ({
               <Col span={24}>
                 <Form.Item
                   name={"heading"}
-                  rules={[{ required: true, message: "Heading is required." }]}
+                  rules={[
+                    { required: true, message: "Heading is required." },
+                    {
+                      max: 100,
+                      message:
+                        "Event Heading cannot be more than 100 characters.",
+                    },
+                  ]}
                 >
                   <Input.TextArea
                     name="heading"
@@ -195,6 +199,10 @@ const AddEvent = ({
                       type: "email",
                       message: "Please enter a valid email address.",
                     },
+                    {
+                      max: 80,
+                      message: "Email cannot be more than 80 characters.",
+                    },
                   ]}
                 >
                   <Input
@@ -209,6 +217,14 @@ const AddEvent = ({
                   name={"contactNumber"}
                   rules={[
                     { required: true, message: "Contact Number is required." },
+                    {
+                      min: 8,
+                      message: "Contact number must be between 8-15 digit",
+                    },
+                    {
+                      max: 15,
+                      message: "Contact number must be between 8-15 digit",
+                    },
                   ]}
                 >
                   <Input

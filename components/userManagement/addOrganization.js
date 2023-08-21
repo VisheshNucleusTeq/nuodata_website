@@ -58,7 +58,13 @@ const AddOrganization = ({
       >
         <Form.Item
           name="firstName"
-          rules={[{ required: true, message: "First name is required" }]}
+          rules={[
+            { required: true, message: "First name is required" },
+            {
+              max: 20,
+              message: "First name cannot be more than 20 characters.",
+            },
+          ]}
           label={"First name"}
           labelAlign={"left"}
         >
@@ -71,7 +77,13 @@ const AddOrganization = ({
         </Form.Item>
         <Form.Item
           name="lastName"
-          rules={[{ required: true, message: "Last name is required" }]}
+          rules={[
+            { required: true, message: "Last name is required" },
+            {
+              max: 20,
+              message: "Last name cannot be more than 20 characters.",
+            },
+          ]}
           label={"Last name"}
           labelAlign={"left"}
         >
@@ -84,7 +96,13 @@ const AddOrganization = ({
         </Form.Item>
         <Form.Item
           name="orgName"
-          rules={[{ required: true, message: "Organization name is required" }]}
+          rules={[
+            { required: true, message: "Organization name is required" },
+            {
+              max: 80,
+              message: "Organization name cannot be more than 80 characters.",
+            },
+          ]}
           label={"organization Name"}
           labelAlign={"left"}
         >
@@ -98,7 +116,7 @@ const AddOrganization = ({
         <Form.Item
           tooltip={{
             title: "icon msg",
-            icon: <InfoCircleTwoTone />
+            icon: <InfoCircleTwoTone />,
           }}
           name="email"
           rules={[
@@ -107,6 +125,10 @@ const AddOrganization = ({
               type: "email",
               message: "Email is not valid.",
             },
+            {
+              max : 80,
+              message: "Email cannot be more than 80 characters."
+            }
           ]}
           label={"Email"}
           labelAlign={"left"}
@@ -169,6 +191,14 @@ const AddOrganization = ({
                       required: true,
                       message: "Please input your phone number",
                     },
+                    {
+                      max : 15,
+                      message: "Contact number must be between 8-15 digit"
+                    },
+                    {
+                      min : 8,
+                      message: "Contact number must be between 8-15 digit"
+                    }
                   ]}
                 >
                   <Input
