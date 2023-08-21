@@ -9,13 +9,15 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider } from "react-redux";
 import { useRouter } from "next/router";
 
-import { wrapper, store } from "../Redux/store";
+import { wrapper } from "../Redux/store";
 import { ProtectRoute } from "../contexts/auth";
 import { useSelector } from "react-redux";
 import { SessionProvider } from "next-auth/react"
 import FullPageLoader from "../components/common/fullPageLoader";
 
-function MyApp({ Component, pageProps, session }) {
+function MyApp({ Component, pageProps, session,  ...rest }) {
+  const {store, props} = wrapper.useWrappedStore(rest);
+
   const [queryClient] = React.useState(() => new QueryClient());
   
   const router = useRouter();
