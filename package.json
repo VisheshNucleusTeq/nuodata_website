@@ -33,7 +33,6 @@
     "react-query": "^3.39.2",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
-    "react-sql-editor": "0.0.6",
     "react-web-share": "^2.0.2",
     "reactflow": "^11.3.3",
     "redux": "^4.2.0",

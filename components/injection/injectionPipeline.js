@@ -22,12 +22,12 @@ import {
   PlusOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import {
-  SqlEditor,
-  READ_VALIDATORS,
-  copyToClipboard,
-  formatSql,
-} from "react-sql-editor";
+// import {
+//   SqlEditor,
+//   READ_VALIDATORS,
+//   copyToClipboard,
+//   formatSql,
+// } from "react-sql-editor";
 import AddSource from "./model/addSource";
 import injectionSourceCss from "../../styles/injectionSource.module.css";
 
@@ -317,7 +317,7 @@ const InjectionPipeline = () => {
                         }}
                         value={"SELECT * FROM table WHERE condition"}
                       /> */}
-                      <SqlEditor
+                      {/* <SqlEditor
                         defaultValue={displaySql}
                         title="Sql Editor"
                         width="auto"
@@ -349,7 +349,7 @@ const InjectionPipeline = () => {
                         }}
                         isShowHeader={true}
 
-                      />
+                      /> */}
                     </Col>
                   </Row>
                 </Col>
