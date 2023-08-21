@@ -9,17 +9,15 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider } from "react-redux";
 import { useRouter } from "next/router";
 
-import { wrapper } from "../Redux/store";
+import { wrapper, store } from "../Redux/store";
 import { ProtectRoute } from "../contexts/auth";
 import { useSelector } from "react-redux";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from "next-auth/react"
 import FullPageLoader from "../components/common/fullPageLoader";
 
-function MyApp({ Component, pageProps, session, ...rest }) {
-  const { store, props } = wrapper.useWrappedStore(rest);
-
+function MyApp({ Component, pageProps, session }) {
   const [queryClient] = React.useState(() => new QueryClient());
-
+  
   const router = useRouter();
   const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
   if (path) {
@@ -30,17 +28,17 @@ function MyApp({ Component, pageProps, session, ...rest }) {
 
   return (
     <SessionProvider session={session}>
-      <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
-            {isLoaderShow && <FullPageLoader />}
-            <ProtectRoute user={user}>
-              <Component key={router.asPath} {...pageProps} />
-            </ProtectRoute>
-          </Hydrate>
-          <ReactQueryDevtools />
-        </QueryClientProvider>
-      </Provider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          {isLoaderShow && <FullPageLoader />}
+          <ProtectRoute user={user}>
+            <Component key={router.asPath} {...pageProps} />
+          </ProtectRoute>
+        </Hydrate>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </Provider>
     </SessionProvider>
   );
 }

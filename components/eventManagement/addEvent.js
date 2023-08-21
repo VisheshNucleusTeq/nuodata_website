@@ -107,8 +107,8 @@ const AddEvent = ({
     postData.endDateTime = moment(
       data?.endDate.format(dateFormat) + " " + data?.endTime.format(timeFormat)
     ).format("yyyy-MM-DDTHH:mm:ss.SSSZ");
-// console.log("postData",postData)
-// return true;
+    // console.log("postData",postData)
+    // return true;
     const resData = await fetch_retry_put_with_file(
       `${UPDATEEVENT}${updateData?.eventId}`,
       postData
@@ -128,13 +128,22 @@ const AddEvent = ({
 
   useEffect(() => {
     if (updateData?.eventId) {
-      // alert(updateData?.ctryCode)
+      let ctryCode;
+      let contactNumber;
+      const contactData = updateData?.contactNumber?.split(" ");
+      if (contactData[0].length > 4) {
+        ctryCode = "91";
+        contactNumber = contactData[0];
+      } else {
+        ctryCode = contactData[0];
+        contactNumber = contactData[1];
+      }
       setImage(updateData?.imagePublicURL);
       form.setFieldsValue({
         heading: updateData?.eventHeading,
         email: updateData?.contactEmail,
-        ctryCode: updateData?.ctryCode,
-        contact : updateData?.contactNumber,
+        ctryCode: ctryCode,
+        contact: contactNumber,
         content: updateData?.content,
         startDate: moment(updateData?.startDateTime, dateFormat),
         startTime: moment(updateData?.startDateTime, timeFormat),
