@@ -20,7 +20,6 @@ const AddOrganization = ({
     dispatch(loderShowHideAction(true));
     const data = await fetch_retry_post(ADDORGANIZATION, {
       ...payload,
-      contact: "+" + payload?.ctryCode + " " + payload?.phone,
     });
     if (data.success) {
       message.success([data?.data?.message]);
@@ -116,7 +115,7 @@ const AddOrganization = ({
         <Form.Item
           tooltip={{
             title: "icon msg",
-            icon: <InfoCircleTwoTone />,
+            // icon: <InfoCircleTwoTone />,
           }}
           name="email"
           rules={[
@@ -126,9 +125,9 @@ const AddOrganization = ({
               message: "Email is not valid.",
             },
             {
-              max : 80,
-              message: "Email cannot be more than 80 characters."
-            }
+              max: 80,
+              message: "Email cannot be more than 80 characters.",
+            },
           ]}
           label={"Email"}
           labelAlign={"left"}
@@ -147,7 +146,7 @@ const AddOrganization = ({
           }}
           label={"Contact Number"}
           labelAlign={"left"}
-          name={"phone"}
+          name={"contact"}
           rules={[
             {
               required: true,
@@ -185,27 +184,27 @@ const AddOrganization = ({
               </Col>
               <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                 <Form.Item
-                  name={"phone"}
+                  name={"contact"}
                   rules={[
                     {
                       required: true,
                       message: "Please input your phone number",
                     },
                     {
-                      max : 15,
-                      message: "Contact number must be between 8-15 digit"
+                      max: 15,
+                      message: "Contact number must be between 8-15 digit",
                     },
                     {
-                      min : 8,
-                      message: "Contact number must be between 8-15 digit"
-                    }
+                      min: 8,
+                      message: "Contact number must be between 8-15 digit",
+                    },
                   ]}
                 >
                   <Input
                     key={"input-phone-number"}
                     className={"inputGroup inputGroupNumber"}
                     placeholder={"Phone Number"}
-                    name={"phone"}
+                    name={"contact"}
                     type={"number"}
                     onKeyDown={(e) => {
                       e.target.value = e.target.value.replace(/\D/g, "");

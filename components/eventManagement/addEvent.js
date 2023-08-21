@@ -10,6 +10,7 @@ import {
   Image,
   Tag,
   message,
+  Select,
 } from "antd";
 const { Dragger } = Upload;
 import ImgCrop from "antd-img-crop";
@@ -25,6 +26,7 @@ import {
 import { loderShowHideAction } from "../../Redux/action";
 import { useEffect } from "react";
 import { useQueryClient } from "react-query";
+import country from "../helper/country";
 
 const AddEvent = ({
   eventManagementCss,
@@ -53,7 +55,8 @@ const AddEvent = ({
     let postData = {};
     postData.eventHeading = data?.heading;
     postData.contactEmail = data?.email;
-    postData.contactNumber = data?.contactNumber;
+    postData.ctryCode = data?.ctryCode;
+    postData.contactNumber = data?.contact;
     postData.content = data?.content;
     postData.file = data?.file ? data?.file : "";
     postData.startDateTime = moment(
@@ -91,7 +94,8 @@ const AddEvent = ({
     let postData = {};
     postData.eventHeading = data?.heading;
     postData.contactEmail = data?.email;
-    postData.contactNumber = data?.contactNumber;
+    postData.ctryCode = data?.ctryCode;
+    postData.contactNumber = data?.contact;
     postData.content = data?.content;
     postData.file = data.file ? data?.file : undefined;
     postData.startDateTime = moment(
@@ -103,7 +107,8 @@ const AddEvent = ({
     postData.endDateTime = moment(
       data?.endDate.format(dateFormat) + " " + data?.endTime.format(timeFormat)
     ).format("yyyy-MM-DDTHH:mm:ss.SSSZ");
-
+// console.log("postData",postData)
+// return true;
     const resData = await fetch_retry_put_with_file(
       `${UPDATEEVENT}${updateData?.eventId}`,
       postData
@@ -123,11 +128,13 @@ const AddEvent = ({
 
   useEffect(() => {
     if (updateData?.eventId) {
+      // alert(updateData?.ctryCode)
       setImage(updateData?.imagePublicURL);
       form.setFieldsValue({
         heading: updateData?.eventHeading,
         email: updateData?.contactEmail,
-        contactNumber: updateData?.contactNumber,
+        ctryCode: updateData?.ctryCode,
+        contact : updateData?.contactNumber,
         content: updateData?.content,
         startDate: moment(updateData?.startDateTime, dateFormat),
         startTime: moment(updateData?.startDateTime, timeFormat),
@@ -213,7 +220,7 @@ const AddEvent = ({
                 </Form.Item>
               </Col>
               <Col span={24}>
-                <Form.Item
+                {/* <Form.Item
                   name={"contactNumber"}
                   rules={[
                     { required: true, message: "Contact Number is required." },
@@ -232,6 +239,105 @@ const AddEvent = ({
                     className={eventManagementCss.textInput}
                     placeholder="Contact Number"
                   />
+                </Form.Item> */}
+                <Form.Item
+                  style={{
+                    height: "2.8vw",
+                    marginBottom: "4vw",
+                  }}
+                  // label={"Contact Number"}
+                  labelAlign={"left"}
+                  name={"contact"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "",
+                    },
+                  ]}
+                >
+                  <Input.Group>
+                    <Row>
+                      <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item
+                          name={"ctryCode"}
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please select country",
+                            },
+                          ]}
+                        >
+                          <Select
+                            name={"ctryCode"}
+                            className="inputSelectGroup"
+                            placeholder="Country Code"
+                            optionFilterProp="children"
+                            initialvalues={""}
+                            options={country}
+                            showSearch
+                            filterOption={(input, option) =>
+                              (option?.label ?? "")
+                                .toLowerCase()
+                                .includes(input.toLowerCase())
+                            }
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                        <Form.Item
+                          name={"contact"}
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please input your phone number",
+                            },
+                            {
+                              max: 15,
+                              message:
+                                "Contact number must be between 8-15 digit",
+                            },
+                            {
+                              min: 8,
+                              message:
+                                "Contact number must be between 8-15 digit",
+                            },
+                          ]}
+                        >
+                          <Input
+                            key={"input-phone-number"}
+                            className={"inputGroup inputGroupNumber"}
+                            placeholder={"Phone Number"}
+                            name={"contact"}
+                            type={"number"}
+                            onKeyDown={(e) => {
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
+                            }}
+                            onKeyUp={(e) => {
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
+                            }}
+                            onChange={(e) => {
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
+                            }}
+                            onBlur={(e) => {
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
+                            }}
+                          />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </Input.Group>
                 </Form.Item>
               </Col>
             </Row>

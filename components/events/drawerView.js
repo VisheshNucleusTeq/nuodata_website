@@ -23,7 +23,8 @@ const DrawerView = ({
       eventId: singleEventData?.eventId,
       userName: payload?.firstName + " " + payload?.lastName,
       email: payload?.email,
-      mobileNo: payload?.ctryCode + "" + payload?.phone,
+      ctryCode: payload?.ctryCode,
+      mobileNo: payload?.phone,
       orgName: payload?.orgName,
       designation: payload?.jobTitle,
     };
@@ -305,9 +306,9 @@ const DrawerView = ({
                     message: "Please input your job title",
                   },
                   {
-                    max : 50,
-                    message : "Job Title cannot be more than 50 characters."
-                  }
+                    max: 50,
+                    message: "Job Title cannot be more than 50 characters.",
+                  },
                 ]}
               >
                 <Input
