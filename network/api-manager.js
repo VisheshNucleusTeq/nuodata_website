@@ -1,5 +1,6 @@
 import retry from "async-retry";
 import { BaseURL as ApiInstance } from "./enviroment";
+import { message } from "antd";
 
 export const fetch_retry_get = async (endpoint, payload = {}) => {
   try {
@@ -19,6 +20,8 @@ export const fetch_retry_get = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
+    // message.error(error?.response?.data?.errorMessages);
+
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
@@ -41,6 +44,9 @@ export const fetch_retry_post = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
+    console.log("error",error)
+    // message.error(error?.response?.data?.errorMessages);
+
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
@@ -63,6 +69,7 @@ export const fetch_retry_put = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
+    // message.error(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
@@ -85,6 +92,8 @@ export const fetch_retry_delete = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
+    // message.error(error?.response?.data?.errorMessages);
+
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
@@ -113,6 +122,8 @@ export const fetch_retry_post_with_file = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
+    // message.error(error?.response?.data?.errorMessages);
+
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
@@ -141,6 +152,8 @@ export const fetch_retry_put_with_file = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
+    // message.error(error?.response?.data?.errorMessages);
+
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };

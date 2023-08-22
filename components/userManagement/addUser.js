@@ -488,8 +488,12 @@ const AddUser = ({
                               message: "Please input phone number",
                             },
                             {
-                              min: 10,
-                              message: "phone number must be 10 digit",
+                              min: 8,
+                              message: "Contact number must be between 8-15 digit",
+                            },
+                            {
+                              max: 15,
+                              message: "Contact number must be between 8-15 digit",
                             },
                           ]}
                         >
