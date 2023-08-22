@@ -152,8 +152,6 @@ export const fetch_retry_put_with_file = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
-    // message.error(error?.response?.data?.errorMessages);
-
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
