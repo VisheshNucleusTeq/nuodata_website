@@ -558,4 +558,53 @@
   border-color: #e74860 !important;
 }
 
+.registerFor {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5vw !important;
+}
 
+.registerModalEvent{
+  width: 50vw !important;
+}
+
+.registerForImage{
+  width: 10vw;
+}
+
+@media (max-width: 1200px) {
+  .registerFor {
+    font-size: 1.8vw !important;
+  }
+  .registerModalEvent{
+    width: 80vw !important;
+  }
+  .registerForImage{
+    width: 20vw;
+  }
+}
+@media (max-width: 992px) {
+  .registerFor {
+    font-size: 2.5vw !important;
+  }
+  .registerModalEvent{
+    width: 90vw !important;
+  }
+  .registerForImage{
+    width: 25vw;
+  }
+}
+@media (max-width: 768px) {
+  .registerFor {
+    font-size: 3vw !important;
+  }
+  
+  .registerForImage{
+    width: 30vw;
+  }
+}
+@media (max-width: 576px) {
+  .registerFor {
+    font-size: 4.5vw !important;
+  }
+}

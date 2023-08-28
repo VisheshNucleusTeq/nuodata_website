@@ -227,7 +227,7 @@ const EventNew = ({ EventsCss }) => {
     <>
       <Modal
         style={{ zIndex: 999999 }}
-        width={"45vw"}
+        // width={"45vw"}
         open={isModalOpen}
         onOk={() => {
           setIsModalOpen(false);
@@ -240,6 +240,8 @@ const EventNew = ({ EventsCss }) => {
         cancelButtonProps={{
           style: { backgroundColor: "#0c3246", color: "#FFF", display: "none" },
         }}
+        className={EventsCss.registerModalEvent}
+        centered
       >
         <DrawerView
           EventsCss={EventsCss}

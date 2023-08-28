@@ -466,3 +466,65 @@ html {
 .ant-menu-vertical .ant-menu-item-only-child span > .tryNowBtn {
   background-color: #e74860;
 }
+
+.phoneGroupHeight {
+  height: 2.8vw !important;
+}
+
+@media (max-width: 1200px) {
+  .input {
+    height: 4vw !important;
+  }
+
+  .phoneGroupHeight {
+    height: 4vw !important;
+  }
+  .inputGroup {
+    height: 4vw !important;
+  }
+  .inputSelectGroup div {
+    height: 4vw !important;
+  }
+}
+@media (max-width: 992px) {
+  .input {
+    height: 5vw !important;
+  }
+  .phoneGroupHeight {
+    height: 10vw !important;
+  }
+  .inputGroup {
+    height: 5vw !important;
+  }
+  .inputSelectGroup div {
+    height: 5vw !important;
+  }
+}
+@media (max-width: 768px) {
+  .input {
+    height: 6vw !important;
+  }
+  .phoneGroupHeight {
+    height: 12vw !important;
+  }
+  .inputGroup {
+    height: 6vw !important;
+  }
+  .inputSelectGroup div {
+    height: 6vw !important;
+  }
+}
+@media (max-width: 576px) {
+  .input {
+    height: 10vw !important;
+  }
+  .phoneGroupHeight {
+    height: 20vw !important;
+  }
+  .inputGroup {
+    height: 10vw !important;
+  }
+  .inputSelectGroup div {
+    height: 10vw !important;
+  }
+}
