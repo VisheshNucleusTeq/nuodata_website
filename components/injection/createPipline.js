@@ -6,7 +6,7 @@ import InjectionSource from "./injectionSource";
 import InjectionPipeline from "./injectionPipeline";
 import SourceTargetPipeline from "./sourceTargetPipeline";
 import Configure from "./configure";
-
+import TestPipeline from "./testPipeline";
 const CreatePipline = ({ injectionPipelineCss }) => {
   const [accountList, setAccountList] = useState([
     {
@@ -137,6 +137,12 @@ const CreatePipline = ({ injectionPipelineCss }) => {
         {selectedTab === 3 && (
           <>
             <Configure injectionPipelineCss={injectionPipelineCss} />
+          </>
+        )}
+
+{selectedTab === 4 && (
+          <>
+            <TestPipeline injectionPipelineCss={injectionPipelineCss} />
           </>
         )}
         
