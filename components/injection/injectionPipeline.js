@@ -29,7 +29,6 @@ import {
 //   formatSql,
 // } from "react-sql-editor";
 import AddSource from "./model/addSource";
-// import injectionPipelineCss from "../../styles/injectionSource.module.css";
 
 const InjectionPipeline = ({ injectionPipelineCss }) => {
   const [displaySql, setDisplaySql] = useState("");
@@ -94,64 +93,6 @@ const InjectionPipeline = ({ injectionPipelineCss }) => {
         <AddSource injectionPipelineCss={injectionPipelineCss} />
       </Modal>
       <div className={injectionPipelineCss.main}>
-        {/* <h1>New Pipeline- Editable Field</h1>
-        <Row className={injectionPipelineCss.dashedLines}>
-          <Col span={24}>
-            <Row align={"space-between"}>
-              {[
-                "Select Source",
-                "Transform",
-                "Select Target",
-                "Configure",
-                "Deploy",
-              ].map((data, i) => {
-                return (
-                  <>
-                    <Col
-                      span={4}
-                      style={{
-                        border: "1px solid lightGray",
-                        height: "6vh",
-                        borderRadius: "10px",
-                      }}
-                    >
-                      <Space
-                        style={{
-                          fontSize: "1.2vw",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignContent: "center",
-                          height: "100%",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        <CheckCircleFilled
-                          style={{
-                            fontSize: "1.5vw",
-                            color: i <= 1 ? "green" : "gray",
-                          }}
-                          twoToneColor="#fff"
-                        />
-                        {data}
-                      </Space>
-                    </Col>
-                    {[0, 1, 2, 3].includes(i) ? (
-                      <Col
-                        span={1}
-                        style={{ display: "flex", alignItems: "center" }}
-                      >
-                        <div
-                          style={{ border: "1px dashed gray", width: "100%" }}
-                        ></div>
-                      </Col>
-                    ) : null}
-                  </>
-                );
-              })}
-            </Row>
-          </Col>
-        </Row> */}
-
         <Row style={{ marginTop: "4vh", height: "100%" }}>
           <Col span={24}>
             <Card className="demoCard">
