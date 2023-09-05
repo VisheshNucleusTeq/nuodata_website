@@ -19,7 +19,7 @@ import {
 } from "@ant-design/icons";
 
 import AddSource from "./model/addSource";
-import injectionSourceCss from "../../styles/injectionSource.module.css";
+import injectionPipelineCss from "../../styles/injectionPipeline.module.css";
 
 const InjectionSource = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,107 +78,62 @@ const InjectionSource = () => {
         }}
         destroyOnClose={true}
         footer={null}
+        centered
       >
-        <AddSource injectionSourceCss={injectionSourceCss} />
+        <AddSource injectionPipelineCss={injectionPipelineCss} />
       </Modal>
-      <div className={injectionSourceCss.main}>
-        <h1>New Pipeline- Editable Field</h1>
-        <Row className={injectionSourceCss.dashedLines}>
-          <Col span={24}>
-            <Row align={"space-between"}>
-              {[
-                "Select Source",
-                "Transform",
-                "Select Target",
-                "Configure",
-                "Deploy",
-              ].map((data, i) => {
-                return (
-                  <>
-                    <Col
-                      span={4}
-                      style={{
-                        border: "1px solid lightGray",
-                        height: "6vh",
-                        borderRadius: "10px",
+
+      <div style={{ marginTop: "2vw" }}>
+        <Card className="demoCard">
+          <Row>
+            <Col span={12} className={injectionPipelineCss.sourceHeader}>
+              <Input className="input" placeholder="Search.." />
+            </Col>
+            <Col
+              span={12}
+              style={{ justifyContent: "end", display: "flex" }}
+              className={injectionPipelineCss.sourceHeader}
+            >
+              <Button
+                style={{
+                  background: "#e74860",
+                  color: "#fff",
+                  borderRadius: "15px",
+                }}
+                onClick={() => {
+                  setIsModalOpen(true);
+                }}
+              >
+                Add a Source
+              </Button>
+            </Col>
+          </Row>
+          <Row align={"center"}>
+            {accountList.map((e) => {
+              return (
+                <Col span={4}>
+                  <div
+                    className={
+                      e.isDisable
+                        ? injectionPipelineCss.notClickDiv
+                        : injectionPipelineCss.clickDiv
+                    }
+                  >
+                    <div
+                      onClick={() => {
+                        setIsModalOpen(true);
                       }}
                     >
-                      <Space
-                        style={{
-                          fontSize: "1.2vw",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignContent: "center",
-                          height: "100%",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        <CheckCircleFilled
-                          style={{
-                            fontSize: "1.5vw",
-                            color: i <= 1 ? "green" : "gray",
-                          }}
-                          twoToneColor="#fff"
-                        />
-                        {data}
-                      </Space>
-                    </Col>
-                    {[0, 1, 2, 3].includes(i) ? (
-                      <Col
-                        span={1}
-                        style={{ display: "flex", alignItems: "center" }}
-                      >
-                        <div
-                          style={{ border: "1px dashed gray", width: "100%" }}
-                        ></div>
-                      </Col>
-                    ) : null}
-                  </>
-                );
-              })}
-            </Row>
-          </Col>
-        </Row>
-
-        <Row style={{ marginTop: "4vh", height: "100%" }}>
-          <Col span={24}>
-            <Row>
-              <Col span={24}>
-                <Card className="demoCard">
-                  <Row align={"center"}>
-                    {accountList.map((e) => {
-                      return (
-                        <Col span={6}>
-                          <div
-                            className={
-                              e.isDisable
-                                ? injectionSourceCss.notClickDiv
-                                : injectionSourceCss.clickDiv
-                            }
-                          >
-                            <div
-                              onClick={() => {
-                                setIsModalOpen(true);
-                              }}
-                            >
-                              <Tooltip title={e.name} color="#0c3246">
-                                <Image
-                                  alt={e.name}
-                                  src={e.image}
-                                  preview={false}
-                                />
-                              </Tooltip>
-                            </div>
-                          </div>
-                        </Col>
-                      );
-                    })}
-                  </Row>
-                </Card>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+                      <Tooltip title={e.name} color="#0c3246">
+                        <Image alt={e.name} src={e.image} preview={false} />
+                      </Tooltip>
+                    </div>
+                  </div>
+                </Col>
+              );
+            })}
+          </Row>
+        </Card>
       </div>
     </>
   );

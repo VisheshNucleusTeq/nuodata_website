@@ -29,9 +29,9 @@ import {
 //   formatSql,
 // } from "react-sql-editor";
 import AddSource from "./model/addSource";
-import injectionSourceCss from "../../styles/injectionSource.module.css";
+// import injectionPipelineCss from "../../styles/injectionSource.module.css";
 
-const InjectionPipeline = () => {
+const InjectionPipeline = ({ injectionPipelineCss }) => {
   const [displaySql, setDisplaySql] = useState("");
   const [copyTips, setCopyTips] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -91,11 +91,11 @@ const InjectionPipeline = () => {
         destroyOnClose={true}
         footer={null}
       >
-        <AddSource injectionSourceCss={injectionSourceCss} />
+        <AddSource injectionPipelineCss={injectionPipelineCss} />
       </Modal>
-      <div className={injectionSourceCss.main}>
-        <h1>New Pipeline- Editable Field</h1>
-        <Row className={injectionSourceCss.dashedLines}>
+      <div className={injectionPipelineCss.main}>
+        {/* <h1>New Pipeline- Editable Field</h1>
+        <Row className={injectionPipelineCss.dashedLines}>
           <Col span={24}>
             <Row align={"space-between"}>
               {[
@@ -150,7 +150,7 @@ const InjectionPipeline = () => {
               })}
             </Row>
           </Col>
-        </Row>
+        </Row> */}
 
         <Row style={{ marginTop: "4vh", height: "100%" }}>
           <Col span={24}>
@@ -161,7 +161,7 @@ const InjectionPipeline = () => {
                     <Image
                       preview={false}
                       src={"https://placehold.co/150?text=P"}
-                      className={injectionSourceCss.iconImage}
+                      className={injectionPipelineCss.iconImage}
                     />
                     <span>Postgres</span>
                   </Space>
@@ -292,7 +292,7 @@ const InjectionPipeline = () => {
                       />
                     </Col>
                     {/* <Col span={1} /> */}
-                    <Col span={24} style={{marginTop : "2vw"}}>
+                    <Col span={24} style={{ marginTop: "2vw" }}>
                       <b>Display Row </b> &nbsp;
                       <Radio.Group
                         onChange={(e) => {

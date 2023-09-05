@@ -21,7 +21,7 @@ import {
 import React from "react";
 import { useState } from "react";
 
-const AddSource = ({ injectionSourceCss }) => {
+const AddSource = ({ injectionPipelineCss }) => {
   const [form] = Form.useForm();
   const [advanced, setAdvanced] = useState([
     {
@@ -100,7 +100,7 @@ const AddSource = ({ injectionSourceCss }) => {
   return (
     <>
       <Row>
-        <Col span={8} className={injectionSourceCss.addSourceImage}>
+        <Col span={8} className={injectionPipelineCss.addSourceImage}>
           <Space size={20}>
             <Image src="/account_and_settings/databricks.svg" />
             <span>Datahub</span>
@@ -115,8 +115,8 @@ const AddSource = ({ injectionSourceCss }) => {
               icon={<UnorderedListOutlined />}
               className={`${
                 formType === "EXISTING"
-                  ? injectionSourceCss.addSourceBtnActive
-                  : injectionSourceCss.addSourceBtn
+                  ? injectionPipelineCss.addSourceBtnActive
+                  : injectionPipelineCss.addSourceBtn
               }`}
               onClick={() => {
                 setFormType("EXISTING");
@@ -131,8 +131,8 @@ const AddSource = ({ injectionSourceCss }) => {
               icon={<FormOutlined />}
               className={`${
                 formType === "NEW"
-                  ? injectionSourceCss.addSourceBtnActive
-                  : injectionSourceCss.addSourceBtn
+                  ? injectionPipelineCss.addSourceBtnActive
+                  : injectionPipelineCss.addSourceBtn
               }`}
               onClick={() => {
                 setFormType("NEW");
@@ -145,7 +145,7 @@ const AddSource = ({ injectionSourceCss }) => {
               ghost
               type="primary"
               icon={<FileDoneOutlined />}
-              className={injectionSourceCss.addSourceBtn}
+              className={injectionPipelineCss.addSourceBtn}
               disabled
             >
               YAML
@@ -180,7 +180,7 @@ const AddSource = ({ injectionSourceCss }) => {
                     }}
                     initialValues={{}}
                   >
-                    <div className={injectionSourceCss.formHeight}>
+                    <div className={injectionPipelineCss.formHeight}>
                       {/* {Object.keys(field).map((e) => {
                       return createField(e);
                     })} */}
@@ -269,7 +269,7 @@ const AddSource = ({ injectionSourceCss }) => {
                     }}
                     initialValues={{}}
                   >
-                    <div className={injectionSourceCss.formHeight}>
+                    <div className={injectionPipelineCss.formHeight}>
                       {Object.keys(field).map((e) => {
                         return createField(e);
                       })}
