@@ -564,7 +564,7 @@ const AnalyzeDetail = ({
               </Button>
             )}
 
-          <Button
+          {/* <Button
             type="primary"
             danger
             className={dataModernizationCss.nextBtn}
@@ -586,7 +586,7 @@ const AnalyzeDetail = ({
             }}
           >
             Transform
-          </Button>
+          </Button> */}
           <Button
             type="primary"
             danger

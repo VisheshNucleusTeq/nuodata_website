@@ -528,3 +528,13 @@ html {
     height: 10vw !important;
   }
 }
+
+.sliderHandle .ant-slider-handle {
+  color: #4bb543;
+  background-color: #4bb543;
+  border-color: #4bb543;
+  width: 3vw;
+  border-radius: 10px;
+  height: 1vh;
+  margin-top: -0.25vh;
+} 

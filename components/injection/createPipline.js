@@ -140,12 +140,11 @@ const CreatePipline = ({ injectionPipelineCss }) => {
           </>
         )}
 
-{selectedTab === 4 && (
+        {selectedTab === 4 && (
           <>
             <TestPipeline injectionPipelineCss={injectionPipelineCss} />
           </>
         )}
-        
 
         {/*  */}
       </div>
