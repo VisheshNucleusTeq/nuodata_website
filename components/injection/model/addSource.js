@@ -19,9 +19,13 @@ import {
   Select,
 } from "antd";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 
-const AddSource = ({ injectionPipelineCss }) => {
+import { INGESTIONTCONNECTIONLIST } from "../../../network/apiConstants";
+import { fetch_retry_get } from "../../../network/api-manager";
+
+const AddSource = ({ injectionPipelineCss, connection }) => {
   const [form] = Form.useForm();
   const [advanced, setAdvanced] = useState([
     {
@@ -47,15 +51,9 @@ const AddSource = ({ injectionPipelineCss }) => {
     },
   ]);
   const [advancedSelected, setAdvancedSelected] = useState([]);
-  const [field, setField] = useState({
-    host: false,
-    port: false,
-    user_name: false,
-    password: true,
-    database: false,
-    connection_name: false,
-  });
+  const [field, setField] = useState({});
   const [formType, setFormType] = useState("NEW");
+  const [existingConnections, setExistingConnections] = useState([]);
 
   const createTitle = (str) => {
     const arr = str.split("_");
@@ -97,33 +95,51 @@ const AddSource = ({ injectionPipelineCss }) => {
     setAdvancedSelected(list);
   };
 
+  const getExistingConnections = async () => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    const result = await fetch_retry_get(
+      `${INGESTIONTCONNECTIONLIST}?type=${connection?.type}&org_id=${authData?.orgId}`
+    );
+    if (result.success) {
+      setExistingConnections(result.data);
+    }
+    console.log(result);
+  };
+
+  useEffect(() => {
+    setField(connection.connection_details);
+    getExistingConnections();
+  }, [connection]);
+
   return (
     <>
       <Row>
         <Col span={8} className={injectionPipelineCss.addSourceImage}>
           <Space size={20}>
-            <Image src="/account_and_settings/databricks.svg" />
-            <span>Datahub</span>
+            <Image src={connection.logo_url} />
+            <span>{connection.title}</span>
           </Space>
         </Col>
 
         <Col span={16} align={"end"}>
           <Space size={20}>
-            <Button
-              ghost
-              type="primary"
-              icon={<UnorderedListOutlined />}
-              className={`${
-                formType === "EXISTING"
-                  ? injectionPipelineCss.addSourceBtnActive
-                  : injectionPipelineCss.addSourceBtn
-              }`}
-              onClick={() => {
-                setFormType("EXISTING");
-              }}
-            >
-              Select a existing postgres connction
-            </Button>
+            {existingConnections.length > 0 && (
+              <Button
+                ghost
+                type="primary"
+                icon={<UnorderedListOutlined />}
+                className={`${
+                  formType === "EXISTING"
+                    ? injectionPipelineCss.addSourceBtnActive
+                    : injectionPipelineCss.addSourceBtn
+                }`}
+                onClick={() => {
+                  setFormType("EXISTING");
+                }}
+              >
+                Select a existing {connection.title} connction
+              </Button>
+            )}
 
             <Button
               ghost
@@ -139,16 +155,6 @@ const AddSource = ({ injectionPipelineCss }) => {
               }}
             >
               Form
-            </Button>
-
-            <Button
-              ghost
-              type="primary"
-              icon={<FileDoneOutlined />}
-              className={injectionPipelineCss.addSourceBtn}
-              disabled
-            >
-              YAML
             </Button>
           </Space>
         </Col>
@@ -181,9 +187,6 @@ const AddSource = ({ injectionPipelineCss }) => {
                     initialValues={{}}
                   >
                     <div className={injectionPipelineCss.formHeight}>
-                      {/* {Object.keys(field).map((e) => {
-                      return createField(e);
-                    })} */}
                       <Form.Item
                         label={"Existing Connections"}
                         labelAlign={"left"}
@@ -196,24 +199,16 @@ const AddSource = ({ injectionPipelineCss }) => {
                         ]}
                       >
                         <Select
-                          defaultValue="gold"
+                          placeholder="Select Existing Connections"
                           onChange={(e) => {
                             alert(e);
                           }}
-                          options={[
-                            {
-                              value: "gold",
-                            },
-                            {
-                              value: "lime",
-                            },
-                            {
-                              value: "green",
-                            },
-                            {
-                              value: "cyan",
-                            },
-                          ]}
+                          options={[...existingConnections].map((e) => {
+                            return {
+                              label: e?.connection_name,
+                              value: e?.connection_id,
+                            };
+                          })}
                         />
                       </Form.Item>
                     </div>
@@ -289,7 +284,7 @@ const AddSource = ({ injectionPipelineCss }) => {
                 </div>
               </Collapse.Panel>
             )}
-            <Collapse.Panel
+            {/* <Collapse.Panel
               header={
                 <div style={{ color: "#0c3246" }}>
                   <FilterOutlined /> &nbsp; Filter
@@ -313,7 +308,7 @@ const AddSource = ({ injectionPipelineCss }) => {
                 value={[...advancedSelected]}
                 onChange={onChange}
               />
-            </Collapse.Panel>
+            </Collapse.Panel> */}
           </Collapse>
         </Col>
       </Row>

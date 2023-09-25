@@ -53,3 +53,13 @@ export const GETEVENT = "core/v1/event/";
 export const UPDATEEVENT = "core/v1/event/update/";
 export const EVENTUSERS = "core/v1/event/users/";
 export const EVENTREGISTER = "core/v1/event/register/user";
+export const ADDDATABASEVARIABLE = "process/v2/design/database/variable?fileId=";
+export const UPDATEDATABASEVARIABLE = "process/v2/design/database/variable?fileId=";
+export const GETDATABASEVARIABLE = "process/v2/design/database/variable/file/";
+export const GETPROJECTDATABASEVARIABLE = "process/v2/design/database/variable/project/";
+
+
+export const INGESTIONTEMPLATES = "ingestion/v1/connection/templates";
+export const INGESTIONTCONNECTIONLIST = "ingestion/v1/connection/fetch/all";
+
+// {{hostname}}/ingestion/v1/connection/fetch/all?type=mysql&org_id=1

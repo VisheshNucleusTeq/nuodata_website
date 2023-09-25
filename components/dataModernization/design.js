@@ -13,6 +13,9 @@ import {
   Tooltip,
   Modal,
   Radio,
+  Form,
+  Input,
+  Checkbox,
 } from "antd";
 const { Panel } = Collapse;
 import { useRouter } from "next/router";
@@ -54,6 +57,7 @@ import DrawerView from "./drawerView";
 import DesignPanel from "./designPanel";
 import { useIsVisible } from "../../hooks/useIsVisible";
 import { fileStatusBadge } from "../helper/fileStatus";
+import Veriable from "./design/veriable";
 
 export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
@@ -78,6 +82,7 @@ export default function Design({ dataModernizationCss }) {
   const [updatedColumnDetails, setUpdatedColumnDetails] = useState([]);
   const [finalDataForUpdate, setFinalDataForUpdate] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [addDataBase, setAddDataBase] = useState(false);
   const [tableType, setTableType] = useState("source");
   const [bothTableShow, setBothTableShow] = useState(false);
   const [sourceTargetData, setSourceTargetData] = useState([]);
@@ -516,6 +521,26 @@ export default function Design({ dataModernizationCss }) {
           ]}
         />
       </Modal>
+
+      <Modal
+        title={<h4 style={{ color: "#052b3b" }}>Add DB Variable</h4>}
+        centered
+        open={addDataBase}
+        onCancel={() => setAddDataBase(false)}
+        onOk={() => setAddDataBase(false)}
+        cancelButtonProps={{ style: { display: "none" } }}
+        width={"60vw"}
+        destroyOnClose
+        footer={null}
+      >
+        <Veriable
+          childData={childData}
+          fileId={fileId}
+          projectId={query.id ? query.id : projectDetails.projectId}
+          setAddDataBase={setAddDataBase}
+        />
+      </Modal>
+
       <div className={dataModernizationCss.designMain}>
         <Table
           pagination={false}
@@ -556,7 +581,7 @@ export default function Design({ dataModernizationCss }) {
               title: "Created Date",
               key: "createDateTime",
               render: (_, record) => {
-                return changeDateFormat(record.createDateTime)
+                return changeDateFormat(record.createDateTime);
               },
             },
             {
@@ -711,8 +736,9 @@ export default function Design({ dataModernizationCss }) {
             >
               {isVisible ? <UpOutlined /> : <DownOutlined />}
             </div>
+
             <Row className={dataModernizationCss.detailsTitle}>
-              <Col xs={24} sm={24} md={24} lg={18} xl={18} xxl={18}>
+              <Col xs={24} sm={24} md={24} lg={15} xl={15} xxl={15}>
                 <h3>
                   {fileName}
                   <span>
@@ -781,6 +807,19 @@ export default function Design({ dataModernizationCss }) {
                   }}
                   options={versionListArr}
                 />
+              </Col>
+
+              <Col xs={24} sm={24} md={24} lg={3} xl={3} xxl={3} align={"end"}>
+                <Button
+                  onClick={() => {
+                    setAddDataBase(true);
+                  }}
+                  type="primary"
+                  style={{ height: "100%" }}
+                  className={dataModernizationCss.exitBtn}
+                >
+                  Add Database
+                </Button>
               </Col>
 
               <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

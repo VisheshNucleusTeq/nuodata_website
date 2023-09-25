@@ -537,4 +537,10 @@ html {
   border-radius: 10px;
   height: 1vh;
   margin-top: -0.25vh;
-} 
+}
+
+.selectabc {
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+  background-color: #e6f7ff !important;
+}

@@ -1,67 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Col,
   Row,
-  Space,
-  Steps,
   Input,
   Button,
   Card,
   Tooltip,
   Image,
   Modal,
+  message,
 } from "antd";
-import {
-  CheckCircleOutlined,
-  CheckCircleFilled,
-  SearchOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
 
 import AddSource from "./model/addSource";
 import injectionPipelineCss from "../../styles/injectionPipeline.module.css";
 
+import { INGESTIONTEMPLATES } from "../../network/apiConstants";
+import { fetch_retry_get } from "../../network/api-manager";
+
 const InjectionSource = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [connection, setConnection] = useState({})
 
-  const [accountList, setAccountList] = useState([
-    {
-      name: "Databricks-Lakehouse",
-      image: "/account_and_settings/databricks.svg",
-      url: "#",
-      isDisable: false,
-    },
-    {
-      name: "Google Cloud Platform",
-      image: "/account_and_settings/googlecloud.svg",
-      url: "#",
-      isDisable: false,
-    },
-    {
-      name: "AWS",
-      image: "/account_and_settings/aws.svg",
-      url: "#",
-      isDisable: false,
-    },
-    {
-      name: "Azure",
-      image: "/account_and_settings/azure.svg",
-      url: "#",
-      isDisable: false,
-    },
-    {
-      name: "Snowflake",
-      image: "/account_and_settings/snowflake.svg",
-      url: "#",
-      isDisable: false,
-    },
-    {
-      name: "IBM Watsonx.data",
-      image: "/account_and_settings/ibm.svg",
-      url: "#",
-      isDisable: false,
-    },
-  ]);
+  const [accountList, setAccountList] = useState([]);
+
+  const getRecord = async () => {
+    const result = await fetch_retry_get(INGESTIONTEMPLATES);
+    if(result.success){
+      setAccountList(result.data)
+    }else{
+      message.error(result.error)
+    }
+  };
+
+  useEffect(() => {
+    getRecord();
+  }, []);
 
   return (
     <>
@@ -80,7 +53,7 @@ const InjectionSource = () => {
         footer={null}
         centered
       >
-        <AddSource injectionPipelineCss={injectionPipelineCss} />
+        <AddSource injectionPipelineCss={injectionPipelineCss} connection={connection} />
       </Modal>
 
       <div style={{ marginTop: "2vw" }}>
@@ -114,18 +87,19 @@ const InjectionSource = () => {
                 <Col span={4}>
                   <div
                     className={
-                      e.isDisable
+                      e?.isDisable
                         ? injectionPipelineCss.notClickDiv
                         : injectionPipelineCss.clickDiv
                     }
                   >
                     <div
                       onClick={() => {
+                        setConnection(e)
                         setIsModalOpen(true);
                       }}
                     >
-                      <Tooltip title={e.name} color="#0c3246">
-                        <Image alt={e.name} src={e.image} preview={false} />
+                      <Tooltip title={e.title} color="#0c3246">
+                        <Image alt={e.title} src={e.logo_url} preview={false} />
                       </Tooltip>
                     </div>
                   </div>
