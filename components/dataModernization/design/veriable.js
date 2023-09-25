@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
 import {
   Form,
   Input,
@@ -11,26 +13,40 @@ import {
   Popconfirm,
   message,
   AutoComplete,
+  Tooltip,
 } from "antd";
 import {
   PlusOutlined,
   DeleteOutlined,
   Loading3QuartersOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
 import {
   fetch_retry_post,
   fetch_retry_get,
   fetch_retry_put,
+  fetch_retry_delete,
 } from "../../../network/api-manager";
 import {
   ADDDATABASEVARIABLE,
   UPDATEDATABASEVARIABLE,
   GETDATABASEVARIABLE,
   GETPROJECTDATABASEVARIABLE,
+  DELETEVERIABLE,
 } from "../../../network/apiConstants";
 
-const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
+import { loderShowHideAction } from "../../../Redux/action";
+
+const veriable = ({
+  childData,
+  fileId,
+  projectId,
+  setAddDataBase,
+  isVeriableAddSubmit,
+  setIsVeriableAddSubmit,
+}) => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
   const [selectedTable, setSelectedTable] = useState([]);
   const [veriableRecord, setVeriableRecord] = useState([]);
   const [projectVeriableRecord, setProjectVeriableRecord] = useState([]);
@@ -38,6 +54,11 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
   const [sourceArr, setSourceArr] = useState([]);
   const [targetArr, setTrgetArr] = useState([]);
   const [sourceTargetArr, setSourceTargetArr] = useState([]);
+  const [checkedValue, setCheckedValue] = useState([
+    // "source",
+    // "target",
+    // "source_and_target",
+  ]);
 
   const getOptions = (sourceTitle, tableType, childData, index) => {
     return [...childData]?.filter((e) => e.tableType == tableType).length
@@ -46,9 +67,10 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
             <>
               <p style={{ color: "#0c3246" }}>
                 <b>{sourceTitle}</b>
-                <span>
+                {/* <span>
                   &nbsp;{" "}
                   <Checkbox
+                    checked={checkedValue.includes(tableType)}
                     onChange={(e) => {
                       let formValues = form.getFieldValue();
                       if (!formValues?.db_variable[index]?.tableIds) {
@@ -60,6 +82,9 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                       }
 
                       if (e.target.checked) {
+                        setCheckedValue([...checkedValue, tableType]);
+
+
                         const filterData = childData
                           ?.filter(
                             (e) =>
@@ -74,15 +99,10 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                         } else if (tableType == "source_and_target") {
                           setSourceTargetArr(filterData);
                         }
-                        
-                        // selectedTable, setSelectedTable
 
                         setSelectedTable([
-                          ...new Set([
-                            ...selectedTable,
-                            ...filterData,
-                          ]),
-                        ])
+                          ...new Set([...selectedTable, ...filterData]),
+                        ]);
 
                         formValues.db_variable[index].tableIds = [
                           ...new Set([
@@ -90,10 +110,11 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                             ...filterData,
                           ]),
                         ];
-                        
+
                         form.setFieldsValue({ ...formValues });
-                        
                       } else {
+                        
+
                         let difference = [];
                         if (tableType == "source") {
                           difference = formValues.db_variable[
@@ -112,10 +133,15 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                         }
                         formValues.db_variable[index].tableIds = difference;
                         form.setFieldsValue({ ...formValues });
+
+                        // const myArray = [...checkedValue];
+                        // const typeIndex = myArray.indexOf(tableType);
+                        // myArray.splice(typeIndex, 1);
+                        // setCheckedValue([...myArray.splice(typeIndex, 1)])
                       }
                     }}
                   />
-                </span>
+                </span> */}
               </p>
             </>
           ),
@@ -124,7 +150,7 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
               ?.filter((e) => e.tableType == tableType)
               ?.map((e) => {
                 return {
-                  label: e?.tableName,
+                  label: `${e?.tableName} (${e?.tableType})`,
                   value: e?.tableId,
                   className: selectedTable.includes(e?.tableId)
                     ? "selectabc"
@@ -138,8 +164,7 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
   };
 
   useEffect(() => {
-    // alert(1)
-    form.setFieldValue("databaseName", "DEFAULT");
+    form.setFieldValue("databaseName", "V_DEFAULT_DB");
     form.setFieldValue("databaseValue", "nuodata_default");
     form.setFieldValue("tableIds", [
       ...childData
@@ -156,35 +181,29 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
       return e?.variableId ? false : true;
     });
 
-    if (
-      data?.databaseName &&
-      data?.databaseValue &&
-      data?.tableIds
-    ) {
-
-      if(data?.variableId && data?.variableId > 0){
+    if (data?.databaseName && data?.databaseValue && data?.tableIds) {
+      if (data?.variableId && data?.variableId > 0) {
         updateData.push({
           databaseName: data?.databaseName,
           databaseValue: data?.databaseValue,
           tableIds: data?.tableIds,
           variableId: data?.variableId,
         });
-      }else{
+      } else {
         addData.push({
           databaseName: data?.databaseName,
           databaseValue: data?.databaseValue,
           tableIds: data?.tableIds,
         });
       }
-      
     }
-
 
     if (updateData && updateData.length) {
       const resultUpdate = await fetch_retry_put(
         `${UPDATEDATABASEVARIABLE}${fileId}`,
         updateData
       );
+      dispatch(loderShowHideAction(false));
       if (resultUpdate.success) {
         message.success(resultUpdate?.data?.message);
         setAddDataBase(false);
@@ -198,6 +217,7 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
         `${UPDATEDATABASEVARIABLE}${fileId}`,
         addData
       );
+      dispatch(loderShowHideAction(false));
       if (resultAdd.success) {
         message.success(resultAdd?.data?.message);
         setAddDataBase(false);
@@ -212,13 +232,13 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
     if (result.success && result?.data?.length) {
       setVeriableRecord(
         result?.data.filter((e) => {
-          return e.databaseName != "DEFAULT";
+          return e.databaseName != "V_DEFAULT_DB";
         })
       );
       let tableIds = [];
       result?.data
         ?.filter((e) => {
-          if (e?.databaseName != "DEFAULT") {
+          if (e?.databaseName != "V_DEFAULT_DB") {
             return true;
           } else {
             form.setFieldValue("variableId", e.variableId);
@@ -253,6 +273,30 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
     }
   };
 
+  const addUpdateVeriable = async () => {
+    try {
+      const data = await form.validateFields();
+      dispatch(loderShowHideAction(true));
+      await onVariableSubmit(data);
+    } catch (error) {
+      dispatch(loderShowHideAction(false));
+      console.log("Validation Error");
+    }
+  };
+
+  const deleteVeriable = async (id) => {
+    await fetch_retry_delete(`${DELETEVERIABLE}${id}`);
+    getVariableRecord();
+    getProjectVariableRecord();
+  };
+
+  useEffect(() => {
+    if (isVeriableAddSubmit === "YES") {
+      addUpdateVeriable();
+    }
+    setIsVeriableAddSubmit("NO");
+  }, [isVeriableAddSubmit]);
+
   useEffect(() => {
     getVariableRecord();
     getProjectVariableRecord();
@@ -265,10 +309,8 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
           form={form}
           layout={"vertical"}
           onFinish={onVariableSubmit}
-          key={Math.random().toString(36).substring(2, 7)}
+          // key={Math.random().toString(36).substring(2, 7)}
         >
-          {/* {veriableRecord.length <= 1 && ( */}
-
           <>
             <Row>
               <Col span={24} style={{ padding: "0vw 1vw 0vw 1vw" }}>
@@ -282,7 +324,17 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
               </Col>
               <Col span={12} style={{ padding: "0vw 1vw 0vw 1vw" }}>
                 <Form.Item
-                  label="Database Variable Name"
+                  label={
+                    <div>
+                      Database Variable Name{" "}
+                      <Tooltip
+                        title={`A default variable with name "V_DEFAULT_DB" will be created with an editable value field (containing database name) which will be used for creating support tables and 'sql user define functions' to run this workflow.`}
+                      >
+                        <InfoCircleOutlined />
+                      </Tooltip>
+                    </div>
+                  }
+                  // label="Database Variable Name"
                   name={"databaseName"}
                   rules={[
                     {
@@ -290,16 +342,18 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                       message: "Database variable name is required.",
                     },
                   ]}
-                  style={{ pointerEvents: "none" }}
+                  // style={{ pointerEvents: "none" }}
+                  // tooltip={`A default variable with name "V_DEFAULT_DB" will be created with an editable value field (containing database name) which will be used for creating support tables and 'sql user define functions' to run this workflow.`}
                 >
                   <Input
                     className="input"
                     placeholder="input placeholder"
-                    defaultValue={"DEFAULT"}
-                    // disabled
+                    defaultValue={"V_DEFAULT_DB"}
+                    disabled
                     onChange={() => {
-                      form.setFieldValue("databaseName", "DEFAULT");
+                      form.setFieldValue("databaseName", "V_DEFAULT_DB");
                     }}
+                    style={{ color: "gray" }}
                   />
                 </Form.Item>
               </Col>
@@ -325,12 +379,12 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                 <Form.Item
                   label="Tables"
                   name={"tableIds"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Database table is required.",
-                    },
-                  ]}
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Database table is required.",
+                  //   },
+                  // ]}
                   style={{ pointerEvents: "none" }}
                 >
                   <Select
@@ -343,7 +397,7 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                         // .filter((e) => !selectedTable.includes(e?.tableId))
                         ?.map((e) => {
                           return {
-                            label: e?.tableName,
+                            label: `${e?.tableName} (${e?.tableType})`,
                             value: e?.tableId,
                           };
                         }),
@@ -365,6 +419,7 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                   {fields.map((field, index) => (
                     <Row>
                       <Col span={24} style={{ padding: "0vw 1vw 0vw 1vw" }}>
+                        {/* {form.getFieldsValue()?.db_variable[index]?.variableId} */}
                         <Form.Item
                           label="Variable Id"
                           name={[field.name, "variableId"]}
@@ -393,7 +448,7 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                             disabled={
                               form.getFieldsValue()?.db_variable &&
                               form.getFieldsValue()?.db_variable[index]
-                                ?.databaseName === "DEFAULT"
+                                ?.databaseName === "V_DEFAULT_DB"
                             }
                             className="inputSelect"
                             placeholder="input here"
@@ -521,6 +576,15 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                                       setSelectedTable(difference);
                                     }
                                     remove(field.name);
+
+                                    if (
+                                      formValues?.db_variable[index]?.variableId
+                                    ) {
+                                      deleteVeriable(
+                                        formValues?.db_variable[index]
+                                          ?.variableId
+                                      );
+                                    }
                                   }}
                                   okText="Yes"
                                   cancelText="No"
@@ -533,7 +597,13 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                                       borderRadius: "10px",
                                     }}
                                   >
-                                    <DeleteOutlined /> Remove
+                                    <DeleteOutlined />{" "}
+                                    {form.getFieldsValue() &&
+                                    form.getFieldsValue()?.db_variable &&
+                                    form.getFieldsValue()?.db_variable[index]
+                                      ?.variableId
+                                      ? "Delete"
+                                      : "Remove"}
                                   </Button>
                                 </Popconfirm>
                               </Col>
@@ -548,7 +618,7 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
             }}
           </Form.List>
 
-          <Row justify={"center"}>
+          {/* <Row justify={"center"}>
             <Col span={12}>
               <Button
                 type="primary"
@@ -563,7 +633,7 @@ const veriable = ({ childData, fileId, projectId, setAddDataBase }) => {
                 Submit
               </Button>
             </Col>
-          </Row>
+          </Row> */}
 
           {/* <Input type="submit" value={"Submit"} /> */}
         </Form>

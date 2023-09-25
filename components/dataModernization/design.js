@@ -88,6 +88,7 @@ export default function Design({ dataModernizationCss }) {
   const [sourceTargetData, setSourceTargetData] = useState([]);
   const [isRelease, setIsRelease] = useState(false);
   const [githubStatus, setGithubStatus] = useState(false);
+  const [isVeriableAddSubmit, setIsVeriableAddSubmit] = useState("NO");
 
   const dispatch = useDispatch();
   const projectDetails = useSelector(
@@ -527,17 +528,19 @@ export default function Design({ dataModernizationCss }) {
         centered
         open={addDataBase}
         onCancel={() => setAddDataBase(false)}
-        onOk={() => setAddDataBase(false)}
-        cancelButtonProps={{ style: { display: "none" } }}
-        width={"60vw"}
+        onOk={() => setIsVeriableAddSubmit("YES")}
+        okButtonProps={{style : {backgroundColor : "#e74860", borderColor : "#e74860"}}}
+        width={"70vw"}
         destroyOnClose
-        footer={null}
+        okText={"Submit"}
       >
         <Veriable
           childData={childData}
           fileId={fileId}
           projectId={query.id ? query.id : projectDetails.projectId}
           setAddDataBase={setAddDataBase}
+          isVeriableAddSubmit={isVeriableAddSubmit}
+          setIsVeriableAddSubmit={setIsVeriableAddSubmit}
         />
       </Modal>
 

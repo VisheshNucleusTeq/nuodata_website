@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import {
   FileDoneOutlined,
   FormOutlined,
@@ -17,16 +18,30 @@ import {
   Collapse,
   Checkbox,
   Select,
+  message,
 } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 
 import { INGESTIONTCONNECTIONLIST } from "../../../network/apiConstants";
-import { fetch_retry_get } from "../../../network/api-manager";
+import {
+  fetch_retry_get,
+  fetch_retry_post,
+  fetch_retry_put,
+} from "../../../network/api-manager";
+
+import { encryptAES_CBC, decryptAES_CBC } from "../../helper/cryptojs";
+import {
+  TESTCONNECTION,
+  ADDCONNECTION,
+  GETCONNECTIONDETAILS,
+} from "../../../network/apiConstants";
+import { loderShowHideAction } from "../../../Redux/action";
 
 const AddSource = ({ injectionPipelineCss, connection }) => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
   const [advanced, setAdvanced] = useState([
     {
       label: "Include Tables",
@@ -54,6 +69,7 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
   const [field, setField] = useState({});
   const [formType, setFormType] = useState("NEW");
   const [existingConnections, setExistingConnections] = useState([]);
+  const [updateRecordId, setUpdateRecordId] = useState(null);
 
   const createTitle = (str) => {
     const arr = str.split("_");
@@ -103,13 +119,137 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
     if (result.success) {
       setExistingConnections(result.data);
     }
-    console.log(result);
+  };
+
+  const testConnection = async (data) => {
+    dispatch(loderShowHideAction(true));
+    const keyArr = [...Object.keys(connection?.connection_details)];
+    keyArr.map((e) => {
+      if (connection?.connection_details[e]) {
+        data[e] = encryptAES_CBC(data[e]);
+      }
+    });
+    const result = await fetch_retry_post(TESTCONNECTION, {
+      type: connection?.type,
+      connection_details: data,
+    });
+    if (result.success) {
+      message.success(result?.data?.message);
+    } else {
+      message.error(result?.error ? result?.error : "Something going wrong.");
+    }
+    dispatch(loderShowHideAction(false));
+  };
+
+  const addConnection = async (data) => {
+    dispatch(loderShowHideAction(true));
+    const keyArr = [...Object.keys(connection?.connection_details)];
+    keyArr.map((e) => {
+      if (connection?.connection_details[e]) {
+        data[e] = encryptAES_CBC(data[e]);
+      }
+    });
+    const result = await fetch_retry_post(TESTCONNECTION, {
+      type: connection?.type,
+      connection_details: data,
+    });
+    if (result.success) {
+      const authData = JSON.parse(localStorage.getItem("authData"));
+      const result = await fetch_retry_post(ADDCONNECTION, {
+        type: connection?.type,
+        connection_details: data,
+        org_id: authData?.orgId,
+      });
+      if (result.success) {
+        message.success(result?.data?.message);
+        getExistingConnections();
+      } else {
+        message.error(result?.error ? result?.error : "Something going wrong.");
+      }
+      dispatch(loderShowHideAction(false));
+    } else {
+      dispatch(loderShowHideAction(false));
+      message.error(result?.error ? result?.error : "Something going wrong.");
+    }
+  };
+
+  const updateConnection = async (data) => {
+    dispatch(loderShowHideAction(true));
+    const keyArr = [...Object.keys(connection?.connection_details)];
+    keyArr.map((e) => {
+      if (connection?.connection_details[e]) {
+        data[e] = encryptAES_CBC(data[e]);
+      }
+    });
+    const result = await fetch_retry_post(TESTCONNECTION, {
+      type: connection?.type,
+      connection_details: data,
+    });
+    if (result.success) {
+      const authData = JSON.parse(localStorage.getItem("authData"));
+      const result = await fetch_retry_put(ADDCONNECTION, {
+        connection_id: updateRecordId,
+        type: connection?.type,
+        connection_details: data,
+        org_id: authData?.orgId,
+      });
+      if (result.success) {
+        setFormType("NEW");
+        setUpdateRecordId(null);
+        message.success(result?.data?.message);
+        getExistingConnections();
+      } else {
+        message.error(result?.error ? result?.error : "Something going wrong.");
+      }
+      dispatch(loderShowHideAction(false));
+    } else {
+      dispatch(loderShowHideAction(false));
+      message.error(result?.error ? result?.error : "Something going wrong.");
+    }
+  };
+
+  const getExistingConnectionDetails = async (data) => {
+    dispatch(loderShowHideAction(true));
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    const result = await fetch_retry_get(
+      `${GETCONNECTIONDETAILS}?type=${connection?.type}&org_id=${authData?.orgId}&connection_id=${data?.existingConnections}`
+    );
+    let dataValue = result?.data?.connection_details;
+    const keyArr = [...Object.keys(connection?.connection_details)];
+    keyArr.map((e) => {
+      if (connection?.connection_details[e]) {
+        dataValue[e] = decryptAES_CBC(dataValue[e]);
+      }
+    });
+    testConnection(dataValue);
   };
 
   useEffect(() => {
     setField(connection.connection_details);
     getExistingConnections();
   }, [connection]);
+
+  const setExistingRecord = async () => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    const result = await fetch_retry_get(
+      `${GETCONNECTIONDETAILS}?type=${connection?.type}&org_id=${authData?.orgId}&connection_id=${updateRecordId}`
+    );
+    let dataValue = result?.data?.connection_details;
+    const keyArr = [...Object.keys(connection?.connection_details)];
+    keyArr.map((e) => {
+      if (connection?.connection_details[e]) {
+        dataValue[e] = decryptAES_CBC(decryptAES_CBC(dataValue[e]));
+      }
+    });
+    form.setFieldsValue(dataValue);
+  };
+
+  useEffect(() => {
+    form.resetFields();
+    if (updateRecordId) {
+      setExistingRecord();
+    }
+  }, [updateRecordId]);
 
   return (
     <>
@@ -135,6 +275,7 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                 }`}
                 onClick={() => {
                   setFormType("EXISTING");
+                  setUpdateRecordId(null);
                 }}
               >
                 Select a existing {connection.title} connction
@@ -152,6 +293,7 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
               }`}
               onClick={() => {
                 setFormType("NEW");
+                setUpdateRecordId(null);
               }}
             >
               Form
@@ -171,7 +313,8 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
               <Collapse.Panel
                 header={
                   <div style={{ color: "#0c3246" }}>
-                    <LinkOutlined /> &nbsp; Existing Postgres Connections
+                    <LinkOutlined /> &nbsp; Existing {connection.title}{" "}
+                    Connections
                   </div>
                 }
                 key="col_0"
@@ -181,8 +324,8 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                     form={form}
                     layout="vertical"
                     autoComplete="on"
-                    onFinish={() => {
-                      alert(1);
+                    onFinish={(e) => {
+                      getExistingConnectionDetails(e);
                     }}
                     initialValues={{}}
                   >
@@ -200,9 +343,6 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                       >
                         <Select
                           placeholder="Select Existing Connections"
-                          onChange={(e) => {
-                            alert(e);
-                          }}
                           options={[...existingConnections].map((e) => {
                             return {
                               label: e?.connection_name,
@@ -214,14 +354,34 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                     </div>
 
                     <div style={{ display: "flex", justifyContent: "end" }}>
-                      <Button
-                        type="primary"
-                        danger
-                        htmlType="submit"
-                        shape="round"
-                      >
-                        Test Source Connections
-                      </Button>
+                      <Space>
+                        <Button
+                          type="primary"
+                          // danger
+                          // htmlType="submit"
+                          shape="round"
+                          onClick={async () => {
+                            try {
+                              const data = await form.validateFields();
+                              setFormType("NEW");
+                              setUpdateRecordId(data?.existingConnections);
+                            } catch (error) {
+                              dispatch(loderShowHideAction(false));
+                              console.log("Validation Error");
+                            }
+                          }}
+                        >
+                          Update Connection
+                        </Button>
+                        <Button
+                          type="primary"
+                          danger
+                          htmlType="submit"
+                          shape="round"
+                        >
+                          Test Source Connections
+                        </Button>
+                      </Space>
                     </div>
                   </Form>
                 </div>
@@ -240,14 +400,35 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                   <div>
                     <Space size={20}>
                       <div onClick={(e) => e.stopPropagation()}>
-                        <button
-                          style={{ borderRadius: "10px" }}
-                          onClick={() => {
-                            alert("add DB");
-                          }}
-                        >
-                          Add DB
-                        </button>
+                        {updateRecordId ? (
+                          <button
+                            style={{ borderRadius: "10px", cursor : "pointer" }}
+                            onClick={async () => {
+                              try {
+                                const data = await form.validateFields();
+                                updateConnection(data);
+                              } catch (error) {
+                                console.log("not valid");
+                              }
+                            }}
+                          >
+                            Update DB
+                          </button>
+                        ) : (
+                          <button
+                            style={{ borderRadius: "10px", cursor : "pointer"  }}
+                            onClick={async () => {
+                              try {
+                                const data = await form.validateFields();
+                                addConnection(data);
+                              } catch (error) {
+                                console.log("not valid");
+                              }
+                            }}
+                          >
+                            Add DB
+                          </button>
+                        )}
                       </div>
                       <p></p>
                     </Space>
@@ -259,8 +440,8 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                     form={form}
                     layout="vertical"
                     autoComplete="on"
-                    onFinish={() => {
-                      alert(1);
+                    onFinish={(e) => {
+                      testConnection(e);
                     }}
                     initialValues={{}}
                   >
@@ -284,6 +465,7 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                 </div>
               </Collapse.Panel>
             )}
+
             {/* <Collapse.Panel
               header={
                 <div style={{ color: "#0c3246" }}>

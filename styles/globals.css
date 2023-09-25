@@ -539,8 +539,18 @@ html {
   margin-top: -0.25vh;
 }
 
+
+/* ant-select-item ant-select-item-option selectabc ant-select-item-option-grouped ant-select-item-option-selected */
+
 .selectabc {
   pointer-events: none !important;
   cursor: not-allowed !important;
   background-color: #e6f7ff !important;
+}
+
+
+.ant-select-item-option-selected {
+  pointer-events :painted !important;
+  cursor: pointer !important;
+
 }

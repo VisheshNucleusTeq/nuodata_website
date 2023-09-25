@@ -8,45 +8,7 @@ import SourceTargetPipeline from "./sourceTargetPipeline";
 import Configure from "./configure";
 import TestPipeline from "./testPipeline";
 const CreatePipline = ({ injectionPipelineCss }) => {
-  const [accountList, setAccountList] = useState([
-    {
-      name: "Databricks-Lakehouse",
-      image: "/account_and_settings/databricks.svg",
-      url: "#",
-      isDisable: false,
-    },
-    {
-      name: "Google Cloud Platform",
-      image: "/account_and_settings/googlecloud.svg",
-      url: "#",
-      isDisable: false,
-    },
-    {
-      name: "AWS",
-      image: "/account_and_settings/aws.svg",
-      url: "#",
-      isDisable: false,
-    },
-    {
-      name: "Azure",
-      image: "/account_and_settings/azure.svg",
-      url: "#",
-      isDisable: false,
-    },
-    {
-      name: "Snowflake",
-      image: "/account_and_settings/snowflake.svg",
-      url: "#",
-      isDisable: false,
-    },
-    {
-      name: "IBM Watsonx.data",
-      image: "/account_and_settings/ibm.svg",
-      url: "#",
-      isDisable: false,
-    },
-  ]);
-
+ 
   const [selectedTab, setSelectedTab] = useState(0);
 
   //   useEffect(() => {

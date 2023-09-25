@@ -57,9 +57,11 @@ export const ADDDATABASEVARIABLE = "process/v2/design/database/variable?fileId="
 export const UPDATEDATABASEVARIABLE = "process/v2/design/database/variable?fileId=";
 export const GETDATABASEVARIABLE = "process/v2/design/database/variable/file/";
 export const GETPROJECTDATABASEVARIABLE = "process/v2/design/database/variable/project/";
-
-
 export const INGESTIONTEMPLATES = "ingestion/v1/connection/templates";
 export const INGESTIONTCONNECTIONLIST = "ingestion/v1/connection/fetch/all";
+export const DELETEVERIABLE = "process/v2/design/database/variable/";
+export const TESTCONNECTION = "ingestion/v1/connection/test";
+export const ADDCONNECTION = "ingestion/v1/connection/";
+export const GETCONNECTIONDETAILS = "ingestion/v1/connection/detail";
 
-// {{hostname}}/ingestion/v1/connection/fetch/all?type=mysql&org_id=1
+// {{hostname}}/ingestion/v1/connection/fetch/all?type=postgres&org_id=1
