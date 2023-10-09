@@ -65,6 +65,7 @@ const InjectionSource = () => {
         <AddSource
           injectionPipelineCss={injectionPipelineCss}
           connection={connection}
+          setIsModalOpen={setIsModalOpen}
         />
       </Modal>
 

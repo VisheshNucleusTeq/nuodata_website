@@ -58,6 +58,7 @@ const AddEvent = ({
     postData.ctryCode = data?.ctryCode;
     postData.contactNumber = data?.contact;
     postData.content = data?.content;
+    postData.buttonText = data?.buttonText;
     postData.file = data?.file ? data?.file : "";
     postData.startDateTime = moment(
       data?.startDate.format(dateFormat) +
@@ -97,6 +98,7 @@ const AddEvent = ({
     postData.ctryCode = data?.ctryCode;
     postData.contactNumber = data?.contact;
     postData.content = data?.content;
+    postData.buttonText = data?.buttonText;
     postData.file = data.file ? data?.file : undefined;
     postData.startDateTime = moment(
       data?.startDate.format(dateFormat) +
@@ -145,6 +147,7 @@ const AddEvent = ({
         ctryCode: ctryCode,
         contact: contactNumber,
         content: updateData?.content,
+        buttonText: updateData?.buttonText,
         startDate: moment(updateData?.startDateTime, dateFormat),
         startTime: moment(updateData?.startDateTime, timeFormat),
         endDate: moment(updateData?.endDateTime, dateFormat),
@@ -163,16 +166,19 @@ const AddEvent = ({
           updateData?.eventId ? updateEvnetFun(e) : addEventFun(e);
         }}
         autoComplete="off"
-        // initialValues={{
-        //   heading: "demo",
-        //   email: "demo@gmail.com",
-        //   contactNumber: "+918982077519",
-        //   startDate: moment(new Date(), dateFormat),
-        //   startTime: moment(new Date(), timeFormat),
-        //   endDate: moment(new Date(), dateFormat),
-        //   endTime: moment(new Date(), timeFormat),
-        //   contect: "sdfdsfsd",
-        // }}
+        initialValues={
+          {
+            // heading: "demo",
+            // email: "demo@gmail.com",
+            // contactNumber: "+918982077519",
+            // startDate: moment(new Date(), dateFormat),
+            // startTime: moment(new Date(), timeFormat),
+            // endDate: moment(new Date(), dateFormat),
+            // endTime: moment(new Date(), timeFormat),
+            // contect: "sdfdsfsd",
+            // buttonText : "Register Now"
+          }
+        }
       >
         <Row gutter={[16, 16]}>
           <Col span={7} className={eventManagementCss.topEventView}>
@@ -229,26 +235,6 @@ const AddEvent = ({
                 </Form.Item>
               </Col>
               <Col span={24}>
-                {/* <Form.Item
-                  name={"contactNumber"}
-                  rules={[
-                    { required: true, message: "Contact Number is required." },
-                    {
-                      min: 8,
-                      message: "Contact number must be between 8-15 digit",
-                    },
-                    {
-                      max: 15,
-                      message: "Contact number must be between 8-15 digit",
-                    },
-                  ]}
-                >
-                  <Input
-                    name="contactNumber"
-                    className={eventManagementCss.textInput}
-                    placeholder="Contact Number"
-                  />
-                </Form.Item> */}
                 <Form.Item
                   style={{
                     height: "2.8vw",
@@ -497,6 +483,30 @@ const AddEvent = ({
               </Col>
             </Row>
           </Col>
+
+          <Col span={12} className={eventManagementCss.topEventViewText}>
+            <Row>
+              <Col span={24} className={eventManagementCss.textHeading}>
+                Button text
+              </Col>
+              <Col span={24}>
+                <Form.Item
+                  name={"buttonText"}
+                  rules={[
+                    { required: true, message: "Button text is required." },
+                  ]}
+                >
+                  <Input
+                    name="buttonText"
+                    placeholder="Button text"
+                    // defaultValue={"Register Now"}
+                    // value={"Register Now"}
+                    className={eventManagementCss.textInput}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Col>
         </Row>
 
         <Button
@@ -505,6 +515,7 @@ const AddEvent = ({
           block
           htmlType="submit"
           style={{ marginTop: "2vh", width: "10vw" }}
+          disabled={updateData?.status != "active"}
         >
           {updateData?.eventId ? "Update" : "Add"} Event
         </Button>

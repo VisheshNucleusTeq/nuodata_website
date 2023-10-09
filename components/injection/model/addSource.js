@@ -19,6 +19,7 @@ import {
   Checkbox,
   Select,
   message,
+  Tooltip,
 } from "antd";
 import React from "react";
 import { useEffect } from "react";
@@ -39,7 +40,7 @@ import {
 } from "../../../network/apiConstants";
 import { loderShowHideAction } from "../../../Redux/action";
 
-const AddSource = ({ injectionPipelineCss, connection }) => {
+const AddSource = ({ injectionPipelineCss, connection, setIsModalOpen }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [advanced, setAdvanced] = useState([
@@ -70,6 +71,8 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
   const [formType, setFormType] = useState("NEW");
   const [existingConnections, setExistingConnections] = useState([]);
   const [updateRecordId, setUpdateRecordId] = useState(null);
+  const [selectedRecordId, setSelectedRecordId] = useState(null);
+  const [isTested, setIsTested] = useState(false);
 
   const createTitle = (str) => {
     const arr = str.split("_");
@@ -98,10 +101,14 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
         ]}
       >
         <Input
+          className="input"
           key={"input_" + key}
           name={key}
           type={"text"}
           placeholder={createTitle(key)}
+          onChange={() => {
+            setIsTested(false);
+          }}
         />
       </Form.Item>
     );
@@ -134,6 +141,7 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
       connection_details: data,
     });
     if (result.success) {
+      setIsTested(true);
       message.success(result?.data?.message);
     } else {
       message.error(result?.error ? result?.error : "Something going wrong.");
@@ -218,7 +226,7 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
     const keyArr = [...Object.keys(connection?.connection_details)];
     keyArr.map((e) => {
       if (connection?.connection_details[e]) {
-        dataValue[e] = decryptAES_CBC(dataValue[e]);
+        dataValue[e] = decryptAES_CBC(decryptAES_CBC(dataValue[e]));
       }
     });
     testConnection(dataValue);
@@ -243,6 +251,8 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
     });
     form.setFieldsValue(dataValue);
   };
+
+  const formValid = () => {};
 
   useEffect(() => {
     form.resetFields();
@@ -276,9 +286,11 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                 onClick={() => {
                   setFormType("EXISTING");
                   setUpdateRecordId(null);
+                  setSelectedRecordId(null);
+                  setIsTested(false);
                 }}
               >
-                Select a existing {connection.title} connction
+                Select a existing {connection.title} connection
               </Button>
             )}
 
@@ -294,6 +306,8 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
               onClick={() => {
                 setFormType("NEW");
                 setUpdateRecordId(null);
+                setSelectedRecordId(null);
+                setIsTested(false);
               }}
             >
               Form
@@ -349,6 +363,9 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                               value: e?.connection_id,
                             };
                           })}
+                          onChange={(e) => {
+                            setSelectedRecordId(e);
+                          }}
                         />
                       </Form.Item>
                     </div>
@@ -356,9 +373,7 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                     <div style={{ display: "flex", justifyContent: "end" }}>
                       <Space>
                         <Button
-                          type="primary"
-                          // danger
-                          // htmlType="submit"
+                          // type="primary"
                           shape="round"
                           onClick={async () => {
                             try {
@@ -370,6 +385,12 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                               console.log("Validation Error");
                             }
                           }}
+                          disabled={selectedRecordId == null}
+                          style={
+                            selectedRecordId == null
+                              ? {}
+                              : { backgroundColor: "#0c3246", color: "#FFF" }
+                          }
                         >
                           Update Connection
                         </Button>
@@ -378,8 +399,24 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                           danger
                           htmlType="submit"
                           shape="round"
+                          disabled={selectedRecordId == null}
+                          style={
+                            selectedRecordId == null
+                              ? {}
+                              : { backgroundColor: "#e74860", color: "#FFF" }
+                          }
                         >
-                          Test Source Connections
+                          Test Connection
+                        </Button>
+
+                        <Button
+                          shape="round"
+                          style={{ backgroundColor: "#0c3246", color: "#FFF" }}
+                          onClick={() => {
+                            setIsModalOpen(false);
+                          }}
+                        >
+                          Cancel
                         </Button>
                       </Space>
                     </div>
@@ -392,53 +429,17 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
               <Collapse.Panel
                 header={
                   <div style={{ color: "#0c3246" }}>
-                    <LinkOutlined /> &nbsp; Connections
+                    <LinkOutlined /> &nbsp; Connection Details
                   </div>
                 }
                 key="col_1"
-                extra={
-                  <div>
-                    <Space size={20}>
-                      <div onClick={(e) => e.stopPropagation()}>
-                        {updateRecordId ? (
-                          <button
-                            style={{ borderRadius: "10px", cursor : "pointer" }}
-                            onClick={async () => {
-                              try {
-                                const data = await form.validateFields();
-                                updateConnection(data);
-                              } catch (error) {
-                                console.log("not valid");
-                              }
-                            }}
-                          >
-                            Update DB
-                          </button>
-                        ) : (
-                          <button
-                            style={{ borderRadius: "10px", cursor : "pointer"  }}
-                            onClick={async () => {
-                              try {
-                                const data = await form.validateFields();
-                                addConnection(data);
-                              } catch (error) {
-                                console.log("not valid");
-                              }
-                            }}
-                          >
-                            Add DB
-                          </button>
-                        )}
-                      </div>
-                      <p></p>
-                    </Space>
-                  </div>
-                }
               >
                 <div>
                   <Form
+                  labelCol= {{ span: 5 }}
+                  wrapperCol= {{ span: 19 }}
                     form={form}
-                    layout="vertical"
+                    // layout="vertical"
                     autoComplete="on"
                     onFinish={(e) => {
                       testConnection(e);
@@ -452,21 +453,87 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                     </div>
 
                     <div style={{ display: "flex", justifyContent: "end" }}>
-                      <Button
-                        type="primary"
-                        danger
-                        htmlType="submit"
-                        shape="round"
-                      >
-                        Test Source Connections
-                      </Button>
+                      <Space>
+                        <Tooltip
+                          placement="top"
+                          title={!isTested ? "First Test Connection " : null}
+                        >
+                          {updateRecordId ? (
+                            <Button
+                              type="primary"
+                              shape="round"
+                              onClick={async () => {
+                                try {
+                                  const data = await form.validateFields();
+                                  updateConnection(data);
+                                } catch (error) {
+                                  console.log("not valid");
+                                }
+                              }}
+                              disabled={!isTested}
+                              style={
+                                isTested
+                                  ? {
+                                      backgroundColor: "#0c3246",
+                                      color: "#FFF",
+                                    }
+                                  : {}
+                              }
+                            >
+                              Update Connection
+                            </Button>
+                          ) : (
+                            <Button
+                              type="primary"
+                              shape="round"
+                              onClick={async () => {
+                                try {
+                                  const data = await form.validateFields();
+                                  addConnection(data);
+                                } catch (error) {
+                                  console.log("not valid");
+                                }
+                              }}
+                              disabled={!isTested}
+                              style={
+                                isTested
+                                  ? {
+                                      backgroundColor: "#0c3246",
+                                      color: "#FFF",
+                                    }
+                                  : {}
+                              }
+                            >
+                              Add Connection
+                            </Button>
+                          )}
+                        </Tooltip>
+                        <Button
+                          type="primary"
+                          danger
+                          htmlType="submit"
+                          shape="round"
+                          style={{ backgroundColor: "#e74860", color: "#FFF" }}
+                        >
+                          Test Connection
+                        </Button>
+                        <Button
+                          shape="round"
+                          style={{ backgroundColor: "#0c3246", color: "#FFF" }}
+                          onClick={() => {
+                            setIsModalOpen(false);
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                      </Space>
                     </div>
                   </Form>
                 </div>
               </Collapse.Panel>
             )}
 
-            {/* <Collapse.Panel
+            <Collapse.Panel
               header={
                 <div style={{ color: "#0c3246" }}>
                   <FilterOutlined /> &nbsp; Filter
@@ -490,7 +557,7 @@ const AddSource = ({ injectionPipelineCss, connection }) => {
                 value={[...advancedSelected]}
                 onChange={onChange}
               />
-            </Collapse.Panel> */}
+            </Collapse.Panel>
           </Collapse>
         </Col>
       </Row>

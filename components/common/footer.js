@@ -125,7 +125,7 @@ const Footer = () => {
         xl={24}
         style={{ display: "flex", justifyContent: "center" }}
       >
-        <p style={{ color: "#e74860" }}  onDoubleClick={() => { Router.push("/test") }}  >
+        <p style={{ color: "#e74860" }} >
           Copyright © NuoData. {new Date().getFullYear()} | All rights reserved.
         </p>
       </Col>

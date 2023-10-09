@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import {
   Form,
   Input,
-  Checkbox,
   Row,
   Col,
   Select,
@@ -36,6 +35,7 @@ import {
 } from "../../../network/apiConstants";
 
 import { loderShowHideAction } from "../../../Redux/action";
+import { useRef } from "react";
 
 const veriable = ({
   childData,
@@ -47,18 +47,10 @@ const veriable = ({
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const myRef = useRef(null);
   const [selectedTable, setSelectedTable] = useState([]);
   const [veriableRecord, setVeriableRecord] = useState([]);
   const [projectVeriableRecord, setProjectVeriableRecord] = useState([]);
-
-  const [sourceArr, setSourceArr] = useState([]);
-  const [targetArr, setTrgetArr] = useState([]);
-  const [sourceTargetArr, setSourceTargetArr] = useState([]);
-  const [checkedValue, setCheckedValue] = useState([
-    // "source",
-    // "target",
-    // "source_and_target",
-  ]);
 
   const getOptions = (sourceTitle, tableType, childData, index) => {
     return [...childData]?.filter((e) => e.tableType == tableType).length
@@ -67,81 +59,6 @@ const veriable = ({
             <>
               <p style={{ color: "#0c3246" }}>
                 <b>{sourceTitle}</b>
-                {/* <span>
-                  &nbsp;{" "}
-                  <Checkbox
-                    checked={checkedValue.includes(tableType)}
-                    onChange={(e) => {
-                      let formValues = form.getFieldValue();
-                      if (!formValues?.db_variable[index]?.tableIds) {
-                        formValues.db_variable[index] = {
-                          databaseName: "",
-                          databaseValue: "",
-                          tableIds: [],
-                        };
-                      }
-
-                      if (e.target.checked) {
-                        setCheckedValue([...checkedValue, tableType]);
-
-
-                        const filterData = childData
-                          ?.filter(
-                            (e) =>
-                              e.tableType == tableType &&
-                              !selectedTable.includes(e?.tableId)
-                          )
-                          .map((e) => e?.tableId);
-                        if (tableType == "source") {
-                          setSourceArr(filterData);
-                        } else if (tableType == "target") {
-                          setTrgetArr(filterData);
-                        } else if (tableType == "source_and_target") {
-                          setSourceTargetArr(filterData);
-                        }
-
-                        setSelectedTable([
-                          ...new Set([...selectedTable, ...filterData]),
-                        ]);
-
-                        formValues.db_variable[index].tableIds = [
-                          ...new Set([
-                            ...formValues.db_variable[index].tableIds,
-                            ...filterData,
-                          ]),
-                        ];
-
-                        form.setFieldsValue({ ...formValues });
-                      } else {
-                        
-
-                        let difference = [];
-                        if (tableType == "source") {
-                          difference = formValues.db_variable[
-                            index
-                          ].tableIds.filter((x) => sourceArr.indexOf(x) === -1);
-                        } else if (tableType == "target") {
-                          difference = formValues.db_variable[
-                            index
-                          ].tableIds.filter((x) => targetArr.indexOf(x) === -1);
-                        } else if (tableType == "source_and_target") {
-                          difference = formValues.db_variable[
-                            index
-                          ].tableIds.filter(
-                            (x) => sourceTargetArr.indexOf(x) === -1
-                          );
-                        }
-                        formValues.db_variable[index].tableIds = difference;
-                        form.setFieldsValue({ ...formValues });
-
-                        // const myArray = [...checkedValue];
-                        // const typeIndex = myArray.indexOf(tableType);
-                        // myArray.splice(typeIndex, 1);
-                        // setCheckedValue([...myArray.splice(typeIndex, 1)])
-                      }
-                    }}
-                  />
-                </span> */}
               </p>
             </>
           ),
@@ -230,10 +147,21 @@ const veriable = ({
   const getVariableRecord = async () => {
     const result = await fetch_retry_get(`${GETDATABASEVARIABLE}${fileId}`, {});
     if (result.success && result?.data?.length) {
+      const oldData = result?.data.filter((e) => {
+        return e.databaseName != "V_DEFAULT_DB";
+      });
+
       setVeriableRecord(
-        result?.data.filter((e) => {
-          return e.databaseName != "V_DEFAULT_DB";
-        })
+        oldData.length
+          ? oldData
+          : [
+              {
+                databaseName: "",
+                databaseValue: "",
+                tableIds: [],
+                variableId: 0,
+              },
+            ]
       );
       let tableIds = [];
       result?.data
@@ -279,12 +207,28 @@ const veriable = ({
       dispatch(loderShowHideAction(true));
       await onVariableSubmit(data);
     } catch (error) {
+      setTimeout(() => {
+        const element = document.getElementsByClassName(
+          "ant-form-item-explain-error"
+        )[0];
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest",
+          });
+        }
+      }, 1000);
       dispatch(loderShowHideAction(false));
       console.log("Validation Error");
     }
   };
 
   const deleteVeriable = async (id) => {
+    // setTimeout(()=>{
+    //   alert(id)
+
+    // },2000)
     await fetch_retry_delete(`${DELETEVERIABLE}${id}`);
     getVariableRecord();
     getProjectVariableRecord();
@@ -305,12 +249,7 @@ const veriable = ({
   return (
     <div style={{ height: "70vh", overflowY: "scroll" }}>
       {veriableRecord.length > 0 ? (
-        <Form
-          form={form}
-          layout={"vertical"}
-          onFinish={onVariableSubmit}
-          // key={Math.random().toString(36).substring(2, 7)}
-        >
+        <Form form={form} layout={"vertical"} onFinish={onVariableSubmit}>
           <>
             <Row>
               <Col span={24} style={{ padding: "0vw 1vw 0vw 1vw" }}>
@@ -334,7 +273,6 @@ const veriable = ({
                       </Tooltip>
                     </div>
                   }
-                  // label="Database Variable Name"
                   name={"databaseName"}
                   rules={[
                     {
@@ -342,8 +280,6 @@ const veriable = ({
                       message: "Database variable name is required.",
                     },
                   ]}
-                  // style={{ pointerEvents: "none" }}
-                  // tooltip={`A default variable with name "V_DEFAULT_DB" will be created with an editable value field (containing database name) which will be used for creating support tables and 'sql user define functions' to run this workflow.`}
                 >
                   <Input
                     className="input"
@@ -379,12 +315,6 @@ const veriable = ({
                 <Form.Item
                   label="Tables"
                   name={"tableIds"}
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: "Database table is required.",
-                  //   },
-                  // ]}
                   style={{ pointerEvents: "none" }}
                 >
                   <Select
@@ -409,8 +339,6 @@ const veriable = ({
             </Row>
             <Divider />
           </>
-
-          {/* )} */}
 
           <Form.List name="db_variable" initialValue={veriableRecord}>
             {(fields, { add, remove }) => {
@@ -458,6 +386,22 @@ const veriable = ({
                                 label: e?.databaseName,
                               };
                             })}
+                            onSelect={(selectedData) => {
+                              const findSelecter = projectVeriableRecord.find(
+                                (e) => {
+                                  return selectedData === e?.databaseName;
+                                }
+                              );
+
+                              if (findSelecter) {
+                                const fields = form.getFieldsValue();
+                                const { db_variable } = fields;
+                                Object.assign(db_variable[index], {
+                                  databaseValue: findSelecter?.databaseValue,
+                                });
+                                form.setFieldsValue({ db_variable });
+                              }
+                            }}
                           />
                         </Form.Item>
                       </Col>
@@ -481,6 +425,22 @@ const veriable = ({
                                 label: e?.databaseValue,
                               };
                             })}
+                            onSelect={(selectedData) => {
+                              const findSelecter = projectVeriableRecord.find(
+                                (e) => {
+                                  return selectedData === e?.databaseValue;
+                                }
+                              );
+
+                              if (findSelecter) {
+                                const fields = form.getFieldsValue();
+                                const { db_variable } = fields;
+                                Object.assign(db_variable[index], {
+                                  databaseName: findSelecter?.databaseName,
+                                });
+                                form.setFieldsValue({ db_variable });
+                              }
+                            }}
                           />
                         </Form.Item>
                       </Col>
@@ -544,6 +504,11 @@ const veriable = ({
                                   htmlType="button"
                                   onClick={() => {
                                     add();
+                                    setTimeout(() => {
+                                      myRef?.current?.scrollIntoView({
+                                        behavior: "smooth",
+                                      });
+                                    }, 0);
                                   }}
                                   style={{
                                     width: "100%",
@@ -556,7 +521,7 @@ const veriable = ({
                                 </Button>
                               </Col>
                             ) : null}
-                            {fields.length > 1 ? (
+                            {fields.length > 0 ? (
                               <Col span={6} style={{ padding: "1vw" }}>
                                 <Popconfirm
                                   title="Confirmmation"
@@ -617,6 +582,8 @@ const veriable = ({
               );
             }}
           </Form.List>
+
+          <p ref={myRef}></p>
 
           {/* <Row justify={"center"}>
             <Col span={12}>

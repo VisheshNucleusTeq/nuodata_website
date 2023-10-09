@@ -446,7 +446,7 @@ const EventNew = ({ EventsCss }) => {
                                 setIsModalOpen(true);
                               }}
                             >
-                              Register Now
+                              {singleEventData?.buttonText ? singleEventData?.buttonText : "Register Now"}
                             </Button>
                             &nbsp; &nbsp;
                             <RWebShare
@@ -595,60 +595,64 @@ const EventNew = ({ EventsCss }) => {
                   </Row>
                 </Col>
                 <Col xs={0} sm={0} md={0} lg={0} xl={6} xxl={6}>
-                  {innerWidth > 1200 && 
-                  <Row className={EventsCss.leftEventChildRow}>
-                    <Col span={24}>
-                      <Row>
-                        <Col span={24}>
-                          {[...eventData]?.map((e, i) => {
-                            return (
-                              <Row
-                                onClick={() => {
-                                  setSingleEventData(e);
-                                }}
-                                id={"eventView" + e?.eventId}
-                              >
-                                <Col
-                                  span={14}
-                                  className={`${EventsCss.rightTimelineName} ${
-                                    e?.eventId === singleEventData?.eventId
-                                      ? EventsCss.rightTimelineNameActive
-                                      : ""
-                                  }`}
+                  {innerWidth > 1200 && (
+                    <Row className={EventsCss.leftEventChildRow}>
+                      <Col span={24}>
+                        <Row>
+                          <Col span={24}>
+                            {[...eventData]?.map((e, i) => {
+                              return (
+                                <Row
+                                  onClick={() => {
+                                    setSingleEventData(e);
+                                  }}
+                                  id={"eventView" + e?.eventId}
                                 >
-                                  <div>{e?.eventHeading}</div>
-                                </Col>
-                                <Col
-                                  span={10}
-                                  className={`${EventsCss.rightTimelineDate} ${
-                                    e?.eventId === singleEventData?.eventId
-                                      ? EventsCss.rightTimelineDateActive
-                                      : ""
-                                  }`}
-                                >
-                                  <div
-                                    className={`${EventsCss.dot} ${
+                                  <Col
+                                    span={14}
+                                    className={`${
+                                      EventsCss.rightTimelineName
+                                    } ${
                                       e?.eventId === singleEventData?.eventId
-                                        ? EventsCss.dotActive
+                                        ? EventsCss.rightTimelineNameActive
                                         : ""
                                     }`}
-                                  ></div>
-                                  <div
-                                    className={`${EventsCss.dotLine} ${
+                                  >
+                                    <div>{e?.eventHeading}</div>
+                                  </Col>
+                                  <Col
+                                    span={10}
+                                    className={`${
+                                      EventsCss.rightTimelineDate
+                                    } ${
                                       e?.eventId === singleEventData?.eventId
-                                        ? EventsCss.dotLineActive
+                                        ? EventsCss.rightTimelineDateActive
                                         : ""
                                     }`}
-                                  ></div>
+                                  >
+                                    <div
+                                      className={`${EventsCss.dot} ${
+                                        e?.eventId === singleEventData?.eventId
+                                          ? EventsCss.dotActive
+                                          : ""
+                                      }`}
+                                    ></div>
+                                    <div
+                                      className={`${EventsCss.dotLine} ${
+                                        e?.eventId === singleEventData?.eventId
+                                          ? EventsCss.dotLineActive
+                                          : ""
+                                      }`}
+                                    ></div>
 
-                                  <div>
-                                    {e?.startDateTime && e?.endDateTime
-                                      ? getStartEndDate(
-                                          e?.startDateTime,
-                                          e?.endDateTime
-                                        )
-                                      : null}
-                                    {/* {e?.startDateTime
+                                    <div>
+                                      {e?.startDateTime && e?.endDateTime
+                                        ? getStartEndDate(
+                                            e?.startDateTime,
+                                            e?.endDateTime
+                                          )
+                                        : null}
+                                      {/* {e?.startDateTime
                                       ? moment(e?.startDateTime).format(
                                           "YYYY-MM-DD"
                                         )
@@ -662,16 +666,16 @@ const EventNew = ({ EventsCss }) => {
                                           "YYYY-MM-DD"
                                         )
                                       : null} */}
-                                  </div>
-                                </Col>
-                              </Row>
-                            );
-                          })}
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                  }
+                                    </div>
+                                  </Col>
+                                </Row>
+                              );
+                            })}
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                  )}
                 </Col>
               </Row>
             </div>
