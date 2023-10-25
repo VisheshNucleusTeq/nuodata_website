@@ -9,6 +9,10 @@ import { useEffect, useState } from "react";
 import { CaretLeftOutlined, CaretDownOutlined } from "@ant-design/icons";
 
 const SiderView = ({ layoutCss, height, componentName }) => {
+  const workspace = useSelector(
+    (state) => state?.workspace?.workspace
+  );
+  console.log(workspace)
   const { query } = useRouter();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -30,6 +34,9 @@ const SiderView = ({ layoutCss, height, componentName }) => {
 
   const [accountAndSettingsArr, setAccountAndSettingsArr] = useState([]);
 
+  const [ingestion, setIngestion] = useState(false);
+  const [ingestionArr, setIngestionArr] = useState([]);
+
   const changePage = async (page, tab) => {
     router.push(page);
     if (tab) {
@@ -49,7 +56,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
 
   useEffect(() => {
     const authData = JSON.parse(localStorage.getItem("authData"));
-    
+
     let accountAndSettingsArrData = [];
     if (["nuodata_admin", "biz_master_admin"].includes(authData?.roleName)) {
       accountAndSettingsArrData.push({
@@ -74,11 +81,40 @@ const SiderView = ({ layoutCss, height, componentName }) => {
         link: "/event/event-management",
       });
     }
-
-    
-
     setAccountAndSettingsArr(accountAndSettingsArrData);
   }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if ("workspace" in localStorage || workspace) {
+        setIngestionArr([
+          {
+            title: "Dashboard",
+            link: "/ingestion",
+          },
+          {
+            title: "Create Pipeline",
+            link: "/ingestion/create-pipeline",
+          },
+          {
+            title: "Create Workspace",
+            link: "/ingestion/create-workspace",
+          },
+        ]);
+      } else {
+        setIngestionArr([
+          {
+            title: "Dashboard",
+            link: "/ingestion",
+          },
+          {
+            title: "Create Workspace",
+            link: "/ingestion/create-workspace",
+          },
+        ]);
+      }
+    }
+  }, [typeof window !== "undefined", workspace]);
 
   return (
     <Sider className={layoutCss.mainLayoutSider}>
@@ -90,23 +126,39 @@ const SiderView = ({ layoutCss, height, componentName }) => {
 
       <Row style={{ marginTop: "10%" }}>
         <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={2}
-            span={20}
-            style={{ height: height / 1.5 + "px" }}
-            className={layoutCss.mainMenu}
-            onClick={() => {
-              setShowDataModernization(!showDataModernization);
-              // setAccountAndSettings(false)
-            }}
-          >
-            Data Modernization &nbsp;{" "}
-            {showDataModernization ? (
-              <CaretDownOutlined style={{ color: "#e74860" }} />
-            ) : (
-              <CaretLeftOutlined style={{ color: "#e74860" }} />
-            )}
-          </Col>
+          <Row>
+            <Col
+              offset={2}
+              span={20}
+              style={{ height: height / 1.5 + "px" }}
+              className={layoutCss.mainMenu}
+              onClick={() => {
+                setShowDataModernization(!showDataModernization);
+              }}
+            >
+              <Row style={{ width: "100%" }}>
+                <Col span={22}>Data Modernization &nbsp;</Col>
+                <Col
+                  span={2}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {accountAndSettings ? (
+                    <CaretDownOutlined
+                      style={{ color: "#e74860", float: "right" }}
+                    />
+                  ) : (
+                    <CaretLeftOutlined
+                      style={{ color: "#e74860", float: "right" }}
+                    />
+                  )}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Col>
 
         {dataModernization.map((data, i) => {
@@ -167,37 +219,43 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             Data Management
           </Col>
         </Col>
-        {/* <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={2}
-            span={20}
-            style={{ height: height / 1.5 + "px" }}
-            className={layoutCss.mainMenu}
-          >
-            Account & Settings
-          </Col>
-        </Col> */}
 
-        {/* accountAndSettings, setAccountAndSettings */}
         <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={2}
-            span={20}
-            style={{ height: height / 1.5 + "px" }}
-            className={layoutCss.mainMenu}
-            onClick={() => {
-              setAccountAndSettings(!accountAndSettings);
-              // setShowDataModernization(false)
-            }}
-          >
-            Account & Settings &nbsp;{" "}
-            {accountAndSettings ? (
-              <CaretDownOutlined style={{ color: "#e74860" }} />
-            ) : (
-              <CaretLeftOutlined style={{ color: "#e74860" }} />
-            )}
-          </Col>
+          <Row>
+            <Col
+              offset={2}
+              span={20}
+              style={{ height: height / 1.5 + "px" }}
+              className={layoutCss.mainMenu}
+              onClick={() => {
+                setAccountAndSettings(!accountAndSettings);
+              }}
+            >
+              <Row style={{ width: "100%" }}>
+                <Col span={22}>Account & Settings &nbsp;</Col>
+                <Col
+                  span={2}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {accountAndSettings ? (
+                    <CaretDownOutlined
+                      style={{ color: "#e74860", float: "right" }}
+                    />
+                  ) : (
+                    <CaretLeftOutlined
+                      style={{ color: "#e74860", float: "right" }}
+                    />
+                  )}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Col>
+
         {accountAndSettingsArr.map((data, i) => {
           return (
             accountAndSettings && (
@@ -227,52 +285,71 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           );
         })}
 
-        {/* <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={2}
-            span={20}
-            style={{ height: height / 1.5 + "px" }}
-            className={layoutCss.mainMenu}
-            onClick={() => {
-              setShowPlatform(!showPlatform);
-            }}
-          >
-            Select Platform &nbsp;{" "}
-            {showPlatform ? (
-              <CaretDownOutlined style={{ color: "#e74860" }} />
-            ) : (
-              <CaretLeftOutlined style={{ color: "#e74860" }} />
-            )}
-          </Col>
+        <Col span={24} className={layoutCss.mainMenuCol}>
+          <Row>
+            <Col
+              offset={2}
+              span={20}
+              style={{ height: height / 1.5 + "px" }}
+              className={layoutCss.mainMenu}
+              onClick={() => {
+                setIngestion(!ingestion);
+              }}
+            >
+              {/* ingestion, setIngestion */}
+              <Row style={{ width: "100%" }}>
+                <Col span={22}>Ingestion &nbsp;</Col>
+                <Col
+                  span={2}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {ingestion ? (
+                    <CaretDownOutlined
+                      style={{ color: "#e74860", float: "right" }}
+                    />
+                  ) : (
+                    <CaretLeftOutlined
+                      style={{ color: "#e74860", float: "right" }}
+                    />
+                  )}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Col>
 
-        {[
-          {
-            name: "DataHub",
-            link: "https://governance.dev.nuodata.io/",
-          },
-        ].map((data, i) => {
+        {ingestionArr.map((data, i) => {
           return (
-            showPlatform && (
+            ingestion && (
               <Col
                 key={(Math.random() + 1).toString(36).substring(7)}
                 span={24}
-                className={`${layoutCss.mainMenuCol}`}
+                className={`${layoutCss.mainMenuCol} ${
+                  router.pathname === data?.link ? layoutCss.activeMenu : null
+                }`}
               >
-                <a onClick={() => window.open(data?.link, "_blank")}>
+                <a
+                  onClick={() => {
+                    changePage(data?.link);
+                  }}
+                >
                   <Col
-                    offset={2}
+                    offset={4}
                     span={20}
                     style={{ height: height / 2 + "px" }}
-                    className={layoutCss.subMainMenuSelect}
+                    className={layoutCss.subMainMenu}
                   >
-                    {data?.name}
+                    {data?.title}
                   </Col>
                 </a>
               </Col>
             )
           );
-        })} */}
+        })}
       </Row>
     </Sider>
   );

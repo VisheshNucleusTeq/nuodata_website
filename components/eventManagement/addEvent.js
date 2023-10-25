@@ -507,18 +507,28 @@ const AddEvent = ({
               </Col>
             </Row>
           </Col>
+          <Col span={12}>
+            <Row>
+              <Col span={24} style={{ height: "2vh" }}>
+                {""}
+              </Col>
+              <Col span={24} style={{alignItems : "end"}}>
+                <Button
+                  size={"large"}
+                  type="primary"
+                  block
+                  htmlType="submit"
+                  style={{ marginTop: "2vh", width: "10vw", float : "right", height : "6vh" }}
+                  disabled={
+                    updateData?.status && updateData?.status != "active"
+                  }
+                >
+                  {updateData?.eventId ? "Update" : "Add"} Event
+                </Button>
+              </Col>
+            </Row>
+          </Col>
         </Row>
-
-        <Button
-          size={"large"}
-          type="primary"
-          block
-          htmlType="submit"
-          style={{ marginTop: "2vh", width: "10vw" }}
-          disabled={updateData?.status != "active"}
-        >
-          {updateData?.eventId ? "Update" : "Add"} Event
-        </Button>
       </Form>
     </div>
   );

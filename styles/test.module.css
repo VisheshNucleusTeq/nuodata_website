@@ -1,18 +1,32 @@
-.textcssView {
-  opacity: 0;
-  /* visibility: hidden; */
+.headerView {
+  border: 1px solid gray;
+  height: 8vh;
+  background-color: #fff;
+  border: 1px solid gray;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
 }
 
-.textcssView:hover {
-  opacity: 1;
-  transition: all 1s;
-  /* visibility: visible; */
+.headerViewText {
+  font-size: 1.5vw;
 }
 
+.headerViewTag {
+  height: 4vh;
+  width: 6vw;
+  border-radius: 5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.bgImage{
-  background: url("/how_it_work/bg3-overlay (1).png") no-repeat center center;
-  /* width: 100%; */
-  /* height: 100vh; */
-  background-size: cover;
+.addNewObj {
+  /* border-bottom: 2px solid gray; */
+  height: 8vh;
+  display: flex;
+  justify-content: end;
+  font-size: 1vw;
+  font-weight: bold;
+  padding: 1vw;
 }

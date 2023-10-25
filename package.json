@@ -27,6 +27,7 @@
     "react-animation-on-scroll": "^5.1.0",
     "react-chartjs-2": "^5.0.1",
     "react-dom": "18.2.0",
+    "react-draggable": "^4.4.6",
     "react-flow-renderer": "^10.3.17",
     "react-icons": "^4.7.1",
     "react-json-view": "^1.21.3",

@@ -8,6 +8,7 @@ import {
   DESIGNDETAILS,
   LOADER,
   OPENDETAILS,
+  WORKSPACE
 } from "./type";
 
 export const UserDetailsAction = (data) => (dispatch) => {
@@ -69,6 +70,13 @@ export const loderShowHideAction = (data) => (dispatch) => {
 export const setOpenDetails = (data) => (dispatch) => {
   dispatch({
     type: OPENDETAILS,
+    payload: data,
+  });
+};
+
+export const setWorkspaceAction = (data) => (dispatch) => {
+  dispatch({
+    type: WORKSPACE,
     payload: data,
   });
 };
