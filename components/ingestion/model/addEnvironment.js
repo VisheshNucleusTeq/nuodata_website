@@ -73,17 +73,17 @@ const AddEnvironment = ({ ingestionCss, addEnvironmentAction }) => {
               ]}
             >
 
-<Radio.Group name="engine_type" defaultValue={1}>
+{/* <Radio.Group name="engine_type" defaultValue={1}>
     <Radio value={'spark'}>Spark</Radio>
     <Radio value={'presto'}>Presto</Radio>
    
-  </Radio.Group>
-              {/* <Checkbox.Group
+  </Radio.Group> */}
+              <Checkbox.Group
               name="engine_type"
                 options={["Spark", "Presto"]}
                 defaultValue={["Spark"]}
                 onChange={() => {}}
-              /> */}
+              />
             </Form.Item>
 
             <Form.Item

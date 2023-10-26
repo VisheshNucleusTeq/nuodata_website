@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Row,
   Col,
@@ -14,8 +14,16 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
 import AddEnvironment from "./model/addEnvironment";
-import { fetch_retry_post, fetch_retry_put } from "../../network/api-manager";
-import { ADDWORKSPACE, ADDRUNTIMEENV } from "../../network/apiConstants";
+import {
+  fetch_retry_post,
+  fetch_retry_put,
+  fetch_retry_get,
+} from "../../network/api-manager";
+import {
+  ADDWORKSPACE,
+  ADDRUNTIMEENV,
+  GETWORKSPACEENV,
+} from "../../network/apiConstants";
 import { loderShowHideAction } from "../../Redux/action";
 const CreateWorkspace = ({ ingestionCss }) => {
   const dispatch = useDispatch();
@@ -23,22 +31,37 @@ const CreateWorkspace = ({ ingestionCss }) => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [environment, setEnvironment] = React.useState([]);
+  const [environmentList, setEnvironmentList] = React.useState([]);
+  const [workspaceId, setWorkspaceId] = React.useState(0);
 
-  const addEnvironmentAction = (data) => {
+  const addEnvironmentAction = async (data) => {
     let obj = environment.find((o) => o.name === data?.name);
     if (obj) {
       message.error(
         "Environment Name must be unique. Please specify another Name"
       );
     } else {
-      console.log(data);
+      dispatch(loderShowHideAction(true));
+      const authData = JSON.parse(localStorage.getItem("authData"));
+      const evnData = await fetch_retry_post(`${ADDRUNTIMEENV}`, {
+        org_id: authData.orgId,
+        created_by: authData.userId,
+        workspace_id: workspaceId,
+        name: data?.name,
+        description: data?.description,
+        engine_type: data?.engine_type,
+        params: {},
+      });
+      dispatch(loderShowHideAction(false));
+
       setEnvironment([...environment, data]);
       setIsModalOpen(false);
+      
     }
   };
 
   const createWorkspace = async (data) => {
-    dispatch(loderShowHideAction(true))
+    dispatch(loderShowHideAction(true));
     const authData = JSON.parse(localStorage.getItem("authData"));
     let defaultEnvData = {};
     const workspaceData = await fetch_retry_post(ADDWORKSPACE, {
@@ -82,19 +105,81 @@ const CreateWorkspace = ({ ingestionCss }) => {
             default_runtime_env_id: defaultEnvData?.id,
           }
         );
-        dispatch(loderShowHideAction(false))
+        dispatch(loderShowHideAction(false));
         if (workspaceUpdateData.success) {
-          message.success([workspaceData?.data?.message])
+          message.success([workspaceData?.data?.message]);
         }
       } else {
-        dispatch(loderShowHideAction(false))
+        dispatch(loderShowHideAction(false));
         message.error(["Something went wrong"]);
       }
     } else {
-      dispatch(loderShowHideAction(false))
+      dispatch(loderShowHideAction(false));
       message.error([workspaceData?.error]);
     }
   };
+
+  const createNewWorkspace = async () => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    try {
+      const data = await form.validateFields();
+      dispatch(loderShowHideAction(true));
+      const workspaceData = await fetch_retry_post(ADDWORKSPACE, {
+        org_id: authData.orgId,
+        created_by: authData.userId,
+        name: data?.name,
+        description: data?.description,
+      });
+      setWorkspaceId(workspaceData?.data?.data?.id);
+      dispatch(loderShowHideAction(false));
+    } catch (errors) {
+      dispatch(loderShowHideAction(false));
+    }
+  };
+
+  const updateWorkspace = async () => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    try {
+      const data = await form.validateFields();
+      let obj = environmentList.find(
+        (o) => o.runtime_env_name === data?.environment
+      );
+      let localObj = environment.find((o) => o.name === data?.environment);
+      if (obj) {
+        dispatch(loderShowHideAction(true));
+
+        const workspaceUpdateData = await fetch_retry_put(
+          `${ADDWORKSPACE}${workspaceId}`,
+          {
+            org_id: authData.orgId,
+            name: obj?.runtime_env_name,
+            description: obj?.description,
+            default_runtime_env_id: obj?.runtime_env_id,
+            default_engine_type: localObj?.engine_type,
+          }
+        );
+        dispatch(loderShowHideAction(false));
+        if (workspaceUpdateData.success) {
+          message.success([workspaceUpdateData?.data?.message]);
+        }
+      }
+    } catch (errors) {
+      console.log(errors);
+      dispatch(loderShowHideAction(false));
+    }
+  };
+
+  const getEnvList = async () => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    const envList = await fetch_retry_get(
+      `${GETWORKSPACEENV}${workspaceId}?org_id=${authData.orgId}`
+    );
+    setEnvironmentList(envList?.data); //6539e58e6c33216c302cdfc0
+  };
+
+  useEffect(() => {
+    environment.length && getEnvList();
+  }, [environment]);
 
   return (
     <>
@@ -134,16 +219,21 @@ const CreateWorkspace = ({ ingestionCss }) => {
               label={"Workspace Name"}
               labelAlign={"left"}
               name={"name"}
-              rules={[
-                {
-                  required: true,
-                  message: "Workspace name is required.",
-                },
-                {
-                  max: 100,
-                  message: "Workspace name cannot be more than 100 characters.",
-                },
-              ]}
+              rules={
+                workspaceId
+                  ? []
+                  : [
+                      {
+                        required: true,
+                        message: "Workspace name is required.",
+                      },
+                      {
+                        max: 100,
+                        message:
+                          "Workspace name cannot be more than 100 characters.",
+                      },
+                    ]
+              }
             >
               <Input
                 key={"input-workspace-name"}
@@ -151,6 +241,7 @@ const CreateWorkspace = ({ ingestionCss }) => {
                 name={"name"}
                 type={"text"}
                 placeholder={"Workspace Name"}
+                disabled={workspaceId != 0}
               />
             </Form.Item>
 
@@ -158,12 +249,16 @@ const CreateWorkspace = ({ ingestionCss }) => {
               label={"Desciption"}
               labelAlign={"left"}
               name={"description"}
-              rules={[
-                {
-                  required: true,
-                  message: "Desciption is required.",
-                },
-              ]}
+              rules={
+                workspaceId
+                  ? []
+                  : [
+                      {
+                        required: true,
+                        message: "Desciption is required.",
+                      },
+                    ]
+              }
             >
               <Input.TextArea
                 key={"input-desciption"}
@@ -171,8 +266,34 @@ const CreateWorkspace = ({ ingestionCss }) => {
                 type={"text"}
                 placeholder={"Desciption"}
                 style={{ minHeight: 100, borderRadius: "10px" }}
+                disabled={workspaceId != 0}
               />
             </Form.Item>
+            {workspaceId == 0 && (
+              <div style={{ display: "flex", justifyContent: "end" }}>
+                <Space>
+                  <Button
+                    type="primary"
+                    className={ingestionCss.exitBtn}
+                    onClick={() => {
+                      route.back();
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="primary"
+                    className={ingestionCss.nextBtn}
+                    // htmlType="submit"
+                    onClick={async () => {
+                      createNewWorkspace();
+                    }}
+                  >
+                    Add Workspace
+                  </Button>
+                </Space>
+              </div>
+            )}
 
             <Row>
               <Col span={16}>
@@ -180,12 +301,16 @@ const CreateWorkspace = ({ ingestionCss }) => {
                   label={"Runtime Environment"}
                   labelAlign={"left"}
                   name={"environment"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Environment is required.",
-                    },
-                  ]}
+                  rules={
+                    workspaceId
+                      ? [
+                          {
+                            required: true,
+                            message: "Environment is required.",
+                          },
+                        ]
+                      : []
+                  }
                 >
                   <Select
                     className="inputSelect"
@@ -203,6 +328,7 @@ const CreateWorkspace = ({ ingestionCss }) => {
                         label: e?.name,
                       };
                     })}
+                    disabled={workspaceId == 0}
                   />
                 </Form.Item>
               </Col>
@@ -225,27 +351,31 @@ const CreateWorkspace = ({ ingestionCss }) => {
                 </Form.Item>
               </Col>
             </Row>
-
-            <div style={{ display: "flex", justifyContent: "end" }}>
-              <Space>
-                <Button
-                  type="primary"
-                  className={ingestionCss.exitBtn}
-                  onClick={() => {
-                    route.back();
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="primary"
-                  className={ingestionCss.nextBtn}
-                  htmlType="submit"
-                >
-                  Add Workspace
-                </Button>
-              </Space>
-            </div>
+            {workspaceId != 0 && (
+              <div style={{ display: "flex", justifyContent: "end" }}>
+                <Space>
+                  <Button
+                    type="primary"
+                    className={ingestionCss.exitBtn}
+                    onClick={() => {
+                      route.back();
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="primary"
+                    className={ingestionCss.nextBtn}
+                    // htmlType="submit"
+                    onClick={async () => {
+                      updateWorkspace();
+                    }}
+                  >
+                    Update Workspace
+                  </Button>
+                </Space>
+              </div>
+            )}
           </Form>
         </Col>
       </Row>
