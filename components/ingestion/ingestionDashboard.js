@@ -10,13 +10,14 @@ import {
   Badge,
   Modal,
   Select,
+  message
 } from "antd";
 import { SwapOutlined, FilterOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 
-import { GETWORKSPACE } from "../../network/apiConstants";
+import { GETWORKSPACE, GETPIPELINE } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
 import { setWorkspaceAction } from "../../Redux/action";
 
@@ -27,6 +28,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [workspace, setWorkspace] = React.useState("");
   const [workspaceData, setWorkspaceData] = React.useState([]);
+  const [pipelineData, setPipelineData] = React.useState([]);
 
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const color = ["#44ae48", "#dda807", "#ff7575", "#a5a5a5"];
@@ -66,7 +68,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
     },
     {
       title: "Pipeline Name",
-      dataIndex: "pipelineName",
+      dataIndex: "workspace_name",
     },
     {
       title: "Status",
@@ -84,12 +86,10 @@ const IngestionDashboard = ({ ingestionCss }) => {
       title: "Schedule",
       dataIndex: "schedule",
     },
-
     {
       title: "Last Modified",
-      dataIndex: "lastModified",
+      dataIndex: "create_dt_time",
     },
-
     {
       title: "Action",
       dataIndex: "action",
@@ -109,22 +109,23 @@ const IngestionDashboard = ({ ingestionCss }) => {
     },
   ];
 
-  const data = Array(3)
-    .fill(undefined)
-    .map((e, i) => {
-      return {
-        key: "1",
-        pipelineName: "Demo",
-        schedule: "Every Day",
-        lastModified: new Date().toDateString(),
-      };
-    });
+  // const data = Array(3)
+  //   .fill(undefined)
+  //   .map((e, i) => {
+  //     return {
+  //       key: "1",
+  //       pipelineName: "Demo",
+  //       schedule: "Every Day",
+  //       lastModified: new Date().toDateString(),
+  //     };
+  //   });
 
   const getWorkSpaceData = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
     if (authData && authData?.orgId) {
       const data = await fetch_retry_get(`${GETWORKSPACE}${authData?.orgId}`);
       if (data.success) {
+        console.log(data?.data)
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
@@ -138,17 +139,32 @@ const IngestionDashboard = ({ ingestionCss }) => {
       if (!workspace && !("workspace" in localStorage)) {
         setIsModalOpen(true);
       } else {
-        const workspaceValue = localStorage.getItem("workspace")
+        const workspaceValue = localStorage.getItem("workspace");
         setWorkspace(workspaceValue);
         dispatch(setWorkspaceAction(workspaceValue));
         setIsModalOpen(false);
       }
     }
-  } 
+  };
+
+  const getPiplineData = async () => {
+    if (typeof window !== "undefined") {
+      if (workspace && ("workspace" in localStorage)) {
+        const data = await fetch_retry_get(`${GETPIPELINE}${workspace}`);
+        if (data.success) {
+          setPipelineData(data.data);
+        } else {
+          setPipelineData([]);
+          message.error([data?.error]);
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     getWorkSpaceData();
-    setOldData()
+    setOldData();
+    getPiplineData();
   }, [workspace, typeof window !== "undefined"]);
 
   return (
@@ -174,7 +190,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
               Add new workspace
             </Button>
           </div>
-
           <Select
             placeholder="Select Workspace"
             style={{
@@ -232,7 +247,67 @@ const IngestionDashboard = ({ ingestionCss }) => {
           </Col>
         </Row>
       )}
-      {["Pipelines", "Models", "Workflows"].map((titleName) => {
+
+      {/* {JSON.stringify(pipelineData)} */}
+
+      <Table
+        columns={columns}
+        dataSource={pipelineData.map((e) => {
+          return {
+            ...e,
+            schedule: "Every Day",
+          }
+        })}
+        bordered
+        title={() => {
+          return (
+            <>
+              <Row>
+                <Col span={4} style={{ display: "flex", alignItems: "center" }}>
+                  <h1>
+                    <b>Pipelines</b>
+                  </h1>
+                </Col>
+                <Col span={10}>
+                  <Input className="input" placeholder={"Search Pipelines"} />
+                </Col>
+                <Col
+                  span={10}
+                  style={{ justifyContent: "end", display: "flex" }}
+                >
+                  <Space>
+                    <Button
+                      style={{
+                        background: "gray",
+                        color: "#fff",
+                        borderRadius: "25px",
+                        height: "100%",
+                      }}
+                    >
+                      <FilterOutlined /> Filter
+                    </Button>
+                    <Button
+                      style={{
+                        background: "#e74860",
+                        color: "#fff",
+                        borderRadius: "25px",
+                        height: "100%",
+                      }}
+                      onClick={() => {
+                        router.push(`/ingestion/create-pipeline`);
+                      }}
+                    >
+                      New Pipelines
+                    </Button>
+                  </Space>
+                </Col>
+              </Row>
+            </>
+          );
+        }}
+      />
+
+      {/* {["Pipelines", "Models", "Workflows"].map((titleName) => {
         return (
           <Table
             columns={columns}
@@ -292,7 +367,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
             }}
           />
         );
-      })}
+      })} */}
     </>
   );
 };

@@ -70,5 +70,6 @@ export const ADDWORKSPACE = "ingestion/v1/workspace/";
 export const GETCONNECTION = "ingestion/v1/connection/type/";
 export const GETCONNECTIONDETAIL = "ingestion/v1/connection/";
 export const GETWORKSPACEENV = "ingestion/v1/runtime-env/workspace/";
-
-
+export const ENVDETAILS = "ingestion/v1/runtime-env/";
+export const CREATEPIPELINE = "ingestion/v1/pipeline/";
+export const GETPIPELINE = "ingestion/v1/pipeline/workspace/";

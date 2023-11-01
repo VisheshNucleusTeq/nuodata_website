@@ -8,8 +8,10 @@ import Build from "./pipelinePages/build";
 
 import { GETWORKSPACE } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
-
+import { setWorkspaceAction } from "../../Redux/action";
 const CreatePipeline = ({ ingestionCss }) => {
+  const dispatch = useDispatch();
+
   const workspace = useSelector((state) => state?.workspace?.workspace);
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [workspaceData, setWorkspaceData] = React.useState([]);
@@ -27,9 +29,21 @@ const CreatePipeline = ({ ingestionCss }) => {
     }
   };
 
+  const setOldData = async () => {
+    if (typeof window !== "undefined") {
+      if (!workspace && !("workspace" in localStorage)) {
+        // setIsModalOpen(true);
+      } else {
+        const workspaceValue = localStorage.getItem("workspace")
+        dispatch(setWorkspaceAction(workspaceValue));
+      }
+    }
+  } 
+
   useEffect(() => {
     getWorkSpaceData();
-  });
+    setOldData()
+  }, [workspace, typeof window !== "undefined"]);
 
   return (
     <>
@@ -148,12 +162,19 @@ const CreatePipeline = ({ ingestionCss }) => {
             {selectedTab === 0 && (
               <>
                 <Divider style={{ margin: "2vh 0vh 2vh 0vh" }}></Divider>
-                <Define ingestionCss={ingestionCss} />
+                {workspaceData.length && workspace ? (
+                  <Define
+                    ingestionCss={ingestionCss}
+                    workspaceData={workspaceData}
+                    workspace={workspace}
+                    setSelectedTab={setSelectedTab}
+                  />
+                ) : null}
               </>
             )}
             {selectedTab === 1 && (
               <>
-                <Build ingestionCss={ingestionCss} />
+                <Build ingestionCss={ingestionCss} setSelectedTab={setSelectedTab} />
               </>
             )}
           </Col>

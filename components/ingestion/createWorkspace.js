@@ -33,6 +33,7 @@ const CreateWorkspace = ({ ingestionCss }) => {
   const [environment, setEnvironment] = React.useState([]);
   const [environmentList, setEnvironmentList] = React.useState([]);
   const [workspaceId, setWorkspaceId] = React.useState(0);
+  const [workspaceName, setWorkspaceName] = React.useState("");
 
   const addEnvironmentAction = async (data) => {
     let obj = environment.find((o) => o.name === data?.name);
@@ -41,6 +42,12 @@ const CreateWorkspace = ({ ingestionCss }) => {
         "Environment Name must be unique. Please specify another Name"
       );
     } else {
+      let params = {};
+      try {
+        params = JSON.parse(data?.params);
+      } catch (error) {
+        params = data?.params;
+      }
       dispatch(loderShowHideAction(true));
       const authData = JSON.parse(localStorage.getItem("authData"));
       const evnData = await fetch_retry_post(`${ADDRUNTIMEENV}`, {
@@ -50,13 +57,11 @@ const CreateWorkspace = ({ ingestionCss }) => {
         name: data?.name,
         description: data?.description,
         engine_type: data?.engine_type,
-        params: {},
+        params: params,
       });
       dispatch(loderShowHideAction(false));
-
       setEnvironment([...environment, data]);
       setIsModalOpen(false);
-      
     }
   };
 
@@ -174,7 +179,7 @@ const CreateWorkspace = ({ ingestionCss }) => {
     const envList = await fetch_retry_get(
       `${GETWORKSPACEENV}${workspaceId}?org_id=${authData.orgId}`
     );
-    setEnvironmentList(envList?.data); //6539e58e6c33216c302cdfc0
+    setEnvironmentList(envList?.data);
   };
 
   useEffect(() => {
@@ -204,6 +209,11 @@ const CreateWorkspace = ({ ingestionCss }) => {
       </Modal>
 
       <Row className={ingestionCss.defineForm}>
+        {workspaceId != 0 && (
+          <Col offset={3} span={21}>
+            <h2 style={{ color: "#e74860" }}>{workspaceName}</h2>
+          </Col>
+        )}
         <Col offset={3} span={18}>
           <Form
             form={form}
@@ -212,169 +222,177 @@ const CreateWorkspace = ({ ingestionCss }) => {
             // labelCol={{ span: 7 }}
             // wrapperCol={{ span: 18 }}
             onFinish={(e) => {
-              createWorkspace(e);
+              // createWorkspace(e);
             }}
           >
-            <Form.Item
-              label={"Workspace Name"}
-              labelAlign={"left"}
-              name={"name"}
-              rules={
-                workspaceId
-                  ? []
-                  : [
-                      {
-                        required: true,
-                        message: "Workspace name is required.",
-                      },
-                      {
-                        max: 100,
-                        message:
-                          "Workspace name cannot be more than 100 characters.",
-                      },
-                    ]
-              }
-            >
-              <Input
-                key={"input-workspace-name"}
-                className={"input"}
-                name={"name"}
-                type={"text"}
-                placeholder={"Workspace Name"}
-                disabled={workspaceId != 0}
-              />
-            </Form.Item>
-
-            <Form.Item
-              label={"Desciption"}
-              labelAlign={"left"}
-              name={"description"}
-              rules={
-                workspaceId
-                  ? []
-                  : [
-                      {
-                        required: true,
-                        message: "Desciption is required.",
-                      },
-                    ]
-              }
-            >
-              <Input.TextArea
-                key={"input-desciption"}
-                name={"description"}
-                type={"text"}
-                placeholder={"Desciption"}
-                style={{ minHeight: 100, borderRadius: "10px" }}
-                disabled={workspaceId != 0}
-              />
-            </Form.Item>
             {workspaceId == 0 && (
-              <div style={{ display: "flex", justifyContent: "end" }}>
-                <Space>
-                  <Button
-                    type="primary"
-                    className={ingestionCss.exitBtn}
-                    onClick={() => {
-                      route.back();
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="primary"
-                    className={ingestionCss.nextBtn}
-                    // htmlType="submit"
-                    onClick={async () => {
-                      createNewWorkspace();
-                    }}
-                  >
-                    Add Workspace
-                  </Button>
-                </Space>
-              </div>
-            )}
-
-            <Row>
-              <Col span={16}>
+              <>
                 <Form.Item
-                  label={"Runtime Environment"}
+                  label={"Workspace Name"}
                   labelAlign={"left"}
-                  name={"environment"}
+                  name={"name"}
                   rules={
                     workspaceId
-                      ? [
+                      ? []
+                      : [
                           {
                             required: true,
-                            message: "Environment is required.",
+                            message: "Workspace name is required.",
+                          },
+                          {
+                            max: 100,
+                            message:
+                              "Workspace name cannot be more than 100 characters.",
                           },
                         ]
-                      : []
                   }
                 >
-                  <Select
-                    className="inputSelect"
-                    showSearch
-                    placeholder="Select runtime environment"
-                    optionFilterProp="children"
-                    filterOption={(input, option) =>
-                      (option?.label ?? "")
-                        .toLowerCase()
-                        .includes(input.toLowerCase())
-                    }
-                    options={environment.map((e) => {
-                      return {
-                        value: e?.name,
-                        label: e?.name,
-                      };
-                    })}
-                    disabled={workspaceId == 0}
+                  <Input
+                    key={"input-workspace-name"}
+                    className={"input"}
+                    name={"name"}
+                    type={"text"}
+                    placeholder={"Workspace Name"}
+                    disabled={workspaceId != 0}
+                    onChange={(e) => {
+                      setWorkspaceName(e.target.value);
+                    }}
                   />
                 </Form.Item>
-              </Col>
-              <Col span={8}>
+
                 <Form.Item
-                  label={" "}
+                  label={"Desciption"}
                   labelAlign={"left"}
-                  name={"addenvironment"}
+                  name={"description"}
+                  rules={
+                    workspaceId
+                      ? []
+                      : [
+                          {
+                            required: true,
+                            message: "Desciption is required.",
+                          },
+                        ]
+                  }
                 >
-                  <Button
-                    type="primary"
-                    danger
-                    className={ingestionCss.addnewEnv}
-                    onClick={() => {
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    Add new runtime environment
-                  </Button>
+                  <Input.TextArea
+                    key={"input-desciption"}
+                    name={"description"}
+                    type={"text"}
+                    placeholder={"Desciption"}
+                    style={{ minHeight: 100, borderRadius: "10px" }}
+                    disabled={workspaceId != 0}
+                  />
                 </Form.Item>
-              </Col>
-            </Row>
+
+                <div style={{ display: "flex", justifyContent: "end" }}>
+                  <Space>
+                    <Button
+                      type="primary"
+                      className={ingestionCss.exitBtn}
+                      onClick={() => {
+                        route.back();
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="primary"
+                      className={ingestionCss.nextBtn}
+                      // htmlType="submit"
+                      onClick={async () => {
+                        createNewWorkspace();
+                      }}
+                    >
+                      Add Workspace
+                    </Button>
+                  </Space>
+                </div>
+              </>
+            )}
             {workspaceId != 0 && (
-              <div style={{ display: "flex", justifyContent: "end" }}>
-                <Space>
-                  <Button
-                    type="primary"
-                    className={ingestionCss.exitBtn}
-                    onClick={() => {
-                      route.back();
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="primary"
-                    className={ingestionCss.nextBtn}
-                    // htmlType="submit"
-                    onClick={async () => {
-                      updateWorkspace();
-                    }}
-                  >
-                    Update Workspace
-                  </Button>
-                </Space>
-              </div>
+              <>
+                <Row>
+                  <Col span={16}>
+                    <Form.Item
+                      label={"Runtime Environment"}
+                      labelAlign={"left"}
+                      name={"environment"}
+                      rules={
+                        workspaceId
+                          ? [
+                              {
+                                required: true,
+                                message: "Environment is required.",
+                              },
+                            ]
+                          : []
+                      }
+                    >
+                      <Select
+                        className="inputSelect"
+                        showSearch
+                        placeholder="Select runtime environment"
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                          (option?.label ?? "")
+                            .toLowerCase()
+                            .includes(input.toLowerCase())
+                        }
+                        options={environment.map((e) => {
+                          return {
+                            value: e?.name,
+                            label: e?.name,
+                          };
+                        })}
+                        disabled={workspaceId == 0}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      label={" "}
+                      labelAlign={"left"}
+                      name={"addenvironment"}
+                    >
+                      <Button
+                        type="primary"
+                        danger
+                        className={ingestionCss.addnewEnv}
+                        onClick={() => {
+                          setIsModalOpen(true);
+                        }}
+                      >
+                        Add new runtime environment
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+
+                <div style={{ display: "flex", justifyContent: "end" }}>
+                  <Space>
+                    <Button
+                      type="primary"
+                      className={ingestionCss.exitBtn}
+                      onClick={() => {
+                        route.back();
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="primary"
+                      className={ingestionCss.nextBtn}
+                      // htmlType="submit"
+                      onClick={async () => {
+                        updateWorkspace();
+                      }}
+                    >
+                      Update Workspace
+                    </Button>
+                  </Space>
+                </div>
+              </>
             )}
           </Form>
         </Col>

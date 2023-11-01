@@ -1,8 +1,31 @@
-import React from "react";
-import { Row, Col, Form, Input, Select, Button, Modal, Checkbox, Radio } from "antd";
+import React, { useEffect } from "react";
+import {
+  Row,
+  Col,
+  Form,
+  Input,
+  Select,
+  Button,
+  Modal,
+  Checkbox,
+  Radio,
+} from "antd";
 
-const AddEnvironment = ({ ingestionCss, addEnvironmentAction }) => {
+const AddEnvironment = ({
+  ingestionCss,
+  addEnvironmentAction,
+  environmentDetails = {},
+}) => {
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (Object.keys(environmentDetails).length > 0) {
+      form.setFieldsValue({
+        ...environmentDetails,
+        params: JSON.stringify(environmentDetails?.params),
+      });
+    }
+  }, [environmentDetails]);
 
   return (
     <>
@@ -72,14 +95,13 @@ const AddEnvironment = ({ ingestionCss, addEnvironmentAction }) => {
                 },
               ]}
             >
-
-{/* <Radio.Group name="engine_type" defaultValue={1}>
+              {/* <Radio.Group name="engine_type" defaultValue={1}>
     <Radio value={'spark'}>Spark</Radio>
     <Radio value={'presto'}>Presto</Radio>
    
   </Radio.Group> */}
               <Checkbox.Group
-              name="engine_type"
+                name="engine_type"
                 options={["Spark", "Presto"]}
                 defaultValue={["Spark"]}
                 onChange={() => {}}
@@ -113,7 +135,9 @@ const AddEnvironment = ({ ingestionCss, addEnvironmentAction }) => {
                 className={ingestionCss.nextBtn}
                 htmlType="submit"
               >
-                Add Runtime Environment
+                {Object.keys(environmentDetails).length > 0
+                  ? "Update Runtime Environment"
+                  : " Add Runtime Environment"}
               </Button>
             </div>
           </Form>

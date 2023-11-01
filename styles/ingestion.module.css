@@ -265,3 +265,23 @@
 .formHeight {
   margin-bottom: 1.5vw;
 }
+
+.workspaceHeader h1 {
+  color: #e74860;
+  font-size: 2vw;
+  line-height: 2vw;
+  font-weight: bold;
+}
+
+.workspaceHeader .button {
+  height: 2.5vw;
+  background: #e74860;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 0vw 1vw 0vw 1vw;
+  cursor: pointer;
+  border: 1px solid #d6d6d6;
+  float: right;
+
+  margin-bottom: 1vw;
+}

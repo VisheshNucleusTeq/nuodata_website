@@ -97,8 +97,8 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             link: "/ingestion/create-pipeline",
           },
           {
-            title: "Create Workspace",
-            link: "/ingestion/create-workspace",
+            title: "Workspace",
+            link: "/ingestion/workspace",
           },
         ]);
       } else {
@@ -108,8 +108,8 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             link: "/ingestion",
           },
           {
-            title: "Create Workspace",
-            link: "/ingestion/create-workspace",
+            title: "Workspace",
+            link: "/ingestion/workspace",
           },
         ]);
       }
