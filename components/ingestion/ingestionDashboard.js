@@ -10,8 +10,14 @@ import {
   Badge,
   Modal,
   Select,
-  message
+  message,
+  Tooltip,
 } from "antd";
+import {
+  EditOutlined,
+  DeleteOutlined
+} from "@ant-design/icons";
+
 import { SwapOutlined, FilterOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -19,7 +25,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { GETWORKSPACE, GETPIPELINE } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
-import { setWorkspaceAction } from "../../Redux/action";
+import { setWorkspaceAction, setPipelineAction } from "../../Redux/action";
 
 const IngestionDashboard = ({ ingestionCss }) => {
   const router = useRouter();
@@ -30,102 +36,85 @@ const IngestionDashboard = ({ ingestionCss }) => {
   const [workspaceData, setWorkspaceData] = React.useState([]);
   const [pipelineData, setPipelineData] = React.useState([]);
 
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const color = ["#44ae48", "#dda807", "#ff7575", "#a5a5a5"];
 
   const columns = [
     {
-      title: "Title",
-      dataIndex: "title",
-      render: (text) => {
-        return (
-          <>
-            <Space size={15}>
-              <Image
-                preview={false}
-                src={
-                  "https://placehold.co/150?text=" +
-                  alphabet[Math.floor(Math.random() * alphabet.length)]
-                }
-                className={ingestionCss.iconImage}
-              />
-              <SwapOutlined
-                className={ingestionCss.title}
-                style={{ fontSize: "1.2vw" }}
-              />
-              <Image
-                preview={false}
-                src={
-                  "https://placehold.co/150?text=" +
-                  alphabet[Math.floor(Math.random() * alphabet.length)]
-                }
-                className={ingestionCss.iconImage}
-              />
-            </Space>
-          </>
-        );
-      },
-    },
-    {
       title: "Pipeline Name",
-      dataIndex: "workspace_name",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      render: (text) => {
+      dataIndex: "pipeline_name",
+      render: (text, record) => {
         return (
-          <Badge
-            count={"Status"}
-            color={color[Math.floor(Math.random() * color.length)]}
-          />
+          <Tooltip placement="topLeft" title={record?.pipeline_description}>
+            <p>{text}</p>
+          </Tooltip>
         );
       },
     },
+
     {
       title: "Schedule",
       dataIndex: "schedule",
     },
     {
       title: "Last Modified",
-      dataIndex: "create_dt_time",
+      dataIndex: "updated_date_time",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      render: (text) => {
+        return <Badge count={text} />;
+      },
     },
     {
       title: "Action",
       dataIndex: "action",
-      render: (text) => {
+      render: (text, record) => {
         return (
-          <Button
-            style={{
-              background: color[Math.floor(Math.random() * color.length)],
-              color: "#fff",
-              borderRadius: "25px",
-            }}
+          <Space
+            size="middle"
+            key={(Math.random() + 1).toString(36).substring(7)}
           >
-            Action
-          </Button>
+            <Tooltip
+              placement="top"
+              title={"Edit"}
+              key={(Math.random() + 1).toString(36).substring(7)}
+            >
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push("/ingestion/create-pipeline?pipeline=" + record?.pipeline_id)
+                }}
+              >
+                <EditOutlined />
+              </a>
+            </Tooltip>
+            <Tooltip
+              placement="top"
+              title={"Delete"}
+              key={(Math.random() + 1).toString(36).substring(7)}
+            >
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+              >
+                <DeleteOutlined />
+              </a>
+            </Tooltip>
+          </Space>
         );
       },
     },
   ];
 
-  // const data = Array(3)
-  //   .fill(undefined)
-  //   .map((e, i) => {
-  //     return {
-  //       key: "1",
-  //       pipelineName: "Demo",
-  //       schedule: "Every Day",
-  //       lastModified: new Date().toDateString(),
-  //     };
-  //   });
 
   const getWorkSpaceData = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
     if (authData && authData?.orgId) {
       const data = await fetch_retry_get(`${GETWORKSPACE}${authData?.orgId}`);
       if (data.success) {
-        console.log(data?.data)
+        console.log(data?.data);
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
@@ -149,7 +138,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
 
   const getPiplineData = async () => {
     if (typeof window !== "undefined") {
-      if (workspace && ("workspace" in localStorage)) {
+      if (workspace && "workspace" in localStorage) {
         const data = await fetch_retry_get(`${GETPIPELINE}${workspace}`);
         if (data.success) {
           setPipelineData(data.data);
@@ -162,6 +151,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
   };
 
   useEffect(() => {
+    dispatch(setPipelineAction(null));
     getWorkSpaceData();
     setOldData();
     getPiplineData();
@@ -256,7 +246,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
           return {
             ...e,
             schedule: "Every Day",
-          }
+          };
         })}
         bordered
         title={() => {

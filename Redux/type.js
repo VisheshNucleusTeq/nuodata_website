@@ -8,3 +8,4 @@ export const DESIGNDETAILS = "DESIGNDETAILS";
 export const LOADER = "LOADER";
 export const OPENDETAILS = "OPENDETAILS";
 export const WORKSPACE = "WORKSPACE";
+export const PIPELINE = "PIPELINE";

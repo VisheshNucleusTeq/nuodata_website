@@ -48,7 +48,7 @@ const CreatePipeline = ({ ingestionCss }) => {
   return (
     <>
       {workspace && (
-        <Row>
+        <Row style={{borderRadius : "5px"}}>
           <Col className={ingestionCss.WorkspaceName} span={24}>
             <Row>
               <Col
@@ -60,30 +60,12 @@ const CreatePipeline = ({ ingestionCss }) => {
                     ?.workspace_name
                 }
               </Col>
-              {/* <Col
-                span={5}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  height: "8vh",
-                  justifyContent: "end",
-                }}
-              >
-                <Button
-                  onClick={() => {
-                    setIsModalOpen(true);
-                  }}
-                  style={{ float: "right" }}
-                >
-                  Change Workspace
-                </Button>
-              </Col> */}
             </Row>
           </Col>
         </Row>
       )}
 
-      <div className={ingestionCss.main}>
+      <div className={ingestionCss.main} style={{borderRadius : "5px"}}>
         <Row>
           <Col span={24} className={ingestionCss.pipelineTitle}>
             <span>New Pipeline- Editable Field</span>

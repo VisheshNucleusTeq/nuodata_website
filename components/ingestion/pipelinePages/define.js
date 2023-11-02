@@ -12,10 +12,13 @@ import {
   message,
   Radio,
 } from "antd";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   fetch_retry_get,
   fetch_retry_post,
+  fetch_retry_put,
 } from "../../../network/api-manager";
 import {
   GETWORKSPACEENV,
@@ -23,14 +26,74 @@ import {
   ENVDETAILS,
   CREATEPIPELINE,
 } from "../../../network/apiConstants";
-import { useRouter } from "next/router";
-
+import { setPipelineAction, loderShowHideAction } from "../../../Redux/action";
 const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
   const route = useRouter();
+  const { query } = useRouter();
+  const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const [environment, setEnvironment] = React.useState([]);
   const [runtimeEngine, setRuntimeEngine] = React.useState([]);
+  const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
+
+  const savePipline = async (type) => {
+    try {
+      dispatch(loderShowHideAction(true));
+      const data = await form.validateFields();
+      const authData = JSON.parse(localStorage.getItem("authData"));
+      if (pipelineData) {
+        const createPipeline = await fetch_retry_put(
+          `${CREATEPIPELINE}${pipelineData}?workspace_id=${workspace}`,
+          {
+            name: data?.name,
+            pipeline_description: data?.pipeline_description,
+            runtime_env_id: data?.environment,
+            runtime_engine: data?.runtime_engine,
+          }
+        );
+
+        if (createPipeline.success) {
+          message.success([createPipeline?.data?.message]);
+          if (type == "save") {
+            route.push("/ingestion");
+          } else {
+            setSelectedTab(1);
+          }
+          dispatch(loderShowHideAction(false));
+        } else {
+          dispatch(loderShowHideAction(false));
+          message.error([createPipeline?.error]);
+        }
+      } else {
+        const createPipeline = await fetch_retry_post(`${CREATEPIPELINE}`, {
+          name: data?.name,
+          pipeline_description: data?.pipeline_description,
+          org_id: authData.orgId,
+          workspace_id: workspace,
+          runtime_env_id: data?.environment,
+          runtime_engine: data?.runtime_engine,
+          job_type: "pipeline",
+        });
+
+        if (createPipeline.success) {
+          message.success([createPipeline?.data?.message]);
+          dispatch(setPipelineAction(createPipeline?.data?.data?.id));
+          if (type == "save") {
+            route.push("/ingestion");
+          } else {
+            setSelectedTab(1);
+          }
+          dispatch(loderShowHideAction(false));
+        } else {
+          dispatch(loderShowHideAction(false));
+          message.error([createPipeline?.error]);
+        }
+      }
+    } catch (errors) {
+      dispatch(loderShowHideAction(false));
+    }
+  };
 
   const updateFormvalue = async () => {
     let defaultValue = {};
@@ -55,41 +118,41 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
       `${ENVDETAILS}${workspaceDetails?.data?.default_runtime_env_id}?org_id=${authData.orgId}&workspace_id=${workspace}`
     );
     setRuntimeEngine(envDetails?.data?.engine_type);
-    // defaultValue.runtime_engine = envDetails?.data?.engine_type;
 
     form.setFieldsValue({ ...defaultValue });
   };
 
-  const savePipline = async (type) => {
-    try {
-      const data = await form.validateFields();
-      const authData = JSON.parse(localStorage.getItem("authData"));
+  const setOldPipeline = async (id) => {
+    dispatch(setPipelineAction(id));
 
-      const createPipeline = await fetch_retry_post(`${CREATEPIPELINE}`, {
-        name: data?.name,
-        org_id: authData.orgId,
-        workspace_id: workspace,
-        runtime_env_id: data?.environment,
-        runtime_engine: data?.runtime_engine[0],
-        job_type: "pipeline",
-      });
+    const authData = JSON.parse(localStorage.getItem("authData"));
 
-      if (createPipeline.success) {
-        message.success([createPipeline?.data?.message]);
-        if (type == "save") {
-          route.push("/ingestion")
-        } else {
-          setSelectedTab(1);
-        }
-      } else {
-        message.error([createPipeline?.error]);
-      }
-    } catch (errors) {}
+    const pipelineDetails = await fetch_retry_get(`${CREATEPIPELINE}${id}`);
+
+    const envDetails = await fetch_retry_get(
+      `${ENVDETAILS}${pipelineDetails?.data?.runtime_env_id}?org_id=${authData.orgId}&workspace_id=${workspace}`
+    );
+    setRuntimeEngine(envDetails?.data?.engine_type);
+
+    const envList = await fetch_retry_get(
+      `${GETWORKSPACEENV}${workspace}?org_id=${authData.orgId}`
+    );
+    setEnvironment(envList?.data);
+    form.setFieldsValue({
+      name: pipelineDetails?.data?.pipeline_name,
+      pipeline_description: pipelineDetails?.data?.pipeline_description,
+      workspace: workspaceData.filter((e) => e.workspace_id === workspace)[0]
+        ?.workspace_name,
+      environment: pipelineDetails?.data?.runtime_env_id,
+      runtime_engine: pipelineDetails?.data?.runtime_engine,
+    });
   };
 
   useEffect(() => {
-    updateFormvalue();
-  }, [workspace]);
+    query?.pipeline || pipelineData
+      ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
+      : updateFormvalue();
+  }, [workspace, query?.pipeline, pipelineData]);
 
   return (
     <>
@@ -104,6 +167,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
               label={"Pipeline Name"}
               labelAlign={"left"}
               name={"name"}
+              tooltip="Accept only alphanumeric with underscore. Ex: Pipeline_v1"
               rules={[
                 {
                   required: true,
@@ -112,6 +176,10 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
                 {
                   max: 100,
                   message: "Pipeline name cannot be more than 100 characters.",
+                },
+                {
+                  pattern: /^[a-zA-Z0-9_]*$/,
+                  message: "Please enter a valid pipeline name",
                 },
               ]}
             >
@@ -127,7 +195,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
             <Form.Item
               label={"Pipeline Description"}
               labelAlign={"left"}
-              name={"description"}
+              name={"pipeline_description"}
               rules={[
                 {
                   required: true,
@@ -138,7 +206,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
               <Input
                 key={"input-runtime-environment-name"}
                 className={"input"}
-                name={"description"}
+                name={"pipeline_description"}
                 type={"text"}
                 placeholder={"Pipeline Description"}
               />
@@ -218,14 +286,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
                     {runtimeEngine.map((e) => {
                       return <Radio value={e}>{e}</Radio>;
                     })}
-                    {/* <Radio value={'spark'}>Spark</Radio>
-    <Radio value={'presto'}>Presto</Radio> */}
                   </Radio.Group>
-                  {/* <Checkbox.Group
-                    name="runtime_engine"
-                    options={["Spark", "Presto"]}
-                    onChange={() => {}}
-                  /> */}
                 </Form.Item>
               </Col>
             </Row>
@@ -239,7 +300,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
                     savePipline("save");
                   }}
                 >
-                  Save
+                  {pipelineData ? "Update" : "Save"}
                 </Button>
                 <Button
                   type="primary"
@@ -248,7 +309,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
                     savePipline("build");
                   }}
                 >
-                  Save & Build pipeline
+                  {pipelineData ? "update" : "save"} & Build pipeline
                 </Button>
               </Space>
             </div>

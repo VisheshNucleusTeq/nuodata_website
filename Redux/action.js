@@ -8,7 +8,8 @@ import {
   DESIGNDETAILS,
   LOADER,
   OPENDETAILS,
-  WORKSPACE
+  WORKSPACE,
+  PIPELINE
 } from "./type";
 
 export const UserDetailsAction = (data) => (dispatch) => {
@@ -77,6 +78,13 @@ export const setOpenDetails = (data) => (dispatch) => {
 export const setWorkspaceAction = (data) => (dispatch) => {
   dispatch({
     type: WORKSPACE,
+    payload: data,
+  });
+};
+
+export const setPipelineAction = (data) => (dispatch) => {
+  dispatch({
+    type: PIPELINE,
     payload: data,
   });
 };

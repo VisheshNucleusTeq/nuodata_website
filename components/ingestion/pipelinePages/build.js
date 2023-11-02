@@ -1,30 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Image, Divider } from "antd";
 import Draggable from "react-draggable";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+
 import EdgesFlow from "../reactflow";
 import Source from "../configView/source/index";
+import {
+  fetch_retry_get,
+  fetch_retry_post,
+} from "../../../network/api-manager";
+import { GETPIPELINEGRAPH, CREATENODE } from "../../../network/apiConstants";
 
 const Build = ({ ingestionCss }) => {
+  const { query } = useRouter();
+  const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
   const [nodeData, setNodeData] = useState([
-    {
-      text: "Source",
-      id: `edges-source`,
-      data: { label: "source" },
-      position: { x: 0, y: 150 },
-      type: "textUpdaterSource",
-      key: (Math.random() + 1).toString(36).substring(7),
-    },
-    {
-      text: "Target",
-      id: `edges-target`,
-      data: { label: "target" },
-      position: { x: 180, y: 150 },
-      type: "textUpdaterTarget",
-      key: (Math.random() + 1).toString(36).substring(7),
-    },
+    // {
+    //   text: "Source",
+    //   id: `edges-source`,
+    //   data: { label: "source" },
+    //   position: { x: 0, y: 150 },
+    //   type: "textUpdaterSource",
+    //   key: (Math.random() + 1).toString(36).substring(7),
+    // },
+    // {
+    //   text: "Target",
+    //   id: `edges-target`,
+    //   data: { label: "target" },
+    //   position: { x: 180, y: 150 },
+    //   type: "textUpdaterTarget",
+    //   key: (Math.random() + 1).toString(36).substring(7),
+    // },
   ]);
+  const [edgeData, setEdgeData] = useState([])
   const [visible, setVisible] = useState(false);
   const [nodePosition, setNodePosition] = useState({});
+
+  const getPiplineGraph = async (id) => {
+    const graph = await fetch_retry_get(`${GETPIPELINEGRAPH}${id}`);
+    if (!graph?.data?.nodes.length) {
+      await fetch_retry_post(`${CREATENODE}`, {
+        pipeline_id: id,
+        type: "textUpdaterSource",
+        transformation_type: "Source",
+      });
+      await fetch_retry_post(`${CREATENODE}`, {
+        pipeline_id: id,
+        type: "textUpdaterTarget",
+        transformation_type: "Target",
+      });
+    } else {
+      setNodeData(graph?.data?.nodes);
+      setEdgeData(graph?.data?.edges)
+    }
+  };
+
+  const createNode = async (type) => {
+    const id = query?.pipeline ? query?.pipeline : pipelineData;
+    await fetch_retry_post(`${CREATENODE}`, {
+      pipeline_id: id,
+      type: 'textUpdater',
+      transformation_type: type,
+    });
+    getPiplineGraph(id);
+  };
+
+  useEffect(() => {
+    getPiplineGraph(query?.pipeline ? query?.pipeline : pipelineData);
+  }, [query?.pipeline ? query?.pipeline : pipelineData]);
 
   return (
     <>
@@ -57,15 +101,22 @@ const Build = ({ ingestionCss }) => {
                 }}
                 onStop={(eData) => {
                   if (visible) {
-                    setNodeData([
-                      ...nodeData,
-                      {
-                        text: e,
-                        id: `edges-${nodeData.length - 2}-${(Math.random() + 1).toString(36).substring(7)}`, //(Math.random() + 1).toString(36).substring(7),
-                        nodePosition: nodePosition,
-                        key: (Math.random() + 1).toString(36).substring(7),
-                      },
-                    ]);
+                    createNode(e);
+                    console.log(eData, e);
+                    // setNodeData([
+                    //   ...nodeData,
+                    //   // {
+                    //   //   text: e,
+                    //   //   id: `edges-${nodeData.length - 2}-${(Math.random() + 1).toString(36).substring(7)}`, //(Math.random() + 1).toString(36).substring(7),
+                    //   //   nodePosition: nodePosition,
+                    //   //   key: (Math.random() + 1).toString(36).substring(7),
+                    //   // },
+                    //   // {
+                    //   //   pipeline_id: "653e1be78ccf3f50e16fe65d_"+(Math.random() + 1).toString(36).substring(7),
+                    //   //   type: e,
+                    //   //   transformation_type: "sourceNode",
+                    //   // },
+                    // ]);
                   }
                 }}
               >
@@ -96,10 +147,12 @@ const Build = ({ ingestionCss }) => {
           <Col span={24} style={{ height: "40vh" }}>
             <EdgesFlow
               nodeData={nodeData}
+              edgeData={edgeData}
               setNodeData={setNodeData}
               setNodePosition={(e) => {
                 setNodePosition(e);
               }}
+              pipeline={query?.pipeline ? query?.pipeline : pipelineData}
             />
           </Col>
         </Row>

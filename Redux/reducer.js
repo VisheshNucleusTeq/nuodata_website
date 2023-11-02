@@ -10,6 +10,7 @@ import {
   LOADER,
   OPENDETAILS,
   WORKSPACE,
+  PIPELINE,
 } from "./type";
 import LocalData from "./LocalData";
 
@@ -29,6 +30,7 @@ const initialData = {
   designDetails: {},
   openDetails: {},
   workspace: null,
+  pipeline: null,
 };
 
 export const userDetailReducer = (state = initialState, action) => {
@@ -152,6 +154,18 @@ export const workspaceReducer = (state = initialData, action) => {
   }
 };
 
+export const pipelineReducer = (state = initialData, action) => {
+  switch (action.type) {
+    case PIPELINE:
+      return {
+        ...state,
+        pipeline: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   userDetails: userDetailReducer,
   projectDetails: projectDetailsReducer,
@@ -163,4 +177,5 @@ export default combineReducers({
   loderShowHide: loderShowHideReducer,
   openDetails: openDetailsReducer,
   workspace: workspaceReducer,
+  pipeline: pipelineReducer,
 });
