@@ -15,24 +15,7 @@ import { GETPIPELINEGRAPH, CREATENODE } from "../../../network/apiConstants";
 const Build = ({ ingestionCss }) => {
   const { query } = useRouter();
   const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
-  const [nodeData, setNodeData] = useState([
-    // {
-    //   text: "Source",
-    //   id: `edges-source`,
-    //   data: { label: "source" },
-    //   position: { x: 0, y: 150 },
-    //   type: "textUpdaterSource",
-    //   key: (Math.random() + 1).toString(36).substring(7),
-    // },
-    // {
-    //   text: "Target",
-    //   id: `edges-target`,
-    //   data: { label: "target" },
-    //   position: { x: 180, y: 150 },
-    //   type: "textUpdaterTarget",
-    //   key: (Math.random() + 1).toString(36).substring(7),
-    // },
-  ]);
+  const [nodeData, setNodeData] = useState([]);
   const [edgeData, setEdgeData] = useState([])
   const [visible, setVisible] = useState(false);
   const [nodePosition, setNodePosition] = useState({});
@@ -102,21 +85,6 @@ const Build = ({ ingestionCss }) => {
                 onStop={(eData) => {
                   if (visible) {
                     createNode(e);
-                    console.log(eData, e);
-                    // setNodeData([
-                    //   ...nodeData,
-                    //   // {
-                    //   //   text: e,
-                    //   //   id: `edges-${nodeData.length - 2}-${(Math.random() + 1).toString(36).substring(7)}`, //(Math.random() + 1).toString(36).substring(7),
-                    //   //   nodePosition: nodePosition,
-                    //   //   key: (Math.random() + 1).toString(36).substring(7),
-                    //   // },
-                    //   // {
-                    //   //   pipeline_id: "653e1be78ccf3f50e16fe65d_"+(Math.random() + 1).toString(36).substring(7),
-                    //   //   type: e,
-                    //   //   transformation_type: "sourceNode",
-                    //   // },
-                    // ]);
                   }
                 }}
               >

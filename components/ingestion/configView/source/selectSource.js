@@ -73,7 +73,7 @@ const SelectSource = ({ ingestionCss, setConnection, setActiveKey }) => {
                       <div
                         onClick={() => {
                           setConnection(e);
-                          setActiveKey("schema_tab");
+                          // setActiveKey("schema_tab");
                         }}
                       >
                         <Tooltip title={e.title} color="#0c3246">

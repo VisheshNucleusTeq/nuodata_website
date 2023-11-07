@@ -27,7 +27,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { INGESTIONTCONNECTIONLIST, GETCONNECTION } from "../../../../network/apiConstants";
+import {
+  INGESTIONTCONNECTIONLIST,
+  GETCONNECTION,
+} from "../../../../network/apiConstants";
 import {
   fetch_retry_get,
   fetch_retry_post,
@@ -39,17 +42,18 @@ import {
   TESTCONNECTION,
   ADDCONNECTION,
   GETCONNECTIONDETAILS,
-  GETCONNECTIONDETAIL
+  GETCONNECTIONDETAIL,
 } from "../../../../network/apiConstants";
 import { loderShowHideAction } from "../../../../Redux/action";
 
 const AddSource = ({
   ingestionCss,
-  connection
+  connection,
+  connectionId,
+  setConnectionId,
+  setActiveKey
 }) => {
-  const workspace = useSelector(
-    (state) => state?.workspace?.workspace
-  );
+  const workspace = useSelector((state) => state?.workspace?.workspace);
   const route = useRouter();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -83,6 +87,7 @@ const AddSource = ({
   const [updateRecordId, setUpdateRecordId] = useState(null);
   const [selectedRecordId, setSelectedRecordId] = useState(null);
   const [isTested, setIsTested] = useState(false);
+  // const [connectionId, setConnectionId] = useState(null);
 
   const createTitle = (str) => {
     const arr = str.split("_");
@@ -177,7 +182,7 @@ const AddSource = ({
         type: connection?.type,
         connection_detail: data,
         org_id: authData?.orgId,
-        workspace_id : workspace
+        workspace_id: workspace,
       });
       if (result.success) {
         message.success(result?.data?.message);
@@ -207,13 +212,16 @@ const AddSource = ({
     });
     if (result.success) {
       const authData = JSON.parse(localStorage.getItem("authData"));
-      const result = await fetch_retry_put(`${ADDCONNECTION}${updateRecordId}`, {
-        connection_id: updateRecordId,
-        type: connection?.type,
-        connection_detail: data,
-        org_id: authData?.orgId,
-        workspace_id : workspace
-      });
+      const result = await fetch_retry_put(
+        `${ADDCONNECTION}${updateRecordId}`,
+        {
+          connection_id: updateRecordId,
+          type: connection?.type,
+          connection_detail: data,
+          org_id: authData?.orgId,
+          workspace_id: workspace,
+        }
+      );
       if (result.success) {
         setFormType("NEW");
         setUpdateRecordId(null);
@@ -240,7 +248,7 @@ const AddSource = ({
     const keyArr = [...Object.keys(connection?.connection_detail)];
     keyArr.map((e) => {
       if (connection?.connection_detail[e]) {
-        dataValue[e] = decryptAES_CBC(decryptAES_CBC(dataValue[e]));
+        dataValue[e] = decryptAES_CBC(dataValue[e]);
       }
     });
     testConnection(dataValue);
@@ -262,7 +270,8 @@ const AddSource = ({
     const keyArr = [...Object.keys(connection?.connection_detail)];
     keyArr.map((e) => {
       if (connection?.connection_detail[e]) {
-        dataValue[e] = decryptAES_CBC(decryptAES_CBC(dataValue[e]));
+        // dataValue[e] = decryptAES_CBC(decryptAES_CBC(dataValue[e]));
+        dataValue[e] = decryptAES_CBC(dataValue[e]);
       }
     });
     form.setFieldsValue(dataValue);
@@ -274,8 +283,14 @@ const AddSource = ({
     form.resetFields();
     if (updateRecordId) {
       setExistingRecord();
+      setConnectionId(updateRecordId);
     }
   }, [updateRecordId]);
+
+  useEffect(() => {
+    // alert(encryptAES_CBC("abhisek"))
+    // alert(decryptAES_CBC("HrpLTQWO/ClEQ8Ug3ehbHA=="))
+  }, []);
 
   return (
     <>
@@ -286,7 +301,6 @@ const AddSource = ({
             <span>{connection.title}</span>
           </Space>
         </Col>
-        {/* {workspace} */}
 
         <Col span={16} align={"end"}>
           <Space size={20}>
@@ -325,6 +339,7 @@ const AddSource = ({
                 setUpdateRecordId(null);
                 setSelectedRecordId(null);
                 setIsTested(false);
+                setConnectionId(null);
               }}
             >
               Form
@@ -456,7 +471,6 @@ const AddSource = ({
                     labelCol={{ span: 5 }}
                     wrapperCol={{ span: 19 }}
                     form={form}
-                    // layout="vertical"
                     autoComplete="on"
                     onFinish={(e) => {
                       testConnection(e);
@@ -534,19 +548,33 @@ const AddSource = ({
                         >
                           Test Connection
                         </Button>
-                        {/* <Button
-                          shape="round"
-                          style={{ backgroundColor: "#0c3246", color: "#FFF" }}
-                          onClick={() => {
-                            route.back();
-                          }}
-                        >
-                          Cancel
-                        </Button> */}
+
+                        {/* {(updateRecordId && isTested)} */}
+                        {/* {connectionId}
+                        {isTested} */}
+                        {connectionId && isTested && (
+                          <Button
+                            type="primary"
+                            shape="round"
+                            style={{
+                              backgroundColor: "#0c3246",
+                              color: "#FFF",
+                            }}
+                            onClick={() => {
+                              setActiveKey("schema_tab")
+                            }}
+                          >
+                            Show Schema
+                          </Button>
+                        )}
                       </Space>
                     </div>
                   </Form>
                 </div>
+                {/* <Row>
+                  <Col span={16}>dsfsf</Col>
+                  <Col span={8}>sdfsd</Col>
+                </Row> */}
               </Collapse.Panel>
             )}
 

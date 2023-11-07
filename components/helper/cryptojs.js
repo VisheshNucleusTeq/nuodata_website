@@ -1,5 +1,5 @@
 import CryptoJS from "crypto-js";
-var key = "f5Oqc9ywJ7jyLGl6zv4bng==";
+var key = "5WngRFFWEP5y1PQE9HPHdsHjnKJibnUh";
 key = CryptoJS.enc.Utf8.parse(key);
 var iv = CryptoJS.enc.Utf8.parse("CFABECFEBDCFCECC"); 
 

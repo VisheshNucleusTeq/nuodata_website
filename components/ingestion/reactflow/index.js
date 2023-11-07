@@ -28,8 +28,15 @@ const nodeHeight = 50;
 
 import CustomNodes from "./customNodes";
 import CustomEdge from "./customEdge";
-import { CREATEEDGE } from "../../../network/apiConstants";
-import { fetch_retry_post } from "../../../network/api-manager";
+import {
+  CREATEEDGE,
+  CREATENODE,
+  DELETEEDGE,
+} from "../../../network/apiConstants";
+import {
+  fetch_retry_post,
+  fetch_retry_delete,
+} from "../../../network/api-manager";
 
 const nodeTypes = {
   textUpdater: CustomNodes,
@@ -41,8 +48,8 @@ const edgeTypes = {
   custom: CustomEdge,
 };
 
-const getLayoutedElements = (nodes, edges, direction = "TB") => {
-  const isHorizontal = direction === "TB";
+const getLayoutedElements = (nodes, edges, direction = "LR") => {
+  const isHorizontal = direction === 'LR';
   dagreGraph.setGraph({ rankdir: direction });
   nodes.forEach((node) => {
     dagreGraph.setNode(node.id, {
@@ -51,7 +58,7 @@ const getLayoutedElements = (nodes, edges, direction = "TB") => {
     });
   });
 
-  edges.forEach((edge,i) => {
+  edges.forEach((edge, i) => {
     edges[i].source = edge.source_node_id;
     edges[i].target = edge.target_node_id;
     dagreGraph.setEdge(edge.source_node_id, edge.target_node_id);
@@ -72,7 +79,13 @@ const getLayoutedElements = (nodes, edges, direction = "TB") => {
   return { nodes, edges };
 };
 
-function EdgesFlow({ nodeData,edgeData, setNodeData, setNodePosition, pipeline }) {
+function EdgesFlow({
+  nodeData,
+  edgeData,
+  setNodeData,
+  setNodePosition,
+  pipeline,
+}) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
@@ -154,7 +167,7 @@ function EdgesFlow({ nodeData,edgeData, setNodeData, setNodePosition, pipeline }
       edgeData
     );
     setNodes(layoutedNodes);
-    setEdges(layoutedEdges)
+    setEdges(layoutedEdges);
   }, [nodeData]);
 
   const onConnectStart = (e, p) => {
@@ -167,6 +180,8 @@ function EdgesFlow({ nodeData,edgeData, setNodeData, setNodePosition, pipeline }
         title: "Do you want to delete this node?",
         content: "Are you sure you want to delete?",
         async onOk() {
+          // alert(deleteInfo?.id)
+          await fetch_retry_delete(`${CREATENODE}/${deleteInfo?.id}`);
           setEdges(
             edges.filter(
               (edge) =>
@@ -185,6 +200,11 @@ function EdgesFlow({ nodeData,edgeData, setNodeData, setNodePosition, pipeline }
         title: "Do you want to delete this edge?",
         content: "Are you sure you want to delete?",
         async onOk() {
+          await fetch_retry_delete(`${DELETEEDGE}${pipeline}`, {
+            data: {
+              edge_ids: [deleteInfo?.id],
+            },
+          });
           setEdges(edges.filter((edge) => edge.id !== deleteInfo?.id));
         },
         onCancel() {},
@@ -335,7 +355,13 @@ function EdgesFlow({ nodeData,edgeData, setNodeData, setNodePosition, pipeline }
 
 // export default EdgesFlow;
 
-export default ({ nodeData, setNodeData, setNodePosition, pipeline, edgeData }) => (
+export default ({
+  nodeData,
+  setNodeData,
+  setNodePosition,
+  pipeline,
+  edgeData,
+}) => (
   <ReactFlowProvider>
     <EdgesFlow
       nodeData={nodeData}

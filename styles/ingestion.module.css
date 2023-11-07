@@ -174,7 +174,7 @@
 }
 
 .pipelineStepTabText span {
-  font-size: .8vw;
+  font-size: 0.8vw;
 }
 
 .pipelineStepTabEdge {
@@ -194,7 +194,6 @@
   justify-content: center;
   align-items: center;
   /* border: 1px solid green; */
-
 }
 
 .pipelineStepTabTextEdge {
@@ -204,7 +203,6 @@
   align-items: center;
 
   /* border: 1px solid green; */
-
 }
 
 .addSourceImage img {
@@ -276,6 +274,20 @@
 .workspaceHeader .button {
   height: 2.5vw;
   background: #e74860;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 0vw 1vw 0vw 1vw;
+  cursor: pointer;
+  border: 1px solid #d6d6d6;
+  float: right;
+
+  margin-bottom: 1vw;
+}
+
+.backButton,
+.backButton:hover {
+  height: 2.5vw;
+  background: #0c3246;
   border-radius: 10px;
   color: #ffffff;
   padding: 0vw 1vw 0vw 1vw;
