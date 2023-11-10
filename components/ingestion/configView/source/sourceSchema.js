@@ -11,8 +11,14 @@ import {
   Button,
 } from "antd";
 
-import { fetch_retry_get } from "../../../../network/api-manager";
-import { GETCONNECTIONDETAIL } from "../../../../network/apiConstants";
+import {
+  fetch_retry_get,
+  fetch_retry_put,
+} from "../../../../network/api-manager";
+import {
+  GETCONNECTIONDETAIL,
+  CREATENODE,
+} from "../../../../network/apiConstants";
 
 const SourceSchema = ({
   connectionId,
@@ -20,7 +26,10 @@ const SourceSchema = ({
   workspace,
   ingestionCss,
   setActiveKey,
-  setTableData
+  setTableData,
+  nodeId,
+  sourceData,
+  setSourceData,
 }) => {
   const [form] = Form.useForm();
   const [schemas, setSchemas] = useState([]);
@@ -33,14 +42,72 @@ const SourceSchema = ({
     setSchemas(schemaData?.data?.schemas);
   };
 
-  const getTableData = async (data) =>{
+  const getTableData = async (data) => {
     const authData = JSON.parse(localStorage.getItem("authData"));
     const tableData = await fetch_retry_get(
       `${GETCONNECTIONDETAIL}schema/${data?.table}?org_id=${authData?.orgId}&workspace_id=${workspace}&connection_id=${connectionId}&type=${connection?.type}&rows=${data?.rows}`
     );
-    setActiveKey('fields_tab')
-    setTableData(tableData?.data)
-  }
+    setActiveKey("fields_tab");
+    setTableData(tableData?.data);
+
+    let transformation_properties = sourceData?.transformation_properties;
+
+    const sourceIndex = transformation_properties.findIndex(
+      (item) => item.property_name === "source_table"
+    );
+    if (sourceIndex < 0) {
+      transformation_properties.push({
+        property_name: "source_table",
+        property_value: data?.table,
+      });
+    } else {
+      transformation_properties[sourceIndex] = {
+        property_name: "source_table",
+        property_value: data?.table,
+      };
+    }
+
+
+    const connectionIndex = transformation_properties.findIndex(
+      (item) => item.property_name === "connection_id"
+    );
+    if (connectionIndex < 0) {
+      transformation_properties.push({
+        property_name: "connection_id",
+        property_value: connectionId,
+      });
+    } else {
+      transformation_properties[connectionIndex] = {
+        property_name: "connection_id",
+        property_value: connectionId,
+      };
+    }
+
+
+    const connectionTypeIndex = transformation_properties.findIndex(
+      (item) => item.property_name === "connection_type"
+    );
+    if (connectionTypeIndex < 0) {
+      transformation_properties.push({
+        property_name: "connection_type",
+        property_value: connection?.type,
+      });
+    } else {
+      transformation_properties[connectionTypeIndex] = {
+        property_name: "connection_type",
+        property_value: connection?.type,
+      };
+    }
+
+    const updateResult = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+      ...sourceData,
+      transformation_properties: transformation_properties,
+    });
+    setSourceData({
+      ...sourceData,
+      transformation_properties: transformation_properties,
+    });
+  };
 
   useEffect(() => {
     getSchema();
@@ -61,7 +128,7 @@ const SourceSchema = ({
           layout="vertical" //horizontal , vertical
           autoComplete="on"
           onFinish={(e) => {
-            getTableData(e)
+            getTableData(e);
           }}
         >
           <Row>
@@ -106,7 +173,7 @@ const SourceSchema = ({
             <Col span={2} />
             <Col span={10}>
               <Form.Item
-                label={"Select Source Schema"}
+                label={"Display rows"}
                 labelAlign={"left"}
                 name={"rows"}
                 rules={[
@@ -123,13 +190,16 @@ const SourceSchema = ({
               </Form.Item>
             </Col>
 
-            <Col span={24} >
+            <Col span={24}>
               <Button
                 shape="round"
                 htmlType="submit"
-                style={{ backgroundColor: "#e74860", color: "#FFF", float : "right" }}
-                onClick={() => {
+                style={{
+                  backgroundColor: "#e74860",
+                  color: "#FFF",
+                  float: "right",
                 }}
+                onClick={() => {}}
               >
                 Save Source Selection
               </Button>

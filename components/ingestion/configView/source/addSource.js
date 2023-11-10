@@ -87,7 +87,6 @@ const AddSource = ({
   const [updateRecordId, setUpdateRecordId] = useState(null);
   const [selectedRecordId, setSelectedRecordId] = useState(null);
   const [isTested, setIsTested] = useState(false);
-  // const [connectionId, setConnectionId] = useState(null);
 
   const createTitle = (str) => {
     const arr = str.split("_");
@@ -188,6 +187,7 @@ const AddSource = ({
         message.success(result?.data?.message);
         getExistingConnections();
         form.resetFields();
+        setConnectionId(result?.data?.data?.id)
       } else {
         message.error(result?.error ? result?.error : "Something going wrong.");
       }
@@ -440,6 +440,22 @@ const AddSource = ({
                         >
                           Test Connection
                         </Button>
+
+                        {connectionId && isTested && (
+                          <Button
+                            type="primary"
+                            shape="round"
+                            style={{
+                              backgroundColor: "#0c3246",
+                              color: "#FFF",
+                            }}
+                            onClick={() => {
+                              setActiveKey("schema_tab")
+                            }}
+                          >
+                            Show Schema
+                          </Button>
+                        )}
 
                         {/* <Button
                           shape="round"

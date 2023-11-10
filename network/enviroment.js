@@ -8,8 +8,26 @@ export const BaseURL = axios.create({
   timeout: 60 * 60 * 1000,
 });
 
+const updateBaseUrl = (config) => {
+  if (process.env.IS_LOCAL && process.env.IS_LOCAL == "true") {
+    if (config?.url.includes("core")) {
+      config.baseURL = process.env.BASE_URL;
+    } else if (config?.url.includes("gitupload")) {
+      config.baseURL = process.env.BASE_URL;
+    } else {
+      config.baseURL = process.env.BASE_URL;
+    }
+  }
+  return config;
+};
+
 BaseURL.interceptors.request.use(
   async (config) => {
+    // console.log("config", config?.url, typeof process.env.IS_LOCAL)
+    // config.baseURL = "https://api.nuodata.io"
+
+    config = updateBaseUrl(config);
+
     if (LOGIN === config?.url) return config;
     const expiryTime = localStorage.getItem("expiryTime");
     if (expiryTime && expiryTime <= Date.now() && isRefreshing) {

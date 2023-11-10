@@ -49,7 +49,7 @@ const edgeTypes = {
 };
 
 const getLayoutedElements = (nodes, edges, direction = "LR") => {
-  const isHorizontal = direction === 'LR';
+  const isHorizontal = direction === "LR";
   dagreGraph.setGraph({ rankdir: direction });
   nodes.forEach((node) => {
     dagreGraph.setNode(node.id, {
@@ -85,11 +85,11 @@ function EdgesFlow({
   setNodeData,
   setNodePosition,
   pipeline,
+  setSelectedNode
 }) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
-  const [hoverEdge, setHoverEdge] = useState({});
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [deleteInfo, setDeleteInfo] = useState({});
 
@@ -122,44 +122,6 @@ function EdgesFlow({
       },
     });
   };
-
-  // useEffect(() => {
-  //   setHoverEdge({});
-  //   const nodesData = nodeData.map((e, i) => {
-  //     if (nodeData.length == i + 1 && hoverEdge?.key) {
-  //       setEdges([
-  //         ...edges.filter((edge) => edge.id !== hoverEdge?.id),
-  //         {
-  //           id: `${hoverEdge?.source}-${e?.id}`,
-  //           source: hoverEdge?.source,
-  //           target: e?.id,
-  //           key: (Math.random() + 1).toString(36).substring(7),
-  //         },
-  //         {
-  //           id: `${e?.id}-${hoverEdge?.source}`,
-  //           source: e?.id,
-  //           target: hoverEdge?.target,
-  //           key: (Math.random() + 1).toString(36).substring(7),
-  //         },
-  //       ]);
-  //     }
-
-  //     return {
-  //       id: e.id ? e.id : `edges-${i}`,
-  //       data: { label: e.text },
-  //       // position: nodes[i]?.position
-  //       //   ? nodes[i]?.position
-  //       //   : e?.nodePosition
-  //       //   ? e?.nodePosition
-  //       //   : { x: 180 * (i + 1), y: 150 },
-  //       sourcePosition: "right",
-  //       targetPosition: "left",
-  //       type: e.type ? e.type : "textUpdater",
-  //       key: e.key ? e.key : (Math.random() + 1).toString(36).substring(7),
-  //     };
-  //   });
-  //   setNodes(nodesData);
-  // }, [nodeData]);
 
   useEffect(() => {
     const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
@@ -213,16 +175,24 @@ function EdgesFlow({
     }
   };
 
+  useEffect(() => {
+    if (deleteInfo && deleteInfo.type == "nodes") {
+      setSelectedNode(deleteInfo);
+    } else {
+      setSelectedNode({});
+    }
+  }, [deleteInfo?.id]);
+
   return (
     <>
       <Row style={{ width: "100%", height: "100%" }}>
-        {/* {JSON.stringify(edgeData)} */}
         <Col
           span={24}
           style={{ width: "100%", height: "100%" }}
           ref={reactFlowWrapper}
         >
           <ReactFlow
+            fitView
             onConnectStart={onConnectStart}
             onInit={setReactFlowInstance}
             nodes={[...nodes]}
@@ -244,37 +214,22 @@ function EdgesFlow({
             onConnect={onConnect}
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
-            fitView
             elementsSelectable={true}
-            onSelectionChange={(e) => {
-              if (
-                e?.nodes &&
-                e?.nodes.length &&
-                (!deleteInfo?.type || deleteInfo?.type == "edges")
-              ) {
-                setDeleteInfo({
-                  id: e?.nodes[0].id,
-                  type: "nodes",
-                  key: e?.nodes[0].key,
-                });
-              }
-              if (
-                e?.edges &&
-                e?.edges.length &&
-                (!deleteInfo?.type || deleteInfo?.type == "nodes")
-              ) {
-                setDeleteInfo({
-                  id: e?.edges[0].id,
-                  type: "edges",
-                });
-              }
-              if (
-                !(e?.nodes && e?.nodes.length) &&
-                !(e?.edges && e?.edges.length) &&
-                deleteInfo?.type
-              ) {
-                setDeleteInfo({});
-              }
+            onNodeClick={(e, node) => {
+              setDeleteInfo({
+                id: node?.id,
+                data: node?.data?.label,
+                type: "nodes",
+              });
+            }}
+            onEdgeClick={(e, edge) => {
+              setDeleteInfo({
+                id: edge?.id,
+                type: "edges",
+              });
+            }}
+            onPaneClick={(e, i) => {
+              setDeleteInfo({});
             }}
             onMouseMove={(event) => {
               const reactFlowBounds =
@@ -290,12 +245,6 @@ function EdgesFlow({
                   window.screen.height * 0.04,
               });
               setNodePosition(position);
-            }}
-            onEdgeMouseEnter={(e, i) => {
-              setHoverEdge(i);
-            }}
-            onEdgeMouseLeave={(e, i) => {
-              setHoverEdge({});
             }}
           >
             {deleteInfo && deleteInfo.id ? (
@@ -361,6 +310,7 @@ export default ({
   setNodePosition,
   pipeline,
   edgeData,
+  setSelectedNode,
 }) => (
   <ReactFlowProvider>
     <EdgesFlow
@@ -369,6 +319,7 @@ export default ({
       setNodeData={setNodeData}
       setNodePosition={setNodePosition}
       pipeline={pipeline}
+      setSelectedNode={setSelectedNode}
     />
   </ReactFlowProvider>
 );

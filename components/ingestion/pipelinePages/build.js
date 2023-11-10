@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Row, Col, Image, Divider } from "antd";
 import Draggable from "react-draggable";
 import { useRouter } from "next/router";
@@ -14,10 +14,12 @@ import { GETPIPELINEGRAPH, CREATENODE } from "../../../network/apiConstants";
 
 const Build = ({ ingestionCss }) => {
   const { query } = useRouter();
+  const messagesEndRef = useRef(null);
   const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
   const [nodeData, setNodeData] = useState([]);
-  const [edgeData, setEdgeData] = useState([])
+  const [edgeData, setEdgeData] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [selectedNode, setSelectedNode] = useState({});
   const [nodePosition, setNodePosition] = useState({});
 
   const getPiplineGraph = async (id) => {
@@ -35,7 +37,7 @@ const Build = ({ ingestionCss }) => {
       });
     } else {
       setNodeData(graph?.data?.nodes);
-      setEdgeData(graph?.data?.edges)
+      setEdgeData(graph?.data?.edges);
     }
   };
 
@@ -43,7 +45,7 @@ const Build = ({ ingestionCss }) => {
     const id = query?.pipeline ? query?.pipeline : pipelineData;
     await fetch_retry_post(`${CREATENODE}`, {
       pipeline_id: id,
-      type: 'textUpdater',
+      type: "textUpdater",
       transformation_type: type,
     });
     getPiplineGraph(id);
@@ -52,6 +54,10 @@ const Build = ({ ingestionCss }) => {
   useEffect(() => {
     getPiplineGraph(query?.pipeline ? query?.pipeline : pipelineData);
   }, [query?.pipeline ? query?.pipeline : pipelineData]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [selectedNode?.id]);
 
   return (
     <>
@@ -120,12 +126,16 @@ const Build = ({ ingestionCss }) => {
               setNodePosition={(e) => {
                 setNodePosition(e);
               }}
+              setSelectedNode={setSelectedNode}
               pipeline={query?.pipeline ? query?.pipeline : pipelineData}
             />
           </Col>
         </Row>
         <Divider />
-        <Source ingestionCss={ingestionCss} />
+        {selectedNode?.data == "Source" && (
+          <Source ingestionCss={ingestionCss} nodeId={selectedNode?.id} />
+        )}
+        <div ref={messagesEndRef} />
       </div>
     </>
   );

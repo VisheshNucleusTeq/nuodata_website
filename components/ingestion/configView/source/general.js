@@ -1,18 +1,33 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
-const General = ({ ingestionCss }) => {
+
+import { CREATENODE } from "../../../../network/apiConstants";
+import { fetch_retry_put } from "../../../../network/api-manager";
+const General = ({ ingestionCss, nodeId, sourceData, setSourceData }) => {
   const [form] = Form.useForm();
+
+  const onFinish = async (e) => {
+    
+    const updateResult = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+      ...sourceData,
+      ...e,
+    });
+    setSourceData({
+      ...sourceData,
+      ...e,
+    })
+  };
 
   return (
     <>
-      <Form form={form} layout="vertical">
+      <Form form={form} layout="vertical" onFinish={onFinish}>
         <Form.Item
-          label={"Name"}
-          name={"name"}
+          label={"Transformation Name"}
+          name={"transformation_name"}
           rules={[
             {
               required: true,
-              message: "Name is required.",
+              message: "Transformation name is required.",
             },
             {
               max: 100,
@@ -21,10 +36,10 @@ const General = ({ ingestionCss }) => {
           ]}
         >
           <Input
-            key={"input-name"}
+            key={"input-transformation-name"}
             className={"input"}
-            name={"name"}
-            placeholder="Name"
+            name={"transformation_name"}
+            placeholder="Transformation Name"
           />
         </Form.Item>
         <Form.Item
@@ -34,10 +49,6 @@ const General = ({ ingestionCss }) => {
             {
               required: true,
               message: "Description is required.",
-            },
-            {
-              max: 100,
-              message: "Description cannot be more than 100 characters.",
             },
           ]}
         >
@@ -49,7 +60,11 @@ const General = ({ ingestionCss }) => {
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className={ingestionCss.submitBtn}
+          >
             Submit
           </Button>
         </Form.Item>
