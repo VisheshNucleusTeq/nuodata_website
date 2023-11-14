@@ -103,7 +103,7 @@ const Source = ({ ingestionCss, nodeId }) => {
                   disabled={!tableData?.metadata}
                 >
                   <KeyTable
-                  key={Date.now()}
+                    key={Date.now()}
                     ingestionCss={ingestionCss}
                     metadata={tableData?.metadata}
                     nodeId={nodeId}

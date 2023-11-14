@@ -594,7 +594,7 @@ const AddSource = ({
               </Collapse.Panel>
             )}
 
-            <Collapse.Panel
+            {/* <Collapse.Panel
               header={
                 <div style={{ color: "#0c3246" }}>
                   <FilterOutlined /> &nbsp; Filter
@@ -618,7 +618,7 @@ const AddSource = ({
                 value={[...advancedSelected]}
                 onChange={onChange}
               />
-            </Collapse.Panel>
+            </Collapse.Panel> */}
           </Collapse>
         </Col>
       </Row>
