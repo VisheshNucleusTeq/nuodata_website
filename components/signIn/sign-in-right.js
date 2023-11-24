@@ -7,6 +7,7 @@ import { LOGIN } from "../../network/apiConstants";
 import { UserDetailsAction, loderShowHideAction } from "../../Redux/action";
 import { useDispatch } from "react-redux";
 import { useQueryClient } from "react-query";
+import { useSession, signIn, signOut, getSession } from "next-auth/react";
 
 import {
   GoogleLogin,
@@ -112,12 +113,12 @@ function SignInRight({ loginCss }) {
           >
             Login
           </Button>
-          {/* <Divider plain></Divider>
-
-          <GoogleOAuthProvider clientId="995061213404-vbdmb63jpqa8ua22u5jhlc9t9f4r8h3m.apps.googleusercontent.com">
+          <Divider plain></Divider>
+          <a href="/api/auth/login" style={{color : "red"}}>SSO Login</a>
+          {/* <GoogleOAuthProvider clientId="995061213404-vbdmb63jpqa8ua22u5jhlc9t9f4r8h3m.apps.googleusercontent.com">
             <GoogleLogin
               onSuccess={(credentialResponse) => {
-                console.log(credentialResponse);
+                console.log("credentialResponse", credentialResponse);
               }}
               onError={() => {
                 console.log("Login Failed");

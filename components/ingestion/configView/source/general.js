@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Form, Input, Button } from "antd";
 
 import { CREATENODE } from "../../../../network/apiConstants";
@@ -7,8 +7,7 @@ const General = ({ ingestionCss, nodeId, sourceData, setSourceData }) => {
   const [form] = Form.useForm();
 
   const onFinish = async (e) => {
-    
-    const updateResult = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+    await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
       ...sourceData,
       ...e,
     });
@@ -17,6 +16,12 @@ const General = ({ ingestionCss, nodeId, sourceData, setSourceData }) => {
       ...e,
     })
   };
+
+  useEffect(()=>{
+    form.setFieldsValue({
+      ...sourceData
+    })
+  },[sourceData])
 
   return (
     <>

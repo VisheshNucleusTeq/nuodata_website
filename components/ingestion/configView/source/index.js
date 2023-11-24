@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Tabs, Button } from "antd";
 import General from "./general";
 import SelectSource from "./selectSource";
@@ -6,7 +6,8 @@ import AddSource from "./addSource";
 import KeyTable from "./keyTable";
 import SourceSchema from "./sourceSchema";
 import DataTable from "./dataTable";
-
+import { CREATENODE } from "../../../../network/apiConstants";
+import { fetch_retry_get } from "../../../../network/api-manager";
 const Source = ({ ingestionCss, nodeId }) => {
   const [connection, setConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
@@ -19,10 +20,22 @@ const Source = ({ ingestionCss, nodeId }) => {
     transformation_properties: [],
   });
 
+  const getNodeRecord = async (nodeId) => {
+    const oldRecord = await fetch_retry_get(`${CREATENODE}/${nodeId}`);
+    setSourceData({
+      transformation_name: oldRecord?.data?.transformation_name ? oldRecord?.data?.transformation_name : "",
+      description: oldRecord?.data?.description ? oldRecord?.data?.description : "",
+      transformation_properties: (oldRecord?.data?.transformation_properties && oldRecord?.data?.transformation_properties?.length) ? oldRecord?.data?.transformation_properties : [],
+    })
+  }
+
+  useEffect(()=>{
+    getNodeRecord(nodeId)
+  },[])
+
   return (
     <>
       <Row>
-        {JSON.stringify(sourceData)}
         <Col span={24}>
           <Tabs className="underline" defaultActiveKey="1">
             <Tabs.TabPane tab="Properties" key="1">

@@ -11,6 +11,7 @@ import {
   fetch_retry_post,
 } from "../../../network/api-manager";
 import { GETPIPELINEGRAPH, CREATENODE } from "../../../network/apiConstants";
+var timer;
 
 const Build = ({ ingestionCss }) => {
   const { query } = useRouter();
@@ -23,22 +24,26 @@ const Build = ({ ingestionCss }) => {
   const [nodePosition, setNodePosition] = useState({});
 
   const getPiplineGraph = async (id) => {
-    const graph = await fetch_retry_get(`${GETPIPELINEGRAPH}${id}`);
-    if (!graph?.data?.nodes.length) {
-      await fetch_retry_post(`${CREATENODE}`, {
-        pipeline_id: id,
-        type: "textUpdaterSource",
-        transformation_type: "Source",
-      });
-      await fetch_retry_post(`${CREATENODE}`, {
-        pipeline_id: id,
-        type: "textUpdaterTarget",
-        transformation_type: "Target",
-      });
-    } else {
-      setNodeData(graph?.data?.nodes);
-      setEdgeData(graph?.data?.edges);
-    }
+    clearTimeout(timer);
+    timer = setTimeout(async () => {
+      const graph = await fetch_retry_get(`${GETPIPELINEGRAPH}${id}`);
+      if (!graph?.data?.nodes.length) {
+        await fetch_retry_post(`${CREATENODE}`, {
+          pipeline_id: id,
+          type: "textUpdaterSource",
+          transformation_type: "Source",
+        });
+        await fetch_retry_post(`${CREATENODE}`, {
+          pipeline_id: id,
+          type: "textUpdaterTarget",
+          transformation_type: "Target",
+        });
+        getPiplineGraph(id);
+      } else {
+        setNodeData(graph?.data?.nodes);
+        setEdgeData(graph?.data?.edges);
+      }
+    }, 1000);
   };
 
   const createNode = async (type) => {

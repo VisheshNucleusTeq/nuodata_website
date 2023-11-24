@@ -80,6 +80,7 @@ const GraphView = ({ showPopUp, analyzeDetailsId, setShowDownload }) => {
   return (
     <>
       <Row>
+        sdfsdfsdf
         <Col
           span={showHide ? 6 : 0}
           style={{ backgroundColor: "#0c3246", height: "85vh" }}

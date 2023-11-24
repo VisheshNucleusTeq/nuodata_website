@@ -20,7 +20,6 @@ const sso = () => {
   );
 };
 
-export default sso;
 
 // export const getServerSideProps = async (context) => {
 //   const session = await getSession(context);
@@ -28,3 +27,6 @@ export default sso;
 //     props: { session },
 //   };
 // };
+
+
+export default sso;

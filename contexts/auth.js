@@ -19,6 +19,7 @@ export const ProtectRoute = ({ children }) => {
     "/contact-us",
     "/data-management",
     "/sso",
+    "/sso-login",
     "/events",
     "/test",
     "/new-pages",
