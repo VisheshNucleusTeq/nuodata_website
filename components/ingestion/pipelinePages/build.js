@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EdgesFlow from "../reactflow";
 import Source from "../configView/source/index";
 import Filter from "../configView/filter/index"
-import Target from "../configView/Target";
+// import Target from "../configView/Target/index";
 
 import {
   fetch_retry_get,
@@ -148,7 +148,7 @@ const Build = ({ ingestionCss }) => {
           <Filter ingestionCss={ingestionCss} nodeId={selectedNode?.id} nodeData={nodeData} edgeData={edgeData} key={`filter${selectedNode?.id}`} />
         )}
         {selectedNode?.data == "Target" && (
-          <Target ingestionCss={ingestionCss} nodeId={selectedNode?.id} key={`target${selectedNode?.id}`} />
+          <Source ingestionCss={ingestionCss} nodeId={selectedNode?.id} key={`target${selectedNode?.id}`} />
         )}
         <div ref={messagesEndRef} />
       </div>
