@@ -81,3 +81,4 @@ export const GETPIPELINEGRAPH = "ingestion/core/v1/graph/pipeline/";
 export const CREATENODE = "ingestion/core/v1/graph/node";
 export const CREATEEDGE = "ingestion/core/v1/graph/edge";
 export const DELETEEDGE = "ingestion/core/v1/graph/delete/edges/pipeline/";
+export const NODEMETADATA = "ingestion/core/v1/graph/metadata/node/";

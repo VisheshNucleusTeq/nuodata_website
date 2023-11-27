@@ -170,7 +170,7 @@ const SourceSchema = ({
               </Form.Item>
             </Col>
             <Col span={2} />
-            <Col span={10}>
+            {/* <Col span={10}>
               <Form.Item
                 label={"Display rows"}
                 labelAlign={"left"}
@@ -187,7 +187,7 @@ const SourceSchema = ({
                   <Radio value={20}>20</Radio>
                 </Radio.Group>
               </Form.Item>
-            </Col>
+            </Col> */}
 
             <Col span={24}>
               <Button

@@ -78,7 +78,7 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
               </Tabs.TabPane>
 
               <Tabs.TabPane tab="Filter" key="filter_tab">
-                <FilterCondition nodeId={nodeId}/>
+                <FilterCondition ingestionCss={ingestionCss} sourceData={sourceData} nodeId={nodeId}/>
               </Tabs.TabPane>
 
               {/* <Tabs.TabPane

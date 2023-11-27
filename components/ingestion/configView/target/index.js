@@ -191,7 +191,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                     setSourceData={setSourceData}
                   />
                 </Tabs.TabPane>
-                <Tabs.TabPane
+                {/* <Tabs.TabPane
                   tab="Fields"
                   key="fields_tab"
                   disabled={!tableData?.fields}
@@ -204,15 +204,15 @@ const Target = ({ ingestionCss, nodeId }) => {
                     sourceData={sourceData}
                     setSourceData={setSourceData}
                   />
-                </Tabs.TabPane>
+                </Tabs.TabPane> */}
               </Tabs>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Preview" key="2" disabled={!tableData?.sample_data}>
+            {/* <Tabs.TabPane tab="Preview" key="2" disabled={!tableData?.sample_data}>
               <DataTable
                 ingestionCss={ingestionCss}
                 tableData={tableData?.sample_data}
               />
-            </Tabs.TabPane>
+            </Tabs.TabPane> */}
           </Tabs>
         </Col>
       </Row>

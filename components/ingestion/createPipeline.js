@@ -2,20 +2,23 @@ import React, { useEffect } from "react";
 import { Row, Col, Space, Card, Tooltip, Button, Divider } from "antd";
 import { CheckCircleFilled } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 import Define from "./pipelinePages/define";
 import Build from "./pipelinePages/build";
 
-import { GETWORKSPACE } from "../../network/apiConstants";
+import { GETWORKSPACE, CREATEPIPELINE } from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
 import { setWorkspaceAction } from "../../Redux/action";
 const CreatePipeline = ({ ingestionCss }) => {
   const dispatch = useDispatch();
+  const { query } = useRouter();
+  const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
 
   const workspace = useSelector((state) => state?.workspace?.workspace);
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [workspaceData, setWorkspaceData] = React.useState([]);
-
+  const [pipelineDetails, setPipelineDetails] = React.useState({});
   const getWorkSpaceData = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
     if (authData && authData?.orgId) {
@@ -34,22 +37,32 @@ const CreatePipeline = ({ ingestionCss }) => {
       if (!workspace && !("workspace" in localStorage)) {
         // setIsModalOpen(true);
       } else {
-        const workspaceValue = localStorage.getItem("workspace")
+        const workspaceValue = localStorage.getItem("workspace");
         dispatch(setWorkspaceAction(workspaceValue));
       }
     }
-  } 
+  };
+
+  const setOldPipeline = async (id) => {
+    const pipelineDetails = await fetch_retry_get(`${CREATEPIPELINE}${id}`);
+    setPipelineDetails(pipelineDetails?.data);
+  };
 
   useEffect(() => {
     getWorkSpaceData();
-    setOldData()
+    setOldData();
   }, [workspace, typeof window !== "undefined"]);
-  
+
+  useEffect(() => {
+    query?.pipeline || pipelineData
+      ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
+      : null;
+  }, [workspace, query?.pipeline, pipelineData]);
 
   return (
     <>
       {workspace && (
-        <Row style={{borderRadius : "5px"}}>
+        <Row style={{ borderRadius: "5px" }}>
           <Col className={ingestionCss.WorkspaceName} span={24}>
             <Row>
               <Col
@@ -66,10 +79,14 @@ const CreatePipeline = ({ ingestionCss }) => {
         </Row>
       )}
 
-      <div className={ingestionCss.main} style={{borderRadius : "5px"}}>
+      <div className={ingestionCss.main} style={{ borderRadius: "5px" }}>
         <Row>
           <Col span={24} className={ingestionCss.pipelineTitle}>
-            <span>New Pipeline- Editable Field</span>
+            <span>
+              {pipelineDetails.pipeline_name
+                ? pipelineDetails.pipeline_name
+                : "New Pipeline- Editable Field"}
+            </span>
           </Col>
           <Divider style={{ margin: "2vh 0vh 2vh 0vh" }}></Divider>
           <Col span={24} className={ingestionCss.pipelineSteps}>
@@ -157,7 +174,10 @@ const CreatePipeline = ({ ingestionCss }) => {
             )}
             {selectedTab === 1 && (
               <>
-                <Build ingestionCss={ingestionCss} setSelectedTab={setSelectedTab} />
+                <Build
+                  ingestionCss={ingestionCss}
+                  setSelectedTab={setSelectedTab}
+                />
               </>
             )}
           </Col>
