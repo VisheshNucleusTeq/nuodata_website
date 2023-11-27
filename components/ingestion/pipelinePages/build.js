@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EdgesFlow from "../reactflow";
 import Source from "../configView/source/index";
 import Filter from "../configView/filter/index"
-import Target from "../configView/Target/index";
+import Target from "../configView/Target";
 
 import {
   fetch_retry_get,
