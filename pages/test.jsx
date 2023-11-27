@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button, Tree } from "antd";
+import { Input, Button, Tree, Row, Col } from "antd";
 const { TextArea } = Input;
 import AnalyzeDetailPopup from "../components/dataModernization/graphView/analyzeDetailPopup";
 const Test = () => {
@@ -12,6 +12,18 @@ const Test = () => {
   const handleMessageChange = (event) => {
     setData(event.target.value);
   };
+
+  return (
+    <>
+    <Row>
+      <Col span={7}>sdfsd</Col>
+      <Col span={7}>sdfsd</Col>
+      <Col span={7}>sdfsdf</Col>
+      <Col span={3}>sdfsd</Col>
+    </Row>
+    
+    </>
+  )
 
   return (
     <div>

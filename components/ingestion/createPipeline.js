@@ -44,6 +44,7 @@ const CreatePipeline = ({ ingestionCss }) => {
     getWorkSpaceData();
     setOldData()
   }, [workspace, typeof window !== "undefined"]);
+  
 
   return (
     <>

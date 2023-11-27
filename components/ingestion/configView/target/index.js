@@ -12,7 +12,7 @@ import {
   GETCONNECTIONDETAIL,
 } from "../../../../network/apiConstants";
 import { fetch_retry_get, fetch_retry_post } from "../../../../network/api-manager";
-const Source = ({ ingestionCss, nodeId }) => {
+const Target = ({ ingestionCss, nodeId }) => {
   const [connection, setConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
   const [connectionId, setConnectionId] = useState(null);
@@ -220,4 +220,4 @@ const Source = ({ ingestionCss, nodeId }) => {
   );
 };
 
-export default Source;
+export default Target;
