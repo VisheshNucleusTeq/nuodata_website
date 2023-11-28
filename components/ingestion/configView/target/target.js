@@ -90,7 +90,7 @@ const Target = ({ ingestionCss, nodeId }) => {
               setConnectionId(connId[0]?.property_value);
 
               const sourceTable = sourceData?.transformation_properties.filter(
-                (e) => e?.property_name == "source_table"
+                (e) => e?.property_name == "target_table"
               );
 
               if (sourceTable && sourceTable.length) {

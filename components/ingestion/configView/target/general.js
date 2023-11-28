@@ -38,6 +38,10 @@ const General = ({ ingestionCss, nodeId, sourceData, setSourceData }) => {
               max: 100,
               message: "Name cannot be more than 100 characters.",
             },
+            {
+              pattern: /^[a-zA-Z0-9_]*$/,
+              message: "Please enter a valid transformation name",
+            },
           ]}
         >
           <Input

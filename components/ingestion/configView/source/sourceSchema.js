@@ -41,6 +41,7 @@ const SourceSchema = ({
       `${GETCONNECTIONDETAIL}${connectionId}/schemas?org_id=${authData?.orgId}&workspace_id=${workspace}&type=${connection?.type}&node_id=${nodeId}`
     );
     setSchemas(schemaData?.data?.schemas);
+    console.log(sourceData)
   };
 
   const getTableData = async (data) => {
@@ -133,7 +134,7 @@ const SourceSchema = ({
           <Row>
             <Col span={12}>
               <Form.Item
-                label={"Select Source Schema"}
+                label={"Select Source"}
                 labelAlign={"left"}
                 name={"table"}
                 rules={[
@@ -178,11 +179,11 @@ const SourceSchema = ({
                 rules={[
                   {
                     required: true,
-                    message: "Desciption is required.",
+                    message: "Display rows is required.",
                   },
                 ]}
               >
-                <Radio.Group name={"rows"}>
+                <Radio.Group name={"rows"} defaultValue={10}>
                   <Radio value={10}>10</Radio>
                   <Radio value={20}>20</Radio>
                 </Radio.Group>
@@ -200,7 +201,7 @@ const SourceSchema = ({
                 }}
                 onClick={() => {}}
               >
-                Save Source Selection
+                Save 
               </Button>
             </Col>
           </Row>

@@ -85,7 +85,7 @@ function EdgesFlow({
   setNodeData,
   setNodePosition,
   pipeline,
-  setSelectedNode
+  setSelectedNode,
 }) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes] = useState([]);
@@ -192,6 +192,7 @@ function EdgesFlow({
           ref={reactFlowWrapper}
         >
           <ReactFlow
+          
             fitView
             onConnectStart={onConnectStart}
             onInit={setReactFlowInstance}

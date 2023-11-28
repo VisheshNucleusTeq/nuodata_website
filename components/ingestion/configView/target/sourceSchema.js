@@ -54,16 +54,16 @@ const SourceSchema = ({
     let transformation_properties = sourceData?.transformation_properties;
 
     const sourceIndex = transformation_properties.findIndex(
-      (item) => item.property_name === "source_table"
+      (item) => item.property_name === "target_table"
     );
     if (sourceIndex < 0) {
       transformation_properties.push({
-        property_name: "source_table",
+        property_name: "target_table",
         property_value: data?.table,
       });
     } else {
       transformation_properties[sourceIndex] = {
-        property_name: "source_table",
+        property_name: "target_table",
         property_value: data?.table,
       };
     }
@@ -133,7 +133,7 @@ const SourceSchema = ({
           <Row>
             <Col span={12}>
               <Form.Item
-                label={"Select Source Schema"}
+                label={"Select Target"}
                 labelAlign={"left"}
                 name={"table"}
                 rules={[

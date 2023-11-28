@@ -176,7 +176,7 @@ const CreatePipeline = ({ ingestionCss }) => {
                             span={4}
                             style={{
                               border: "1px solid lightGray",
-                              height: "6vh",
+                              height: "4vh",
                               borderRadius: "10px",
                               cursor: "pointer",
                             }}
@@ -196,7 +196,7 @@ const CreatePipeline = ({ ingestionCss }) => {
                             >
                               <CheckCircleFilled
                                 style={{
-                                  fontSize: "1.5vw",
+                                  fontSize: "1vw",
                                   color: i <= selectedTab ? "green" : "gray",
                                 }}
                                 twoToneColor="#fff"
