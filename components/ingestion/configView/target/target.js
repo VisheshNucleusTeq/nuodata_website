@@ -135,7 +135,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                 </Tabs.TabPane>
 
                 <Tabs.TabPane
-                  tab="Source"
+                  tab="Target"
                   key="source_tab"
                   disabled={!(sourceData && sourceData?.transformation_name)}
                 >
@@ -175,7 +175,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                 </Tabs.TabPane>
 
                 <Tabs.TabPane
-                  tab="Source Schema"
+                  tab="Target Schema"
                   key="schema_tab"
                   disabled={!(connection && connection?.title && connectionId)}
                 >

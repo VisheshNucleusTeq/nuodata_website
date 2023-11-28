@@ -82,3 +82,9 @@ export const CREATENODE = "ingestion/core/v1/graph/node";
 export const CREATEEDGE = "ingestion/core/v1/graph/edge";
 export const DELETEEDGE = "ingestion/core/v1/graph/delete/edges/pipeline/";
 export const NODEMETADATA = "ingestion/core/v1/graph/metadata/node/";
+export const CONVERTPIPELINE = "ingestion/spark-engine/v1/convert/pipeline/";
+export const RUNPIPELINE = "ingestion/core/v1/pipeline-run/pipeline/";
+export const RUNPIPELINELIST = "ingestion/core/v1/pipeline-run/all/";
+export const RUNPIPELINELOGS = "ingestion/core/v1/pipeline-run/logs/";
+
+

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Row, Col, Space, Card, Tooltip, Button, Divider } from "antd";
+import { Row, Col, Space, Card, Tooltip, Button, Divider, message, Modal } from "antd";
 import { CheckCircleFilled } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -7,18 +7,27 @@ import { useRouter } from "next/router";
 import Define from "./pipelinePages/define";
 import Build from "./pipelinePages/build";
 
-import { GETWORKSPACE, CREATEPIPELINE } from "../../network/apiConstants";
-import { fetch_retry_get } from "../../network/api-manager";
-import { setWorkspaceAction } from "../../Redux/action";
+import {
+  GETWORKSPACE,
+  CREATEPIPELINE,
+  CONVERTPIPELINE,
+  RUNPIPELINE,
+} from "../../network/apiConstants";
+import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
+import { setWorkspaceAction, loderShowHideAction } from "../../Redux/action";
+import JobList from "./configView/jobList";
+
 const CreatePipeline = ({ ingestionCss }) => {
   const dispatch = useDispatch();
   const { query } = useRouter();
   const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
-
   const workspace = useSelector((state) => state?.workspace?.workspace);
+
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [workspaceData, setWorkspaceData] = React.useState([]);
   const [pipelineDetails, setPipelineDetails] = React.useState({});
+  const [showJobList, setShowJobList] = React.useState(false);
+
   const getWorkSpaceData = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
     if (authData && authData?.orgId) {
@@ -48,6 +57,20 @@ const CreatePipeline = ({ ingestionCss }) => {
     setPipelineDetails(pipelineDetails?.data);
   };
 
+  const convertPipeline = async (id) => {
+    dispatch(loderShowHideAction(true));
+    const data = await fetch_retry_post(`${CONVERTPIPELINE}${id}`);
+    message.success(data?.data?.message);
+    dispatch(loderShowHideAction(false));
+  };
+
+  const runPipeline = async (id) => {
+    dispatch(loderShowHideAction(true));
+    const data = await fetch_retry_post(`${RUNPIPELINE}${id}`);
+    message.success(data?.data?.message);
+    dispatch(loderShowHideAction(false));
+  };
+
   useEffect(() => {
     getWorkSpaceData();
     setOldData();
@@ -61,6 +84,21 @@ const CreatePipeline = ({ ingestionCss }) => {
 
   return (
     <>
+    <Modal
+    width={"80%"}
+        title={"Job List"}
+        centered
+        open={showJobList}
+        onOk={() => {
+          setShowJobList(false)
+        }}
+        onCancel={()=>{setShowJobList(false)}}
+        maskClosable={false}
+        okText={"Ok"}
+        destroyOnClose
+      >
+        <JobList />
+      </Modal>
       {workspace && (
         <Row style={{ borderRadius: "5px" }}>
           <Col className={ingestionCss.WorkspaceName} span={24}>
@@ -81,13 +119,50 @@ const CreatePipeline = ({ ingestionCss }) => {
 
       <div className={ingestionCss.main} style={{ borderRadius: "5px" }}>
         <Row>
-          <Col span={24} className={ingestionCss.pipelineTitle}>
+          <Divider
+            style={{ margin: "2vh 0vh 2vh 0vh", borderColor: "#FFF" }}
+          ></Divider>
+
+          <Col span={12} className={ingestionCss.pipelineTitle}>
             <span>
               {pipelineDetails.pipeline_name
                 ? pipelineDetails.pipeline_name
                 : "New Pipeline- Editable Field"}
             </span>
           </Col>
+          <Col span={12} className={ingestionCss.pipelineBtns}>
+            <Space>
+              <Button
+                className={ingestionCss.draftBtn}
+                onClick={() => {
+                  convertPipeline(
+                    query?.pipeline ? query?.pipeline : pipelineData
+                  );
+                }}
+              >
+                Convert Pipeline
+              </Button>
+              <Button
+                className={ingestionCss.draftBtn}
+                onClick={() => {
+                  runPipeline(query?.pipeline ? query?.pipeline : pipelineData);
+                }}
+              >
+                Run Pipeline
+              </Button>
+
+              <Button
+                className={ingestionCss.draftBtn}
+                onClick={() => {
+                  setShowJobList(true)
+                }}
+              >
+                Job List
+              </Button>
+
+            </Space>
+          </Col>
+
           <Divider style={{ margin: "2vh 0vh 2vh 0vh" }}></Divider>
           <Col span={24} className={ingestionCss.pipelineSteps}>
             <Row className={ingestionCss.dashedLines}>
