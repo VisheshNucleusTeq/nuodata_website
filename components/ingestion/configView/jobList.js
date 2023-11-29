@@ -74,6 +74,8 @@ const JobList = () => {
           >
             Back
           </Button>
+
+          
           <br />
           <br />
           {Object.keys(detailId).map((e) => {
