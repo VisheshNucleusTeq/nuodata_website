@@ -158,6 +158,10 @@ const SourceSchema = ({
             ?.property_value
         )
       );
+    }else{
+      form.setFieldValue(
+        "rows", 10
+      );
     }
   };
 
