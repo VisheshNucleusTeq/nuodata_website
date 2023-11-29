@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { Button, Table, Tag, Tooltip, Descriptions, Row, Col } from "antd";
+
+import {
+  Button,
+  Table,
+  Tag,
+  Tooltip,
+  Descriptions,
+  Row,
+  Col,
+  Space,
+} from "antd";
 import {
   RUNPIPELINELIST,
   RUNPIPELINELOGS,
 } from "../../../network/apiConstants";
 import { fetch_retry_get } from "../../../network/api-manager";
 
-import { EyeOutlined } from "@ant-design/icons";
-
+import { EyeOutlined, LoadingOutlined } from "@ant-design/icons";
+import { loderShowHideAction } from "../../../Redux/action";
 const JobList = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
@@ -17,6 +27,7 @@ const JobList = () => {
   const [runList, setRunList] = useState([]);
   const [detailId, setDetailId] = useState(null);
   const [downloadLink, setDownloadLink] = useState({});
+  const [loader, setLoader] = useState(false);
 
   const changeDateFormat = (date) => {
     const dt = new Date(date);
@@ -43,13 +54,27 @@ const JobList = () => {
   };
 
   const getRunList = async (id) => {
+    setLoader(true);
     const runListData = await fetch_retry_get(`${RUNPIPELINELIST}${id}`);
     setRunList(runListData?.data);
+    if (detailId) {
+      const selectedData = runListData?.data.find((e) => {
+        return e?.exe_id == detailId?.exe_id;
+      });
+      if (selectedData && selectedData?.exe_id) {
+        setDetailId(selectedData);
+      } else {
+        setLoader(false);
+      }
+    } else {
+      setLoader(false);
+    }
   };
 
   const getRuntimeLinks = async (id) => {
     const runLinkData = await fetch_retry_get(`${RUNPIPELINELOGS}${id}`);
     setDownloadLink(runLinkData?.data);
+    setLoader(false);
   };
 
   useEffect(() => {
@@ -65,19 +90,36 @@ const JobList = () => {
   return (
     <>
       {/* {detailId} */}
+
+      <Row>
+        <Col span={24}>
+          <Space style={{ float: "right" }}>
+            {detailId ? (
+              <Button
+                onClick={() => {
+                  setDetailId(null);
+                }}
+              >
+                Back
+              </Button>
+            ) : null}
+            <Button
+              onClick={() => {
+                getRunList(query?.pipeline ? query?.pipeline : pipelineData);
+              }}
+              disabled={loader}
+            >
+              {loader && <LoadingOutlined />} Refress
+            </Button>
+          </Space>
+        </Col>
+      </Row>
+
+      <br />
+      <br />
+
       {detailId ? (
         <>
-          <Button
-            onClick={() => {
-              setDetailId(null);
-            }}
-          >
-            Back
-          </Button>
-
-          
-          <br />
-          <br />
           {Object.keys(detailId).map((e) => {
             return (
               <Row>
@@ -107,7 +149,12 @@ const JobList = () => {
                     alignItems: "center",
                   }}
                 >
-                  &nbsp; {detailId[e]}
+                  &nbsp;{" "}
+                  {e != "job_status" ? (
+                    detailId[e]
+                  ) : (
+                    <span>{getJobStatus(detailId[e])}</span>
+                  )}
                 </Col>
               </Row>
             );
