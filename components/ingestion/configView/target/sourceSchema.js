@@ -9,7 +9,9 @@ import {
   Input,
   Radio,
   Button,
+  message
 } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   fetch_retry_get,
@@ -20,6 +22,7 @@ import {
   GETCONNECTIONDETAIL,
   CREATENODE,
 } from "../../../../network/apiConstants";
+import { loderShowHideAction } from "../../../../Redux/action";
 
 const SourceSchema = ({
   connectionId,
@@ -34,21 +37,25 @@ const SourceSchema = ({
 }) => {
   const [form] = Form.useForm();
   const [schemas, setSchemas] = useState([]);
+  const dispatch = useDispatch();
 
   const getSchema = async () => {
+    dispatch(loderShowHideAction(true));
     const authData = JSON.parse(localStorage.getItem("authData"));
     const schemaData = await fetch_retry_get(
       `${GETCONNECTIONDETAIL}${connectionId}/schemas?org_id=${authData?.orgId}&workspace_id=${workspace}&type=${connection?.type}&node_id=${nodeId}`
     );
     setSchemas(schemaData?.data?.schemas);
+    dispatch(loderShowHideAction(false));
   };
 
   const getTableData = async (data) => {
+    dispatch(loderShowHideAction(true));
     const authData = JSON.parse(localStorage.getItem("authData"));
     const tableData = await fetch_retry_post(
       `${GETCONNECTIONDETAIL}schema/${data?.table}?org_id=${authData?.orgId}&workspace_id=${workspace}&connection_id=${connectionId}&type=${connection?.type}&rows=${data?.rows}&node_id=${nodeId}`
     );
-    setActiveKey("fields_tab");
+    // setActiveKey("fields_tab");
     setTableData(tableData?.data);
 
     let transformation_properties = sourceData?.transformation_properties;
@@ -65,6 +72,21 @@ const SourceSchema = ({
       transformation_properties[sourceIndex] = {
         property_name: "target_table",
         property_value: data?.table,
+      };
+    }
+
+    const displayRowsIndex = transformation_properties.findIndex(
+      (item) => item.property_name === "display_rows"
+    );
+    if (displayRowsIndex < 0) {
+      transformation_properties.push({
+        property_name: "display_rows",
+        property_value: data?.rows + "",
+      });
+    } else {
+      transformation_properties[displayRowsIndex] = {
+        property_name: "display_rows",
+        property_value: data?.rows + "",
       };
     }
 
@@ -98,26 +120,58 @@ const SourceSchema = ({
       };
     }
 
-    const updateResult = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+    const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
       ...sourceData,
       transformation_properties: transformation_properties,
     });
+    if (result?.success) {
+      message.success(result?.data?.message);
+    } else {
+      message.error("Something went wrong");
+    }
     setSourceData({
       ...sourceData,
       transformation_properties: transformation_properties,
     });
+    dispatch(loderShowHideAction(false));
+  };
+
+  const setOldValue = () => {
+    const sourceIndex = sourceData?.transformation_properties.findIndex(
+      (item) => item.property_name === "target_table"
+    );
+    if (sourceIndex >= 0) {
+      form.setFieldValue(
+        "table",
+        sourceData?.transformation_properties[sourceIndex]?.property_value
+      );
+    }
+
+    const displayRowsIndex = sourceData?.transformation_properties.findIndex(
+      (item) => item.property_name === "display_rows"
+    );
+    if (displayRowsIndex >= 0) {
+      form.setFieldValue(
+        "rows",
+        Number(
+          sourceData?.transformation_properties[displayRowsIndex]
+            ?.property_value
+        )
+      );
+    }
   };
 
   useEffect(() => {
     getSchema();
+    setOldValue();
   }, []);
 
   return (
     <Row>
       <Col span={24} className={ingestionCss.addSourceImage}>
         <Space size={20}>
-          <Image src={connection.logo_url} />
-          <span>{connection.title}</span>
+          <Image src={`/db_icon/${connection.title}.png`} />
+          <b>{connection.title}</b>
         </Space>
       </Col>
 
@@ -139,7 +193,7 @@ const SourceSchema = ({
                 rules={[
                   {
                     required: true,
-                    message: "Desciption is required.",
+                    message: "Target is required.",
                   },
                 ]}
               >
@@ -170,7 +224,7 @@ const SourceSchema = ({
               </Form.Item>
             </Col>
             <Col span={2} />
-            {/* <Col span={10}>
+            <Col span={10}>
               <Form.Item
                 label={"Display rows"}
                 labelAlign={"left"}
@@ -178,16 +232,16 @@ const SourceSchema = ({
                 rules={[
                   {
                     required: true,
-                    message: "Desciption is required.",
+                    message: "Display rows is required.",
                   },
                 ]}
               >
-                <Radio.Group name={"rows"}>
+                <Radio.Group name={"rows"} defaultValue={10}>
                   <Radio value={10}>10</Radio>
                   <Radio value={20}>20</Radio>
                 </Radio.Group>
               </Form.Item>
-            </Col> */}
+            </Col>
 
             <Col span={24}>
               <Button
@@ -200,45 +254,11 @@ const SourceSchema = ({
                 }}
                 onClick={() => {}}
               >
-                Save Source Selection
+                Save
               </Button>
             </Col>
           </Row>
         </Form>
-        {/* <Row>
-          <Col span={12}>
-            <Select
-              className="inputSelect"
-              showSearch
-              placeholder="Select a table"
-              optionFilterProp="children"
-              options={[
-                ...schemas.map((e) => {
-                  return {
-                    value: e,
-                    label: e,
-                  };
-                }),
-              ]}
-              style={{ width: "100%" }}
-              filterOption={(input, option) =>
-                (option?.label ?? "").includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? "")
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? "").toLowerCase())
-              }
-            />
-          </Col>
-          <Col span={12}>
-          <Radio.Group onChange={onChange} value={value}>
-      <Radio value={1}>10</Radio>
-      <Radio value={2}>B</Radio>
-      
-    </Radio.Group>
-          </Col>
-        </Row> */}
       </Col>
     </Row>
   );

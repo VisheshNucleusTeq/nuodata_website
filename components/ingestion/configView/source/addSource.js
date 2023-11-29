@@ -128,10 +128,6 @@ const AddSource = ({
     );
   };
 
-  const onChange = (list) => {
-    setAdvancedSelected(list);
-  };
-
   const getExistingConnections = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
     const result = await fetch_retry_get(
@@ -262,7 +258,6 @@ const AddSource = ({
   }, [connection]);
 
   const setExistingRecord = async () => {
-    const authData = JSON.parse(localStorage.getItem("authData"));
     const result = await fetch_retry_get(
       `${GETCONNECTIONDETAIL}${updateRecordId}?workspace_id=${workspace}`
     );
@@ -270,14 +265,11 @@ const AddSource = ({
     const keyArr = [...Object.keys(connection?.connection_detail)];
     keyArr.map((e) => {
       if (connection?.connection_detail[e]) {
-        // dataValue[e] = decryptAES_CBC(decryptAES_CBC(dataValue[e]));
         dataValue[e] = decryptAES_CBC(dataValue[e]);
       }
     });
     form.setFieldsValue(dataValue);
   };
-
-  const formValid = () => {};
 
   useEffect(() => {
     form.resetFields();
@@ -288,8 +280,10 @@ const AddSource = ({
   }, [updateRecordId]);
 
   useEffect(() => {
+    //selectedRecordId
     if(connectionId){
       setConnectionId(connectionId);
+      setSelectedRecordId(connectionId);
       setFormType("EXISTING");
       form.setFieldsValue({
         existingConnections : connectionId
@@ -302,8 +296,8 @@ const AddSource = ({
       <Row>
         <Col span={8} className={ingestionCss.addSourceImage}>
           <Space size={20}>
-            <Image src={connection.logo_url} />
-            <span>{connection.title}</span>
+            <Image src={`/db_icon/${connection.title}.png`} />
+            <b>{connection.title}</b>
           </Space>
         </Col>
 
@@ -326,7 +320,7 @@ const AddSource = ({
                   setIsTested(false);
                 }}
               >
-                Select a existing {connection.title} connection
+                Select a existing {connection.title.toLowerCase()} connection
               </Button>
             )}
 

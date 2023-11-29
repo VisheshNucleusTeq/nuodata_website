@@ -7,7 +7,7 @@ import FilterCondition from "./filterCondition";
 const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
   const [activeKey, setActiveKey] = useState("general_tab");
   const [tableData, setTableData] = useState({});
-  const [sourceNode, setSourceNode] = useState(null)
+  const [sourceNode, setSourceNode] = useState(null);
   const [sourceData, setSourceData] = useState({
     transformation_name: "",
     description: "",
@@ -74,88 +74,25 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
                   nodeId={nodeId}
                   sourceData={sourceData}
                   setSourceData={setSourceData}
+                  setActiveKey={setActiveKey}
                 />
               </Tabs.TabPane>
 
               <Tabs.TabPane tab="Filter" key="filter_tab">
-                <FilterCondition ingestionCss={ingestionCss} sourceData={sourceData} nodeId={nodeId}/>
+                <FilterCondition
+                  ingestionCss={ingestionCss}
+                  sourceData={sourceData}
+                  nodeId={nodeId}
+                />
               </Tabs.TabPane>
-
-              {/* <Tabs.TabPane
-                  tab="Source"
-                  key="source_tab"
-                  disabled={!(sourceData && sourceData?.transformation_name)}
-                >
-                  {connection && connection?.title ? (
-                    <Row>
-                      <Col span={24}>
-                        <Button
-                          className={ingestionCss.backButton}
-                          onClick={() => {
-                            setConnection({});
-                          }}
-                        >
-                          Change Source
-                        </Button>
-                      </Col>
-                      <Col span={24}>
-                        <AddSource
-                          ingestionCss={ingestionCss}
-                          connection={connection}
-                          setIsModalOpen={() => {}}
-                          connectionId={connectionId}
-                          setConnectionId={setConnectionId}
-                          setActiveKey={setActiveKey}
-                        />
-                      </Col>
-                    </Row>
-                  ) : (
-                    <SelectSource
-                      ingestionCss={ingestionCss}
-                      setConnection={setConnection}
-                      setActiveKey={setActiveKey}
-                    />
-                  )}
-                </Tabs.TabPane>
-                <Tabs.TabPane
-                  tab="Source Schema"
-                  key="schema_tab"
-                  disabled={!(connection && connection?.title && connectionId)}
-                >
-                  <SourceSchema
-                    connectionId={connectionId}
-                    connection={connection}
-                    workspace={localStorage.getItem("workspace")}
-                    ingestionCss={ingestionCss}
-                    setActiveKey={setActiveKey}
-                    setTableData={setTableData}
-                    nodeId={nodeId}
-                    sourceData={sourceData}
-                    setSourceData={setSourceData}
-                  />
-                </Tabs.TabPane>
-                <Tabs.TabPane
-                  tab="Fields"
-                  key="fields_tab"
-                  disabled={!tableData?.metadata}
-                >
-                  <KeyTable
-                    key={Date.now()}
-                    ingestionCss={ingestionCss}
-                    metadata={tableData?.metadata}
-                    nodeId={nodeId}
-                    sourceData={sourceData}
-                    setSourceData={setSourceData}
-                  />
-                </Tabs.TabPane> */}
             </Tabs>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Preview" key="2" disabled={!tableData?.data}>
-            {/* <DataTable
+          {/* <Tabs.TabPane tab="Preview" key="2" disabled={!tableData?.data}>
+            <DataTable
                 ingestionCss={ingestionCss}
                 tableData={tableData?.data}
-              /> */}
-          </Tabs.TabPane>
+              />
+          </Tabs.TabPane> */}
         </Tabs>
       </Col>
     </Row>

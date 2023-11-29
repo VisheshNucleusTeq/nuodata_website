@@ -108,8 +108,8 @@ const Build = ({ ingestionCss }) => {
                       <Image
                         preview={false}
                         src={`/pipelines_icon/${e}.png`}
-                        width={"1.8vw"}
-                        height={"1.8vw"}
+                        width={"1.5vw"}
+                        height={"1.5vw"}
                       />
                     </Col>
                     <Col span={24} className={ingestionCss.pipelineStepTabText}>
@@ -126,7 +126,7 @@ const Build = ({ ingestionCss }) => {
           onMouseEnter={() => setVisible(true)}
           onMouseLeave={() => setVisible(false)}
         >
-          <Col span={24} style={{ height: "40vh" }}>
+          <Col span={24} style={{ height: "50vh" }}>
             <EdgesFlow
               nodeData={nodeData}
               edgeData={edgeData}

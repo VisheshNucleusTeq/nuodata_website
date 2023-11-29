@@ -17,7 +17,7 @@ const FullPageLoader = () => {
           alignItems: "center",
           textAlign: "center",
           position: "fixed",
-          zIndex: "999999999",
+          zIndex: "999",
         }}
       >
         <MutatingDots

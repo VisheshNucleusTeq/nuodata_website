@@ -1,13 +1,18 @@
 import { Row, Col, Space, Select, Input, Button, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { DeleteOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
 
 import { NODEMETADATA, CREATENODE } from "../../../../network/apiConstants";
 import {
   fetch_retry_get,
   fetch_retry_put,
 } from "../../../../network/api-manager";
+import { loderShowHideAction } from "../../../../Redux/action";
+
 const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
+  const dispatch = useDispatch();
+
   const [formSubmit, setFormSubmit] = useState(false);
   const [filterType, setFilterType] = useState("SIMPLE");
   const [fieldsData, setFieldsData] = useState([]);
@@ -34,6 +39,7 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
   };
 
   const updateFilterData = async () => {
+    dispatch(loderShowHideAction(true));
     let valid = true;
     let filterConditionValue = [];
     let filterString = "";
@@ -82,17 +88,21 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
     }
 
     if (valid) {
-      await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+      const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
         ...sourceData,
         transformation_properties,
       });
+      if (result?.success) {
+        message.success(result?.data?.message);
+      } else {
+        message.error("Something went wrong");
+      }
     } else {
       setFormSubmit(true);
       message.error("Please fill all required fields");
     }
+    dispatch(loderShowHideAction(false));
   };
-
-
 
   useEffect(() => {
     if (nodeId) {
@@ -274,7 +284,7 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
                         }}
                       />
                       {formSubmit && !filterData[i].value && (
-                        <p style={{ color: "red" }}>type is required.</p>
+                        <p style={{ color: "red" }}>Value is required.</p>
                       )}
                     </Col>
                     <Col span={3}>

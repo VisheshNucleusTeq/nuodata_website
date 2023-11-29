@@ -46,27 +46,26 @@ const SelectSource = ({ ingestionCss, setConnection, accountListArr }) => {
           <Row align={"centerr"}>
             {accountList &&
               accountList.length > 0 &&
-              accountList.map((e,i ) => {
+              accountList.map((e, i) => {
                 return (
-                  <Col span={4} key={'sourceCol' + i}>
+                  <Col span={4} key={"sourceCol" + i}>
                     <div
                       className={
                         e?.isDisable
                           ? ingestionCss.notClickDiv
                           : ingestionCss.clickDiv
                       }
-                      key={'sourceDiv' + i}
+                      key={"sourceDiv" + i}
                     >
                       <div
                         onClick={() => {
                           setConnection(e);
-                          // setActiveKey("schema_tab");
                         }}
                       >
                         <Tooltip title={e.title} color="#0c3246">
                           <Image
                             alt={e.title}
-                            src={e.logo_url}
+                            src={`/db_icon/${e.title}.png`}
                             preview={false}
                           />
                         </Tooltip>

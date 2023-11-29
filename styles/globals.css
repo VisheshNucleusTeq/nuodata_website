@@ -585,3 +585,9 @@ html {
   color: #777;
   font-size: 12px;
 } */
+
+.ant-message-notice-content{
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  z-index: 9999;
+}

@@ -10,6 +10,7 @@ import {
   Radio,
   Button,
 } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   fetch_retry_get,
@@ -20,6 +21,7 @@ import {
   GETCONNECTIONDETAIL,
   CREATENODE,
 } from "../../../../network/apiConstants";
+import { loderShowHideAction } from "../../../../Redux/action";
 
 const SourceSchema = ({
   connectionId,
@@ -34,17 +36,20 @@ const SourceSchema = ({
 }) => {
   const [form] = Form.useForm();
   const [schemas, setSchemas] = useState([]);
+  const dispatch = useDispatch();
 
   const getSchema = async () => {
+    dispatch(loderShowHideAction(true));
     const authData = JSON.parse(localStorage.getItem("authData"));
     const schemaData = await fetch_retry_get(
       `${GETCONNECTIONDETAIL}${connectionId}/schemas?org_id=${authData?.orgId}&workspace_id=${workspace}&type=${connection?.type}&node_id=${nodeId}`
     );
     setSchemas(schemaData?.data?.schemas);
-    console.log(sourceData)
+    dispatch(loderShowHideAction(false));
   };
 
   const getTableData = async (data) => {
+    dispatch(loderShowHideAction(true));
     const authData = JSON.parse(localStorage.getItem("authData"));
     const tableData = await fetch_retry_post(
       `${GETCONNECTIONDETAIL}schema/${data?.table}?org_id=${authData?.orgId}&workspace_id=${workspace}&connection_id=${connectionId}&type=${connection?.type}&rows=${data?.rows}&node_id=${nodeId}`
@@ -66,6 +71,21 @@ const SourceSchema = ({
       transformation_properties[sourceIndex] = {
         property_name: "source_table",
         property_value: data?.table,
+      };
+    }
+
+    const displayRowsIndex = transformation_properties.findIndex(
+      (item) => item.property_name === "display_rows"
+    );
+    if (displayRowsIndex < 0) {
+      transformation_properties.push({
+        property_name: "display_rows",
+        property_value: data?.rows + "",
+      });
+    } else {
+      transformation_properties[displayRowsIndex] = {
+        property_name: "display_rows",
+        property_value: data?.rows + "",
       };
     }
 
@@ -99,7 +119,7 @@ const SourceSchema = ({
       };
     }
 
-    const updateResult = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+    await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
       ...sourceData,
       transformation_properties: transformation_properties,
     });
@@ -107,18 +127,45 @@ const SourceSchema = ({
       ...sourceData,
       transformation_properties: transformation_properties,
     });
+    dispatch(loderShowHideAction(false));
+  };
+
+  const setOldValue = () => {
+    const sourceIndex = sourceData?.transformation_properties.findIndex(
+      (item) => item.property_name === "source_table"
+    );
+    if (sourceIndex >= 0) {
+      form.setFieldValue(
+        "table",
+        sourceData?.transformation_properties[sourceIndex]?.property_value
+      );
+    }
+
+    const displayRowsIndex = sourceData?.transformation_properties.findIndex(
+      (item) => item.property_name === "display_rows"
+    );
+    if (displayRowsIndex >= 0) {
+      form.setFieldValue(
+        "rows",
+        Number(
+          sourceData?.transformation_properties[displayRowsIndex]
+            ?.property_value
+        )
+      );
+    }
   };
 
   useEffect(() => {
     getSchema();
+    setOldValue();
   }, []);
 
   return (
     <Row>
       <Col span={24} className={ingestionCss.addSourceImage}>
         <Space size={20}>
-          <Image src={connection.logo_url} />
-          <span>{connection.title}</span>
+          <Image src={`/db_icon/${connection.title}.png`} />
+          <b>{connection.title}</b>
         </Space>
       </Col>
 
@@ -140,7 +187,7 @@ const SourceSchema = ({
                 rules={[
                   {
                     required: true,
-                    message: "Desciption is required.",
+                    message: "Source is required.",
                   },
                 ]}
               >
@@ -201,45 +248,11 @@ const SourceSchema = ({
                 }}
                 onClick={() => {}}
               >
-                Save 
+                Save
               </Button>
             </Col>
           </Row>
         </Form>
-        {/* <Row>
-          <Col span={12}>
-            <Select
-              className="inputSelect"
-              showSearch
-              placeholder="Select a table"
-              optionFilterProp="children"
-              options={[
-                ...schemas.map((e) => {
-                  return {
-                    value: e,
-                    label: e,
-                  };
-                }),
-              ]}
-              style={{ width: "100%" }}
-              filterOption={(input, option) =>
-                (option?.label ?? "").includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? "")
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? "").toLowerCase())
-              }
-            />
-          </Col>
-          <Col span={12}>
-          <Radio.Group onChange={onChange} value={value}>
-      <Radio value={1}>10</Radio>
-      <Radio value={2}>B</Radio>
-      
-    </Radio.Group>
-          </Col>
-        </Row> */}
       </Col>
     </Row>
   );

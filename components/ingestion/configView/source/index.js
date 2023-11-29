@@ -5,13 +5,17 @@ import SelectSource from "./selectSource";
 import AddSource from "./addSource";
 import KeyTable from "./keyTable";
 import SourceSchema from "./sourceSchema";
+import SourceSchemaInput from "./sourceSchemaInput";
 import DataTable from "./dataTable";
 import {
   CREATENODE,
   INGESTIONTEMPLATES,
   GETCONNECTIONDETAIL,
 } from "../../../../network/apiConstants";
-import { fetch_retry_get, fetch_retry_post } from "../../../../network/api-manager";
+import {
+  fetch_retry_get,
+  fetch_retry_post,
+} from "../../../../network/api-manager";
 const Source = ({ ingestionCss, nodeId }) => {
   const [connection, setConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
@@ -93,7 +97,15 @@ const Source = ({ ingestionCss, nodeId }) => {
                 (e) => e?.property_name == "source_table"
               );
 
-              if (sourceTable && sourceTable.length) {
+              console.log(conn[0].type);
+
+              if (
+                sourceTable &&
+                sourceTable.length &&
+                ["mysql", "mongodb", "snowflake", "postgres"].includes(
+                  conn[0].type
+                )
+              ) {
                 getSchema(
                   sourceTable[0]?.property_value,
                   connId[0]?.property_value,
@@ -131,6 +143,7 @@ const Source = ({ ingestionCss, nodeId }) => {
                     nodeId={nodeId}
                     sourceData={sourceData}
                     setSourceData={setSourceData}
+                    setActiveKey={setActiveKey}
                   />
                 </Tabs.TabPane>
 
@@ -139,7 +152,6 @@ const Source = ({ ingestionCss, nodeId }) => {
                   key="source_tab"
                   disabled={!(sourceData && sourceData?.transformation_name)}
                 >
-                  {" "}
                   {connection && connection?.title ? (
                     <Row>
                       <Col span={24}>
@@ -179,40 +191,70 @@ const Source = ({ ingestionCss, nodeId }) => {
                   key="schema_tab"
                   disabled={!(connection && connection?.title && connectionId)}
                 >
-                  <SourceSchema
-                    connectionId={connectionId}
-                    connection={connection}
-                    workspace={localStorage.getItem("workspace")}
-                    ingestionCss={ingestionCss}
-                    setActiveKey={setActiveKey}
-                    setTableData={setTableData}
-                    nodeId={nodeId}
-                    sourceData={sourceData}
-                    setSourceData={setSourceData}
-                  />
+                  {/* {JSON.stringify(connection.type)} */}
+                  {["mysql", "mongodb", "snowflake", "postgres"].includes(
+                    connection.type
+                  ) && (
+                    <SourceSchema
+                      connectionId={connectionId}
+                      connection={connection}
+                      workspace={localStorage.getItem("workspace")}
+                      ingestionCss={ingestionCss}
+                      setActiveKey={setActiveKey}
+                      setTableData={setTableData}
+                      nodeId={nodeId}
+                      sourceData={sourceData}
+                      setSourceData={setSourceData}
+                    />
+                  )}
+                  {["s3bucket"].includes(connection.type) && (
+                    <SourceSchemaInput
+                      connectionId={connectionId}
+                      connection={connection}
+                      workspace={localStorage.getItem("workspace")}
+                      ingestionCss={ingestionCss}
+                      setActiveKey={setActiveKey}
+                      setTableData={setTableData}
+                      nodeId={nodeId}
+                      sourceData={sourceData}
+                      setSourceData={setSourceData}
+                    />
+                  )}
                 </Tabs.TabPane>
-                <Tabs.TabPane
-                  tab="Fields"
-                  key="fields_tab"
-                  disabled={!tableData?.fields}
-                >
-                  <KeyTable
-                    key={Date.now()}
-                    ingestionCss={ingestionCss}
-                    metadata={tableData?.fields}
-                    nodeId={nodeId}
-                    sourceData={sourceData}
-                    setSourceData={setSourceData}
-                  />
-                </Tabs.TabPane>
+                {["mysql", "mongodb", "snowflake", "postgres"].includes(
+                  connection.type
+                ) && (
+                  <Tabs.TabPane
+                    tab="Fields"
+                    key="fields_tab"
+                    disabled={!tableData?.fields}
+                  >
+                    <KeyTable
+                      key={Date.now()}
+                      ingestionCss={ingestionCss}
+                      metadata={tableData?.fields}
+                      nodeId={nodeId}
+                      sourceData={sourceData}
+                      setSourceData={setSourceData}
+                    />
+                  </Tabs.TabPane>
+                )}
               </Tabs>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Preview" key="2" disabled={!tableData?.sample_data}>
-              <DataTable
-                ingestionCss={ingestionCss}
-                tableData={tableData?.sample_data}
-              />
-            </Tabs.TabPane>
+            {["mysql", "mongodb", "snowflake", "postgres"].includes(
+              connection.type
+            ) && (
+              <Tabs.TabPane
+                tab="Preview"
+                key="2"
+                disabled={!tableData?.sample_data}
+              >
+                <DataTable
+                  ingestionCss={ingestionCss}
+                  tableData={tableData?.sample_data}
+                />
+              </Tabs.TabPane>
+            )}
           </Tabs>
         </Col>
       </Row>

@@ -1,5 +1,15 @@
 import React, { useEffect } from "react";
-import { Row, Col, Space, Card, Tooltip, Button, Divider, message, Modal } from "antd";
+import {
+  Row,
+  Col,
+  Space,
+  Card,
+  Tooltip,
+  Button,
+  Divider,
+  message,
+  Modal,
+} from "antd";
 import { CheckCircleFilled } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -59,16 +69,29 @@ const CreatePipeline = ({ ingestionCss }) => {
 
   const convertPipeline = async (id) => {
     dispatch(loderShowHideAction(true));
-    const data = await fetch_retry_post(`${CONVERTPIPELINE}${id}`);
-    message.success(data?.data?.message);
-    dispatch(loderShowHideAction(false));
+    const result = await fetch_retry_post(`${CONVERTPIPELINE}${id}`);
+    if (result?.success) {
+      dispatch(loderShowHideAction(false));
+      message.success(result?.data?.message);
+      runPipeline(id);
+    } else {
+      message.error("Something went wrong");
+    }
   };
 
   const runPipeline = async (id) => {
     dispatch(loderShowHideAction(true));
-    const data = await fetch_retry_post(`${RUNPIPELINE}${id}`);
-    message.success(data?.data?.message);
+    const result = await fetch_retry_post(`${RUNPIPELINE}${id}`);
+    if (result?.success) {
+      message.success(result?.data?.message);
+    } else {
+      message.error("Something went wrong");
+    }
     dispatch(loderShowHideAction(false));
+  };
+
+  const convertAndRunPipeline = async (id) => {
+    await convertPipeline(id);
   };
 
   useEffect(() => {
@@ -80,26 +103,40 @@ const CreatePipeline = ({ ingestionCss }) => {
     query?.pipeline || pipelineData
       ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
       : null;
+    message.success("result?.data?.message");
   }, [workspace, query?.pipeline, pipelineData]);
 
   return (
     <>
-    <Modal
-    width={"80%"}
+      {/* <Button
+        onClick={() => {
+          dispatch(loderShowHideAction(true));
+          message.success("result?.data?.message");
+          setTimeout(() => {
+            dispatch(loderShowHideAction(false));
+          }, 2000);
+        }}
+      >
+        sdfsdf
+      </Button> */}
+      <Modal
+        width={"80%"}
         title={"Job List"}
         centered
         open={showJobList}
         onOk={() => {
-          setShowJobList(false)
+          setShowJobList(false);
         }}
-        onCancel={()=>{setShowJobList(false)}}
+        onCancel={() => {
+          setShowJobList(false);
+        }}
         maskClosable={false}
         okText={"Ok"}
         destroyOnClose
       >
         <JobList />
       </Modal>
-      {workspace && (
+      {/* {workspace && (
         <Row style={{ borderRadius: "5px" }}>
           <Col className={ingestionCss.WorkspaceName} span={24}>
             <Row>
@@ -115,55 +152,17 @@ const CreatePipeline = ({ ingestionCss }) => {
             </Row>
           </Col>
         </Row>
-      )}
+      )} */}
 
       <div className={ingestionCss.main} style={{ borderRadius: "5px" }}>
         <Row>
-          <Divider
-            style={{ margin: "2vh 0vh 2vh 0vh", borderColor: "#FFF" }}
-          ></Divider>
-
-          <Col span={12} className={ingestionCss.pipelineTitle}>
-            <span>
-              {pipelineDetails.pipeline_name
-                ? pipelineDetails.pipeline_name
-                : "New Pipeline- Editable Field"}
-            </span>
-          </Col>
-          <Col span={12} className={ingestionCss.pipelineBtns}>
-            <Space>
-              <Button
-                className={ingestionCss.draftBtn}
-                onClick={() => {
-                  convertPipeline(
-                    query?.pipeline ? query?.pipeline : pipelineData
-                  );
-                }}
-              >
-                Convert Pipeline
-              </Button>
-              <Button
-                className={ingestionCss.draftBtn}
-                onClick={() => {
-                  runPipeline(query?.pipeline ? query?.pipeline : pipelineData);
-                }}
-              >
-                Run Pipeline
-              </Button>
-
-              <Button
-                className={ingestionCss.draftBtn}
-                onClick={() => {
-                  setShowJobList(true)
-                }}
-              >
-                Job List
-              </Button>
-
-            </Space>
+          <Col span={12} className={ingestionCss.pipelineTitle} >
+            {pipelineDetails.pipeline_name && <span>{pipelineDetails.pipeline_name}</span>}
+            {workspaceData && <span style={{color : "#0c3246"}}>({workspaceData.filter((e) => e.workspace_id === workspace)[0]?.workspace_name})</span>}
           </Col>
 
-          <Divider style={{ margin: "2vh 0vh 2vh 0vh" }}></Divider>
+
+          <Divider style={{ margin: "0vh 0vh 1vh 0vh" }}></Divider>
           <Col span={24} className={ingestionCss.pipelineSteps}>
             <Row className={ingestionCss.dashedLines}>
               <Col span={18}>
@@ -227,8 +226,29 @@ const CreatePipeline = ({ ingestionCss }) => {
               </Col>
               <Col span={6} className={ingestionCss.pipelineBtns}>
                 <Space>
-                  <Button className={ingestionCss.draftBtn}>Draft</Button>
-                  <Button className={ingestionCss.saveBtn}>Save</Button>
+                  {/* <Button className={ingestionCss.draftBtn}>Draft</Button> */}
+                  <Button
+                    className={ingestionCss.saveBtn}
+                    onClick={async () => {
+                      const id = query?.pipeline
+                        ? query?.pipeline
+                        : pipelineData;
+                      // await convertPipeline(id);
+                      // await runPipeline(id);
+
+                      await convertAndRunPipeline(id);
+                    }}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    className={ingestionCss.draftBtn}
+                    onClick={() => {
+                      setShowJobList(true);
+                    }}
+                  >
+                    Job List
+                  </Button>
                 </Space>
               </Col>
             </Row>

@@ -192,7 +192,6 @@ function EdgesFlow({
           ref={reactFlowWrapper}
         >
           <ReactFlow
-          
             fitView
             onConnectStart={onConnectStart}
             onInit={setReactFlowInstance}
