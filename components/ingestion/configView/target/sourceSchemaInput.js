@@ -132,13 +132,13 @@ const SourceSchemaInput = ({
             <Row>
               <Col span={12}>
                 <Form.Item
-                  label={"Source"}
+                  label={"Target"}
                   labelAlign={"left"}
                   name={"table"}
                   rules={[
                     {
                       required: true,
-                      message: "Source is required.",
+                      message: "Target is required.",
                     },
                   ]}
                 >
@@ -146,7 +146,7 @@ const SourceSchemaInput = ({
                     key={"input-source-name"}
                     className={"input"}
                     name={"table"}
-                    placeholder="Source Name"
+                    placeholder="Target Name"
                   />
                 </Form.Item>
               </Col>
