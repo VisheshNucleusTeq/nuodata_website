@@ -103,7 +103,6 @@ const CreatePipeline = ({ ingestionCss }) => {
     query?.pipeline || pipelineData
       ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
       : null;
-    message.success("result?.data?.message");
   }, [workspace, query?.pipeline, pipelineData]);
 
   return (
