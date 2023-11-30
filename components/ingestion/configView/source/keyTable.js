@@ -191,7 +191,7 @@ const KeyTable = ({ metadata, ingestionCss, sourceData, setSourceData, nodeId })
           <Space>
             <Button
               onClick={() => {
-                updateTableField();
+                // updateTableField();
               }}
               className={ingestionCss.draftBtn}
             >

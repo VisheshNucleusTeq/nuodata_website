@@ -73,7 +73,6 @@ const CreatePipeline = ({ ingestionCss }) => {
     if (result?.success) {
       dispatch(loderShowHideAction(false));
       message.success(result?.data?.message);
-      runPipeline(id);
     } else {
       message.error("Something went wrong");
     }
@@ -107,17 +106,6 @@ const CreatePipeline = ({ ingestionCss }) => {
 
   return (
     <>
-      {/* <Button
-        onClick={() => {
-          dispatch(loderShowHideAction(true));
-          message.success("result?.data?.message");
-          setTimeout(() => {
-            dispatch(loderShowHideAction(false));
-          }, 2000);
-        }}
-      >
-        sdfsdf
-      </Button> */}
       <Modal
         width={"80%"}
         title={"Job List"}
@@ -155,16 +143,26 @@ const CreatePipeline = ({ ingestionCss }) => {
 
       <div className={ingestionCss.main} style={{ borderRadius: "5px" }}>
         <Row>
-          <Col span={12} className={ingestionCss.pipelineTitle} >
-            {pipelineDetails.pipeline_name && <span>{pipelineDetails.pipeline_name}</span>}
-            {workspaceData && <span style={{color : "#0c3246"}}>({workspaceData.filter((e) => e.workspace_id === workspace)[0]?.workspace_name})</span>}
+          <Col span={12} className={ingestionCss.pipelineTitle}>
+            {pipelineDetails.pipeline_name && (
+              <span>{pipelineDetails.pipeline_name}</span>
+            )}
+            {workspaceData && (
+              <span style={{ color: "#0c3246" }}>
+                (
+                {
+                  workspaceData.filter((e) => e.workspace_id === workspace)[0]
+                    ?.workspace_name
+                }
+                )
+              </span>
+            )}
           </Col>
-
 
           <Divider style={{ margin: "0vh 0vh 1vh 0vh" }}></Divider>
           <Col span={24} className={ingestionCss.pipelineSteps}>
             <Row className={ingestionCss.dashedLines}>
-              <Col span={18}>
+              <Col span={16}>
                 <Row align={"space-between"}>
                   {["Define", "Build", "Test", "Configure", "Deploy"].map(
                     (data, i) => {
@@ -223,22 +221,31 @@ const CreatePipeline = ({ ingestionCss }) => {
                   )}
                 </Row>
               </Col>
-              <Col span={6} className={ingestionCss.pipelineBtns}>
+              <Col span={8} className={ingestionCss.pipelineBtns}>
                 <Space>
-                  {/* <Button className={ingestionCss.draftBtn}>Draft</Button> */}
                   <Button
                     className={ingestionCss.saveBtn}
                     onClick={async () => {
                       const id = query?.pipeline
                         ? query?.pipeline
                         : pipelineData;
-                      // await convertPipeline(id);
-                      // await runPipeline(id);
-
-                      await convertAndRunPipeline(id);
+                      convertPipeline(id);
+                      // await convertAndRunPipeline(id);
                     }}
                   >
-                    Save
+                    Save pipeline
+                  </Button>
+                  <Button
+                    className={ingestionCss.saveBtn}
+                    onClick={async () => {
+                      const id = query?.pipeline
+                        ? query?.pipeline
+                        : pipelineData;
+                      runPipeline(id);
+                      // await convertAndRunPipeline(id);
+                    }}
+                  >
+                    Run pipeline
                   </Button>
                   <Button
                     className={ingestionCss.draftBtn}

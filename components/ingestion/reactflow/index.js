@@ -292,7 +292,7 @@ function EdgesFlow({
                 </div>
               </div>
             ) : null}
-            <MiniMap />
+            {/* <MiniMap /> */}
             <Controls />
             <Background />
           </ReactFlow>

@@ -224,7 +224,7 @@ const SourceSchema = ({
             <Col span={2} />
             <Col span={10}>
               <Form.Item
-                label={"Display rows"}
+                label={"Display Rows"}
                 labelAlign={"left"}
                 name={"rows"}
                 rules={[

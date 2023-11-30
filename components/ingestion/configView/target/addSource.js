@@ -320,7 +320,7 @@ const AddSource = ({
                   setIsTested(false);
                 }}
               >
-                Select a existing {connection.title} connection
+                Select a existing {connection.title.toLowerCase()} connection
               </Button>
             )}
 

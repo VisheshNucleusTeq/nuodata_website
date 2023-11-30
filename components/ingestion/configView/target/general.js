@@ -91,7 +91,7 @@ const General = ({
             htmlType="submit"
             className={ingestionCss.submitBtn}
           >
-            Submit
+            Save
           </Button>
         </Form.Item>
       </Form>

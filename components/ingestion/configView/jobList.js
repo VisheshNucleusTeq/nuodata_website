@@ -109,7 +109,7 @@ const JobList = () => {
               }}
               disabled={loader}
             >
-              {loader && <LoadingOutlined />} Refress
+              {loader && <LoadingOutlined />} Refresh
             </Button>
           </Space>
         </Col>
