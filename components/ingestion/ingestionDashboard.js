@@ -20,7 +20,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 
-import { GETWORKSPACE, GETPIPELINE, GETWORKSPACEENV } from "../../network/apiConstants";
+import {
+  GETWORKSPACE,
+  GETPIPELINE,
+  GETWORKSPACEENV,
+} from "../../network/apiConstants";
 import { fetch_retry_get } from "../../network/api-manager";
 import { setWorkspaceAction, setPipelineAction } from "../../Redux/action";
 
@@ -47,7 +51,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
         );
       },
     },
-
     {
       title: "Schedule",
       dataIndex: "schedule",
@@ -187,17 +190,17 @@ const IngestionDashboard = ({ ingestionCss }) => {
               width: "100%",
             }}
             onChange={async (e) => {
-              const authData = JSON.parse(localStorage.getItem("authData"))
+              const authData = JSON.parse(localStorage.getItem("authData"));
               const envList = await fetch_retry_get(
                 `${GETWORKSPACEENV}${e}?org_id=${authData.orgId}`
               );
-              if(envList?.data && envList?.data.length){
+              if (envList?.data && envList?.data.length) {
                 localStorage.setItem("workspace", e);
                 dispatch(setWorkspaceAction(e));
                 setWorkspace(e);
                 setIsModalOpen(false);
-              }else{
-                message.warning("Please add environment for this workspace.")
+              } else {
+                message.warning("Please add environment for this workspace.");
               }
             }}
             options={[

@@ -107,7 +107,7 @@ const Build = ({ ingestionCss }) => {
                     <Col span={24} className={ingestionCss.pipelineStepTabIcon}>
                       <Image
                         preview={false}
-                        src={`/pipelines_icon/${e}.png`}
+                        src={`/pipelines_icons/${e}.png`}
                         width={"1.5vw"}
                         height={"1.5vw"}
                       />

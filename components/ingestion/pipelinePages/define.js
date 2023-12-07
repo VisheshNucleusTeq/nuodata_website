@@ -300,7 +300,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
                     savePipline("save");
                   }}
                 >
-                  {pipelineData ? "Update" : "Save"}
+                  {pipelineData ? "Update" : "Save"} & exit
                 </Button>
                 <Button
                   type="primary"
@@ -309,7 +309,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
                     savePipline("build");
                   }}
                 >
-                  {pipelineData ? "update" : "save"} & Build pipeline
+                  {pipelineData ? "Update" : "Save"} & build pipeline
                 </Button>
               </Space>
             </div>

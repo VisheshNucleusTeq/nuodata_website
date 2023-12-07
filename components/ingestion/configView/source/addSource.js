@@ -7,6 +7,7 @@ import {
   LinkOutlined,
   FilterOutlined,
   SettingOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import {
   Col,
@@ -52,34 +53,13 @@ const AddSource = ({
   connectionId,
   setConnectionId,
   setActiveKey,
+  setConnection,
 }) => {
   const workspace = useSelector((state) => state?.workspace?.workspace);
   const route = useRouter();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const [advanced, setAdvanced] = useState([
-    {
-      label: "Include Tables",
-      value: "include_tables",
-      style: { width: "19%" },
-    },
-    { label: "Include Views", value: "include_views", style: { width: "19%" } },
-    {
-      label: "Enable Table Profiling",
-      value: "enable_table_profiling",
-      style: { width: "19%" },
-    },
-    {
-      label: "Enable Column Profiling",
-      value: "enable_column_profiling",
-      style: { width: "19%" },
-    },
-    {
-      label: "Enable Stateful Ingestion",
-      value: "enable_stateful_ingestion",
-      style: { width: "19%" },
-    },
-  ]);
+
   const [advancedSelected, setAdvancedSelected] = useState([]);
   const [field, setField] = useState({});
   const [formType, setFormType] = useState("NEW");
@@ -135,6 +115,9 @@ const AddSource = ({
     );
     if (result.success) {
       setExistingConnections(result.data);
+      if (result.data.length) {
+        setFormType("EXISTING");
+      }
     }
   };
 
@@ -240,6 +223,7 @@ const AddSource = ({
     const result = await fetch_retry_get(
       `${GETCONNECTIONDETAIL}${data?.existingConnections}?workspace_id=${workspace}`
     );
+    setConnectionId(data?.existingConnections);
     let dataValue = result?.data?.connection_detail;
     const keyArr = [...Object.keys(connection?.connection_detail)];
     keyArr.map((e) => {
@@ -280,24 +264,35 @@ const AddSource = ({
   }, [updateRecordId]);
 
   useEffect(() => {
-    //selectedRecordId
-    if(connectionId){
+    if (connectionId) {
       setConnectionId(connectionId);
       setSelectedRecordId(connectionId);
-      setFormType("EXISTING");
+      // setFormType("EXISTING");
       form.setFieldsValue({
-        existingConnections : connectionId
-      })
+        existingConnections: connectionId,
+      });
     }
   }, [connectionId]);
 
   return (
     <>
+      {/* setConnection */}
       <Row>
         <Col span={8} className={ingestionCss.addSourceImage}>
           <Space size={20}>
             <Image src={`/db_icon/${connection.title}.png`} />
-            <b>{connection.title}</b>
+            <b>
+              {connection.title} &nbsp;&nbsp;
+              <span
+                style={{ cursor: "pointer", color: "#e74860" }}
+                onClick={() => {
+                  setConnection({});
+                }}
+              >
+                <EditOutlined />
+                &nbsp; Change source
+              </span>
+            </b>
           </Space>
         </Col>
 
@@ -320,7 +315,7 @@ const AddSource = ({
                   setIsTested(false);
                 }}
               >
-                Select a existing {connection.title.toLowerCase()} connection
+                Select an existing {connection.title.toLowerCase()} connection
               </Button>
             )}
 
@@ -341,7 +336,7 @@ const AddSource = ({
                 setConnectionId(null);
               }}
             >
-              Form
+              Add a new {connection.title.toLowerCase()} connection
             </Button>
           </Space>
         </Col>
@@ -374,7 +369,6 @@ const AddSource = ({
                     }}
                     initialValues={{}}
                   >
-                    {/* {JSON.stringify(existingConnections)} */}
                     <div className={ingestionCss.formHeight}>
                       <Form.Item
                         label={"Existing Connections"}
@@ -407,7 +401,6 @@ const AddSource = ({
                     <div style={{ display: "flex", justifyContent: "end" }}>
                       <Space>
                         <Button
-                          // type="primary"
                           shape="round"
                           onClick={async () => {
                             try {
@@ -426,7 +419,7 @@ const AddSource = ({
                               : { backgroundColor: "#0c3246", color: "#FFF" }
                           }
                         >
-                          Update Connection
+                          Update connection
                         </Button>
                         <Button
                           type="primary"
@@ -440,7 +433,7 @@ const AddSource = ({
                               : { backgroundColor: "#e74860", color: "#FFF" }
                           }
                         >
-                          Test Connection
+                          Test connection
                         </Button>
 
                         {connectionId && isTested && (
@@ -455,19 +448,9 @@ const AddSource = ({
                               setActiveKey("schema_tab");
                             }}
                           >
-                            Show Schema
+                            Select source dataset
                           </Button>
                         )}
-
-                        {/* <Button
-                          shape="round"
-                          style={{ backgroundColor: "#0c3246", color: "#FFF" }}
-                          onClick={() => {
-                            route.back();
-                          }}
-                        >
-                          Cancel
-                        </Button> */}
                       </Space>
                     </div>
                   </Form>
@@ -553,7 +536,7 @@ const AddSource = ({
                                   : {}
                               }
                             >
-                              Add Connection
+                              Add connection
                             </Button>
                           )}
                         </Tooltip>
@@ -564,12 +547,9 @@ const AddSource = ({
                           shape="round"
                           style={{ backgroundColor: "#e74860", color: "#FFF" }}
                         >
-                          Test Connection
+                          Test connection
                         </Button>
-
-                        {/* {(updateRecordId && isTested)} */}
-                        {/* {connectionId}
-                        {isTested} */}
+                        
                         {connectionId && isTested && (
                           <Button
                             type="primary"
@@ -582,7 +562,7 @@ const AddSource = ({
                               setActiveKey("schema_tab");
                             }}
                           >
-                            Show Schema
+                            Select source dataset
                           </Button>
                         )}
                       </Space>

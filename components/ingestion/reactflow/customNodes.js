@@ -32,7 +32,7 @@ function CustomNodes({ data, isConnectable, type, selected }) {
         <Col span={24} className={ingestionCss.pipelineStepTabIconEdge}>
           <Image
             preview={false}
-            src={`/pipelines_icon/${data.label}.png`}
+            src={`/pipelines_icons/${data.label}.png`}
             width={"1vw"}
             height={"1vw"}
           />

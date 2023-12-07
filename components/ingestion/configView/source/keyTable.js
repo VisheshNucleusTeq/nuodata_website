@@ -15,7 +15,13 @@ import { EditOutlined, CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { fetch_retry_put } from "../../../../network/api-manager";
 import { CREATENODE } from "../../../../network/apiConstants";
 
-const KeyTable = ({ metadata, ingestionCss, sourceData, setSourceData, nodeId }) => {
+const KeyTable = ({
+  metadata,
+  ingestionCss,
+  sourceData,
+  setSourceData,
+  nodeId,
+}) => {
   const [form] = Form.useForm();
   const columns = [
     {
@@ -74,7 +80,7 @@ const KeyTable = ({ metadata, ingestionCss, sourceData, setSourceData, nodeId })
     );
   };
 
-  const updateTableField = async  () => {
+  const updateTableField = async () => {
     let transformation_properties = sourceData?.transformation_properties;
     console.log(transformation_properties, data);
 
@@ -101,7 +107,6 @@ const KeyTable = ({ metadata, ingestionCss, sourceData, setSourceData, nodeId })
       ...sourceData,
       transformation_properties: transformation_properties,
     });
-
   };
 
   return (
@@ -187,7 +192,8 @@ const KeyTable = ({ metadata, ingestionCss, sourceData, setSourceData, nodeId })
           </Form>
         </Col>
         <Divider></Divider>
-        <Col span={24} className={ingestionCss.pipelineBtns}>
+
+        {/* <Col span={24} className={ingestionCss.pipelineBtns}>
           <Space>
             <Button
               onClick={() => {
@@ -197,8 +203,31 @@ const KeyTable = ({ metadata, ingestionCss, sourceData, setSourceData, nodeId })
             >
               Update Fields
             </Button>
-            {/* <Button className={ingestionCss.saveBtn}>Save</Button> */}
           </Space>
+        </Col> */}
+        <Col span={24} className={ingestionCss.pipelineBtns}>
+          <div style={{ display: "flex", justifyContent: "end" }}>
+            <Space>
+              <Button
+                type="primary"
+                className={ingestionCss.defineSave}
+                onClick={() => {
+                  // savePipline("save");
+                }}
+              >
+                Save & exit
+              </Button>
+              <Button
+                type="primary"
+                className={ingestionCss.defineSaveAndBuild}
+                onClick={() => {
+                  // savePipline("build");
+                }}
+              >
+                Save & preview fields
+              </Button>
+            </Space>
+          </div>
         </Col>
       </Row>
     </div>

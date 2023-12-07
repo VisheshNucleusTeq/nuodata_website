@@ -9,10 +9,11 @@ import {
   fetch_retry_put,
 } from "../../../../network/api-manager";
 import { loderShowHideAction } from "../../../../Redux/action";
+import { useRouter } from "next/router";
 
 const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
   const dispatch = useDispatch();
-
+  const route = useRouter();
   const [formSubmit, setFormSubmit] = useState(false);
   const [filterType, setFilterType] = useState("SIMPLE");
   const [fieldsData, setFieldsData] = useState([]);
@@ -38,7 +39,7 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
     );
   };
 
-  const updateFilterData = async () => {
+  const updateFilterData = async (type) => {
     dispatch(loderShowHideAction(true));
     let valid = true;
     let filterConditionValue = [];
@@ -94,6 +95,11 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
       });
       if (result?.success) {
         message.success(result?.data?.message);
+        if (type == "save") {
+          route.push("/ingestion");
+        } else {
+          // setActiveKey("source_tab");
+        }
       } else {
         message.error("Something went wrong");
       }
@@ -329,6 +335,30 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
         <br />
         <br />
         <Col span={22} style={{ height: "8%" }}>
+        <div style={{ display: "flex", justifyContent: "end" }}>
+          <Space>
+            <Button
+              type="primary"
+              className={ingestionCss.defineSave}
+              onClick={() => {
+                updateFilterData("save");
+              }}
+            >
+              Save & exit
+            </Button>
+            <Button
+              type="primary"
+              className={ingestionCss.defineSaveAndBuild}
+              onClick={() => {
+                updateFilterData("build");
+              }}
+            >
+              Save & select filter
+            </Button>
+          </Space>
+        </div>
+        </Col>
+        {/* <Col span={22} style={{ height: "8%" }}>
           <Button
             type="primary"
             htmlType="submit"
@@ -337,7 +367,7 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
           >
             Submit Condition
           </Button>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );

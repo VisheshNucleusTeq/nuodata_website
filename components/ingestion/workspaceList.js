@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Table, Space, Tooltip, Modal, Row, Col, Button } from "antd";
 import { EditOutlined, EyeOutlined, PlusOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
 
 import { fetch_retry_get } from "../../network/api-manager";
 import { GETWORKSPACE } from "../../network/apiConstants";
 import EnvironmentList from "./model/environmentList";
+import { setWorkspaceAction } from "../../Redux/action";
 
 const WorkspaceList = ({ ingestionCss }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [workspaceData, setWorkspaceData] = React.useState([]);
   const [workspaceId, setWorkspaceId] = React.useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -98,6 +101,20 @@ const WorkspaceList = ({ ingestionCss }) => {
             title: "Workspace Name",
             dataIndex: "workspace_name",
             key: "workspace_name",
+            render: (text, record, index) => {
+              console.log(record?.workspace_id);
+              return (
+                <a
+                  onClick={() => {
+                    localStorage.setItem("workspace", record?.workspace_id);
+                    dispatch(setWorkspaceAction(record?.workspace_id));
+                    router.push("/ingestion/");
+                  }}
+                >
+                  {text}
+                </a>
+              );
+            },
           },
           {
             title: "Description",

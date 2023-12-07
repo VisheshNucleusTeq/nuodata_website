@@ -154,7 +154,7 @@ const Source = ({ ingestionCss, nodeId }) => {
                 >
                   {connection && connection?.title ? (
                     <Row>
-                      <Col span={24}>
+                      {/* <Col span={24}>
                         <Button
                           className={ingestionCss.backButton}
                           onClick={() => {
@@ -163,7 +163,7 @@ const Source = ({ ingestionCss, nodeId }) => {
                         >
                           Change Source
                         </Button>
-                      </Col>
+                      </Col> */}
                       <Col span={24}>
                         <AddSource
                           key={"source_add_source"}
@@ -173,6 +173,7 @@ const Source = ({ ingestionCss, nodeId }) => {
                           connectionId={connectionId}
                           setConnectionId={setConnectionId}
                           setActiveKey={setActiveKey}
+                          setConnection={setConnection}
                         />
                       </Col>
                     </Row>
@@ -187,11 +188,10 @@ const Source = ({ ingestionCss, nodeId }) => {
                 </Tabs.TabPane>
 
                 <Tabs.TabPane
-                  tab="Source Schema"
+                  tab="Source Dataset"
                   key="schema_tab"
                   disabled={!(connection && connection?.title && connectionId)}
                 >
-                  {/* {JSON.stringify(connection.type)} */}
                   {["mysql", "mongodb", "snowflake", "postgres"].includes(
                     connection.type
                   ) && (

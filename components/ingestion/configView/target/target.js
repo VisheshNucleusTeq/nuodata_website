@@ -16,12 +16,13 @@ import {
   fetch_retry_get,
   fetch_retry_post,
 } from "../../../../network/api-manager";
-const target = ({ ingestionCss, nodeId }) => {
+const Target = ({ ingestionCss, nodeId }) => {
   const [connection, setConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
   const [connectionId, setConnectionId] = useState(null);
   const [tableData, setTableData] = useState({});
   const [accountListArr, setAccountListArr] = useState([]);
+  const [defaultActiveKey, setDefaultActiveKey] = useState("properties");
 
   const [sourceData, setSourceData] = useState({
     transformation_name: "",
@@ -69,7 +70,7 @@ const target = ({ ingestionCss, nodeId }) => {
         "workspace"
       )}&connection_id=${connectionId}&type=${type}&rows=10&node_id=${nodeId}`
     );
-    setActiveKey("fields_tab");
+    // setActiveKey("fields_tab");
     setTableData(tableData?.data);
   };
 
@@ -94,24 +95,24 @@ const target = ({ ingestionCss, nodeId }) => {
               setConnectionId(connId[0]?.property_value);
 
               const sourceTable = sourceData?.transformation_properties.filter(
-                (e) => e?.property_name == "source_table"
+                (e) => e?.property_name == "target_table"
               );
 
               console.log(conn[0].type);
 
-              // if (
-              //   sourceTable &&
-              //   sourceTable.length &&
-              //   ["mysql", "mongodb", "snowflake", "postgres"].includes(
-              //     conn[0].type
-              //   )
-              // ) {
-              //   getSchema(
-              //     sourceTable[0]?.property_value,
-              //     connId[0]?.property_value,
-              //     e?.property_value
-              //   );
-              // }
+              if (
+                sourceTable &&
+                sourceTable.length &&
+                ["mysql", "mongodb", "snowflake", "postgres"].includes(
+                  conn[0].type
+                )
+              ) {
+                getSchema(
+                  sourceTable[0]?.property_value,
+                  connId[0]?.property_value,
+                  e?.property_value
+                );
+              }
             }
           }
         }
@@ -126,9 +127,16 @@ const target = ({ ingestionCss, nodeId }) => {
   return (
     <>
       <Row>
+        {/* {defaultActiveKey} */}
         <Col span={24}>
-          <Tabs className="underline" defaultActiveKey="1">
-            <Tabs.TabPane tab="Properties" key="1">
+          <Tabs
+            className="underline"
+            activeKey={defaultActiveKey}
+            onChange={(key) => {
+              setDefaultActiveKey(key);
+            }}
+          >
+            <Tabs.TabPane tab="Properties" key="properties">
               <Tabs
                 className="tabActive"
                 tabPosition={"left"}
@@ -154,16 +162,16 @@ const target = ({ ingestionCss, nodeId }) => {
                 >
                   {connection && connection?.title ? (
                     <Row>
-                      <Col span={24}>
+                      {/* <Col span={24}>
                         <Button
                           className={ingestionCss.backButton}
                           onClick={() => {
                             setConnection({});
                           }}
                         >
-                          Change Target
+                          Change Source
                         </Button>
-                      </Col>
+                      </Col> */}
                       <Col span={24}>
                         <AddSource
                           key={"source_add_source"}
@@ -173,6 +181,7 @@ const target = ({ ingestionCss, nodeId }) => {
                           connectionId={connectionId}
                           setConnectionId={setConnectionId}
                           setActiveKey={setActiveKey}
+                          setConnection={setConnection}
                         />
                       </Col>
                     </Row>
@@ -187,7 +196,7 @@ const target = ({ ingestionCss, nodeId }) => {
                 </Tabs.TabPane>
 
                 <Tabs.TabPane
-                  tab="Target Schema"
+                  tab="Target Dataset"
                   key="schema_tab"
                   disabled={!(connection && connection?.title && connectionId)}
                 >
@@ -204,6 +213,7 @@ const target = ({ ingestionCss, nodeId }) => {
                       nodeId={nodeId}
                       sourceData={sourceData}
                       setSourceData={setSourceData}
+                      setDefaultActiveKey={setDefaultActiveKey}
                     />
                   )}
                   {["s3bucket"].includes(connection.type) && (
@@ -240,12 +250,12 @@ const target = ({ ingestionCss, nodeId }) => {
                 )} */}
               </Tabs>
             </Tabs.TabPane>
-            {/* {["mysql", "mongodb", "snowflake", "postgres"].includes(
+            {["mysql", "mongodb", "snowflake", "postgres"].includes(
               connection.type
             ) && (
               <Tabs.TabPane
                 tab="Preview"
-                key="2"
+                key="preview"
                 disabled={!tableData?.sample_data}
               >
                 <DataTable
@@ -253,7 +263,7 @@ const target = ({ ingestionCss, nodeId }) => {
                   tableData={tableData?.sample_data}
                 />
               </Tabs.TabPane>
-            )} */}
+            )}
           </Tabs>
         </Col>
       </Row>
@@ -261,4 +271,4 @@ const target = ({ ingestionCss, nodeId }) => {
   );
 };
 
-export default target;
+export default Target;

@@ -89,6 +89,10 @@ const SiderView = ({ layoutCss, height, componentName }) => {
       if ("workspace" in localStorage || workspace) {
         setIngestionArr([
           {
+            title: "Workspace",
+            link: "/ingestion/workspace",
+          },
+          {
             title: "Dashboard",
             link: "/ingestion",
           },
@@ -96,20 +100,16 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             title: "Create Pipeline",
             link: "/ingestion/create-pipeline",
           },
-          {
-            title: "Workspace",
-            link: "/ingestion/workspace",
-          },
         ]);
       } else {
         setIngestionArr([
           {
-            title: "Dashboard",
-            link: "/ingestion",
-          },
-          {
             title: "Workspace",
             link: "/ingestion/workspace",
+          },
+          {
+            title: "Dashboard",
+            link: "/ingestion",
           },
         ]);
       }

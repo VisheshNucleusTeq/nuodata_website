@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, Space, message } from "antd";
 import { useDispatch } from "react-redux";
 
 import { CREATENODE } from "../../../../network/apiConstants";
 import { fetch_retry_put } from "../../../../network/api-manager";
 import { loderShowHideAction } from "../../../../Redux/action";
+import { useRouter } from "next/router";
 const General = ({
   ingestionCss,
   nodeId,
@@ -14,24 +15,31 @@ const General = ({
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-
-  const onFinish = async (e) => {
-    dispatch(loderShowHideAction(true));
-    const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
-      ...sourceData,
-      ...e,
-    });
-    setSourceData({
-      ...sourceData,
-      ...e,
-    });
-    if (result?.success) {
-      message.success(result?.data?.message);
-      setActiveKey("filter_tab");
-    } else {
-      message.error("Something went wrong");
-    }
-    dispatch(loderShowHideAction(false));
+  const route = useRouter();
+  const savePipline = async (type) => {
+    try {
+      const data = await form.validateFields();
+      dispatch(loderShowHideAction(true));
+      const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+        ...sourceData,
+        ...data,
+      });
+      setSourceData({
+        ...sourceData,
+        ...data,
+      });
+      if (result?.success) {
+        message.success(result?.data?.message);
+        if (type == "save") {
+          route.push("/ingestion");
+        } else {
+          setActiveKey("filter_tab");
+        }
+      } else {
+        message.error("Something went wrong");
+      }
+      dispatch(loderShowHideAction(false));
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -42,9 +50,9 @@ const General = ({
 
   return (
     <>
-      <Form form={form} layout="vertical" onFinish={onFinish}>
+      <Form form={form} layout="vertical">
         <Form.Item
-          label={"Transformation Name"}
+          label={"Filter name"}
           name={"transformation_name"}
           rules={[
             {
@@ -85,7 +93,7 @@ const General = ({
             placeholder="Description"
           />
         </Form.Item>
-        <Form.Item>
+        {/* <Form.Item>
           <Button
             type="primary"
             htmlType="submit"
@@ -93,7 +101,29 @@ const General = ({
           >
             Save
           </Button>
-        </Form.Item>
+        </Form.Item> */}
+        <div style={{ display: "flex", justifyContent: "end" }}>
+          <Space>
+            <Button
+              type="primary"
+              className={ingestionCss.defineSave}
+              onClick={() => {
+                savePipline("save");
+              }}
+            >
+              Save & exit
+            </Button>
+            <Button
+              type="primary"
+              className={ingestionCss.defineSaveAndBuild}
+              onClick={() => {
+                savePipline("build");
+              }}
+            >
+              Save & select filter
+            </Button>
+          </Space>
+        </div>
       </Form>
     </>
   );

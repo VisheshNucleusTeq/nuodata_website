@@ -29,6 +29,7 @@ import JobList from "./configView/jobList";
 
 const CreatePipeline = ({ ingestionCss }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { query } = useRouter();
   const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
   const workspace = useSelector((state) => state?.workspace?.workspace);
@@ -144,17 +145,25 @@ const CreatePipeline = ({ ingestionCss }) => {
       <div className={ingestionCss.main} style={{ borderRadius: "5px" }}>
         <Row>
           <Col span={12} className={ingestionCss.pipelineTitle}>
-            {pipelineDetails.pipeline_name && (
-              <span>{pipelineDetails.pipeline_name}</span>
-            )}
             {workspaceData && (
-              <span style={{ color: "#0c3246" }}>
-                (
-                {
-                  workspaceData.filter((e) => e.workspace_id === workspace)[0]
-                    ?.workspace_name
-                }
-                )
+              <span>
+                Workspace:&nbsp;
+                <a
+                  onClick={() => {
+                    router.push("/ingestion");
+                  }}
+                >
+                  {
+                    workspaceData.filter((e) => e.workspace_id === workspace)[0]
+                      ?.workspace_name
+                  }
+                  ,
+                </a>
+              </span>
+            )}
+            {pipelineDetails.pipeline_name && (
+              <span>
+                Pipeline:&nbsp;<a>{pipelineDetails.pipeline_name}</a>
               </span>
             )}
           </Col>

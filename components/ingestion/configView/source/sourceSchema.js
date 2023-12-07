@@ -9,6 +9,7 @@ import {
   Input,
   Radio,
   Button,
+  message,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,6 +23,7 @@ import {
   CREATENODE,
 } from "../../../../network/apiConstants";
 import { loderShowHideAction } from "../../../../Redux/action";
+import { useRouter } from "next/router";
 
 const SourceSchema = ({
   connectionId,
@@ -37,6 +39,7 @@ const SourceSchema = ({
   const [form] = Form.useForm();
   const [schemas, setSchemas] = useState([]);
   const dispatch = useDispatch();
+  const route = useRouter();
 
   const getSchema = async () => {
     dispatch(loderShowHideAction(true));
@@ -48,86 +51,100 @@ const SourceSchema = ({
     dispatch(loderShowHideAction(false));
   };
 
-  const getTableData = async (data) => {
-    dispatch(loderShowHideAction(true));
-    const authData = JSON.parse(localStorage.getItem("authData"));
-    const tableData = await fetch_retry_post(
-      `${GETCONNECTIONDETAIL}schema/${data?.table}?org_id=${authData?.orgId}&workspace_id=${workspace}&connection_id=${connectionId}&type=${connection?.type}&rows=${data?.rows}&node_id=${nodeId}`
-    );
-    setActiveKey("fields_tab");
-    setTableData(tableData?.data);
+  const getTableData = async (type) => {
+    try {
+      const data = await form.validateFields();
+      dispatch(loderShowHideAction(true));
+      const authData = JSON.parse(localStorage.getItem("authData"));
+      const tableData = await fetch_retry_post(
+        `${GETCONNECTIONDETAIL}schema/${data?.table}?org_id=${authData?.orgId}&workspace_id=${workspace}&connection_id=${connectionId}&type=${connection?.type}&rows=${data?.rows}&node_id=${nodeId}`
+      );
+      setTableData(tableData?.data);
 
-    let transformation_properties = sourceData?.transformation_properties;
+      let transformation_properties = sourceData?.transformation_properties;
 
-    const sourceIndex = transformation_properties.findIndex(
-      (item) => item.property_name === "source_table"
-    );
-    if (sourceIndex < 0) {
-      transformation_properties.push({
-        property_name: "source_table",
-        property_value: data?.table,
+      const sourceIndex = transformation_properties.findIndex(
+        (item) => item.property_name === "source_table"
+      );
+      if (sourceIndex < 0) {
+        transformation_properties.push({
+          property_name: "source_table",
+          property_value: data?.table,
+        });
+      } else {
+        transformation_properties[sourceIndex] = {
+          property_name: "source_table",
+          property_value: data?.table,
+        };
+      }
+
+      const displayRowsIndex = transformation_properties.findIndex(
+        (item) => item.property_name === "display_rows"
+      );
+      if (displayRowsIndex < 0) {
+        transformation_properties.push({
+          property_name: "display_rows",
+          property_value: data?.rows + "",
+        });
+      } else {
+        transformation_properties[displayRowsIndex] = {
+          property_name: "display_rows",
+          property_value: data?.rows + "",
+        };
+      }
+
+      const connectionIndex = transformation_properties.findIndex(
+        (item) => item.property_name === "connection_id"
+      );
+      if (connectionIndex < 0) {
+        transformation_properties.push({
+          property_name: "connection_id",
+          property_value: connectionId,
+        });
+      } else {
+        transformation_properties[connectionIndex] = {
+          property_name: "connection_id",
+          property_value: connectionId,
+        };
+      }
+
+      const connectionTypeIndex = transformation_properties.findIndex(
+        (item) => item.property_name === "connection_type"
+      );
+      if (connectionTypeIndex < 0) {
+        transformation_properties.push({
+          property_name: "connection_type",
+          property_value: connection?.type,
+        });
+      } else {
+        transformation_properties[connectionTypeIndex] = {
+          property_name: "connection_type",
+          property_value: connection?.type,
+        };
+      }
+
+      const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+        ...sourceData,
+        transformation_properties: transformation_properties,
       });
-    } else {
-      transformation_properties[sourceIndex] = {
-        property_name: "source_table",
-        property_value: data?.table,
-      };
-    }
-
-    const displayRowsIndex = transformation_properties.findIndex(
-      (item) => item.property_name === "display_rows"
-    );
-    if (displayRowsIndex < 0) {
-      transformation_properties.push({
-        property_name: "display_rows",
-        property_value: data?.rows + "",
+      setSourceData({
+        ...sourceData,
+        transformation_properties: transformation_properties,
       });
-    } else {
-      transformation_properties[displayRowsIndex] = {
-        property_name: "display_rows",
-        property_value: data?.rows + "",
-      };
+      if (result?.success) {
+        message.success(result?.data?.message);
+        if (type == "save") {
+          route.push("/ingestion");
+        } else {
+          setActiveKey("fields_tab");
+        }
+      } else {
+        message.error("Something went wrong");
+      }
+      dispatch(loderShowHideAction(false));
+    } catch (error) {
+      console.log(error);
     }
-
-    const connectionIndex = transformation_properties.findIndex(
-      (item) => item.property_name === "connection_id"
-    );
-    if (connectionIndex < 0) {
-      transformation_properties.push({
-        property_name: "connection_id",
-        property_value: connectionId,
-      });
-    } else {
-      transformation_properties[connectionIndex] = {
-        property_name: "connection_id",
-        property_value: connectionId,
-      };
-    }
-
-    const connectionTypeIndex = transformation_properties.findIndex(
-      (item) => item.property_name === "connection_type"
-    );
-    if (connectionTypeIndex < 0) {
-      transformation_properties.push({
-        property_name: "connection_type",
-        property_value: connection?.type,
-      });
-    } else {
-      transformation_properties[connectionTypeIndex] = {
-        property_name: "connection_type",
-        property_value: connection?.type,
-      };
-    }
-
-    await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
-      ...sourceData,
-      transformation_properties: transformation_properties,
-    });
-    setSourceData({
-      ...sourceData,
-      transformation_properties: transformation_properties,
-    });
-    dispatch(loderShowHideAction(false));
   };
 
   const setOldValue = () => {
@@ -152,10 +169,8 @@ const SourceSchema = ({
             ?.property_value
         )
       );
-    }else{
-      form.setFieldValue(
-        "rows", 10
-      );
+    } else {
+      form.setFieldValue("rows", 10);
     }
   };
 
@@ -176,7 +191,7 @@ const SourceSchema = ({
       <Col span={24} style={{ marginTop: "5vh" }}>
         <Form
           form={form}
-          layout="vertical" //horizontal , vertical
+          layout="vertical"
           autoComplete="on"
           onFinish={(e) => {
             getTableData(e);
@@ -234,14 +249,25 @@ const SourceSchema = ({
                   },
                 ]}
               >
-                <Radio.Group name={"rows"} defaultValue={10}>
+                <Input
+                  type="number"
+                  className="input"
+                  name={"rows"}
+                  defaultValue={10}
+                  onChange={(num) => {
+                    if (num.target.value > 100) {
+                      form.setFieldValue("rows", 100);
+                    }
+                  }}
+                />
+                {/* <Radio.Group name={"rows"} defaultValue={10}>
                   <Radio value={10}>10</Radio>
                   <Radio value={20}>20</Radio>
-                </Radio.Group>
+                </Radio.Group> */}
               </Form.Item>
             </Col>
 
-            <Col span={24}>
+            {/* <Col span={24}>
               <Button
                 shape="round"
                 htmlType="submit"
@@ -254,8 +280,31 @@ const SourceSchema = ({
               >
                 Save
               </Button>
-            </Col>
+            </Col> */}
           </Row>
+
+          <div style={{ display: "flex", justifyContent: "end" }}>
+            <Space>
+              <Button
+                type="primary"
+                className={ingestionCss.defineSave}
+                onClick={() => {
+                  getTableData("save");
+                }}
+              >
+                Save & exit
+              </Button>
+              <Button
+                type="primary"
+                className={ingestionCss.defineSaveAndBuild}
+                onClick={() => {
+                  getTableData("build");
+                }}
+              >
+                Save & update fields
+              </Button>
+            </Space>
+          </div>
         </Form>
       </Col>
     </Row>
