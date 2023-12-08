@@ -11,6 +11,7 @@ import {
   CREATENODE,
   INGESTIONTEMPLATES,
   GETCONNECTIONDETAIL,
+  NODEMETADATA
 } from "../../../../network/apiConstants";
 import {
   fetch_retry_get,
@@ -62,16 +63,22 @@ const Target = ({ ingestionCss, nodeId }) => {
   }, []);
 
   const getSchema = async (table, connectionId, type) => {
-    const authData = JSON.parse(localStorage.getItem("authData"));
-    const tableData = await fetch_retry_post(
-      `${GETCONNECTIONDETAIL}schema/${table}?org_id=${
-        authData?.orgId
-      }&workspace_id=${localStorage.getItem(
-        "workspace"
-      )}&connection_id=${connectionId}&type=${type}&rows=10&node_id=${nodeId}`
-    );
-    // setActiveKey("fields_tab");
-    setTableData(tableData?.data);
+    const oldRecord = await fetch_retry_get(`${NODEMETADATA}${nodeId}`);
+    if (oldRecord?.data?.sample_data && oldRecord?.data?.sample_data.length) {
+      // setActiveKey("fields_tab");
+      setTableData(oldRecord?.data);
+    } else {
+      const authData = JSON.parse(localStorage.getItem("authData"));
+      const tableData = await fetch_retry_post(
+        `${GETCONNECTIONDETAIL}schema/${table}?org_id=${
+          authData?.orgId
+        }&workspace_id=${localStorage.getItem(
+          "workspace"
+        )}&connection_id=${connectionId}&type=${type}&rows=10&node_id=${nodeId}`
+      );
+      // setActiveKey("fields_tab");
+      setTableData(tableData?.data);
+    }
   };
 
   useEffect(() => {
