@@ -113,7 +113,7 @@ function EdgesFlow({
   );
 
   const createEdge = async (connection) => {
-    await fetch_retry_post(`${CREATEEDGE}`, {
+    const edgeData = await fetch_retry_post(`${CREATEEDGE}`, {
       pipeline_id: pipeline,
       edge: {
         transformation_type: "edge",
@@ -121,6 +121,28 @@ function EdgesFlow({
         target_node_id: connection?.target,
       },
     });
+    // setTimeout(() => {
+    //   const edgesArr = [];
+
+    // edges.map((e) => {
+    //   if (e.source_node_id) {
+    //     edgesArr.push(e);
+    //   } else {
+    //     edgesArr.push({
+    //       ...e,
+    //       id: edgeData?.data?.data?.id,
+    //       // source: connection?.source,
+    //       // source_node_id: connection?.source,
+    //       // target: connection?.source,
+    //       // target_node_id: connection?.source,
+    //       // transformation_type: "edge",
+    //     });
+    //   }
+    // });
+    // setEdges(edgesArr);
+    // }, 2000);
+    // console.log(edges)
+    // console.log(edgeData?.data?.data?.id)
   };
 
   useEffect(() => {
@@ -162,7 +184,7 @@ function EdgesFlow({
         title: "Do you want to delete this edge?",
         content: "Are you sure you want to delete?",
         async onOk() {
-          await fetch_retry_delete(`${DELETEEDGE}${pipeline}`, {
+          await fetch_retry_delete(`${DELETEEDGE}${pipeline}/edges`, {
             data: {
               edge_ids: [deleteInfo?.id],
             },

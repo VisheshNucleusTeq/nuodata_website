@@ -70,7 +70,7 @@ const Target = ({ ingestionCss, nodeId }) => {
     } else {
       const authData = JSON.parse(localStorage.getItem("authData"));
       const tableData = await fetch_retry_post(
-        `${GETCONNECTIONDETAIL}schema/${table}?org_id=${
+        `${GETCONNECTIONDETAIL}datasets/${table}?org_id=${
           authData?.orgId
         }&workspace_id=${localStorage.getItem(
           "workspace"

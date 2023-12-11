@@ -45,7 +45,7 @@ const SourceSchema = ({
     dispatch(loderShowHideAction(true));
     const authData = JSON.parse(localStorage.getItem("authData"));
     const schemaData = await fetch_retry_get(
-      `${GETCONNECTIONDETAIL}${connectionId}/schemas?org_id=${authData?.orgId}&workspace_id=${workspace}&type=${connection?.type}&node_id=${nodeId}`
+      `${GETCONNECTIONDETAIL}${connectionId}/datasets?org_id=${authData?.orgId}&workspace_id=${workspace}&type=${connection?.type}&node_id=${nodeId}`
     );
     setSchemas(schemaData?.data?.schemas);
     dispatch(loderShowHideAction(false));
@@ -57,7 +57,7 @@ const SourceSchema = ({
       dispatch(loderShowHideAction(true));
       const authData = JSON.parse(localStorage.getItem("authData"));
       const tableData = await fetch_retry_post(
-        `${GETCONNECTIONDETAIL}schema/${data?.table}?org_id=${authData?.orgId}&workspace_id=${workspace}&connection_id=${connectionId}&type=${connection?.type}&rows=${data?.rows}&node_id=${nodeId}`
+        `${GETCONNECTIONDETAIL}data/${data?.table}?org_id=${authData?.orgId}&workspace_id=${workspace}&connection_id=${connectionId}&type=${connection?.type}&rows=${data?.rows}&node_id=${nodeId}`
       );
       setTableData(tableData?.data);
 

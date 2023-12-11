@@ -30,12 +30,14 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
   const fetchNodeMetadata = async (nodeId) => {
     const nodeMetaData = await fetch_retry_get(`${NODEMETADATA}${nodeId}`);
     setFieldsData(
-      nodeMetaData?.data?.fields.map((e) => {
-        return {
-          value: e?.name,
-          label: e?.name,
-        };
-      })
+      nodeMetaData?.data?.fields
+        ? nodeMetaData?.data?.fields?.map((e) => {
+            return {
+              value: e?.name,
+              label: e?.name,
+            };
+          })
+        : []
     );
   };
 
@@ -120,14 +122,16 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
     const filterTypeIndex = sourceData?.transformation_properties.filter(
       (item) => item.property_name === "filter_type"
     );
-    if(filterTypeIndex && filterTypeIndex.length){
-      if(filterTypeIndex[0]?.property_value == "SIMPLE"){
-        const whereConditionIndex = sourceData?.transformation_properties.filter(
-          (item) => item.property_name === "where_condition"
-        );
-        if(whereConditionIndex && whereConditionIndex.length){
-          const whereCondition  = whereConditionIndex[0]?.property_value.split(" AND ");
-          const whereConditionArr = []
+    if (filterTypeIndex && filterTypeIndex.length) {
+      if (filterTypeIndex[0]?.property_value == "SIMPLE") {
+        const whereConditionIndex =
+          sourceData?.transformation_properties.filter(
+            (item) => item.property_name === "where_condition"
+          );
+        if (whereConditionIndex && whereConditionIndex.length) {
+          const whereCondition =
+            whereConditionIndex[0]?.property_value.split(" AND ");
+          const whereConditionArr = [];
           whereCondition.map((singleConditoin) => {
             const filterDataArr = singleConditoin.split(" ");
             whereConditionArr.push({
@@ -135,22 +139,22 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
               type: filterDataArr[1],
               value: filterDataArr[2],
               key: (Math.random() + 1).toString(36).substring(7),
-            })
-          })
-          console.log(whereConditionArr)
-          setFilterData(whereConditionArr)
+            });
+          });
+          console.log(whereConditionArr);
+          setFilterData(whereConditionArr);
         }
-      }else{
-        const whereConditionIndex = sourceData?.transformation_properties.filter(
-          (item) => item.property_name === "where_condition"
-        );
-        console.log(whereConditionIndex)
-        if(whereConditionIndex && whereConditionIndex.length){
-          setFilterValue(whereConditionIndex[0]?.property_value)
+      } else {
+        const whereConditionIndex =
+          sourceData?.transformation_properties.filter(
+            (item) => item.property_name === "where_condition"
+          );
+        console.log(whereConditionIndex);
+        if (whereConditionIndex && whereConditionIndex.length) {
+          setFilterValue(whereConditionIndex[0]?.property_value);
         }
-
       }
-      setFilterType(filterTypeIndex[0]?.property_value)
+      setFilterType(filterTypeIndex[0]?.property_value);
     }
   }, [sourceData]);
 
@@ -319,7 +323,7 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
         {filterType == "ADVANCE" && (
           <Col span={22} style={{ marginBottom: "1vh" }} key={"sqlCondition"}>
             <Input.TextArea
-            value={filterValue}
+              value={filterValue}
               rows={4}
               placeholder="Filter Condition"
               onChange={(e) => {
@@ -335,28 +339,28 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
         <br />
         <br />
         <Col span={22} style={{ height: "8%" }}>
-        <div style={{ display: "flex", justifyContent: "end" }}>
-          <Space>
-            <Button
-              type="primary"
-              className={ingestionCss.defineSave}
-              onClick={() => {
-                updateFilterData("save");
-              }}
-            >
-              Save & exit
-            </Button>
-            <Button
-              type="primary"
-              className={ingestionCss.defineSaveAndBuild}
-              onClick={() => {
-                updateFilterData("build");
-              }}
-            >
-              Save & select filter
-            </Button>
-          </Space>
-        </div>
+          <div style={{ display: "flex", justifyContent: "end" }}>
+            <Space>
+              <Button
+                type="primary"
+                className={ingestionCss.defineSave}
+                onClick={() => {
+                  updateFilterData("save");
+                }}
+              >
+                Save & exit
+              </Button>
+              <Button
+                type="primary"
+                className={ingestionCss.defineSaveAndBuild}
+                onClick={() => {
+                  updateFilterData("build");
+                }}
+              >
+                Save & select filter
+              </Button>
+            </Space>
+          </div>
         </Col>
         {/* <Col span={22} style={{ height: "8%" }}>
           <Button
