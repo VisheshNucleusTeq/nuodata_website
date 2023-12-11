@@ -136,6 +136,7 @@ const Build = ({ ingestionCss }) => {
               }}
               setSelectedNode={setSelectedNode}
               pipeline={query?.pipeline ? query?.pipeline : pipelineData}
+              getPiplineGraph={getPiplineGraph}
             />
           </Col>
         </Row>

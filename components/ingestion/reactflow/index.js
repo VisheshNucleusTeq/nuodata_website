@@ -86,6 +86,7 @@ function EdgesFlow({
   setNodePosition,
   pipeline,
   setSelectedNode,
+  getPiplineGraph
 }) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes] = useState([]);
@@ -121,25 +122,27 @@ function EdgesFlow({
         target_node_id: connection?.target,
       },
     });
+    getPiplineGraph(pipeline)
     // setTimeout(() => {
-    //   const edgesArr = [];
+    //   const edgesArr = [
+    //     [
+    //       ...edges,
+    //       {
+    //         // ...e/
+    //         id: edgeData?.data?.data?.id,
+    //         source: connection?.source,
+    //         source_node_id: connection?.source,
+    //         target: connection?.source,
+    //         target_node_id: connection?.source,
+    //         transformation_type: "edge",
+    //       },
+    //     ],
+    //   ];
 
-    // edges.map((e) => {
-    //   if (e.source_node_id) {
-    //     edgesArr.push(e);
-    //   } else {
-    //     edgesArr.push({
-    //       ...e,
-    //       id: edgeData?.data?.data?.id,
-    //       // source: connection?.source,
-    //       // source_node_id: connection?.source,
-    //       // target: connection?.source,
-    //       // target_node_id: connection?.source,
-    //       // transformation_type: "edge",
-    //     });
-    //   }
-    // });
-    // setEdges(edgesArr);
+    //   const { nodes: layoutedNodes, edges: layoutedEdges } =
+    //     getLayoutedElements(nodeData, edgesArr);
+    //   setNodes(layoutedNodes);
+    //   setEdges(layoutedEdges);
     // }, 2000);
     // console.log(edges)
     // console.log(edgeData?.data?.data?.id)
@@ -333,6 +336,7 @@ export default ({
   pipeline,
   edgeData,
   setSelectedNode,
+  getPiplineGraph
 }) => (
   <ReactFlowProvider>
     <EdgesFlow
@@ -342,6 +346,7 @@ export default ({
       setNodePosition={setNodePosition}
       pipeline={pipeline}
       setSelectedNode={setSelectedNode}
+      getPiplineGraph={getPiplineGraph}
     />
   </ReactFlowProvider>
 );
