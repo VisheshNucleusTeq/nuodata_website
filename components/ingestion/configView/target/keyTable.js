@@ -30,6 +30,11 @@ const KeyTable = ({
       render: (text) => <a>{text}</a>,
     },
     {
+      title : "From Transformation Name",
+      dataIndex : "from_transformation_name",
+      render: (text) => { return text ? text : "NA"}
+    },
+    {
       title: "Type",
       dataIndex: "type",
     },

@@ -62,7 +62,7 @@ const Source = ({ ingestionCss, nodeId }) => {
   }, []);
 
   const getSchema = async (table, connectionId, type) => {
-    const oldRecord = await fetch_retry_get(`${NODEMETADATA}${nodeId}`);
+    const oldRecord = await fetch_retry_get(`${NODEMETADATA}${nodeId}/metadata`);
     if (oldRecord?.data?.sample_data && oldRecord?.data?.sample_data.length) {
       setActiveKey("fields_tab");
       setTableData(oldRecord?.data);

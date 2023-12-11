@@ -39,6 +39,7 @@ function CustomNodes({ data, isConnectable, type, selected }) {
         </Col>
         <Col span={24} className={ingestionCss.pipelineStepTabTextEdge}>
           <span>{data.label}</span>
+          {/* <small>{JSON.stringify(data)}</small> */}
         </Col>
       </Row>
       {/* {data.label} */}

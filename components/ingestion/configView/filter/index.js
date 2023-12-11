@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Tabs, Button } from "antd";
 import { fetch_retry_get } from "../../../../network/api-manager";
-import { CREATENODE } from "../../../../network/apiConstants";
+import { CREATENODE, NODEMETADATA } from "../../../../network/apiConstants";
 import General from "./general";
 import FilterCondition from "./filterCondition";
+import DataTable from "./dataTable";
+import KeyTable from "./keyTable";
 const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
   const [activeKey, setActiveKey] = useState("general_tab");
   const [tableData, setTableData] = useState({});
@@ -15,6 +17,19 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
   });
 
   const getNodeRecord = async (nodeId) => {
+    const oldRecordSchema = await fetch_retry_get(
+      `${NODEMETADATA}${nodeId}/metadata`
+    ); //fields
+    console.log(oldRecordSchema?.data);
+    if (
+      (oldRecordSchema?.data?.sample_data &&
+        oldRecordSchema?.data?.sample_data.length) ||
+      (oldRecordSchema?.data?.fields && oldRecordSchema?.data?.fields.length)
+    ) {
+      setActiveKey("fields_tab");
+      setTableData(oldRecordSchema?.data);
+    }
+
     const oldRecord = await fetch_retry_get(`${CREATENODE}/${nodeId}`);
     setSourceData({
       transformation_name: oldRecord?.data?.transformation_name
@@ -85,6 +100,26 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
                   nodeId={nodeId}
                 />
               </Tabs.TabPane>
+              {JSON.stringify(tableData)}
+
+              {/* {["mysql", "mongodb", "snowflake", "postgres"].includes(
+                  connection.type
+                ) && ( */}
+              <Tabs.TabPane
+                tab="Fields"
+                key="fields_tab"
+                disabled={!tableData?.fields}
+              >
+                <KeyTable
+                  key={Date.now()}
+                  ingestionCss={ingestionCss}
+                  metadata={tableData?.fields}
+                  nodeId={nodeId}
+                  sourceData={sourceData}
+                  setSourceData={setSourceData}
+                />
+              </Tabs.TabPane>
+              {/* )} */}
             </Tabs>
           </Tabs.TabPane>
           {/* <Tabs.TabPane tab="Preview" key="2" disabled={!tableData?.data}>

@@ -28,7 +28,7 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
   const [filterValue, setFilterValue] = useState("");
 
   const fetchNodeMetadata = async (nodeId) => {
-    const nodeMetaData = await fetch_retry_get(`${NODEMETADATA}${nodeId}`);
+    const nodeMetaData = await fetch_retry_get(`${NODEMETADATA}${nodeId}/metadata`);
     setFieldsData(
       nodeMetaData?.data?.fields
         ? nodeMetaData?.data?.fields?.map((e) => {
