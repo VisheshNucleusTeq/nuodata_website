@@ -232,7 +232,7 @@ const SourceSchema = ({
           }}
           value={targetType}
         >
-          <Radio value={"exist"}>Select existing data</Radio>
+          <Radio value={"exist"}>Select existing</Radio>
           <Radio value={"new"}>Create new dataset</Radio>
         </Radio.Group>
       </Col>
@@ -307,7 +307,7 @@ const SourceSchema = ({
               )}
             </Col>
             <Col span={2} />
-            <Col span={10}>
+            <Col span={10} style={{display : "none"}}>
               <Form.Item
                 label={"Display Rows"}
                 labelAlign={"left"}

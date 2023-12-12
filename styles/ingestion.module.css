@@ -188,8 +188,8 @@
 }
 
 .pipelineStepTabEdge {
-  width: 7vw;
-  height: 3vw;
+  width: 8vw;
+  height: 4vw;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   justify-content: center;
@@ -206,13 +206,25 @@
   /* border: 1px solid green; */
 }
 
-.pipelineStepTabTextEdge {
-  height: 1.5vw;
+.pipelineStepTabTextEdge1 {
+  height: 1.25vw;
   display: flex;
   justify-content: center;
   align-items: center;
 
   /* border: 1px solid green; */
+}
+
+.pipelineStepTabTextEdge2 {
+  height: 1.25vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pipelineStepTabTextEdge2 span{
+  /* font-size: small; */
+  font-size: .6vw;
 }
 
 .addSourceImage img {

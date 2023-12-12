@@ -25,6 +25,7 @@ const Build = ({ ingestionCss }) => {
   const [visible, setVisible] = useState(false);
   const [selectedNode, setSelectedNode] = useState({});
   const [nodePosition, setNodePosition] = useState({});
+  const [updateble, setUpdateble] = useState(true);
 
   const getPiplineGraph = async (id) => {
     clearTimeout(timer);
@@ -65,7 +66,17 @@ const Build = ({ ingestionCss }) => {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [selectedNode?.id]);
+
+    const dataHave = edgeData.find((e) => {
+     return  e?.source_node_id == selectedNode?.id || e?.target_node_id == selectedNode?.id 
+    });
+
+    if(dataHave){
+      setUpdateble(false)
+    }else{
+      setUpdateble(true)
+    }
+  }, [selectedNode?.id, nodeData, edgeData]);
 
   return (
     <>
@@ -143,7 +154,7 @@ const Build = ({ ingestionCss }) => {
         <Divider />
         {/* {JSON.stringify()} */}
         {selectedNode?.data == "Source" && (
-          <Source ingestionCss={ingestionCss} nodeId={selectedNode?.id} key={`source${selectedNode?.id}`} />
+          <Source ingestionCss={ingestionCss} nodeId={selectedNode?.id} key={`source${selectedNode?.id}`} updateble={updateble} />
         )}
         {selectedNode?.data == "Filter" && (
           <Filter ingestionCss={ingestionCss} nodeId={selectedNode?.id} nodeData={nodeData} edgeData={edgeData} key={`filter${selectedNode?.id}`} />

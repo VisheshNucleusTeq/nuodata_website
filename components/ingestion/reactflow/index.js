@@ -10,6 +10,7 @@ import ReactFlow, {
   Background,
   ReactFlowProvider,
   MarkerType,
+  useReactFlow
 } from "reactflow";
 import { Button, Col, Row, Modal, Menu, Tabs, Space } from "antd";
 const { confirm } = Modal;
@@ -23,8 +24,8 @@ import {
 import dagre from "dagre";
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
-const nodeWidth = 100;
-const nodeHeight = 50;
+const nodeWidth = 150;
+const nodeHeight = 40;
 
 import CustomNodes from "./customNodes";
 import CustomEdge from "./customEdge";
@@ -88,6 +89,8 @@ function EdgesFlow({
   setSelectedNode,
   getPiplineGraph
 }) {
+  const { setViewport, zoomIn, zoomOut } = useReactFlow();
+
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
@@ -155,6 +158,12 @@ function EdgesFlow({
     );
     setNodes(layoutedNodes);
     setEdges(layoutedEdges);
+
+    // setTimeout(() => {
+    //   for (let index = 0; index < 50; index++) {
+    //     zoomOut({ duration: 1 })
+    //   }
+    // }, 100);
   }, [nodeData]);
 
   const onConnectStart = (e, p) => {
@@ -167,7 +176,6 @@ function EdgesFlow({
         title: "Do you want to delete this node?",
         content: "Are you sure you want to delete?",
         async onOk() {
-          // alert(deleteInfo?.id)
           await fetch_retry_delete(`${CREATENODE}/${deleteInfo?.id}`);
           setEdges(
             edges.filter(
@@ -177,6 +185,7 @@ function EdgesFlow({
           );
           setNodes(nodes.filter((node) => node?.id !== deleteInfo?.id));
           setNodeData(nodeData.filter((e) => e?.id !== deleteInfo?.id));
+          getPiplineGraph(pipeline)
         },
         onCancel() {},
         okText: "Delete",
@@ -193,6 +202,7 @@ function EdgesFlow({
             },
           });
           setEdges(edges.filter((edge) => edge.id !== deleteInfo?.id));
+          getPiplineGraph(pipeline)
         },
         onCancel() {},
         okText: "Delete",
@@ -218,6 +228,7 @@ function EdgesFlow({
         >
           <ReactFlow
             fitView
+            // zoomOut={.01}
             onConnectStart={onConnectStart}
             onInit={setReactFlowInstance}
             nodes={[...nodes]}

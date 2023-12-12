@@ -237,7 +237,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                     />
                   )}
                 </Tabs.TabPane>
-                {/* {["mysql", "mongodb", "snowflake", "postgres"].includes(
+                {["mysql", "mongodb", "snowflake", "postgres"].includes(
                   connection.type
                 ) && (
                   <Tabs.TabPane
@@ -254,7 +254,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                       setSourceData={setSourceData}
                     />
                   </Tabs.TabPane>
-                )} */}
+                )}
               </Tabs>
             </Tabs.TabPane>
             {["mysql", "mongodb", "snowflake", "postgres"].includes(

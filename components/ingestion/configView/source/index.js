@@ -17,7 +17,7 @@ import {
   fetch_retry_get,
   fetch_retry_post,
 } from "../../../../network/api-manager";
-const Source = ({ ingestionCss, nodeId }) => {
+const Source = ({ ingestionCss, nodeId, updateble }) => {
   const [connection, setConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
   const [connectionId, setConnectionId] = useState(null);
@@ -64,7 +64,7 @@ const Source = ({ ingestionCss, nodeId }) => {
   const getSchema = async (table, connectionId, type) => {
     const oldRecord = await fetch_retry_get(`${NODEMETADATA}${nodeId}/metadata`);
     if (oldRecord?.data?.sample_data && oldRecord?.data?.sample_data.length) {
-      setActiveKey("fields_tab");
+      updateble ? setActiveKey("fields_tab") : null;
       setTableData(oldRecord?.data);
     } else {
       const authData = JSON.parse(localStorage.getItem("authData"));
@@ -75,7 +75,7 @@ const Source = ({ ingestionCss, nodeId }) => {
           "workspace"
         )}&connection_id=${connectionId}&type=${type}&rows=10&node_id=${nodeId}`
       );
-      setActiveKey("fields_tab");
+      updateble ? setActiveKey("fields_tab") : null;
       setTableData(tableData?.data);
     }
   };
@@ -132,7 +132,8 @@ const Source = ({ ingestionCss, nodeId }) => {
     <>
       <Row>
         <Col span={24}>
-          <Tabs className="underline" defaultActiveKey="1">
+          <center style={{color : "#e74860"}}>{!updateble && "Update can't be performed if nodes are connected."}</center>
+          <Tabs className={`${'underline'} ${!updateble ? 'buttonHide' : ""}`} defaultActiveKey="1">
             <Tabs.TabPane tab="Properties" key="1">
               <Tabs
                 className="tabActive"

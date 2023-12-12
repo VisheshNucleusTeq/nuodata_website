@@ -19,8 +19,7 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
   const getNodeRecord = async (nodeId) => {
     const oldRecordSchema = await fetch_retry_get(
       `${NODEMETADATA}${nodeId}/metadata`
-    ); //fields
-    console.log(oldRecordSchema?.data);
+    ); 
     if (
       (oldRecordSchema?.data?.sample_data &&
         oldRecordSchema?.data?.sample_data.length) ||
@@ -122,12 +121,12 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
               {/* )} */}
             </Tabs>
           </Tabs.TabPane>
-          {/* <Tabs.TabPane tab="Preview" key="2" disabled={!tableData?.data}>
+          <Tabs.TabPane tab="Preview" key="2" disabled={!tableData?.data}>
             <DataTable
                 ingestionCss={ingestionCss}
                 tableData={tableData?.data}
               />
-          </Tabs.TabPane> */}
+          </Tabs.TabPane>
         </Tabs>
       </Col>
     </Row>
