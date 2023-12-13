@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from "react";
 import {
-  Col,
-  Row,
-  Input,
-  Button,
   Card,
-  Tooltip,
+  Col,
   Image,
-  Modal,
-  message,
+  Input,
+  Row,
+  Tooltip
 } from "antd";
-import { INGESTIONTEMPLATES } from "../../../../network/apiConstants";
-import { fetch_retry_get } from "../../../../network/api-manager";
+import React, { useEffect, useState } from "react";
 
 const SelectSource = ({ ingestionCss, setConnection, accountListArr }) => {
   const [accountList, setAccountList] = useState([]);

@@ -1,51 +1,43 @@
 import { useRouter } from "next/router";
 
 import {
-  FileDoneOutlined,
-  FormOutlined,
-  UnorderedListOutlined,
-  LinkOutlined,
-  FilterOutlined,
-  SettingOutlined,
   EditOutlined,
+  FormOutlined,
+  LinkOutlined,
+  UnorderedListOutlined
 } from "@ant-design/icons";
 import {
-  Col,
-  Image,
-  Row,
-  Space,
   Button,
-  Form,
-  Input,
+  Col,
   Collapse,
-  Checkbox,
+  Form,
+  Image,
+  Input,
+  Row,
   Select,
-  message,
+  Space,
   Tooltip,
+  message
 } from "antd";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  INGESTIONTCONNECTIONLIST,
-  GETCONNECTION,
-} from "../../../../network/apiConstants";
 import {
   fetch_retry_get,
   fetch_retry_post,
   fetch_retry_put,
 } from "../../../../network/api-manager";
-
-import { encryptAES_CBC, decryptAES_CBC } from "../../../helper/cryptojs";
 import {
-  TESTCONNECTION,
-  ADDCONNECTION,
-  GETCONNECTIONDETAILS,
-  GETCONNECTIONDETAIL,
+  GETCONNECTION
 } from "../../../../network/apiConstants";
+
 import { loderShowHideAction } from "../../../../Redux/action";
+import {
+  ADDCONNECTION,
+  GETCONNECTIONDETAIL,
+  TESTCONNECTION
+} from "../../../../network/apiConstants";
+import { decryptAES_CBC, encryptAES_CBC } from "../../../helper/cryptojs";
 
 const AddSource = ({
   ingestionCss,
@@ -54,6 +46,7 @@ const AddSource = ({
   setConnectionId,
   setActiveKey,
   setConnection,
+  updateble
 }) => {
   const workspace = useSelector((state) => state?.workspace?.workspace);
   const route = useRouter();
@@ -234,12 +227,7 @@ const AddSource = ({
     testConnection(dataValue);
   };
 
-  useEffect(() => {
-    connection && connection.connection_detail
-      ? setField(connection.connection_detail)
-      : null;
-    getExistingConnections();
-  }, [connection]);
+  
 
   const setExistingRecord = async () => {
     const result = await fetch_retry_get(
@@ -267,16 +255,22 @@ const AddSource = ({
     if (connectionId) {
       setConnectionId(connectionId);
       setSelectedRecordId(connectionId);
-      // setFormType("EXISTING");
       form.setFieldsValue({
         existingConnections: connectionId,
       });
     }
   }, [connectionId]);
 
+  useEffect(() => {
+    connection && connection.connection_detail
+      ? setField(connection.connection_detail)
+      : null;
+    getExistingConnections();
+  }, [connection]);
+
   return (
     <>
-      {/* setConnection */}
+      {updateble}
       <Row>
         <Col span={8} className={ingestionCss.addSourceImage}>
           <Space size={20}>
@@ -370,6 +364,7 @@ const AddSource = ({
                     initialValues={{}}
                   >
                     <div className={ingestionCss.formHeight}>
+                      
                       <Form.Item
                         label={"Existing Connections"}
                         labelAlign={"left"}
@@ -436,7 +431,7 @@ const AddSource = ({
                           Test connection
                         </Button>
 
-                        {connectionId && isTested && (
+                        {(connectionId === selectedRecordId) && isTested && (
                           <Button
                             type="primary"
                             shape="round"

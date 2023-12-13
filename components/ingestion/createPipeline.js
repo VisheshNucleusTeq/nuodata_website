@@ -1,30 +1,28 @@
-import React, { useEffect } from "react";
-import {
-  Row,
-  Col,
-  Space,
-  Card,
-  Tooltip,
-  Button,
-  Divider,
-  message,
-  Modal,
-} from "antd";
 import { CheckCircleFilled } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-
-import Define from "./pipelinePages/define";
-import Build from "./pipelinePages/build";
-
 import {
-  GETWORKSPACE,
-  CREATEPIPELINE,
+  Button,
+  Col,
+  Divider,
+  Modal,
+  Row,
+  Space,
+  message
+} from "antd";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import Build from "./pipelinePages/build";
+import Define from "./pipelinePages/define";
+
+import { loderShowHideAction, setWorkspaceAction } from "../../Redux/action";
+import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
+import {
   CONVERTPIPELINE,
+  CREATEPIPELINE,
+  GETWORKSPACE,
   RUNPIPELINE,
 } from "../../network/apiConstants";
-import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
-import { setWorkspaceAction, loderShowHideAction } from "../../Redux/action";
 import JobList from "./configView/jobList";
 
 const CreatePipeline = ({ ingestionCss }) => {

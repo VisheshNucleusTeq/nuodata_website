@@ -448,7 +448,7 @@ const AddSource = ({
                               setActiveKey("schema_tab");
                             }}
                           >
-                            Select source dataset
+                            Select target dataset
                           </Button>
                         )}
                       </Space>
@@ -563,7 +563,7 @@ const AddSource = ({
                               setActiveKey("schema_tab");
                             }}
                           >
-                            Select source dataset
+                            Select target dataset
                           </Button>
                         )}
                       </Space>

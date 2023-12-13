@@ -1,31 +1,30 @@
-import React, { useEffect, useState } from "react";
 import {
-  Row,
-  Col,
-  Space,
-  Image,
-  Select,
-  Form,
-  Input,
-  Radio,
   Button,
+  Col,
+  Form,
+  Image,
+  Input,
   message,
+  Radio,
+  Row,
+  Select,
+  Space,
 } from "antd";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   fetch_retry_get,
   fetch_retry_post,
   fetch_retry_put,
 } from "../../../../network/api-manager";
 import {
-  GETCONNECTIONDETAIL,
-  CREATENODE,
-  RUNPIPELINE,
   CONVERTPIPELINE,
+  CREATENODE,
+  GETCONNECTIONDETAIL,
+  RUNPIPELINE,
 } from "../../../../network/apiConstants";
 import { loderShowHideAction } from "../../../../Redux/action";
-import { useRouter } from "next/router";
 
 const SourceSchema = ({
   connectionId,
@@ -228,7 +227,9 @@ const SourceSchema = ({
       <Col span={24} style={{ marginTop: "5vh" }}>
         <Radio.Group
           onChange={(e) => {
+            // form.setFieldValue("table", "");
             setTargetType(e.target.value);
+            // setOldValue()
           }}
           value={targetType}
         >
@@ -249,13 +250,13 @@ const SourceSchema = ({
             <Col span={12}>
               {targetType == "exist" && (
                 <Form.Item
-                  label={"Select Source"}
+                  label={"Select Target"}
                   labelAlign={"left"}
                   name={"table"}
                   rules={[
                     {
                       required: true,
-                      message: "Source is required.",
+                      message: "target is required.",
                     },
                   ]}
                 >
@@ -287,13 +288,25 @@ const SourceSchema = ({
               )}
               {targetType == "new" && (
                 <Form.Item
-                  label={"Select Source"}
+                  label={"Select Target"}
                   labelAlign={"left"}
                   name={"table"}
                   rules={[
                     {
                       required: true,
-                      message: "Source is required.",
+                      message: "Target is required.",
+                    },
+                    {
+                      validator: (rule, value, callback, source, options) => {
+                        schemas.includes(value) ? callback("This dataset is already available.") : callback();
+                        // console.log(schemas, value, schemas.includes(value))
+                        // try {
+                        //   setParams(JSON.parse(value));
+                        //   callback();
+                        // } catch (error) {
+                        //   callback("Not a valid object");
+                        // }
+                      },
                     },
                   ]}
                 >
@@ -301,13 +314,13 @@ const SourceSchema = ({
                     key={"input-source-name"}
                     className={"input"}
                     name={"table"}
-                    placeholder="Source Name"
+                    placeholder="Target Name"
                   />
                 </Form.Item>
               )}
             </Col>
             <Col span={2} />
-            <Col span={10} style={{display : "none"}}>
+            <Col span={10} style={{ display: "none" }}>
               <Form.Item
                 label={"Display Rows"}
                 labelAlign={"left"}

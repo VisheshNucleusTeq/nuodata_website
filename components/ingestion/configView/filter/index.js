@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Tabs, Button } from "antd";
+import { Col, Row, Tabs } from "antd";
+import React, { useEffect, useState } from "react";
 import { fetch_retry_get } from "../../../../network/api-manager";
 import { CREATENODE, NODEMETADATA } from "../../../../network/apiConstants";
-import General from "./general";
-import FilterCondition from "./filterCondition";
 import DataTable from "./dataTable";
+import FilterCondition from "./filterCondition";
+import General from "./general";
 import KeyTable from "./keyTable";
 const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
   const [activeKey, setActiveKey] = useState("general_tab");

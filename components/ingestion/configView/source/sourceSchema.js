@@ -1,30 +1,23 @@
-import React, { useEffect, useState } from "react";
 import {
-  Row,
-  Col,
-  Space,
-  Image,
-  Select,
-  Form,
-  Input,
-  Radio,
   Button,
-  message,
+  Col,
+  Form,
+  Image,
+  Input,
+  Modal,
+  Row,
+  Select,
+  Space,
+  message
 } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
-import {
-  fetch_retry_get,
-  fetch_retry_post,
-  fetch_retry_put,
-} from "../../../../network/api-manager";
-import {
-  GETCONNECTIONDETAIL,
-  CREATENODE,
-} from "../../../../network/apiConstants";
-import { loderShowHideAction } from "../../../../Redux/action";
 import { useRouter } from "next/router";
-
+import { loderShowHideAction } from "../../../../Redux/action";
+import { fetch_retry_post, fetch_retry_put, fetch_retry_get } from "../../../../network/api-manager";
+import { GETCONNECTIONDETAIL } from "../../../../network/apiConstants";
+import { CREATENODE } from "../../../../network/apiConstants";
 const SourceSchema = ({
   connectionId,
   connection,
@@ -35,6 +28,7 @@ const SourceSchema = ({
   nodeId,
   sourceData,
   setSourceData,
+  updateble,
 }) => {
   const [form] = Form.useForm();
   const [schemas, setSchemas] = useState([]);
@@ -51,7 +45,7 @@ const SourceSchema = ({
     dispatch(loderShowHideAction(false));
   };
 
-  const getTableData = async (type) => {
+  const getTableDataAction = async (type) => {
     try {
       const data = await form.validateFields();
       dispatch(loderShowHideAction(true));
@@ -145,6 +139,32 @@ const SourceSchema = ({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const getTableData = async (type) => {
+    const sourceIndex = sourceData?.transformation_properties.find(
+      (item) => item.property_name === "source_table"
+    );
+    const connectionIndex = sourceData?.transformation_properties.find(
+      (item) => item.property_name === "connection_id"
+    );
+
+    try {
+      const data = await form.validateFields();
+      if (updateble || (sourceIndex?.property_value == data?.table && connectionIndex?.property_value == connectionId)) {
+        await getTableDataAction(type);
+      } else {
+        Modal.confirm({
+          title: "The file has changed on disk.",
+          content: "Do you want to reload it?",
+          okText: "Yes",
+          cancelText: "No",
+          onOk: async () => {
+            await getTableDataAction(type);
+          },
+        });
+      }
+    } catch (error) {}
   };
 
   const setOldValue = () => {

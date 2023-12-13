@@ -1,33 +1,33 @@
-import React from "react";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import {
-  Col,
-  Image,
-  Input,
-  Row,
-  Table,
-  Button,
-  Space,
   Badge,
+  Button,
+  Col,
+  Input,
   Modal,
+  Popconfirm,
+  Row,
   Select,
-  message,
+  Space,
+  Table,
   Tooltip,
+  message
 } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import React from "react";
 
-import { SwapOutlined, FilterOutlined } from "@ant-design/icons";
-import { useEffect } from "react";
+import { FilterOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
+import { loderShowHideAction, setPipelineAction, setWorkspaceAction } from "../../Redux/action";
+import { fetch_retry_delete, fetch_retry_get } from "../../network/api-manager";
 import {
-  GETWORKSPACE,
+  DELETEPIPELINE,
   GETPIPELINE,
+  GETWORKSPACE,
   GETWORKSPACEENV,
 } from "../../network/apiConstants";
-import { fetch_retry_get } from "../../network/api-manager";
-import { setWorkspaceAction, setPipelineAction } from "../../Redux/action";
-
 const IngestionDashboard = ({ ingestionCss }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -36,8 +36,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
   const [workspace, setWorkspace] = React.useState("");
   const [workspaceData, setWorkspaceData] = React.useState([]);
   const [pipelineData, setPipelineData] = React.useState([]);
-
-  const color = ["#44ae48", "#dda807", "#ff7575", "#a5a5a5"];
 
   const columns = [
     {
@@ -96,13 +94,23 @@ const IngestionDashboard = ({ ingestionCss }) => {
               title={"Delete"}
               key={(Math.random() + 1).toString(36).substring(7)}
             >
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
+              <Popconfirm
+                title="Delete the task"
+                description="Are you sure to delete this task?"
+                okText="Yes"
+                cancelText="No"
+                onConfirm={() => {
+                  deletePipeline(record?.pipeline_id);
                 }}
               >
-                <DeleteOutlined />
-              </a>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  <DeleteOutlined />
+                </a>
+              </Popconfirm>
             </Tooltip>
           </Space>
         );
@@ -151,11 +159,24 @@ const IngestionDashboard = ({ ingestionCss }) => {
     }
   };
 
-  useEffect(() => {
+  const deletePipeline = async (id) => {
+    dispatch(loderShowHideAction(true));
+    await fetch_retry_delete(`${DELETEPIPELINE}${id}`);
+    setPipelineData(pipelineData.filter((e) => e?.pipeline_id != id));
+    dispatch(loderShowHideAction(false));
+  };
+
+  const getUpdateAllData = () => {
+    dispatch(loderShowHideAction(true));
     dispatch(setPipelineAction(null));
     getWorkSpaceData();
     setOldData();
     getPiplineData();
+    dispatch(loderShowHideAction(false));
+  };
+
+  useEffect(() => {
+    getUpdateAllData();
   }, [workspace, typeof window !== "undefined"]);
 
   return (
@@ -250,8 +271,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
         </Row>
       )}
 
-      {/* {JSON.stringify(pipelineData)} */}
-
       <Table
         columns={columns}
         dataSource={pipelineData.map((e) => {
@@ -308,68 +327,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
           );
         }}
       />
-
-      {/* {["Pipelines", "Models", "Workflows"].map((titleName) => {
-        return (
-          <Table
-            columns={columns}
-            dataSource={data}
-            bordered
-            title={() => {
-              return (
-                <>
-                  <Row>
-                    <Col
-                      span={4}
-                      style={{ display: "flex", alignItems: "center" }}
-                    >
-                      <h1>
-                        <b>{titleName}</b>
-                      </h1>
-                    </Col>
-                    <Col span={10}>
-                      <Input
-                        className="input"
-                        placeholder={"Search " + titleName}
-                      />
-                    </Col>
-                    <Col
-                      span={10}
-                      style={{ justifyContent: "end", display: "flex" }}
-                    >
-                      <Space>
-                        <Button
-                          style={{
-                            background: "gray",
-                            color: "#fff",
-                            borderRadius: "25px",
-                            height: "100%",
-                          }}
-                        >
-                          <FilterOutlined /> Filter
-                        </Button>
-                        <Button
-                          style={{
-                            background: "#e74860",
-                            color: "#fff",
-                            borderRadius: "25px",
-                            height: "100%",
-                          }}
-                          onClick={() => {
-                            router.push(`/ingestion/create-pipeline`);
-                          }}
-                        >
-                          New {titleName}
-                        </Button>
-                      </Space>
-                    </Col>
-                  </Row>
-                </>
-              );
-            }}
-          />
-        );
-      })} */}
     </>
   );
 };

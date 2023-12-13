@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Row, Col, Image, Divider } from "antd";
-import Draggable from "react-draggable";
+import { Col, Divider, Image, Row } from "antd";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
+import Draggable from "react-draggable";
+import { useSelector } from "react-redux";
 
-import EdgesFlow from "../reactflow";
+import Expression from "../configView/expression/expression";
+import Filter from "../configView/filter/index";
 import Source from "../configView/source/index";
-import Filter from "../configView/filter/index"
 import Target from "../configView/target/target";
+import EdgesFlow from "../reactflow";
 
 import {
   fetch_retry_get,
   fetch_retry_post,
 } from "../../../network/api-manager";
-import { GETPIPELINEGRAPH, CREATENODE } from "../../../network/apiConstants";
+import { CREATENODE, GETPIPELINEGRAPH } from "../../../network/apiConstants";
 var timer;
 
 const Build = ({ ingestionCss }) => {
@@ -152,7 +153,7 @@ const Build = ({ ingestionCss }) => {
           </Col>
         </Row>
         <Divider />
-        {/* {JSON.stringify()} */}
+        {/* {JSON.stringify(selectedNode?.data)} Expression */}
         {selectedNode?.data == "Source" && (
           <Source ingestionCss={ingestionCss} nodeId={selectedNode?.id} key={`source${selectedNode?.id}`} updateble={updateble} />
         )}
@@ -161,6 +162,9 @@ const Build = ({ ingestionCss }) => {
         )}
         {selectedNode?.data == "Target" && (
           <Target ingestionCss={ingestionCss} nodeId={selectedNode?.id} key={`target${selectedNode?.id}`} />
+        )}
+        {selectedNode?.data == "Expression" && (
+          <Expression ingestionCss={ingestionCss} nodeId={selectedNode?.id} key={`expression${selectedNode?.id}`} />
         )}
         <div ref={messagesEndRef} />
       </div>

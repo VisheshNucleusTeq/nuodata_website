@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Tabs, Button } from "antd";
-import General from "./general";
-import SelectSource from "./selectSource";
-import AddSource from "./addSource";
-import KeyTable from "./keyTable";
-import SourceSchema from "./sourceSchema";
-import SourceSchemaInput from "./sourceSchemaInput";
-import DataTable from "./dataTable";
-import {
-  CREATENODE,
-  INGESTIONTEMPLATES,
-  GETCONNECTIONDETAIL,
-  NODEMETADATA,
-} from "../../../../network/apiConstants";
+import { Col, Row, Tabs } from "antd";
+import React, { useEffect, useState } from "react";
 import {
   fetch_retry_get,
   fetch_retry_post,
 } from "../../../../network/api-manager";
+import {
+  CREATENODE,
+  GETCONNECTIONDETAIL,
+  INGESTIONTEMPLATES,
+  NODEMETADATA,
+} from "../../../../network/apiConstants";
+import AddSource from "./addSource";
+import DataTable from "./dataTable";
+import General from "./general";
+import KeyTable from "./keyTable";
+import SelectSource from "./selectSource";
+import SourceSchema from "./sourceSchema";
+import SourceSchemaInput from "./sourceSchemaInput";
 const Source = ({ ingestionCss, nodeId, updateble }) => {
   const [connection, setConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
@@ -132,8 +132,9 @@ const Source = ({ ingestionCss, nodeId, updateble }) => {
     <>
       <Row>
         <Col span={24}>
-          <center style={{color : "#e74860"}}>{!updateble && "Update can't be performed if nodes are connected."}</center>
-          <Tabs className={`${'underline'} ${!updateble ? 'buttonHide' : ""}`} defaultActiveKey="1">
+          {/* <center style={{color : "#e74860"}}>{!updateble && "An update cannot be executed if the nodes are interconnected."}</center> */}
+          <Tabs className={`${'underline'}`} defaultActiveKey="1">
+          {/* <Tabs className={`${'underline'} ${!updateble ? 'buttonHide' : ""}`} defaultActiveKey="1"> */}
             <Tabs.TabPane tab="Properties" key="1">
               <Tabs
                 className="tabActive"
@@ -160,16 +161,6 @@ const Source = ({ ingestionCss, nodeId, updateble }) => {
                 >
                   {connection && connection?.title ? (
                     <Row>
-                      {/* <Col span={24}>
-                        <Button
-                          className={ingestionCss.backButton}
-                          onClick={() => {
-                            setConnection({});
-                          }}
-                        >
-                          Change Source
-                        </Button>
-                      </Col> */}
                       <Col span={24}>
                         <AddSource
                           key={"source_add_source"}
@@ -180,6 +171,7 @@ const Source = ({ ingestionCss, nodeId, updateble }) => {
                           setConnectionId={setConnectionId}
                           setActiveKey={setActiveKey}
                           setConnection={setConnection}
+                          updateble={updateble}
                         />
                       </Col>
                     </Row>
@@ -211,6 +203,7 @@ const Source = ({ ingestionCss, nodeId, updateble }) => {
                       nodeId={nodeId}
                       sourceData={sourceData}
                       setSourceData={setSourceData}
+                      updateble={updateble}
                     />
                   )}
                   {["s3bucket"].includes(connection.type) && (
@@ -224,6 +217,7 @@ const Source = ({ ingestionCss, nodeId, updateble }) => {
                       nodeId={nodeId}
                       sourceData={sourceData}
                       setSourceData={setSourceData}
+                      updateble={updateble}
                     />
                   )}
                 </Tabs.TabPane>

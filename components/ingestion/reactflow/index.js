@@ -1,24 +1,22 @@
-import "reactflow/dist/style.css";
-import { useEffect, useRef } from "react";
-import { useCallback, useState } from "react";
+import { Col, Modal, Row, Space } from "antd";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ReactFlow, {
+  Background,
+  Controls,
+  MarkerType,
+  ReactFlowProvider,
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
-  MiniMap,
-  Controls,
-  Background,
-  ReactFlowProvider,
-  MarkerType,
   useReactFlow
 } from "reactflow";
-import { Button, Col, Row, Modal, Menu, Tabs, Space } from "antd";
+import "reactflow/dist/style.css";
 const { confirm } = Modal;
 
 import {
+  CopyOutlined,
   DeleteOutlined,
   ScissorOutlined,
-  CopyOutlined,
 } from "@ant-design/icons";
 
 import dagre from "dagre";
@@ -27,17 +25,17 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 150;
 const nodeHeight = 40;
 
-import CustomNodes from "./customNodes";
-import CustomEdge from "./customEdge";
+import {
+  fetch_retry_delete,
+  fetch_retry_post,
+} from "../../../network/api-manager";
 import {
   CREATEEDGE,
   CREATENODE,
   DELETEEDGE,
 } from "../../../network/apiConstants";
-import {
-  fetch_retry_post,
-  fetch_retry_delete,
-} from "../../../network/api-manager";
+import CustomEdge from "./customEdge";
+import CustomNodes from "./customNodes";
 
 const nodeTypes = {
   textUpdater: CustomNodes,
@@ -65,7 +63,7 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
     dagreGraph.setEdge(edge.source_node_id, edge.target_node_id);
   });
   dagre.layout(dagreGraph);
-  nodes.forEach((node) => {
+  nodes.forEach((node, j) => {
     const nodeWithPosition = dagreGraph.node(node.id);
     node.targetPosition = isHorizontal ? "left" : "top";
     node.sourcePosition = isHorizontal ? "right" : "bottom";
@@ -74,7 +72,15 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
       y: nodeWithPosition.y - nodeHeight / 2,
     };
 
-    node.data = { label: node?.transformation_type };
+    console.log(node);
+
+    node.data = {
+      label: node?.transformation_type,
+      transformation_name: node?.transformation_name
+        ? node?.transformation_name
+        : `${node?.transformation_type}_${j + 1}`,
+      connection_type: node?.connection_type ? node?.connection_type : "",
+    };
     return node;
   });
   return { nodes, edges };
@@ -87,7 +93,7 @@ function EdgesFlow({
   setNodePosition,
   pipeline,
   setSelectedNode,
-  getPiplineGraph
+  getPiplineGraph,
 }) {
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
 
@@ -125,7 +131,7 @@ function EdgesFlow({
         target_node_id: connection?.target,
       },
     });
-    getPiplineGraph(pipeline)
+    getPiplineGraph(pipeline);
     // setTimeout(() => {
     //   const edgesArr = [
     //     [
@@ -185,7 +191,7 @@ function EdgesFlow({
           );
           setNodes(nodes.filter((node) => node?.id !== deleteInfo?.id));
           setNodeData(nodeData.filter((e) => e?.id !== deleteInfo?.id));
-          getPiplineGraph(pipeline)
+          getPiplineGraph(pipeline);
         },
         onCancel() {},
         okText: "Delete",
@@ -202,7 +208,7 @@ function EdgesFlow({
             },
           });
           setEdges(edges.filter((edge) => edge.id !== deleteInfo?.id));
-          getPiplineGraph(pipeline)
+          getPiplineGraph(pipeline);
         },
         onCancel() {},
         okText: "Delete",
@@ -227,8 +233,8 @@ function EdgesFlow({
           ref={reactFlowWrapper}
         >
           <ReactFlow
+            useZoomPanHelper
             fitView
-            // zoomOut={.01}
             onConnectStart={onConnectStart}
             onInit={setReactFlowInstance}
             nodes={[...nodes]}
@@ -347,7 +353,7 @@ export default ({
   pipeline,
   edgeData,
   setSelectedNode,
-  getPiplineGraph
+  getPiplineGraph,
 }) => (
   <ReactFlowProvider>
     <EdgesFlow

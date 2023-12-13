@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
 import {
-  Row,
-  Col,
-  Space,
-  Image,
-  Select,
-  Form,
-  Input,
-  Radio,
   Button,
+  Col,
+  Form,
+  Image,
+  Input,
   message,
+  Row,
+  Space
 } from "antd";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { fetch_retry_put } from "../../../../network/api-manager";
@@ -27,11 +25,12 @@ const SourceSchemaInput = ({
   nodeId,
   sourceData,
   setSourceData,
+  updateble,
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
-  const getTableData = async (data) => {
+  const getTableDataAction = async (data) => {
     dispatch(loderShowHideAction(true));
     let transformation_properties = sourceData?.transformation_properties;
 
@@ -92,6 +91,32 @@ const SourceSchemaInput = ({
       message.error("Something went wrong");
     }
     dispatch(loderShowHideAction(false));
+  };
+
+  const getTableData = async (type) => {
+    const sourceIndex = sourceData?.transformation_properties.find(
+      (item) => item.property_name === "source_table"
+    );
+    const connectionIndex = sourceData?.transformation_properties.find(
+      (item) => item.property_name === "connection_id"
+    );
+
+    try {
+      const data = await form.validateFields();
+      if (updateble || (sourceIndex?.property_value == data?.table && connectionIndex?.property_value == connectionId)) {
+        await getTableDataAction(type);
+      } else {
+        Modal.confirm({
+          title: "The file has changed on disk.",
+          content: "Do you want to reload it?",
+          okText: "Yes",
+          cancelText: "No",
+          onOk: async () => {
+            await getTableDataAction(type);
+          },
+        });
+      }
+    } catch (error) {}
   };
 
   const setOldValue = () => {

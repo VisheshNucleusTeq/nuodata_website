@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { Handle, Position } from "reactflow";
 
-import { Row, Col, Image } from "antd";
+import { Col, Image, Row } from "antd";
 
 import ingestionCss from "../../../styles/ingestion.module.css";
 
@@ -30,18 +30,47 @@ function CustomNodes({ data, isConnectable, type, selected }) {
       )}
       <Row>
         <Col span={24} className={ingestionCss.pipelineStepTabIconEdge}>
-          <Image
-            preview={false}
-            src={`/pipelines_icons/${data.label}.png`}
-            width={"1vw"}
-            height={"1vw"}
-          />
+          {data?.connection_type ? (
+            <>
+              <Image
+                alt={data?.connection_type}
+                src={`/db_icon/${data?.connection_type}.png`}
+                preview={false}
+                width={"1vw"}
+                height={"1vw"}
+              />
+              &nbsp;
+            </>
+          ) : (
+            <Image
+              preview={false}
+              src={`/pipelines_icons/${data.label}.png`}
+              width={"1vw"}
+              height={"1vw"}
+            />
+          )}
         </Col>
         <Col span={24} className={ingestionCss.pipelineStepTabTextEdge1}>
-          <span>{data.label}</span>
+          <div>
+            {/* {data?.connection_type && (
+              <>
+                <Image
+                  alt={data?.connection_type}
+                  src={`/db_icon/${data?.connection_type}.png`}
+                  preview={false}
+                  width={"1vw"}
+                  height={"1vw"}
+                />
+                &nbsp;
+              </>
+            )} */}
+            <span>{data.label}</span>
+          </div>
         </Col>
         <Col span={24} className={ingestionCss.pipelineStepTabTextEdge2}>
-          <span>{data.label}</span>
+          <span>
+            {data?.transformation_name} {data?.connection_type}
+          </span>
         </Col>
       </Row>
       {/* {data.label} */}
