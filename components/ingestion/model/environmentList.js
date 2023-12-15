@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
-import { Table, Space, Tooltip, Modal, message, Row, Col, Button } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import { Button, Col, Modal, Row, Space, Table, Tooltip, message } from "antd";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+import { loderShowHideAction } from "../../../Redux/action";
 import {
-  fetch_retry_post,
   fetch_retry_get,
+  fetch_retry_post,
   fetch_retry_put,
 } from "../../../network/api-manager";
 import {
-  GETWORKSPACEENV,
-  ENVDETAILS,
   ADDRUNTIMEENV,
+  ENVDETAILS,
+  GETWORKSPACEENV,
 } from "../../../network/apiConstants";
 import AddEnvironment from "./addEnvironment";
-import { loderShowHideAction } from "../../../Redux/action";
 const EnvironmentList = ({ ingestionCss, workspaceId }) => {
   const dispatch = useDispatch();
   const [environmentList, setEnvironmentList] = React.useState([]);

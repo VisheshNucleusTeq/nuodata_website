@@ -17,7 +17,7 @@ import KeyTable from "./keyTable";
 import SelectSource from "./selectSource";
 import SourceSchema from "./sourceSchema";
 import SourceSchemaInput from "./sourceSchemaInput";
-const Source = ({ ingestionCss, nodeId, updateble }) => {
+const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplineGraph }) => {
   const [connection, setConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
   const [connectionId, setConnectionId] = useState(null);
@@ -203,7 +203,10 @@ const Source = ({ ingestionCss, nodeId, updateble }) => {
                       nodeId={nodeId}
                       sourceData={sourceData}
                       setSourceData={setSourceData}
+                      edgeData={edgeData}
                       updateble={updateble}
+                      pipeline={pipeline}
+                      getPiplineGraph={getPiplineGraph}
                     />
                   )}
                   {["s3bucket"].includes(connection.type) && (

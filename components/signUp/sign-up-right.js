@@ -5,7 +5,6 @@ import Link from "next/link";
 
 function SignUpRight({ signUpCss }) {
   const onFinish = async (payload) => {
-    console.log(payload);
   };
 
   return (

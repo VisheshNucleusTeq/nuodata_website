@@ -105,8 +105,6 @@ const Target = ({ ingestionCss, nodeId }) => {
                 (e) => e?.property_name == "target_table"
               );
 
-              console.log(conn[0].type);
-
               if (
                 sourceTable &&
                 sourceTable.length &&

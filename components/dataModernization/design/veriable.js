@@ -220,7 +220,6 @@ const veriable = ({
         }
       }, 1000);
       dispatch(loderShowHideAction(false));
-      console.log("Validation Error");
     }
   };
 

@@ -1,37 +1,25 @@
-import {
-  Col,
-  Row,
-  Button,
-  Divider,
-  Drawer,
-  Space,
-  Modal,
-  message,
-  Image,
-} from "antd";
-import React, { useState, useEffect } from "react";
-import { RWebShare } from "react-web-share";
+import { Button, Col, Drawer, Image, Modal, Row, Space, message } from "antd";
 import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { RWebShare } from "react-web-share";
 
-import Header from "../common/header";
 import {
-  MailOutlined,
-  MobileOutlined,
-  GlobalOutlined,
-  // RightOutlined,
-  // LeftOutlined,
-  CloseOutlined,
-  BellOutlined,
-  PhoneOutlined,
-  CalendarOutlined,
-  ClockCircleOutlined,
-  ShareAltOutlined,
   ArrowLeftOutlined,
   ArrowRightOutlined,
+  BellOutlined,
+  CalendarOutlined,
+  ClockCircleOutlined,
+  CloseOutlined,
+  GlobalOutlined,
+  MailOutlined,
+  MobileOutlined,
+  PhoneOutlined,
+  ShareAltOutlined,
 } from "@ant-design/icons";
+import moment from "moment";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
-import moment from "moment";
+import Header from "../common/header";
 
 import { loderShowHideAction } from "../../Redux/action";
 import { fetch_retry_get } from "../../network/api-manager";
@@ -292,36 +280,6 @@ const EventNew = ({ EventsCss }) => {
 
           <Header />
           <div className={EventsCss.detailsDiv}>
-            {/* <div
-              className={`${
-                open ? EventsCss.modelButonOpen : EventsCss.modelButonClose
-              } ${
-                displayDiv ? EventsCss.displayDivShow : EventsCss.displayDivHide
-              }`}
-              onClick={() => {
-                setDisplayDiv(false);
-                setTimeout(() => {
-                  setDisplayDiv(true);
-                }, 1000);
-                setOpen(!open);
-              }}
-            >
-              <div>
-                <span>{open ? "Close" : "Open"}</span>
-                <br />
-                <p
-                  style={{
-                    textAlign: "center",
-                    lineHeight: "0",
-                    marginTop: "5px",
-                    marginBottom: "5px",
-                  }}
-                >
-                  {open ? <LeftOutlined /> : <RightOutlined />}
-                </p>
-              </div>
-            </div> */}
-
             <div className={EventsCss.relativeDiv}>
               <Space direction="horizontal" className={EventsCss.collapseDiv}>
                 <div style={{ display: !isExpanded ? "none" : "block" }}>
@@ -446,7 +404,9 @@ const EventNew = ({ EventsCss }) => {
                                 setIsModalOpen(true);
                               }}
                             >
-                              {singleEventData?.buttonText ? singleEventData?.buttonText : "Register Now"}
+                              {singleEventData?.buttonText
+                                ? singleEventData?.buttonText
+                                : "Register Now"}
                             </Button>
                             &nbsp; &nbsp;
                             <RWebShare
@@ -458,9 +418,7 @@ const EventNew = ({ EventsCss }) => {
                                   singleEventData?.eventId,
                                 title: "NuoData",
                               }}
-                              onClick={() =>
-                                console.log("shared successfully!")
-                              }
+                              onClick={() =>{}}
                             >
                               <Button>
                                 Share <ShareAltOutlined />
@@ -537,57 +495,6 @@ const EventNew = ({ EventsCss }) => {
                               </div>
                             </Col>
                           </Row>
-
-                          {/* <Row className={EventsCss.leftEventBottom}>
-                            <Col
-                              span={24}
-                              className={EventsCss.leftEventBottomBadge}
-                            >
-                              <Button
-                                onClick={() => {
-                                  // setOpen(true);
-                                }}
-                              >
-                                Reach Us At
-                              </Button>
-                            </Col>
-                            <Col span={6} className={EventsCss.bottomText}>
-                              <span>
-                                <MailOutlined />
-                                &nbsp;&nbsp; info@nucleusteq.com
-                              </span>
-                            </Col>
-                            <Col span={1} className={EventsCss.bottomText}>
-                              <Divider
-                                type="vertical"
-                                style={{
-                                  backgroundColor: "#FFF",
-                                  height: "4vh",
-                                }}
-                              />
-                            </Col>
-                            <Col span={5} className={EventsCss.bottomText}>
-                              <span>
-                                <MobileOutlined />
-                                &nbsp;&nbsp;+91 9876543210
-                              </span>
-                            </Col>
-                            <Col span={1} className={EventsCss.bottomText}>
-                              <Divider
-                                type="vertical"
-                                style={{
-                                  backgroundColor: "#FFF",
-                                  height: "4vh",
-                                }}
-                              />
-                            </Col>
-                            <Col span={5} className={EventsCss.bottomText}>
-                              <span>
-                                <GlobalOutlined />
-                                &nbsp;&nbsp;nucleusteq.com
-                              </span>
-                            </Col>
-                          </Row> */}
                         </Col>
                         <Col span={2}></Col>
                       </Row>
@@ -652,20 +559,6 @@ const EventNew = ({ EventsCss }) => {
                                             e?.endDateTime
                                           )
                                         : null}
-                                      {/* {e?.startDateTime
-                                      ? moment(e?.startDateTime).format(
-                                          "YYYY-MM-DD"
-                                        )
-                                      : null}
-                                      {
-
-                                      }
-                                    <br /> to <br />
-                                    {e?.endDateTime
-                                      ? moment(e?.endDateTime).format(
-                                          "YYYY-MM-DD"
-                                        )
-                                      : null} */}
                                     </div>
                                   </Col>
                                 </Row>

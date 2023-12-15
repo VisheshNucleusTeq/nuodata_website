@@ -50,7 +50,6 @@ const Test = () => {
       <Button
         type="primary"
         onClick={() => {
-          // console.log(treeDataArr)
           try {
             setTreeData(JSON.parse(treeDataArr));
           } catch (error) {

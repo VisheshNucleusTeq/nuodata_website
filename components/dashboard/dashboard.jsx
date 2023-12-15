@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
-import {
-  Table,
-  Space,
-  Tooltip,
-  Button,
-  message,
-  Card,
-  Row,
-  Col,
-  Input,
-  Modal,
-} from "antd";
 import {
   EditOutlined,
   EyeOutlined,
-  SearchOutlined,
   PlusOutlined,
+  SearchOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
+import {
+  Button,
+  Card,
+  Col,
+  Input,
+  Modal,
+  Row,
+  Space,
+  Table,
+  Tooltip,
+  message,
+} from "antd";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { useDispatch } from "react-redux";
 
-import dashboardCss from "../../styles/dashboard.module.css";
+import { SetTabTypeAction, loderShowHideAction } from "../../Redux/action";
 import { fetch_retry_get } from "../../network/api-manager";
 import { GETALLPROJECT, GETGITDATA } from "../../network/apiConstants";
-import { SetTabTypeAction, loderShowHideAction } from "../../Redux/action";
+import dashboardCss from "../../styles/dashboard.module.css";
 
 const DashboardView = () => {
   const router = useRouter();
@@ -86,16 +86,13 @@ const DashboardView = () => {
     const resData = await fetch_retry_get(
       `${GETGITDATA}${authData?.orgId}?type=github`
     );
-    console.log(resData);
     if (
       !resData?.data?.configs?.github_url ||
       !resData?.data?.configs?.github_username
     ) {
       setModal2Open(true);
-      // alert(1);
     } else {
       setModal2Open(false);
-      // setModal2Open(true);
     }
   };
 

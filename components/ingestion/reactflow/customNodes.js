@@ -1,17 +1,8 @@
-import { useCallback } from "react";
 import { Handle, Position } from "reactflow";
-
 import { Col, Image, Row } from "antd";
-
 import ingestionCss from "../../../styles/ingestion.module.css";
 
-const handleStyle = { left: 10 };
-
 function CustomNodes({ data, isConnectable, type, selected }) {
-  const onChange = useCallback((evt) => {
-    console.log(evt.target.value);
-  }, []);
-
   return (
     <div
       className={ingestionCss.pipelineStepTabEdge}
@@ -52,24 +43,17 @@ function CustomNodes({ data, isConnectable, type, selected }) {
         </Col>
         <Col span={24} className={ingestionCss.pipelineStepTabTextEdge1}>
           <div>
-            {/* {data?.connection_type && (
-              <>
-                <Image
-                  alt={data?.connection_type}
-                  src={`/db_icon/${data?.connection_type}.png`}
-                  preview={false}
-                  width={"1vw"}
-                  height={"1vw"}
-                />
-                &nbsp;
-              </>
-            )} */}
             <span>{data.label}</span>
           </div>
         </Col>
         <Col span={24} className={ingestionCss.pipelineStepTabTextEdge2}>
           <span>
-            {data?.transformation_name} {data?.connection_type}
+            {data?.transformation_name
+              .split("", 10)
+              .reduce(
+                (o, c) => (o.length === 9 ? `${o}${c}...` : `${o}${c}`),
+                ""
+              )}
           </span>
         </Col>
       </Row>

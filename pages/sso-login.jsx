@@ -14,15 +14,11 @@ import React from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 const Sso_login = () => {
-    const { user, error, isLoading } = useUser();
-
-    console.log({ user, error, isLoading })
-
+  const { user, error, isLoading } = useUser();
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
   if (user) {
-    console.log(user);
     return (
       <div>
         <img src={user?.picture} />
@@ -31,14 +27,16 @@ const Sso_login = () => {
         <br></br>
         Your nickname is {user.nickname}.
         <pre>
-            <code>
-            {JSON.stringify(user,  null, 4)}
-            </code>
+          <code>{JSON.stringify(user, null, 4)}</code>
         </pre>
       </div>
     );
   }
-  return <a href="/api/auth/login" style={{color : "red"}}>Login</a>;
-}
+  return (
+    <a href="/api/auth/login" style={{ color: "red" }}>
+      Login
+    </a>
+  );
+};
 
 export default Sso_login;

@@ -220,6 +220,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pipelineStepTabTextEdge2 span{

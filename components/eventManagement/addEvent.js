@@ -1,31 +1,31 @@
 import {
+  Button,
   Col,
   DatePicker,
   Form,
+  Image,
   Input,
   Row,
-  TimePicker,
-  Button,
-  Upload,
-  Image,
-  Tag,
-  message,
   Select,
+  Tag,
+  TimePicker,
+  Upload,
+  message,
 } from "antd";
-const { Dragger } = Upload;
 import ImgCrop from "antd-img-crop";
-import React, { use, useState } from "react";
 import moment from "moment";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+const { Dragger } = Upload;
 
-import { ADDEVENT, UPDATEEVENT } from "../../network/apiConstants";
+import { useEffect } from "react";
+import { useQueryClient } from "react-query";
+import { loderShowHideAction } from "../../Redux/action";
 import {
   fetch_retry_post_with_file,
   fetch_retry_put_with_file,
 } from "../../network/api-manager";
-import { loderShowHideAction } from "../../Redux/action";
-import { useEffect } from "react";
-import { useQueryClient } from "react-query";
+import { ADDEVENT, UPDATEEVENT } from "../../network/apiConstants";
 import country from "../helper/country";
 
 const AddEvent = ({
@@ -109,8 +109,6 @@ const AddEvent = ({
     postData.endDateTime = moment(
       data?.endDate.format(dateFormat) + " " + data?.endTime.format(timeFormat)
     ).format("yyyy-MM-DDTHH:mm:ss.SSSZ");
-    // console.log("postData",postData)
-    // return true;
     const resData = await fetch_retry_put_with_file(
       `${UPDATEEVENT}${updateData?.eventId}`,
       postData
@@ -457,9 +455,6 @@ const AddEvent = ({
                         reader.readAsDataURL(file);
                         reader.onload = function () {
                           setImage(reader.result);
-                        };
-                        reader.onerror = function (error) {
-                          console.log("Error: ", error);
                         };
                       }
                       getBase64(e);

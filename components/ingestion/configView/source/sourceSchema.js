@@ -15,8 +15,8 @@ import { useDispatch } from "react-redux";
 
 import { useRouter } from "next/router";
 import { loderShowHideAction } from "../../../../Redux/action";
-import { fetch_retry_post, fetch_retry_put, fetch_retry_get } from "../../../../network/api-manager";
-import { GETCONNECTIONDETAIL } from "../../../../network/apiConstants";
+import { fetch_retry_post, fetch_retry_put, fetch_retry_get, fetch_retry_delete } from "../../../../network/api-manager";
+import { GETCONNECTIONDETAIL, DELETEEDGE } from "../../../../network/apiConstants";
 import { CREATENODE } from "../../../../network/apiConstants";
 const SourceSchema = ({
   connectionId,
@@ -28,7 +28,10 @@ const SourceSchema = ({
   nodeId,
   sourceData,
   setSourceData,
+  edgeData,
   updateble,
+  pipeline,
+  getPiplineGraph
 }) => {
   const [form] = Form.useForm();
   const [schemas, setSchemas] = useState([]);
@@ -137,7 +140,6 @@ const SourceSchema = ({
       }
       dispatch(loderShowHideAction(false));
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -149,18 +151,30 @@ const SourceSchema = ({
       (item) => item.property_name === "connection_id"
     );
 
+    const deleteEdges = edgeData.map((e) => {
+      if (e?.source == nodeId || e?.source_node_id == nodeId) {
+        return e?.id;
+      }
+    });
+
     try {
       const data = await form.validateFields();
       if (updateble || (sourceIndex?.property_value == data?.table && connectionIndex?.property_value == connectionId)) {
         await getTableDataAction(type);
       } else {
         Modal.confirm({
-          title: "The file has changed on disk.",
-          content: "Do you want to reload it?",
-          okText: "Yes",
-          cancelText: "No",
+          title: "warning!",
+          content: "Alterations in source detected. Proceeding further will reset connection.",
+          okText: "Continue",
+          cancelText: "Cancel",
           onOk: async () => {
             await getTableDataAction(type);
+            await fetch_retry_delete(`${DELETEEDGE}${pipeline}/edges`, {
+              data: {
+                edge_ids: [...deleteEdges],
+              },
+            });
+            getPiplineGraph(pipeline)
           },
         });
       }

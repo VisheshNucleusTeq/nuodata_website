@@ -71,9 +71,6 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
       x: nodeWithPosition.x - nodeWidth / 2,
       y: nodeWithPosition.y - nodeHeight / 2,
     };
-
-    console.log(node);
-
     node.data = {
       label: node?.transformation_type,
       transformation_name: node?.transformation_name
@@ -132,29 +129,6 @@ function EdgesFlow({
       },
     });
     getPiplineGraph(pipeline);
-    // setTimeout(() => {
-    //   const edgesArr = [
-    //     [
-    //       ...edges,
-    //       {
-    //         // ...e/
-    //         id: edgeData?.data?.data?.id,
-    //         source: connection?.source,
-    //         source_node_id: connection?.source,
-    //         target: connection?.source,
-    //         target_node_id: connection?.source,
-    //         transformation_type: "edge",
-    //       },
-    //     ],
-    //   ];
-
-    //   const { nodes: layoutedNodes, edges: layoutedEdges } =
-    //     getLayoutedElements(nodeData, edgesArr);
-    //   setNodes(layoutedNodes);
-    //   setEdges(layoutedEdges);
-    // }, 2000);
-    // console.log(edges)
-    // console.log(edgeData?.data?.data?.id)
   };
 
   useEffect(() => {
@@ -164,16 +138,9 @@ function EdgesFlow({
     );
     setNodes(layoutedNodes);
     setEdges(layoutedEdges);
-
-    // setTimeout(() => {
-    //   for (let index = 0; index < 50; index++) {
-    //     zoomOut({ duration: 1 })
-    //   }
-    // }, 100);
   }, [nodeData]);
 
   const onConnectStart = (e, p) => {
-    console.log(JSON.stringify(p));
   };
 
   const deleteNodeOrEdge = () => {
@@ -334,7 +301,6 @@ function EdgesFlow({
                 </div>
               </div>
             ) : null}
-            {/* <MiniMap /> */}
             <Controls />
             <Background />
           </ReactFlow>
@@ -343,8 +309,6 @@ function EdgesFlow({
     </>
   );
 }
-
-// export default EdgesFlow;
 
 export default ({
   nodeData,

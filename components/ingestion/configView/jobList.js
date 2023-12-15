@@ -1,27 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Button, Col, Row, Space, Table, Tag, Tooltip } from "antd";
 import { useRouter } from "next/router";
-
-import {
-  Button,
-  Table,
-  Tag,
-  Tooltip,
-  Descriptions,
-  Row,
-  Col,
-  Space,
-} from "antd";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { fetch_retry_get } from "../../../network/api-manager";
 import {
   RUNPIPELINELIST,
   RUNPIPELINELOGS,
 } from "../../../network/apiConstants";
-import { fetch_retry_get } from "../../../network/api-manager";
 
 import { EyeOutlined, LoadingOutlined } from "@ant-design/icons";
-import { loderShowHideAction } from "../../../Redux/action";
 const JobList = () => {
-  const dispatch = useDispatch();
   const { query } = useRouter();
   const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
   const [runList, setRunList] = useState([]);
@@ -89,8 +77,6 @@ const JobList = () => {
 
   return (
     <>
-      {/* {detailId} */}
-
       <Row>
         <Col span={24}>
           <Space style={{ float: "right" }}>
@@ -114,10 +100,8 @@ const JobList = () => {
           </Space>
         </Col>
       </Row>
-
       <br />
       <br />
-
       {detailId ? (
         <>
           {Object.keys(detailId).map((e) => {
@@ -195,8 +179,6 @@ const JobList = () => {
         <Table
           pagination={{
             defaultPageSize: 5,
-            //   showSizeChanger: true,
-            //   pageSizeOptions: ["10", "20", "30"],
           }}
           key={runList.length}
           rowKey="projectId"
@@ -243,7 +225,6 @@ const JobList = () => {
                 >
                   <a
                     onClick={() => {
-                      console.log(record);
                       setDetailId(record);
                     }}
                   >
@@ -253,7 +234,7 @@ const JobList = () => {
               ),
             },
           ]}
-          dataSource={runList} //job_status
+          dataSource={runList}
         />
       )}
     </>

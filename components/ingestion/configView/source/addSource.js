@@ -404,7 +404,6 @@ const AddSource = ({
                               setUpdateRecordId(data?.existingConnections);
                             } catch (error) {
                               dispatch(loderShowHideAction(false));
-                              console.log("Validation Error");
                             }
                           }}
                           disabled={selectedRecordId == null}
@@ -494,7 +493,6 @@ const AddSource = ({
                                   const data = await form.validateFields();
                                   updateConnection(data);
                                 } catch (error) {
-                                  console.log("not valid");
                                 }
                               }}
                               disabled={!isTested}
@@ -518,7 +516,6 @@ const AddSource = ({
                                   const data = await form.validateFields();
                                   addConnection(data);
                                 } catch (error) {
-                                  console.log("not valid");
                                 }
                               }}
                               disabled={!isTested}

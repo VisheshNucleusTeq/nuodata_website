@@ -1,5 +1,5 @@
-import axios from "axios";
 import { message } from "antd";
+import axios from "axios";
 import { GETACCESSTOKEN, LOGIN } from "./apiConstants";
 let isRefreshing = true;
 
@@ -23,9 +23,6 @@ const updateBaseUrl = (config) => {
 
 BaseURL.interceptors.request.use(
   async (config) => {
-    // console.log("config", config?.url, typeof process.env.IS_LOCAL)
-    // config.baseURL = "https://api.nuodata.io"
-
     config = updateBaseUrl(config);
 
     if (LOGIN === config?.url) return config;

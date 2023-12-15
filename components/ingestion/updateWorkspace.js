@@ -1,31 +1,31 @@
-import React, { useEffect } from "react";
 import {
-  Row,
+  Button,
   Col,
   Form,
   Input,
-  Select,
-  Button,
   Modal,
-  message,
+  Row,
+  Select,
   Space,
+  message,
 } from "antd";
 import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import AddEnvironment from "./model/addEnvironment";
+import { loderShowHideAction } from "../../Redux/action";
 import {
+  fetch_retry_get,
   fetch_retry_post,
   fetch_retry_put,
-  fetch_retry_get,
 } from "../../network/api-manager";
 import {
-  ADDWORKSPACE,
   ADDRUNTIMEENV,
-  GETWORKSPACEENV,
+  ADDWORKSPACE,
   ENVDETAILS,
+  GETWORKSPACEENV,
 } from "../../network/apiConstants";
-import { loderShowHideAction } from "../../Redux/action";
+import AddEnvironment from "./model/addEnvironment";
 const UpdateWorkspace = ({ ingestionCss }) => {
   const { query } = useRouter();
   const dispatch = useDispatch();
@@ -77,7 +77,6 @@ const UpdateWorkspace = ({ ingestionCss }) => {
       description: workspaceDetails?.data?.description,
       environment: workspaceDetails?.data?.default_runtime_env_id,
     });
-    console.log(workspaceDetails?.data);
   };
 
   const getEnvList = async () => {

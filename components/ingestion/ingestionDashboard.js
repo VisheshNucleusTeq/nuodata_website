@@ -123,7 +123,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
     if (authData && authData?.orgId) {
       const data = await fetch_retry_get(`${GETWORKSPACE}${authData?.orgId}`);
       if (data.success) {
-        console.log(data?.data);
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);

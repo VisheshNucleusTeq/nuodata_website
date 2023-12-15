@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import { CheckOutlined, CloseOutlined, EditOutlined } from "@ant-design/icons";
 import {
-  Divider,
-  Radio,
-  Table,
-  Input,
   Button,
-  Space,
-  Form,
-  Row,
   Col,
+  Divider,
+  Form,
+  Input,
+  Row,
+  Space,
+  Table
 } from "antd";
-import { EditOutlined, CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
 
 import { fetch_retry_put } from "../../../../network/api-manager";
 import { CREATENODE } from "../../../../network/apiConstants";
@@ -30,9 +29,11 @@ const KeyTable = ({
       render: (text) => <a>{text}</a>,
     },
     {
-      title : "From Transformation Name",
-      dataIndex : "from_transformation_name",
-      render: (text) => { return text ? text : "NA"}
+      title: "From Transformation Name",
+      dataIndex: "from_transformation_name",
+      render: (text) => {
+        return text ? text : "NA";
+      },
     },
     {
       title: "Type",
@@ -87,8 +88,6 @@ const KeyTable = ({
 
   const updateTableField = async () => {
     let transformation_properties = sourceData?.transformation_properties;
-    console.log(transformation_properties, data);
-
     const sourceIndex = transformation_properties.findIndex(
       (item) => item.property_name === "fields"
     );
@@ -155,10 +154,7 @@ const KeyTable = ({
                                     tableData[index] = formData;
                                     setData(tableData);
                                   }
-                                  console.log(index, formData);
-                                } catch (e) {
-                                  console.log(e, "Not a valid form");
-                                }
+                                } catch (e) {}
                                 setUpdateName(null);
                               }}
                             />

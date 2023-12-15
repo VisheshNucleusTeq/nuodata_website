@@ -1,25 +1,25 @@
-import { Col, Row, Button, Divider, Drawer, Space, Modal, message } from "antd";
-import React, { useState, useEffect } from "react";
-import { RWebShare } from "react-web-share";
+import { Button, Col, Divider, Drawer, Modal, Row, Space, message } from "antd";
 import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { RWebShare } from "react-web-share";
 
-import Header from "../common/header";
 import {
-  MailOutlined,
-  MobileOutlined,
-  GlobalOutlined,
-  RightOutlined,
-  LeftOutlined,
-  CloseOutlined,
   BellOutlined,
-  PhoneOutlined,
   CalendarOutlined,
   ClockCircleOutlined,
+  CloseOutlined,
+  GlobalOutlined,
+  LeftOutlined,
+  MailOutlined,
+  MobileOutlined,
+  PhoneOutlined,
+  RightOutlined,
   ShareAltOutlined,
 } from "@ant-design/icons";
+import moment from "moment";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
-import moment from "moment";
+import Header from "../common/header";
 
 import { loderShowHideAction } from "../../Redux/action";
 import { fetch_retry_get } from "../../network/api-manager";
@@ -356,9 +356,7 @@ const Event = ({ EventsCss }) => {
                                   singleEventData?.eventId,
                                 title: "NuoData",
                               }}
-                              onClick={() =>
-                                console.log("shared successfully!")
-                              }
+                              onClick={() =>{}}
                             >
                               <Button>
                                 Share <ShareAltOutlined />
@@ -484,20 +482,6 @@ const Event = ({ EventsCss }) => {
                                           e?.endDateTime
                                         )
                                       : null}
-                                    {/* {e?.startDateTime
-                                      ? moment(e?.startDateTime).format(
-                                          "YYYY-MM-DD"
-                                        )
-                                      : null}
-                                      {
-
-                                      }
-                                    <br /> to <br />
-                                    {e?.endDateTime
-                                      ? moment(e?.endDateTime).format(
-                                          "YYYY-MM-DD"
-                                        )
-                                      : null} */}
                                   </div>
                                 </Col>
                               </Row>

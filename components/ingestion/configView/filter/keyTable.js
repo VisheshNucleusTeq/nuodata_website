@@ -87,8 +87,6 @@ const KeyTable = ({
 
   const updateTableField = async () => {
     let transformation_properties = sourceData?.transformation_properties;
-    console.log(transformation_properties, data);
-
     const sourceIndex = transformation_properties.findIndex(
       (item) => item.property_name === "fields"
     );
@@ -155,9 +153,7 @@ const KeyTable = ({
                                     tableData[index] = formData;
                                     setData(tableData);
                                   }
-                                  console.log(index, formData);
                                 } catch (e) {
-                                  console.log(e, "Not a valid form");
                                 }
                                 setUpdateName(null);
                               }}

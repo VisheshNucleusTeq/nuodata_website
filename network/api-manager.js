@@ -44,9 +44,6 @@ export const fetch_retry_post = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
-    console.log("error",error)
-    // message.error(error?.response?.data?.errorMessages);
-
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };

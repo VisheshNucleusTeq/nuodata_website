@@ -1,15 +1,15 @@
-import { Row, Col, Space, Select, Input, Button, message } from "antd";
-import React, { useEffect, useState } from "react";
 import { DeleteOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { Button, Col, Input, Row, Select, Space, message } from "antd";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { NODEMETADATA, CREATENODE } from "../../../../network/apiConstants";
+import { useRouter } from "next/router";
+import { loderShowHideAction } from "../../../../Redux/action";
 import {
   fetch_retry_get,
   fetch_retry_put,
 } from "../../../../network/api-manager";
-import { loderShowHideAction } from "../../../../Redux/action";
-import { useRouter } from "next/router";
+import { CREATENODE, NODEMETADATA } from "../../../../network/apiConstants";
 
 const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
   const dispatch = useDispatch();
@@ -28,7 +28,9 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
   const [filterValue, setFilterValue] = useState("");
 
   const fetchNodeMetadata = async (nodeId) => {
-    const nodeMetaData = await fetch_retry_get(`${NODEMETADATA}${nodeId}/metadata`);
+    const nodeMetaData = await fetch_retry_get(
+      `${NODEMETADATA}${nodeId}/metadata`
+    );
     setFieldsData(
       nodeMetaData?.data?.fields
         ? nodeMetaData?.data?.fields?.map((e) => {
@@ -99,8 +101,6 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
         message.success(result?.data?.message);
         if (type == "save") {
           route.push("/ingestion");
-        } else {
-          // setActiveKey("source_tab");
         }
       } else {
         message.error("Something went wrong");
@@ -141,7 +141,6 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
               key: (Math.random() + 1).toString(36).substring(7),
             });
           });
-          console.log(whereConditionArr);
           setFilterData(whereConditionArr);
         }
       } else {
@@ -149,7 +148,6 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
           sourceData?.transformation_properties.filter(
             (item) => item.property_name === "where_condition"
           );
-        console.log(whereConditionIndex);
         if (whereConditionIndex && whereConditionIndex.length) {
           setFilterValue(whereConditionIndex[0]?.property_value);
         }
@@ -362,16 +360,6 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
             </Space>
           </div>
         </Col>
-        {/* <Col span={22} style={{ height: "8%" }}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className={ingestionCss.submitBtn}
-            onClick={updateFilterData}
-          >
-            Submit Condition
-          </Button>
-        </Col> */}
       </Row>
     </div>
   );

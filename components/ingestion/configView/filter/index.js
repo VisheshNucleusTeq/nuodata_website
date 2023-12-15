@@ -45,27 +45,7 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
     });
   };
 
-  // const getSourceData = (nodeId) => { //transformation_type : "Source"
-  //   const findData = nodeData.filter((e) => e?.id == nodeId);
-  //   console.log(findData)
-  //   if(findData && findData.length){
-  //       if(findData[0]?.transformation_type == "Source"){
-  //           console.log(findData[0])
-  //       }else{
-  //           findSource(nodeId)
-  //       }
-  //   }
-  // }
-
-  // const findSource = (nodeId) => {
-  //   const findData = edgeData.filter((e) => e?.target_node_id == nodeId);
-  //   if(findData && findData.length){
-  //       getSourceData(findData[0]?.source_node_id)
-  //   }
-  // }
-
   useEffect(() => {
-    // findSource(nodeId)
     getNodeRecord(nodeId);
   }, []);
 

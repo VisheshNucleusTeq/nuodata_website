@@ -69,13 +69,16 @@ const Build = ({ ingestionCss }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 
     const dataHave = edgeData.find((e) => {
-     return  e?.source_node_id == selectedNode?.id || e?.target_node_id == selectedNode?.id 
+      return (
+        e?.source_node_id == selectedNode?.id ||
+        e?.target_node_id == selectedNode?.id
+      );
     });
 
-    if(dataHave){
-      setUpdateble(false)
-    }else{
-      setUpdateble(true)
+    if (dataHave) {
+      setUpdateble(false);
+    } else {
+      setUpdateble(true);
     }
   }, [selectedNode?.id, nodeData, edgeData]);
 
@@ -103,10 +106,8 @@ const Build = ({ ingestionCss }) => {
               <Draggable
                 position={{ x: 0, y: 0 }}
                 onStart={(eData) => {
-                  console.log("onStart", e);
                 }}
                 onDrag={(eData) => {
-                  console.log("onDrag", e);
                 }}
                 onStop={(eData) => {
                   if (visible) {
@@ -155,16 +156,38 @@ const Build = ({ ingestionCss }) => {
         <Divider />
         {/* {JSON.stringify(selectedNode?.data)} Expression */}
         {selectedNode?.data == "Source" && (
-          <Source ingestionCss={ingestionCss} nodeId={selectedNode?.id} key={`source${selectedNode?.id}`} updateble={updateble} />
+          <Source
+            ingestionCss={ingestionCss}
+            nodeId={selectedNode?.id}
+            key={`source${selectedNode?.id}`}
+            updateble={updateble}
+            edgeData={edgeData}
+            pipeline={query?.pipeline ? query?.pipeline : pipelineData}
+            getPiplineGraph={getPiplineGraph}
+          />
         )}
         {selectedNode?.data == "Filter" && (
-          <Filter ingestionCss={ingestionCss} nodeId={selectedNode?.id} nodeData={nodeData} edgeData={edgeData} key={`filter${selectedNode?.id}`} />
+          <Filter
+            ingestionCss={ingestionCss}
+            nodeId={selectedNode?.id}
+            nodeData={nodeData}
+            edgeData={edgeData}
+            key={`filter${selectedNode?.id}`}
+          />
         )}
         {selectedNode?.data == "Target" && (
-          <Target ingestionCss={ingestionCss} nodeId={selectedNode?.id} key={`target${selectedNode?.id}`} />
+          <Target
+            ingestionCss={ingestionCss}
+            nodeId={selectedNode?.id}
+            key={`target${selectedNode?.id}`}
+          />
         )}
         {selectedNode?.data == "Expression" && (
-          <Expression ingestionCss={ingestionCss} nodeId={selectedNode?.id} key={`expression${selectedNode?.id}`} />
+          <Expression
+            ingestionCss={ingestionCss}
+            nodeId={selectedNode?.id}
+            key={`expression${selectedNode?.id}`}
+          />
         )}
         <div ref={messagesEndRef} />
       </div>

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Table, Space, Tooltip, Modal, Row, Col, Button } from "antd";
 import { EditOutlined, EyeOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Col, Modal, Row, Space, Table, Tooltip, message } from "antd";
 import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
+import { setWorkspaceAction } from "../../Redux/action";
 import { fetch_retry_get } from "../../network/api-manager";
 import { GETWORKSPACE } from "../../network/apiConstants";
 import EnvironmentList from "./model/environmentList";
-import { setWorkspaceAction } from "../../Redux/action";
 
 const WorkspaceList = ({ ingestionCss }) => {
   const router = useRouter();
@@ -102,7 +102,6 @@ const WorkspaceList = ({ ingestionCss }) => {
             dataIndex: "workspace_name",
             key: "workspace_name",
             render: (text, record, index) => {
-              console.log(record?.workspace_id);
               return (
                 <a
                   onClick={() => {

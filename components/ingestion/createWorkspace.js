@@ -1,30 +1,30 @@
-import React, { useEffect } from "react";
 import {
-  Row,
+  Button,
   Col,
   Form,
   Input,
-  Select,
-  Button,
   Modal,
-  message,
+  Row,
+  Select,
   Space,
+  message,
 } from "antd";
 import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import AddEnvironment from "./model/addEnvironment";
+import { loderShowHideAction } from "../../Redux/action";
 import {
+  fetch_retry_get,
   fetch_retry_post,
   fetch_retry_put,
-  fetch_retry_get,
 } from "../../network/api-manager";
 import {
-  ADDWORKSPACE,
   ADDRUNTIMEENV,
+  ADDWORKSPACE,
   GETWORKSPACEENV,
 } from "../../network/apiConstants";
-import { loderShowHideAction } from "../../Redux/action";
+import AddEnvironment from "./model/addEnvironment";
 const CreateWorkspace = ({ ingestionCss }) => {
   const dispatch = useDispatch();
   const route = useRouter();
@@ -35,6 +35,7 @@ const CreateWorkspace = ({ ingestionCss }) => {
   const [environmentList, setEnvironmentList] = React.useState([]);
   const [workspaceId, setWorkspaceId] = React.useState(0);
   const [workspaceName, setWorkspaceName] = React.useState("");
+  const [workspaceData, setWorkspaceData] = React.useState({});
 
   const addEnvironmentAction = async (data) => {
     let obj = environment.find((o) => o.name === data?.name);
@@ -136,6 +137,8 @@ const CreateWorkspace = ({ ingestionCss }) => {
         name: data?.name,
         description: data?.description,
       });
+      setWorkspaceData(data);
+
       setWorkspaceId(workspaceData?.data?.data?.id);
       dispatch(loderShowHideAction(false));
     } catch (errors) {
@@ -158,8 +161,8 @@ const CreateWorkspace = ({ ingestionCss }) => {
           `${ADDWORKSPACE}${workspaceId}`,
           {
             org_id: authData.orgId,
-            name: obj?.runtime_env_name,
-            description: obj?.description,
+            name: workspaceData?.name,
+            description: workspaceData?.description,
             default_runtime_env_id: obj?.runtime_env_id,
             default_engine_type: localObj?.engine_type,
           }
@@ -167,10 +170,10 @@ const CreateWorkspace = ({ ingestionCss }) => {
         dispatch(loderShowHideAction(false));
         if (workspaceUpdateData.success) {
           message.success([workspaceUpdateData?.data?.message]);
+          route.push("/ingestion/workspace/")
         }
       }
     } catch (errors) {
-      console.log(errors);
       dispatch(loderShowHideAction(false));
     }
   };

@@ -178,9 +178,7 @@ const SourceSchema = ({
         message.error("Something went wrong");
       }
       dispatch(loderShowHideAction(false));
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const setOldValue = () => {
@@ -298,14 +296,9 @@ const SourceSchema = ({
                     },
                     {
                       validator: (rule, value, callback, source, options) => {
-                        schemas.includes(value) ? callback("This dataset is already available.") : callback();
-                        // console.log(schemas, value, schemas.includes(value))
-                        // try {
-                        //   setParams(JSON.parse(value));
-                        //   callback();
-                        // } catch (error) {
-                        //   callback("Not a valid object");
-                        // }
+                        schemas.includes(value)
+                          ? callback("This dataset is already available.")
+                          : callback();
                       },
                     },
                   ]}

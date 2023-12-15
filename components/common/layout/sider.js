@@ -1,18 +1,17 @@
+import { Col, Image, Layout, Row } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Layout, Row, Col, Image } from "antd";
 const { Sider } = Layout;
 
-import { useDispatch, useSelector } from "react-redux";
-import { SetTabTypeAction, loderShowHideAction } from "../../../Redux/action";
+import { CaretDownOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { CaretLeftOutlined, CaretDownOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { SetTabTypeAction } from "../../../Redux/action";
 
 const SiderView = ({ layoutCss, height, componentName }) => {
   const workspace = useSelector(
     (state) => state?.workspace?.workspace
   );
-  console.log(workspace)
   const { query } = useRouter();
   const router = useRouter();
   const dispatch = useDispatch();
