@@ -29,7 +29,7 @@ const AddEnvironment = ({
     // "spark.app.name": "SparkApp",
   });
 
-  const [paramsView, setParamsVaew] = useState("FORM");
+  const [paramsView, setParamsVaew] = useState("JSON");
 
   useEffect(() => {
     if (Object.keys(environmentDetails).length > 0) {
@@ -289,10 +289,7 @@ const AddEnvironment = ({
                     );
                   })}
                 </Form.Item>
-              </>
-            )}
-
-            <Row>
+                <Row>
               <Col span={24} style={{ margin: "2vh 0vh 2vh 0vh" }}>
                 <Button
                   style={{ float: "right" }}
@@ -309,6 +306,10 @@ const AddEnvironment = ({
                 </Button>
               </Col>
             </Row>
+              </>
+            )}
+
+            
 
             <div style={{ display: "flex", justifyContent: "end" }}>
               <Button

@@ -514,6 +514,7 @@ const EventNew = ({ EventsCss }) => {
                                     setSingleEventData(e);
                                   }}
                                   id={"eventView" + e?.eventId}
+                                  key={"eventView" + e?.eventId}
                                 >
                                   <Col
                                     span={14}

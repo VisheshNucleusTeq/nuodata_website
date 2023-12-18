@@ -9,17 +9,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { SetTabTypeAction } from "../../../Redux/action";
 
 const SiderView = ({ layoutCss, height, componentName }) => {
-  const workspace = useSelector(
-    (state) => state?.workspace?.workspace
-  );
+  const workspace = useSelector((state) => state?.workspace?.workspace);
   const { query } = useRouter();
   const router = useRouter();
   const dispatch = useDispatch();
   const tabType = useSelector((state) => state.tabType.tabType);
 
   const [showDataModernization, setShowDataModernization] = useState(true);
-  const [showPlatform, setShowPlatform] = useState(false);
+  const [showDataManagement, setShowDataManagement] = useState(false);
   const [accountAndSettings, setAccountAndSettings] = useState(false);
+  const [ingestion, setIngestion] = useState(false);
+
   const [dataModernization] = useState([
     "Dashboard",
     "Define",
@@ -31,9 +31,8 @@ const SiderView = ({ layoutCss, height, componentName }) => {
     "Rollout",
   ]);
 
+  const [dataManagement, setDataManagement] = useState([]);
   const [accountAndSettingsArr, setAccountAndSettingsArr] = useState([]);
-
-  const [ingestion, setIngestion] = useState(false);
   const [ingestionArr, setIngestionArr] = useState([]);
 
   const changePage = async (page, tab) => {
@@ -63,17 +62,14 @@ const SiderView = ({ layoutCss, height, componentName }) => {
         link: "/user-management",
       });
     }
-
     accountAndSettingsArrData.push({
       title: "Repo settings",
       link: "/account-and-settings/repo-settings",
     });
-
     accountAndSettingsArrData.push({
       title: "Target Platforms",
       link: "/account-and-settings/target-platform",
     });
-
     if (["nuodata_admin"].includes(authData?.roleName)) {
       accountAndSettingsArrData.push({
         title: "Events",
@@ -84,6 +80,33 @@ const SiderView = ({ layoutCss, height, componentName }) => {
   }, []);
 
   useEffect(() => {
+    setDataManagement([
+      {
+        title: "Workspace",
+        link: "/ingestion/workspace",
+      },
+      {
+        title: "Pipelines",
+        link: "/ingestion",
+      },
+      {
+        title: "Connections",
+        link: "#",
+      },
+      {
+        title: "Job Runs",
+        link: "#",
+      },
+      {
+        title: "Catalog",
+        link: "#",
+      },
+      {
+        title: "Governance",
+        link: "#",
+      },
+    ]);
+
     if (typeof window !== "undefined") {
       if ("workspace" in localStorage || workspace) {
         setIngestionArr([
@@ -100,6 +123,32 @@ const SiderView = ({ layoutCss, height, componentName }) => {
             link: "/ingestion/create-pipeline",
           },
         ]);
+        setDataManagement([
+          {
+            title: "Workspace",
+            link: "/ingestion/workspace",
+          },
+          {
+            title: "Pipelines",
+            link: "/ingestion",
+          },
+          {
+            title: "Connections",
+            link: "#",
+          },
+          {
+            title: "Job Runs",
+            link: "#",
+          },
+          {
+            title: "Catalog",
+            link: "#",
+          },
+          {
+            title: "Governance",
+            link: "#",
+          },
+        ]);
       } else {
         setIngestionArr([
           {
@@ -109,6 +158,32 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           {
             title: "Dashboard",
             link: "/ingestion",
+          },
+        ]);
+        setDataManagement([
+          {
+            title: "Workspace",
+            link: "/ingestion/workspace",
+          },
+          {
+            title: "Pipelines",
+            link: "/ingestion",
+          },
+          {
+            title: "Connections",
+            link: "#",
+          },
+          {
+            title: "Job Runs",
+            link: "#",
+          },
+          {
+            title: "Catalog",
+            link: "#",
+          },
+          {
+            title: "Governance",
+            link: "#",
           },
         ]);
       }
@@ -145,7 +220,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
                     justifyContent: "center",
                   }}
                 >
-                  {accountAndSettings ? (
+                  {showDataModernization ? (
                     <CaretDownOutlined
                       style={{ color: "#e74860", float: "right" }}
                     />
@@ -209,15 +284,68 @@ const SiderView = ({ layoutCss, height, componentName }) => {
         })}
 
         <Col span={24} className={layoutCss.mainMenuCol}>
-          <Col
-            offset={2}
-            span={20}
-            style={{ height: height / 1.5 + "px" }}
-            className={layoutCss.mainMenu}
-          >
-            Data Management
-          </Col>
+          <Row>
+            <Col
+              offset={2}
+              span={20}
+              style={{ height: height / 1.5 + "px" }}
+              className={layoutCss.mainMenu}
+              onClick={() => {
+                setShowDataManagement(!showDataManagement);
+              }}
+            >
+              <Row style={{ width: "100%" }}>
+                <Col span={22}>Data Management &nbsp;</Col>
+                <Col
+                  span={2}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {showDataManagement ? (
+                    <CaretDownOutlined
+                      style={{ color: "#e74860", float: "right" }}
+                    />
+                  ) : (
+                    <CaretLeftOutlined
+                      style={{ color: "#e74860", float: "right" }}
+                    />
+                  )}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Col>
+        {dataManagement.map((data, i) => {
+          return (
+            showDataManagement && (
+              <Col
+                key={(Math.random() + 1).toString(36).substring(7)}
+                span={24}
+                className={`${layoutCss.mainMenuCol} ${
+                  router.pathname === data?.link ? layoutCss.activeMenu : null
+                }`}
+              >
+                <a
+                  onClick={() => {
+                    changePage(data?.link);
+                  }}
+                >
+                  <Col
+                    offset={4}
+                    span={20}
+                    style={{ height: height / 2 + "px" }}
+                    className={layoutCss.subMainMenu}
+                  >
+                    {data?.title}
+                  </Col>
+                </a>
+              </Col>
+            )
+          );
+        })}
 
         <Col span={24} className={layoutCss.mainMenuCol}>
           <Row>
@@ -284,7 +412,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           );
         })}
 
-        <Col span={24} className={layoutCss.mainMenuCol}>
+        {/* <Col span={24} className={layoutCss.mainMenuCol}>
           <Row>
             <Col
               offset={2}
@@ -295,7 +423,6 @@ const SiderView = ({ layoutCss, height, componentName }) => {
                 setIngestion(!ingestion);
               }}
             >
-              {/* ingestion, setIngestion */}
               <Row style={{ width: "100%" }}>
                 <Col span={22}>Ingestion &nbsp;</Col>
                 <Col
@@ -319,7 +446,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
               </Row>
             </Col>
           </Row>
-        </Col>
+        </Col> */}
 
         {ingestionArr.map((data, i) => {
           return (

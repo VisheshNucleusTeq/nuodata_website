@@ -8,7 +8,7 @@ import {
   CREATENODE,
   GETCONNECTIONDETAIL,
   INGESTIONTEMPLATES,
-  NODEMETADATA
+  NODEMETADATA,
 } from "../../../../network/apiConstants";
 import AddSource from "./addSource";
 import DataTable from "./dataTable";
@@ -63,8 +63,13 @@ const Target = ({ ingestionCss, nodeId }) => {
   }, []);
 
   const getSchema = async (table, connectionId, type) => {
-    const oldRecord = await fetch_retry_get(`${NODEMETADATA}${nodeId}/metadata`);
-    if (oldRecord?.data?.sample_data && oldRecord?.data?.sample_data.length) {
+    const oldRecord = await fetch_retry_get(
+      `${NODEMETADATA}${nodeId}/metadata`
+    );
+    if (
+      (oldRecord?.data?.sample_data && oldRecord?.data?.sample_data.length) ||
+      (oldRecord?.data?.fields && oldRecord?.data?.fields.length)
+    ) {
       // setActiveKey("fields_tab");
       setTableData(oldRecord?.data);
     } else {
@@ -77,7 +82,7 @@ const Target = ({ ingestionCss, nodeId }) => {
         )}&connection_id=${connectionId}&type=${type}&rows=10&node_id=${nodeId}`
       );
       // setActiveKey("fields_tab");
-      setTableData(tableData?.data);
+      tableData?.data && setTableData(tableData?.data);
     }
   };
 

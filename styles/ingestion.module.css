@@ -10,7 +10,7 @@
 }
 
 .addNewWorkspace {
-  justify-content: end;
+  justify-content: flex-end;
   display: flex;
   margin-bottom: 2vh;
 }
@@ -23,7 +23,7 @@
 }
 
 .submitWorkspace {
-  justify-content: end;
+  justify-content: flex-end;
   display: flex;
   margin-top: 2vh;
 }
@@ -89,7 +89,7 @@
 .pipelineBtns {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .draftBtn {

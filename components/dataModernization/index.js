@@ -1,7 +1,7 @@
-import { Row, Col } from "antd";
+import { Col, Row } from "antd";
 import dynamic from "next/dynamic";
-import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 
 // import Define from "./define";
 // import Connect from "./connect";

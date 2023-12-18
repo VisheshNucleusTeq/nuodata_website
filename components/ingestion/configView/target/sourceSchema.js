@@ -23,6 +23,7 @@ import {
   CREATENODE,
   GETCONNECTIONDETAIL,
   RUNPIPELINE,
+  NODEMETADATA
 } from "../../../../network/apiConstants";
 import { loderShowHideAction } from "../../../../Redux/action";
 
@@ -53,8 +54,9 @@ const SourceSchema = ({
     const schemaData = await fetch_retry_get(
       `${GETCONNECTIONDETAIL}${connectionId}/datasets?org_id=${authData?.orgId}&workspace_id=${workspace}&type=${connection?.type}&node_id=${nodeId}`
     );
-    setSchemas(schemaData?.data?.schemas);
+    setSchemas(schemaData?.data?.schemas ? schemaData?.data?.schemas : []);
     dispatch(loderShowHideAction(false));
+    schemaData?.data?.schemas ? setTargetType('exist') : setTargetType('new')
   };
 
   const convertPipeline = async (id) => {
@@ -91,7 +93,21 @@ const SourceSchema = ({
           connection?.type
         }&rows=${data?.rows ? data?.rows : 20}&node_id=${nodeId}`
       );
-      setTableData(tableData?.data);
+
+
+      const oldRecordSchema = await fetch_retry_get(
+        `${NODEMETADATA}${nodeId}/metadata`
+      ); 
+      if (
+        (oldRecordSchema?.data?.sample_data &&
+          oldRecordSchema?.data?.sample_data.length) ||
+        (oldRecordSchema?.data?.fields && oldRecordSchema?.data?.fields.length)
+      ) {
+        // setActiveKey("fields_tab");
+        setTableData(oldRecordSchema?.data);
+      }
+
+      // setTableData(tableData?.data);
 
       let transformation_properties = sourceData?.transformation_properties;
 

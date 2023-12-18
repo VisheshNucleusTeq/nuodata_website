@@ -26,8 +26,28 @@ BaseURL.interceptors.request.use(
     config = updateBaseUrl(config);
 
     if (LOGIN === config?.url) return config;
+
+    const authPage = [
+      "/",
+      "/how-it-works/",
+      "/sign-in/",
+      "/sign-up/",
+      "/contact-us/",
+      "/data-management/",
+      "/sso/",
+      "/sso-login/",
+      "/events/",
+      "/test/",
+      "/new-pages/",
+    ];
+
     const expiryTime = localStorage.getItem("expiryTime");
-    if (expiryTime && expiryTime <= Date.now() && isRefreshing) {
+    if (
+      expiryTime &&
+      expiryTime <= Date.now() &&
+      isRefreshing &&
+      !authPage.includes(window?.location?.pathname)
+    ) {
       isRefreshing = false;
       await refreshToken();
     }

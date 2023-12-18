@@ -9,7 +9,7 @@ const DataTable = ({ ingestionCss, tableData }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (tableData.length) {
+    if (tableData && tableData.length) {
       setData(tableData);
     }
   }, [tableData]);
@@ -17,7 +17,7 @@ const DataTable = ({ ingestionCss, tableData }) => {
   return (
     <div>
       <Table dataSource={data} scroll={{ x: 400 }}>
-        {Object.keys(tableData[0]).map((e) => {
+        {tableData && tableData.length && Object.keys(tableData[0]).map((e) => {
           if (Array.isArray(tableData[0][e])) {
             // return (
             //     <ColumnGroup title={e}>
