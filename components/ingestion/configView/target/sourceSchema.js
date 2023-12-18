@@ -23,7 +23,7 @@ import {
   CREATENODE,
   GETCONNECTIONDETAIL,
   RUNPIPELINE,
-  NODEMETADATA
+  NODEMETADATA,
 } from "../../../../network/apiConstants";
 import { loderShowHideAction } from "../../../../Redux/action";
 
@@ -47,6 +47,7 @@ const SourceSchema = ({
   const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
 
   const [targetType, setTargetType] = useState("exist");
+  const [writeMode, setWriteMode] = useState("append");
 
   const getSchema = async () => {
     dispatch(loderShowHideAction(true));
@@ -56,7 +57,7 @@ const SourceSchema = ({
     );
     setSchemas(schemaData?.data?.schemas ? schemaData?.data?.schemas : []);
     dispatch(loderShowHideAction(false));
-    schemaData?.data?.schemas ? setTargetType('exist') : setTargetType('new')
+    schemaData?.data?.schemas ? setTargetType("exist") : setTargetType("new");
   };
 
   const convertPipeline = async (id) => {
@@ -94,10 +95,9 @@ const SourceSchema = ({
         }&rows=${data?.rows ? data?.rows : 20}&node_id=${nodeId}`
       );
 
-
       const oldRecordSchema = await fetch_retry_get(
         `${NODEMETADATA}${nodeId}/metadata`
-      ); 
+      );
       if (
         (oldRecordSchema?.data?.sample_data &&
           oldRecordSchema?.data?.sample_data.length) ||
@@ -171,6 +171,36 @@ const SourceSchema = ({
         };
       }
 
+      const targetTypeIndex = transformation_properties.findIndex(
+        (item) => item.property_name === "target_type"
+      );
+      if (targetTypeIndex < 0) {
+        transformation_properties.push({
+          property_name: "target_type",
+          property_value: targetType,
+        });
+      } else {
+        transformation_properties[targetTypeIndex] = {
+          property_name: "target_type",
+          property_value: targetType,
+        };
+      }
+
+      const writeModeIndex = transformation_properties.findIndex(
+        (item) => item.property_name === "write_mode"
+      );
+      if (writeModeIndex < 0) {
+        transformation_properties.push({
+          property_name: "write_mode",
+          property_value: writeMode,
+        });
+      } else {
+        transformation_properties[writeModeIndex] = {
+          property_name: "write_mode",
+          property_value: writeMode,
+        };
+      }
+
       const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
         ...sourceData,
         transformation_properties: transformation_properties,
@@ -222,6 +252,21 @@ const SourceSchema = ({
     } else {
       form.setFieldValue("rows", 10);
     }
+
+    const targetTypeIndex = sourceData?.transformation_properties.findIndex(
+      (item) => item.property_name === "target_type"
+    );
+    if (sourceIndex >= 0) {
+      setTargetType(sourceData?.transformation_properties[targetTypeIndex]?.property_value)
+    }
+
+    const writeModeIndex = sourceData?.transformation_properties.findIndex(
+      (item) => item.property_name === "write_mode"
+    );
+    if (writeModeIndex >= 0) {
+      console.log(sourceData?.transformation_properties[writeModeIndex]?.property_value)
+      setWriteMode(sourceData?.transformation_properties[writeModeIndex]?.property_value)
+    }
   };
 
   useEffect(() => {
@@ -235,6 +280,21 @@ const SourceSchema = ({
         <Space size={20}>
           <Image src={`/db_icon/${connection.title}.png`} />
           <b>{connection.title}</b>
+        </Space>
+      </Col>
+
+      <Col span={24} style={{ marginTop: "5vh" }}>
+        <Space>
+          <b>Write Mode:</b>
+          <Radio.Group
+            onChange={(e) => {
+              setWriteMode(e.target.value);
+            }}
+            value={writeMode}
+          >
+            <Radio value={"append"}>Append</Radio>
+            <Radio value={"overwrite"}>Overwrite</Radio>
+          </Radio.Group>
         </Space>
       </Col>
 
