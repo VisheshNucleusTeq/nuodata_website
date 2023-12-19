@@ -199,6 +199,72 @@ const SiderView = ({ layoutCss, height, componentName }) => {
       </div>
 
       <Row style={{ marginTop: "10%" }}>
+
+      <Col span={24} className={layoutCss.mainMenuCol}>
+          <Row>
+            <Col
+              offset={2}
+              span={20}
+              style={{ height: height / 1.5 + "px" }}
+              className={layoutCss.mainMenu}
+              onClick={() => {
+                setShowDataManagement(!showDataManagement);
+              }}
+            >
+              <Row style={{ width: "100%" }}>
+                <Col span={22}>Data Management &nbsp;</Col>
+                <Col
+                  span={2}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {showDataManagement ? (
+                    <CaretDownOutlined
+                      style={{ color: "#e74860", float: "right" }}
+                    />
+                  ) : (
+                    <CaretLeftOutlined
+                      style={{ color: "#e74860", float: "right" }}
+                    />
+                  )}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+        {dataManagement.map((data, i) => {
+          return (
+            showDataManagement && (
+              <Col
+                key={(Math.random() + 1).toString(36).substring(7)}
+                span={24}
+                className={`${layoutCss.mainMenuCol} ${
+                  router.pathname === data?.link ? layoutCss.activeMenu : null
+                }`}
+              >
+                <a
+                  onClick={() => {
+                    changePage(data?.link);
+                  }}
+                >
+                  <Col
+                    offset={4}
+                    span={20}
+                    style={{ height: height / 2 + "px" }}
+                    className={layoutCss.subMainMenu}
+                  >
+                    {data?.title}
+                  </Col>
+                </a>
+              </Col>
+            )
+          );
+        })}
+
+
         <Col span={24} className={layoutCss.mainMenuCol}>
           <Row>
             <Col
@@ -283,70 +349,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           );
         })}
 
-        <Col span={24} className={layoutCss.mainMenuCol}>
-          <Row>
-            <Col
-              offset={2}
-              span={20}
-              style={{ height: height / 1.5 + "px" }}
-              className={layoutCss.mainMenu}
-              onClick={() => {
-                setShowDataManagement(!showDataManagement);
-              }}
-            >
-              <Row style={{ width: "100%" }}>
-                <Col span={22}>Data Management &nbsp;</Col>
-                <Col
-                  span={2}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {showDataManagement ? (
-                    <CaretDownOutlined
-                      style={{ color: "#e74860", float: "right" }}
-                    />
-                  ) : (
-                    <CaretLeftOutlined
-                      style={{ color: "#e74860", float: "right" }}
-                    />
-                  )}
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Col>
-        {dataManagement.map((data, i) => {
-          return (
-            showDataManagement && (
-              <Col
-                key={(Math.random() + 1).toString(36).substring(7)}
-                span={24}
-                className={`${layoutCss.mainMenuCol} ${
-                  router.pathname === data?.link ? layoutCss.activeMenu : null
-                }`}
-              >
-                <a
-                  onClick={() => {
-                    changePage(data?.link);
-                  }}
-                >
-                  <Col
-                    offset={4}
-                    span={20}
-                    style={{ height: height / 2 + "px" }}
-                    className={layoutCss.subMainMenu}
-                  >
-                    {data?.title}
-                  </Col>
-                </a>
-              </Col>
-            )
-          );
-        })}
-
+       
         <Col span={24} className={layoutCss.mainMenuCol}>
           <Row>
             <Col
