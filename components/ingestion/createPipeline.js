@@ -12,8 +12,8 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Build from "./pipelinePages/build";
 import Define from "./pipelinePages/define";
+import Build from "./pipelinePages/build";
 
 import { loderShowHideAction, setWorkspaceAction } from "../../Redux/action";
 import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";

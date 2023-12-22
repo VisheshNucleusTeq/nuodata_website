@@ -4,9 +4,9 @@ import React, { useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
 import { useSelector } from "react-redux";
 
+import Source from "../configView/source/source";
 import Expression from "../configView/expression/expression";
-import Filter from "../configView/filter/index";
-import Source from "../configView/source/index";
+import Filter from "../configView/filter/filter";
 import Target from "../configView/target/target";
 import EdgesFlow from "../reactflow";
 

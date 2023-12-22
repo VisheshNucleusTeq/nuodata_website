@@ -12,9 +12,9 @@ function CustomNodes({ data, isConnectable, type, selected }) {
         alignItems: "center",
       }}
     >
-      {type != "textUpdaterSource" && (
+      {data?.label != "Source" && (
         <Handle
-          type="target"
+          type="target" // LEFT
           position={Position.Left}
           isConnectable={isConnectable}
         />
@@ -57,10 +57,9 @@ function CustomNodes({ data, isConnectable, type, selected }) {
           </span>
         </Col>
       </Row>
-      {/* {data.label} */}
-      {type != "textUpdaterTarget" && (
+      {data?.label != "Target" && (
         <Handle
-          type="source"
+          type="source" // RIGHT
           position={Position.Right}
           isConnectable={isConnectable}
         />

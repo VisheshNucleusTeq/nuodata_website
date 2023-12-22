@@ -1,17 +1,18 @@
-import { Button, Form, Input, Space, message } from "antd";
 import React, { useEffect } from "react";
+import { Form, Input, Button, Space, message } from "antd";
 import { useDispatch } from "react-redux";
 
-import { useRouter } from "next/router";
-import { loderShowHideAction } from "../../../../Redux/action";
-import { fetch_retry_put } from "../../../../network/api-manager";
 import { CREATENODE } from "../../../../network/apiConstants";
+import { fetch_retry_put } from "../../../../network/api-manager";
+import { loderShowHideAction } from "../../../../Redux/action";
+import { useRouter } from "next/router";
 const General = ({
   ingestionCss,
   nodeId,
   sourceData,
   setSourceData,
   setActiveKey,
+  name
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const General = ({
     <>
       <Form form={form} layout="vertical">
         <Form.Item
-          label={"Filter name"}
+          label={`${name} name`}
           name={"transformation_name"}
           rules={[
             {
@@ -120,7 +121,7 @@ const General = ({
                 savePipline("build");
               }}
             >
-              Save & next
+              Save & select filter
             </Button>
           </Space>
         </div>

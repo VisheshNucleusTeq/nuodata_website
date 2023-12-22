@@ -1,17 +1,7 @@
-import {
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  Row,
-  Space
-} from "antd";
+import { Button, Checkbox, Col, Form, Input, Row, Space } from "antd";
 import React, { useEffect, useState } from "react";
 
-import {
-  MinusCircleOutlined
-} from "@ant-design/icons";
+import { MinusCircleOutlined } from "@ant-design/icons";
 
 const AddEnvironment = ({
   ingestionCss,
@@ -38,6 +28,20 @@ const AddEnvironment = ({
         params: JSON.stringify(environmentDetails?.params),
       });
       setParams(environmentDetails?.params);
+    } else {
+      setParams({
+        "spark.executor.cores": "4",
+        "spark.executor.memory": "14G",
+        "spark.driver.memory": "14G",
+        "spark.driver.cores": "4",
+        "spark.executor.instances": "3",
+        "spark.dynamicAllocation.maxExecutors": "100",
+        "spark.emr-serverless.driver.disk": "20G",
+        "spark.emr-serverless.executor.disk": "20G",
+        "spark.dynamicAllocation.minExecutors": "0",
+        "spark.dynamicAllocation.maxExecutors": "100",
+        "spark.dynamicAllocation.initialExecutors": "3",
+      });
     }
   }, [environmentDetails]);
 
@@ -290,26 +294,24 @@ const AddEnvironment = ({
                   })}
                 </Form.Item>
                 <Row>
-              <Col span={24} style={{ margin: "2vh 0vh 2vh 0vh" }}>
-                <Button
-                  style={{ float: "right" }}
-                  type="primary"
-                  icon={<MinusCircleOutlined />}
-                  onClick={() => {
-                    setParams({
-                      ...params,
-                      "": "",
-                    });
-                  }}
-                >
-                  Add more
-                </Button>
-              </Col>
-            </Row>
+                  <Col span={24} style={{ margin: "2vh 0vh 2vh 0vh" }}>
+                    <Button
+                      style={{ float: "right" }}
+                      type="primary"
+                      icon={<MinusCircleOutlined />}
+                      onClick={() => {
+                        setParams({
+                          ...params,
+                          "": "",
+                        });
+                      }}
+                    >
+                      Add more
+                    </Button>
+                  </Col>
+                </Row>
               </>
             )}
-
-            
 
             <div style={{ display: "flex", justifyContent: "end" }}>
               <Button

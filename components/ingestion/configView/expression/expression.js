@@ -1,15 +1,52 @@
-import React, {useState} from "react";
-import { Row, Col, Tabs } from "antd";
-import General from "./general";
+import { Col, Row, Tabs } from "antd";
+import React, { useEffect, useState } from "react";
+import { fetch_retry_get } from "../../../../network/api-manager";
+import { CREATENODE, NODEMETADATA } from "../../../../network/apiConstants";
+import General from "../commonView/general";
+import DataTable from "../commonView/dataTable";
 
 const Expression = ({ ingestionCss, nodeId, updateble }) => {
-    const [activeKey, setActiveKey] = useState("general_tab");
-    const [sourceData, setSourceData] = useState({
-        transformation_name: "",
-        description: "",
-        transformation_properties: [],
-      });
-    
+  const [activeKey, setActiveKey] = useState("general_tab");
+  const [tableData, setTableData] = useState({});
+  const [sourceNode, setSourceNode] = useState(null);
+  const [sourceData, setSourceData] = useState({
+    transformation_name: "",
+    description: "",
+    transformation_properties: [],
+  });
+
+  const getNodeRecord = async (nodeId) => {
+    const oldRecordSchema = await fetch_retry_get(
+      `${NODEMETADATA}${nodeId}/metadata`
+    );
+    if (
+      (oldRecordSchema?.data?.sample_data &&
+        oldRecordSchema?.data?.sample_data.length) ||
+      (oldRecordSchema?.data?.fields && oldRecordSchema?.data?.fields.length)
+    ) {
+      // setActiveKey("fields_tab");
+      setTableData(oldRecordSchema?.data);
+    }
+
+    const oldRecord = await fetch_retry_get(`${CREATENODE}/${nodeId}`);
+    setSourceData({
+      transformation_name: oldRecord?.data?.transformation_name
+        ? oldRecord?.data?.transformation_name
+        : "",
+      description: oldRecord?.data?.description
+        ? oldRecord?.data?.description
+        : "",
+      transformation_properties:
+        oldRecord?.data?.transformation_properties &&
+        oldRecord?.data?.transformation_properties?.length
+          ? oldRecord?.data?.transformation_properties
+          : [],
+    });
+  };
+
+  useEffect(() => {
+    getNodeRecord(nodeId);
+  }, []);
 
   return (
     <Row>
@@ -31,6 +68,7 @@ const Expression = ({ ingestionCss, nodeId, updateble }) => {
                   sourceData={sourceData}
                   setSourceData={setSourceData}
                   setActiveKey={setActiveKey}
+                  name="Expression"
                 />
               </Tabs.TabPane>
 
@@ -59,12 +97,13 @@ const Expression = ({ ingestionCss, nodeId, updateble }) => {
             </Tabs.TabPane> */}
             </Tabs>
           </Tabs.TabPane>
-          {/* <Tabs.TabPane tab="Preview" key="2" disabled={!tableData?.data}>
-          <DataTable
+          <Tabs.TabPane tab="Preview" key="2">
+            <DataTable
               ingestionCss={ingestionCss}
               tableData={tableData?.data}
+              nodeId={nodeId}
             />
-        </Tabs.TabPane> */}
+          </Tabs.TabPane>
         </Tabs>
       </Col>
     </Row>

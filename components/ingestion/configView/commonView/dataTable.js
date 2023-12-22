@@ -2,19 +2,19 @@ import { Modal, Spin, Table, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import { fetch_retry_get } from "../../../../network/api-manager";
 import { PREVIEWDATA } from "../../../../network/apiConstants";
-const DataTable = ({ ingestionCss, tableData }) => {
+const DataTable = ({ ingestionCss, nodeId }) => {
   const [spinning, setSpinning] = useState(true);
-  const [tableDatas, setTableDatas] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [tableColumns, setTableColumns] = useState([]);
   const [page, setPage] = useState(1);
 
   const getPreviewData = async () => {
     setSpinning(true);
-    // const previewData = await fetch_retry_get(
-    //   `${PREVIEWDATA}${nodeId}/preview`
-    // );
-    if (tableData?.length) {
-      const checkKey = Object.keys(tableData[0]);
+    const previewData = await fetch_retry_get(
+      `${PREVIEWDATA}${nodeId}/preview`
+    );
+    if (previewData?.data?.sample_data?.length) {
+      const checkKey = Object.keys(previewData?.data?.sample_data[0]);
       const tableColumn = [...checkKey, "data"].map((e) => {
         return {
           title: e,
@@ -90,12 +90,12 @@ const DataTable = ({ ingestionCss, tableData }) => {
         ...tableColumn,
       ]);
     }
-    setTableDatas(
-      tableData?.length
+    setTableData(
+      previewData?.data?.sample_data?.length
         ? [{
-          ...tableData[0],
-          data : tableData
-        },...tableData]
+          ...previewData?.data?.sample_data[0],
+          data : previewData?.data?.sample_data
+        },...previewData?.data?.sample_data]
         : []
     );
     setSpinning(false);
@@ -103,12 +103,12 @@ const DataTable = ({ ingestionCss, tableData }) => {
 
   useEffect(() => {
     getPreviewData();
-  }, [tableData]);
+  }, [nodeId]);
 
   return (
     <div>
       <Table
-        dataSource={tableDatas}
+        dataSource={tableData}
         columns={tableColumns}
         scroll={{ x: "max-content" }}
         loading={{
@@ -134,57 +134,3 @@ const DataTable = ({ ingestionCss, tableData }) => {
 };
 
 export default DataTable;
-
-
-// import React, { useState, useEffect } from "react";
-// import { Divider, Radio, Table } from "antd";
-// const { Column, ColumnGroup } = Table;
-
-// import create from "@ant-design/icons/lib/components/IconFont";
-// var columnData = "";
-// const DataTable = ({ ingestionCss, tableData }) => {
-//   const [columns, setColumns] = useState([]);
-//   const [data, setData] = useState([]);
-
-//   useEffect(() => {
-//     if (tableData.length) {
-//       setData(tableData);
-//     }
-//   }, [tableData]);
-
-//   return (
-//     <div>
-//       <Table dataSource={data} scroll={{ x: 400 }}>
-//         {Object.keys(tableData[0]).map((e) => {
-//           if (Array.isArray(tableData[0][e])) {
-//             // return (
-//             //     <ColumnGroup title={e}>
-//             //       {(tableData[0] && tableData[0][e]) && Object.keys(tableData[0][e][0]).map((ee) => {
-//             //         if (typeof tableData[0][ee] == "object") {
-//             //         } else {
-//             //           return <Column title={ee} dataIndex={ee} key={ee} />;
-//             //         }
-//             //       })}
-//             //     </ColumnGroup>
-//             //   );
-//           } else if (typeof tableData[0][e] == "object") {
-//             // return (
-//             //   <ColumnGroup title={e}>
-//             //     {(tableData[0] && tableData[0][e]) && Object.keys(tableData[0][e]).map((ee) => {
-//             //       if (typeof tableData[0][ee] == "object") {
-//             //       } else {
-//             //         return <Column title={ee} dataIndex={ee} key={ee} />;
-//             //       }
-//             //     })}
-//             //   </ColumnGroup>
-//             // );
-//           } else {
-//             return <Column title={e} dataIndex={e} key={e} />;
-//           }
-//         })}
-//       </Table>
-//     </div>
-//   );
-// };
-
-// export default DataTable;

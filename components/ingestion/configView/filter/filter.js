@@ -2,9 +2,9 @@ import { Col, Row, Tabs } from "antd";
 import React, { useEffect, useState } from "react";
 import { fetch_retry_get } from "../../../../network/api-manager";
 import { CREATENODE, NODEMETADATA } from "../../../../network/apiConstants";
-import DataTable from "./dataTable";
+import DataTable from "../commonView/dataTable";
 import FilterCondition from "./filterCondition";
-import General from "./general";
+import General from "../commonView/general";
 import KeyTable from "./keyTable";
 const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
   const [activeKey, setActiveKey] = useState("general_tab");
@@ -69,6 +69,7 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
                   sourceData={sourceData}
                   setSourceData={setSourceData}
                   setActiveKey={setActiveKey}
+                  name={'Filter'}
                 />
               </Tabs.TabPane>
 
@@ -79,7 +80,7 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
                   nodeId={nodeId}
                 />
               </Tabs.TabPane>
-              {JSON.stringify(tableData)}
+              {/* {JSON.stringify(tableData)} */}
 
               {/* {["mysql", "mongodb", "snowflake", "postgres"].includes(
                   connection.type
@@ -101,10 +102,10 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
               {/* )} */}
             </Tabs>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Preview" key="2" disabled={!tableData?.data}>
+          <Tabs.TabPane tab="Preview" key="2">
             <DataTable
                 ingestionCss={ingestionCss}
-                tableData={tableData?.data}
+                nodeId={nodeId}
               />
           </Tabs.TabPane>
         </Tabs>
