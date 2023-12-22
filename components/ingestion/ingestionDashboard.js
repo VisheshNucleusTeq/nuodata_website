@@ -187,10 +187,12 @@ const IngestionDashboard = ({ ingestionCss }) => {
           setIsModalOpen(false);
         }}
         onCancel={() => {
-          setIsModalOpen(workspace ? false : true);
+          // setIsModalOpen(workspace ? false : true);
+          setIsModalOpen(workspace ? false : false);
         }}
         footer={null}
-        closable={workspace ? true : false}
+        // closable={workspace ? true : false}
+        closable={workspace ? true : true}
       >
         <>
           <div className={ingestionCss.addNewWorkspace}>
