@@ -177,7 +177,7 @@ const SourceSchemaInput = ({
             <Row>
               <Col span={12}>
                 <Form.Item
-                  label={"Source"}
+                  label={"Target"}
                   labelAlign={"left"}
                   name={"target_table"}
                   rules={[
@@ -237,7 +237,7 @@ const SourceSchemaInput = ({
                       { value: "csv", label: "csv" },
                       { value: "avro", label: "avro" },
                       { value: "parquet", label: "parquet" },
-                      { value: "orc", label: "ord" },
+                      { value: "orc", label: "orc" },
                       { value: "json", label: "json" },
                     ]}
                     className="inputSelect"
