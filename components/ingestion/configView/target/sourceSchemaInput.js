@@ -95,9 +95,9 @@ const SourceSchemaInput = ({
     transformation_properties = setOldNewValue(transformation_properties, "connection_id", connectionId);
     transformation_properties = setOldNewValue(transformation_properties, "connection_type", connection?.type);
     
-    console.log(transformation_properties, data);
-    dispatch(loderShowHideAction(false));
-    return true;
+    // console.log(transformation_properties, data);
+    // dispatch(loderShowHideAction(false));
+    // return true;
 
     const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
       ...sourceData,
