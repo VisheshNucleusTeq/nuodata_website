@@ -32,54 +32,73 @@ const SourceSchemaInput = ({
   const dispatch = useDispatch();
 
   const [writeMode, setWriteMode] = useState("append");
+  const [tableType, setTableType] = useState("");
 
-  const getTableData = async (data) => {
-    dispatch(loderShowHideAction(true));
-    let transformation_properties = sourceData?.transformation_properties;
 
+  const setOldNewValue = (transformation_properties, property_name, property_value) => {
     const sourceIndex = transformation_properties.findIndex(
-      (item) => item.property_name === "target_table"
+      (item) => item.property_name === property_name
     );
     if (sourceIndex < 0) {
       transformation_properties.push({
-        property_name: "target_table",
-        property_value: data?.table,
+        property_name: property_name,
+        property_value: property_value,
       });
     } else {
       transformation_properties[sourceIndex] = {
-        property_name: "target_table",
-        property_value: data?.table,
+        property_name: property_name,
+        property_value: property_value,
       };
     }
-    const connectionIndex = transformation_properties.findIndex(
-      (item) => item.property_name === "connection_id"
+    return transformation_properties;
+  }
+
+  const deleteOldNewValue = (transformation_properties, property_name) => {
+    transformation_properties = transformation_properties.filter(
+      (item) => item.property_name != property_name
     );
-    if (connectionIndex < 0) {
-      transformation_properties.push({
-        property_name: "connection_id",
-        property_value: connectionId,
-      });
-    } else {
-      transformation_properties[connectionIndex] = {
-        property_name: "connection_id",
-        property_value: connectionId,
-      };
+    return transformation_properties;
+  }
+
+  const getTableData = async (data) => {
+    
+
+    dispatch(loderShowHideAction(true));
+    var transformation_properties = sourceData?.transformation_properties;
+    transformation_properties = setOldNewValue(transformation_properties, "target_table", data?.target_table);
+    transformation_properties = setOldNewValue(transformation_properties, "insert_type", data?.insert_type);
+    transformation_properties = setOldNewValue(transformation_properties, "file_format", data?.file_format);
+    transformation_properties = setOldNewValue(transformation_properties, "file_format", data?.file_format);
+
+    if(data?.table_type){
+      transformation_properties = setOldNewValue(transformation_properties, "table_type", data?.table_type);
+      if(data?.table_type == 'iceberg'){
+        transformation_properties = setOldNewValue(transformation_properties, "database", data?.database);
+        transformation_properties = setOldNewValue(transformation_properties, "catalog", data?.catalog);
+      }else{
+        
+        transformation_properties = deleteOldNewValue(transformation_properties, "database");
+        transformation_properties = deleteOldNewValue(transformation_properties, "catalog");
+        // delete transformation_properties['database']
+        // delete transformation_properties['catalog']
+      }
+      transformation_properties = setOldNewValue(transformation_properties, "table_name", data?.table_name);
+    }else{
+      transformation_properties = deleteOldNewValue(transformation_properties, "database");
+      transformation_properties = deleteOldNewValue(transformation_properties, "catalog");
+      transformation_properties = deleteOldNewValue(transformation_properties, "table_name");
+      // delete transformation_properties['database']
+      // delete transformation_properties['catalog']
+      // delete transformation_properties['table_name']
     }
 
-    const connectionTypeIndex = transformation_properties.findIndex(
-      (item) => item.property_name === "connection_type"
-    );
-    if (connectionTypeIndex < 0) {
-      transformation_properties.push({
-        property_name: "connection_type",
-        property_value: connection?.type,
-      });
-    } else {
-      transformation_properties[connectionTypeIndex] = {
-        property_name: "connection_type",
-        property_value: connection?.type,
-      };
-    }
+    transformation_properties = setOldNewValue(transformation_properties, "connection_id", connectionId);
+    transformation_properties = setOldNewValue(transformation_properties, "connection_type", connection?.type);
+    
+    console.log(transformation_properties, data);
+    dispatch(loderShowHideAction(false));
+    return true;
+
     const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
       ...sourceData,
       transformation_properties: transformation_properties,
@@ -102,7 +121,7 @@ const SourceSchemaInput = ({
     );
     if (sourceIndex >= 0) {
       form.setFieldValue(
-        "table",
+        "target_table",
         sourceData?.transformation_properties[sourceIndex]?.property_value
       );
     }
@@ -160,18 +179,18 @@ const SourceSchemaInput = ({
                 <Form.Item
                   label={"Source"}
                   labelAlign={"left"}
-                  name={"table"}
+                  name={"target_table"}
                   rules={[
                     {
                       required: true,
-                      message: "Source is required.",
+                      message: "Target is required.",
                     },
                   ]}
                 >
                   <Input
                     key={"input-source-name"}
                     className={"input"}
-                    name={"table"}
+                    name={"target_table"}
                     placeholder="Source Name"
                   />
                 </Form.Item>
@@ -194,7 +213,7 @@ const SourceSchemaInput = ({
                   <Select
                     options={[
                       { value: "append", label: "Append" },
-                      { value: "overwrite", label: "Overwrite" }
+                      { value: "overwrite", label: "Overwrite" },
                     ]}
                     className="inputSelect"
                   />
@@ -233,88 +252,100 @@ const SourceSchemaInput = ({
                   label={"Table Type"}
                   labelAlign={"left"}
                   name={"table_type"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Table type is required.",
-                    },
-                  ]}
+                  rules={
+                    [
+                      // {
+                      //   required: true,
+                      //   message: "Table type is required.",
+                      // },
+                    ]
+                  }
                 >
                   <Select
+                    onChange={(e) => {
+                      setTableType(e);
+                    }}
                     options={[
+                      { value: "", label: "None of them" },
                       { value: "iceberg", label: "Iceberg" },
-                      { value: "delta", label: "Delta" }
+                      { value: "delta", label: "Delta" },
                     ]}
                     className="inputSelect"
+                    defaultValue={""}
                   />
                 </Form.Item>
               </Col>
+              {tableType && (
+                <Col span={24}>
+                  <Row>
+                    <Col span={12}>
+                      <Form.Item
+                        label={"Database"}
+                        labelAlign={"left"}
+                        name={"database"}
+                        rules={[
+                          {
+                            required: true,
+                            message: "Database is required.",
+                          },
+                        ]}
+                      >
+                        <Input
+                          key={"input-database"}
+                          className={"input"}
+                          name={"database"}
+                          placeholder="Database"
+                        />
+                      </Form.Item>
+                    </Col>
 
+                    <Col span={2} />
 
-              <Col span={12}>
-                <Form.Item
-                  label={"Database"}
-                  labelAlign={"left"}
-                  name={"database"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Database is required.",
-                    },
-                  ]}
-                >
-                  <Input
-                    key={"input-database"}
-                    className={"input"}
-                    name={"database"}
-                    placeholder="Database"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={2} />
-
-              <Col span={10}>
-                <Form.Item
-                  label={"Catalog"}
-                  labelAlign={"left"}
-                  name={"catalog"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Catalog is required.",
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      { value: "glue_catalog", label: "Glue Catalog" },
-                    ]}
-                    className="inputSelect"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item
-                  label={"Table Name"}
-                  labelAlign={"left"}
-                  name={"table_name"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Source is required.",
-                    },
-                  ]}
-                >
-                  <Input
-                    key={"input-table-name"}
-                    className={"input"}
+                    <Col span={10}>
+                      <Form.Item
+                        label={"Catalog"}
+                        labelAlign={"left"}
+                        name={"catalog"}
+                        rules={[
+                          {
+                            required: true,
+                            message: "Catalog is required.",
+                          },
+                        ]}
+                      >
+                        <Select
+                          options={[
+                            { value: "glue_catalog", label: "Glue Catalog" },
+                          ]}
+                          className="inputSelect"
+                        />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Col>
+              )}
+              {tableType && tableType == "iceberg" && (
+                <Col span={12}>
+                  <Form.Item
+                    label={"Table Name"}
+                    labelAlign={"left"}
                     name={"table_name"}
-                    placeholder="Source Name"
-                  />
-                </Form.Item>
-              </Col>
+                    rules={[
+                      {
+                        required: true,
+                        message: "Source is required.",
+                      },
+                    ]}
+                  >
+                    <Input
+                      key={"input-table-name"}
+                      className={"input"}
+                      name={"table_name"}
+                      placeholder="Source Name"
+                    />
+                  </Form.Item>
+                </Col>
+              )}
 
               <Col span={24}>
                 <Button
