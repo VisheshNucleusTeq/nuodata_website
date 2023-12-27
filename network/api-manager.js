@@ -73,6 +73,7 @@ export const fetch_retry_put = async (endpoint, payload = {}) => {
 
 export const fetch_retry_delete = async (endpoint, payload = {}) => {
   try {
+    console.log("payload --- ", payload)
     return await retry(
       async () => {
         const response = await ApiInstance.delete(endpoint, payload);

@@ -232,6 +232,7 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
                     key="fields_tab"
                     disabled={!tableData?.fields}
                   >
+                    {/* {JSON.stringify(connection)} */}
                     <KeyTable
                       key={Date.now()}
                       ingestionCss={ingestionCss}
@@ -239,6 +240,8 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
                       nodeId={nodeId}
                       sourceData={sourceData}
                       setSourceData={setSourceData}
+                      pipeline={pipeline}
+                      connection={connection}
                     />
                   </Tabs.TabPane>
                 )}
