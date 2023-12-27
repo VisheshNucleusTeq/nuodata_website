@@ -1,17 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Input, Button, Tree, Row, Col } from "antd";
 const { TextArea } = Input;
 import AnalyzeDetailPopup from "../components/dataModernization/graphView/analyzeDetailPopup";
 const Test = () => {
   const [modalData, setModalData] = useState({});
-  const [data, setData] = useState({});
+  // const [data, setData] = useState({});
+  const [data, setData] = useState('demo');
+  const textareaRef = useRef();
 
   const [treeDataArr, setTreeDataArr] = useState([]);
   const [treeData, setTreeData] = useState([]);
+  const cursorPosition = 0;
 
   const handleMessageChange = (event) => {
     setData(event.target.value);
   };
+
+  return (
+    <div>
+      {cursorPosition}
+       <textarea
+    ref={textareaRef}
+    onBlur={() => textareaRef.current.setSelectionRange(cursorPosition, cursorPosition)}
+  />
+      {/* <TextArea value={data} onFocus={()=>{
+const selectionStart = textareaRef?.current?.selectionStart;
+const selectionEnd = textareaRef?.current?.selectionEnd;
+
+console.log(selectionStart, selectionEnd)
+      }}></TextArea> */}
+      <Button onClick={()=>{ 
+
+
+      }}>SUM("value1", "value2")</Button>
+    </div>
+  )
 
   return (
     <>

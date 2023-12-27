@@ -31,6 +31,8 @@ const SourceSchemaInput = ({
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
+  const [writeMode, setWriteMode] = useState("append");
+
   const getTableData = async (data) => {
     dispatch(loderShowHideAction(true));
     let transformation_properties = sourceData?.transformation_properties;
@@ -120,6 +122,30 @@ const SourceSchemaInput = ({
           </Space>
         </Col>
 
+        {/* <Col span={24} style={{ marginTop: "5vh" }}>
+        <Space>
+          <b>Insert Type:</b>
+          <Radio.Group
+            onChange={(e) => {
+              setWriteMode(e.target.value);
+            }}
+            value={writeMode}
+          >
+            <Radio value={"append"}>Append</Radio>
+            <Radio value={"overwrite"}>Overwrite</Radio>
+          </Radio.Group>
+        </Space>
+      </Col>
+
+      <Col span={24} style={{ marginTop: "5vh" }}>
+        <Space>
+          <b>File Format:</b>
+          <Select options={
+            []
+          }></Select>
+        </Space>
+      </Col> */}
+
         <Col span={24} style={{ marginTop: "5vh" }}>
           <Form
             form={form}
@@ -146,6 +172,145 @@ const SourceSchemaInput = ({
                     key={"input-source-name"}
                     className={"input"}
                     name={"table"}
+                    placeholder="Source Name"
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={2} />
+
+              <Col span={10}>
+                <Form.Item
+                  label={"Inset Type"}
+                  labelAlign={"left"}
+                  name={"insert_type"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Inset type is required.",
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      { value: "append", label: "Append" },
+                      { value: "overwrite", label: "Overwrite" }
+                    ]}
+                    className="inputSelect"
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={12}>
+                <Form.Item
+                  label={"File Format"}
+                  labelAlign={"left"}
+                  name={"file_format"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "File format is required.",
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      { value: "csv", label: "csv" },
+                      { value: "avro", label: "avro" },
+                      { value: "parquet", label: "parquet" },
+                      { value: "orc", label: "ord" },
+                      { value: "json", label: "json" },
+                    ]}
+                    className="inputSelect"
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={2} />
+
+              <Col span={10}>
+                <Form.Item
+                  label={"Table Type"}
+                  labelAlign={"left"}
+                  name={"table_type"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Table type is required.",
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      { value: "iceberg", label: "Iceberg" },
+                      { value: "delta", label: "Delta" }
+                    ]}
+                    className="inputSelect"
+                  />
+                </Form.Item>
+              </Col>
+
+
+              <Col span={12}>
+                <Form.Item
+                  label={"Database"}
+                  labelAlign={"left"}
+                  name={"database"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Database is required.",
+                    },
+                  ]}
+                >
+                  <Input
+                    key={"input-database"}
+                    className={"input"}
+                    name={"database"}
+                    placeholder="Database"
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={2} />
+
+              <Col span={10}>
+                <Form.Item
+                  label={"Catalog"}
+                  labelAlign={"left"}
+                  name={"catalog"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Catalog is required.",
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      { value: "glue_catalog", label: "Glue Catalog" },
+                    ]}
+                    className="inputSelect"
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={12}>
+                <Form.Item
+                  label={"Table Name"}
+                  labelAlign={"left"}
+                  name={"table_name"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Source is required.",
+                    },
+                  ]}
+                >
+                  <Input
+                    key={"input-table-name"}
+                    className={"input"}
+                    name={"table_name"}
                     placeholder="Source Name"
                   />
                 </Form.Item>

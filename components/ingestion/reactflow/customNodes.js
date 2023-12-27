@@ -1,8 +1,31 @@
-import { Handle, Position } from "reactflow";
 import { Col, Image, Row } from "antd";
+import { Handle, Position } from "reactflow";
 import ingestionCss from "../../../styles/ingestion.module.css";
 
 function CustomNodes({ data, isConnectable, type, selected }) {
+  const getFileName = (type) => {
+    switch (type) {
+      case "snowflake":
+        return "Snowflake";
+        break;
+      case "postgres":
+        return "Postgres";
+        break;
+      case "s3bucket":
+        return "S3Bucket";
+        break;
+      case "mongodb":
+        return "MongoDB";
+        break;
+      case "mysql":
+        return "MySQL";
+        break;
+      default:
+        return null;
+        break;
+    }
+  };
+
   return (
     <div
       className={ingestionCss.pipelineStepTabEdge}
@@ -21,11 +44,12 @@ function CustomNodes({ data, isConnectable, type, selected }) {
       )}
       <Row>
         <Col span={24} className={ingestionCss.pipelineStepTabIconEdge}>
-          {data?.connection_type ? (
+          {data?.connection_type && getFileName(data?.connection_type) ? (
             <>
+              {/* {data?.connection_type} */}
               <Image
                 alt={data?.connection_type}
-                src={`/db_icon/${data?.connection_type}.png`}
+                src={`/db_icon/${getFileName(data?.connection_type)}.png`}
                 preview={false}
                 width={"1vw"}
                 height={"1vw"}
