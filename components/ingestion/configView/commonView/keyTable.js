@@ -171,13 +171,13 @@ const keyTable = ({
                       key={(Math.random() + 1).toString(36).substring(7)}
                       align="center"
                     >
-                      <EditOutlined
+                      {/* <EditOutlined
                         onClick={() => {
                           setUpdateRecord(record);
                           setModalVisible(true);
                           form.setFieldValue("name", record?.name);
                         }}
-                      />
+                      /> */}
                       <Popconfirm
                         title="Are you sure to delete this field?"
                         description="Are you sure to delete this field?"

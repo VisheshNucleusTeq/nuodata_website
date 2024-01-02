@@ -127,55 +127,55 @@ const KeyTable = ({
               }}
               columns={[
                 ...columns,
-                {
-                  title: "Action",
-                  dataIndex: "action",
-                  list: true,
-                  render: (_, record) => {
-                    return (
-                      <Space
-                        size="middle"
-                        key={(Math.random() + 1).toString(36).substring(7)}
-                        align="center"
-                      >
-                        {updateName == record?.name ? (
-                          <Space>
-                            <CheckOutlined
-                              onClick={async () => {
-                                try {
-                                  let tableData = JSON.parse(
-                                    JSON.stringify(data)
-                                  );
-                                  const formData = await form.validateFields();
-                                  const index = tableData.findIndex(
-                                    (e) => e?.name == updateName
-                                  );
-                                  if (index != -1) {
-                                    tableData[index] = formData;
-                                    setData(tableData);
-                                  }
-                                } catch (e) {}
-                                setUpdateName(null);
-                              }}
-                            />
-                            <CloseOutlined
-                              onClick={() => {
-                                setUpdateName(null);
-                              }}
-                            />
-                          </Space>
-                        ) : (
-                          <EditOutlined
-                            onClick={() => {
-                              setUpdateName(record?.name);
-                              form.setFieldsValue({ ...record });
-                            }}
-                          />
-                        )}
-                      </Space>
-                    );
-                  },
-                },
+                // {
+                //   title: "Action",
+                //   dataIndex: "action",
+                //   list: true,
+                //   render: (_, record) => {
+                //     return (
+                //       <Space
+                //         size="middle"
+                //         key={(Math.random() + 1).toString(36).substring(7)}
+                //         align="center"
+                //       >
+                //         {updateName == record?.name ? (
+                //           <Space>
+                //             <CheckOutlined
+                //               onClick={async () => {
+                //                 try {
+                //                   let tableData = JSON.parse(
+                //                     JSON.stringify(data)
+                //                   );
+                //                   const formData = await form.validateFields();
+                //                   const index = tableData.findIndex(
+                //                     (e) => e?.name == updateName
+                //                   );
+                //                   if (index != -1) {
+                //                     tableData[index] = formData;
+                //                     setData(tableData);
+                //                   }
+                //                 } catch (e) {}
+                //                 setUpdateName(null);
+                //               }}
+                //             />
+                //             <CloseOutlined
+                //               onClick={() => {
+                //                 setUpdateName(null);
+                //               }}
+                //             />
+                //           </Space>
+                //         ) : (
+                //           <EditOutlined
+                //             onClick={() => {
+                //               setUpdateName(record?.name);
+                //               form.setFieldsValue({ ...record });
+                //             }}
+                //           />
+                //         )}
+                //       </Space>
+                //     );
+                //   },
+                // },
               ]?.map((columnData) => {
                 return {
                   ...columnData,

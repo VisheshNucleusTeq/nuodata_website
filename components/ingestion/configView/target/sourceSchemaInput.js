@@ -34,6 +34,8 @@ const SourceSchemaInput = ({
   const [writeMode, setWriteMode] = useState("append");
   const [tableType, setTableType] = useState("");
 
+  const [fileFormatStatus, setFileFormatStatus] = useState(false)
+
 
   const setOldNewValue = (transformation_properties, property_name, property_value) => {
     const sourceIndex = transformation_properties.findIndex(
@@ -61,8 +63,6 @@ const SourceSchemaInput = ({
   }
 
   const getTableData = async (data) => {
-    
-
     dispatch(loderShowHideAction(true));
     var transformation_properties = sourceData?.transformation_properties;
     transformation_properties = setOldNewValue(transformation_properties, "target_table", data?.target_table);
@@ -141,29 +141,7 @@ const SourceSchemaInput = ({
           </Space>
         </Col>
 
-        {/* <Col span={24} style={{ marginTop: "5vh" }}>
-        <Space>
-          <b>Insert Type:</b>
-          <Radio.Group
-            onChange={(e) => {
-              setWriteMode(e.target.value);
-            }}
-            value={writeMode}
-          >
-            <Radio value={"append"}>Append</Radio>
-            <Radio value={"overwrite"}>Overwrite</Radio>
-          </Radio.Group>
-        </Space>
-      </Col>
-
-      <Col span={24} style={{ marginTop: "5vh" }}>
-        <Space>
-          <b>File Format:</b>
-          <Select options={
-            []
-          }></Select>
-        </Space>
-      </Col> */}
+        
 
         <Col span={24} style={{ marginTop: "5vh" }}>
           <Form
@@ -177,7 +155,7 @@ const SourceSchemaInput = ({
             <Row>
               <Col span={12}>
                 <Form.Item
-                  label={"Target"}
+                  label={"Location"}
                   labelAlign={"left"}
                   name={"target_table"}
                   rules={[
@@ -199,23 +177,38 @@ const SourceSchemaInput = ({
               <Col span={2} />
 
               <Col span={10}>
-                <Form.Item
-                  label={"Inset Type"}
+              <Form.Item
+                  label={"Table Type"}
                   labelAlign={"left"}
-                  name={"insert_type"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Inset type is required.",
-                    },
-                  ]}
+                  name={"table_type"}
+                  rules={
+                    [
+                      // {
+                      //   required: true,
+                      //   message: "Table type is required.",
+                      // },
+                    ]
+                  }
                 >
                   <Select
+                    onChange={(e) => {
+                      setTableType(e);
+                      // fileFormatStatus, setFileFormatStatus
+                      if(e == "iceberg"){
+                        form.setFieldValue("file_format","parquet");
+                        setFileFormatStatus(true)
+                      }else{
+                        form.resetFields(["file_format"])
+                        setFileFormatStatus(false)
+                      }
+                    }}
                     options={[
-                      { value: "append", label: "Append" },
-                      { value: "overwrite", label: "Overwrite" },
+                      { value: "", label: "NA" },
+                      { value: "iceberg", label: "Iceberg" },
+                      // { value: "delta", label: "Delta" },
                     ]}
                     className="inputSelect"
+                    defaultValue={""}
                   />
                 </Form.Item>
               </Col>
@@ -241,6 +234,7 @@ const SourceSchemaInput = ({
                       { value: "json", label: "json" },
                     ]}
                     className="inputSelect"
+                    disabled={fileFormatStatus}
                   />
                 </Form.Item>
               </Col>
@@ -248,32 +242,26 @@ const SourceSchemaInput = ({
               <Col span={2} />
 
               <Col span={10}>
-                <Form.Item
-                  label={"Table Type"}
+              <Form.Item
+                  label={"Save Mode"}
                   labelAlign={"left"}
-                  name={"table_type"}
-                  rules={
-                    [
-                      // {
-                      //   required: true,
-                      //   message: "Table type is required.",
-                      // },
-                    ]
-                  }
+                  name={"insert_type"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Save Mode is required.",
+                    },
+                  ]}
                 >
                   <Select
-                    onChange={(e) => {
-                      setTableType(e);
-                    }}
                     options={[
-                      { value: "", label: "None of them" },
-                      { value: "iceberg", label: "Iceberg" },
-                      { value: "delta", label: "Delta" },
+                      { value: "append", label: "Append" },
+                      { value: "overwrite", label: "Overwrite" },
                     ]}
                     className="inputSelect"
-                    defaultValue={""}
                   />
                 </Form.Item>
+               
               </Col>
               {tableType && (
                 <Col span={24}>

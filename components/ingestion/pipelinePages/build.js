@@ -173,6 +173,7 @@ const Build = ({ ingestionCss }) => {
             nodeData={nodeData}
             edgeData={edgeData}
             key={`filter${selectedNode?.id}`}
+            pipeline={query?.pipeline ? query?.pipeline : pipelineData}
           />
         )}
         {selectedNode?.data == "Target" && (
@@ -180,6 +181,7 @@ const Build = ({ ingestionCss }) => {
             ingestionCss={ingestionCss}
             nodeId={selectedNode?.id}
             key={`target${selectedNode?.id}`}
+            pipeline={query?.pipeline ? query?.pipeline : pipelineData}
           />
         )}
         {selectedNode?.data == "Expression" && (
@@ -187,6 +189,7 @@ const Build = ({ ingestionCss }) => {
             ingestionCss={ingestionCss}
             nodeId={selectedNode?.id}
             key={`expression${selectedNode?.id}`}
+            pipeline={query?.pipeline ? query?.pipeline : pipelineData}
           />
         )}
         <div ref={messagesEndRef} />

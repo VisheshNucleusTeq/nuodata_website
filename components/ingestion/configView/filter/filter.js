@@ -5,8 +5,8 @@ import { CREATENODE, NODEMETADATA } from "../../../../network/apiConstants";
 import DataTable from "../commonView/dataTable";
 import FilterCondition from "./filterCondition";
 import General from "../commonView/general";
-import KeyTable from "./keyTable";
-const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
+import KeyTable from "../commonView/keyTable";
+const Filter = ({ ingestionCss, nodeId, nodeData, edgeData, pipeline }) => {
   const [activeKey, setActiveKey] = useState("general_tab");
   const [tableData, setTableData] = useState({});
   const [sourceNode, setSourceNode] = useState(null);
@@ -80,11 +80,7 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
                   nodeId={nodeId}
                 />
               </Tabs.TabPane>
-              {/* {JSON.stringify(tableData)} */}
 
-              {/* {["mysql", "mongodb", "snowflake", "postgres"].includes(
-                  connection.type
-                ) && ( */}
               <Tabs.TabPane
                 tab="Fields"
                 key="fields_tab"
@@ -97,9 +93,9 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData }) => {
                   nodeId={nodeId}
                   sourceData={sourceData}
                   setSourceData={setSourceData}
+                  pipeline={pipeline}
                 />
               </Tabs.TabPane>
-              {/* )} */}
             </Tabs>
           </Tabs.TabPane>
           <Tabs.TabPane tab="Preview" key="2">
