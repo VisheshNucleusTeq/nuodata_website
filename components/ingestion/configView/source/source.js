@@ -17,6 +17,7 @@ import KeyTable from "./keyTable";
 import SelectSource from "./selectSource";
 import SourceSchema from "./sourceSchema";
 import SourceSchemaInput from "./sourceSchemaInput";
+import { structureDB, noStructureDB } from "../../../helper/dbConditions";
 const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplineGraph }) => {
   const [connection, setConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
@@ -57,6 +58,7 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
   };
 
   useEffect(() => {
+    console.log([...structureDB()])
     getRecord();
     getNodeRecord(nodeId);
   }, []);
@@ -107,7 +109,7 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
               if (
                 sourceTable &&
                 sourceTable.length &&
-                ["mysql", "mongodb", "snowflake", "postgres"].includes(
+                [...structureDB()].includes(
                   conn[0].type
                 )
               ) {
@@ -190,7 +192,7 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
                   key="schema_tab"
                   disabled={!(connection && connection?.title && connectionId)}
                 >
-                  {["mysql", "mongodb", "snowflake", "postgres"].includes(
+                  {[...structureDB()].includes(
                     connection.type
                   ) && (
                     <SourceSchema
@@ -209,7 +211,7 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
                       getPiplineGraph={getPiplineGraph}
                     />
                   )}
-                  {["s3bucket"].includes(connection.type) && (
+                  {[...noStructureDB()].includes(connection.type) && (
                     <SourceSchemaInput
                       connectionId={connectionId}
                       connection={connection}
@@ -224,7 +226,7 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
                     />
                   )}
                 </Tabs.TabPane>
-                {["mysql", "mongodb", "snowflake", "postgres"].includes(
+                {[...structureDB()].includes(
                   connection.type
                 ) && (
                   <Tabs.TabPane
@@ -247,7 +249,7 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
                 )}
               </Tabs>
             </Tabs.TabPane>
-            {["mysql", "mongodb", "snowflake", "postgres"].includes(
+            {[...structureDB()].includes(
               connection.type
             ) && (
               <Tabs.TabPane

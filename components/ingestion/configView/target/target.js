@@ -17,6 +17,8 @@ import KeyTable from "./keyTable";
 import SelectSource from "./selectSource";
 import SourceSchema from "./sourceSchema";
 import SourceSchemaInput from "./sourceSchemaInput";
+import { structureDB, noStructureDB } from "../../../helper/dbConditions";
+
 const Target = ({ ingestionCss, nodeId }) => {
   const [connection, setConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
@@ -113,7 +115,7 @@ const Target = ({ ingestionCss, nodeId }) => {
               if (
                 sourceTable &&
                 sourceTable.length &&
-                ["mysql", "mongodb", "snowflake", "postgres"].includes(
+                [...structureDB()].includes(
                   conn[0].type
                 )
               ) {
@@ -210,7 +212,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                   key="schema_tab"
                   disabled={!(connection && connection?.title && connectionId)}
                 >
-                  {["mysql", "mongodb", "snowflake", "postgres"].includes(
+                  {[...structureDB()].includes(
                     connection.type
                   ) && (
                     <SourceSchema
@@ -226,7 +228,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                       setDefaultActiveKey={setDefaultActiveKey}
                     />
                   )}
-                  {["s3bucket"].includes(connection.type) && (
+                  {[...noStructureDB()].includes(connection.type) && (
                     <SourceSchemaInput
                       connectionId={connectionId}
                       connection={connection}
@@ -240,7 +242,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                     />
                   )}
                 </Tabs.TabPane>
-                {["mysql", "mongodb", "snowflake", "postgres"].includes(
+                {[...structureDB()].includes(
                   connection.type
                 ) && (
                   <Tabs.TabPane
@@ -260,7 +262,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                 )}
               </Tabs>
             </Tabs.TabPane>
-            {["mysql", "mongodb", "snowflake", "postgres"].includes(
+            {[...structureDB()].includes(
               connection.type
             ) && (
               <Tabs.TabPane

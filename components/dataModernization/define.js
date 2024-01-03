@@ -20,6 +20,8 @@ const Define = ({ dataModernizationCss }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
+  const [sourceLang, setSourceLang] = useState([]);
+  const [sourcePlatform, setSourcePlatform] = useState("");
 
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -204,6 +206,47 @@ const Define = ({ dataModernizationCss }) => {
             ]}
           >
             <Select
+              onChange={async (e) => {
+                setSourcePlatform(e);
+
+                if (e == "HadoopHive") {
+                  setSourceLang([
+                    {
+                      value: "txt",
+                      label: "txt",
+                    },
+                    {
+                      value: "sequence",
+                      label: "sequence",
+                    },
+                    {
+                      value: "orc",
+                      label: "orc",
+                    },
+                    {
+                      value: "parquet",
+                      label: "parquet",
+                    },
+                  ]);
+                } else {
+                  setSourceLang([
+                    {
+                      value: "XML",
+                      label: "XML",
+                    },
+                  ]);
+                }
+                if (projectDetails && projectDetails.sourcePlatform == e) {
+                  form.setFieldValue(
+                    "sourceLang",
+                    projectDetails && projectDetails.sourceLang
+                      ? projectDetails && projectDetails.sourceLang
+                      : ""
+                  );
+                } else {
+                  form.setFieldValue("sourceLang", "");
+                }
+              }}
               className="inputSelect"
               showSearch
               placeholder="Select source platform"
@@ -228,8 +271,8 @@ const Define = ({ dataModernizationCss }) => {
                   label: "Netezza",
                 },
                 {
-                  value: "Hadoop",
-                  label: "Hadoop",
+                  value: "HadoopHive",
+                  label: "Hadoop - Hive",
                 },
                 {
                   value: "Teradata",
@@ -242,6 +285,30 @@ const Define = ({ dataModernizationCss }) => {
                 {
                   value: "Oracle",
                   label: "Oracle",
+                },
+                {
+                  value: "DatabricksLakehouse",
+                  label: "Databricks - Lakehouse",
+                },
+                {
+                  value: "GoogleCloudPlatform",
+                  label: "Google Cloud Platform",
+                },
+                {
+                  value: "AWS",
+                  label: "AWS",
+                },
+                {
+                  value: "Azure",
+                  label: "Azure",
+                },
+                {
+                  value: "Snowflake",
+                  label: "Snowflake",
+                },
+                {
+                  value: "IBMWatsonx.data",
+                  label: "IBM Watsonx.data",
                 },
               ]}
             />
@@ -273,12 +340,7 @@ const Define = ({ dataModernizationCss }) => {
                   ? projectDetails.sourceLang
                   : ""
               }
-              options={[
-                {
-                  value: "XML",
-                  label: "XML",
-                },
-              ]}
+              options={sourceLang}
             />
           </Form.Item>
 
@@ -332,6 +394,10 @@ const Define = ({ dataModernizationCss }) => {
                 {
                   value: "IBM Watsonx.data",
                   label: "IBM Watsonx.data",
+                },
+                {
+                  value: "NuoData",
+                  label: "NuoData",
                 },
               ]}
             />

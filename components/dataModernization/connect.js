@@ -28,6 +28,9 @@ const Connect = ({ dataModernizationCss }) => {
     height: "15vw",
     name: "file",
     multiple: true,
+    beforeUpload : (file) => {
+      console.log(file)
+    },
     action: `${process.env.BASE_URL}${UPLOADFILE}/project/${
       query.id ? query.id : projectDetails.projectId
     }/user/${authData.userId}`,

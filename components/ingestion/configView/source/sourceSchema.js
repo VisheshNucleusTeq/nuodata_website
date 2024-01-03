@@ -251,7 +251,7 @@ const SourceSchema = ({
                   placeholder="Select a table"
                   optionFilterProp="children"
                   options={[
-                    ...schemas.map((e) => {
+                    ...schemas?.map((e) => {
                       return {
                         value: e,
                         label: e,
