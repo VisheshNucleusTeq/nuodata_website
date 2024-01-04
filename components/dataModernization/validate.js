@@ -120,6 +120,78 @@ export default function Validate({ dataModernizationCss }) {
     )}:${padL(dt.getSeconds())}`;
   };
 
+  const createLaunchLink = () => {
+    switch (projectDetails?.targetPlatform) {
+      case "Databricks-Lakehouse":
+        return (
+          <a href="https://accounts.cloud.databricks.com/login" target="_blank">
+            <DatabaseOutlined />
+            {` Launch ${projectDetails?.targetPlatform}`}
+          </a>
+        );
+        break;
+      case "gcp":
+        return (
+          <a href="https://cloud.google.com/" target="_blank">
+            <DatabaseOutlined />
+            {` Launch ${projectDetails?.targetPlatform}`}
+          </a>
+        );
+        break;
+      case "AWS":
+        return (
+          <a href="https://aws.amazon.com/" target="_blank">
+            <DatabaseOutlined />
+            {` Launch ${projectDetails?.targetPlatform}`}
+          </a>
+        );
+        break;
+      case "Azure":
+        return (
+          <a href="https://portal.azure.com/" target="_blank">
+            <DatabaseOutlined />
+            {` Launch ${projectDetails?.targetPlatform}`}
+          </a>
+        );
+        break;
+      case "Snowflake":
+        return (
+          <a href="https://www.snowflake.com/" target="_blank">
+            <DatabaseOutlined />
+            {` Launch ${projectDetails?.targetPlatform}`}
+          </a>
+        );
+        break;
+      case "hive":
+        return (
+          <a href="https://hive.apache.org/" target="_blank">
+            <DatabaseOutlined />
+            {` Launch ${projectDetails?.targetPlatform}`}
+          </a>
+        );
+        break;
+      case "IBM Watsonx.data":
+        return (
+          <a href="https://www.ibm.com/products/watsonx-data/" target="_blank">
+            <DatabaseOutlined />
+            {` Launch ${projectDetails?.targetPlatform}`}
+          </a>
+        );
+        break;
+      case "NuoData":
+        return (
+          <a href="https://nuodata.io/login/" target="_blank">
+            <DatabaseOutlined />
+            {` Launch ${projectDetails?.targetPlatform}`}
+          </a>
+        );
+        break;
+      default:
+        return <></>;
+      // code block
+    }
+  };
+
   return (
     <>
       <Modal
@@ -166,7 +238,9 @@ export default function Validate({ dataModernizationCss }) {
           if (data.success) {
             getAnalyzeData();
           } else {
-            message.error("Something went wrong please try again after sometime")
+            message.error(
+              "Something went wrong please try again after sometime"
+            );
             setSelectedGitFile(0);
           }
         }}
@@ -234,6 +308,8 @@ export default function Validate({ dataModernizationCss }) {
           )}
         </Collapse>
       </Modal>
+
+      {JSON.stringify(projectDetails?.targetPlatform)}
 
       <Row className={dataModernizationCss.validateTab}>
         <Col span={24}>
@@ -529,7 +605,6 @@ export default function Validate({ dataModernizationCss }) {
                             style={{ color: "#adadad", cursor: "not-allowed" }}
                           >
                             <GithubOutlined />
-                            {/* {" Checked-in (GitHub)"} */}
                             {record.githubStatus === "not_uploaded"
                               ? " Please transform this file."
                               : " Already check-in"}
@@ -538,13 +613,7 @@ export default function Validate({ dataModernizationCss }) {
                       )}
 
                       <br />
-                      <a
-                        href="https://accounts.cloud.databricks.com/login"
-                        target="_blank"
-                      >
-                        <DatabaseOutlined />
-                        {" Launch Databricks"}
-                      </a>
+                      {createLaunchLink()}
 
                       <br />
                       {record.fileStatus != "validated" ? (

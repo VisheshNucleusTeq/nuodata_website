@@ -203,6 +203,12 @@ const Target = ({ ingestionCss, nodeId }) => {
                       setConnection={setConnection}
                       setActiveKey={setActiveKey}
                       accountListArr={accountListArr}
+
+                      sourceData={sourceData}
+                      setSourceData={setSourceData}
+                      nodeId={nodeId}
+                      setConnectionId={setConnectionId}
+                      setTableData={setTableData}
                     />
                   )}
                 </Tabs.TabPane>

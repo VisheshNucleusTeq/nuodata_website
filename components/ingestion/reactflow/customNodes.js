@@ -20,6 +20,9 @@ function CustomNodes({ data, isConnectable, type, selected }) {
       case "mysql":
         return "MySQL";
         break;
+        case "hive":
+        return "Hive";
+        break;
       default:
         return null;
         break;

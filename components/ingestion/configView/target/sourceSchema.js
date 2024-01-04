@@ -273,6 +273,11 @@ const SourceSchema = ({
   useEffect(() => {
     getSchema();
     setOldValue();
+  }, [connectionId]);
+
+  useEffect(() => {
+    getSchema();
+    setOldValue();
   }, []);
 
   return (

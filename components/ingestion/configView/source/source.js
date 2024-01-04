@@ -1,4 +1,4 @@
-import { Col, Row, Tabs } from "antd";
+import { Col, Row, Tabs, message } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   fetch_retry_get,
@@ -18,9 +18,17 @@ import SelectSource from "./selectSource";
 import SourceSchema from "./sourceSchema";
 import SourceSchemaInput from "./sourceSchemaInput";
 import { structureDB, noStructureDB } from "../../../helper/dbConditions";
-const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplineGraph }) => {
+const Source = ({
+  ingestionCss,
+  nodeId,
+  updateble,
+  edgeData,
+  pipeline,
+  getPiplineGraph,
+}) => {
   const [connection, setConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
+  const [activeTopKey, setActiveTopKey] = useState("properties");
   const [connectionId, setConnectionId] = useState(null);
   const [tableData, setTableData] = useState({});
   const [accountListArr, setAccountListArr] = useState([]);
@@ -58,13 +66,14 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
   };
 
   useEffect(() => {
-    console.log([...structureDB()])
     getRecord();
     getNodeRecord(nodeId);
   }, []);
 
   const getSchema = async (table, connectionId, type) => {
-    const oldRecord = await fetch_retry_get(`${NODEMETADATA}${nodeId}/metadata`);
+    const oldRecord = await fetch_retry_get(
+      `${NODEMETADATA}${nodeId}/metadata`
+    );
     if (oldRecord?.data?.sample_data && oldRecord?.data?.sample_data.length) {
       updateble ? setActiveKey("fields_tab") : null;
       setTableData(oldRecord?.data);
@@ -77,8 +86,12 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
           "workspace"
         )}&connection_id=${connectionId}&type=${type}&rows=10&node_id=${nodeId}`
       );
-      updateble ? setActiveKey("fields_tab") : null;
-      setTableData(tableData?.data);
+      if (tableData.success) {
+        updateble ? setActiveKey("fields_tab") : null;
+        setTableData(tableData?.data);
+      } else {
+        message.error(tableData?.error);
+      }
     }
   };
 
@@ -109,9 +122,7 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
               if (
                 sourceTable &&
                 sourceTable.length &&
-                [...structureDB()].includes(
-                  conn[0].type
-                )
+                [...structureDB()].includes(conn[0].type)
               ) {
                 getSchema(
                   sourceTable[0]?.property_value,
@@ -135,9 +146,16 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
       <Row>
         <Col span={24}>
           {/* <center style={{color : "#e74860"}}>{!updateble && "An update cannot be executed if the nodes are interconnected."}</center> */}
-          <Tabs className={`${'underline'}`} defaultActiveKey="1">
-          {/* <Tabs className={`${'underline'} ${!updateble ? 'buttonHide' : ""}`} defaultActiveKey="1"> */}
-            <Tabs.TabPane tab="Properties" key="1">
+          <Tabs
+            className={`${"underline"}`}
+            defaultActiveKey="1"
+            activeKey={activeTopKey}
+            onChange={(key) => {
+              setActiveTopKey(key);
+            }}
+          >
+            {/* <Tabs className={`${'underline'} ${!updateble ? 'buttonHide' : ""}`} defaultActiveKey="1"> */}
+            <Tabs.TabPane tab="Properties" key="properties">
               <Tabs
                 className="tabActive"
                 tabPosition={"left"}
@@ -183,6 +201,11 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
                       setConnection={setConnection}
                       setActiveKey={setActiveKey}
                       accountListArr={accountListArr}
+                      sourceData={sourceData}
+                      setSourceData={setSourceData}
+                      nodeId={nodeId}
+                      setConnectionId={setConnectionId}
+                      setTableData={setTableData}
                     />
                   )}
                 </Tabs.TabPane>
@@ -192,9 +215,7 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
                   key="schema_tab"
                   disabled={!(connection && connection?.title && connectionId)}
                 >
-                  {[...structureDB()].includes(
-                    connection.type
-                  ) && (
+                  {[...structureDB()].includes(connection.type) && (
                     <SourceSchema
                       connectionId={connectionId}
                       connection={connection}
@@ -226,15 +247,12 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
                     />
                   )}
                 </Tabs.TabPane>
-                {[...structureDB()].includes(
-                  connection.type
-                ) && (
+                {[...structureDB()].includes(connection.type) && (
                   <Tabs.TabPane
                     tab="Fields"
                     key="fields_tab"
                     disabled={!tableData?.fields}
                   >
-                    {/* {JSON.stringify(connection)} */}
                     <KeyTable
                       key={Date.now()}
                       ingestionCss={ingestionCss}
@@ -244,17 +262,16 @@ const Source = ({ ingestionCss, nodeId, updateble, edgeData, pipeline, getPiplin
                       setSourceData={setSourceData}
                       pipeline={pipeline}
                       connection={connection}
+                      setActiveTopKey={setActiveTopKey}
                     />
                   </Tabs.TabPane>
                 )}
               </Tabs>
             </Tabs.TabPane>
-            {[...structureDB()].includes(
-              connection.type
-            ) && (
+            {[...structureDB()].includes(connection.type) && (
               <Tabs.TabPane
                 tab="Preview"
-                key="2"
+                key="preview"
                 disabled={!tableData?.sample_data}
               >
                 <DataTable

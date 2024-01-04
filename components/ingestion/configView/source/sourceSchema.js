@@ -8,15 +8,23 @@ import {
   Row,
   Select,
   Space,
-  message
+  message,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { useRouter } from "next/router";
 import { loderShowHideAction } from "../../../../Redux/action";
-import { fetch_retry_post, fetch_retry_put, fetch_retry_get, fetch_retry_delete } from "../../../../network/api-manager";
-import { GETCONNECTIONDETAIL, DELETEEDGE } from "../../../../network/apiConstants";
+import {
+  fetch_retry_post,
+  fetch_retry_put,
+  fetch_retry_get,
+  fetch_retry_delete,
+} from "../../../../network/api-manager";
+import {
+  GETCONNECTIONDETAIL,
+  DELETEEDGE,
+} from "../../../../network/apiConstants";
 import { CREATENODE } from "../../../../network/apiConstants";
 const SourceSchema = ({
   connectionId,
@@ -31,7 +39,7 @@ const SourceSchema = ({
   edgeData,
   updateble,
   pipeline,
-  getPiplineGraph
+  getPiplineGraph,
 }) => {
   const [form] = Form.useForm();
   const [schemas, setSchemas] = useState([]);
@@ -39,13 +47,20 @@ const SourceSchema = ({
   const route = useRouter();
 
   const getSchema = async () => {
-    dispatch(loderShowHideAction(true));
-    const authData = JSON.parse(localStorage.getItem("authData"));
-    const schemaData = await fetch_retry_get(
-      `${GETCONNECTIONDETAIL}${connectionId}/datasets?org_id=${authData?.orgId}&workspace_id=${workspace}&type=${connection?.type}&node_id=${nodeId}`
-    );
-    setSchemas(schemaData?.data?.schemas);
-    dispatch(loderShowHideAction(false));
+    if (connectionId) {
+      dispatch(loderShowHideAction(true));
+      const authData = JSON.parse(localStorage.getItem("authData"));
+      const schemaData = await fetch_retry_get(
+        `${GETCONNECTIONDETAIL}${connectionId}/datasets?org_id=${authData?.orgId}&workspace_id=${workspace}&type=${connection?.type}&node_id=${nodeId}`
+      );
+      if (schemaData.success) {
+        setSchemas(schemaData?.data?.schemas);
+        dispatch(loderShowHideAction(false));
+      } else {
+        message.error(schemaData?.error);
+        dispatch(loderShowHideAction(false));
+      }
+    }
   };
 
   const getTableDataAction = async (type) => {
@@ -56,91 +71,95 @@ const SourceSchema = ({
       const tableData = await fetch_retry_post(
         `${GETCONNECTIONDETAIL}data/${data?.table}?org_id=${authData?.orgId}&workspace_id=${workspace}&connection_id=${connectionId}&type=${connection?.type}&rows=${data?.rows}&node_id=${nodeId}`
       );
-      setTableData(tableData?.data);
+      if (tableData.success) {
+        setTableData(tableData?.data);
 
-      let transformation_properties = sourceData?.transformation_properties;
+        let transformation_properties = sourceData?.transformation_properties;
 
-      const sourceIndex = transformation_properties.findIndex(
-        (item) => item.property_name === "source_table"
-      );
-      if (sourceIndex < 0) {
-        transformation_properties.push({
-          property_name: "source_table",
-          property_value: data?.table,
-        });
-      } else {
-        transformation_properties[sourceIndex] = {
-          property_name: "source_table",
-          property_value: data?.table,
-        };
-      }
-
-      const displayRowsIndex = transformation_properties.findIndex(
-        (item) => item.property_name === "display_rows"
-      );
-      if (displayRowsIndex < 0) {
-        transformation_properties.push({
-          property_name: "display_rows",
-          property_value: data?.rows + "",
-        });
-      } else {
-        transformation_properties[displayRowsIndex] = {
-          property_name: "display_rows",
-          property_value: data?.rows + "",
-        };
-      }
-
-      const connectionIndex = transformation_properties.findIndex(
-        (item) => item.property_name === "connection_id"
-      );
-      if (connectionIndex < 0) {
-        transformation_properties.push({
-          property_name: "connection_id",
-          property_value: connectionId,
-        });
-      } else {
-        transformation_properties[connectionIndex] = {
-          property_name: "connection_id",
-          property_value: connectionId,
-        };
-      }
-
-      const connectionTypeIndex = transformation_properties.findIndex(
-        (item) => item.property_name === "connection_type"
-      );
-      if (connectionTypeIndex < 0) {
-        transformation_properties.push({
-          property_name: "connection_type",
-          property_value: connection?.type,
-        });
-      } else {
-        transformation_properties[connectionTypeIndex] = {
-          property_name: "connection_type",
-          property_value: connection?.type,
-        };
-      }
-
-      const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
-        ...sourceData,
-        transformation_properties: transformation_properties,
-      });
-      setSourceData({
-        ...sourceData,
-        transformation_properties: transformation_properties,
-      });
-      if (result?.success) {
-        message.success(result?.data?.message);
-        if (type == "save") {
-          route.push("/ingestion");
+        const sourceIndex = transformation_properties.findIndex(
+          (item) => item.property_name === "source_table"
+        );
+        if (sourceIndex < 0) {
+          transformation_properties.push({
+            property_name: "source_table",
+            property_value: data?.table,
+          });
         } else {
-          setActiveKey("fields_tab");
+          transformation_properties[sourceIndex] = {
+            property_name: "source_table",
+            property_value: data?.table,
+          };
         }
+
+        const displayRowsIndex = transformation_properties.findIndex(
+          (item) => item.property_name === "display_rows"
+        );
+        if (displayRowsIndex < 0) {
+          transformation_properties.push({
+            property_name: "display_rows",
+            property_value: data?.rows + "",
+          });
+        } else {
+          transformation_properties[displayRowsIndex] = {
+            property_name: "display_rows",
+            property_value: data?.rows + "",
+          };
+        }
+
+        const connectionIndex = transformation_properties.findIndex(
+          (item) => item.property_name === "connection_id"
+        );
+        if (connectionIndex < 0) {
+          transformation_properties.push({
+            property_name: "connection_id",
+            property_value: connectionId,
+          });
+        } else {
+          transformation_properties[connectionIndex] = {
+            property_name: "connection_id",
+            property_value: connectionId,
+          };
+        }
+
+        const connectionTypeIndex = transformation_properties.findIndex(
+          (item) => item.property_name === "connection_type"
+        );
+        if (connectionTypeIndex < 0) {
+          transformation_properties.push({
+            property_name: "connection_type",
+            property_value: connection?.type,
+          });
+        } else {
+          transformation_properties[connectionTypeIndex] = {
+            property_name: "connection_type",
+            property_value: connection?.type,
+          };
+        }
+
+        const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+          ...sourceData,
+          transformation_properties: transformation_properties,
+        });
+        setSourceData({
+          ...sourceData,
+          transformation_properties: transformation_properties,
+        });
+        if (result?.success) {
+          message.success(result?.data?.message);
+          if (type == "save") {
+            route.push("/ingestion");
+          } else {
+            setActiveKey("fields_tab");
+          }
+        } else {
+          message.error("Something went wrong");
+        }
+        dispatch(loderShowHideAction(false));
       } else {
-        message.error("Something went wrong");
+        dispatch(loderShowHideAction(false));
+        message.error(tableData?.error);
       }
-      dispatch(loderShowHideAction(false));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const getTableData = async (type) => {
@@ -159,12 +178,17 @@ const SourceSchema = ({
 
     try {
       const data = await form.validateFields();
-      if (updateble || (sourceIndex?.property_value == data?.table && connectionIndex?.property_value == connectionId)) {
+      if (
+        updateble ||
+        (sourceIndex?.property_value == data?.table &&
+          connectionIndex?.property_value == connectionId)
+      ) {
         await getTableDataAction(type);
       } else {
         Modal.confirm({
           title: "warning!",
-          content: "Alterations in source detected. Proceeding further will reset connection.",
+          content:
+            "Alterations in source detected. Proceeding further will reset connection.",
           okText: "Continue",
           cancelText: "Cancel",
           onOk: async () => {
@@ -174,7 +198,7 @@ const SourceSchema = ({
                 edge_ids: [...deleteEdges],
               },
             });
-            getPiplineGraph(pipeline)
+            getPiplineGraph(pipeline);
           },
         });
       }
@@ -207,6 +231,11 @@ const SourceSchema = ({
       form.setFieldValue("rows", 10);
     }
   };
+
+  useEffect(() => {
+    getSchema();
+    setOldValue();
+  }, [connectionId]);
 
   useEffect(() => {
     getSchema();

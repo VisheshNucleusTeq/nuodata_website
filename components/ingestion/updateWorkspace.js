@@ -192,21 +192,21 @@ const UpdateWorkspace = ({ ingestionCss }) => {
               </Form.Item>
 
               <Form.Item
-                label={"Desciption"}
+                label={"Description"}
                 labelAlign={"left"}
                 name={"description"}
                 rules={[
                   {
                     required: true,
-                    message: "Desciption is required.",
+                    message: "Description is required.",
                   },
                 ]}
               >
                 <Input.TextArea
-                  key={"input-desciption"}
+                  key={"input-Description"}
                   name={"description"}
                   type={"text"}
-                  placeholder={"Desciption"}
+                  placeholder={"Description"}
                   style={{ minHeight: 100, borderRadius: "10px" }}
                 />
               </Form.Item>

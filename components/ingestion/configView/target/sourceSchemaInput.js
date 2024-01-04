@@ -34,10 +34,13 @@ const SourceSchemaInput = ({
   const [writeMode, setWriteMode] = useState("append");
   const [tableType, setTableType] = useState("");
 
-  const [fileFormatStatus, setFileFormatStatus] = useState(false)
+  const [fileFormatStatus, setFileFormatStatus] = useState(false);
 
-
-  const setOldNewValue = (transformation_properties, property_name, property_value) => {
+  const setOldNewValue = (
+    transformation_properties,
+    property_name,
+    property_value
+  ) => {
     const sourceIndex = transformation_properties.findIndex(
       (item) => item.property_name === property_name
     );
@@ -53,48 +56,102 @@ const SourceSchemaInput = ({
       };
     }
     return transformation_properties;
-  }
+  };
 
   const deleteOldNewValue = (transformation_properties, property_name) => {
     transformation_properties = transformation_properties.filter(
       (item) => item.property_name != property_name
     );
     return transformation_properties;
-  }
+  };
 
   const getTableData = async (data) => {
     dispatch(loderShowHideAction(true));
     var transformation_properties = sourceData?.transformation_properties;
-    transformation_properties = setOldNewValue(transformation_properties, "target_table", data?.target_table);
-    transformation_properties = setOldNewValue(transformation_properties, "insert_type", data?.insert_type);
-    transformation_properties = setOldNewValue(transformation_properties, "file_format", data?.file_format);
-    transformation_properties = setOldNewValue(transformation_properties, "file_format", data?.file_format);
+    transformation_properties = setOldNewValue(
+      transformation_properties,
+      "target_table",
+      data?.target_table
+    );
+    transformation_properties = setOldNewValue(
+      transformation_properties,
+      "insert_type",
+      data?.insert_type
+    );
+    transformation_properties = setOldNewValue(
+      transformation_properties,
+      "file_format",
+      data?.file_format
+    );
+    transformation_properties = setOldNewValue(
+      transformation_properties,
+      "file_format",
+      data?.file_format
+    );
 
-    if(data?.table_type){
-      transformation_properties = setOldNewValue(transformation_properties, "table_type", data?.table_type);
-      if(data?.table_type == 'iceberg'){
-        transformation_properties = setOldNewValue(transformation_properties, "database", data?.database);
-        transformation_properties = setOldNewValue(transformation_properties, "catalog", data?.catalog);
-      }else{
-        
-        transformation_properties = deleteOldNewValue(transformation_properties, "database");
-        transformation_properties = deleteOldNewValue(transformation_properties, "catalog");
+    if (data?.table_type) {
+      transformation_properties = setOldNewValue(
+        transformation_properties,
+        "table_type",
+        data?.table_type
+      );
+      if (data?.table_type == "iceberg") {
+        transformation_properties = setOldNewValue(
+          transformation_properties,
+          "database",
+          data?.database
+        );
+        transformation_properties = setOldNewValue(
+          transformation_properties,
+          "catalog",
+          data?.catalog
+        );
+      } else {
+        transformation_properties = deleteOldNewValue(
+          transformation_properties,
+          "database"
+        );
+        transformation_properties = deleteOldNewValue(
+          transformation_properties,
+          "catalog"
+        );
         // delete transformation_properties['database']
         // delete transformation_properties['catalog']
       }
-      transformation_properties = setOldNewValue(transformation_properties, "table_name", data?.table_name);
-    }else{
-      transformation_properties = deleteOldNewValue(transformation_properties, "database");
-      transformation_properties = deleteOldNewValue(transformation_properties, "catalog");
-      transformation_properties = deleteOldNewValue(transformation_properties, "table_name");
+      transformation_properties = setOldNewValue(
+        transformation_properties,
+        "table_name",
+        data?.table_name
+      );
+    } else {
+      transformation_properties = deleteOldNewValue(
+        transformation_properties,
+        "database"
+      );
+      transformation_properties = deleteOldNewValue(
+        transformation_properties,
+        "catalog"
+      );
+      transformation_properties = deleteOldNewValue(
+        transformation_properties,
+        "table_name"
+      );
       // delete transformation_properties['database']
       // delete transformation_properties['catalog']
       // delete transformation_properties['table_name']
     }
 
-    transformation_properties = setOldNewValue(transformation_properties, "connection_id", connectionId);
-    transformation_properties = setOldNewValue(transformation_properties, "connection_type", connection?.type);
-    
+    transformation_properties = setOldNewValue(
+      transformation_properties,
+      "connection_id",
+      connectionId
+    );
+    transformation_properties = setOldNewValue(
+      transformation_properties,
+      "connection_type",
+      connection?.type
+    );
+
     // console.log(transformation_properties, data);
     // dispatch(loderShowHideAction(false));
     // return true;
@@ -141,8 +198,6 @@ const SourceSchemaInput = ({
           </Space>
         </Col>
 
-        
-
         <Col span={24} style={{ marginTop: "5vh" }}>
           <Form
             form={form}
@@ -153,7 +208,7 @@ const SourceSchemaInput = ({
             }}
           >
             <Row>
-              <Col span={12}>
+              <Col span={24}>
                 <Form.Item
                   label={"Location"}
                   labelAlign={"left"}
@@ -174,10 +229,10 @@ const SourceSchemaInput = ({
                 </Form.Item>
               </Col>
 
-              <Col span={2} />
+              {/* <Col span={2} /> */}
 
-              <Col span={10}>
-              <Form.Item
+              <Col span={24}>
+                <Form.Item
                   label={"Table Type"}
                   labelAlign={"left"}
                   name={"table_type"}
@@ -194,12 +249,12 @@ const SourceSchemaInput = ({
                     onChange={(e) => {
                       setTableType(e);
                       // fileFormatStatus, setFileFormatStatus
-                      if(e == "iceberg"){
-                        form.setFieldValue("file_format","parquet");
-                        setFileFormatStatus(true)
-                      }else{
-                        form.resetFields(["file_format"])
-                        setFileFormatStatus(false)
+                      if (e == "iceberg") {
+                        form.setFieldValue("file_format", "parquet");
+                        setFileFormatStatus(true);
+                      } else {
+                        form.resetFields(["file_format"]);
+                        setFileFormatStatus(false);
                       }
                     }}
                     options={[
@@ -213,7 +268,53 @@ const SourceSchemaInput = ({
                 </Form.Item>
               </Col>
 
-              <Col span={12}>
+              {tableType && (
+                <Col span={24}>
+                  <Form.Item
+                    label={"Database"}
+                    labelAlign={"left"}
+                    name={"database"}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Database is required.",
+                      },
+                    ]}
+                  >
+                    <Input
+                      key={"input-database"}
+                      className={"input"}
+                      name={"database"}
+                      placeholder="Database"
+                    />
+                  </Form.Item>
+                </Col>
+              )}
+
+              {tableType && tableType == "iceberg" && (
+                <Col span={24}>
+                  <Form.Item
+                    label={"Table Name"}
+                    labelAlign={"left"}
+                    name={"table_name"}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Source is required.",
+                      },
+                    ]}
+                  >
+                    <Input
+                      key={"input-table-name"}
+                      className={"input"}
+                      name={"table_name"}
+                      placeholder="Source Name"
+                    />
+                  </Form.Item>
+                </Col>
+              )}
+
+              <Col span={24}>
                 <Form.Item
                   label={"File Format"}
                   labelAlign={"left"}
@@ -239,9 +340,76 @@ const SourceSchemaInput = ({
                 </Form.Item>
               </Col>
 
-              <Col span={2} />
+              <Col span={24}>
+                <Form.Item
+                  label={"Save Mode"}
+                  labelAlign={"left"}
+                  name={"insert_type"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Save Mode is required.",
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      { value: "append", label: "Append" },
+                      { value: "overwrite", label: "Overwrite" },
+                    ]}
+                    className="inputSelect"
+                  />
+                </Form.Item>
+              </Col>
 
-              <Col span={10}>
+              <Col span={24}>
+                <Form.Item
+                  label={"Catalog"}
+                  labelAlign={"left"}
+                  name={"catalog"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Catalog is required.",
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[{ value: "glue_catalog", label: "Glue Catalog" }]}
+                    className="inputSelect"
+                  />
+                </Form.Item>
+              </Col>
+
+              {/* <Col span={24}>
+                <Form.Item
+                  label={"File Format"}
+                  labelAlign={"left"}
+                  name={"file_format"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "File format is required.",
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      { value: "csv", label: "csv" },
+                      { value: "avro", label: "avro" },
+                      { value: "parquet", label: "parquet" },
+                      { value: "orc", label: "orc" },
+                      { value: "json", label: "json" },
+                    ]}
+                    className="inputSelect"
+                    disabled={fileFormatStatus}
+                  />
+                </Form.Item>
+              </Col> */}
+
+              {/* <Col span={2} /> */}
+
+              {/* <Col span={24}>
               <Form.Item
                   label={"Save Mode"}
                   labelAlign={"left"}
@@ -266,7 +434,7 @@ const SourceSchemaInput = ({
               {tableType && (
                 <Col span={24}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Form.Item
                         label={"Database"}
                         labelAlign={"left"}
@@ -287,9 +455,8 @@ const SourceSchemaInput = ({
                       </Form.Item>
                     </Col>
 
-                    <Col span={2} />
 
-                    <Col span={10}>
+                    <Col span={24}>
                       <Form.Item
                         label={"Catalog"}
                         labelAlign={"left"}
@@ -313,7 +480,7 @@ const SourceSchemaInput = ({
                 </Col>
               )}
               {tableType && tableType == "iceberg" && (
-                <Col span={12}>
+                <Col span={24}>
                   <Form.Item
                     label={"Table Name"}
                     labelAlign={"left"}
@@ -333,7 +500,7 @@ const SourceSchemaInput = ({
                     />
                   </Form.Item>
                 </Col>
-              )}
+              )} */}
 
               <Col span={24}>
                 <Button

@@ -90,12 +90,11 @@ const DataTable = ({ ingestionCss, tableData }) => {
         ...tableColumn,
       ]);
     }
+
+   
     setTableDatas(
       tableData?.length
-        ? [{
-          ...tableData[0],
-          data : tableData
-        },...tableData]
+        ? [...tableData]
         : []
     );
     setSpinning(false);
@@ -128,7 +127,6 @@ const DataTable = ({ ingestionCss, tableData }) => {
           defaultPageSize: 10, hideOnSinglePage: true
         }}
       />
-      ;
     </div>
   );
 };

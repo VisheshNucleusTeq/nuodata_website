@@ -1,14 +1,18 @@
-import {
-  Card,
-  Col,
-  Image,
-  Input,
-  Row,
-  Tooltip
-} from "antd";
+import { Card, Col, Image, Input, Row, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
+import { fetch_retry_put } from "../../../../network/api-manager";
+import { CREATENODE } from "../../../../network/apiConstants";
 
-const SelectSource = ({ ingestionCss, setConnection, accountListArr }) => {
+const SelectSource = ({
+  ingestionCss,
+  setConnection,
+  accountListArr,
+  sourceData,
+  setSourceData,
+  nodeId,
+  setConnectionId,
+  setTableData
+}) => {
   const [accountList, setAccountList] = useState([]);
 
   const filterData = (text) => {
@@ -17,6 +21,24 @@ const SelectSource = ({ ingestionCss, setConnection, accountListArr }) => {
       return e.title.toLowerCase().includes(text.toLowerCase());
     });
     setAccountList(dataArr);
+  };
+
+  const setConnectionData = async (e) => {
+    const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+      ...sourceData,
+      transformation_properties: [],
+    });
+    if (result.success) {
+      setSourceData({
+        ...sourceData,
+        transformation_properties: [],
+      });
+      setTableData({})
+      setConnectionId(null)
+      setConnection(e);
+    } else {
+      message.error(result.error)
+    }
   };
 
   useEffect(() => {
@@ -54,7 +76,7 @@ const SelectSource = ({ ingestionCss, setConnection, accountListArr }) => {
                     >
                       <div
                         onClick={() => {
-                          setConnection(e);
+                          setConnectionData(e);
                         }}
                       >
                         <Tooltip title={e.title} color="#0c3246">

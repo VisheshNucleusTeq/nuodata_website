@@ -27,6 +27,8 @@ import {
   NODEMETADATA as NMD,
   UPDATEFIELDNAME as UFN,
 } from "../../../../network/apiConstants";
+import { useRouter } from "next/router";
+
 const keyTable = ({
   metadata,
   ingestionCss,
@@ -35,18 +37,51 @@ const keyTable = ({
   nodeId,
   pipeline,
   connection,
+  setActiveTopKey,
 }) => {
+  var bulkName = [];
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-
+  const route = useRouter();
   const [tableKey, setTableKey] = useState(
     (Math.random() + 1).toString(36).substring(7)
   );
+
+  const bulkNameUpdate = async (data) => {
+    const index = bulkName.findIndex(
+      (e) => e.from_field_name == data.from_field_name
+    );
+    if (index < 0) {
+      bulkName = [
+        ...bulkName,
+        Object.keys(data).reduce((acc, key) => {
+          acc[key] = data[key] === null ? "" : data[key];
+          return acc;
+        }, {}),
+      ];
+    } else {
+      bulkName[index] = {
+        ...Object.keys(data).reduce((acc, key) => {
+          acc[key] = data[key] === null ? "" : data[key];
+          return acc;
+        }, {}),
+      };
+    }
+  };
+
   const [columns] = useState([
     {
       title: "Name",
       dataIndex: "name",
-      render: (text) => <a>{text}</a>,
+      // render: (text) => <a>{text}</a>,
+      render: (text, record) => (
+        <Input
+          defaultValue={text}
+          onChange={async (e) => {
+            await bulkNameUpdate({ ...record, name: e.target.value });
+          }}
+        />
+      ),
     },
     {
       title: "From Transformation Name",
@@ -123,8 +158,36 @@ const keyTable = ({
     }
   };
 
+  const saveUpdateField = async (type) => {
+    setApiCall(true);
+    const requestBody = {
+      pipeline_id: pipeline,
+      node_id: nodeId,
+      fields: [...bulkName],
+    };
+    const updateResult = await fetch_retry_put(`${UFN}`, requestBody);
+    if (updateResult.success) {
+      message.success(updateResult?.data?.message);
+      getUpdatedRecord();
+      setUpdateRecord({});
+      setModalVisible(false);
+      setApiCall(false);
+      bulkName = [];
+      if (type == "exit") {
+        route.push("/ingestion");
+      } else {
+        setActiveTopKey("preview");
+      }
+    } else {
+      setApiCall(false);
+      message.error([...updateResult?.error]);
+      bulkName = [];
+    }
+  };
+
   return (
     <>
+      {/* {JSON.stringify(bulkNameData)} */}
       <Modal
         title="Update Field"
         open={modalVisible}
@@ -155,6 +218,7 @@ const keyTable = ({
       <Row>
         <Col span={24}>
           <Table
+            rowKey={"name"}
             key={tableKey}
             pagination={false}
             dataSource={[...tableData]}
@@ -204,7 +268,7 @@ const keyTable = ({
                 type="primary"
                 className={ingestionCss.defineSave}
                 onClick={() => {
-                  // savePipline("save");
+                  saveUpdateField("exit");
                 }}
               >
                 Save & exit
@@ -213,7 +277,7 @@ const keyTable = ({
                 type="primary"
                 className={ingestionCss.defineSaveAndBuild}
                 onClick={() => {
-                  // savePipline("build");
+                  saveUpdateField("preview");
                 }}
               >
                 Save & preview fields
