@@ -4,7 +4,7 @@ import {
   EditOutlined,
   FormOutlined,
   LinkOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -17,7 +17,7 @@ import {
   Select,
   Space,
   Tooltip,
-  message
+  message,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,15 +27,13 @@ import {
   fetch_retry_post,
   fetch_retry_put,
 } from "../../../../network/api-manager";
-import {
-  GETCONNECTION
-} from "../../../../network/apiConstants";
+import { GETCONNECTION } from "../../../../network/apiConstants";
 
 import { loderShowHideAction } from "../../../../Redux/action";
 import {
   ADDCONNECTION,
   GETCONNECTIONDETAIL,
-  TESTCONNECTION
+  TESTCONNECTION,
 } from "../../../../network/apiConstants";
 import { decryptAES_CBC, encryptAES_CBC } from "../../../helper/cryptojs";
 
@@ -46,7 +44,11 @@ const AddSource = ({
   setConnectionId,
   setActiveKey,
   setConnection,
-  updateble
+  updateble,
+  oldConnection,
+  setOldConnection,
+  sourceData,
+  setSourceData,
 }) => {
   const workspace = useSelector((state) => state?.workspace?.workspace);
   const route = useRouter();
@@ -227,8 +229,6 @@ const AddSource = ({
     testConnection(dataValue);
   };
 
-  
-
   const setExistingRecord = async () => {
     const result = await fetch_retry_get(
       `${GETCONNECTIONDETAIL}${updateRecordId}?workspace_id=${workspace}`
@@ -241,6 +241,26 @@ const AddSource = ({
       }
     });
     form.setFieldsValue(dataValue);
+  };
+
+  // setConnectionData()
+  // setActiveKey("schema_tab");
+  const setConnectionData = async () => {
+    const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+      ...sourceData,
+      transformation_properties: [],
+    });
+    if (result.success) {
+      setSourceData({
+        ...sourceData,
+        transformation_properties: [],
+      });
+      setTableData({});
+      setConnectionId(null);
+      setActiveKey("schema_tab");
+    } else {
+      message.error(result.error);
+    }
   };
 
   useEffect(() => {
@@ -270,7 +290,7 @@ const AddSource = ({
 
   return (
     <>
-      {updateble}
+      {/* {updateble} */}
       <Row>
         <Col span={8} className={ingestionCss.addSourceImage}>
           <Space size={20}>
@@ -280,6 +300,7 @@ const AddSource = ({
               <span
                 style={{ cursor: "pointer", color: "#e74860" }}
                 onClick={() => {
+                  setOldConnection(connection);
                   setConnection({});
                 }}
               >
@@ -364,7 +385,6 @@ const AddSource = ({
                     initialValues={{}}
                   >
                     <div className={ingestionCss.formHeight}>
-                      
                       <Form.Item
                         label={"Existing Connections"}
                         labelAlign={"left"}
@@ -430,7 +450,7 @@ const AddSource = ({
                           Test connection
                         </Button>
 
-                        {(connectionId === selectedRecordId) && isTested && (
+                        {connectionId === selectedRecordId && isTested && (
                           <Button
                             type="primary"
                             shape="round"
@@ -439,6 +459,7 @@ const AddSource = ({
                               color: "#FFF",
                             }}
                             onClick={() => {
+                              // setConnectionData()
                               setActiveKey("schema_tab");
                             }}
                           >
@@ -492,8 +513,7 @@ const AddSource = ({
                                 try {
                                   const data = await form.validateFields();
                                   updateConnection(data);
-                                } catch (error) {
-                                }
+                                } catch (error) {}
                               }}
                               disabled={!isTested}
                               style={
@@ -515,8 +535,7 @@ const AddSource = ({
                                 try {
                                   const data = await form.validateFields();
                                   addConnection(data);
-                                } catch (error) {
-                                }
+                                } catch (error) {}
                               }}
                               disabled={!isTested}
                               style={
@@ -541,7 +560,7 @@ const AddSource = ({
                         >
                           Test connection
                         </Button>
-                        
+
                         {connectionId && isTested && (
                           <Button
                             type="primary"
@@ -551,6 +570,7 @@ const AddSource = ({
                               color: "#FFF",
                             }}
                             onClick={() => {
+                              // setConnectionData()
                               setActiveKey("schema_tab");
                             }}
                           >

@@ -27,6 +27,7 @@ const Source = ({
   getPiplineGraph,
 }) => {
   const [connection, setConnection] = useState({});
+  const [oldConnection, setOldConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
   const [activeTopKey, setActiveTopKey] = useState("properties");
   const [connectionId, setConnectionId] = useState(null);
@@ -205,6 +206,10 @@ const Source = ({
                           setActiveKey={setActiveKey}
                           setConnection={setConnection}
                           updateble={updateble}
+                          oldConnection={oldConnection}
+                          setOldConnection={setOldConnection}
+                          sourceData={sourceData}
+                          setSourceData={setSourceData}
                         />
                       </Col>
                     </Row>
@@ -219,6 +224,8 @@ const Source = ({
                       nodeId={nodeId}
                       setConnectionId={setConnectionId}
                       setTableData={setTableData}
+                      oldConnection={oldConnection}
+                      setOldConnection={setOldConnection}
                     />
                   )}
                 </Tabs.TabPane>

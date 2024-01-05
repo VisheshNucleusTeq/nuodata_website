@@ -192,13 +192,20 @@ const SourceSchema = ({
           okText: "Continue",
           cancelText: "Cancel",
           onOk: async () => {
-            await getTableDataAction(type);
-            await fetch_retry_delete(`${DELETEEDGE}${pipeline}/edges`, {
-              data: {
-                edge_ids: [...deleteEdges.filter(n => n)],
-              },
-            });
-            getPiplineGraph(pipeline);
+            const deleteResult = await fetch_retry_delete(
+              `${DELETEEDGE}${pipeline}/edges`,
+              {
+                data: {
+                  edge_ids: [...deleteEdges.filter((n) => n)],
+                },
+              }
+            );
+            if (deleteResult.success) {
+              await getPiplineGraph(pipeline);
+              await getTableDataAction(type);
+            } else {
+              message.error(deleteResult.error);
+            }
           },
         });
       }

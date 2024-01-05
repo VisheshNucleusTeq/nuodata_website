@@ -128,7 +128,6 @@ const DataTable = ({ ingestionCss, nodeId }) => {
           defaultPageSize: 10, hideOnSinglePage: true
         }}
       />
-      ;
     </div>
   );
 };
