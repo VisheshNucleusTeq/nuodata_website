@@ -257,16 +257,25 @@ const SourceSchema = ({
       (item) => item.property_name === "target_type"
     );
     if (sourceIndex >= 0) {
-      setTargetType(sourceData?.transformation_properties[targetTypeIndex]?.property_value)
+      setTargetType(
+        sourceData?.transformation_properties[targetTypeIndex]?.property_value
+      );
     }
 
     const writeModeIndex = sourceData?.transformation_properties.findIndex(
       (item) => item.property_name === "write_mode"
     );
     if (writeModeIndex >= 0) {
-      console.log(sourceData?.transformation_properties[writeModeIndex]?.property_value)
-      setWriteMode(sourceData?.transformation_properties[writeModeIndex]?.property_value)
-      form.setFieldValue("write_mode", sourceData?.transformation_properties[writeModeIndex]?.property_value);
+      console.log(
+        sourceData?.transformation_properties[writeModeIndex]?.property_value
+      );
+      setWriteMode(
+        sourceData?.transformation_properties[writeModeIndex]?.property_value
+      );
+      form.setFieldValue(
+        "write_mode",
+        sourceData?.transformation_properties[writeModeIndex]?.property_value
+      );
     }
   };
 
@@ -395,27 +404,29 @@ const SourceSchema = ({
               )}
             </Col>
             <Col span={1} />
-            <Col span={10} >
-            <Form.Item
-                  label={"Save Mode"}
-                  labelAlign={"left"}
-                  name={"write_mode"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Save Mode is required.",
-                    },
+            <Col span={10}>
+              <Form.Item
+                label={"Save Mode"}
+                labelAlign={"left"}
+                name={"write_mode"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Save Mode is required.",
+                  },
+                ]}
+              >
+                <Select
+                  options={[
+                    { value: "append", label: "Append" },
+                    { value: "overwrite", label: "Overwrite" },
                   ]}
-                >
-                  <Select
-                    options={[
-                      { value: "append", label: "Append" },
-                      { value: "overwrite", label: "Overwrite" },
-                    ]}
-                    className="inputSelect"
-                    onChange={(e)=> {setWriteMode(e)}}
-                  />
-                </Form.Item>
+                  className="inputSelect"
+                  onChange={(e) => {
+                    setWriteMode(e);
+                  }}
+                />
+              </Form.Item>
             </Col>
             <Col span={10} style={{ display: "none" }}>
               <Form.Item

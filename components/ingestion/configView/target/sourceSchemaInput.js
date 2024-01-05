@@ -75,8 +75,8 @@ const SourceSchemaInput = ({
     );
     transformation_properties = setOldNewValue(
       transformation_properties,
-      "insert_type",
-      data?.insert_type
+      "write_mode",
+      data?.write_mode
     );
     transformation_properties = setOldNewValue(
       transformation_properties,
@@ -115,8 +115,6 @@ const SourceSchemaInput = ({
           transformation_properties,
           "catalog"
         );
-        // delete transformation_properties['database']
-        // delete transformation_properties['catalog']
       }
       transformation_properties = setOldNewValue(
         transformation_properties,
@@ -124,6 +122,10 @@ const SourceSchemaInput = ({
         data?.table_name
       );
     } else {
+      transformation_properties = deleteOldNewValue(
+        transformation_properties,
+        "table_type"
+      );
       transformation_properties = deleteOldNewValue(
         transformation_properties,
         "database"
@@ -136,9 +138,6 @@ const SourceSchemaInput = ({
         transformation_properties,
         "table_name"
       );
-      // delete transformation_properties['database']
-      // delete transformation_properties['catalog']
-      // delete transformation_properties['table_name']
     }
 
     transformation_properties = setOldNewValue(
@@ -151,9 +150,8 @@ const SourceSchemaInput = ({
       "connection_type",
       connection?.type
     );
-
-    // console.log(transformation_properties, data);
     // dispatch(loderShowHideAction(false));
+    // console.log(transformation_properties);
     // return true;
 
     const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
@@ -172,21 +170,44 @@ const SourceSchemaInput = ({
     dispatch(loderShowHideAction(false));
   };
 
-  const setOldValue = () => {
+  const setOldValue = (key, input) => {
     const sourceIndex = sourceData?.transformation_properties.findIndex(
-      (item) => item.property_name === "target_table"
+      (item) => item.property_name === key
     );
     if (sourceIndex >= 0) {
       form.setFieldValue(
-        "target_table",
+        input,
         sourceData?.transformation_properties[sourceIndex]?.property_value
       );
+
+      if (input == "table_type") {
+        if (
+          sourceData?.transformation_properties[sourceIndex]?.property_value ==
+          "iceberg"
+        ) {
+          setTableType(
+            sourceData?.transformation_properties[sourceIndex]?.property_value
+          );
+          setFileFormatStatus(true);
+        } else {
+          setTableType(
+            sourceData?.transformation_properties[sourceIndex]?.property_value
+          );
+          setFileFormatStatus(false);
+        }
+      }
     }
   };
 
   useEffect(() => {
-    setOldValue();
-  }, []);
+    setOldValue("target_table", "target_table");
+    setOldValue("table_type", "table_type");
+    setOldValue("catalog", "catalog");
+    setOldValue("database", "database");
+    setOldValue("table_name", "table_name");
+    setOldValue("write_mode", "write_mode");
+    setOldValue("file_format", "file_format");
+  }, [sourceData?.transformation_properties]);
 
   return (
     <>
@@ -267,25 +288,28 @@ const SourceSchemaInput = ({
                   />
                 </Form.Item>
               </Col>
-
-              <Col span={24}>
-                <Form.Item
-                  label={"Catalog Type"}
-                  labelAlign={"left"}
-                  name={"catalog"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Catalog is required.",
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[{ value: "glue_catalog", label: "Glue Catalog" }]}
-                    className="inputSelect"
-                  />
-                </Form.Item>
-              </Col>
+              {tableType && tableType == "iceberg" && (
+                <Col span={24}>
+                  <Form.Item
+                    label={"Catalog Type"}
+                    labelAlign={"left"}
+                    name={"catalog"}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Catalog is required.",
+                      },
+                    ]}
+                  >
+                    <Select
+                      options={[
+                        { value: "glue_catalog", label: "Glue Catalog" },
+                      ]}
+                      className="inputSelect"
+                    />
+                  </Form.Item>
+                </Col>
+              )}
 
               {tableType && (
                 <Col span={24}>
@@ -333,11 +357,11 @@ const SourceSchemaInput = ({
                 </Col>
               )}
 
-<Col span={24}>
+              <Col span={24}>
                 <Form.Item
                   label={"Save Mode"}
                   labelAlign={"left"}
-                  name={"insert_type"}
+                  name={"write_mode"}
                   rules={[
                     {
                       required: true,
@@ -355,8 +379,8 @@ const SourceSchemaInput = ({
                 </Form.Item>
               </Col>
 
-              <Col span={24} >
-              {/* <Col span={24} style={{display : fileFormatStatus ? "none" : ""}}> */}
+              <Col span={24}>
+                {/* <Col span={24} style={{display : fileFormatStatus ? "none" : ""}}> */}
                 <Form.Item
                   label={"File Format"}
                   labelAlign={"left"}
@@ -381,8 +405,6 @@ const SourceSchemaInput = ({
                   />
                 </Form.Item>
               </Col>
-
-              
 
               {/* <Col span={24}>
                 <Form.Item
