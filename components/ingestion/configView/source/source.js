@@ -141,6 +141,18 @@ const Source = ({
     accountListArr && accountListArr.length,
   ]);
 
+  const handleTabClick = async (key) => {
+    if (key === "properties") {
+      console.log("Get Schema is called here through properties>>>");
+      const oldRecord = await fetch_retry_get(
+        `${NODEMETADATA}${nodeId}/metadata`
+      );
+      if (oldRecord?.data?.sample_data && oldRecord?.data?.sample_data.length) {
+        setTableData(oldRecord?.data);
+      }
+    }
+  };
+
   return (
     <>
       <Row>
@@ -152,6 +164,7 @@ const Source = ({
             activeKey={activeTopKey}
             onChange={(key) => {
               setActiveTopKey(key);
+              handleTabClick(key)
             }}
           >
             {/* <Tabs className={`${'underline'} ${!updateble ? 'buttonHide' : ""}`} defaultActiveKey="1"> */}
