@@ -268,6 +268,25 @@ const SourceSchemaInput = ({
                 </Form.Item>
               </Col>
 
+              <Col span={24}>
+                <Form.Item
+                  label={"Catalog Type"}
+                  labelAlign={"left"}
+                  name={"catalog"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Catalog is required.",
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[{ value: "glue_catalog", label: "Glue Catalog" }]}
+                    className="inputSelect"
+                  />
+                </Form.Item>
+              </Col>
+
               {tableType && (
                 <Col span={24}>
                   <Form.Item
@@ -308,13 +327,36 @@ const SourceSchemaInput = ({
                       key={"input-table-name"}
                       className={"input"}
                       name={"table_name"}
-                      placeholder="Source Name"
+                      placeholder="Table Name"
                     />
                   </Form.Item>
                 </Col>
               )}
 
-              <Col span={24}>
+<Col span={24}>
+                <Form.Item
+                  label={"Save Mode"}
+                  labelAlign={"left"}
+                  name={"insert_type"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Save Mode is required.",
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      { value: "append", label: "Append" },
+                      { value: "overwrite", label: "Overwrite" },
+                    ]}
+                    className="inputSelect"
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={24} >
+              {/* <Col span={24} style={{display : fileFormatStatus ? "none" : ""}}> */}
                 <Form.Item
                   label={"File Format"}
                   labelAlign={"left"}
@@ -340,29 +382,9 @@ const SourceSchemaInput = ({
                 </Form.Item>
               </Col>
 
-              <Col span={24}>
-                <Form.Item
-                  label={"Save Mode"}
-                  labelAlign={"left"}
-                  name={"insert_type"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Save Mode is required.",
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      { value: "append", label: "Append" },
-                      { value: "overwrite", label: "Overwrite" },
-                    ]}
-                    className="inputSelect"
-                  />
-                </Form.Item>
-              </Col>
+              
 
-              <Col span={24}>
+              {/* <Col span={24}>
                 <Form.Item
                   label={"Catalog"}
                   labelAlign={"left"}
@@ -379,7 +401,7 @@ const SourceSchemaInput = ({
                     className="inputSelect"
                   />
                 </Form.Item>
-              </Col>
+              </Col> */}
 
               {/* <Col span={24}>
                 <Form.Item

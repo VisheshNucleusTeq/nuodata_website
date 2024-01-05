@@ -2,13 +2,14 @@ import { Col, Divider, Image, Row } from "antd";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import Source from "../configView/source/source";
 import Expression from "../configView/expression/expression";
 import Filter from "../configView/filter/filter";
+import Source from "../configView/source/source";
 import Target from "../configView/target/target";
 import EdgesFlow from "../reactflow";
+import { loderShowHideAction } from "../../../Redux/action";
 
 import {
   fetch_retry_get,
@@ -18,6 +19,7 @@ import { CREATENODE, GETPIPELINEGRAPH } from "../../../network/apiConstants";
 var timer;
 
 const Build = ({ ingestionCss }) => {
+  const dispatch = useDispatch();
   const { query } = useRouter();
   const messagesEndRef = useRef(null);
   const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
@@ -29,6 +31,7 @@ const Build = ({ ingestionCss }) => {
   const [updateble, setUpdateble] = useState(true);
 
   const getPiplineGraph = async (id) => {
+    dispatch(loderShowHideAction(true));
     clearTimeout(timer);
     timer = setTimeout(async () => {
       const graph = await fetch_retry_get(`${GETPIPELINEGRAPH}${id}`);
@@ -44,9 +47,11 @@ const Build = ({ ingestionCss }) => {
           transformation_type: "Target",
         });
         getPiplineGraph(id);
+        dispatch(loderShowHideAction(false));
       } else {
         setNodeData(graph?.data?.nodes);
         setEdgeData(graph?.data?.edges);
+        dispatch(loderShowHideAction(false));
       }
     }, 1000);
   };

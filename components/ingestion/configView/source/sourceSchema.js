@@ -195,7 +195,7 @@ const SourceSchema = ({
             await getTableDataAction(type);
             await fetch_retry_delete(`${DELETEEDGE}${pipeline}/edges`, {
               data: {
-                edge_ids: [...deleteEdges],
+                edge_ids: [...deleteEdges.filter(n => n)],
               },
             });
             getPiplineGraph(pipeline);

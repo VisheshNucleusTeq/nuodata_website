@@ -224,6 +224,7 @@ const Transform = ({ dataModernizationCss }) => {
           <Row className={dataModernizationCss.defineForm}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
               <Table
+              scroll={{ x: "max-content" }}
                 pagination={false}
                 rowKey="fileId"
                 expandable={{
@@ -270,6 +271,11 @@ const Transform = ({ dataModernizationCss }) => {
                         record?.isUserAction
                       );
                     },
+                  },
+                  {
+                    title: "Exceptions",
+                    key: "Exceptions",
+                    render: (_, record) => {return <>test</>},
                   },
                   {
                     title: "Created Date",

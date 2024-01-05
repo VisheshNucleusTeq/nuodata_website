@@ -1,7 +1,5 @@
 import { Modal, Spin, Table, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
-import { fetch_retry_get } from "../../../../network/api-manager";
-import { PREVIEWDATA } from "../../../../network/apiConstants";
 const DataTable = ({ ingestionCss, tableData }) => {
   const [spinning, setSpinning] = useState(true);
   const [tableDatas, setTableDatas] = useState([]);
@@ -15,7 +13,7 @@ const DataTable = ({ ingestionCss, tableData }) => {
     // );
     if (tableData?.length) {
       const checkKey = Object.keys(tableData[0]);
-      const tableColumn = [...checkKey, "data"].map((e) => {
+      const tableColumn = [...checkKey].map((e) => {
         return {
           title: e,
           dataIndex: e,
@@ -86,17 +84,10 @@ const DataTable = ({ ingestionCss, tableData }) => {
           },
         };
       });
-      setTableColumns([
-        ...tableColumn,
-      ]);
+      setTableColumns([...tableColumn]);
     }
 
-   
-    setTableDatas(
-      tableData?.length
-        ? [...tableData]
-        : []
-    );
+    setTableDatas(tableData?.length ? [...tableData] : []);
     setSpinning(false);
   };
 
@@ -124,7 +115,8 @@ const DataTable = ({ ingestionCss, tableData }) => {
             // alert(current)
             setPage(current);
           },
-          defaultPageSize: 10, hideOnSinglePage: true
+          defaultPageSize: 10,
+          hideOnSinglePage: true,
         }}
       />
     </div>
@@ -132,7 +124,6 @@ const DataTable = ({ ingestionCss, tableData }) => {
 };
 
 export default DataTable;
-
 
 // import React, { useState, useEffect } from "react";
 // import { Divider, Radio, Table } from "antd";

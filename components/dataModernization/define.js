@@ -210,29 +210,44 @@ const Define = ({ dataModernizationCss }) => {
                 setSourcePlatform(e);
 
                 if (e == "HadoopHive") {
+                  // txt, sql,  ty
+                  // setSourceLang([
+                  //   {
+                  //     value: "txt",
+                  //     label: "txt",
+                  //   },
+                  //   {
+                  //     value: "sequence",
+                  //     label: "sequence",
+                  //   },
+                  //   {
+                  //     value: "orc",
+                  //     label: "orc",
+                  //   },
+                  //   {
+                  //     value: "parquet",
+                  //     label: "parquet",
+                  //   },
+                  // ]);
                   setSourceLang([
                     {
                       value: "txt",
-                      label: "txt",
+                      label: ".txt",
                     },
                     {
-                      value: "sequence",
-                      label: "sequence",
+                      value: "sql",
+                      label: ".sql",
                     },
                     {
-                      value: "orc",
-                      label: "orc",
+                      value: "py",
+                      label: ".py",
                     },
-                    {
-                      value: "parquet",
-                      label: "parquet",
-                    },
-                  ]);
+                  ])
                 } else {
                   setSourceLang([
                     {
                       value: "XML",
-                      label: "XML",
+                      label: ".XML",
                     },
                   ]);
                 }
