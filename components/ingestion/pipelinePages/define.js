@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Row,
   Col,
@@ -106,20 +106,41 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
     const envList = await fetch_retry_get(
       `${GETWORKSPACEENV}${workspace}?org_id=${authData.orgId}`
     );
-    setEnvironment(envList?.data);
+    if (envList?.data.length === 0) {
+      Modal.confirm({
+        title: "warning!",
+        content:
+          "please add runtime environment",
+        okText: "Add Runtime Environment",
+        cancelText: "Cancel",
+        onOk: async () => {
+          route.push(
+            "update-workspace?workspace=" + workspace
+          );
+        },
+        onCancel: async () => {
+          route.back()
+        },
+      })
+    }
+    else {
+      setEnvironment(envList?.data);
 
-    const workspaceDetails = await fetch_retry_get(
-      `${ADDWORKSPACE}${workspace}?org_id=${authData.orgId}`
-    );
+      const workspaceDetails = await fetch_retry_get(
+        `${ADDWORKSPACE}${workspace}?org_id=${authData.orgId}`
+      );
 
-    defaultValue.environment = workspaceDetails?.data?.default_runtime_env_id;
+      defaultValue.environment = workspaceDetails?.data?.default_runtime_env_id;
 
-    const envDetails = await fetch_retry_get(
-      `${ENVDETAILS}${workspaceDetails?.data?.default_runtime_env_id}?org_id=${authData.orgId}&workspace_id=${workspace}`
-    );
-    setRuntimeEngine(envDetails?.data?.engine_type);
-
-    form.setFieldsValue({ ...defaultValue });
+      const envDetails = await fetch_retry_get(
+        `${ENVDETAILS}${workspaceDetails?.data?.default_runtime_env_id}?org_id=${authData.orgId}&workspace_id=${workspace}`
+      );
+      setRuntimeEngine(envDetails?.data?.engine_type);
+      if (envDetails?.data?.engine_type?.length === 1) {
+        form.setFieldsValue({ "runtime_engine": envDetails?.data?.engine_type[0] });
+      }
+      form.setFieldsValue({ ...defaultValue });
+    }
   };
 
   const setOldPipeline = async (id) => {
@@ -149,9 +170,12 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
   };
 
   useEffect(() => {
-    query?.pipeline || pipelineData
-      ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
-      : updateFormvalue();
+    const delayDebounceFn = setTimeout(() => {
+      query?.pipeline || pipelineData
+        ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
+        : updateFormvalue();
+    }, 1000)
+    return () => clearTimeout(delayDebounceFn)
   }, [workspace, query?.pipeline, pipelineData]);
 
   return (
@@ -198,7 +222,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
               name={"pipeline_description"}
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: "Pipeline description is required.",
                 },
               ]}
@@ -230,7 +254,9 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
                 type={"text"}
                 placeholder={"Workspace"}
                 disabled
-                style={{ color: "#e74860" }}
+                // style={{ color: "#e74860" }}
+                style={{ color: "#000" }}
+
               />
             </Form.Item>
 
@@ -282,8 +308,8 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
                   ]}
                 >
                   {/* {JSON.stringify(runtimeEngine)} */}
-                  <Radio.Group name="runtime_engine">
-                    {runtimeEngine.map((e) => {
+                  <Radio.Group name="runtime_engine" >
+                    {runtimeEngine?.map((e) => {
                       return <Radio value={e}>{e}</Radio>;
                     })}
                   </Radio.Group>

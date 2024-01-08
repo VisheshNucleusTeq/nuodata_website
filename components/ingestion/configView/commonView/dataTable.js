@@ -86,16 +86,11 @@ const DataTable = ({ ingestionCss, nodeId }) => {
           },
         };
       });
-      setTableColumns([
-        ...tableColumn,
-      ]);
+      setTableColumns([...tableColumn]);
     }
     setTableData(
       previewData?.data?.sample_data?.length
-        ? [{
-          ...previewData?.data?.sample_data[0],
-          data : previewData?.data?.sample_data
-        },...previewData?.data?.sample_data]
+        ? [...previewData?.data?.sample_data]
         : []
     );
     setSpinning(false);
@@ -125,7 +120,8 @@ const DataTable = ({ ingestionCss, nodeId }) => {
             // alert(current)
             setPage(current);
           },
-          defaultPageSize: 10, hideOnSinglePage: true
+          defaultPageSize: 10,
+          hideOnSinglePage: true,
         }}
       />
     </div>

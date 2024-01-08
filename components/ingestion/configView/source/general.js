@@ -82,7 +82,7 @@ const General = ({
           name={"description"}
           rules={[
             {
-              required: true,
+              required: false,
               message: "Description is required.",
             },
           ]}

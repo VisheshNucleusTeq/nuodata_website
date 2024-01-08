@@ -30,7 +30,7 @@ export const ProtectRoute = ({ children }) => {
     if (!authPage.includes(router.pathname) && !user) {
       router.push("/");
     } else if (["/sign-in", "/sign-up"].includes(router.pathname) && user) {
-      router.push("/dashboard");
+      router.push("/ingestion/workspace/");
     }
 
     if (!authPage.includes(router.pathname)) {

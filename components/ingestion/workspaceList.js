@@ -66,7 +66,7 @@ const WorkspaceList = ({ ingestionCss }) => {
       </Modal>
 
       <div className={ingestionCss.workspaceHeader}>
-        <h1>Workspace</h1>
+        <h1>Workspaces</h1>
 
         <Row>
           <Col span={24}>

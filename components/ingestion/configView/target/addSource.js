@@ -411,7 +411,7 @@ const AddSource = ({
                               : { backgroundColor: "#0c3246", color: "#FFF" }
                           }
                         >
-                          Update connection
+                          Edit connection
                         </Button>
                         <Button
                           type="primary"
@@ -503,7 +503,7 @@ const AddSource = ({
                                   : {}
                               }
                             >
-                              Update Connection
+                              Edit Connection
                             </Button>
                           ) : (
                             <Button

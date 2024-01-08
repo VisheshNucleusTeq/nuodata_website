@@ -19,7 +19,7 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData, pipeline }) => {
   const getNodeRecord = async (nodeId) => {
     const oldRecordSchema = await fetch_retry_get(
       `${NODEMETADATA}${nodeId}/metadata`
-    ); 
+    );
     if (
       (oldRecordSchema?.data?.sample_data &&
         oldRecordSchema?.data?.sample_data.length) ||
@@ -52,8 +52,8 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData, pipeline }) => {
   return (
     <Row>
       <Col span={24}>
-        <Tabs className="underline" defaultActiveKey="1">
-          <Tabs.TabPane tab="Properties" key="1">
+        <Tabs className="underline" defaultActiveKey="1" destroyInactiveTabPane>
+          <Tabs.TabPane tab="Properties" key="properties">
             <Tabs
               className="tabActive"
               tabPosition={"left"}
@@ -69,7 +69,7 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData, pipeline }) => {
                   sourceData={sourceData}
                   setSourceData={setSourceData}
                   setActiveKey={setActiveKey}
-                  name={'Filter'}
+                  name={"Filter"}
                 />
               </Tabs.TabPane>
 
@@ -98,11 +98,12 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData, pipeline }) => {
               </Tabs.TabPane>
             </Tabs>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Preview" key="2">
+          <Tabs.TabPane tab="Preview" key="preview">
             <DataTable
-                ingestionCss={ingestionCss}
-                nodeId={nodeId}
-              />
+              nodeId={nodeId}
+              ingestionCss={ingestionCss}
+              tableData={tableData?.sample_data}
+            />
           </Tabs.TabPane>
         </Tabs>
       </Col>

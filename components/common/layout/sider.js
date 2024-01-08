@@ -15,8 +15,8 @@ const SiderView = ({ layoutCss, height, componentName }) => {
   const dispatch = useDispatch();
   const tabType = useSelector((state) => state.tabType.tabType);
 
-  const [showDataModernization, setShowDataModernization] = useState(true);
-  const [showDataManagement, setShowDataManagement] = useState(false);
+  const [showDataModernization, setShowDataModernization] = useState(false);
+  const [showDataManagement, setShowDataManagement] = useState(true);
   const [accountAndSettings, setAccountAndSettings] = useState(false);
   const [ingestion, setIngestion] = useState(false);
 
@@ -91,7 +91,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
       },
       {
         title: "Connections",
-        link: "#",
+        link: "/ingestion/connections",
       },
       {
         title: "Job Runs",
@@ -134,7 +134,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           },
           {
             title: "Connections",
-            link: "#",
+            link: "/ingestion/connections",
           },
           {
             title: "Job Runs",
@@ -171,7 +171,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
           },
           {
             title: "Connections",
-            link: "#",
+            link: "/ingestion/connections",
           },
           {
             title: "Job Runs",

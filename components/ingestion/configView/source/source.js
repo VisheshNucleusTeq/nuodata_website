@@ -33,7 +33,6 @@ const Source = ({
   const [connectionId, setConnectionId] = useState(null);
   const [tableData, setTableData] = useState({});
   const [accountListArr, setAccountListArr] = useState([]);
-  const [keyChange, setKeyChange] = useState(Date.now() + '');
 
   const [sourceData, setSourceData] = useState({
     transformation_name: "",
@@ -153,7 +152,6 @@ const Source = ({
         setTableData(oldRecord?.data);
       }
     }
-    setKeyChange(Date.now() + '')
   };
 
   return (
@@ -167,8 +165,9 @@ const Source = ({
             activeKey={activeTopKey}
             onChange={(key) => {
               setActiveTopKey(key);
-              handleTabClick(key)
+              handleTabClick(key);
             }}
+            destroyInactiveTabPane
           >
             {/* <Tabs className={`${'underline'} ${!updateble ? 'buttonHide' : ""}`} defaultActiveKey="1"> */}
             <Tabs.TabPane tab="Properties" key="properties">
@@ -297,7 +296,7 @@ const Source = ({
                 disabled={!tableData?.sample_data}
               >
                 <DataTable
-                  keyChange={keyChange}
+                  nodeId={nodeId}
                   ingestionCss={ingestionCss}
                   tableData={tableData?.sample_data}
                 />

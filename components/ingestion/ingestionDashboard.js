@@ -262,7 +262,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
                   onClick={() => {
                     setIsModalOpen(true);
                   }}
-                  style={{ float: "right" }}
+                  style={{ float: "right", display: "none" }}
                 >
                   Change Workspace
                 </Button>
@@ -319,7 +319,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
                         router.push(`/ingestion/create-pipeline`);
                       }}
                     >
-                      Create Pipeline
+                      Add Pipeline
                     </Button>
                   </Space>
                 </Col>

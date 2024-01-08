@@ -525,7 +525,7 @@ const AddSource = ({
                                   : {}
                               }
                             >
-                              Update Connection
+                              Edit Connection
                             </Button>
                           ) : (
                             <Button

@@ -159,7 +159,6 @@ const Build = ({ ingestionCss }) => {
           </Col>
         </Row>
         <Divider />
-        {/* {JSON.stringify(selectedNode?.data)} Expression */}
         {selectedNode?.data == "Source" && (
           <Source
             ingestionCss={ingestionCss}

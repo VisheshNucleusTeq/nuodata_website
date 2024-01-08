@@ -216,15 +216,19 @@ body {
 .demo .ant-table-thead tr:first-child th:first-child {
   border-radius: 10px 0px 0px 0px !important;
 }
+
 .demo .ant-table-thead tr:first-child th:last-child {
   border-radius: 0px 10px 0px 0px !important;
 }
-.demo .ant-table-tbody > tr:last-child > td:first-child {
+
+.demo .ant-table-tbody>tr:last-child>td:first-child {
   border-radius: 0px 0px 0px 10px !important;
 }
-.demo .ant-table-tbody > tr:last-child > td:last-child {
+
+.demo .ant-table-tbody>tr:last-child>td:last-child {
   border-radius: 0px 0px 10px 0px !important;
 }
+
 .demo .ant-table-content {
   padding: 2% !important;
   border-radius: 10px !important;
@@ -362,7 +366,7 @@ html {
 }
 
 .search::placeholder {
-  color: #0c3246 !important ;
+  color: #0c3246 !important;
   opacity: 1 !important;
 }
 
@@ -429,12 +433,13 @@ html {
 }
 
 .ant-radio-checked .ant-radio-inner {
-  border-color: #e74860 !important ;
+  border-color: #e74860 !important;
 }
 
 .ant-radio-checked .ant-radio-inner:after {
   background-color: #e74860;
 }
+
 .ant-radio .ant-radio-inner {
   border-color: #0c3246;
 }
@@ -452,12 +457,12 @@ html {
   width: 50vh;
 }
 
-.drawer > .ant-drawer-content {
+.drawer>.ant-drawer-content {
   background-color: gray !important;
   border: 1px solid #e74860;
 }
 
-.ant-menu-vertical .ant-menu-item-only-child span > .tryNowBtn {
+.ant-menu-vertical .ant-menu-item-only-child span>.tryNowBtn {
   background-color: #e74860;
 }
 
@@ -473,51 +478,65 @@ html {
   .phoneGroupHeight {
     height: 4vw !important;
   }
+
   .inputGroup {
     height: 4vw !important;
   }
+
   .inputSelectGroup div {
     height: 4vw !important;
   }
 }
+
 @media (max-width: 992px) {
   .input {
     height: 5vw !important;
   }
+
   .phoneGroupHeight {
     height: 10vw !important;
   }
+
   .inputGroup {
     height: 5vw !important;
   }
+
   .inputSelectGroup div {
     height: 5vw !important;
   }
 }
+
 @media (max-width: 768px) {
   .input {
     height: 6vw !important;
   }
+
   .phoneGroupHeight {
     height: 12vw !important;
   }
+
   .inputGroup {
     height: 6vw !important;
   }
+
   .inputSelectGroup div {
     height: 6vw !important;
   }
 }
+
 @media (max-width: 576px) {
   .input {
     height: 10vw !important;
   }
+
   .phoneGroupHeight {
     height: 20vw !important;
   }
+
   .inputGroup {
     height: 10vw !important;
   }
+
   .inputSelectGroup div {
     height: 10vw !important;
   }
@@ -586,7 +605,7 @@ html {
   font-size: 12px;
 } */
 
-.ant-message-notice-content{
+.ant-message-notice-content {
   border: 1px solid lightgray;
   border-radius: 10px;
   z-index: 9999;
@@ -594,4 +613,8 @@ html {
 
 .buttonHide button {
   display: none
+}
+
+.ant-btn>span {
+  text-transform: capitalize;
 }

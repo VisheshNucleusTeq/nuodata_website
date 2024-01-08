@@ -155,14 +155,16 @@ const CreatePipeline = ({ ingestionCss }) => {
                     workspaceData.filter((e) => e.workspace_id === workspace)[0]
                       ?.workspace_name
                   }
-                  ,
+
                 </a>
               </span>
             )}
             {pipelineDetails.pipeline_name && (
-              <span>
-                Pipeline:&nbsp;<a>{pipelineDetails.pipeline_name}</a>
-              </span>
+              <>,
+                <span>
+                  Pipeline:&nbsp;<a>{pipelineDetails.pipeline_name}</a>
+                </span>
+              </>
             )}
           </Col>
 
@@ -214,9 +216,8 @@ const CreatePipeline = ({ ingestionCss }) => {
                             >
                               <div
                                 style={{
-                                  border: `1px dashed ${
-                                    i <= selectedTab - 1 ? "green" : "gray"
-                                  }`,
+                                  border: `1px dashed ${i <= selectedTab - 1 ? "green" : "gray"
+                                    }`,
                                   width: "100%",
                                 }}
                               ></div>

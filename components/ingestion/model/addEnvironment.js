@@ -46,7 +46,8 @@ const AddEnvironment = ({
   }, [environmentDetails]);
 
   useEffect(() => {
-    form.setFieldValue("params", JSON.stringify(params));
+    // form.setFieldValue("params", JSON.stringify(params));
+    form.setFieldValue("params", JSON.stringify(params, undefined, 4));
   }, [params]);
 
   return (

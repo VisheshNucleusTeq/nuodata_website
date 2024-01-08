@@ -319,6 +319,14 @@ const SourceSchema = ({
             // form.setFieldValue("table", "");
             setTargetType(e.target.value);
             // setOldValue()
+
+            if(e.target.value == "new"){
+              setWriteMode('overwrite');
+              form.setFieldValue("write_mode", "overwrite")
+            }else{
+              // setWriteMode('append');
+              // form.setFieldValue("write_mode", "append")
+            }
           }}
           value={targetType}
         >
@@ -326,6 +334,8 @@ const SourceSchema = ({
           <Radio value={"new"}>Create new dataset</Radio>
         </Radio.Group>
       </Col>
+      {/* {targetType} */}
+
       <Col span={24} style={{ marginTop: "5vh" }}>
         <Form
           form={form}
@@ -425,6 +435,7 @@ const SourceSchema = ({
                   onChange={(e) => {
                     setWriteMode(e);
                   }}
+                  disabled={targetType == "new"}
                 />
               </Form.Item>
             </Col>

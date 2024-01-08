@@ -116,9 +116,7 @@ const Target = ({ ingestionCss, nodeId }) => {
               if (
                 sourceTable &&
                 sourceTable.length &&
-                [...structureDB()].includes(
-                  conn[0].type
-                )
+                [...structureDB()].includes(conn[0].type)
               ) {
                 getSchema(
                   sourceTable[0]?.property_value,
@@ -140,7 +138,6 @@ const Target = ({ ingestionCss, nodeId }) => {
   return (
     <>
       <Row>
-        {/* {defaultActiveKey} */}
         <Col span={24}>
           <Tabs
             className="underline"
@@ -148,6 +145,7 @@ const Target = ({ ingestionCss, nodeId }) => {
             onChange={(key) => {
               setDefaultActiveKey(key);
             }}
+            destroyInactiveTabPane
           >
             <Tabs.TabPane tab="Properties" key="properties">
               <Tabs
@@ -222,9 +220,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                   key="schema_tab"
                   disabled={!(connection && connection?.title && connectionId)}
                 >
-                  {[...structureDB()].includes(
-                    connection.type
-                  ) && (
+                  {[...structureDB()].includes(connection.type) && (
                     <SourceSchema
                       connectionId={connectionId}
                       connection={connection}
@@ -252,9 +248,7 @@ const Target = ({ ingestionCss, nodeId }) => {
                     />
                   )}
                 </Tabs.TabPane>
-                {[...structureDB()].includes(
-                  connection.type
-                ) && (
+                {[...structureDB()].includes(connection.type) && (
                   <Tabs.TabPane
                     tab="Fields"
                     key="fields_tab"
@@ -272,15 +266,14 @@ const Target = ({ ingestionCss, nodeId }) => {
                 )}
               </Tabs>
             </Tabs.TabPane>
-            {[...structureDB()].includes(
-              connection.type
-            ) && (
+            {[...structureDB()].includes(connection.type) && (
               <Tabs.TabPane
                 tab="Preview"
                 key="preview"
                 disabled={!tableData?.sample_data}
               >
                 <DataTable
+                  nodeId={nodeId}
                   ingestionCss={ingestionCss}
                   tableData={tableData?.sample_data}
                 />

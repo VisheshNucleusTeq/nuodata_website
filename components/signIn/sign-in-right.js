@@ -42,7 +42,7 @@ function SignInRight({ loginCss }) {
       localStorage.setItem("authData", JSON.stringify(data.data));
       queryClient.clear();
       dispatch(UserDetailsAction(true));
-      router.push("dashboard");
+      router.push("ingestion/workspace/");
     } else {
       message.error([data?.error]);
     }
