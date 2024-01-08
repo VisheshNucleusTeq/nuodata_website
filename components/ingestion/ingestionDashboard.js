@@ -319,7 +319,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
                         router.push(`/ingestion/create-pipeline`);
                       }}
                     >
-                      New Pipelines
+                      Create Pipeline
                     </Button>
                   </Space>
                 </Col>

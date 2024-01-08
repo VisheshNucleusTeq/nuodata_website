@@ -1,6 +1,6 @@
 import { Modal, Spin, Table, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
-const DataTable = ({ ingestionCss, tableData }) => {
+const DataTable = ({ keyChange, ingestionCss, tableData }) => {
   const [spinning, setSpinning] = useState(true);
   const [tableDatas, setTableDatas] = useState([]);
   const [tableColumns, setTableColumns] = useState([]);
@@ -93,10 +93,11 @@ const DataTable = ({ ingestionCss, tableData }) => {
 
   useEffect(() => {
     getPreviewData();
-  }, [tableData]);
+  }, [tableData, keyChange]);
 
   return (
     <div>
+      {/* {keyChange} */}
       <Table
         dataSource={tableDatas}
         columns={tableColumns}

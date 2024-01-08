@@ -21,6 +21,7 @@ import { structureDB, noStructureDB } from "../../../helper/dbConditions";
 
 const Target = ({ ingestionCss, nodeId }) => {
   const [connection, setConnection] = useState({});
+  const [oldConnection, setOldConnection] = useState({});
   const [activeKey, setActiveKey] = useState("general_tab");
   const [connectionId, setConnectionId] = useState(null);
   const [tableData, setTableData] = useState({});
@@ -194,6 +195,8 @@ const Target = ({ ingestionCss, nodeId }) => {
                           setConnectionId={setConnectionId}
                           setActiveKey={setActiveKey}
                           setConnection={setConnection}
+                          oldConnection={oldConnection}
+                          setOldConnection={setOldConnection}
                         />
                       </Col>
                     </Row>
@@ -203,12 +206,13 @@ const Target = ({ ingestionCss, nodeId }) => {
                       setConnection={setConnection}
                       setActiveKey={setActiveKey}
                       accountListArr={accountListArr}
-
                       sourceData={sourceData}
                       setSourceData={setSourceData}
                       nodeId={nodeId}
                       setConnectionId={setConnectionId}
                       setTableData={setTableData}
+                      oldConnection={oldConnection}
+                      setOldConnection={setOldConnection}
                     />
                   )}
                 </Tabs.TabPane>

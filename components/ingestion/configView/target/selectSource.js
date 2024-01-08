@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { RollbackOutlined } from "@ant-design/icons";
 import {
-  Col,
-  Row,
-  Input,
-  Button,
   Card,
-  Tooltip,
+  Col,
   Image,
-  Modal,
-  message,
+  Input,
+  Row,
+  Tooltip,
+  message
 } from "antd";
-import { INGESTIONTEMPLATES, CREATENODE } from "../../../../network/apiConstants";
-import { fetch_retry_get, fetch_retry_put } from "../../../../network/api-manager";
-
+import React, { useEffect, useState } from "react";
+import { fetch_retry_put } from "../../../../network/api-manager";
+import { CREATENODE } from "../../../../network/apiConstants";
 const SelectSource = ({
   ingestionCss,
   setConnection,
@@ -22,6 +20,8 @@ const SelectSource = ({
   nodeId,
   setConnectionId,
   setTableData,
+  oldConnection,
+  setOldConnection,
 }) => {
   const [accountList, setAccountList] = useState([]);
 
@@ -68,6 +68,40 @@ const SelectSource = ({
                   filterData(e.target.value);
                 }}
               />
+            </Col>
+            <Col
+              span={12}
+              style={{
+                display: "flex",
+                justifyContent: "",
+                alignItems: "center",
+              }}
+            >
+              {oldConnection?.type && (
+                <span
+                  style={{
+                    cursor: "pointer",
+                    color: "#e74860",
+                    fontWeight: "bold",
+                  }}
+                  onClick={() => {
+                    setConnection(oldConnection);
+                    setOldConnection({});
+                  }}
+                >
+                  <RollbackOutlined />
+                  &nbsp; Cancel
+                </span>
+              )}
+              {/* <span
+                onClick={() => {
+                  setConnection(oldConnection);
+                  setOldConnection({});
+                }}
+                style={{ color: "#e74860", cursor: "pointer" }}
+              >
+                Cancel Changes
+              </span> */}
             </Col>
           </Row>
           <Row align={"centerr"}>

@@ -1,51 +1,41 @@
 import { useRouter } from "next/router";
-
 import {
-  FileDoneOutlined,
-  FormOutlined,
-  UnorderedListOutlined,
-  LinkOutlined,
-  FilterOutlined,
-  SettingOutlined,
   EditOutlined,
+  FormOutlined,
+  LinkOutlined,
+  UnorderedListOutlined
 } from "@ant-design/icons";
 import {
-  Col,
-  Image,
-  Row,
-  Space,
   Button,
-  Form,
-  Input,
+  Col,
   Collapse,
-  Checkbox,
+  Form,
+  Image,
+  Input,
+  Row,
   Select,
-  message,
+  Space,
   Tooltip,
+  message
 } from "antd";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import {
-  INGESTIONTCONNECTIONLIST,
-  GETCONNECTION,
-} from "../../../../network/apiConstants";
 import {
   fetch_retry_get,
   fetch_retry_post,
   fetch_retry_put,
 } from "../../../../network/api-manager";
-
-import { encryptAES_CBC, decryptAES_CBC } from "../../../helper/cryptojs";
 import {
-  TESTCONNECTION,
-  ADDCONNECTION,
-  GETCONNECTIONDETAILS,
-  GETCONNECTIONDETAIL,
+  GETCONNECTION
 } from "../../../../network/apiConstants";
+
 import { loderShowHideAction } from "../../../../Redux/action";
+import {
+  ADDCONNECTION,
+  GETCONNECTIONDETAIL,
+  TESTCONNECTION
+} from "../../../../network/apiConstants";
+import { decryptAES_CBC, encryptAES_CBC } from "../../../helper/cryptojs";
 
 const AddSource = ({
   ingestionCss,
@@ -54,6 +44,8 @@ const AddSource = ({
   setConnectionId,
   setActiveKey,
   setConnection,
+  oldConnection,
+  setOldConnection,
 }) => {
   const workspace = useSelector((state) => state?.workspace?.workspace);
   const route = useRouter();
@@ -286,6 +278,7 @@ const AddSource = ({
               <span
                 style={{ cursor: "pointer", color: "#e74860" }}
                 onClick={() => {
+                  setOldConnection(connection);
                   setConnection({});
                 }}
               >

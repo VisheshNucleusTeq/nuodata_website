@@ -82,7 +82,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
   useEffect(() => {
     setDataManagement([
       {
-        title: "Workspace",
+        title: "Workspaces",
         link: "/ingestion/workspace",
       },
       {
@@ -111,7 +111,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
       if ("workspace" in localStorage || workspace) {
         setIngestionArr([
           {
-            title: "Workspace",
+            title: "Workspaces",
             link: "/ingestion/workspace",
           },
           {
@@ -125,7 +125,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
         ]);
         setDataManagement([
           {
-            title: "Workspace",
+            title: "Workspaces",
             link: "/ingestion/workspace",
           },
           {
@@ -152,7 +152,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
       } else {
         setIngestionArr([
           {
-            title: "Workspace",
+            title: "Workspaces",
             link: "/ingestion/workspace",
           },
           {
@@ -162,7 +162,7 @@ const SiderView = ({ layoutCss, height, componentName }) => {
         ]);
         setDataManagement([
           {
-            title: "Workspace",
+            title: "Workspaces",
             link: "/ingestion/workspace",
           },
           {

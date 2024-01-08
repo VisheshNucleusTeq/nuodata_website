@@ -33,6 +33,7 @@ const Source = ({
   const [connectionId, setConnectionId] = useState(null);
   const [tableData, setTableData] = useState({});
   const [accountListArr, setAccountListArr] = useState([]);
+  const [keyChange, setKeyChange] = useState(Date.now() + '');
 
   const [sourceData, setSourceData] = useState({
     transformation_name: "",
@@ -152,6 +153,7 @@ const Source = ({
         setTableData(oldRecord?.data);
       }
     }
+    setKeyChange(Date.now() + '')
   };
 
   return (
@@ -295,6 +297,7 @@ const Source = ({
                 disabled={!tableData?.sample_data}
               >
                 <DataTable
+                  keyChange={keyChange}
                   ingestionCss={ingestionCss}
                   tableData={tableData?.sample_data}
                 />
