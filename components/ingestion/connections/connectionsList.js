@@ -120,7 +120,7 @@ const ConnectionsList = ({ ingestionCss }) => {
       </Modal>
       {workspace &&
         accountListArr &&
-        accountListArr.length &&
+        accountListArr.length > 0 &&
         accountListArr.map((e) => {
           return (
             <>

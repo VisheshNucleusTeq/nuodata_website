@@ -235,7 +235,7 @@ const ConnectionTable = ({
           {
             title: "#",
             key: "sno",
-            width: 100,
+            width: 50,
             render: (text, object, index) => {
               return index + 1;
             },
