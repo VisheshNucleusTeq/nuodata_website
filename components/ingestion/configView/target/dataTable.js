@@ -305,7 +305,6 @@ const DataTable = ({ ingestionCss, nodeId }) => {
                     <Tooltip
                       placement="left"
                       title={record}
-                      // style={{ width: "50vw" }}
                     >
                       ...
                       <a> Read More</a>
