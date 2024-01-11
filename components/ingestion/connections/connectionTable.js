@@ -11,6 +11,7 @@ import {
   Table,
   Tooltip,
   message,
+  Divider,
 } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -34,6 +35,8 @@ const ConnectionTable = ({
   ingestionCss,
   title,
   connection_detail,
+  connectionType,
+  setConnectionType,
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -192,129 +195,144 @@ const ConnectionTable = ({
     }
   }, [updateRecordId]);
 
+  useEffect(() => {
+    if (connectionType && connectionType == type) {
+      setUpdateRecordId(null);
+      setIsModalOpen(true);
+      form.resetFields();
+      setConnectionType(null);
+    }
+  }, [connectionType]);
+
   return (
     <div>
-      <Modal
-        title={`${updateRecordId ? "Update " : "Add New "}  Connection`}
-        open={isModalOpen}
-        onOk={async () => {
-          try {
-            const data = await form.validateFields();
-            updateRecordId ? updateConnection(data) : addConnection(data);
-          } catch (error) {}
-        }}
-        onCancel={() => {
-          setIsModalOpen(false);
-        }}
-        closable={true}
-        centered
-        destroyOnClose
-        okText={updateRecordId ? "Update" : "Save"}
-        okButtonProps={{
-          style: { backgroundColor: "#e74860", borderColor: "#e74860" },
-        }}
-      >
-        <Form
-          layout="vertical"
-          form={form}
-          autoComplete="on"
-          onFinish={(e) => {}}
-          initialValues={{}}
-          style={{ maxHeight: "70vh", overflowY: "scroll" }}
-        >
-          <div className={ingestionCss.formHeight}>
-            {Object.keys(connection_detail).map((e) => {
-              return createField(e);
-            })}
-          </div>
-        </Form>
-      </Modal>
+      {connectionType}
+      {connectionData && connectionData.length > 0 && (
+        <>
+          <Modal
+            title={`${updateRecordId ? "Update " : "Add New "}  Connection`}
+            open={isModalOpen}
+            onOk={async () => {
+              try {
+                const data = await form.validateFields();
+                updateRecordId ? updateConnection(data) : addConnection(data);
+              } catch (error) {}
+            }}
+            onCancel={() => {
+              setIsModalOpen(false);
+            }}
+            closable={true}
+            centered
+            destroyOnClose
+            okText={updateRecordId ? "Update" : "Save"}
+            okButtonProps={{
+              style: { backgroundColor: "#e74860", borderColor: "#e74860" },
+            }}
+          >
+            <Form
+              layout="vertical"
+              form={form}
+              autoComplete="on"
+              onFinish={(e) => {}}
+              initialValues={{}}
+              style={{ maxHeight: "70vh", overflowY: "scroll" }}
+            >
+              <div className={ingestionCss.formHeight}>
+                {Object.keys(connection_detail).map((e) => {
+                  return createField(e);
+                })}
+              </div>
+            </Form>
+          </Modal>
 
-      <Table
-        columns={[
-          {
-            title: "#",
-            key: "sno",
-            width: 50,
-            render: (text, object, index) => {
-              return index + 1;
-            },
-          },
-          {
-            title: "Connection Name",
-            dataIndex: "connection_name",
-            render: (text) => <a>{text}</a>,
-          },
-          {
-            width: 100,
-            fixed: "right",
-            title: "Action",
-            dataIndex: "action",
-            render: (text, record) => {
-              return (
-                <Space
-                  size="middle"
-                  key={(Math.random() + 1).toString(36).substring(7)}
-                >
-                  <Tooltip
-                    placement="top"
-                    title={"Edit Connection"}
-                    key={(Math.random() + 1).toString(36).substring(7)}
-                  >
-                    <a
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setIsModalOpen(true);
-                        setUpdateRecordId(record?._id);
-                      }}
+          <Table
+            columns={[
+              {
+                title: "#",
+                key: "sno",
+                width: 50,
+                render: (text, object, index) => {
+                  return index + 1;
+                },
+              },
+              {
+                title: "Connection Name",
+                dataIndex: "connection_name",
+                render: (text) => <a>{text}</a>,
+              },
+              {
+                width: 100,
+                fixed: "right",
+                title: "Action",
+                dataIndex: "action",
+                render: (text, record) => {
+                  return (
+                    <Space
+                      size="middle"
+                      key={(Math.random() + 1).toString(36).substring(7)}
                     >
-                      <EditOutlined />
-                    </a>
-                  </Tooltip>
-                </Space>
+                      <Tooltip
+                        placement="top"
+                        title={"Edit Connection"}
+                        key={(Math.random() + 1).toString(36).substring(7)}
+                      >
+                        <a
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setIsModalOpen(true);
+                            setUpdateRecordId(record?._id);
+                          }}
+                        >
+                          <EditOutlined />
+                        </a>
+                      </Tooltip>
+                    </Space>
+                  );
+                },
+              },
+            ]}
+            dataSource={[...connectionData]}
+            bordered
+            title={() => {
+              return (
+                <>
+                  <Row>
+                    <Col
+                      span={12}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <Image
+                        src={`/db_icon/${title}.png`}
+                        width={35}
+                        style={{
+                          borderRadius: "25px",
+                          padding: "2px",
+                        }}
+                      />
+                      &nbsp;
+                      <b style={{ color: "#e74860" }}>{title}</b>
+                    </Col>
+                    <Col span={12}>
+                      {/* <Button
+                        className={ingestionCss.backButton}
+                        onClick={() => {
+                          setUpdateRecordId(null);
+                          setIsModalOpen(true);
+                          form.resetFields();
+                        }}
+                      >
+                        Add New connection
+                      </Button> */}
+                    </Col>
+                  </Row>
+                </>
               );
-            },
-          },
-        ]}
-        dataSource={[...connectionData]}
-        bordered
-        title={() => {
-          return (
-            <>
-              <Row>
-                <Col
-                  span={12}
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  <Image
-                    src={`/db_icon/${title}.png`}
-                    width={35}
-                    style={{
-                      borderRadius: "25px",
-                      padding: "2px",
-                    }}
-                  />
-                  &nbsp;
-                  <b style={{ color: "#e74860" }}>{title}</b>
-                </Col>
-                <Col span={12}>
-                  <Button
-                    className={ingestionCss.backButton}
-                    onClick={() => {
-                      setUpdateRecordId(null);
-                      setIsModalOpen(true);
-                      form.resetFields();
-                    }}
-                  >
-                    Add New connection
-                  </Button>
-                </Col>
-              </Row>
-            </>
-          );
-        }}
-        pagination={false}
-      />
+            }}
+            pagination={false}
+          />
+          <Divider style={{ borderColor: "#FFF" }}></Divider>
+        </>
+      )}
     </div>
   );
 };

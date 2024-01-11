@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { fetch_retry_put } from "../../../../network/api-manager";
 import { CREATENODE } from "../../../../network/apiConstants";
 import { loderShowHideAction } from "../../../../Redux/action";
-
+import { getFileName } from "../../../helper/getFileName";
 const SourceSchemaInput = ({
   connectionId,
   connection,
@@ -214,7 +214,7 @@ const SourceSchemaInput = ({
       <Row>
         <Col span={24} className={ingestionCss.addSourceImage}>
           <Space size={20}>
-            <Image src={`/db_icon/${connection.title}.png`} />
+            <Image src={`/db_icon/${getFileName(connection.type)}.png`} />
             <b>{connection.title}</b>
           </Space>
         </Col>

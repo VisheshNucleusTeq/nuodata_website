@@ -26,6 +26,7 @@ import {
   DELETEEDGE,
 } from "../../../../network/apiConstants";
 import { CREATENODE } from "../../../../network/apiConstants";
+import { getFileName } from "../../../helper/getFileName";
 const SourceSchema = ({
   connectionId,
   connection,
@@ -253,7 +254,7 @@ const SourceSchema = ({
     <Row>
       <Col span={24} className={ingestionCss.addSourceImage}>
         <Space size={20}>
-          <Image src={`/db_icon/${connection.title}.png`} />
+          <Image src={`/db_icon/${getFileName(connection.type)}.png`} />
           <b>{connection.title}</b>
         </Space>
       </Col>

@@ -1,4 +1,14 @@
-import { Button, Divider, Modal, Select, message } from "antd";
+import {
+  Button,
+  Divider,
+  Modal,
+  Select,
+  message,
+  Row,
+  Col,
+  Tooltip,
+  Image,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setWorkspaceAction } from "../../../Redux/action";
@@ -6,7 +16,7 @@ import { fetch_retry_get } from "../../../network/api-manager";
 import {
   GETWORKSPACE,
   GETWORKSPACEENV,
-  INGESTIONTEMPLATES
+  INGESTIONTEMPLATES,
 } from "../../../network/apiConstants";
 
 import ConnectionTable from "./connectionTable";
@@ -15,7 +25,9 @@ const ConnectionsList = ({ ingestionCss }) => {
   const dispatch = useDispatch();
   const [accountListArr, setAccountListArr] = useState([]);
   const [workspace, setWorkspace] = React.useState("");
+  const [connectionType, setConnectionType] = React.useState("");
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [addConnModal, setAddConnModal] = React.useState(false);
   const [workspaceData, setWorkspaceData] = React.useState([]);
 
   const setOldData = async () => {
@@ -59,9 +71,70 @@ const ConnectionsList = ({ ingestionCss }) => {
     setOldData();
   }, [workspace, typeof window !== "undefined"]);
 
-
   return (
     <div>
+      <Button
+        className={ingestionCss.backButton}
+        onClick={() => {
+          setAddConnModal(true);
+        }}
+      >
+        Add New connection
+      </Button>
+
+      <Modal
+        title="Select Connection Type"
+        open={addConnModal}
+        onOk={() => {
+          setAddConnModal(false);
+        }}
+        onCancel={() => {
+          setAddConnModal(false);
+        }}
+        footer={null}
+        closable={true}
+        // width={"50%"}
+      >
+        <Row align={"center"}>
+          {accountListArr &&
+            accountListArr.length > 0 &&
+            accountListArr.map((e, i) => {
+              return (
+                <Col span={5} key={"sourceCol" + i}>
+                  <div
+                    style={{
+                      borderRadius: "10px",
+                      margin: "10px",
+                      boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                    }}
+                    key={"sourceDiv" + i}
+                  >
+                    <div
+                      onClick={() => {
+                        setConnectionType(e.type);
+                        setAddConnModal(false);
+                      }}
+                    >
+                      <Tooltip title={e.title} color="#0c3246">
+                        <Image
+                          alt={e.title}
+                          src={`/db_icon/${e.title}.png`}
+                          preview={false}
+                        />
+                      </Tooltip>
+                    </div>
+                  </div>
+                </Col>
+              );
+            })}
+          {accountListArr.length <= 0 && (
+            <Col span={24} style={{ marginTop: "4vw" }}>
+              <h3 style={{ textAlign: "center" }}>No record found</h3>
+            </Col>
+          )}
+        </Row>
+      </Modal>
+
       <Modal
         title="Workspace"
         open={isModalOpen}
@@ -124,8 +197,15 @@ const ConnectionsList = ({ ingestionCss }) => {
         accountListArr.map((e) => {
           return (
             <>
-              <ConnectionTable {...{ ...e, workspace: workspace, ingestionCss : ingestionCss }} />
-              <Divider style={{ borderColor: "#FFF" }}></Divider>
+              <ConnectionTable
+                {...{
+                  ...e,
+                  workspace,
+                  ingestionCss,
+                  connectionType,
+                  setConnectionType,
+                }}
+              />
             </>
           );
         })}

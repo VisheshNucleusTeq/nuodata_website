@@ -1,8 +1,10 @@
-import { Button, Card, Col, Image, Input, Row, Tooltip, message } from "antd";
+import { RollbackOutlined } from "@ant-design/icons";
+import { Card, Col, Image, Input, Row, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { fetch_retry_put } from "../../../../network/api-manager";
 import { CREATENODE } from "../../../../network/apiConstants";
-import { RollbackOutlined } from "@ant-design/icons";
+import { getFileName } from "../../../helper/getFileName";
+
 const SelectSource = ({
   ingestionCss,
   setConnection,
@@ -121,7 +123,7 @@ const SelectSource = ({
                         <Tooltip title={e.title} color="#0c3246">
                           <Image
                             alt={e.title}
-                            src={`/db_icon/${e.title}.png`}
+                            src={`/db_icon/${getFileName(e.type)}.png`}
                             preview={false}
                           />
                         </Tooltip>

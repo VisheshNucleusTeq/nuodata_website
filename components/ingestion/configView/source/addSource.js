@@ -36,6 +36,7 @@ import {
   TESTCONNECTION,
 } from "../../../../network/apiConstants";
 import { decryptAES_CBC, encryptAES_CBC } from "../../../helper/cryptojs";
+import { getFileName } from "../../../helper/getFileName";
 
 const AddSource = ({
   ingestionCss,
@@ -290,11 +291,11 @@ const AddSource = ({
 
   return (
     <>
-      {/* {updateble} */}
+      {/* {connection.type} */}
       <Row>
         <Col span={8} className={ingestionCss.addSourceImage}>
           <Space size={20}>
-            <Image src={`/db_icon/${connection.title}.png`} />
+            <Image src={`/db_icon/${getFileName(connection.type)}.png`} />
             <b>
               {connection.title} &nbsp;&nbsp;
               <span

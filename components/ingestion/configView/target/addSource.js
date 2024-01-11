@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import {
   EditOutlined,
   FormOutlined,
@@ -18,6 +17,7 @@ import {
   Tooltip,
   message
 } from "antd";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -36,6 +36,7 @@ import {
   TESTCONNECTION
 } from "../../../../network/apiConstants";
 import { decryptAES_CBC, encryptAES_CBC } from "../../../helper/cryptojs";
+import { getFileName } from "../../../helper/getFileName";
 
 const AddSource = ({
   ingestionCss,
@@ -266,13 +267,15 @@ const AddSource = ({
     }
   }, [connectionId]);
 
+  
+
   return (
     <>
-      {/* setConnection */}
       <Row>
         <Col span={8} className={ingestionCss.addSourceImage}>
           <Space size={20}>
-            <Image src={`/db_icon/${connection.title}.png`} />
+            
+            <Image src={`/db_icon/${getFileName(connection.type)}.png`} />
             <b>
               {connection.title} &nbsp;&nbsp;
               <span
