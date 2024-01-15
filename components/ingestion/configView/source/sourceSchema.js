@@ -70,8 +70,9 @@ const SourceSchema = ({
       dispatch(loderShowHideAction(true));
       const authData = JSON.parse(localStorage.getItem("authData"));
       const tableData = await fetch_retry_post(
-        `${GETCONNECTIONDETAIL}data/${data?.table}?org_id=${authData?.orgId}&workspace_id=${workspace}&connection_id=${connectionId}&type=${connection?.type}&rows=${data?.rows}&node_id=${nodeId}`
+        `${GETCONNECTIONDETAIL}data/${data?.table}?org_id=${authData?.orgId}&connection_id=${connectionId}&type=${connection?.type}&rows=${data?.rows}&node_id=${nodeId}`
       );
+      // &workspace_id=${workspace}
       if (tableData.success) {
         setTableData(tableData?.data);
 
@@ -193,20 +194,22 @@ const SourceSchema = ({
           okText: "Continue",
           cancelText: "Cancel",
           onOk: async () => {
-            const deleteResult = await fetch_retry_delete(
-              `${DELETEEDGE}${pipeline}/edges`,
-              {
-                data: {
-                  edge_ids: [...deleteEdges.filter((n) => n)],
-                },
-              }
-            );
-            if (deleteResult.success) {
-              await getPiplineGraph(pipeline);
-              await getTableDataAction(type);
-            } else {
-              message.error(deleteResult.error);
-            }
+            await getPiplineGraph(pipeline);
+            await getTableDataAction(type);
+            // const deleteResult = await fetch_retry_delete(
+            //   `${DELETEEDGE}${pipeline}/edges`,
+            //   {
+            //     data: {
+            //       edge_ids: [...deleteEdges.filter((n) => n)],
+            //     },
+            //   }
+            // );
+            // if (deleteResult.success) {
+            //   await getPiplineGraph(pipeline);
+            //   await getTableDataAction(type);
+            // } else {
+            //   message.error(deleteResult.error);
+            // }
           },
         });
       }

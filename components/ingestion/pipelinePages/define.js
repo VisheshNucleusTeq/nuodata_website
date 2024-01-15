@@ -141,6 +141,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
       }
       form.setFieldsValue({ ...defaultValue });
     }
+    dispatch(loderShowHideAction(false))
   };
 
   const setOldPipeline = async (id) => {
@@ -167,9 +168,11 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
       environment: pipelineDetails?.data?.runtime_env_id,
       runtime_engine: pipelineDetails?.data?.runtime_engine,
     });
+    dispatch(loderShowHideAction(false))
   };
 
   useEffect(() => {
+    dispatch(loderShowHideAction(true))
     const delayDebounceFn = setTimeout(() => {
       query?.pipeline || pipelineData
         ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)

@@ -1,25 +1,36 @@
-import { CheckCircleFilled } from "@ant-design/icons";
+import {
+  CheckCircleFilled,
+  CloseCircleOutlined,
+  LeftOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import {
   Button,
   Col,
+  Collapse,
   Divider,
+  Drawer,
+  Image,
   Modal,
   Row,
   Space,
-  message
+  Tag,
+  message,
+  Tooltip,
 } from "antd";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Define from "./pipelinePages/define";
 import Build from "./pipelinePages/build";
+import Define from "./pipelinePages/define";
 
 import { loderShowHideAction, setWorkspaceAction } from "../../Redux/action";
 import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
 import {
   CONVERTPIPELINE,
   CREATEPIPELINE,
+  GETPIPELINEERROR,
   GETWORKSPACE,
   RUNPIPELINE,
 } from "../../network/apiConstants";
@@ -36,6 +47,9 @@ const CreatePipeline = ({ ingestionCss }) => {
   const [workspaceData, setWorkspaceData] = React.useState([]);
   const [pipelineDetails, setPipelineDetails] = React.useState({});
   const [showJobList, setShowJobList] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [validation, setValidation] = React.useState({});
+  const [validateLoad, setValidateLoad] = React.useState(false);
 
   const getWorkSpaceData = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
@@ -92,6 +106,20 @@ const CreatePipeline = ({ ingestionCss }) => {
     await convertPipeline(id);
   };
 
+  const getValidationData = async () => {
+    const id = query?.pipeline ? query?.pipeline : pipelineData;
+    if (id) {
+      setValidateLoad(true);
+      const validationData = await fetch_retry_get(
+        `${GETPIPELINEERROR}${id}/validate`
+      );
+      if (validationData.success) {
+        setValidation(validationData.data);
+      }
+      setValidateLoad(false);
+    }
+  };
+
   useEffect(() => {
     getWorkSpaceData();
     setOldData();
@@ -101,6 +129,7 @@ const CreatePipeline = ({ ingestionCss }) => {
     query?.pipeline || pipelineData
       ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
       : null;
+    getValidationData();
   }, [workspace, query?.pipeline, pipelineData]);
 
   return (
@@ -122,23 +151,166 @@ const CreatePipeline = ({ ingestionCss }) => {
       >
         <JobList />
       </Modal>
-      {/* {workspace && (
-        <Row style={{ borderRadius: "5px" }}>
-          <Col className={ingestionCss.WorkspaceName} span={24}>
+
+      <Drawer
+        title={
+          <>
             <Row>
-              <Col
-                span={24}
-                style={{ display: "flex", alignItems: "center", height: "8vh" }}
-              >
-                {
-                  workspaceData.filter((e) => e.workspace_id === workspace)[0]
-                    ?.workspace_name
-                }
+              <Col span={12}>
+                <b>Validation</b>
+              </Col>
+              <Col span={12} style={{ display: "flex", justifyContent: "end" }}>
+                <Space>
+                  <ReloadOutlined
+                    style={{
+                      // color: "#FFF",
+                      borderRadius: "25px",
+                      fontSize: "1.5vw",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      getValidationData();
+                    }}
+                    spin={validateLoad}
+                  />
+                  &nbsp;
+                  <CloseCircleOutlined
+                    style={{
+                      color: "#FFF",
+                      backgroundColor: "red",
+                      borderRadius: "25px",
+                      fontSize: "1.5vw",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  />
+                </Space>
               </Col>
             </Row>
-          </Col>
-        </Row>
-      )} */}
+          </>
+        }
+        placement={"right"}
+        closable={false}
+        onClose={() => {
+          setOpen(false);
+        }}
+        open={open}
+        key={"right"}
+        width={"40%"}
+        height={"100%"}
+      >
+        {validation?.validations &&
+          validation?.validations.length &&
+          validation?.validations.map((e) => {
+            return (
+              <>
+                <Collapse
+                  expandIconPosition="right"
+                  onChange={() => {
+                    console.log(e?.element_id)
+                  }}
+                  accordion
+                >
+                  <Collapse.Panel
+                    arrow="right"
+                    header={
+                      <Row>
+                        <Col span={18}>
+                          <Tooltip placement="top" title={e?.element_type}>
+                            <span
+                              style={{ display: "flex", alignItems: "center" }}
+                            >
+                              <span>
+                                <Image
+                                  preview={false}
+                                  src={`/pipelines_icons/${e?.element_type}.png`}
+                                  width={"2.5vw"}
+                                  height={"2.5vw"}
+                                />
+                              </span>
+                              &nbsp; &nbsp;
+                              <span
+                                style={{
+                                  color: "#000",
+                                  fontWeight: "initial",
+                                  fontSize: "1vw",
+                                }}
+                              >
+                                <span>{e?.element_name}</span>
+                                <br></br>
+                                {/* <small style={{backgroundColor : "lightblue", color : "#000", borderRadius : "5px"}}>&nbsp;{e?.element_type}&nbsp;</small> */}
+                                <Tag bordered={false} color="processing" >
+                                  {e?.element_type}
+                                </Tag>
+                              </span>
+                            </span>
+                          </Tooltip>
+                        </Col>
+                        <Col span={6}>
+                          <>
+                            {/* border: "15px solid #FFF" */}
+                            <div
+                              style={{
+                                // border: "1px solid red",
+                                height: "100%",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "end",
+                              }}
+                            >
+                              {e?.element_status == "invalid" && (
+                                <Tag icon={<CloseCircleOutlined />} color="red">
+                                  Invalid
+                                </Tag>
+                              )}
+                              {(e?.element_status == "partially_valid" ||
+                                e?.element_status == "partially valid") && (
+                                <Tag
+                                  icon={<CloseCircleOutlined />}
+                                  color="orange"
+                                >
+                                  Partially Valid
+                                </Tag>
+                              )}
+                            </div>
+                          </>
+                        </Col>
+                      </Row>
+                    }
+                    key="1"
+                    // extra={
+                    //   <>
+                    //   {/* border: "15px solid #FFF" */}
+                    //     <div style={{ border : "1px solid red", height : "100%", display : "flex", alignItems :"center"}}>
+                    //       {e?.element_status == "invalid" && (
+                    //         <Tag icon={<CloseCircleOutlined />} color="red">
+                    //           Invalid
+                    //         </Tag>
+                    //       )}
+                    //       {(e?.element_status == "partially_valid" || e?.element_status == "partially valid") && (
+                    //         <Tag icon={<CloseCircleOutlined />} color="orange">
+                    //           Partially Valid
+                    //         </Tag>
+                    //       )}
+                    //     </div>
+                    //   </>
+                    // }
+                  >
+                    <ul>
+                      {e?.validation_messages &&
+                        e?.validation_messages?.map((errorList) => {
+                          return <li>{errorList}</li>;
+                        })}
+                    </ul>
+                  </Collapse.Panel>
+                </Collapse>
+                <p></p>
+              </>
+            );
+          })}
+      </Drawer>
 
       <div className={ingestionCss.main} style={{ borderRadius: "5px" }}>
         <Row>
@@ -155,17 +327,57 @@ const CreatePipeline = ({ ingestionCss }) => {
                     workspaceData.filter((e) => e.workspace_id === workspace)[0]
                       ?.workspace_name
                   }
-
                 </a>
               </span>
             )}
-            {pipelineDetails.pipeline_name && (
-              <>,
+            {pipelineDetails?.pipeline_name && (
+              <>
+                ,
                 <span>
-                  Pipeline:&nbsp;<a>{pipelineDetails.pipeline_name}</a>
+                  Pipeline:&nbsp;<a>{pipelineDetails?.pipeline_name}</a>
                 </span>
               </>
             )}
+          </Col>
+
+          <Col
+            span={12}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "end",
+              paddingRight: "2vw",
+            }}
+          >
+            {}
+            {validation?.pipeline_status &&
+              validation?.pipeline_status != "valid" && (
+                <Button
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                >
+                  <span>
+                    <span>
+                      <LeftOutlined />
+                    </span>
+                    &nbsp;
+                    <span>
+                      {`validation (${validation?.validations?.length})`}{" "}
+                    </span>
+                    &nbsp; &nbsp;
+                    <span>
+                      <CloseCircleOutlined
+                        style={{
+                          color: "#FFF",
+                          backgroundColor: "red",
+                          borderRadius: "25px",
+                        }}
+                      />
+                    </span>
+                  </span>
+                </Button>
+              )}
           </Col>
 
           <Divider style={{ margin: "0vh 0vh 1vh 0vh" }}></Divider>
@@ -216,8 +428,9 @@ const CreatePipeline = ({ ingestionCss }) => {
                             >
                               <div
                                 style={{
-                                  border: `1px dashed ${i <= selectedTab - 1 ? "green" : "gray"
-                                    }`,
+                                  border: `1px dashed ${
+                                    i <= selectedTab - 1 ? "green" : "gray"
+                                  }`,
                                   width: "100%",
                                 }}
                               ></div>
@@ -231,30 +444,34 @@ const CreatePipeline = ({ ingestionCss }) => {
               </Col>
               <Col span={8} className={ingestionCss.pipelineBtns}>
                 <Space>
-                  <Button
-                    className={ingestionCss.saveBtn}
-                    onClick={async () => {
-                      const id = query?.pipeline
-                        ? query?.pipeline
-                        : pipelineData;
-                      convertPipeline(id);
-                      // await convertAndRunPipeline(id);
-                    }}
-                  >
-                    Save pipeline
-                  </Button>
-                  <Button
-                    className={ingestionCss.saveBtn}
-                    onClick={async () => {
-                      const id = query?.pipeline
-                        ? query?.pipeline
-                        : pipelineData;
-                      runPipeline(id);
-                      // await convertAndRunPipeline(id);
-                    }}
-                  >
-                    Run pipeline
-                  </Button>
+                  {validation?.pipeline_status == "valid" && (
+                    <>
+                      <Button
+                        className={ingestionCss.saveBtn}
+                        onClick={async () => {
+                          const id = query?.pipeline
+                            ? query?.pipeline
+                            : pipelineData;
+                          convertPipeline(id);
+                          // await convertAndRunPipeline(id);
+                        }}
+                      >
+                        Convert pipeline
+                      </Button>
+                      <Button
+                        className={ingestionCss.saveBtn}
+                        onClick={async () => {
+                          const id = query?.pipeline
+                            ? query?.pipeline
+                            : pipelineData;
+                          runPipeline(id);
+                          // await convertAndRunPipeline(id);
+                        }}
+                      >
+                        Run pipeline
+                      </Button>
+                    </>
+                  )}
                   <Button
                     className={ingestionCss.draftBtn}
                     onClick={() => {

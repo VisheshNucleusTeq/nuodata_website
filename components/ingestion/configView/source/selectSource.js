@@ -30,6 +30,10 @@ const SelectSource = ({
   const setConnectionData = async (e) => {
     // setConnection(e);
 
+    setTableData({});
+    // setConnectionId(null);
+    // setConnection(e);
+
     const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
       ...sourceData,
       transformation_properties: [],

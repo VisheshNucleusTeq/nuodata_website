@@ -309,7 +309,7 @@ export default function Validate({ dataModernizationCss }) {
         </Collapse>
       </Modal>
 
-      {JSON.stringify(projectDetails?.targetPlatform)}
+      {/* {JSON.stringify(projectDetails?.targetPlatform)} */}
 
       <Row className={dataModernizationCss.validateTab}>
         <Col span={24}>

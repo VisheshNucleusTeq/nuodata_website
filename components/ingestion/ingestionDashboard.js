@@ -11,16 +11,22 @@ import {
   Space,
   Table,
   Tooltip,
-  message
+  message,
+  Avatar,
+  Image,
 } from "antd";
 import React from "react";
 
-import { FilterOutlined } from "@ant-design/icons";
+import { FilterOutlined, SwapOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { loderShowHideAction, setPipelineAction, setWorkspaceAction } from "../../Redux/action";
+import {
+  loderShowHideAction,
+  setPipelineAction,
+  setWorkspaceAction,
+} from "../../Redux/action";
 import { fetch_retry_delete, fetch_retry_get } from "../../network/api-manager";
 import {
   DELETEPIPELINE,
@@ -28,6 +34,7 @@ import {
   GETWORKSPACE,
   GETWORKSPACEENV,
 } from "../../network/apiConstants";
+import { getFileName } from "../helper/getFileName";
 const IngestionDashboard = ({ ingestionCss }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -38,6 +45,135 @@ const IngestionDashboard = ({ ingestionCss }) => {
   const [pipelineData, setPipelineData] = React.useState([]);
 
   const columns = [
+    {
+      title: "Title",
+      dataIndex: "title",
+      render: (text, record) => {
+        return (
+          <>
+            <Space size={15}>
+              <Avatar.Group
+                maxCount={2}
+                maxStyle={{
+                  color: "#f56a00",
+                  backgroundColor: "#fde3cf",
+                }}
+              >
+                {record?.sources.length ? (
+                  [...record?.sources].map((e) => {
+                    return (
+                      <Avatar
+                        src={`/db_icon/${getFileName(e)}.png`}
+                        style={{
+                          border: "1px solid lightgray",
+                          backgroundColor: "#FFF",
+                          padding: "2px",
+                        }}
+                      />
+                    );
+                  })
+                ) : (
+                  <>NA</>
+                )}
+              </Avatar.Group>
+              <SwapOutlined
+                className={ingestionCss.title}
+                style={{ fontSize: "1.2vw" }}
+              />
+              <Avatar.Group
+                maxCount={2}
+                maxStyle={{
+                  color: "#f56a00",
+                  backgroundColor: "#fde3cf",
+                }}
+              >
+                {record?.targets.length ? (
+                  [...record?.targets].map((e) => {
+                    return (
+                      <Avatar
+                        src={`/db_icon/${getFileName(e)}.png`}
+                        style={{
+                          border: "1px solid lightgray",
+                          backgroundColor: "#FFF",
+                          padding: "2px",
+                        }}
+                      />
+                    );
+                  })
+                ) : (
+                  <>NA</>
+                )}
+              </Avatar.Group>
+            </Space>
+          </>
+        );
+      },
+    },
+
+    {
+      title: "Source",
+      dataIndex: "sources",
+      render: (source, record) => {
+        return (
+          <Avatar.Group
+            maxCount={2}
+            maxStyle={{
+              color: "#f56a00",
+              backgroundColor: "#fde3cf",
+            }}
+          >
+            {source.length ? (
+              [...source].map((e) => {
+                return (
+                  <Avatar
+                    src={`/db_icon/${getFileName(e)}.png`}
+                    style={{
+                      border: "1px solid lightgray",
+                      backgroundColor: "#FFF",
+                      padding: "2px",
+                    }}
+                  />
+                );
+              })
+            ) : (
+              <>NA</>
+            )}
+          </Avatar.Group>
+        );
+      },
+    },
+    {
+      title: "Target",
+      dataIndex: "targets",
+      render: (target, record) => {
+        return (
+          <Avatar.Group
+            maxCount={2}
+            maxStyle={{
+              color: "#f56a00",
+              backgroundColor: "#fde3cf",
+            }}
+          >
+            {target.length ? (
+              [...target].map((e) => {
+                return (
+                  <Avatar
+                    src={`/db_icon/${getFileName(e)}.png`}
+                    style={{
+                      border: "1px solid lightgray",
+                      backgroundColor: "#FFF",
+                      padding: "2px",
+                    }}
+                  />
+                );
+              })
+            ) : (
+              <>NA</>
+            )}
+          </Avatar.Group>
+        );
+      },
+    },
     {
       title: "Pipeline Name",
       dataIndex: "pipeline_name",
@@ -56,6 +192,9 @@ const IngestionDashboard = ({ ingestionCss }) => {
     {
       title: "Last Modified",
       dataIndex: "updated_date_time",
+      render: (data) => {
+        return changeDateFormat(data);
+      },
     },
     {
       title: "Status",
@@ -64,6 +203,32 @@ const IngestionDashboard = ({ ingestionCss }) => {
         return <Badge count={text} />;
       },
     },
+
+    {
+      title: "Last Job Run",
+      dataIndex: "last_job_run",
+      render: (last_job_run) => {
+        switch (last_job_run?.job_status) {
+          // SUCCESS
+          case "SUCCESS":
+            return <Badge count={last_job_run?.job_status} color="green" onClick={()=>{
+              console.log(last_job_run)
+            }} />;
+            break;
+          case "SUBMITTED":
+            return <Badge count={last_job_run?.job_status} color="orange" onClick={()=>{
+              console.log(last_job_run)
+            }}/>;
+            break;
+          default:
+            return <Badge count={last_job_run?.job_status ? last_job_run?.job_status : "Not Run Yet"} color="gray" onClick={()=>{
+              console.log(last_job_run)
+            }}/>;
+            break;
+        }
+      },
+    },
+
     {
       title: "Action",
       dataIndex: "action",
@@ -117,6 +282,16 @@ const IngestionDashboard = ({ ingestionCss }) => {
       },
     },
   ];
+
+  const changeDateFormat = (date) => {
+    const dt = new Date(date);
+    const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
+    return `${padL(dt.getMonth() + 1)}/${padL(
+      dt.getDate()
+    )}/${dt.getFullYear()} ${padL(dt.getHours())}:${padL(
+      dt.getMinutes()
+    )}:${padL(dt.getSeconds())}`;
+  };
 
   const getWorkSpaceData = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
@@ -273,6 +448,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
       )}
 
       <Table
+        scroll={{ x: "max-content" }}
         columns={columns}
         dataSource={pipelineData.map((e) => {
           return {

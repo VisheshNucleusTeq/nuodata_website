@@ -77,6 +77,7 @@ export const GETWORKSPACEENV = "ingestion/core/v1/runtime-env/workspace/";
 export const ENVDETAILS = "ingestion/core/v1/runtime-env/";
 export const CREATEPIPELINE = "ingestion/core/v1/pipeline/";
 export const DELETEPIPELINE = "ingestion/core/v1/pipeline/";
+export const GETPIPELINEERROR = "ingestion/core/v1/pipeline/";
 export const GETPIPELINE = "ingestion/core/v1/pipeline/workspace/";
 export const GETPIPELINEGRAPH = "ingestion/core/v1/graph/pipeline/";
 export const CREATENODE = "ingestion/core/v1/graph/node";
