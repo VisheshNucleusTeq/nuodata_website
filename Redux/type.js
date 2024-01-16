@@ -9,3 +9,4 @@ export const LOADER = "LOADER";
 export const OPENDETAILS = "OPENDETAILS";
 export const WORKSPACE = "WORKSPACE";
 export const PIPELINE = "PIPELINE";
+export const CHECKVALIDATION = "CHECKVALIDATION";

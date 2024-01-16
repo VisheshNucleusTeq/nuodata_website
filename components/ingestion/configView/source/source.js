@@ -58,7 +58,7 @@ const Source = ({
   };
 
   const getRecord = async () => {
-    const result = await fetch_retry_get(INGESTIONTEMPLATES);
+    const result = await fetch_retry_get(`${INGESTIONTEMPLATES}source`);
     if (result.success) {
       setAccountListArr(result.data);
     } else {

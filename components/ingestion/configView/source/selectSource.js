@@ -31,24 +31,24 @@ const SelectSource = ({
     // setConnection(e);
 
     setTableData({});
-    // setConnectionId(null);
-    // setConnection(e);
+    setConnectionId(null);
+    setConnection(e);
 
-    const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
-      ...sourceData,
-      transformation_properties: [],
-    });
-    if (result.success) {
-      setSourceData({
-        ...sourceData,
-        transformation_properties: [],
-      });
-      setTableData({});
-      setConnectionId(null);
-      setConnection(e);
-    } else {
-      message.error(result.error);
-    }
+    // const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
+    //   ...sourceData,
+    //   transformation_properties: [],
+    // });
+    // if (result.success) {
+    //   setSourceData({
+    //     ...sourceData,
+    //     transformation_properties: [],
+    //   });
+    //   setTableData({});
+    //   setConnectionId(null);
+    //   setConnection(e);
+    // } else {
+    //   message.error(result.error);
+    // }
   };
 
   useEffect(() => {

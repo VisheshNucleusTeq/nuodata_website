@@ -63,7 +63,7 @@ export const ADDGITDATA = "gitupload/v1/config";
 export const UPDATEGITDATA = "gitupload/v1/config";
 export const GETGITDATA = "gitupload/v1/config/";
 
-export const INGESTIONTEMPLATES = "ingestion/core/v1/template/";
+export const INGESTIONTEMPLATES = "ingestion/core/v1/template/type/";
 export const INGESTIONTCONNECTIONLIST = "ingestion/core/v1/connection/fetch/all";
 export const TESTCONNECTION = "ingestion/core/v1/connection/test";
 export const ADDCONNECTION = "ingestion/core/v1/connection/";

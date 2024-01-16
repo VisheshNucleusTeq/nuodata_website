@@ -6,7 +6,8 @@ import {
   Input,
   message,
   Row,
-  Space
+  Space,
+  Modal
 } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -116,7 +117,9 @@ const SourceSchemaInput = ({
           },
         });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const setOldValue = () => {

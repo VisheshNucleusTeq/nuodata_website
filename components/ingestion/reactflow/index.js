@@ -1,5 +1,6 @@
 import { Col, Modal, Row, Space } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import ReactFlow, {
   Background,
   Controls,
@@ -8,7 +9,7 @@ import ReactFlow, {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
-  useReactFlow
+  useReactFlow,
 } from "reactflow";
 import "reactflow/dist/style.css";
 const { confirm } = Modal;
@@ -25,6 +26,7 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 150;
 const nodeHeight = 40;
 
+import { setCheckValidationAction } from "../../../Redux/action";
 import {
   fetch_retry_delete,
   fetch_retry_post,
@@ -36,7 +38,6 @@ import {
 } from "../../../network/apiConstants";
 import CustomEdge from "./customEdge";
 import CustomNodes from "./customNodes";
-
 const nodeTypes = {
   textUpdater: CustomNodes,
   textUpdaterSource: CustomNodes,
@@ -92,6 +93,7 @@ function EdgesFlow({
   setSelectedNode,
   getPiplineGraph,
 }) {
+  const dispatch = useDispatch();
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
 
   const reactFlowWrapper = useRef(null);
@@ -129,6 +131,7 @@ function EdgesFlow({
       },
     });
     getPiplineGraph(pipeline);
+    dispatch(setCheckValidationAction(Date.now()));
   };
 
   useEffect(() => {
@@ -140,8 +143,7 @@ function EdgesFlow({
     setEdges(layoutedEdges);
   }, [nodeData]);
 
-  const onConnectStart = (e, p) => {
-  };
+  const onConnectStart = (e, p) => {};
 
   const deleteNodeOrEdge = () => {
     if (deleteInfo && deleteInfo.type == "nodes") {
@@ -159,6 +161,7 @@ function EdgesFlow({
           setNodes(nodes.filter((node) => node?.id !== deleteInfo?.id));
           setNodeData(nodeData.filter((e) => e?.id !== deleteInfo?.id));
           getPiplineGraph(pipeline);
+          dispatch(setCheckValidationAction(Date.now()));
         },
         onCancel() {},
         okText: "Delete",
@@ -176,6 +179,7 @@ function EdgesFlow({
           });
           setEdges(edges.filter((edge) => edge.id !== deleteInfo?.id));
           getPiplineGraph(pipeline);
+          dispatch(setCheckValidationAction(Date.now()));
         },
         onCancel() {},
         okText: "Delete",

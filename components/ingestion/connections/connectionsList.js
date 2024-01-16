@@ -20,6 +20,7 @@ import {
 } from "../../../network/apiConstants";
 
 import ConnectionTable from "./connectionTable";
+import { getFileName } from "../../helper/getFileName";
 
 const ConnectionsList = ({ ingestionCss }) => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const ConnectionsList = ({ ingestionCss }) => {
   };
 
   const getRecord = async () => {
-    const result = await fetch_retry_get(INGESTIONTEMPLATES);
+    const result = await fetch_retry_get(`${INGESTIONTEMPLATES}all`);
     if (result.success) {
       setAccountListArr(result.data);
     } else {
@@ -118,7 +119,7 @@ const ConnectionsList = ({ ingestionCss }) => {
                       <Tooltip title={e.title} color="#0c3246">
                         <Image
                           alt={e.title}
-                          src={`/db_icon/${e.title}.png`}
+                          src={`/db_icon/${getFileName(e.type)}.png`}
                           preview={false}
                         />
                       </Tooltip>

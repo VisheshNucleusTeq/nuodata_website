@@ -15,8 +15,8 @@ import {
   Row,
   Space,
   Tag,
-  message,
   Tooltip,
+  message,
 } from "antd";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -42,6 +42,9 @@ const CreatePipeline = ({ ingestionCss }) => {
   const { query } = useRouter();
   const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
   const workspace = useSelector((state) => state?.workspace?.workspace);
+  const checkValidation = useSelector(
+    (state) => state?.checkValidation?.checkValidation
+  );
 
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [workspaceData, setWorkspaceData] = React.useState([]);
@@ -129,8 +132,11 @@ const CreatePipeline = ({ ingestionCss }) => {
     query?.pipeline || pipelineData
       ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
       : null;
-    getValidationData();
   }, [workspace, query?.pipeline, pipelineData]);
+
+  useEffect(() => {
+    checkValidation && getValidationData();
+  }, [checkValidation]);
 
   return (
     <>
@@ -202,14 +208,14 @@ const CreatePipeline = ({ ingestionCss }) => {
         height={"100%"}
       >
         {validation?.validations &&
-          validation?.validations.length &&
+          validation?.validations.length > 0 &&
           validation?.validations.map((e) => {
             return (
               <>
                 <Collapse
                   expandIconPosition="right"
                   onChange={() => {
-                    console.log(e?.element_id)
+                    console.log(e?.element_id);
                   }}
                   accordion
                 >
@@ -241,7 +247,7 @@ const CreatePipeline = ({ ingestionCss }) => {
                                 <span>{e?.element_name}</span>
                                 <br></br>
                                 {/* <small style={{backgroundColor : "lightblue", color : "#000", borderRadius : "5px"}}>&nbsp;{e?.element_type}&nbsp;</small> */}
-                                <Tag bordered={false} color="processing" >
+                                <Tag bordered={false} color="processing">
                                   {e?.element_type}
                                 </Tag>
                               </span>
@@ -250,10 +256,8 @@ const CreatePipeline = ({ ingestionCss }) => {
                         </Col>
                         <Col span={6}>
                           <>
-                            {/* border: "15px solid #FFF" */}
                             <div
                               style={{
-                                // border: "1px solid red",
                                 height: "100%",
                                 display: "flex",
                                 alignItems: "center",
@@ -280,23 +284,6 @@ const CreatePipeline = ({ ingestionCss }) => {
                       </Row>
                     }
                     key="1"
-                    // extra={
-                    //   <>
-                    //   {/* border: "15px solid #FFF" */}
-                    //     <div style={{ border : "1px solid red", height : "100%", display : "flex", alignItems :"center"}}>
-                    //       {e?.element_status == "invalid" && (
-                    //         <Tag icon={<CloseCircleOutlined />} color="red">
-                    //           Invalid
-                    //         </Tag>
-                    //       )}
-                    //       {(e?.element_status == "partially_valid" || e?.element_status == "partially valid") && (
-                    //         <Tag icon={<CloseCircleOutlined />} color="orange">
-                    //           Partially Valid
-                    //         </Tag>
-                    //       )}
-                    //     </div>
-                    //   </>
-                    // }
                   >
                     <ul>
                       {e?.validation_messages &&

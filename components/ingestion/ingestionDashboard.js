@@ -1,4 +1,8 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  ArrowRightOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 import {
   Badge,
   Button,
@@ -45,13 +49,180 @@ const IngestionDashboard = ({ ingestionCss }) => {
   const [pipelineData, setPipelineData] = React.useState([]);
 
   const columns = [
+    // {
+    //   title: "Source",
+    //   dataIndex: "sources",
+    //   render: (source, record) => {
+    //     return (
+    //       <Avatar.Group
+    //         maxCount={2}
+    //         maxStyle={{
+    //           color: "#f56a00",
+    //           backgroundColor: "#fde3cf",
+    //         }}
+    //       >
+    //         {source.length ? (
+    //           [...source].map((e) => {
+    //             return (
+    //               <Avatar
+    //                 src={`/db_icon/${getFileName(e)}.png`}
+    //                 style={{
+    //                   border: "1px solid lightgray",
+    //                   backgroundColor: "#FFF",
+    //                   padding: "2px",
+    //                 }}
+    //               />
+    //             );
+    //           })
+    //         ) : (
+    //           <>NA</>
+    //         )}
+    //       </Avatar.Group>
+    //     );
+    //   },
+    // },
+    // {
+    //   title: "Target",
+    //   dataIndex: "targets",
+    //   render: (target, record) => {
+    //     return (
+    //       <Avatar.Group
+    //         maxCount={2}
+    //         maxStyle={{
+    //           color: "#f56a00",
+    //           backgroundColor: "#fde3cf",
+    //         }}
+    //       >
+    //         {target.length ? (
+    //           [...target].map((e) => {
+    //             return (
+    //               <Avatar
+    //                 src={`/db_icon/${getFileName(e)}.png`}
+    //                 style={{
+    //                   border: "1px solid lightgray",
+    //                   backgroundColor: "#FFF",
+    //                   padding: "2px",
+    //                 }}
+    //               />
+    //             );
+    //           })
+    //         ) : (
+    //           <>NA</>
+    //         )}
+    //       </Avatar.Group>
+    //     );
+    //   },
+    // },
     {
-      title: "Title",
-      dataIndex: "title",
+      title: "Pipeline Name",
+      dataIndex: "pipeline_name",
       render: (text, record) => {
         return (
+          <Tooltip placement="topLeft" title={record?.pipeline_description}>
+            <p>{text}</p>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      title: (
+        <>
+          <Row>
+            <Col span={11}>Source</Col>
+            <Col span={2}>
+              <ArrowRightOutlined
+                className={ingestionCss.title}
+                style={{ fontSize: "1.2vw" }}
+              />
+            </Col>
+            <Col span={11} style={{ justifyContent: "end", display: "flex" }}>
+              Target
+            </Col>
+          </Row>
+        </>
+      ),
+      dataIndex: "title",
+      render: (text, record) => {
+        //https://placehold.co/50?text=NA
+        return (
           <>
-            <Space size={15}>
+            <Row>
+              <Col span={11}>
+                <Avatar.Group
+                  maxCount={2}
+                  maxStyle={{
+                    color: "#f56a00",
+                    backgroundColor: "#fde3cf",
+                  }}
+                >
+                  {record?.sources.length ? (
+                    [...record?.sources].map((e) => {
+                      return (
+                        <Avatar
+                          src={`/db_icon/${getFileName(e)}.png`}
+                          style={{
+                            border: "1px solid lightgray",
+                            backgroundColor: "#FFF",
+                            padding: "2px",
+                          }}
+                        />
+                      );
+                    })
+                  ) : (
+                    <Avatar
+                      src={`https://placehold.co/150/white/black?text=NA&font=roboto`}
+                      style={{
+                        border: "1px solid lightgray",
+                        backgroundColor: "#FFF",
+                        padding: "2px",
+                      }}
+                    />
+                  )}
+                </Avatar.Group>
+              </Col>
+              <Col span={2}>
+                <ArrowRightOutlined
+                  className={ingestionCss.title}
+                  style={{ fontSize: "1.2vw" }}
+                />
+              </Col>
+              <Col span={11} style={{ display: "flex", justifyContent: "end" }}>
+                <Avatar.Group
+                  maxCount={2}
+                  maxStyle={{
+                    color: "#f56a00",
+                    backgroundColor: "#fde3cf",
+                  }}
+                >
+                  {record?.targets.length ? (
+                    [...record?.targets].map((e) => {
+                      return (
+                        <Avatar
+                          src={`/db_icon/${getFileName(e)}.png`}
+                          style={{
+                            border: "1px solid lightgray",
+                            backgroundColor: "#FFF",
+                            padding: "2px",
+                          }}
+                        />
+                      );
+                    })
+                  ) : (
+                    <Avatar
+                      src={`https://placehold.co/150/white/black?text=NA&font=roboto`}
+                      style={{
+                        border: "1px solid lightgray",
+                        backgroundColor: "#FFF",
+                        padding: "2px",
+                      }}
+                    />
+                    // <>NA</>
+                  )}
+                </Avatar.Group>
+              </Col>
+            </Row>
+
+            {/* <Space size={15}>
               <Avatar.Group
                 maxCount={2}
                 maxStyle={{
@@ -76,7 +247,8 @@ const IngestionDashboard = ({ ingestionCss }) => {
                   <>NA</>
                 )}
               </Avatar.Group>
-              <SwapOutlined
+
+              <ArrowRightOutlined
                 className={ingestionCss.title}
                 style={{ fontSize: "1.2vw" }}
               />
@@ -104,84 +276,8 @@ const IngestionDashboard = ({ ingestionCss }) => {
                   <>NA</>
                 )}
               </Avatar.Group>
-            </Space>
+            </Space> */}
           </>
-        );
-      },
-    },
-
-    {
-      title: "Source",
-      dataIndex: "sources",
-      render: (source, record) => {
-        return (
-          <Avatar.Group
-            maxCount={2}
-            maxStyle={{
-              color: "#f56a00",
-              backgroundColor: "#fde3cf",
-            }}
-          >
-            {source.length ? (
-              [...source].map((e) => {
-                return (
-                  <Avatar
-                    src={`/db_icon/${getFileName(e)}.png`}
-                    style={{
-                      border: "1px solid lightgray",
-                      backgroundColor: "#FFF",
-                      padding: "2px",
-                    }}
-                  />
-                );
-              })
-            ) : (
-              <>NA</>
-            )}
-          </Avatar.Group>
-        );
-      },
-    },
-    {
-      title: "Target",
-      dataIndex: "targets",
-      render: (target, record) => {
-        return (
-          <Avatar.Group
-            maxCount={2}
-            maxStyle={{
-              color: "#f56a00",
-              backgroundColor: "#fde3cf",
-            }}
-          >
-            {target.length ? (
-              [...target].map((e) => {
-                return (
-                  <Avatar
-                    src={`/db_icon/${getFileName(e)}.png`}
-                    style={{
-                      border: "1px solid lightgray",
-                      backgroundColor: "#FFF",
-                      padding: "2px",
-                    }}
-                  />
-                );
-              })
-            ) : (
-              <>NA</>
-            )}
-          </Avatar.Group>
-        );
-      },
-    },
-    {
-      title: "Pipeline Name",
-      dataIndex: "pipeline_name",
-      render: (text, record) => {
-        return (
-          <Tooltip placement="topLeft" title={record?.pipeline_description}>
-            <p>{text}</p>
-          </Tooltip>
         );
       },
     },
@@ -200,7 +296,25 @@ const IngestionDashboard = ({ ingestionCss }) => {
       title: "Status",
       dataIndex: "status",
       render: (text) => {
-        return <Badge count={text} />;
+        let color = "#3498db";
+        switch (text) {
+          case "invalid":
+            color = "#e74c3c";
+            break;
+          case "valid":
+            color = "#2ecc71";
+            break;
+          default:
+            break;
+        }
+
+        return (
+          <Badge
+            count={text}
+            color={color}
+            style={{ minWidth: "4vw", textTransform: "capitalize" }}
+          />
+        );
       },
     },
 
@@ -208,24 +322,55 @@ const IngestionDashboard = ({ ingestionCss }) => {
       title: "Last Job Run",
       dataIndex: "last_job_run",
       render: (last_job_run) => {
+        let color = "gray";
         switch (last_job_run?.job_status) {
-          // SUCCESS
-          case "SUCCESS":
-            return <Badge count={last_job_run?.job_status} color="green" onClick={()=>{
-              console.log(last_job_run)
-            }} />;
-            break;
           case "SUBMITTED":
-            return <Badge count={last_job_run?.job_status} color="orange" onClick={()=>{
-              console.log(last_job_run)
-            }}/>;
+            color = "#3498db";
+            break;
+          case "PENDING":
+            color = "#f39c12";
+            break;
+          case "SCHEDULED":
+            color = "#27ae60";
+            break;
+          case "RUNNING":
+            color = "#2c3e50";
+            break;
+          case "SUCCESS":
+            color = "#2ecc71";
+            break;
+          case "FAILED":
+            color = "#e74c3c";
+            break;
+          case "CANCELLING":
+            color = "#e67e22";
+            break;
+          case "CANCELLED":
+            color = "#95a5a6";
             break;
           default:
-            return <Badge count={last_job_run?.job_status ? last_job_run?.job_status : "Not Run Yet"} color="gray" onClick={()=>{
-              console.log(last_job_run)
-            }}/>;
             break;
         }
+
+        return (
+          <Badge
+            count={(last_job_run?.job_status
+              ? last_job_run?.job_status
+              : "NOT STARTED"
+            ).toLowerCase()}
+            color={color}
+            style={{ minWidth: "4vw", textTransform: "capitalize" }}
+          />
+        );
+
+        // SUBMITTED: #3498db (Blue)
+        // PENDING: #f39c12 (Orange)
+        // SCHEDULED: #27ae60 (Green)
+        // RUNNING: #2c3e50 (Dark Gray)
+        // SUCCESS: #2ecc71 (Light Green)
+        // FAILED: #e74c3c (Red)
+        // CANCELLING: #e67e22 (Dark Orange)
+        // CANCELLED: #95a5a6 (Silver)
       },
     },
 

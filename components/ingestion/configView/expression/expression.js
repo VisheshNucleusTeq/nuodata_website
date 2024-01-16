@@ -4,6 +4,8 @@ import { fetch_retry_get } from "../../../../network/api-manager";
 import { CREATENODE, NODEMETADATA } from "../../../../network/apiConstants";
 import General from "../commonView/general";
 import DataTable from "../commonView/dataTable";
+import IncomingFields from "./incomingFields";
+import ExpressionTab from "./expressionTab";
 
 const Expression = ({ ingestionCss, nodeId, updateble }) => {
   const [activeKey, setActiveKey] = useState("general_tab");
@@ -38,7 +40,7 @@ const Expression = ({ ingestionCss, nodeId, updateble }) => {
         : "",
       transformation_properties:
         oldRecord?.data?.transformation_properties &&
-        oldRecord?.data?.transformation_properties?.length
+          oldRecord?.data?.transformation_properties?.length
           ? oldRecord?.data?.transformation_properties
           : [],
     });
@@ -71,6 +73,27 @@ const Expression = ({ ingestionCss, nodeId, updateble }) => {
                   name="Expression"
                 />
               </Tabs.TabPane>
+              <Tabs.TabPane tab="Incoming Fields" key="incoming_field_tab">
+                <IncomingFields
+                  ingestionCss={ingestionCss}
+                  nodeId={nodeId}
+                  sourceData={sourceData}
+                  setSourceData={setSourceData}
+                  setActiveKey={setActiveKey}
+                  name="Expression"
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Expression" key="expression_tab">
+                <ExpressionTab
+                  ingestionCss={ingestionCss}
+                  nodeId={nodeId}
+                  sourceData={sourceData}
+                  setSourceData={setSourceData}
+                  setActiveKey={setActiveKey}
+                  name="Expression"
+                />
+              </Tabs.TabPane>
+
 
               {/* <Tabs.TabPane tab="Filter" key="filter_tab">
               <FilterCondition

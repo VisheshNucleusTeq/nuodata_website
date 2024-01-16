@@ -9,7 +9,8 @@ import {
   LOADER,
   OPENDETAILS,
   WORKSPACE,
-  PIPELINE
+  PIPELINE,
+  CHECKVALIDATION
 } from "./type";
 
 export const UserDetailsAction = (data) => (dispatch) => {
@@ -85,6 +86,13 @@ export const setWorkspaceAction = (data) => (dispatch) => {
 export const setPipelineAction = (data) => (dispatch) => {
   dispatch({
     type: PIPELINE,
+    payload: data,
+  });
+};
+
+export const setCheckValidationAction = (data) => (dispatch) => {
+  dispatch({
+    type: CHECKVALIDATION,
     payload: data,
   });
 };

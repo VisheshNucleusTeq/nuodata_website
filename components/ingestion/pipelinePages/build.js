@@ -9,7 +9,10 @@ import Filter from "../configView/filter/filter";
 import Source from "../configView/source/source";
 import Target from "../configView/target/target";
 import EdgesFlow from "../reactflow";
-import { loderShowHideAction } from "../../../Redux/action";
+import {
+  loderShowHideAction,
+  setCheckValidationAction,
+} from "../../../Redux/action";
 
 import {
   fetch_retry_get,
@@ -52,6 +55,7 @@ const Build = ({ ingestionCss }) => {
         setNodeData(graph?.data?.nodes);
         setEdgeData(graph?.data?.edges);
         dispatch(loderShowHideAction(false));
+        dispatch(setCheckValidationAction(Date.now()));
       }
     }, 1000);
   };
@@ -64,6 +68,7 @@ const Build = ({ ingestionCss }) => {
       transformation_type: type,
     });
     getPiplineGraph(id);
+    dispatch(setCheckValidationAction(Date.now()));
   };
 
   useEffect(() => {
@@ -72,14 +77,12 @@ const Build = ({ ingestionCss }) => {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-
     const dataHave = edgeData.find((e) => {
       return (
         e?.source_node_id == selectedNode?.id ||
         e?.target_node_id == selectedNode?.id
       );
     });
-
     if (dataHave) {
       setUpdateble(false);
     } else {
@@ -110,10 +113,8 @@ const Build = ({ ingestionCss }) => {
             return (
               <Draggable
                 position={{ x: 0, y: 0 }}
-                onStart={(eData) => {
-                }}
-                onDrag={(eData) => {
-                }}
+                onStart={(eData) => {}}
+                onDrag={(eData) => {}}
                 onStop={(eData) => {
                   if (visible) {
                     createNode(e);

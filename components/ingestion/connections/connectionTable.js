@@ -28,7 +28,7 @@ import {
 } from "../../../network/apiConstants";
 import { loderShowHideAction } from "../../../Redux/action";
 import { decryptAES_CBC, encryptAES_CBC } from "../../helper/cryptojs";
-
+import { getFileName } from "../../helper/getFileName";
 const ConnectionTable = ({
   type,
   workspace,
@@ -302,7 +302,7 @@ const ConnectionTable = ({
                       style={{ display: "flex", alignItems: "center" }}
                     >
                       <Image
-                        src={`/db_icon/${title}.png`}
+                        src={`/db_icon/${getFileName(type)}.png`}
                         width={35}
                         style={{
                           borderRadius: "25px",
