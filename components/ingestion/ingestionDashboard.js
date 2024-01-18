@@ -18,6 +18,7 @@ import {
   message,
   Avatar,
   Image,
+  Tag,
 } from "antd";
 import React from "react";
 
@@ -39,6 +40,7 @@ import {
   GETWORKSPACEENV,
 } from "../../network/apiConstants";
 import { getFileName } from "../helper/getFileName";
+import JobRunDetails from "./model/jobRunDetails";
 const IngestionDashboard = ({ ingestionCss }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -47,6 +49,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
   const [workspace, setWorkspace] = React.useState("");
   const [workspaceData, setWorkspaceData] = React.useState([]);
   const [pipelineData, setPipelineData] = React.useState([]);
+  const [pipelineId, setPipelineId] = React.useState(null);
 
   const columns = [
     // {
@@ -114,6 +117,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
     //   },
     // },
     {
+      fixed: "left",
       title: "Pipeline Name",
       dataIndex: "pipeline_name",
       render: (text, record) => {
@@ -125,6 +129,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
       },
     },
     {
+      // fixed: 'left',
       title: (
         <>
           <Row>
@@ -180,8 +185,12 @@ const IngestionDashboard = ({ ingestionCss }) => {
                   )}
                 </Avatar.Group>
               </Col>
-              <Col span={2}>
+              <Col
+                span={2}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
                 <ArrowRightOutlined
+                  // spin={true}
                   className={ingestionCss.title}
                   style={{ fontSize: "1.2vw" }}
                 />
@@ -296,18 +305,24 @@ const IngestionDashboard = ({ ingestionCss }) => {
       title: "Status",
       dataIndex: "status",
       render: (text) => {
-        let color = "#3498db";
+        let color = "#FFF";
         switch (text) {
+          case "valid":
+            color = "#2ecc71";
+            break;
           case "invalid":
             color = "#e74c3c";
             break;
-          case "valid":
-            color = "#2ecc71";
+          case "converted":
+            color = "#3498db";
+            break;
+          case "draft":
+            color = "#f1c40f";
             break;
           default:
             break;
         }
-
+        // return <Tag color={color}>{text}</Tag>;
         return (
           <Badge
             count={text}
@@ -322,7 +337,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
       title: "Last Job Run",
       dataIndex: "last_job_run",
       render: (last_job_run) => {
-        let color = "gray";
+        let color = "#808080";
         switch (last_job_run?.job_status) {
           case "SUBMITTED":
             color = "#3498db";
@@ -359,7 +374,14 @@ const IngestionDashboard = ({ ingestionCss }) => {
               : "NOT STARTED"
             ).toLowerCase()}
             color={color}
-            style={{ minWidth: "4vw", textTransform: "capitalize" }}
+            style={{
+              minWidth: "4vw",
+              textTransform: "capitalize",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              setPipelineId(last_job_run?.exe_id);
+            }}
           />
         );
 
@@ -373,8 +395,35 @@ const IngestionDashboard = ({ ingestionCss }) => {
         // CANCELLED: #95a5a6 (Silver)
       },
     },
+    {
+      title: "Job Start Time",
+      dataIndex: "last_job_run",
+      render: (last_job_run) => {
+        return (
+          <p>
+            {last_job_run?.start_time
+              ? changeDateFormat(last_job_run?.start_time)
+              : "--"}
+          </p>
+        );
+      },
+    },
+    {
+      title: "Job End Time",
+      dataIndex: "last_job_run",
+      render: (last_job_run) => {
+        return (
+          <p>
+            {last_job_run?.start_time
+              ? changeDateFormat(last_job_run?.end_time)
+              : "--"}
+          </p>
+        );
+      },
+    },
 
     {
+      fixed: "right",
       title: "Action",
       dataIndex: "action",
       render: (text, record) => {
@@ -500,6 +549,21 @@ const IngestionDashboard = ({ ingestionCss }) => {
 
   return (
     <>
+      <Modal
+        title="Running Status"
+        open={pipelineId != null}
+        onOk={() => {
+          setPipelineId(null);
+        }}
+        onCancel={() => {
+          setPipelineId(null);
+        }}
+        footer={null}
+        closable={true}
+      >
+        <JobRunDetails pipelineId={pipelineId} />
+      </Modal>
+
       <Modal
         title="Workspace"
         open={isModalOpen}

@@ -87,6 +87,7 @@ export const NODEMETADATA = "ingestion/core/v1/graph/node/";
 export const CONVERTPIPELINE = "ingestion/spark-engine/v1/convert/pipeline/";
 export const RUNPIPELINE = "ingestion/core/v1/pipeline-run/pipeline/";
 export const RUNPIPELINELIST = "ingestion/core/v1/pipeline-run/all/";
+export const RUNPIPELINESTATUS = "ingestion/core/v1/pipeline-run/";
 export const RUNPIPELINELOGS = "ingestion/core/v1/pipeline-run/logs/";
 export const PREVIEWDATA = "ingestion/core/v1/graph/node/";
 export const UPDATEFIELDNAME = "ingestion/core/v1/graph/node/fields";

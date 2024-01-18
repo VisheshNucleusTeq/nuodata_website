@@ -431,9 +431,11 @@ const CreatePipeline = ({ ingestionCss }) => {
               </Col>
               <Col span={8} className={ingestionCss.pipelineBtns}>
                 <Space>
-                  {validation?.pipeline_status == "valid" && (
+                  {/* {validation?.pipeline_status == "valid" ?? ( */}
+                  <Tooltip title={validation?.pipeline_status == "valid" ? "" : "Please resolve the validation issue to continue."}>
                     <>
                       <Button
+                        disabled={validation?.pipeline_status != "valid"}
                         className={ingestionCss.saveBtn}
                         onClick={async () => {
                           const id = query?.pipeline
@@ -445,7 +447,9 @@ const CreatePipeline = ({ ingestionCss }) => {
                       >
                         Convert pipeline
                       </Button>
+&nbsp;
                       <Button
+                        disabled={validation?.pipeline_status != "valid"}
                         className={ingestionCss.saveBtn}
                         onClick={async () => {
                           const id = query?.pipeline
@@ -458,7 +462,9 @@ const CreatePipeline = ({ ingestionCss }) => {
                         Run pipeline
                       </Button>
                     </>
-                  )}
+                  </Tooltip>
+
+                  {/* )} */}
                   <Button
                     className={ingestionCss.draftBtn}
                     onClick={() => {

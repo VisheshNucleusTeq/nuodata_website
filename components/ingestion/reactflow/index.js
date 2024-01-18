@@ -78,6 +78,7 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
         ? node?.transformation_name
         : `${node?.transformation_type}_${j + 1}`,
       connection_type: node?.connection_type ? node?.connection_type : "",
+      status: node?.status ? node?.status : "",
     };
     return node;
   });
@@ -259,6 +260,8 @@ function EdgesFlow({
               });
               setNodePosition(position);
             }}
+            maxZoom={1.2}
+            // defaultViewport={1}
           >
             {deleteInfo && deleteInfo.id ? (
               <div
