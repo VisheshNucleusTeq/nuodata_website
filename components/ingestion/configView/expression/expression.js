@@ -7,7 +7,7 @@ import DataTable from "../commonView/dataTable";
 import IncomingFields from "./incomingFields";
 import ExpressionTab from "./expressionTab";
 
-const Expression = ({ ingestionCss, nodeId, updateble }) => {
+const Expression = ({ ingestionCss, nodeId, pipeline }) => {
   const [activeKey, setActiveKey] = useState("general_tab");
   const [tableData, setTableData] = useState({});
   const [sourceNode, setSourceNode] = useState(null);
@@ -91,6 +91,7 @@ const Expression = ({ ingestionCss, nodeId, updateble }) => {
                   setSourceData={setSourceData}
                   setActiveKey={setActiveKey}
                   name="Expression"
+                  pipeline={pipeline}
                 />
               </Tabs.TabPane>
 

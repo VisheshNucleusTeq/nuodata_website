@@ -1,138 +1,183 @@
-import { Button, Col, Form, Input, Row, Select } from 'antd';
-import React, { useState } from 'react';
+import { Button, Col, Form, Input, Row, Select, message } from "antd";
+import React, { useState } from "react";
+import { loderShowHideAction } from "../../../../Redux/action";
+import { fetch_retry_post } from "../../../../network/api-manager";
+import { ADDFIELDNAME } from "../../../../network/apiConstants";
+import { useDispatch } from "react-redux";
+function AddNewFieldExp({
+  ingestionCss,
+  nodeId,
+  pipeline,
+  getNodeRecord,
+  setIsModalOpen,
+}) {
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
 
-function AddNewFieldExp({ ingestionCss }) {
-    const [fieldType, setFieldType] = useState('');
-    const [name, setName] = useState('');
-    const [type, setType] = useState('');
-    const [precision, setPrecision] = useState('');
-    const [scale, setScale] = useState('');
-    const [defaultValue, setDefaultValue] = useState('');
-    const [description, setDescription] = useState('');
-
-    const fieldTypeOptions = ['Type1', 'Type2', 'Type3'].map((e) => {
-        return {
-            value: e,
-            label: e,
-        }
-    });
-
-    const customCols = {
-        labelCol: {
-            xs: { span: 5 },
-            sm: { span: 5 },
-            md: { span: 5 },
-            lg: { span: 5 },
-        },
-        wrapperCol: {
-            xs: { span: 19 },
-            sm: { span: 19 },
-            md: { span: 19 },
-            lg: { span: 19 },
-        },
+  const fieldTypeOptions = [
+    "INTEGER",
+    "BIGINT",
+    "STRING",
+    "TEXT",
+    "BINARY",
+    "DECIMAL",
+    "DOUBLE",
+    "DATE/TIME",
+  ].map((e) => {
+    return {
+      value: e.toLowerCase(),
+      label: e.toLowerCase(),
     };
+  });
 
-    const handleCancel = () => {
-        // Add your cancel logic here
-    };
+  const customCols = {
+    labelCol: {
+      xs: { span: 5 },
+      sm: { span: 5 },
+      md: { span: 5 },
+      lg: { span: 5 },
+    },
+    wrapperCol: {
+      xs: { span: 19 },
+      sm: { span: 19 },
+      md: { span: 19 },
+      lg: { span: 19 },
+    },
+  };
 
-    const handleSubmit = () => {
-        // Add your submit logic here
-    };
+  const handleCancel = () => {
+    form.resetFields();
+    setIsModalOpen(false);
+  };
 
-    return (
-        <Form
-            layout="horizontal"
-            onFinish={handleSubmit}
-        >
-            <Row gutter={[6, 0]} justify="start">
-                <Col span={24}>
-                    <Form.Item label="Field Type:" labelAlign="left" {...customCols} className={ingestionCss.antFormItem}>
-                        <Select
-                            style={{ borderRadius: "5px" }}
-                            value={fieldType}
-                            onChange={(value) => setFieldType(value)}
-                            className={ingestionCss.inputSelect}
-                            placeholder="Select Field Type"
-                            options={fieldTypeOptions}
-                        />
-                    </Form.Item>
-                    <Form.Item label="Name:" labelAlign="left" {...customCols} className={ingestionCss.antFormItem}>
-                        <Input
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className={ingestionCss.input}
-                            placeholder="Dev"
-                        />
-                    </Form.Item>
-                    <Form.Item label="Type" labelAlign="left" {...customCols} className={ingestionCss.antFormItem}>
-                        <Select
-                            style={{ borderRadius: "5px" }}
-                            value={type}
-                            onChange={(value) => setType(value)}
-                            className={ingestionCss.inputSelect}
-                            placeholder="Select Type"
-                        // Add options for the 'Type' field
-                        />
-                    </Form.Item>
-                    <Form.Item label="Precision" labelAlign="left" {...customCols} className={ingestionCss.antFormItem}>
-                        <Input
-                            value={precision}
-                            onChange={(e) => setPrecision(e.target.value)}
-                            className={ingestionCss.input}
-                            placeholder="100"
-                        />
-                    </Form.Item>
-                    <Form.Item label="Scale:" labelAlign="left" {...customCols} className={ingestionCss.antFormItem}>
-                        <Input
-                            value={scale}
-                            onChange={(e) => setScale(e.target.value)}
-                            className={ingestionCss.input}
-                            placeholder="0"
-                        />
-                    </Form.Item>
-                    <Form.Item label="Default Value:" labelAlign="left" {...customCols} className={ingestionCss.antFormItem}>
-                        <Input
-                            value={defaultValue}
-                            onChange={(e) => setDefaultValue(e.target.value)}
-                            className={ingestionCss.input}
-                            placeholder="ERROR('transformation error')"
-                        />
-                    </Form.Item>
-                    <Form.Item label="Description:" labelAlign="left" {...customCols} className={ingestionCss.antFormItem}>
-                        <Input.TextArea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            className={ingestionCss.textArea}
-                            placeholder="Enter Description"
-                            rows={4}
-                        />
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row align={"end"}>
-                <Col
-                    className={ingestionCss.expBtnGrp}
-                >
-                    <Button
-                        type="primary"
-                        className={`${ingestionCss.expCancelBtn} ${ingestionCss.draftBtn}`}
-                        onClick={handleCancel}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        type="primary"
-                        className={`${ingestionCss.expSubmitBtn} ${ingestionCss.saveBtn}`}
-                        onClick={handleSubmit}
-                    >
-                        Submit
-                    </Button>
-                </Col>
-            </Row>
-        </Form >
-    );
+  const handleSubmit = async () => {
+    try {
+      dispatch(loderShowHideAction(true));
+      const data = await form.validateFields();
+      const submitData = {
+        pipeline_id: pipeline,
+        node_id: nodeId,
+        fields: [
+          {
+            ...data,
+            field_type: "Normal",
+            port_type: "output",
+          },
+        ],
+      };
+
+      const resultData = await fetch_retry_post(ADDFIELDNAME, submitData);
+      if (resultData.success) {
+        getNodeRecord(nodeId);
+        message.success(resultData?.data?.message);
+        form.resetFields();
+        setIsModalOpen(false);
+      } else {
+        console.log([resultData?.error]);
+      }
+      dispatch(loderShowHideAction(false));
+    } catch (error) {
+      console.log(error);
+    }
+
+    // Add your submit logic here
+  };
+
+  return (
+    <Form form={form} layout="horizontal" onFinish={handleSubmit}>
+      <Row gutter={[6, 0]} justify="start">
+        <Col span={24}>
+          <Form.Item
+            label="Name:"
+            labelAlign="left"
+            {...customCols}
+            className={ingestionCss.antFormItem}
+            rules={[
+              {
+                required: true,
+                message: "Name is required.",
+              },
+            ]}
+            name={"name"}
+          >
+            <Input className={ingestionCss.input} placeholder="Dev" />
+          </Form.Item>
+
+          <Form.Item
+            label="Field Type:"
+            labelAlign="left"
+            {...customCols}
+            className={ingestionCss.antFormItem}
+            name={"type"}
+            rules={[
+              {
+                required: true,
+                message: "Type is required.",
+              },
+            ]}
+          >
+            <Select
+              style={{ borderRadius: "5px" }}
+              className={ingestionCss.inputSelect}
+              placeholder="Select Field Type"
+              options={fieldTypeOptions}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Precision"
+            labelAlign="left"
+            {...customCols}
+            className={ingestionCss.antFormItem}
+            rules={[
+              {
+                required: true,
+                message: "Precision is required.",
+              },
+            ]}
+            name={"precision"}
+          >
+            <Input className={ingestionCss.input} placeholder="100" />
+          </Form.Item>
+
+          <Form.Item
+            label="Scale:"
+            labelAlign="left"
+            {...customCols}
+            className={ingestionCss.antFormItem}
+            name={"scale"}
+            rules={[
+              {
+                required: true,
+                message: "Scale is required.",
+              },
+            ]}
+          >
+            <Input className={ingestionCss.input} placeholder="0" />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row align={"end"}>
+        <Col className={ingestionCss.expBtnGrp}>
+          <Button
+            type="primary"
+            className={`${ingestionCss.expCancelBtn} ${ingestionCss.draftBtn}`}
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            // type="primary"
+            htmlType="submit"
+            className={`${ingestionCss.expSubmitBtn} ${ingestionCss.saveBtn}`}
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </Col>
+      </Row>
+    </Form>
+  );
 }
 
-
-export default AddNewFieldExp
+export default AddNewFieldExp;
