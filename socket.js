@@ -1,6 +1,13 @@
 import { io } from "socket.io-client";
 
-// "undefined" means the URL will be computed from the `window.location` object
-const URL = "https://api.dev.nuodata.io";
-
-export const socket = io(URL);
+export const socket = io("https://api.dev.nuodata.io", {
+  secure: true,
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+  transports: ["websocket"],
+  upgrade: false,
+  reconnection: true,
+  path: "/socket.io/",
+});

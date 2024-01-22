@@ -4,36 +4,17 @@ import { socket } from "../socket";
 const useSocketConnectionStatus = () => {
   const [isConnected, setIsConnected] = useState(false);
   useEffect(() => {
-    // useSocket();
-    // if (!isConnected) {
-    // console.log("not connetced")
-    socket.connect();
-    // }else{
-    // console.log("connected!! ");
-    socket.emit("request_random_number", "Hello,Server!", "testnew");
-
-    // }
-    // return () => {
-    //   socket.disconnect();
-    // };
+    !isConnected && socket.connect();
   }, [socket, isConnected]);
+
   useEffect(() => {
     socket.on("connect", (data) => {
-      console.log("value", data);
+      console.log('Connected to server');
       setIsConnected(true);
     });
-    socket.on("requestRandomNumber", (data) => {
-      console.log("data", data);
-    });
-    socket.on("randomNumber", (data) => {
-      console.log("data", data);
-    });
-    // return () => {
-    //   setIsConnected(false);
-    // };
   }, [socket]);
 
-  return isConnected;
+  return { isConnected, socket };
 };
 
 export default useSocketConnectionStatus;
