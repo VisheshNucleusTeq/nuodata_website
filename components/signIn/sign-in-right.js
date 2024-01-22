@@ -18,16 +18,16 @@ import {
 } from "@react-oauth/google";
 
 function SignInRight({ loginCss }) {
-  const {isConnected, socket} = useSocketConnectionStatus();
+  const isConnect = useSocketConnectionStatus();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(isConnected, socket)
+    // alert(isConnect)
     googleLogout();
-  }, [isConnected, ]);
+  }, [isConnect]);
 
   const onFinish = async (payload) => {
     setLoading(true);
@@ -48,7 +48,8 @@ function SignInRight({ loginCss }) {
       dispatch(UserDetailsAction(true));
       router.push("ingestion/workspace/");
     } else {
-      message.error([data?.error]);
+      // message.error([data?.error]);
+      console.log([data?.error])
     }
     dispatch(loderShowHideAction(false));
   };
@@ -106,6 +107,8 @@ function SignInRight({ loginCss }) {
             <b>Forgot Password?</b>
           </p>
 
+
+
           <Button
             size={"large"}
             className={loginCss.loginBtn}
@@ -118,9 +121,7 @@ function SignInRight({ loginCss }) {
             Login
           </Button>
           <Divider plain></Divider>
-          <a href="/api/auth/login" style={{ color: "red" }}>
-            SSO Login
-          </a>
+          <a href="/api/auth/login" style={{ color: "red" }}>SSO Login</a>
           {/* <GoogleOAuthProvider clientId="995061213404-vbdmb63jpqa8ua22u5jhlc9t9f4r8h3m.apps.googleusercontent.com">
             <GoogleLogin
               onSuccess={(credentialResponse) => {

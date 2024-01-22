@@ -58,7 +58,8 @@ const SourceSchema = ({
         setSchemas(schemaData?.data?.schemas);
         dispatch(loderShowHideAction(false));
       } else {
-        message.error(schemaData?.error);
+        // message.error(schemaData?.error);
+        console.log(schemaData?.error)
         dispatch(loderShowHideAction(false));
       }
     }
@@ -159,7 +160,8 @@ const SourceSchema = ({
         dispatch(loderShowHideAction(false));
       } else {
         dispatch(loderShowHideAction(false));
-        message.error(tableData?.error);
+        // message.error(tableData?.error);
+        console.log(tableData?.error);
       }
     } catch (error) {}
   };

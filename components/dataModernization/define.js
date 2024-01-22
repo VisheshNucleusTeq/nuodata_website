@@ -54,7 +54,8 @@ const Define = ({ dataModernizationCss }) => {
         dispatch(SetProjectDetailsAction(data.data));
         dispatch(SetTabTypeAction("Connect"));
       } else {
-        message.error([data?.error]);
+        // message.error([data?.error]);
+        console.log([data?.error])
       }
     }
   };
@@ -78,7 +79,8 @@ const Define = ({ dataModernizationCss }) => {
       dispatch(SetProjectDetailsAction(data.data));
       router.push(`/dashboard`);
     } else {
-      message.error([data?.error]);
+      // message.error([data?.error]);
+      console.log([data?.error])
     }
   };
 

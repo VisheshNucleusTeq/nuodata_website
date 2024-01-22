@@ -19,7 +19,8 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
       ]);
       form.resetFields();
     } else {
-      message.error([data?.error]);
+      // message.error([data?.error]);
+      console.log([data?.error])
     }
     dispatch(loderShowHideAction(false));
   };

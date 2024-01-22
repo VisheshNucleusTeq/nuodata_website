@@ -55,28 +55,28 @@ const veriable = ({
   const getOptions = (sourceTitle, tableType, childData, index) => {
     return [...childData]?.filter((e) => e.tableType == tableType).length
       ? {
-          label: (
-            <>
-              <p style={{ color: "#0c3246" }}>
-                <b>{sourceTitle}</b>
-              </p>
-            </>
-          ),
-          options: [
-            ...childData
-              ?.filter((e) => e.tableType == tableType)
-              ?.map((e) => {
-                return {
-                  label: `${e?.tableName} (${e?.tableType})`,
-                  value: e?.tableId,
-                  className: selectedTable.includes(e?.tableId)
-                    ? "selectabc"
-                    : "",
-                };
-              }),
-          ],
-          optionFilterProp: "children",
-        }
+        label: (
+          <>
+            <p style={{ color: "#0c3246" }}>
+              <b>{sourceTitle}</b>
+            </p>
+          </>
+        ),
+        options: [
+          ...childData
+            ?.filter((e) => e.tableType == tableType)
+            ?.map((e) => {
+              return {
+                label: `${e?.tableName} (${e?.tableType})`,
+                value: e?.tableId,
+                className: selectedTable.includes(e?.tableId)
+                  ? "selectabc"
+                  : "",
+              };
+            }),
+        ],
+        optionFilterProp: "children",
+      }
       : {};
   };
 
@@ -125,7 +125,9 @@ const veriable = ({
         message.success(resultUpdate?.data?.message);
         setAddDataBase(false);
       } else {
-        message.error(resultUpdate.error);
+        // message.error(resultUpdate.error);
+        console.log(resultUpdate.error);
+
       }
     }
 
@@ -139,7 +141,8 @@ const veriable = ({
         message.success(resultAdd?.data?.message);
         setAddDataBase(false);
       } else {
-        message.error(resultAdd.error);
+        // message.error(resultAdd.error);
+        console.log(resultAdd.error)
       }
     }
   };
@@ -155,13 +158,13 @@ const veriable = ({
         oldData.length
           ? oldData
           : [
-              {
-                databaseName: "",
-                databaseValue: "",
-                tableIds: [],
-                variableId: 0,
-              },
-            ]
+            {
+              databaseName: "",
+              databaseValue: "",
+              tableIds: [],
+              variableId: 0,
+            },
+          ]
       );
       let tableIds = [];
       result?.data
@@ -563,9 +566,9 @@ const veriable = ({
                                   >
                                     <DeleteOutlined />{" "}
                                     {form.getFieldsValue() &&
-                                    form.getFieldsValue()?.db_variable &&
-                                    form.getFieldsValue()?.db_variable[index]
-                                      ?.variableId
+                                      form.getFieldsValue()?.db_variable &&
+                                      form.getFieldsValue()?.db_variable[index]
+                                        ?.variableId
                                       ? "Delete"
                                       : "Remove"}
                                   </Button>

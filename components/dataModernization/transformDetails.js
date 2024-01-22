@@ -1,15 +1,15 @@
-import { Row, Col, message, Badge, Button } from "antd";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { DownloadOutlined } from "@ant-design/icons";
+import { Badge, Button, Col, Row } from "antd";
 import { useRouter } from "next/router";
-import { fetch_retry_get } from "../../network/api-manager";
-import { GETANALYZEDATA, DOWNLOADZIP } from "../../network/apiConstants";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   SetAnalyzeDetailAction,
   SetTabTypeAction,
   setOpenDetails,
 } from "../../Redux/action";
+import { fetch_retry_get } from "../../network/api-manager";
+import { DOWNLOADZIP, GETANALYZEDATA } from "../../network/apiConstants";
 import AnalyzeDetail from "./analyzeDetail";
 
 const TransformDetails = ({ dataModernizationCss, setIsDetails }) => {
@@ -31,7 +31,9 @@ const TransformDetails = ({ dataModernizationCss, setIsDetails }) => {
     if (data.success) {
       dispatch(SetAnalyzeDetailAction(data?.data));
     } else {
-      message.error([data?.error]);
+      // message.error([data?.error]);
+      console.log([data?.error])
+
     }
   };
 

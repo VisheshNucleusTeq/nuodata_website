@@ -56,7 +56,8 @@ const Target = ({ ingestionCss, nodeId }) => {
     if (result.success) {
       setAccountListArr(result.data);
     } else {
-      message.error(result.error);
+      // message.error(result.error);
+      console.log(result.error)
     }
   };
 

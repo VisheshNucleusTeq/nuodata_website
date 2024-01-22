@@ -1,63 +1,59 @@
 import {
-  Table,
-  Space,
   Button,
-  Collapse,
   Card,
-  message,
-  Drawer,
-  Row,
   Col,
-  Select,
+  Collapse,
   Divider,
-  Tooltip,
+  Drawer,
   Modal,
   Radio,
-  Form,
-  Input,
-  Checkbox,
+  Row,
+  Select,
+  Space,
+  Table,
+  Tooltip
 } from "antd";
-const { Panel } = Collapse;
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+const { Panel } = Collapse;
 
 import {
-  ANALYZESUMMARY,
-  VERSION,
-  TABLE,
-  RELEASEVERSION,
-  TABLECHANGELOGS,
-  COLUMNCHANGELOGS,
-  CHANGELOGS,
-  GETANALYZEDATA,
-  UPDATEDESIGN,
-  DISCARD,
-} from "../../network/apiConstants";
-import {
-  fetch_retry_post,
-  fetch_retry_get,
-  fetch_retry_put,
-} from "../../network/api-manager";
-import {
-  SetTabTypeAction,
   SetProjectTransformDetailsAction,
+  SetTabTypeAction,
   loderShowHideAction,
   setOpenDetails,
 } from "../../Redux/action";
+import {
+  fetch_retry_get,
+  fetch_retry_post,
+  fetch_retry_put,
+} from "../../network/api-manager";
+import {
+  ANALYZESUMMARY,
+  CHANGELOGS,
+  COLUMNCHANGELOGS,
+  DISCARD,
+  GETANALYZEDATA,
+  RELEASEVERSION,
+  TABLE,
+  TABLECHANGELOGS,
+  UPDATEDESIGN,
+  VERSION,
+} from "../../network/apiConstants";
 
 import {
   DownOutlined,
-  UpOutlined,
   EyeOutlined,
   UndoOutlined,
+  UpOutlined,
 } from "@ant-design/icons";
 
-import DrawerView from "./drawerView";
-import DesignPanel from "./designPanel";
 import { useIsVisible } from "../../hooks/useIsVisible";
 import { fileStatusBadge } from "../helper/fileStatus";
 import Veriable from "./design/veriable";
+import DesignPanel from "./designPanel";
+import DrawerView from "./drawerView";
 
 export default function Design({ dataModernizationCss }) {
   const { query } = useRouter();
@@ -194,7 +190,9 @@ export default function Design({ dataModernizationCss }) {
     } else {
       dispatch(SetProjectTransformDetailsAction({}));
       dispatch(SetTabTypeAction("Connect"));
-      message.error([data?.error]);
+      // message.error([data?.error]);
+      console.log([data?.error])
+
     }
   };
 

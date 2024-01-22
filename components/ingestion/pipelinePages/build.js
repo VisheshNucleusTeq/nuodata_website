@@ -93,7 +93,7 @@ const Build = ({ ingestionCss }) => {
   return (
     <>
       <div className={ingestionCss.pipelineSteps}>
-        <Row justify="space-between">
+        <Row justify="space-between" className={ingestionCss.pipeLineIconRow}>
           {[
             "Source",
             "Joiner",
@@ -144,6 +144,7 @@ const Build = ({ ingestionCss }) => {
         <Row
           onMouseEnter={() => setVisible(true)}
           onMouseLeave={() => setVisible(false)}
+          className={ingestionCss.reactFlowPane}
         >
           <Col span={24} style={{ height: "50vh" }}>
             <EdgesFlow

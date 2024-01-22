@@ -495,7 +495,8 @@ const IngestionDashboard = ({ ingestionCss }) => {
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
-        message.error([data?.error]);
+        // message.error([data?.error]);     
+        console.log([data?.error])
       }
     }
   };
@@ -521,7 +522,8 @@ const IngestionDashboard = ({ ingestionCss }) => {
           setPipelineData(data.data);
         } else {
           setPipelineData([]);
-          message.error([data?.error]);
+          // message.error([data?.error]);
+          console.log(data?.error)
         }
       }
     }

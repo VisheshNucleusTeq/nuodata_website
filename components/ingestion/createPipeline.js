@@ -62,7 +62,8 @@ const CreatePipeline = ({ ingestionCss }) => {
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
-        message.error([data?.error]);
+        // message.error([data?.error]);
+        console.log([data?.error])
       }
     }
   };
@@ -271,13 +272,13 @@ const CreatePipeline = ({ ingestionCss }) => {
                               )}
                               {(e?.element_status == "partially_valid" ||
                                 e?.element_status == "partially valid") && (
-                                <Tag
-                                  icon={<CloseCircleOutlined />}
-                                  color="orange"
-                                >
-                                  Partially Valid
-                                </Tag>
-                              )}
+                                  <Tag
+                                    icon={<CloseCircleOutlined />}
+                                    color="orange"
+                                  >
+                                    Partially Valid
+                                  </Tag>
+                                )}
                             </div>
                           </>
                         </Col>
@@ -336,7 +337,7 @@ const CreatePipeline = ({ ingestionCss }) => {
               paddingRight: "2vw",
             }}
           >
-            {}
+            { }
             {validation?.pipeline_status &&
               validation?.pipeline_status != "valid" && (
                 <Button
@@ -368,8 +369,8 @@ const CreatePipeline = ({ ingestionCss }) => {
           </Col>
 
           <Divider style={{ margin: "0vh 0vh 1vh 0vh" }}></Divider>
-          <Col span={24} className={ingestionCss.pipelineSteps}>
-            <Row className={ingestionCss.dashedLines}>
+          <Col span={24} className={ingestionCss.pipelineStepsRow}>
+            <Row className={ingestionCss.pipelineStepsRow__}>
               <Col span={16}>
                 <Row align={"space-between"}>
                   {["Define", "Build", "Test", "Configure", "Deploy"].map(
@@ -377,26 +378,28 @@ const CreatePipeline = ({ ingestionCss }) => {
                       return (
                         <>
                           <Col
+                            className={ingestionCss.stepsIcon}
                             span={4}
-                            style={{
-                              border: "1px solid lightGray",
-                              height: "4vh",
-                              borderRadius: "10px",
-                              cursor: "pointer",
-                            }}
+                            // style={{
+                            //   border: "1px solid lightGray",
+                            //   height: "4vh",
+                            //   borderRadius: "10px",
+                            //   cursor: "pointer",
+                            // }}
                             onClick={() => {
                               setSelectedTab(i);
                             }}
                           >
                             <Space
-                              style={{
-                                fontSize: "1vw",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignContent: "center",
-                                height: "100%",
-                                fontWeight: "bold",
-                              }}
+                              // style={{
+                              //   fontSize: "1vw",
+                              //   display: "flex",
+                              //   justifyContent: "center",
+                              //   alignContent: "center",
+                              //   height: "100%",
+                              //   fontWeight: "500",
+                              // }}
+                              className={ingestionCss.stepsIcon_text}
                             >
                               <CheckCircleFilled
                                 style={{
@@ -415,9 +418,8 @@ const CreatePipeline = ({ ingestionCss }) => {
                             >
                               <div
                                 style={{
-                                  border: `1px dashed ${
-                                    i <= selectedTab - 1 ? "green" : "gray"
-                                  }`,
+                                  border: `1px dashed ${i <= selectedTab - 1 ? "green" : "gray"
+                                    }`,
                                   width: "100%",
                                 }}
                               ></div>
@@ -447,7 +449,7 @@ const CreatePipeline = ({ ingestionCss }) => {
                       >
                         Convert pipeline
                       </Button>
-&nbsp;
+                      &nbsp;
                       <Button
                         disabled={validation?.pipeline_status != "valid"}
                         className={ingestionCss.saveBtn}

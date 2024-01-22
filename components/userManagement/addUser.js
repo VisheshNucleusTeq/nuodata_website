@@ -60,7 +60,8 @@ const AddUser = ({
       setAddType(null);
       setShowAddModel(false);
     } else {
-      message.error([data?.error]);
+      // message.error([data?.error]);
+      console.log([data?.error])
     }
     dispatch(loderShowHideAction(false));
   };
@@ -78,7 +79,8 @@ const AddUser = ({
       setAddType(null);
       setShowAddModel(false);
     } else {
-      message.error([data?.error]);
+      // message.error([data?.error]);
+      console.log([data?.error])
     }
     dispatch(loderShowHideAction(false));
   };

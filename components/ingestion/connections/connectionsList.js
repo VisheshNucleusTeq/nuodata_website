@@ -51,7 +51,9 @@ const ConnectionsList = ({ ingestionCss }) => {
     if (result.success) {
       setAccountListArr(result.data);
     } else {
-      message.error(result.error);
+      // message.error(result.error);
+      console.log(result.error)
+
     }
   };
 
@@ -63,7 +65,8 @@ const ConnectionsList = ({ ingestionCss }) => {
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
-        message.error([data?.error]);
+        // message.error([data?.error]);
+        console.log([data?.error])
       }
     }
   };
@@ -94,7 +97,7 @@ const ConnectionsList = ({ ingestionCss }) => {
         }}
         footer={null}
         closable={true}
-        // width={"50%"}
+      // width={"50%"}
       >
         <Row align={"center"}>
           {accountListArr &&

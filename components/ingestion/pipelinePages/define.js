@@ -87,7 +87,8 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
           dispatch(loderShowHideAction(false));
         } else {
           dispatch(loderShowHideAction(false));
-          message.error([createPipeline?.error]);
+          // message.error([createPipeline?.error]);
+          console.log([createPipeline?.error])
         }
       }
     } catch (errors) {
