@@ -121,7 +121,7 @@ const IncomingFields = () => {
             showSearch
             searchPlaceholder="Search fields"
             operations={["Excluded Fields", "Included Fields"]}
-            className={ingestionCss.transferStyle}
+            className={"ingestion-transfer"}
           />
         </Col>
 

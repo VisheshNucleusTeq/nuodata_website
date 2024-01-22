@@ -78,6 +78,7 @@ export default function Validate({ dataModernizationCss }) {
       setSelectedFile(0);
       setSelectedGitFile(0);
     } else {
+      console.log([data?.error])
       // dispatch(SetProjectTransformDetailsAction({}));
       // dispatch(SetTabTypeAction("Connect"));
       // message.error(data?.error ? [data?.error] : "Something went wrong.");

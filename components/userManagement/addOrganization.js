@@ -30,7 +30,8 @@ const AddOrganization = ({
         getOrganization();
       }, 1000);
     } else {
-      message.error([data?.error]);
+      // message.error([data?.error]);
+      console.log([data?.error])
     }
     dispatch(loderShowHideAction(false));
   };

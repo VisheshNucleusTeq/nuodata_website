@@ -46,6 +46,7 @@ const Transform = ({ dataModernizationCss }) => {
       });
       setComplexityGraph(data?.data?.complexityGraph);
     } else {
+      console.log([data?.error])
       // dispatch(SetProjectTransformDetailsAction({}));
       // dispatch(SetTabTypeAction("Connect"));
       // message.error(data?.error ? [data?.error] : "Something went wrong.");

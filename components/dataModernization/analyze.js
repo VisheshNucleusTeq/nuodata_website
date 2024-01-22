@@ -1,41 +1,40 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  Row,
-  Col,
-  Table,
-  Space,
-  Card,
-  message,
-  Carousel,
-  Button,
-  Modal,
-} from "antd";
-import { useRouter } from "next/router";
 import {
   ArrowRightOutlined,
   EyeOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
 import {
-  GETPROJECT,
-  ANALYZESUMMARY,
-  VERSION,
-  GETANALYZEDATA,
-  CONVERTTRANSFORN,
-} from "../../network/apiConstants";
+  Button,
+  Card,
+  Carousel,
+  Col,
+  Modal,
+  Row,
+  Space,
+  Table
+} from "antd";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  SetProjectDetailsAction,
+  SetProjectTransformDetailsAction,
+  SetTabTypeAction,
+  loderShowHideAction,
+} from "../../Redux/action";
 import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
+import {
+  ANALYZESUMMARY,
+  CONVERTTRANSFORN,
+  GETANALYZEDATA,
+  GETPROJECT,
+  VERSION,
+} from "../../network/apiConstants";
+import { fileStatusBadge } from "../helper/fileStatus";
+import AnalyzeDetail from "./analyzeDetail";
 import BarChart from "./charts/barChart";
 import LineChart from "./charts/lineChart";
 import PieChart from "./charts/pieChart";
-import AnalyzeDetail from "./analyzeDetail";
-import {
-  SetProjectDetailsAction,
-  SetTabTypeAction,
-  SetProjectTransformDetailsAction,
-  loderShowHideAction,
-} from "../../Redux/action";
-import { fileStatusBadge } from "../helper/fileStatus";
 
 const Analyze = ({ dataModernizationCss }) => {
   const dispatch = useDispatch();
@@ -68,7 +67,9 @@ const Analyze = ({ dataModernizationCss }) => {
     } else {
       dispatch(SetProjectTransformDetailsAction({}));
       dispatch(SetTabTypeAction("Connect"));
-      message.error([data?.error]);
+      // message.error([data?.error]);
+      console.log([data?.error])
+
     }
   };
 

@@ -49,7 +49,8 @@ const EnvironmentList = ({ ingestionCss, workspaceId }) => {
       setEnvironmentDetails(envDetails?.data);
       setIsModalOpen(true);
     } else {
-      message.error([envDetails?.error]);
+      // message.error([envDetails?.error]);
+      console.log([envDetails?.error]);
     }
   };
 
@@ -86,7 +87,8 @@ const EnvironmentList = ({ ingestionCss, workspaceId }) => {
         getEnvList();
       } else {
         dispatch(loderShowHideAction(false));
-        message.error([evnData?.error]);
+        // message.error([evnData?.error]);
+        console.log([evnData?.error]);
       }
     }
   };
@@ -119,7 +121,8 @@ const EnvironmentList = ({ ingestionCss, workspaceId }) => {
       message.success([updateEnv?.data?.message]);
     } else {
       dispatch(loderShowHideAction(false));
-      message.error([updateEnv?.error]);
+      // message.error([updateEnv?.error]);
+      console.log([updateEnv?.error]);
     }
   };
 

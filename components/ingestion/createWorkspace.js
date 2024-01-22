@@ -122,7 +122,9 @@ const CreateWorkspace = ({ ingestionCss }) => {
       }
     } else {
       dispatch(loderShowHideAction(false));
-      message.error([workspaceData?.error]);
+      // message.error([workspaceData?.error]);
+      console.log([workspaceData?.error]);
+
     }
   };
 

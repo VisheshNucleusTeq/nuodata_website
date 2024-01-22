@@ -4,7 +4,6 @@ import {
   Col,
   Space,
   Card,
-  message,
   Skeleton,
   Collapse,
   Button,
@@ -91,7 +90,9 @@ const AnalyzeDetail = ({
       setOutputFiles(data?.data?.outputFiles);
       setTransformationSummary(data?.data?.transformationSummary);
     } else {
-      message.error([data?.error]);
+      // message.error([data?.error]);
+      console.log([data?.error])
+
     }
   };
 

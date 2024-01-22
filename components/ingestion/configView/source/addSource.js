@@ -260,7 +260,8 @@ const AddSource = ({
       setConnectionId(null);
       setActiveKey("schema_tab");
     } else {
-      message.error(result.error);
+      // message.error(result.error);
+      console.log(result.error)
     }
   };
 
@@ -319,11 +320,10 @@ const AddSource = ({
                 ghost
                 type="primary"
                 icon={<UnorderedListOutlined />}
-                className={`${
-                  formType === "EXISTING"
+                className={`${formType === "EXISTING"
                     ? ingestionCss.addSourceBtnActive
                     : ingestionCss.addSourceBtn
-                }`}
+                  }`}
                 onClick={() => {
                   setFormType("EXISTING");
                   setUpdateRecordId(null);
@@ -339,11 +339,10 @@ const AddSource = ({
               ghost
               type="primary"
               icon={<FormOutlined />}
-              className={`${
-                formType === "NEW"
+              className={`${formType === "NEW"
                   ? ingestionCss.addSourceBtnActive
                   : ingestionCss.addSourceBtn
-              }`}
+                }`}
               onClick={() => {
                 setFormType("NEW");
                 setUpdateRecordId(null);
@@ -362,7 +361,7 @@ const AddSource = ({
         <Col span={24}>
           <Collapse
             defaultActiveKey={["col_0", "col_1"]}
-            onChange={() => {}}
+            onChange={() => { }}
             expandIconPosition="right"
           >
             {formType == "EXISTING" && (
@@ -514,15 +513,15 @@ const AddSource = ({
                                 try {
                                   const data = await form.validateFields();
                                   updateConnection(data);
-                                } catch (error) {}
+                                } catch (error) { }
                               }}
                               disabled={!isTested}
                               style={
                                 isTested
                                   ? {
-                                      backgroundColor: "#0c3246",
-                                      color: "#FFF",
-                                    }
+                                    backgroundColor: "#0c3246",
+                                    color: "#FFF",
+                                  }
                                   : {}
                               }
                             >
@@ -536,15 +535,15 @@ const AddSource = ({
                                 try {
                                   const data = await form.validateFields();
                                   addConnection(data);
-                                } catch (error) {}
+                                } catch (error) { }
                               }}
                               disabled={!isTested}
                               style={
                                 isTested
                                   ? {
-                                      backgroundColor: "#0c3246",
-                                      color: "#FFF",
-                                    }
+                                    backgroundColor: "#0c3246",
+                                    color: "#FFF",
+                                  }
                                   : {}
                               }
                             >

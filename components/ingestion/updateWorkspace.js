@@ -112,7 +112,8 @@ const UpdateWorkspace = ({ ingestionCss }) => {
         if (updateResult.success) {
           message.success([updateResult?.data?.message]);
         } else {
-          message.error([updateResult?.error]);
+          // message.error([updateResult?.error]);
+          console.log([updateResult?.error])
         }
         route.back();
       } else {

@@ -48,7 +48,8 @@ const SelectSource = ({
       setConnectionId(null);
       setConnection(e);
     } else {
-      message.error(result.error);
+      // message.error(result.error);
+      console.log(result.error)
     }
   };
 

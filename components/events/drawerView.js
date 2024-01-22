@@ -34,7 +34,8 @@ const DrawerView = ({
       setOpen(false);
       setIsModalOpen(false);
     } else {
-      message.error(resData?.error);
+      // message.error(resData?.error);
+      console.log(resData?.error)
     }
     dispatch(loderShowHideAction(false));
   };

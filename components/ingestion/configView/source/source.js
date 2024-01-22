@@ -51,7 +51,7 @@ const Source = ({
         : "",
       transformation_properties:
         oldRecord?.data?.transformation_properties &&
-        oldRecord?.data?.transformation_properties?.length
+          oldRecord?.data?.transformation_properties?.length
           ? oldRecord?.data?.transformation_properties
           : [],
     });
@@ -62,7 +62,8 @@ const Source = ({
     if (result.success) {
       setAccountListArr(result.data);
     } else {
-      message.error(result.error);
+      // message.error(result.error);
+      console.log(result.error)
     }
   };
 
@@ -81,8 +82,7 @@ const Source = ({
     } else {
       const authData = JSON.parse(localStorage.getItem("authData"));
       const tableData = await fetch_retry_post(
-        `${GETCONNECTIONDETAIL}data/${table}?org_id=${
-          authData?.orgId
+        `${GETCONNECTIONDETAIL}data/${table}?org_id=${authData?.orgId
         }&workspace_id=${localStorage.getItem(
           "workspace"
         )}&connection_id=${connectionId}&type=${type}&rows=10&node_id=${nodeId}`
@@ -91,7 +91,8 @@ const Source = ({
         updateble ? setActiveKey("fields_tab") : null;
         setTableData(tableData?.data);
       } else {
-        message.error(tableData?.error);
+        // message.error(tableData?.error);
+        console.log(tableData?.error);
       }
     }
   };
@@ -138,7 +139,7 @@ const Source = ({
     }
   }, [
     sourceData?.transformation_properties &&
-      sourceData?.transformation_properties?.length,
+    sourceData?.transformation_properties?.length,
     accountListArr && accountListArr.length,
   ]);
 
@@ -201,7 +202,7 @@ const Source = ({
                           key={"source_add_source"}
                           ingestionCss={ingestionCss}
                           connection={connection}
-                          setIsModalOpen={() => {}}
+                          setIsModalOpen={() => { }}
                           connectionId={connectionId}
                           setConnectionId={setConnectionId}
                           setActiveKey={setActiveKey}

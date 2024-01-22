@@ -53,7 +53,7 @@
   background-color: #fff;
   padding: 2%;
   border-radius: 10px;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.05%), 0 4px 10px 0 rgba(0, 0, 0, 0.05%);
   background-color: #fff;
 }
 
@@ -87,23 +87,37 @@
 }
 
 .pipelineBtns {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: flex-end;
+  display: inline-flex;
+  /* align-items: flex-start; */
+  gap: 12px;
 }
 
 .draftBtn {
-  border-radius: 1vh;
+  /* border-radius: 1vh; */
+  border-radius: 100px;
   background-color: #0c3246 !important;
   border: 1px solid #0c3246 !important;
   color: #fff !important;
 }
 
 .saveBtn {
-  border-radius: 1vh;
+  border-radius: 100px;
   background-color: #e74860 !important;
   border: 1px solid #e74860 !important;
   color: #fff !important;
+}
+
+.saveBtn span,
+.draftBtn span {
+  color: var(--White, #FFF);
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .pipelineTitle {
@@ -115,9 +129,12 @@
 
 .pipelineTitle span {
   /* color: #e74860; */
-  font-weight: bold;
+  /* font-weight: bold; */
   margin-left: 1.5vh;
-  font-size: 1.2vw;
+  /* font-size: 1.2vw; */
+  font-size: 16px;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .pipelineTitle span a {
@@ -136,34 +153,67 @@
 }
 
 .defineSave {
-  border-radius: 1vh;
+  /* border-radius: 1vh; */
+  border-radius: 100px;
   border: 1px solid #e74860 !important;
   background-color: transparent !important;
   color: #e74860 !important;
-  height: 5vh;
+  /* height: 5vh; */
+  height: 32px;
 }
 
 .defineSaveAndBuild {
-  border-radius: 1vh;
+  /* border-radius: 1vh; */
+  border-radius: 100px;
   background-color: #e74860 !important;
   border: 1px solid #e74860 !important;
   color: #fff !important;
-  height: 5vh;
+  /* height: 5vh; */
+  height: 32px;
+}
+
+.defineSave span,
+.defineSaveAndBuild span {
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .pipelineSteps {
-  padding: 1.5vh;
+  padding: 0 16px;
+  background: #FBFBFB;
+}
+
+.reactFlowPane {
+  border: 1px solid #ECECEC;
+  margin-top: 16px;
+  background: var(--Secondary, #0c324610);
+}
+
+.pipelineStepsRow {
+  padding: 16px 16px;
+  background: #FBFBFB;
+}
+
+.pipeLineIconRow {
+  width: 100%;
+  background: #FBFBFB;
 }
 
 .pipelineStepTab {
   width: 5vw;
   height: 4vw;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px; */
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 1vh;
   cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid var(--border, #ECECEC);
+  background: #FFF;
   /* border: 1px solid red; */
 }
 
@@ -173,6 +223,26 @@
   justify-content: center;
   align-items: center;
   /* border: 1px solid red; */
+}
+
+.stepsIcon {
+  cursor: pointer;
+  display: inline-flex;
+  padding: 7px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border, #ECECEC);
+  background: #FFF;
+}
+
+.stepsIcon_text {
+  color: var(--Black8, #333);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .pipelineStepTabText {
@@ -190,12 +260,15 @@
 .pipelineStepTabEdge {
   width: 8vw;
   height: 4vw;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 1vh;
   cursor: pointer;
+  border-radius: 7.5px;
+  border: 1.5px solid var(--Black2, #CCC);
+  background: #fff;
 }
 
 .pipelineStepTabIconEdge {
@@ -226,7 +299,7 @@
   text-overflow: ellipsis;
 }
 
-.pipelineStepTabTextEdge2 span{
+.pipelineStepTabTextEdge2 span {
   /* font-size: small; */
   font-size: .6vw;
 }
@@ -334,17 +407,166 @@
   border: 1px solid #0c3246 !important;
 }
 
-.joinerButton {
-  width: 100%;
-  height: auto;
-  font-size: 0.75rem;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  border: 1px solid #b1b1b7;
-  background: #fef6f7;
+.inputSelect div {
+  height: 32px !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  border: 1px solid #d6d6d6 !important;
+  border-radius: 5px !important;
+  resize: vertical !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 12px;
 }
 
-.customNodeSpace {
+.inputSelectMultiple div {
+  border-radius: 5px !important;
+  padding: 0.14vw;
+  font-size: 12px;
+  height: 32px !important;
+}
+
+
+.input {
+  height: 32px !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  border: 1px solid #d6d6d6 !important;
+  border-radius: 5px !important;
+  resize: vertical !important;
+  font-size: 12px;
+
+}
+
+.validateBtn {
+  border-radius: 1vh;
+  background-color: var(--Green, #49BE4D) !important;
+  border: 1px solid var(--Green, #49BE4D) !important;
+  color: #fff !important;
+  display: inline-flex;
+  height: 32px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.antFormItem {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.expSubmitBtn {
+  border-radius: 1vh;
+  border-radius: 100px;
+  background: var(--Primary, #E74860);
+  color: #fff !important;
+  display: inline-flex;
+  height: 32px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.expCancelBtn {
+  border-radius: 1vh;
+  border-radius: 100px;
+  background: var(--Secondary, #0C3246);
+  border: 1px solid (--Secondary, #0C3246);
+  color: #fff !important;
+  display: inline-flex;
+  height: 32px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.expBtnGrp {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-direction: row;
+}
+
+.addBtn {
+  border-radius: 100px;
+  border: 1px solid #0C3246 !important;
+  background: #FFF;
+  display: flex;
+  width: 56px;
+  padding: 4px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.addBtn>span {
+  color: var(--Secondary, #0C3246);
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.expSubmitBtn>span,
+.expCancel>span,
+.validateBtn>span {
+  color: var(--White, #FFF);
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.antFormItem label {
+  font-size: 12px !important;
+}
+
+.textArea {
   width: 100%;
-  padding: 0 6%;
+  border: 1px solid rgba(231, 235, 237, 0.80) !important;
+}
+
+.inputSelectTable div {
+
+  height: 32px !important;
+  width: 238px !important;
+  background: #ffffff !important;
+  border: 1px solid #d6d6d6 !important;
+  border-radius: 5px !important;
+  resize: vertical !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 12px;
+}
+
+.antFormItemJoin {
+  font-size: 12px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.antFormItemJoin label {
+  font-size: 12px !important;
+}
+
+.tableHeaderTitle {
+  color: #313131;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  font-size: 12px
+    /* 100% - Adjust as needed */
+
+}
+
+.radioStyle {
+  margin: 24px 0 16px 0;
 }
