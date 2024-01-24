@@ -6,12 +6,27 @@ import {
   SmileOutlined,
   FunctionOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Form, Input, Row, Select, Tree } from "antd";
+import { Button, Col, Form, Input, Row, Select, Tree, message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { fetch_retry_get } from "../../../../network/api-manager";
 import { EXPRESSIONFUNTYPES, SPARKFUN } from "../../../../network/apiConstants";
+import {
+  NODEMETADATA as NMD,
+  UPDATEFIELDNAME as UFN,
+} from "../../../../network/apiConstants";
+import { fetch_retry_put } from "../../../../network/api-manager";
 
-function ConfigureFieldExpression({ ingestionCss, tableData }) {
+function ConfigureFieldExpression({
+  ingestionCss,
+  tableData,
+  setIsConfigureModalOpen,
+  nodeId,
+  pipeline,
+  fieldData,
+  fieldUpdateData,
+  setFieldUpdateData,
+  getNodeRecord,
+}) {
   const [expression, setExpression] = useState("");
   const [selectedFunction, setSelectedFunction] = useState("");
   const [selectedFields, setSelectedFields] = useState([]);
@@ -74,11 +89,46 @@ function ConfigureFieldExpression({ ingestionCss, tableData }) {
     }
   };
   const handleCancel = () => {
+    setIsConfigureModalOpen(false);
     // Implement cancel functionality
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    // const newData = {
+    //   ...Object.keys(fieldData).reduce((acc, key) => {
+    //     acc[key] = fieldData[key] === null ? "" : fieldData[key];
+    //     return acc;
+    //   }, {}),
+    //   expression: inputArea,
+    // };
+
+    //   fieldUpdateData,
+    // setFieldUpdateData,
+
     // Implement submit functionality
+
+    const requestBody = {
+      pipeline_id: pipeline,
+      node_id: nodeId,
+      fields: [
+        {
+          ...Object.keys(fieldData).reduce((acc, key) => {
+            acc[key] = fieldData[key] === null ? "" : fieldData[key];
+            return acc;
+          }, {}),
+          expression: inputArea,
+          name: fieldData?.name + "_new",
+        },
+      ],
+    };
+    const updateResult = await fetch_retry_put(`${UFN}`, requestBody);
+    if (updateResult.success) {
+      getNodeRecord(nodeId);
+      message.success(updateResult?.data?.message);
+      setIsConfigureModalOpen(false);
+    } else {
+      console.log(updateResult);
+    }
   };
 
   const getTypes = async () => {
@@ -96,6 +146,11 @@ function ConfigureFieldExpression({ ingestionCss, tableData }) {
 
   useEffect(() => {
     getTypes();
+
+    if(fieldData?.expression){
+      setInputArea(fieldData?.expression)
+    }
+
   }, []);
 
   const getExpressionOptions = async () => {
@@ -196,7 +251,6 @@ function ConfigureFieldExpression({ ingestionCss, tableData }) {
                     );
                   })}{" "}
               </Select>
-
             </Form.Item>
           </Col>
           <Col span={15}>
@@ -266,6 +320,7 @@ function ConfigureFieldExpression({ ingestionCss, tableData }) {
               type="primary"
               className={`${ingestionCss.expSubmitBtn} ${ingestionCss.saveBtn} `}
               onClick={handleSubmit}
+              disabled={inputArea.trim() == ""}
             >
               Submit
             </Button>

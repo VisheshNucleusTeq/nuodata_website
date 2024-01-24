@@ -12,9 +12,11 @@ function ExpressionTab({
   setSourceData,
   setActiveKey,
   name,
-  pipeline
+  pipeline,
 }) {
   const [tableData, setTableData] = useState({});
+  const [fieldData, setFieldData] = useState({});
+  const [fieldUpdateData, setFieldUpdateData] = useState([]);
 
   const columns = [
     {
@@ -27,7 +29,11 @@ function ExpressionTab({
       render: (_, record) => (
         <span
           style={{ cursor: "pointer", color: "#E74860" }}
-          onClick={() => setIsConfigureModalOpen(true)}
+          onClick={() => {
+            // console.log(record)
+            setFieldData(record);
+            setIsConfigureModalOpen(true);
+          }}
         >
           Configure...
         </span>
@@ -132,7 +138,13 @@ function ExpressionTab({
         destroyOnClose
         centered
       >
-        <AddNewFieldExp ingestionCss={ingestionCss} nodeId={nodeId} pipeline={pipeline} getNodeRecord={getNodeRecord} setIsModalOpen={setIsModalOpen} />
+        <AddNewFieldExp
+          ingestionCss={ingestionCss}
+          nodeId={nodeId}
+          pipeline={pipeline}
+          getNodeRecord={getNodeRecord}
+          setIsModalOpen={setIsModalOpen}
+        />
       </Modal>
       <Modal
         title="Field Expression: dev_new"
@@ -148,7 +160,17 @@ function ExpressionTab({
         destroyOnClose
         centered
       >
-        <ConfigureFieldExpression ingestionCss={ingestionCss} tableData={tableData} />
+        <ConfigureFieldExpression
+          ingestionCss={ingestionCss}
+          tableData={tableData}
+          setIsConfigureModalOpen={setIsConfigureModalOpen}
+          nodeId={nodeId}
+          pipeline={pipeline}
+          fieldData={fieldData}
+          fieldUpdateData={fieldUpdateData}
+          setFieldUpdateData={setFieldUpdateData}
+          getNodeRecord={getNodeRecord}
+        />
       </Modal>
       <Table
         className={"re-ex-padding"}

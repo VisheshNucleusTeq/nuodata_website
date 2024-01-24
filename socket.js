@@ -9,5 +9,5 @@ export const socket = io("https://api.dev.nuodata.io", {
   transports: ["websocket"],
   upgrade: false,
   reconnection: true,
-  path: "/socket.io/",
-});
+  path: "/socket-io/",
+}); 

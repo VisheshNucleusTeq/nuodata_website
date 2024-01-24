@@ -54,6 +54,12 @@ function SignInRight({ loginCss }) {
     dispatch(loderShowHideAction(false));
   };
 
+  useEffect(()=>{
+    if(typeof window !== "undefined") {
+      window.open("https://beta.governance.dev.nuodata.io/signin", "newWindow")
+    }
+  },[typeof window !== "undefined"])
+
   return (
     <div className={loginCss.flexView}>
       <div className={loginCss.loginForm}>
@@ -122,7 +128,7 @@ function SignInRight({ loginCss }) {
           </Button>
           <Divider plain></Divider>
           <a href="/api/auth/login" style={{ color: "red" }}>SSO Login</a>
-          {/* <GoogleOAuthProvider clientId="995061213404-vbdmb63jpqa8ua22u5jhlc9t9f4r8h3m.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId="995061213404-vbdmb63jpqa8ua22u5jhlc9t9f4r8h3m.apps.googleusercontent.com">
             <GoogleLogin
               onSuccess={(credentialResponse) => {
               }}
@@ -131,7 +137,7 @@ function SignInRight({ loginCss }) {
               useOneTap
               theme={"filled_blue"}
             />
-          </GoogleOAuthProvider> */}
+          </GoogleOAuthProvider>
 
           <Divider plain></Divider>
 

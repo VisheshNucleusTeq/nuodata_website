@@ -4,6 +4,7 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import {
+  Avatar,
   Badge,
   Button,
   Col,
@@ -15,14 +16,11 @@ import {
   Space,
   Table,
   Tooltip,
-  message,
-  Avatar,
-  Image,
-  Tag,
+  messages
 } from "antd";
 import React from "react";
 
-import { FilterOutlined, SwapOutlined } from "@ant-design/icons";
+import { FilterOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -52,70 +50,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
   const [pipelineId, setPipelineId] = React.useState(null);
 
   const columns = [
-    // {
-    //   title: "Source",
-    //   dataIndex: "sources",
-    //   render: (source, record) => {
-    //     return (
-    //       <Avatar.Group
-    //         maxCount={2}
-    //         maxStyle={{
-    //           color: "#f56a00",
-    //           backgroundColor: "#fde3cf",
-    //         }}
-    //       >
-    //         {source.length ? (
-    //           [...source].map((e) => {
-    //             return (
-    //               <Avatar
-    //                 src={`/db_icon/${getFileName(e)}.png`}
-    //                 style={{
-    //                   border: "1px solid lightgray",
-    //                   backgroundColor: "#FFF",
-    //                   padding: "2px",
-    //                 }}
-    //               />
-    //             );
-    //           })
-    //         ) : (
-    //           <>NA</>
-    //         )}
-    //       </Avatar.Group>
-    //     );
-    //   },
-    // },
-    // {
-    //   title: "Target",
-    //   dataIndex: "targets",
-    //   render: (target, record) => {
-    //     return (
-    //       <Avatar.Group
-    //         maxCount={2}
-    //         maxStyle={{
-    //           color: "#f56a00",
-    //           backgroundColor: "#fde3cf",
-    //         }}
-    //       >
-    //         {target.length ? (
-    //           [...target].map((e) => {
-    //             return (
-    //               <Avatar
-    //                 src={`/db_icon/${getFileName(e)}.png`}
-    //                 style={{
-    //                   border: "1px solid lightgray",
-    //                   backgroundColor: "#FFF",
-    //                   padding: "2px",
-    //                 }}
-    //               />
-    //             );
-    //           })
-    //         ) : (
-    //           <>NA</>
-    //         )}
-    //       </Avatar.Group>
-    //     );
-    //   },
-    // },
     {
       fixed: "left",
       title: "Pipeline Name",
@@ -129,7 +63,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
       },
     },
     {
-      // fixed: 'left',
       title: (
         <>
           <Row>
@@ -148,7 +81,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
       ),
       dataIndex: "title",
       render: (text, record) => {
-        //https://placehold.co/50?text=NA
         return (
           <>
             <Row>
@@ -190,7 +122,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
                 style={{ display: "flex", justifyContent: "center" }}
               >
                 <ArrowRightOutlined
-                  // spin={true}
                   className={ingestionCss.title}
                   style={{ fontSize: "1.2vw" }}
                 />
@@ -225,67 +156,10 @@ const IngestionDashboard = ({ ingestionCss }) => {
                         padding: "2px",
                       }}
                     />
-                    // <>NA</>
                   )}
                 </Avatar.Group>
               </Col>
             </Row>
-
-            {/* <Space size={15}>
-              <Avatar.Group
-                maxCount={2}
-                maxStyle={{
-                  color: "#f56a00",
-                  backgroundColor: "#fde3cf",
-                }}
-              >
-                {record?.sources.length ? (
-                  [...record?.sources].map((e) => {
-                    return (
-                      <Avatar
-                        src={`/db_icon/${getFileName(e)}.png`}
-                        style={{
-                          border: "1px solid lightgray",
-                          backgroundColor: "#FFF",
-                          padding: "2px",
-                        }}
-                      />
-                    );
-                  })
-                ) : (
-                  <>NA</>
-                )}
-              </Avatar.Group>
-
-              <ArrowRightOutlined
-                className={ingestionCss.title}
-                style={{ fontSize: "1.2vw" }}
-              />
-              <Avatar.Group
-                maxCount={2}
-                maxStyle={{
-                  color: "#f56a00",
-                  backgroundColor: "#fde3cf",
-                }}
-              >
-                {record?.targets.length ? (
-                  [...record?.targets].map((e) => {
-                    return (
-                      <Avatar
-                        src={`/db_icon/${getFileName(e)}.png`}
-                        style={{
-                          border: "1px solid lightgray",
-                          backgroundColor: "#FFF",
-                          padding: "2px",
-                        }}
-                      />
-                    );
-                  })
-                ) : (
-                  <>NA</>
-                )}
-              </Avatar.Group>
-            </Space> */}
           </>
         );
       },
@@ -322,7 +196,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
           default:
             break;
         }
-        // return <Tag color={color}>{text}</Tag>;
         return (
           <Badge
             count={text}
@@ -332,7 +205,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
         );
       },
     },
-
     {
       title: "Last Job Run",
       dataIndex: "last_job_run",
@@ -366,7 +238,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
           default:
             break;
         }
-
         return (
           <Badge
             count={(last_job_run?.job_status
@@ -384,15 +255,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
             }}
           />
         );
-
-        // SUBMITTED: #3498db (Blue)
-        // PENDING: #f39c12 (Orange)
-        // SCHEDULED: #27ae60 (Green)
-        // RUNNING: #2c3e50 (Dark Gray)
-        // SUCCESS: #2ecc71 (Light Green)
-        // FAILED: #e74c3c (Red)
-        // CANCELLING: #e67e22 (Dark Orange)
-        // CANCELLED: #95a5a6 (Silver)
       },
     },
     {
@@ -421,7 +283,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
         );
       },
     },
-
     {
       fixed: "right",
       title: "Action",
@@ -495,7 +356,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
-        // message.error([data?.error]);     
         console.log([data?.error])
       }
     }
@@ -522,7 +382,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
           setPipelineData(data.data);
         } else {
           setPipelineData([]);
-          // message.error([data?.error]);
           console.log(data?.error)
         }
       }
@@ -562,8 +421,9 @@ const IngestionDashboard = ({ ingestionCss }) => {
         }}
         footer={null}
         closable={true}
+        destroyOnClose
       >
-        <JobRunDetails pipelineId={pipelineId} />
+        <JobRunDetails pipelineId={pipelineId} pipelineData={pipelineData} setPipelineData={setPipelineData} />
       </Modal>
 
       <Modal
@@ -573,11 +433,9 @@ const IngestionDashboard = ({ ingestionCss }) => {
           setIsModalOpen(false);
         }}
         onCancel={() => {
-          // setIsModalOpen(workspace ? false : true);
           setIsModalOpen(workspace ? false : false);
         }}
         footer={null}
-        // closable={workspace ? true : false}
         closable={workspace ? true : true}
       >
         <>

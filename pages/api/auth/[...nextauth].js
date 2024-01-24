@@ -10,7 +10,7 @@ export default NextAuth({
     }),
   ],
   pages: {
-    signIn: "/auth/signIn",
+    signIn: "/auth/signIn-123",
   },
 
   callbacks: {
