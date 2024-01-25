@@ -1,10 +1,10 @@
 import { DeleteOutlined } from "@ant-design/icons";
-import { Button, Col, Modal, Popconfirm, Row, Space, Table } from "antd";
+import { Button, Col, Modal, Popconfirm, Row, Space, Table, message } from "antd";
 import React, { useState, useEffect } from "react";
 import AddNewFieldExp from "./addNewFieldExp";
 import ConfigureFieldExpression from "./configureFieldRule";
-import { NODEMETADATA } from "../../../../network/apiConstants";
-import { fetch_retry_get } from "../../../../network/api-manager";
+import { NODEMETADATA, UPDATEFIELDNAME as UFN, } from "../../../../network/apiConstants";
+import { fetch_retry_get, fetch_retry_delete } from "../../../../network/api-manager";
 function ExpressionTab({
   ingestionCss,
   nodeId,
@@ -115,6 +115,20 @@ function ExpressionTab({
       (oldRecordSchema?.data?.fields && oldRecordSchema?.data?.fields.length)
     ) {
       setTableData(oldRecordSchema?.data);
+    }
+  };
+
+  const deleteField = async (field) => {
+    const updateResult = await fetch_retry_delete(`${UFN}`, {
+      data: {
+        pipeline_id: pipeline,
+        node_id: nodeId,
+        field_ids: [field?.field_id],
+      },
+    });
+    if (updateResult.success) {
+      getNodeRecord(nodeId);
+      message.success(updateResult?.data?.message);
     }
   };
 

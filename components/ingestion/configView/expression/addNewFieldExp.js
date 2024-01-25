@@ -170,7 +170,7 @@ function AddNewFieldExp({
             // type="primary"
             htmlType="submit"
             className={`${ingestionCss.expSubmitBtn} ${ingestionCss.saveBtn}`}
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
           >
             Submit
           </Button>
