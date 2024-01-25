@@ -16,7 +16,7 @@ import {
   Space,
   Table,
   Tooltip,
-  messages
+  messages,
 } from "antd";
 import React from "react";
 
@@ -239,21 +239,47 @@ const IngestionDashboard = ({ ingestionCss }) => {
             break;
         }
         return (
-          <Badge
-            count={(last_job_run?.job_status
-              ? last_job_run?.job_status
-              : "NOT STARTED"
-            ).toLowerCase()}
-            color={color}
-            style={{
-              minWidth: "6vw",
-              textTransform: "capitalize",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              setPipelineId(last_job_run?.exe_id);
-            }}
-          />
+          <Tooltip
+            color={'geekblue'}
+            placement="top"
+            title={
+              last_job_run?.start_time &&
+              last_job_run?.job_status == "SUCCESS" ? (
+                <>
+                  <span>
+                    <b>Start Time:</b> {changeDateFormat(last_job_run?.start_time)}
+                  </span>
+                  <br />
+                  <span>
+                    <b>End Time:</b> {changeDateFormat(last_job_run?.end_time)}
+                  </span>
+                </>
+              ) : // <p>
+              //   {last_job_run?.start_time
+              //     ? changeDateFormat(last_job_run?.start_time) +
+              //       " - " +
+              //       changeDateFormat(last_job_run?.end_time)
+              //     : "--"}
+              // </p>
+              null
+            }
+          >
+            <Badge
+              count={(last_job_run?.job_status
+                ? last_job_run?.job_status
+                : "NOT STARTED"
+              ).toLowerCase()}
+              color={color}
+              style={{
+                minWidth: "6vw",
+                textTransform: "capitalize",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                setPipelineId(last_job_run?.exe_id);
+              }}
+            />
+          </Tooltip>
         );
       },
     },
@@ -356,7 +382,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
-        console.log([data?.error])
+        console.log([data?.error]);
       }
     }
   };
@@ -382,7 +408,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
           setPipelineData(data.data);
         } else {
           setPipelineData([]);
-          console.log(data?.error)
+          console.log(data?.error);
         }
       }
     }
@@ -423,7 +449,11 @@ const IngestionDashboard = ({ ingestionCss }) => {
         closable={true}
         destroyOnClose
       >
-        <JobRunDetails pipelineId={pipelineId} pipelineData={pipelineData} setPipelineData={setPipelineData} />
+        <JobRunDetails
+          pipelineId={pipelineId}
+          pipelineData={pipelineData}
+          setPipelineData={setPipelineData}
+        />
       </Modal>
 
       <Modal
@@ -536,7 +566,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
                   </h1>
                 </Col>
                 <Col span={10}>
-                  <Input className="input" placeholder={"Search Pipelines"} />
+                  {/* <Input className="input" placeholder={"Search Pipelines"} /> */}
                 </Col>
                 <Col
                   span={10}

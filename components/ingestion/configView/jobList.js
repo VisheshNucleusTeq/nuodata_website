@@ -89,14 +89,14 @@ const JobList = () => {
                 Back
               </Button>
             ) : null}
-            <Button
+            {/* <Button
               onClick={() => {
                 getRunList(query?.pipeline ? query?.pipeline : pipelineData);
               }}
               disabled={loader}
             >
               {loader && <LoadingOutlined />} Refresh
-            </Button>
+            </Button> */}
           </Space>
         </Col>
       </Row>

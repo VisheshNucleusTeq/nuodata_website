@@ -251,7 +251,7 @@ const EventNew = ({ EventsCss }) => {
           backgroundSize: "cover",
         }}
       >
-        <div style={{ backgroundColor: "rgb(0, 0, 0, 0.8)" }}>
+        <div style={{ backgroundColor: "rgb(0, 0, 0, 1)" }}>
           <Drawer
             contentWrapperStyle={{
               borderRight: ".5vw solid #e74860",

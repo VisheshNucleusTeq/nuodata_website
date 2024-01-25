@@ -49,7 +49,7 @@ const keyTable = ({
 
   const bulkNameUpdate = async (data) => {
     const index = bulkName.findIndex(
-      (e) => e.from_field_name == data.from_field_name
+      (e) => e.field_id == data.field_id
     );
     if (index < 0) {
       bulkName = [
@@ -78,7 +78,21 @@ const keyTable = ({
         <Input
           defaultValue={text}
           onChange={async (e) => {
-            await bulkNameUpdate({ ...record, name: e.target.value });
+            // field_id
+            // name
+            // type
+            // precision
+            // scale
+            // expression
+            // await bulkNameUpdate({ ...record, name: e.target.value });
+            await bulkNameUpdate({
+              field_id: record?.field_id,
+              type: record?.type,
+              precision: record?.precision,
+              scale: record?.scale,
+              expression: record?.expression,
+              name: e.target.value,
+            });
           }}
         />
       ),
@@ -138,7 +152,7 @@ const keyTable = ({
       } else {
         setApiCall(false);
         // message.error([...updateResult?.error]);
-        console.log([...updateResult?.error])
+        console.log([...updateResult?.error]);
       }
     });
   };
@@ -148,7 +162,7 @@ const keyTable = ({
       data: {
         pipeline_id: pipeline,
         node_id: nodeId,
-        fields_name: [field?.name],
+        field_ids: [field?.field_id],
       },
     });
     if (updateResult.success) {
@@ -156,8 +170,7 @@ const keyTable = ({
       getUpdatedRecord();
     } else {
       // message.error([...updateResult?.error]);
-      console.log([...updateResult?.error])
-
+      console.log([...updateResult?.error]);
     }
   };
 
@@ -184,7 +197,7 @@ const keyTable = ({
     } else {
       setApiCall(false);
       // message.error([...updateResult?.error]);
-      console.log([...updateResult?.error])
+      console.log([...updateResult?.error]);
       bulkName = [];
     }
   };

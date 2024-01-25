@@ -113,7 +113,7 @@ const keyTable = ({
       data: {
         pipeline_id: pipeline,
         node_id: nodeId,
-        fields_name: [field?.name],
+        field_ids: [field?.field_id],
       },
     });
     if (updateResult.success) {
