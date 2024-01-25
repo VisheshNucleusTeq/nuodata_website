@@ -98,7 +98,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
                         <Avatar
                           src={`/db_icon/${getFileName(e)}.png`}
                           style={{
-                            border: "1px solid lightgray",
+                            // border: "1px solid lightgray",
                             backgroundColor: "#FFF",
                             padding: "2px",
                           }}
@@ -109,7 +109,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
                     <Avatar
                       src={`https://placehold.co/150/white/black?text=NA&font=roboto`}
                       style={{
-                        border: "1px solid lightgray",
+                        // border: "1px solid lightgray",
                         backgroundColor: "#FFF",
                         padding: "2px",
                       }}
@@ -140,7 +140,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
                         <Avatar
                           src={`/db_icon/${getFileName(e)}.png`}
                           style={{
-                            border: "1px solid lightgray",
+                            // border: "1px solid lightgray",
                             backgroundColor: "#FFF",
                             padding: "2px",
                           }}
@@ -151,7 +151,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
                     <Avatar
                       src={`https://placehold.co/150/white/black?text=NA&font=roboto`}
                       style={{
-                        border: "1px solid lightgray",
+                        // border: "1px solid lightgray",
                         backgroundColor: "#FFF",
                         padding: "2px",
                       }}
@@ -176,7 +176,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
       },
     },
     {
-      title: "Status",
+      title: "Pipeline Status",
       dataIndex: "status",
       render: (text) => {
         let color = "#FFF";
@@ -200,13 +200,13 @@ const IngestionDashboard = ({ ingestionCss }) => {
           <Badge
             count={text}
             color={color}
-            style={{ minWidth: "4vw", textTransform: "capitalize" }}
+            style={{ minWidth: "5vw", textTransform: "capitalize" }}
           />
         );
       },
     },
     {
-      title: "Last Job Run",
+      title: "Last Job Run Status",
       dataIndex: "last_job_run",
       render: (last_job_run) => {
         let color = "#808080";
@@ -246,7 +246,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
             ).toLowerCase()}
             color={color}
             style={{
-              minWidth: "4vw",
+              minWidth: "6vw",
               textTransform: "capitalize",
               cursor: "pointer",
             }}
@@ -257,32 +257,32 @@ const IngestionDashboard = ({ ingestionCss }) => {
         );
       },
     },
-    {
-      title: "Job Start Time",
-      dataIndex: "last_job_run",
-      render: (last_job_run) => {
-        return (
-          <p>
-            {last_job_run?.start_time
-              ? changeDateFormat(last_job_run?.start_time)
-              : "--"}
-          </p>
-        );
-      },
-    },
-    {
-      title: "Job End Time",
-      dataIndex: "last_job_run",
-      render: (last_job_run) => {
-        return (
-          <p>
-            {last_job_run?.start_time
-              ? changeDateFormat(last_job_run?.end_time)
-              : "--"}
-          </p>
-        );
-      },
-    },
+    // {
+    //   title: "Job Start Time",
+    //   dataIndex: "last_job_run",
+    //   render: (last_job_run) => {
+    //     return (
+    //       <p>
+    //         {last_job_run?.start_time
+    //           ? changeDateFormat(last_job_run?.start_time)
+    //           : "--"}
+    //       </p>
+    //     );
+    //   },
+    // },
+    // {
+    //   title: "Job End Time",
+    //   dataIndex: "last_job_run",
+    //   render: (last_job_run) => {
+    //     return (
+    //       <p>
+    //         {last_job_run?.start_time
+    //           ? changeDateFormat(last_job_run?.end_time)
+    //           : "--"}
+    //       </p>
+    //     );
+    //   },
+    // },
     {
       fixed: "right",
       title: "Action",

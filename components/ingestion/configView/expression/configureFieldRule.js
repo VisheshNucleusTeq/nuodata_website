@@ -280,7 +280,7 @@ function ConfigureFieldExpression({
                 >
                   Expression:
                 </h4>
-                <Button
+                {/* <Button
                   type="primary"
                   className={ingestionCss.validateBtn}
                   onClick={() => {}}
@@ -290,7 +290,7 @@ function ConfigureFieldExpression({
                   }}
                 >
                   Validate
-                </Button>
+                </Button> */}
               </div>
               <Input.TextArea
                 ref={textAreaRef}
