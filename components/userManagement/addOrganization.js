@@ -29,9 +29,6 @@ const AddOrganization = ({
         setShowAddModel(false);
         getOrganization();
       }, 1000);
-    } else {
-      // message.error([data?.error]);
-      console.log([data?.error])
     }
     dispatch(loderShowHideAction(false));
   };

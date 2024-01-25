@@ -190,9 +190,6 @@ export default function Design({ dataModernizationCss }) {
     } else {
       dispatch(SetProjectTransformDetailsAction({}));
       dispatch(SetTabTypeAction("Connect"));
-      // message.error([data?.error]);
-      console.log([data?.error])
-
     }
   };
 

@@ -20,8 +20,8 @@ export const fetch_retry_get = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
-    // message.error(error?.response?.data?.errorMessages);
-    showError(error?.response?.data?.errorMessages)
+    error?.response?.status != 401 &&
+      showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
@@ -44,7 +44,8 @@ export const fetch_retry_post = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
-    showError(error?.response?.data?.errorMessages)
+    error?.response?.status != 401 &&
+      showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
@@ -67,15 +68,15 @@ export const fetch_retry_put = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
-    // message.error(error?.response?.data?.errorMessages);
-    showError(error?.response?.data?.errorMessages)
+    error?.response?.status != 401 &&
+      showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
 
 export const fetch_retry_delete = async (endpoint, payload = {}) => {
   try {
-    console.log("payload --- ", payload)
+    console.log("payload --- ", payload);
     return await retry(
       async () => {
         const response = await ApiInstance.delete(endpoint, payload);
@@ -92,8 +93,8 @@ export const fetch_retry_delete = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
-    // message.error(error?.response?.data?.errorMessages);
-    showError(error?.response?.data?.errorMessages)
+    error?.response?.status != 401 &&
+      showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
@@ -122,8 +123,8 @@ export const fetch_retry_post_with_file = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
-    // message.error(error?.response?.data?.errorMessages);
-    showError(error?.response?.data?.errorMessages)
+    error?.response?.status != 401 &&
+      showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
@@ -152,7 +153,8 @@ export const fetch_retry_put_with_file = async (endpoint, payload = {}) => {
       }
     );
   } catch (error) {
-    showError(error?.response?.data?.errorMessages)
+    error?.response?.status != 401 &&
+      showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };

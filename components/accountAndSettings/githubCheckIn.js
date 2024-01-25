@@ -44,11 +44,7 @@ const GithubCheckIn = () => {
         .filter((e) => e.value),
     });
     if(data.success){
-
       message.success(data?.data?.message);
-    }else{
-      // message.error(data?.error);
-
     }
     await gitConfigData();
     dispatch(loderShowHideAction(false));

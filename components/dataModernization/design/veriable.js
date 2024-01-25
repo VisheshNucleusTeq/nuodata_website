@@ -124,10 +124,6 @@ const veriable = ({
       if (resultUpdate.success) {
         message.success(resultUpdate?.data?.message);
         setAddDataBase(false);
-      } else {
-        // message.error(resultUpdate.error);
-        console.log(resultUpdate.error);
-
       }
     }
 
@@ -140,9 +136,6 @@ const veriable = ({
       if (resultAdd.success) {
         message.success(resultAdd?.data?.message);
         setAddDataBase(false);
-      } else {
-        // message.error(resultAdd.error);
-        console.log(resultAdd.error)
       }
     }
   };

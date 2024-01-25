@@ -66,8 +66,6 @@ const SourceSchema = ({
     if (result?.success) {
       dispatch(loderShowHideAction(false));
       message.success(result?.data?.message);
-    } else {
-      message.error("Something went wrong");
     }
   };
 
@@ -76,8 +74,6 @@ const SourceSchema = ({
     const result = await fetch_retry_post(`${RUNPIPELINE}${id}`);
     if (result?.success) {
       message.success(result?.data?.message);
-    } else {
-      message.error("Something went wrong");
     }
     dispatch(loderShowHideAction(false));
   };
@@ -220,8 +216,6 @@ const SourceSchema = ({
           await convertPipeline(id);
           await runPipeline(id);
         }
-      } else {
-        message.error("Something went wrong");
       }
       dispatch(loderShowHideAction(false));
     } catch (error) {}

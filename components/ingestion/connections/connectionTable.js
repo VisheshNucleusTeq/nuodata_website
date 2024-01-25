@@ -78,13 +78,10 @@ const ConnectionTable = ({
         form.resetFields();
         setIsModalOpen(false);
         getConnectionData();
-      } else {
-        message.error(result?.error ? result?.error : "Something going wrong.");
       }
       dispatch(loderShowHideAction(false));
     } else {
       dispatch(loderShowHideAction(false));
-      message.error(result?.error ? result?.error : "Something going wrong.");
     }
   };
 
@@ -118,13 +115,10 @@ const ConnectionTable = ({
         form.resetFields();
         setIsModalOpen(false);
         getConnectionData();
-      } else {
-        message.error(result?.error ? result?.error : "Something going wrong.");
       }
       dispatch(loderShowHideAction(false));
     } else {
       dispatch(loderShowHideAction(false));
-      message.error(result?.error ? result?.error : "Something going wrong.");
     }
   };
 

@@ -58,8 +58,6 @@ const SourceSchema = ({
         setSchemas(schemaData?.data?.schemas);
         dispatch(loderShowHideAction(false));
       } else {
-        // message.error(schemaData?.error);
-        console.log(schemaData?.error)
         dispatch(loderShowHideAction(false));
       }
     }
@@ -154,14 +152,10 @@ const SourceSchema = ({
           } else {
             setActiveKey("fields_tab");
           }
-        } else {
-          message.error("Something went wrong");
         }
         dispatch(loderShowHideAction(false));
       } else {
         dispatch(loderShowHideAction(false));
-        // message.error(tableData?.error);
-        console.log(tableData?.error);
       }
     } catch (error) {}
   };
@@ -198,20 +192,6 @@ const SourceSchema = ({
           onOk: async () => {
             await getPiplineGraph(pipeline);
             await getTableDataAction(type);
-            // const deleteResult = await fetch_retry_delete(
-            //   `${DELETEEDGE}${pipeline}/edges`,
-            //   {
-            //     data: {
-            //       edge_ids: [...deleteEdges.filter((n) => n)],
-            //     },
-            //   }
-            // );
-            // if (deleteResult.success) {
-            //   await getPiplineGraph(pipeline);
-            //   await getTableDataAction(type);
-            // } else {
-            //   message.error(deleteResult.error);
-            // }
           },
         });
       }

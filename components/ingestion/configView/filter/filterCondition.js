@@ -102,12 +102,10 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
         if (type == "save") {
           route.push("/ingestion");
         }
-      } else {
-        message.error("Something went wrong");
       }
     } else {
       setFormSubmit(true);
-      message.error("Please fill all required fields");
+      message.info("Please fill all required fields");
     }
     dispatch(loderShowHideAction(false));
   };

@@ -1,5 +1,5 @@
-import { message } from "antd"
+import { message } from "antd";
 
 export const showError = (error) => {
-    message.error(error ? error : "Something went wrong")
-}
+  message.error(error ? error : "Something went wrong");
+};

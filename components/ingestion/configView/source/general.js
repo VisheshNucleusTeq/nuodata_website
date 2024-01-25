@@ -36,8 +36,6 @@ const General = ({
         } else {
           setActiveKey("source_tab");
         }
-      } else {
-        message.error("Something went wrong");
       }
       dispatch(loderShowHideAction(false));
     } catch (error) {}

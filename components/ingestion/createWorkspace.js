@@ -40,7 +40,7 @@ const CreateWorkspace = ({ ingestionCss }) => {
   const addEnvironmentAction = async (data) => {
     let obj = environment.find((o) => o.name === data?.name);
     if (obj) {
-      message.error(
+      message.info(
         "Environment Name must be unique. Please specify another Name"
       );
     } else {
@@ -118,13 +118,9 @@ const CreateWorkspace = ({ ingestionCss }) => {
         }
       } else {
         dispatch(loderShowHideAction(false));
-        message.error(["Something went wrong"]);
       }
     } else {
       dispatch(loderShowHideAction(false));
-      // message.error([workspaceData?.error]);
-      console.log([workspaceData?.error]);
-
     }
   };
 

@@ -114,7 +114,7 @@ const refreshToken = async () => {
       key: "sessionExpired",
       content:
         "Your session has expired. Please login to pick up where you left off.",
-      duration: 5,
+      duration: 2,
       onClose: () => {
         window.location.assign("/");
       },

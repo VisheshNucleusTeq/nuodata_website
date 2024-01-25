@@ -102,8 +102,6 @@ const keyTable = ({
         setApiCall(false);
       } else {
         setApiCall(false);
-        // message.error([...updateResult?.error]);
-        console.log([...updateResult?.error])
       }
     });
   };
@@ -119,9 +117,6 @@ const keyTable = ({
     if (updateResult.success) {
       message.success(updateResult?.data?.message);
       getUpdatedRecord();
-    } else {
-      // message.error([...updateResult?.error]);
-      console.log([...updateResult?.error])
     }
   };
 

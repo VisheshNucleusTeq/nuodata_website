@@ -89,10 +89,6 @@ const AnalyzeDetail = ({
       setAnalyzeDetails(data?.data?.complexity);
       setOutputFiles(data?.data?.outputFiles);
       setTransformationSummary(data?.data?.transformationSummary);
-    } else {
-      // message.error([data?.error]);
-      console.log([data?.error])
-
     }
   };
 

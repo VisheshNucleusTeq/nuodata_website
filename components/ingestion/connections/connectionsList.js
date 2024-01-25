@@ -50,10 +50,6 @@ const ConnectionsList = ({ ingestionCss }) => {
     const result = await fetch_retry_get(`${INGESTIONTEMPLATES}all`);
     if (result.success) {
       setAccountListArr(result.data);
-    } else {
-      // message.error(result.error);
-      console.log(result.error)
-
     }
   };
 
@@ -65,8 +61,6 @@ const ConnectionsList = ({ ingestionCss }) => {
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
-        // message.error([data?.error]);
-        console.log([data?.error])
       }
     }
   };

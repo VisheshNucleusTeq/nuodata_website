@@ -30,10 +30,6 @@ const TransformDetails = ({ dataModernizationCss, setIsDetails }) => {
     );
     if (data.success) {
       dispatch(SetAnalyzeDetailAction(data?.data));
-    } else {
-      // message.error([data?.error]);
-      console.log([data?.error])
-
     }
   };
 

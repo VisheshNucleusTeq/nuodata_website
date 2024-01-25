@@ -240,18 +240,20 @@ const EventNew = ({ EventsCss }) => {
           width={"100%"}
         />
       </Modal>
+      {/* background: url("/home/sequence.gif") no-repeat center center; */}
       <div
         className={EventsCss.mainDiv}
         style={{
           background: `url("${
             singleEventData && singleEventData?.imagePublicURL
-              ? singleEventData?.imagePublicURL
+              // ? singleEventData?.imagePublicURL
+              ? "/home/sequence.gif"
               : "/home/sequence.gif"
           }") no-repeat center center`,
           backgroundSize: "cover",
         }}
       >
-        <div style={{ backgroundColor: "rgb(0, 0, 0, 1)" }}>
+        <div style={{ backgroundColor: "rgb(0, 0, 0, .5)" }}>
           <Drawer
             contentWrapperStyle={{
               borderRight: ".5vw solid #e74860",

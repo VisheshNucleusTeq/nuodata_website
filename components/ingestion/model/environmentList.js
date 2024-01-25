@@ -48,16 +48,13 @@ const EnvironmentList = ({ ingestionCss, workspaceId }) => {
     if (envDetails.success) {
       setEnvironmentDetails(envDetails?.data);
       setIsModalOpen(true);
-    } else {
-      // message.error([envDetails?.error]);
-      console.log([envDetails?.error]);
     }
   };
 
   const addEnvironmentAction = async (data) => {
     let obj = environmentList.find((o) => o.name === data?.name);
     if (obj) {
-      message.error(
+      message.info(
         "Environment Name must be unique. Please specify another Name"
       );
     } else {
@@ -87,8 +84,6 @@ const EnvironmentList = ({ ingestionCss, workspaceId }) => {
         getEnvList();
       } else {
         dispatch(loderShowHideAction(false));
-        // message.error([evnData?.error]);
-        console.log([evnData?.error]);
       }
     }
   };
@@ -121,8 +116,6 @@ const EnvironmentList = ({ ingestionCss, workspaceId }) => {
       message.success([updateEnv?.data?.message]);
     } else {
       dispatch(loderShowHideAction(false));
-      // message.error([updateEnv?.error]);
-      console.log([updateEnv?.error]);
     }
   };
 

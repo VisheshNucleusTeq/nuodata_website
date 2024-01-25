@@ -63,7 +63,6 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
           dispatch(loderShowHideAction(false));
         } else {
           dispatch(loderShowHideAction(false));
-          message.error([createPipeline?.error]);
         }
       } else {
         const createPipeline = await fetch_retry_post(`${CREATEPIPELINE}`, {
@@ -87,8 +86,6 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
           dispatch(loderShowHideAction(false));
         } else {
           dispatch(loderShowHideAction(false));
-          // message.error([createPipeline?.error]);
-          console.log([createPipeline?.error])
         }
       }
     } catch (errors) {

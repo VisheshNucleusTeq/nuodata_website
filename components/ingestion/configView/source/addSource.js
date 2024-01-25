@@ -132,8 +132,6 @@ const AddSource = ({
     if (result.success) {
       setIsTested(true);
       message.success(result?.data?.message);
-    } else {
-      message.error(result?.error ? result?.error : "Something going wrong.");
     }
     dispatch(loderShowHideAction(false));
   };
@@ -163,13 +161,10 @@ const AddSource = ({
         getExistingConnections();
         form.resetFields();
         setConnectionId(result?.data?.data?.id);
-      } else {
-        message.error(result?.error ? result?.error : "Something going wrong.");
       }
       dispatch(loderShowHideAction(false));
     } else {
       dispatch(loderShowHideAction(false));
-      message.error(result?.error ? result?.error : "Something going wrong.");
     }
   };
 
@@ -203,13 +198,10 @@ const AddSource = ({
         message.success(result?.data?.message);
         getExistingConnections();
         form.resetFields();
-      } else {
-        message.error(result?.error ? result?.error : "Something going wrong.");
       }
       dispatch(loderShowHideAction(false));
     } else {
       dispatch(loderShowHideAction(false));
-      message.error(result?.error ? result?.error : "Something going wrong.");
     }
   };
 
@@ -259,9 +251,6 @@ const AddSource = ({
       setTableData({});
       setConnectionId(null);
       setActiveKey("schema_tab");
-    } else {
-      // message.error(result.error);
-      console.log(result.error)
     }
   };
 

@@ -55,9 +55,6 @@ const Target = ({ ingestionCss, nodeId }) => {
     const result = await fetch_retry_get(`${INGESTIONTEMPLATES}target`);
     if (result.success) {
       setAccountListArr(result.data);
-    } else {
-      // message.error(result.error);
-      console.log(result.error)
     }
   };
 

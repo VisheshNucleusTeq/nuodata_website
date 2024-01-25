@@ -77,11 +77,6 @@ export default function Validate({ dataModernizationCss }) {
       setComplexityGraph(data?.data?.complexityGraph);
       setSelectedFile(0);
       setSelectedGitFile(0);
-    } else {
-      console.log([data?.error])
-      // dispatch(SetProjectTransformDetailsAction({}));
-      // dispatch(SetTabTypeAction("Connect"));
-      // message.error(data?.error ? [data?.error] : "Something went wrong.");
     }
   };
 
@@ -239,9 +234,9 @@ export default function Validate({ dataModernizationCss }) {
           if (data.success) {
             getAnalyzeData();
           } else {
-            message.error(
-              "Something went wrong please try again after sometime"
-            );
+            // message.erro_r(
+            //   "Something went wrong please try again after sometime"
+            // );
             setSelectedGitFile(0);
           }
         }}

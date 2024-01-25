@@ -6,6 +6,7 @@ import country from "../helper/country";
 import { fetch_retry_post } from "../../network/api-manager";
 import { CONTACT } from "../../network/apiConstants";
 import { loderShowHideAction } from "../../Redux/action";
+import Link from "next/link";
 
 function ContactUsRight({ signUpCss, title, buttonText }) {
   const [form] = Form.useForm();
@@ -18,9 +19,6 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
         "Thank you for contacting us. We will reach out to you soon.",
       ]);
       form.resetFields();
-    } else {
-      // message.error([data?.error]);
-      console.log([data?.error])
     }
     dispatch(loderShowHideAction(false));
   };
@@ -508,7 +506,18 @@ function ContactUsRight({ signUpCss, title, buttonText }) {
               </Form.Item>
             </Col>
           </Row>
-
+          <Row justify="center">
+            <Col span={23}>
+              {buttonText == "Sign-Up" && (
+                <p>
+                  Have an account? &nbsp;
+                  <Link href="/sign-in">
+                    <b className={signUpCss.cursorPointer}>Sign in</b>
+                  </Link>
+                </p>
+              )}
+            </Col>
+          </Row>
           <Button
             size={"large"}
             className={signUpCss.signUpBtn}

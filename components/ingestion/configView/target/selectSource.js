@@ -47,9 +47,6 @@ const SelectSource = ({
       setTableData({});
       setConnectionId(null);
       setConnection(e);
-    } else {
-      // message.error(result.error);
-      console.log(result.error)
     }
   };
 

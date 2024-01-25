@@ -61,9 +61,6 @@ const Source = ({
     const result = await fetch_retry_get(`${INGESTIONTEMPLATES}source`);
     if (result.success) {
       setAccountListArr(result.data);
-    } else {
-      // message.error(result.error);
-      console.log(result.error)
     }
   };
 
@@ -90,9 +87,6 @@ const Source = ({
       if (tableData.success) {
         updateble ? setActiveKey("fields_tab") : null;
         setTableData(tableData?.data);
-      } else {
-        // message.error(tableData?.error);
-        console.log(tableData?.error);
       }
     }
   };

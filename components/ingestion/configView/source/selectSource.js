@@ -28,27 +28,9 @@ const SelectSource = ({
   };
 
   const setConnectionData = async (e) => {
-    // setConnection(e);
-
     setTableData({});
     setConnectionId(null);
     setConnection(e);
-
-    // const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
-    //   ...sourceData,
-    //   transformation_properties: [],
-    // });
-    // if (result.success) {
-    //   setSourceData({
-    //     ...sourceData,
-    //     transformation_properties: [],
-    //   });
-    //   setTableData({});
-    //   setConnectionId(null);
-    //   setConnection(e);
-    // } else {
-    //   message.error(result.error);
-    // }
   };
 
   useEffect(() => {
@@ -57,7 +39,6 @@ const SelectSource = ({
 
   return (
     <>
-      {/* {oldConnection?.type} */}
       <div style={{ marginTop: "2vw" }}>
         <Card className="demoCard">
           <Row>
@@ -94,15 +75,6 @@ const SelectSource = ({
                   &nbsp; Cancel
                 </span>
               )}
-              {/* <span
-                onClick={() => {
-                  setConnection(oldConnection);
-                  setOldConnection({});
-                }}
-                style={{ color: "#e74860", cursor: "pointer" }}
-              >
-                Cancel Changes
-              </span> */}
             </Col>
           </Row>
           <Row align={"centerr"}>
@@ -149,15 +121,3 @@ const SelectSource = ({
 };
 
 export default SelectSource;
-
-// import React from 'react';
-
-// const SelectSource = ({ingestionCss}) => {
-//     return (
-//         <div>
-//             SelectSource
-//         </div>
-//     );
-// };
-
-// export default SelectSource;

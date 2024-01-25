@@ -35,8 +35,6 @@ const WorkspaceList = ({ ingestionCss }) => {
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
-        // message.error([data?.error]);
-        console.log([data?.error])
       }
     }
   };

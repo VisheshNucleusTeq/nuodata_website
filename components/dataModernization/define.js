@@ -53,9 +53,6 @@ const Define = ({ dataModernizationCss }) => {
         queryClient.refetchQueries({ queryKey: ["PROJECT_DATA"] });
         dispatch(SetProjectDetailsAction(data.data));
         dispatch(SetTabTypeAction("Connect"));
-      } else {
-        // message.error([data?.error]);
-        console.log([data?.error])
       }
     }
   };
@@ -78,9 +75,6 @@ const Define = ({ dataModernizationCss }) => {
       queryClient.refetchQueries({ queryKey: ["PROJECT_DATA"] });
       dispatch(SetProjectDetailsAction(data.data));
       router.push(`/dashboard`);
-    } else {
-      // message.error([data?.error]);
-      console.log([data?.error])
     }
   };
 

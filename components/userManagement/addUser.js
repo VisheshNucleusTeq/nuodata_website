@@ -59,9 +59,6 @@ const AddUser = ({
       form.resetFields();
       setAddType(null);
       setShowAddModel(false);
-    } else {
-      // message.error([data?.error]);
-      console.log([data?.error])
     }
     dispatch(loderShowHideAction(false));
   };
@@ -78,9 +75,6 @@ const AddUser = ({
       form.resetFields();
       setAddType(null);
       setShowAddModel(false);
-    } else {
-      // message.error([data?.error]);
-      console.log([data?.error])
     }
     dispatch(loderShowHideAction(false));
   };

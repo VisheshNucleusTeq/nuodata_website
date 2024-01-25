@@ -66,7 +66,6 @@ const DashboardView = () => {
         return data;
       } else {
         setData([]);
-        search === "" ?? message.error([data?.error]);
       }
     }
   };
@@ -83,16 +82,18 @@ const DashboardView = () => {
 
   const checkGitConfigration = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
-    const resData = await fetch_retry_get(
-      `${GETGITDATA}${authData?.orgId}?type=github`
-    );
-    if (
-      !resData?.data?.configs?.github_url ||
-      !resData?.data?.configs?.github_username
-    ) {
-      setModal2Open(true);
-    } else {
-      setModal2Open(false);
+    if (authData?.orgId) {
+      const resData = await fetch_retry_get(
+        `${GETGITDATA}${authData?.orgId}?type=github`
+      );
+      if (
+        !resData?.data?.configs?.github_url ||
+        !resData?.data?.configs?.github_username
+      ) {
+        setModal2Open(true);
+      } else {
+        setModal2Open(false);
+      }
     }
   };
 
@@ -105,7 +106,6 @@ const DashboardView = () => {
         setData(projectData.data);
       } else {
         setData([]);
-        search === "" ?? message.error([projectData?.error]);
       }
     }
   }, [status, projectData]);

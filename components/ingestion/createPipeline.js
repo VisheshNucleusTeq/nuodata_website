@@ -62,8 +62,6 @@ const CreatePipeline = ({ ingestionCss }) => {
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
-        // message.error([data?.error]);
-        console.log([data?.error])
       }
     }
   };
@@ -90,8 +88,6 @@ const CreatePipeline = ({ ingestionCss }) => {
     if (result?.success) {
       dispatch(loderShowHideAction(false));
       message.success(result?.data?.message);
-    } else {
-      message.error("Something went wrong");
     }
   };
 
@@ -100,8 +96,6 @@ const CreatePipeline = ({ ingestionCss }) => {
     const result = await fetch_retry_post(`${RUNPIPELINE}${id}`);
     if (result?.success) {
       message.success(result?.data?.message);
-    } else {
-      message.error("Something went wrong");
     }
     dispatch(loderShowHideAction(false));
   };

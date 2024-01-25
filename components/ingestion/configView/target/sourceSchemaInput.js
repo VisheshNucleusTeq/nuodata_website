@@ -164,8 +164,6 @@ const SourceSchemaInput = ({
     });
     if (result?.success) {
       message.success(result?.data?.message);
-    } else {
-      message.error("Something went wrong");
     }
     dispatch(loderShowHideAction(false));
   };

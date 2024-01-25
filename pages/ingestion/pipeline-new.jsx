@@ -497,7 +497,6 @@ const IngestionDashboard = () => {
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
-        message.error([data?.error]);
       }
     }
   };
@@ -523,7 +522,6 @@ const IngestionDashboard = () => {
           setPipelineData(data.data);
         } else {
           setPipelineData([]);
-          message.error([data?.error]);
         }
       }
     }

@@ -25,7 +25,6 @@ const EventUsersList = ({ eventManagementCss, eventId }) => {
         return data;
       } else {
         setData([]);
-        search === "" ?? message.error([data?.error]);
       }
     }
   };
@@ -48,7 +47,6 @@ const EventUsersList = ({ eventManagementCss, eventId }) => {
         setData(eventUsers.data);
       } else {
         setData([]);
-        search === "" ?? message.error([eventUsers?.error]);
       }
     }
   }, [status, eventUsers]);
