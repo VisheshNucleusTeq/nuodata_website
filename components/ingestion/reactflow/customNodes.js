@@ -3,7 +3,7 @@ import { Col, Image, Row, Button, Space } from "antd";
 import ingestionCss from "../../../styles/ingestion.module.css";
 import { Handle, Position } from "reactflow";
 import { TbArrowsJoin } from "react-icons/tb";
-
+import { getFileName } from "../../helper/getFileName";
 function CustomNodes({ data, isConnectable, type, selected }) {
   const isJoiner = data.label === "Joiner";
 
@@ -42,7 +42,7 @@ function CustomNodes({ data, isConnectable, type, selected }) {
             <>
               <Image
                 alt={data?.connection_type}
-                src={`/db_icon/${data?.connection_type}.png`}
+                src={`/db_icon/${getFileName(data?.connection_type)}.png`}
                 preview={false}
                 width={"1vw"}
                 height={"1vw"}

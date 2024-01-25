@@ -54,11 +54,11 @@ function SignInRight({ loginCss }) {
     dispatch(loderShowHideAction(false));
   };
 
-  useEffect(()=>{
-    if(typeof window !== "undefined") {
-      window.open("https://beta.governance.dev.nuodata.io/signin", "newWindow")
-    }
-  },[typeof window !== "undefined"])
+  // useEffect(()=>{
+  //   if(typeof window !== "undefined") {
+  //     window.open("https://beta.governance.dev.nuodata.io/signin", "newWindow")
+  //   }
+  // },[typeof window !== "undefined"])
 
   return (
     <div className={loginCss.flexView}>
