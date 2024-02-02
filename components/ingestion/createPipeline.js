@@ -3,6 +3,7 @@ import {
   CloseCircleOutlined,
   LeftOutlined,
   ReloadOutlined,
+  CheckCircleOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -80,6 +81,7 @@ const CreatePipeline = ({ ingestionCss }) => {
   const setOldPipeline = async (id) => {
     const pipelineDetails = await fetch_retry_get(`${CREATEPIPELINE}${id}`);
     setPipelineDetails(pipelineDetails?.data);
+    getValidationData();
   };
 
   const convertPipeline = async (id) => {
@@ -98,10 +100,6 @@ const CreatePipeline = ({ ingestionCss }) => {
       message.success(result?.data?.message);
     }
     dispatch(loderShowHideAction(false));
-  };
-
-  const convertAndRunPipeline = async (id) => {
-    await convertPipeline(id);
   };
 
   const getValidationData = async () => {
@@ -130,7 +128,7 @@ const CreatePipeline = ({ ingestionCss }) => {
   }, [workspace, query?.pipeline, pipelineData]);
 
   useEffect(() => {
-    checkValidation && getValidationData();
+    // checkValidation && getValidationData();
   }, [checkValidation]);
 
   return (
@@ -266,13 +264,13 @@ const CreatePipeline = ({ ingestionCss }) => {
                               )}
                               {(e?.element_status == "partially_valid" ||
                                 e?.element_status == "partially valid") && (
-                                  <Tag
-                                    icon={<CloseCircleOutlined />}
-                                    color="orange"
-                                  >
-                                    Partially Valid
-                                  </Tag>
-                                )}
+                                <Tag
+                                  icon={<CloseCircleOutlined />}
+                                  color="orange"
+                                >
+                                  Partially Valid
+                                </Tag>
+                              )}
                             </div>
                           </>
                         </Col>
@@ -331,13 +329,22 @@ const CreatePipeline = ({ ingestionCss }) => {
               paddingRight: "2vw",
             }}
           >
-            { }
-            {validation?.pipeline_status &&
-              validation?.pipeline_status != "valid" && (
+            {}
+            {validation?.pipeline_status && (
+              <Space>
                 <Button
                   onClick={() => {
-                    setOpen(true);
+                    setOpen(
+                      validation?.pipeline_status &&
+                        validation?.pipeline_status != "valid"
+                    );
                   }}
+                  disabled={
+                    !(
+                      validation?.pipeline_status &&
+                      validation?.pipeline_status != "valid"
+                    )
+                  }
                 >
                   <span>
                     <span>
@@ -349,17 +356,43 @@ const CreatePipeline = ({ ingestionCss }) => {
                     </span>
                     &nbsp; &nbsp;
                     <span>
-                      <CloseCircleOutlined
-                        style={{
-                          color: "#FFF",
-                          backgroundColor: "red",
-                          borderRadius: "25px",
-                        }}
-                      />
+                      {validation?.pipeline_status &&
+                      validation?.pipeline_status != "valid" ? (
+                        <CloseCircleOutlined
+                          style={{
+                            color: "#FFF",
+                            backgroundColor: "red",
+                            borderRadius: "25px",
+                          }}
+                        />
+                      ) : (
+                        <CheckCircleOutlined
+                          style={{
+                            color: "#FFF",
+                            backgroundColor: "green",
+                            borderRadius: "25px",
+                          }}
+                        />
+                      )}
                     </span>
                   </span>
                 </Button>
-              )}
+                <Tooltip title={"Reload Validation"}>
+                  <ReloadOutlined
+                    style={{
+                      // color: "#FFF",
+                      borderRadius: "25px",
+                      fontSize: "1vw",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      getValidationData();
+                    }}
+                    spin={validateLoad}
+                  />
+                </Tooltip>
+              </Space>
+            )}
           </Col>
 
           <Divider style={{ margin: "0vh 0vh 1vh 0vh" }}></Divider>
@@ -412,8 +445,9 @@ const CreatePipeline = ({ ingestionCss }) => {
                             >
                               <div
                                 style={{
-                                  border: `1px dashed ${i <= selectedTab - 1 ? "green" : "gray"
-                                    }`,
+                                  border: `1px dashed ${
+                                    i <= selectedTab - 1 ? "green" : "gray"
+                                  }`,
                                   width: "100%",
                                 }}
                               ></div>
@@ -427,8 +461,13 @@ const CreatePipeline = ({ ingestionCss }) => {
               </Col>
               <Col span={8} className={ingestionCss.pipelineBtns}>
                 <Space>
-                  {/* {validation?.pipeline_status == "valid" ?? ( */}
-                  <Tooltip title={validation?.pipeline_status == "valid" ? "" : "Please resolve the validation issue to continue."}>
+                  <Tooltip
+                    title={
+                      validation?.pipeline_status == "valid"
+                        ? ""
+                        : "Please resolve the validation issue to continue."
+                    }
+                  >
                     <>
                       <Button
                         disabled={validation?.pipeline_status != "valid"}
@@ -438,7 +477,6 @@ const CreatePipeline = ({ ingestionCss }) => {
                             ? query?.pipeline
                             : pipelineData;
                           convertPipeline(id);
-                          // await convertAndRunPipeline(id);
                         }}
                       >
                         Convert pipeline
@@ -452,7 +490,6 @@ const CreatePipeline = ({ ingestionCss }) => {
                             ? query?.pipeline
                             : pipelineData;
                           runPipeline(id);
-                          // await convertAndRunPipeline(id);
                         }}
                       >
                         Run pipeline
@@ -473,6 +510,7 @@ const CreatePipeline = ({ ingestionCss }) => {
               </Col>
             </Row>
           </Col>
+
           <Col span={24} className={ingestionCss.pipelineStepData}>
             {selectedTab === 0 && (
               <>

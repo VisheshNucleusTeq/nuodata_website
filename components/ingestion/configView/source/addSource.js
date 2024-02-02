@@ -83,12 +83,16 @@ const AddSource = ({
         label={createTitle(key)}
         labelAlign={"left"}
         name={key}
-        rules={[
-          {
-            required: true,
-            message: createTitle(key) + " is required.",
-          },
-        ]}
+        rules={
+          (!field[key] && updateRecordId) || !updateRecordId
+            ? [
+                {
+                  required: true,
+                  message: createTitle(key) + " is required.",
+                },
+              ]
+            : []
+        }
       >
         <Input
           className="input"
@@ -173,7 +177,11 @@ const AddSource = ({
     const keyArr = [...Object.keys(connection?.connection_detail)];
     keyArr.map((e) => {
       if (connection?.connection_detail[e]) {
-        data[e] = encryptAES_CBC(data[e]);
+        if (data[e].trim()) {
+          data[e] = encryptAES_CBC(data[e]);
+        } else {
+          delete data[e];
+        }
       }
     });
     const result = await fetch_retry_post(TESTCONNECTION, {
@@ -230,7 +238,8 @@ const AddSource = ({
     const keyArr = [...Object.keys(connection?.connection_detail)];
     keyArr.map((e) => {
       if (connection?.connection_detail[e]) {
-        dataValue[e] = decryptAES_CBC(dataValue[e]);
+        // dataValue[e] = decryptAES_CBC(dataValue[e]);
+        dataValue[e] = "";
       }
     });
     form.setFieldsValue(dataValue);

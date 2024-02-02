@@ -2,7 +2,7 @@ import {
   EditOutlined,
   FormOutlined,
   LinkOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -15,7 +15,7 @@ import {
   Select,
   Space,
   Tooltip,
-  message
+  message,
 } from "antd";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -25,15 +25,13 @@ import {
   fetch_retry_post,
   fetch_retry_put,
 } from "../../../../network/api-manager";
-import {
-  GETCONNECTION
-} from "../../../../network/apiConstants";
+import { GETCONNECTION } from "../../../../network/apiConstants";
 
 import { loderShowHideAction } from "../../../../Redux/action";
 import {
   ADDCONNECTION,
   GETCONNECTIONDETAIL,
-  TESTCONNECTION
+  TESTCONNECTION,
 } from "../../../../network/apiConstants";
 import { decryptAES_CBC, encryptAES_CBC } from "../../../helper/cryptojs";
 import { getFileName } from "../../../helper/getFileName";
@@ -80,12 +78,16 @@ const AddSource = ({
         label={createTitle(key)}
         labelAlign={"left"}
         name={key}
-        rules={[
-          {
-            required: true,
-            message: createTitle(key) + " is required.",
-          },
-        ]}
+        rules={
+          (!field[key] && updateRecordId) || !updateRecordId
+            ? [
+                {
+                  required: true,
+                  message: createTitle(key) + " is required.",
+                },
+              ]
+            : []
+        }
       >
         <Input
           className="input"
@@ -170,7 +172,11 @@ const AddSource = ({
     const keyArr = [...Object.keys(connection?.connection_detail)];
     keyArr.map((e) => {
       if (connection?.connection_detail[e]) {
-        data[e] = encryptAES_CBC(data[e]);
+        if (data[e].trim()) {
+          data[e] = encryptAES_CBC(data[e]);
+        } else {
+          delete data[e];
+        }
       }
     });
     const result = await fetch_retry_post(TESTCONNECTION, {
@@ -234,7 +240,8 @@ const AddSource = ({
     const keyArr = [...Object.keys(connection?.connection_detail)];
     keyArr.map((e) => {
       if (connection?.connection_detail[e]) {
-        dataValue[e] = decryptAES_CBC(dataValue[e]);
+        // dataValue[e] = decryptAES_CBC(dataValue[e]);
+        dataValue[e] = "";
       }
     });
     form.setFieldsValue(dataValue);
@@ -259,14 +266,11 @@ const AddSource = ({
     }
   }, [connectionId]);
 
-  
-
   return (
     <>
       <Row>
         <Col span={8} className={ingestionCss.addSourceImage}>
           <Space size={20}>
-            
             <Image src={`/db_icon/${getFileName(connection.type)}.png`} />
             <b>
               {connection.title} &nbsp;&nbsp;
@@ -485,8 +489,7 @@ const AddSource = ({
                                 try {
                                   const data = await form.validateFields();
                                   updateConnection(data);
-                                } catch (error) {
-                                }
+                                } catch (error) {}
                               }}
                               disabled={!isTested}
                               style={
@@ -508,8 +511,7 @@ const AddSource = ({
                                 try {
                                   const data = await form.validateFields();
                                   addConnection(data);
-                                } catch (error) {
-                                }
+                                } catch (error) {}
                               }}
                               disabled={!isTested}
                               style={
@@ -535,7 +537,6 @@ const AddSource = ({
                           Test connection
                         </Button>
 
-                       
                         {connectionId && isTested && (
                           <Button
                             type="primary"

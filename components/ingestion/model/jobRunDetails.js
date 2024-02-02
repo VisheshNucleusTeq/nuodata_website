@@ -131,8 +131,8 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
       const modelData = { ...JSON.parse(data) };
       setData({
         ...modelData,
-        start_time: changeDateFormat(modelData?.start_time),
-        end_time: changeDateFormat(modelData?.end_time),
+        start_time: modelData?.start_time ? changeDateFormat(modelData?.start_time) :null,
+        end_time: modelData?.end_time ? changeDateFormat(modelData?.end_time) : null
       });
 
       const pipelineDataData = pipelineData?.map((e) => {
@@ -179,22 +179,34 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                   })
                   .join(" ")}
               </Col>
-              <Col
-                span={12}
-                style={{
-                  border: "1px solid gray",
-                  height: "5vh",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                &nbsp;{" "}
-                {e != "job_status" ? (
-                  data[e]
-                ) : (
-                  <span>{getJobStatus(data[e])}</span>
-                )}
-              </Col>
+              {data[e] ? (
+                <Col
+                  span={12}
+                  style={{
+                    border: "1px solid gray",
+                    height: "5vh",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  &nbsp;{" "}
+                  {e != "job_status" ? (
+                    data[e]
+                  ) : (
+                    <span>{getJobStatus(data[e])}</span>
+                  )}
+                </Col>
+              ) : (
+                <Col
+                  span={12}
+                  style={{
+                    border: "1px solid gray",
+                    height: "5vh",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >&nbsp;{" "}NA</Col>
+              )}
             </Row>
           );
         })}

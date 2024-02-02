@@ -110,6 +110,14 @@
   color: #fff !important;
 }
 
+.saveBtn[disabled] {
+  border-radius: 100px;
+  background-color: #e74860 !important;
+  border: 1px solid #e74860 !important;
+  color: #fff !important;
+  opacity: .8;
+}
+
 .saveBtn span,
 .draftBtn span {
   color: var(--White, #FFF);

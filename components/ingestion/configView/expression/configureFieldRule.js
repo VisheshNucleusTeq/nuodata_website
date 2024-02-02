@@ -117,7 +117,7 @@ function ConfigureFieldExpression({
             return acc;
           }, {}),
           expression: inputArea,
-          name: fieldData?.name + "_new",
+          name: fieldData?.name,
         },
       ],
     };

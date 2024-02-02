@@ -86,13 +86,18 @@ const ConnectionTable = ({
   };
 
   const updateConnection = async (data) => {
-    dispatch(loderShowHideAction(true));
+    dispatch(loderShowHideAction(false));
     const keyArr = [...Object.keys(connection_detail)];
     keyArr.map((e) => {
       if (connection_detail[e]) {
-        data[e] = encryptAES_CBC(data[e]);
+        if (data[e].trim()) {
+          data[e] = encryptAES_CBC(data[e]);
+        } else {
+          delete data[e];
+        }
       }
     });
+
     const result = await fetch_retry_post(TESTCONNECTION, {
       type: type,
       connection_detail: data,
@@ -130,7 +135,8 @@ const ConnectionTable = ({
     const keyArr = [...Object.keys(connection_detail)];
     keyArr.map((e) => {
       if (connection_detail[e]) {
-        dataValue[e] = decryptAES_CBC(dataValue[e]);
+        // dataValue[e] = decryptAES_CBC(dataValue[e]);
+        dataValue[e] = "";
       }
     });
     form.setFieldsValue(dataValue);
@@ -155,12 +161,16 @@ const ConnectionTable = ({
         label={createTitle(key)}
         labelAlign={"left"}
         name={key}
-        rules={[
-          {
-            required: true,
-            message: createTitle(key) + " is required.",
-          },
-        ]}
+        rules={
+          (!connection_detail[key] && updateRecordId) || !updateRecordId
+            ? [
+                {
+                  required: true,
+                  message: createTitle(key) + " is required.",
+                },
+              ]
+            : []
+        }
       >
         <Input
           className="input"
