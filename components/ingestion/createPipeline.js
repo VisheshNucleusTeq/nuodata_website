@@ -54,6 +54,7 @@ const CreatePipeline = ({ ingestionCss }) => {
   const [open, setOpen] = React.useState(false);
   const [validation, setValidation] = React.useState({});
   const [validateLoad, setValidateLoad] = React.useState(false);
+  const [validateStatus, setValidateStatus] = React.useState(false);
 
   const getWorkSpaceData = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
@@ -88,8 +89,10 @@ const CreatePipeline = ({ ingestionCss }) => {
     dispatch(loderShowHideAction(true));
     const result = await fetch_retry_post(`${CONVERTPIPELINE}${id}`);
     if (result?.success) {
-      dispatch(loderShowHideAction(false));
       message.success(result?.data?.message);
+      runPipeline(id);
+    } else {
+      dispatch(loderShowHideAction(false));
     }
   };
 
@@ -110,6 +113,7 @@ const CreatePipeline = ({ ingestionCss }) => {
         `${GETPIPELINEERROR}${id}/validate`
       );
       if (validationData.success) {
+        setValidateStatus(validationData?.data?.pipeline_status != "valid");
         setValidation(validationData.data);
       }
       setValidateLoad(false);
@@ -128,6 +132,7 @@ const CreatePipeline = ({ ingestionCss }) => {
   }, [workspace, query?.pipeline, pipelineData]);
 
   useEffect(() => {
+    checkValidation && setValidateStatus(true);
     // checkValidation && getValidationData();
   }, [checkValidation]);
 
@@ -469,8 +474,8 @@ const CreatePipeline = ({ ingestionCss }) => {
                     }
                   >
                     <>
-                      <Button
-                        disabled={validation?.pipeline_status != "valid"}
+                      {/* <Button
+                        disabled={validateStatus}
                         className={ingestionCss.saveBtn}
                         onClick={async () => {
                           const id = query?.pipeline
@@ -480,16 +485,17 @@ const CreatePipeline = ({ ingestionCss }) => {
                         }}
                       >
                         Convert pipeline
-                      </Button>
+                      </Button> */}
                       &nbsp;
                       <Button
-                        disabled={validation?.pipeline_status != "valid"}
+                        disabled={validateStatus}
                         className={ingestionCss.saveBtn}
                         onClick={async () => {
                           const id = query?.pipeline
                             ? query?.pipeline
                             : pipelineData;
-                          runPipeline(id);
+                          // runPipeline(id);
+                          convertPipeline(id);
                         }}
                       >
                         Run pipeline

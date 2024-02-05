@@ -100,6 +100,7 @@ const ConnectionTable = ({
 
     const result = await fetch_retry_post(TESTCONNECTION, {
       type: type,
+      connection_id: updateRecordId,
       connection_detail: data,
     });
     if (result.success) {

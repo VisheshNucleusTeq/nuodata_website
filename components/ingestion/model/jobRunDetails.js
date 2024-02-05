@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  RUNPIPELINESTATUS,
-  RUNPIPELINELOGS,
-} from "../../../network/apiConstants";
+import { RUNPIPELINESTATUS } from "../../../network/apiConstants";
 import { fetch_retry_get } from "../../../network/api-manager";
 import { Row, Col, Button, Tag } from "antd";
 // import {socket} from "../../socket";
@@ -36,17 +33,12 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
     const data = await fetch_retry_get(`${RUNPIPELINESTATUS}${pipelineId}`);
     if (data.success) {
       const modelData = { ...data?.data };
-      // setData({
-      //   ...modelData,
-      //   start_time: changeDateFormat(modelData?.start_time),
-      //   end_time: changeDateFormat(modelData?.end_time),
-      // });
-    }
-    const runLinkData = await fetch_retry_get(
-      `${RUNPIPELINELOGS}${pipelineId}`
-    );
-    if (runLinkData.success) {
-      setDownloadLink(runLinkData?.data);
+      setData({
+        ...modelData,
+        stdout: modelData?.stdout,
+        stderr: modelData?.stderr,
+        spark_ui: modelData?.spark_ui,
+      });
     }
   };
 
@@ -107,18 +99,8 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
     // }
   };
 
-  const getRuntimeLinks = async () => {
-    const runLinkData = await fetch_retry_get(
-      `${RUNPIPELINELOGS}${pipelineId}`
-    );
-    if (runLinkData.success) {
-      setDownloadLink(runLinkData?.data);
-    }
-  };
-
   useEffect(() => {
     getRecord();
-    getRuntimeLinks();
   }, [pipelineId]);
 
   useEffect(() => {
@@ -131,8 +113,12 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
       const modelData = { ...JSON.parse(data) };
       setData({
         ...modelData,
-        start_time: modelData?.start_time ? changeDateFormat(modelData?.start_time) :null,
-        end_time: modelData?.end_time ? changeDateFormat(modelData?.end_time) : null
+        start_time: modelData?.start_time
+          ? changeDateFormat(modelData?.start_time)
+          : null,
+        end_time: modelData?.end_time
+          ? changeDateFormat(modelData?.end_time)
+          : null,
       });
 
       const pipelineDataData = pipelineData?.map((e) => {
@@ -159,27 +145,11 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
   return (
     <>
       <>
-        {Object.keys(data).map((e) => {
-          return (
-            <Row key={Math.random()}>
-              <Col
-                span={12}
-                style={{
-                  border: "1px solid gray",
-                  height: "5vh",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                &nbsp;{" "}
-                {e
-                  .split("_")
-                  .map((str) => {
-                    return str.charAt(0).toUpperCase() + str.slice(1);
-                  })
-                  .join(" ")}
-              </Col>
-              {data[e] ? (
+        {Object.keys(data)
+          .filter((key) => !["stdout", "stderr", "spark_ui"].includes(key))
+          .map((e) => {
+            return (
+              <Row key={Math.random()}>
                 <Col
                   span={12}
                   style={{
@@ -190,29 +160,51 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                   }}
                 >
                   &nbsp;{" "}
-                  {e != "job_status" ? (
-                    data[e]
-                  ) : (
-                    <span>{getJobStatus(data[e])}</span>
-                  )}
+                  {e
+                    .split("_")
+                    .map((str) => {
+                      return str.charAt(0).toUpperCase() + str.slice(1);
+                    })
+                    .join(" ")}
                 </Col>
-              ) : (
-                <Col
-                  span={12}
-                  style={{
-                    border: "1px solid gray",
-                    height: "5vh",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >&nbsp;{" "}NA</Col>
-              )}
-            </Row>
-          );
-        })}
-        {Object.keys(downloadLink).map((e) => {
+                {data[e] ? (
+                  <Col
+                    span={12}
+                    style={{
+                      border: "1px solid gray",
+                      height: "5vh",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    &nbsp;{" "}
+                    {e != "job_status" ? (
+                      data[e]
+                    ) : (
+                      <span>{getJobStatus(data[e])}</span>
+                    )}
+                  </Col>
+                ) : (
+                  <Col
+                    span={12}
+                    style={{
+                      border: "1px solid gray",
+                      height: "5vh",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    &nbsp; NA
+                  </Col>
+                )}
+              </Row>
+            );
+          })}
+        {["stdout", "stderr", "spark_ui"].map((key) => {
           return (
-            <Row key={Math.random()}>
+            <Row key={key}>
+              {" "}
+              {/* Removed Math.random() to prevent unnecessary re-renders */}
               <Col
                 span={12}
                 style={{
@@ -222,7 +214,7 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                   alignItems: "center",
                 }}
               >
-                &nbsp; {e.toUpperCase()}
+                &nbsp; {key.toUpperCase()}
               </Col>
               <Col
                 span={12}
@@ -233,10 +225,14 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                   alignItems: "center",
                 }}
               >
-                &nbsp;{" "}
-                <a target="_blank" download href={downloadLink[e]}>
-                  <Button>{e}</Button>
-                </a>
+                &nbsp;
+                {data[key] ? (
+                  <a target="_blank" download href={data[key]}>
+                    <Button>Download</Button>
+                  </a>
+                ) : (
+                  "NA"
+                )}
               </Col>
             </Row>
           );

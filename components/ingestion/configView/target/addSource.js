@@ -127,6 +127,7 @@ const AddSource = ({
     const result = await fetch_retry_post(TESTCONNECTION, {
       type: connection?.type,
       connection_detail: data,
+      connection_id: updateRecordId ? updateRecordId : connectionId,
     });
     if (result.success) {
       setIsTested(true);
@@ -182,6 +183,7 @@ const AddSource = ({
     const result = await fetch_retry_post(TESTCONNECTION, {
       type: connection?.type,
       connection_detail: data,
+      connection_id: updateRecordId,
     });
     if (result.success) {
       const authData = JSON.parse(localStorage.getItem("authData"));

@@ -30,12 +30,17 @@ import {
   setPipelineAction,
   setWorkspaceAction,
 } from "../../Redux/action";
-import { fetch_retry_delete, fetch_retry_get } from "../../network/api-manager";
+import {
+  fetch_retry_delete,
+  fetch_retry_get,
+  fetch_retry_post,
+} from "../../network/api-manager";
 import {
   DELETEPIPELINE,
   GETPIPELINE,
   GETWORKSPACE,
   GETWORKSPACEENV,
+  RUNPIPELINESTATUS,
 } from "../../network/apiConstants";
 import { getFileName } from "../helper/getFileName";
 import JobRunDetails from "./model/jobRunDetails";
@@ -210,18 +215,23 @@ const IngestionDashboard = ({ ingestionCss }) => {
       dataIndex: "last_job_run",
       render: (last_job_run) => {
         let color = "#808080";
+        let showKillButton = false;
         switch (last_job_run?.job_status) {
           case "SUBMITTED":
             color = "#3498db";
+            showKillButton = true;
             break;
           case "PENDING":
             color = "#f39c12";
+            showKillButton = true;
             break;
           case "SCHEDULED":
             color = "#27ae60";
+            showKillButton = true;
             break;
           case "RUNNING":
             color = "#2c3e50";
+            showKillButton = true;
             break;
           case "SUCCESS":
             color = "#2ecc71";
@@ -239,47 +249,58 @@ const IngestionDashboard = ({ ingestionCss }) => {
             break;
         }
         return (
-          <Tooltip
-            color={'geekblue'}
-            placement="top"
-            title={
-              last_job_run?.start_time &&
-              last_job_run?.job_status == "SUCCESS" ? (
-                <>
-                  <span>
-                    <b>Start Time:</b> {changeDateFormat(last_job_run?.start_time)}
-                  </span>
-                  <br />
-                  <span>
-                    <b>End Time:</b> {changeDateFormat(last_job_run?.end_time)}
-                  </span>
-                </>
-              ) : // <p>
-              //   {last_job_run?.start_time
-              //     ? changeDateFormat(last_job_run?.start_time) +
-              //       " - " +
-              //       changeDateFormat(last_job_run?.end_time)
-              //     : "--"}
-              // </p>
-              null
-            }
-          >
-            <Badge
-              count={(last_job_run?.job_status
-                ? last_job_run?.job_status
-                : "NOT STARTED"
-              ).toLowerCase()}
-              color={color}
-              style={{
-                minWidth: "6vw",
-                textTransform: "capitalize",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                setPipelineId(last_job_run?.exe_id);
-              }}
-            />
-          </Tooltip>
+          <>
+            <Tooltip
+              color={"geekblue"}
+              placement="top"
+              title={
+                last_job_run?.start_time &&
+                last_job_run?.job_status == "SUCCESS" ? (
+                  <>
+                    <span>
+                      <b>Start Time:</b>{" "}
+                      {changeDateFormat(last_job_run?.start_time)}
+                    </span>
+                    <br />
+                    <span>
+                      <b>End Time:</b>{" "}
+                      {changeDateFormat(last_job_run?.end_time)}
+                    </span>
+                  </>
+                ) : null
+              }
+            >
+              <Badge
+                count={(last_job_run?.job_status
+                  ? last_job_run?.job_status
+                  : "NOT STARTED"
+                ).toLowerCase()}
+                color={color}
+                style={{
+                  minWidth: "6vw",
+                  textTransform: "capitalize",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setPipelineId(last_job_run?.exe_id);
+                }}
+              />
+            </Tooltip>
+            {showKillButton && (
+              <a
+                style={{
+                  marginLeft: "1vw",
+                  color: "#e74860",
+                  textDecoration: "underline",
+                }}
+                onClick={() => {
+                  cancelPipeline(last_job_run?.exe_id);
+                }}
+              >
+                <span>Kill</span>
+              </a>
+            )}
+          </>
         );
       },
     },
@@ -429,7 +450,15 @@ const IngestionDashboard = ({ ingestionCss }) => {
     getPiplineData();
     dispatch(loderShowHideAction(false));
   };
-
+  const cancelPipeline = async (id) => {
+    const data = await fetch_retry_post(`${RUNPIPELINESTATUS}${id}/cancel`);
+    if (data.success) {
+      console.log(data?.data);
+    } else {
+      console.log(data?.error);
+    }
+    console.log("Cancel Job Run id:", id);
+  };
   useEffect(() => {
     getUpdateAllData();
   }, [workspace, typeof window !== "undefined"]);
