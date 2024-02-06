@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RUNPIPELINESTATUS } from "../../../network/apiConstants";
 import { fetch_retry_get } from "../../../network/api-manager";
-import { Row, Col, Button, Tag } from "antd";
+import { Row, Col, Button, Tag, Table } from "antd";
 // import {socket} from "../../socket";
 // import { socket } from "../../../socket";
 import useSocketConnectionStatus from "../../../hooks/useSocketConnectionStatus";
@@ -18,8 +18,6 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
   const [refreshData, setRefreshData] = useState(Math.random());
 
   const changeDateFormat = (date) => {
-    //start_time
-    // end_time
     const dt = new Date(date);
     const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
     return `${padL(dt.getMonth() + 1)}/${padL(
@@ -29,15 +27,35 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
     )}:${padL(dt.getSeconds())}`;
   };
 
+  const convertSeconds = (seconds) => {
+    // Calculate days
+    var days = Math.floor(seconds / (3600 * 24));
+    seconds %= 3600 * 24;
+
+    // Calculate hours
+    var hours = Math.floor(seconds / 3600);
+    seconds %= 3600;
+
+    // Calculate minutes
+    var minutes = Math.floor(seconds / 60);
+
+    if (days > 0) {
+      return days + " day" + (days > 1 ? "s" : "");
+    } else if (hours > 0) {
+      return hours + " hour" + (hours > 1 ? "s" : "");
+    } else if (minutes > 0) {
+      return minutes + " minute" + (minutes > 1 ? "s" : "");
+    } else {
+      return seconds + " second" + (seconds > 1 ? "s" : "");
+    }
+  };
+
   const getRecord = async () => {
     const data = await fetch_retry_get(`${RUNPIPELINESTATUS}${pipelineId}`);
     if (data.success) {
       const modelData = { ...data?.data };
       setData({
         ...modelData,
-        stdout: modelData?.stdout,
-        stderr: modelData?.stderr,
-        spark_ui: modelData?.spark_ui,
       });
     }
   };
@@ -62,7 +80,7 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
         break;
       case "SUCCESS":
         color = "#2ecc71";
-        icon = <CheckCircleOutlined />;
+        icon = <CheckCircleOutlined style={{ color: "#FFF" }} />;
         break;
       case "FAILED":
         color = "#e74c3c";
@@ -82,7 +100,7 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
 
     return (
       <Tag color={color}>
-        {icon}&nbsp;{status}
+        {icon}&nbsp; &nbsp;{status}
       </Tag>
     );
 
@@ -100,7 +118,7 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
   };
 
   useEffect(() => {
-    getRecord();
+    // getRecord();
   }, [pipelineId]);
 
   useEffect(() => {
@@ -145,11 +163,97 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
   return (
     <>
       <>
-        {Object.keys(data)
-          .filter((key) => !["stdout", "stderr", "spark_ui"].includes(key))
-          .map((e) => {
-            return (
-              <Row key={Math.random()}>
+        <Table
+          bordered
+          pagination={false}
+          showHeader={false}
+          dataSource={[
+            ...Object.keys(data).map((e) => {
+              return {
+                objKey: e,
+                objVal: data[e],
+              };
+            }),
+          ]}
+          columns={[
+            {
+              title: "objKey",
+              dataIndex: "objKey",
+              key: "objKey",
+              render: (text, record) => <b>{text}</b>,
+            },
+            {
+              title: "objVal",
+              dataIndex: "objVal",
+              key: "objVal",
+              render: (text, record) => {
+                let viewValue = <></>;
+                switch (record?.objKey) {
+                  case "job_status":
+                    viewValue = <>{getJobStatus(text)}</>;
+                    break;
+                  case "elapsed_time":
+                    viewValue = <>{convertSeconds(text)}</>;
+                    break;
+                  case "stdout":
+                    viewValue = (
+                      <>
+                        <a target="_blank" download href={text}>
+                          <Button>Download</Button>
+                        </a>
+                      </>
+                    );
+                    break;
+                  case "stderr":
+                    viewValue = (
+                      <>
+                        <a target="_blank" download href={text}>
+                          <Button>Download</Button>
+                        </a>
+                      </>
+                    );
+                    break;
+                  case "spark_ui":
+                    viewValue = (
+                      <>
+                        <a target="_blank" download href={text}>
+                          <Button>Download</Button>
+                        </a>
+                      </>
+                    );
+                    break;
+                  default:
+                    viewValue = <>{text ? text : "NA"}</>;
+                    break;
+                }
+                return viewValue;
+              },
+            },
+          ]}
+          size={"small"}
+        />
+        {/* {JSON.stringify(Object.keys(data))} */}
+        {/* {Object.keys(data).map((e) => {
+          return (
+            <Row key={Math.random()}>
+              <Col
+                span={12}
+                style={{
+                  border: "1px solid gray",
+                  height: "5vh",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                &nbsp;{" "}
+                {e
+                  .split("_")
+                  .map((str) => {
+                    return str.charAt(0).toUpperCase() + str.slice(1);
+                  })
+                  .join(" ")}
+              </Col>
+              {data[e] ? (
                 <Col
                   span={12}
                   style={{
@@ -160,51 +264,31 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                   }}
                 >
                   &nbsp;{" "}
-                  {e
-                    .split("_")
-                    .map((str) => {
-                      return str.charAt(0).toUpperCase() + str.slice(1);
-                    })
-                    .join(" ")}
+                  {e != "job_status" ? (
+                    data[e]
+                  ) : (
+                    <span>{getJobStatus(data[e])}</span>
+                  )}
                 </Col>
-                {data[e] ? (
-                  <Col
-                    span={12}
-                    style={{
-                      border: "1px solid gray",
-                      height: "5vh",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    &nbsp;{" "}
-                    {e != "job_status" ? (
-                      data[e]
-                    ) : (
-                      <span>{getJobStatus(data[e])}</span>
-                    )}
-                  </Col>
-                ) : (
-                  <Col
-                    span={12}
-                    style={{
-                      border: "1px solid gray",
-                      height: "5vh",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    &nbsp; NA
-                  </Col>
-                )}
-              </Row>
-            );
-          })}
-        {["stdout", "stderr", "spark_ui"].map((key) => {
+              ) : (
+                <Col
+                  span={12}
+                  style={{
+                    border: "1px solid gray",
+                    height: "5vh",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  &nbsp; NA
+                </Col>
+              )}
+            </Row>
+          );
+        })} */}
+        {/* {["stdout", "stderr", "spark_ui"].map((key) => {
           return (
             <Row key={key}>
-              {" "}
-              {/* Removed Math.random() to prevent unnecessary re-renders */}
               <Col
                 span={12}
                 style={{
@@ -236,7 +320,7 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
               </Col>
             </Row>
           );
-        })}
+        })} */}
       </>
     </>
   );

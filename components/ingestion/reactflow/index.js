@@ -61,6 +61,8 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
   edges.forEach((edge, i) => {
     edges[i].source = edge.source_node_id;
     edges[i].target = edge.target_node_id;
+    edges[i].sourceHandle = edge?.ui_details?.sourceHandle;
+    edges[i].targetHandle = edge?.ui_details?.targetHandle;
     dagreGraph.setEdge(edge.source_node_id, edge.target_node_id);
   });
   dagre.layout(dagreGraph);
@@ -129,10 +131,18 @@ function EdgesFlow({
         transformation_type: "edge",
         source_node_id: connection?.source,
         target_node_id: connection?.target,
+        ui_details: {
+          sourceHandle: connection?.sourceHandle,
+          targetHandle: connection?.targetHandle,
+        },
       },
     });
-    getPiplineGraph(pipeline);
-    dispatch(setCheckValidationAction(Date.now()));
+    if (edgeData.success) {
+      getPiplineGraph(pipeline);
+      dispatch(setCheckValidationAction(Date.now()));
+    } else {
+      getPiplineGraph(pipeline);
+    }
   };
 
   useEffect(() => {
@@ -218,7 +228,8 @@ function EdgesFlow({
                     type: MarkerType.ArrowClosed,
                     width: 15,
                     height: 15,
-                    color: "#FF0072",
+                    // color: "#FF0072",
+                    color: "gray",
                   },
                 };
               }),

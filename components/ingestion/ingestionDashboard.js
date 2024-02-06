@@ -2,6 +2,7 @@ import {
   ArrowRightOutlined,
   DeleteOutlined,
   EditOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -546,11 +547,27 @@ const IngestionDashboard = ({ ingestionCss }) => {
               <Col
                 span={18}
                 style={{ display: "flex", alignItems: "center", height: "8vh" }}
+                className={ingestionCss.pipelineTitle}
               >
-                {
+                <span>
+                  Workspace:&nbsp;
+                  <a
+                    onClick={() => {
+                      // router.push("/ingestion");
+                    }}
+                  >
+                    {
+                      workspaceData.filter(
+                        (e) => e.workspace_id === workspace
+                      )[0]?.workspace_name
+                    }
+                  </a>
+                </span>
+
+                {/* {
                   workspaceData.filter((e) => e.workspace_id === workspace)[0]
                     ?.workspace_name
-                }
+                } */}
               </Col>
               <Col
                 span={5}
@@ -623,6 +640,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
                         router.push(`/ingestion/create-pipeline`);
                       }}
                     >
+                      <PlusOutlined />
                       Add Pipeline
                     </Button>
                   </Space>

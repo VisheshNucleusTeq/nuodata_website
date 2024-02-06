@@ -404,8 +404,9 @@ const CreatePipeline = ({ ingestionCss }) => {
           <Col span={24} className={ingestionCss.pipelineStepsRow}>
             <Row className={ingestionCss.pipelineStepsRow__}>
               <Col span={16}>
-                <Row align={"space-between"}>
-                  {["Define", "Build", "Test", "Configure", "Deploy"].map(
+                <Row align={"space-between1"}>
+                  {/* {["Define", "Build", "Test", "Configure", "Deploy"].map( */}
+                  {["Define", "Build", "Configure", "Deploy"].map(
                     (data, i) => {
                       return (
                         <>
@@ -443,7 +444,7 @@ const CreatePipeline = ({ ingestionCss }) => {
                               {data}
                             </Space>
                           </Col>
-                          {[0, 1, 2, 3].includes(i) ? (
+                          {[0, 1, 2].includes(i) ? (
                             <Col
                               span={1}
                               style={{ display: "flex", alignItems: "center" }}

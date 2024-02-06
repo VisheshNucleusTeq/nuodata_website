@@ -714,3 +714,15 @@ html {
 .ant-transfer-list-content::-webkit-scrollbar-thumb {
   background-color: #ececec !important;
 }
+
+.ant-table-tbody .anticon{
+  color: var(--Secondary9, #0C3246);
+  font-size : 1vw !important;
+}
+
+.ant-table-tbody a{
+  color: var(--Secondary9, #0C3246);
+  text-decoration: underline !important;
+  color : #0c3246 !important
+  /* font-size : 1vw !important; */
+}

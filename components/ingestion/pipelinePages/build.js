@@ -8,6 +8,7 @@ import Expression from "../configView/expression/expression";
 import Filter from "../configView/filter/filter";
 import Source from "../configView/source/source";
 import Target from "../configView/target/target";
+import Joiner from "../configView/joiner/joiner";
 import EdgesFlow from "../reactflow";
 import {
   loderShowHideAction,
@@ -195,6 +196,16 @@ const Build = ({ ingestionCss }) => {
             ingestionCss={ingestionCss}
             nodeId={selectedNode?.id}
             key={`expression${selectedNode?.id}`}
+            pipeline={query?.pipeline ? query?.pipeline : pipelineData}
+          />
+        )}
+        {}
+        {selectedNode?.data == "Joiner" && (
+          <Joiner
+            ingestionCss={ingestionCss}
+            nodeId={selectedNode?.id}
+            key={`joiner${selectedNode?.id}`}
+            edgeData={edgeData}
             pipeline={query?.pipeline ? query?.pipeline : pipelineData}
           />
         )}

@@ -64,11 +64,12 @@ const WorkspaceList = ({ ingestionCss }) => {
         />
       </Modal>
 
-      <div className={ingestionCss.workspaceHeader}>
-        <h1>Workspaces</h1>
-
+      {/* <div className={ingestionCss.workspaceHeader}>
         <Row>
-          <Col span={24}>
+          <Col span={12}>
+            <h1>Workspaces</h1>
+          </Col>
+          <Col span={12}>
             <Button className={ingestionCss.button}>
               <span
                 style={{ fontSize: "1.2vw" }}
@@ -81,9 +82,69 @@ const WorkspaceList = ({ ingestionCss }) => {
             </Button>
           </Col>
         </Row>
-      </div>
+      </div> */}
 
       <Table
+        title={() => {
+          return (
+            <>
+              <Row>
+                <Col span={4} style={{ display: "flex", alignItems: "center" }}>
+                  <h1>
+                    <b>Workspaces</b>
+                  </h1>
+                </Col>
+                <Col span={10}>
+                  {/* <Input className="input" placeholder={"Search Pipelines"} /> */}
+                </Col>
+                <Col
+                  span={10}
+                  style={{ justifyContent: "end", display: "flex" }}
+                >
+                  <Space>
+                    {/* <Button
+                    style={{
+                      background: "gray",
+                      color: "#fff",
+                      borderRadius: "25px",
+                      height: "100%",
+                    }}
+                  >
+                    <FilterOutlined /> Filter
+                  </Button>
+                  <Button
+                    style={{
+                      background: "#e74860",
+                      color: "#fff",
+                      borderRadius: "25px",
+                      height: "100%",
+                    }}
+                    onClick={() => {
+                      router.push(`/ingestion/create-pipeline`);
+                    }}
+                  >
+                    Add Pipeline
+                  </Button> */}
+
+                    <Button
+                      style={{
+                        background: "#e74860",
+                        color: "#fff",
+                        borderRadius: "25px",
+                        height: "100%",
+                      }}
+                      onClick={() => {
+                        router.push("create-workspace");
+                      }}
+                    >
+                      <PlusOutlined /> Create Workspace
+                    </Button>
+                  </Space>
+                </Col>
+              </Row>
+            </>
+          );
+        }}
         pagination={{
           onChange(current, pageSize) {
             setPage(current);

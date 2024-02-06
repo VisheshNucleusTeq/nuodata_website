@@ -263,7 +263,7 @@ const ConnectionTable = ({
               {
                 title: "Connection Name",
                 dataIndex: "connection_name",
-                render: (text) => <a>{text}</a>,
+                render: (text) => <span>{text}</span>,
               },
               {
                 width: 100,

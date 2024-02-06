@@ -7,15 +7,13 @@ import { getFileName } from "../../helper/getFileName";
 function CustomNodes({ data, isConnectable, type, selected }) {
   const isJoiner = data.label === "Joiner";
 
-  const joinerHandleStyle = (top) => ({
-    top: `${top}%`,
-  });
-
   return (
     <div
       className={ingestionCss.pipelineStepTabEdge}
       style={{
-        border: `${selected ? 2 : 1}px solid #e74860`,
+        border: `${selected ? 2 : 1}px solid ${
+          data?.status == "valid" ? "green" : "#e74860"
+        }`,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -29,7 +27,7 @@ function CustomNodes({ data, isConnectable, type, selected }) {
             backgroundColor: "#FFF",
             height: ".6vw",
             width: ".6vw",
-            border: "1px solid #e74860",
+            border: `1px solid ${data?.status == "valid" ? "green" : "#e74860"}`,
           }}
           type="target" // LEFT
           position={Position.Left}
@@ -69,28 +67,26 @@ function CustomNodes({ data, isConnectable, type, selected }) {
               type="target"
               position={Position.Left}
               isConnectable={isConnectable}
-              id="1"
-              // style={joinerHandleStyle(48)}
+              id="Master"
               style={{
                 backgroundColor: "#FFF",
                 height: ".6vw",
                 width: ".6vw",
-                border: "1px solid #e74860",
-                top : "48%"
+                border: `1px solid ${data?.status == "valid" ? "green" : "#e74860"}`,
+                top: "48%",
               }}
             />
             <Handle
               type="target"
               position={Position.Left}
               isConnectable={isConnectable}
-              id="2"
-              // style={joinerHandleStyle(68)}
+              id="Details"
               style={{
                 backgroundColor: "#FFF",
                 height: ".6vw",
                 width: ".6vw",
-                border: "1px solid #e74860",
-                top : "68%"
+                border: `1px solid ${data?.status == "valid" ? "green" : "#e74860"}`,
+                top: "68%",
               }}
             />
 
@@ -122,7 +118,7 @@ function CustomNodes({ data, isConnectable, type, selected }) {
             backgroundColor: "#FFF",
             height: ".6vw",
             width: ".6vw",
-            border: "1px solid #e74860",
+            border: `1px solid ${data?.status == "valid" ? "green" : "#e74860"}`,
           }}
           type="source" // RIGHT
           position={Position.Right}
@@ -134,17 +130,6 @@ function CustomNodes({ data, isConnectable, type, selected }) {
 }
 
 export default CustomNodes;
-
-
-
-
-
-
-
-
-
-
-
 
 // import { Col, Image, Row } from "antd";
 // import { Handle, Position } from "reactflow";
