@@ -1,9 +1,9 @@
 import {
   CheckCircleFilled,
+  CheckCircleOutlined,
   CloseCircleOutlined,
   LeftOutlined,
   ReloadOutlined,
-  CheckCircleOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -19,12 +19,19 @@ import {
   Tooltip,
   message,
 } from "antd";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from "../dataModernization/loading";
 
-import Build from "./pipelinePages/build";
-import Define from "./pipelinePages/define";
+const Build = dynamic(() => import("./pipelinePages/build"), {
+  loading: () => <Loading />,
+});
+
+const Define = dynamic(() => import("./pipelinePages/define"), {
+  loading: () => <Loading />,
+});
 
 import { loderShowHideAction, setWorkspaceAction } from "../../Redux/action";
 import { fetch_retry_get, fetch_retry_post } from "../../network/api-manager";
@@ -54,7 +61,7 @@ const CreatePipeline = ({ ingestionCss }) => {
   const [open, setOpen] = React.useState(false);
   const [validation, setValidation] = React.useState({});
   const [validateLoad, setValidateLoad] = React.useState(false);
-  const [validateStatus, setValidateStatus] = React.useState(false);
+  const [validateStatus, setValidateStatus] = React.useState(true);
 
   const getWorkSpaceData = async () => {
     const authData = JSON.parse(localStorage.getItem("authData"));
@@ -68,10 +75,9 @@ const CreatePipeline = ({ ingestionCss }) => {
     }
   };
 
-  const setOldData = async () => {
+  const setSelectedWorkSpace = async () => {
     if (typeof window !== "undefined") {
       if (!workspace && !("workspace" in localStorage)) {
-        // setIsModalOpen(true);
       } else {
         const workspaceValue = localStorage.getItem("workspace");
         dispatch(setWorkspaceAction(workspaceValue));
@@ -82,14 +88,12 @@ const CreatePipeline = ({ ingestionCss }) => {
   const setOldPipeline = async (id) => {
     const pipelineDetails = await fetch_retry_get(`${CREATEPIPELINE}${id}`);
     setPipelineDetails(pipelineDetails?.data);
-    getValidationData();
   };
 
   const convertPipeline = async (id) => {
     dispatch(loderShowHideAction(true));
     const result = await fetch_retry_post(`${CONVERTPIPELINE}${id}`);
     if (result?.success) {
-      message.success(result?.data?.message);
       runPipeline(id);
     } else {
       dispatch(loderShowHideAction(false));
@@ -121,20 +125,21 @@ const CreatePipeline = ({ ingestionCss }) => {
   };
 
   useEffect(() => {
-    getWorkSpaceData();
-    setOldData();
+    const delayDebounceFn = setTimeout(() => {
+      getWorkSpaceData();
+      setSelectedWorkSpace();
+    }, 500);
+    return () => clearTimeout(delayDebounceFn);
   }, [workspace, typeof window !== "undefined"]);
 
   useEffect(() => {
-    query?.pipeline || pipelineData
-      ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
-      : null;
+    const delayDebounceFn = setTimeout(() => {
+      query?.pipeline || pipelineData
+        ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
+        : null;
+    }, 500);
+    return () => clearTimeout(delayDebounceFn);
   }, [workspace, query?.pipeline, pipelineData]);
-
-  useEffect(() => {
-    checkValidation && setValidateStatus(true);
-    // checkValidation && getValidationData();
-  }, [checkValidation]);
 
   return (
     <>
@@ -167,7 +172,6 @@ const CreatePipeline = ({ ingestionCss }) => {
                 <Space>
                   <ReloadOutlined
                     style={{
-                      // color: "#FFF",
                       borderRadius: "25px",
                       fontSize: "1.5vw",
                       cursor: "pointer",
@@ -244,7 +248,6 @@ const CreatePipeline = ({ ingestionCss }) => {
                               >
                                 <span>{e?.element_name}</span>
                                 <br></br>
-                                {/* <small style={{backgroundColor : "lightblue", color : "#000", borderRadius : "5px"}}>&nbsp;{e?.element_type}&nbsp;</small> */}
                                 <Tag bordered={false} color="processing">
                                   {e?.element_type}
                                 </Tag>
@@ -334,70 +337,71 @@ const CreatePipeline = ({ ingestionCss }) => {
               paddingRight: "2vw",
             }}
           >
-            {}
-            {validation?.pipeline_status && (
-              <Space>
-                <Button
-                  onClick={() => {
-                    setOpen(
-                      validation?.pipeline_status &&
-                        validation?.pipeline_status != "valid"
-                    );
-                  }}
-                  disabled={
-                    !(
-                      validation?.pipeline_status &&
+            <Space>
+              <Button
+                onClick={() => {
+                  setOpen(
+                    validation?.pipeline_status &&
                       validation?.pipeline_status != "valid"
-                    )
-                  }
-                >
+                  );
+                }}
+                disabled={
+                  !(
+                    validation?.pipeline_status &&
+                    validation?.pipeline_status != "valid"
+                  )
+                }
+              >
+                <span>
                   <span>
-                    <span>
-                      <LeftOutlined />
-                    </span>
-                    &nbsp;
-                    <span>
-                      {`validation (${validation?.validations?.length})`}{" "}
-                    </span>
-                    &nbsp; &nbsp;
-                    <span>
-                      {validation?.pipeline_status &&
-                      validation?.pipeline_status != "valid" ? (
-                        <CloseCircleOutlined
-                          style={{
-                            color: "#FFF",
-                            backgroundColor: "red",
-                            borderRadius: "25px",
-                          }}
-                        />
-                      ) : (
-                        <CheckCircleOutlined
-                          style={{
-                            color: "#FFF",
-                            backgroundColor: "green",
-                            borderRadius: "25px",
-                          }}
-                        />
-                      )}
-                    </span>
+                    <LeftOutlined />
                   </span>
-                </Button>
-                <Tooltip title={"Reload Validation"}>
-                  <ReloadOutlined
-                    style={{
-                      // color: "#FFF",
-                      borderRadius: "25px",
-                      fontSize: "1vw",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      getValidationData();
-                    }}
-                    spin={validateLoad}
-                  />
-                </Tooltip>
-              </Space>
-            )}
+                  &nbsp;
+                  <span>
+                    {`validation (${
+                      validation?.validations
+                        ? validation?.validations?.length
+                        : 0
+                    })`}{" "}
+                  </span>
+                  &nbsp; &nbsp;
+                  <span>
+                    {validation?.pipeline_status &&
+                    validation?.pipeline_status != "valid" ? (
+                      <CloseCircleOutlined
+                        style={{
+                          color: "#FFF",
+                          backgroundColor: "red",
+                          borderRadius: "25px",
+                        }}
+                      />
+                    ) : (
+                      <CheckCircleOutlined
+                        style={{
+                          color: "#FFF",
+                          backgroundColor: "green",
+                          borderRadius: "25px",
+                        }}
+                      />
+                    )}
+                  </span>
+                </span>
+              </Button>
+              <Tooltip placement={"left"} title={"Reload Validation"}>
+                <ReloadOutlined
+                  style={{
+                    // color: "#FFF",
+                    borderRadius: "25px",
+                    fontSize: "1vw",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    getValidationData();
+                  }}
+                  spin={validateLoad}
+                />
+              </Tooltip>
+            </Space>
           </Col>
 
           <Divider style={{ margin: "0vh 0vh 1vh 0vh" }}></Divider>
@@ -406,63 +410,45 @@ const CreatePipeline = ({ ingestionCss }) => {
               <Col span={16}>
                 <Row align={"space-between1"}>
                   {/* {["Define", "Build", "Test", "Configure", "Deploy"].map( */}
-                  {["Define", "Build", "Configure", "Deploy"].map(
-                    (data, i) => {
-                      return (
-                        <>
+                  {["Define", "Build", "Configure", "Deploy"].map((data, i) => {
+                    return (
+                      <>
+                        <Col
+                          className={ingestionCss.stepsIcon}
+                          span={4}
+                          onClick={() => {
+                            setSelectedTab(i);
+                          }}
+                        >
+                          <Space className={ingestionCss.stepsIcon_text}>
+                            <CheckCircleFilled
+                              style={{
+                                fontSize: "1vw",
+                                color: i <= selectedTab ? "green" : "gray",
+                              }}
+                              twoToneColor="#fff"
+                            />
+                            {data}
+                          </Space>
+                        </Col>
+                        {[0, 1, 2].includes(i) ? (
                           <Col
-                            className={ingestionCss.stepsIcon}
-                            span={4}
-                            // style={{
-                            //   border: "1px solid lightGray",
-                            //   height: "4vh",
-                            //   borderRadius: "10px",
-                            //   cursor: "pointer",
-                            // }}
-                            onClick={() => {
-                              setSelectedTab(i);
-                            }}
+                            span={1}
+                            style={{ display: "flex", alignItems: "center" }}
                           >
-                            <Space
-                              // style={{
-                              //   fontSize: "1vw",
-                              //   display: "flex",
-                              //   justifyContent: "center",
-                              //   alignContent: "center",
-                              //   height: "100%",
-                              //   fontWeight: "500",
-                              // }}
-                              className={ingestionCss.stepsIcon_text}
-                            >
-                              <CheckCircleFilled
-                                style={{
-                                  fontSize: "1vw",
-                                  color: i <= selectedTab ? "green" : "gray",
-                                }}
-                                twoToneColor="#fff"
-                              />
-                              {data}
-                            </Space>
+                            <div
+                              style={{
+                                border: `1px dashed ${
+                                  i <= selectedTab - 1 ? "green" : "gray"
+                                }`,
+                                width: "100%",
+                              }}
+                            ></div>
                           </Col>
-                          {[0, 1, 2].includes(i) ? (
-                            <Col
-                              span={1}
-                              style={{ display: "flex", alignItems: "center" }}
-                            >
-                              <div
-                                style={{
-                                  border: `1px dashed ${
-                                    i <= selectedTab - 1 ? "green" : "gray"
-                                  }`,
-                                  width: "100%",
-                                }}
-                              ></div>
-                            </Col>
-                          ) : null}
-                        </>
-                      );
-                    }
-                  )}
+                        ) : null}
+                      </>
+                    );
+                  })}
                 </Row>
               </Col>
               <Col span={8} className={ingestionCss.pipelineBtns}>
@@ -475,19 +461,6 @@ const CreatePipeline = ({ ingestionCss }) => {
                     }
                   >
                     <>
-                      {/* <Button
-                        disabled={validateStatus}
-                        className={ingestionCss.saveBtn}
-                        onClick={async () => {
-                          const id = query?.pipeline
-                            ? query?.pipeline
-                            : pipelineData;
-                          convertPipeline(id);
-                        }}
-                      >
-                        Convert pipeline
-                      </Button> */}
-                      &nbsp;
                       <Button
                         disabled={validateStatus}
                         className={ingestionCss.saveBtn}
@@ -495,7 +468,6 @@ const CreatePipeline = ({ ingestionCss }) => {
                           const id = query?.pipeline
                             ? query?.pipeline
                             : pipelineData;
-                          // runPipeline(id);
                           convertPipeline(id);
                         }}
                       >
@@ -503,8 +475,6 @@ const CreatePipeline = ({ ingestionCss }) => {
                       </Button>
                     </>
                   </Tooltip>
-
-                  {/* )} */}
                   <Button
                     className={ingestionCss.draftBtn}
                     onClick={() => {
@@ -528,6 +498,7 @@ const CreatePipeline = ({ ingestionCss }) => {
                     workspaceData={workspaceData}
                     workspace={workspace}
                     setSelectedTab={setSelectedTab}
+                    pipelineDetails={pipelineDetails}
                   />
                 ) : null}
               </>
