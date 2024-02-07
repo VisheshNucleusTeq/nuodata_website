@@ -197,9 +197,8 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                     viewValue = <>{convertSeconds(text)}</>;
                     break;
                   case "stdout":
-                    console.log('stdout text:', text);
+                    // console.log("stdout text:", text);
                     viewValue = text ? (
-                     
                       <>
                         <a
                           target="_blank"
@@ -211,28 +210,41 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                         </a>
                       </>
                     ) : (
-                      "N/A" 
+                      "N/A"
                     );
                     break;
                   case "stderr":
-                    console.log('stderr text:', text);
-
-                    viewValue = (
+                    // console.log("stderr text:", text);
+                    viewValue = text ? (
                       <>
-                        <a target="_blank" download href={text}>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          download
+                          href={text}
+                        >
                           <Button>Download</Button>
                         </a>
                       </>
+                    ) : (
+                      "N/A"
                     );
                     break;
                   case "spark_ui":
-                    console.log('spark_ui text:', text);
-                    viewValue = (
+                    // console.log("spark_ui text:", text);
+                    viewValue = text ? (
                       <>
-                        <a target="_blank" download href={text}>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          download
+                          href={text}
+                        >
                           <Button>Download</Button>
                         </a>
                       </>
+                    ) : (
+                      "N/A"
                     );
                     break;
                   default:
