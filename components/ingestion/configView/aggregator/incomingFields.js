@@ -136,7 +136,7 @@ const IncomingFields = ({ nodeId, pipeline }) => {
         : "",
       transformation_properties:
         oldRecord?.data?.transformation_properties &&
-          oldRecord?.data?.transformation_properties?.length
+        oldRecord?.data?.transformation_properties?.length
           ? oldRecord?.data?.transformation_properties
           : [],
     });

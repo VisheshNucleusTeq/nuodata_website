@@ -3,11 +3,13 @@ import { Button, Col, Radio, Row, Select, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { fetch_retry_get, fetch_retry_put } from "../../../../network/api-manager";
 import { CREATENODE, NODEMETADATA } from "../../../../network/apiConstants";
+import { useDispatch } from "react-redux";
+import { loderShowHideAction } from "../../../../Redux/action";
 
 function GroupBy({ ingestionCss, sourceData, nodeId }) {
-    const [oldGroupByFieldsValue, setOldGroupByFieldsValue] = useState("");
     const [tableData, setTableData] = useState({});
     const [groupByFieldData, setGroupByFieldData] = useState([]);
+    const dispatch = useDispatch();
 
     const getNodeRecord = async (nodeId) => {
         const oldRecordSchema = await fetch_retry_get(
@@ -33,6 +35,7 @@ function GroupBy({ ingestionCss, sourceData, nodeId }) {
     }
 
     const handleUpdateNodeRecord = async () => {
+        dispatch(loderShowHideAction(true));
         const property_value = groupByFieldData.map(obj => obj.field).join(",");
         let transformation_properties = [];
         transformation_properties.push({
@@ -46,7 +49,8 @@ function GroupBy({ ingestionCss, sourceData, nodeId }) {
         if (result?.success) {
             message.success(result?.data?.message);
         }
-        getNodeGroupByFields(nodeId)
+        dispatch(loderShowHideAction(false));
+
     }
     useEffect(() => {
         getNodeRecord(nodeId);
