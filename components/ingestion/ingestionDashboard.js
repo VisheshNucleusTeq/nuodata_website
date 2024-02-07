@@ -260,12 +260,12 @@ const IngestionDashboard = ({ ingestionCss }) => {
                   <>
                     <span>
                       <b>Start Time:</b>{" "}
-                      {changeDateFormat(last_job_run?.start_time)}
+                      {last_job_run?.start_time ? changeDateFormat(last_job_run?.start_time) : "NA"}
                     </span>
                     <br />
                     <span>
                       <b>End Time:</b>{" "}
-                      {changeDateFormat(last_job_run?.end_time)}
+                      {last_job_run?.end_time ? changeDateFormat(last_job_run?.end_time) : "NA"}
                     </span>
                   </>
                 ) : null

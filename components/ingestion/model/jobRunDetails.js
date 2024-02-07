@@ -28,6 +28,10 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
   };
 
   const convertSeconds = (seconds) => {
+    return seconds;
+
+    // seconds = seconds.replace(/[a-zA-Z0-9]/g, '');
+
     // Calculate days
     var days = Math.floor(seconds / (3600 * 24));
     seconds %= 3600 * 24;
@@ -56,6 +60,12 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
       const modelData = { ...data?.data };
       setData({
         ...modelData,
+        start_time: modelData?.start_time
+          ? changeDateFormat(modelData?.start_time)
+          : null,
+        end_time: modelData?.end_time
+          ? changeDateFormat(modelData?.end_time)
+          : null,
       });
     }
   };
@@ -72,11 +82,11 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
         break;
       case "SCHEDULED":
         color = "#27ae60";
-        icon = <ClockCircleOutlined />;
+        icon = <ClockCircleOutlined style={{ color: "#FFF" }}/>;
         break;
       case "RUNNING":
         color = "#2c3e50";
-        icon = <LoadingOutlined spin={true} />;
+        icon = <LoadingOutlined spin={true} style={{ color: "#FFF" }}/>;
         break;
       case "SUCCESS":
         color = "#2ecc71";
@@ -88,11 +98,11 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
         break;
       case "CANCELLING":
         color = "#e67e22";
-        icon = <CloseCircleOutlined spin={true} />;
+        icon = <CloseCircleOutlined spin={true} style={{ color: "#FFF" }}/>;
         break;
       case "CANCELLED":
         color = "#95a5a6";
-        icon = <CloseCircleOutlined />;
+        icon = <CloseCircleOutlined style={{ color: "#FFF" }}/>;
         break;
       default:
         break;
@@ -100,7 +110,7 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
 
     return (
       <Tag color={color}>
-        {icon}&nbsp; &nbsp;{status}
+        <span style={{display : "flex", alignItems : "center"}}>{icon}&nbsp;{status}</span>
       </Tag>
     );
 
@@ -118,7 +128,7 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
   };
 
   useEffect(() => {
-    // getRecord();
+    getRecord();
   }, [pipelineId]);
 
   useEffect(() => {
@@ -196,31 +206,31 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                     viewValue = <>{convertSeconds(text)}</>;
                     break;
                   case "stdout":
-                    viewValue = (
+                    viewValue = text ?(
                       <>
                         <a target="_blank" download href={text}>
-                          <Button>Download</Button>
+                          <Button>View</Button>
                         </a>
                       </>
-                    );
+                    ) : "NA";
                     break;
                   case "stderr":
-                    viewValue = (
+                    viewValue = text ? (
                       <>
                         <a target="_blank" download href={text}>
-                          <Button>Download</Button>
+                          <Button>View</Button>
                         </a>
                       </>
-                    );
+                    ) : "NA";
                     break;
                   case "spark_ui":
-                    viewValue = (
+                    viewValue = text ? (
                       <>
                         <a target="_blank" download href={text}>
-                          <Button>Download</Button>
+                          <Button>View</Button>
                         </a>
                       </>
-                    );
+                    ) : "NA";
                     break;
                   default:
                     viewValue = <>{text ? text : "NA"}</>;

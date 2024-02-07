@@ -70,6 +70,8 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData, pipeline }) => {
                   setSourceData={setSourceData}
                   setActiveKey={setActiveKey}
                   name={"Filter"}
+                  nextTab="filter_tab"
+                  nextButtonText="Save & Create Filter"
                 />
               </Tabs.TabPane>
 

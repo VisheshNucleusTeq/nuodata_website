@@ -12,7 +12,9 @@ const General = ({
   sourceData,
   setSourceData,
   setActiveKey,
-  name
+  name,
+  nextTab,
+  nextButtonText
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ const General = ({
         if (type == "save") {
           route.push("/ingestion");
         } else {
-          setActiveKey("filter_tab");
+          setActiveKey(nextTab);
         }
       }
       dispatch(loderShowHideAction(false));
@@ -119,7 +121,7 @@ const General = ({
                 savePipline("build");
               }}
             >
-              Save & select filter
+              {nextButtonText}
             </Button>
           </Space>
         </div>

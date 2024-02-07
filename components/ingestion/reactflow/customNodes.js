@@ -44,6 +44,7 @@ function CustomNodes({ data, isConnectable, type, selected }) {
                 preview={false}
                 width={"1vw"}
                 height={"1vw"}
+                // style={{"filter": "opacity(0.5) drop-shadow(0 0 0 blue)"}}
               />
               &nbsp;
             </>
@@ -53,6 +54,7 @@ function CustomNodes({ data, isConnectable, type, selected }) {
               src={`/pipelines_icons/${data.label}.png`}
               width={"1vw"}
               height={"1vw"}
+              // style={{"filter": "opacity(1) drop-shadow(0 0 10px green)"}}
             />
           )}
         </Col>
