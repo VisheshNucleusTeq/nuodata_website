@@ -1,183 +1,155 @@
 .title {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center
 }
 
 .iconImage {
   width: 3vw;
-  border-radius: 25px;
+  border-radius: 25px
+}
+
+.addNewWorkspace,
+.submitWorkspace {
+  justify-content: flex-end;
+  display: flex
 }
 
 .addNewWorkspace {
-  justify-content: flex-end;
-  display: flex;
-  margin-bottom: 2vh;
+  margin-bottom: 2vh
 }
 
 .addNewWorkspace button,
-.addNewWorkspace button:hover {
-  background-color: #e74860;
-  border: #e74860;
-  color: #fff;
-}
-
-.submitWorkspace {
-  justify-content: flex-end;
-  display: flex;
-  margin-top: 2vh;
-}
-
+.addNewWorkspace button:hover,
 .submitWorkspace button,
 .submitWorkspace button:hover {
   background-color: #e74860;
   border: #e74860;
-  color: #fff;
+  color: #fff
+}
+
+.submitWorkspace {
+  margin-top: 2vh
 }
 
 .WorkspaceName {
   height: 8vh;
   margin-bottom: 2vh;
   background-color: #fff;
-  /* display: flex;
-  align-items: center; */
   font-size: large;
-  font-weight: bold;
+  font-weight: 700;
   padding-left: 1vw;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.04) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, .04)0 6px 24px 0, rgba(0, 0, 0, .04)0 0 0 1px
 }
 
 .defineForm {
   margin-top: 2%;
-  background-color: #fff;
   padding: 2%;
   border-radius: 10px;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.05%), 0 4px 10px 0 rgba(0, 0, 0, 0.05%);
-  background-color: #fff;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .05%), 0 4px 10px 0 rgba(0, 0, 0, .05%);
+  background-color: #fff
+}
+
+.addnewEnv,
+.exitBtn,
+.nextBtn {
+  height: 3vw;
+  border-radius: 1vh;
+  border: 1px solid #e74860 !important
 }
 
 .addnewEnv {
   float: right;
-  height: 3vw;
-  border-radius: 1vh;
-  /* background-color: #e74860 !important; */
-  border: 1px solid #e74860 !important;
   background-color: transparent !important;
-  color: #e74860 !important;
+  color: #e74860 !important
 }
 
+.exitBtn,
 .nextBtn {
-  height: 3vw;
-  border-radius: 1vh;
-  background-color: #e74860 !important;
-  border: 1px solid #e74860 !important;
+  background-color: #e74860 !important
 }
 
 .exitBtn {
-  height: 3vw;
-  border-radius: 1vh;
   background-color: #0c3246 !important;
-  border: 1px solid #0c3246 !important;
+  border: 1px solid #0c3246 !important
 }
 
 .main {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, .1);
+  background-color: #fff
 }
 
 .pipelineBtns {
-  /* display: flex; */
   align-items: center;
   justify-content: flex-end;
   display: inline-flex;
-  /* align-items: flex-start; */
-  gap: 12px;
+  gap: 12px
 }
 
-.draftBtn {
-  /* border-radius: 1vh; */
+.draftBtn,
+.saveBtn,
+.saveBtn[disabled] {
   border-radius: 100px;
   background-color: #0c3246 !important;
   border: 1px solid #0c3246 !important;
-  color: #fff !important;
+  color: #fff !important
 }
 
-.saveBtn {
-  border-radius: 100px;
+.saveBtn,
+.saveBtn[disabled] {
   background-color: #e74860 !important;
-  border: 1px solid #e74860 !important;
-  color: #fff !important;
+  border: 1px solid #e74860 !important
 }
 
 .saveBtn[disabled] {
-  border-radius: 100px;
-  background-color: #e74860 !important;
-  border: 1px solid #e74860 !important;
-  color: #fff !important;
-  opacity: .8;
+  opacity: .8
 }
 
-.saveBtn span,
-.draftBtn span {
+.draftBtn span,
+.saveBtn span {
   color: var(--White, #FFF);
   text-align: right;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: normal
 }
 
 .pipelineTitle {
   display: flex;
   align-items: center;
   height: 8vh;
-  color: #0c3246 !important;
+  color: #0c3246 !important
 }
 
 .pipelineTitle span {
-  /* color: #e74860; */
-  /* font-weight: bold; */
   margin-left: 1.5vh;
-  /* font-size: 1.2vw; */
   font-size: 16px;
   font-weight: 500;
-  line-height: normal;
+  line-height: normal
 }
 
 .pipelineTitle span a {
-  /* font-size: 1.5vw; */
-  /* text-transform: uppercase; */
-  color: #e74860;
+  color: #e74860
 }
 
 .pipelineSteps {
   padding-left: 1.5vh;
-  padding-right: 1.5vh;
+  padding-right: 1.5vh
 }
 
-.pipelineStepData {
-  /* padding: 1.5vh; */
-}
-
-.defineSave {
-  /* border-radius: 1vh; */
+.defineSave,
+.defineSaveAndBuild {
   border-radius: 100px;
   border: 1px solid #e74860 !important;
   background-color: transparent !important;
   color: #e74860 !important;
-  /* height: 5vh; */
-  height: 32px;
+  height: 32px
 }
 
 .defineSaveAndBuild {
-  /* border-radius: 1vh; */
-  border-radius: 100px;
   background-color: #e74860 !important;
-  border: 1px solid #e74860 !important;
-  color: #fff !important;
-  /* height: 5vh; */
-  height: 32px;
+  color: #fff !important
 }
 
 .defineSave span,
@@ -186,63 +158,61 @@
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: normal
 }
 
 .pipelineSteps {
   padding: 0 16px;
-  background: #FBFBFB;
+  background: #fbfbfb
 }
 
 .reactFlowPane {
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
   margin-top: 16px;
-  background: var(--Secondary, #0c324610);
+  background: var(--Secondary, #0c324610)
 }
 
 .pipelineStepsRow {
-  padding: 16px 16px;
-  background: #FBFBFB;
+  padding: 16px;
+  background: #fbfbfb
 }
 
 .pipeLineIconRow {
   width: 100%;
-  background: #FBFBFB;
+  background: #fbfbfb
 }
 
 .pipelineStepTab {
   width: 5vw;
   height: 4vw;
-  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px; */
   display: flex;
-  justify-content: center;
-  align-items: center;
   border-radius: 1vh;
   cursor: pointer;
   border-radius: 5px;
   border: 1px solid var(--border, #ECECEC);
-  background: #FFF;
-  /* border: 1px solid red; */
+  background: #fff
+}
+
+.pipelineStepTab,
+.pipelineStepTabIcon,
+.stepsIcon {
+  justify-content: center;
+  align-items: center
 }
 
 .pipelineStepTabIcon {
   height: 2vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* border: 1px solid red; */
+  display: flex
 }
 
 .stepsIcon {
   cursor: pointer;
   display: inline-flex;
   padding: 7px 12px;
-  justify-content: center;
-  align-items: center;
   gap: 8px;
   border-radius: 5px;
   border: 1px solid var(--border, #ECECEC);
-  background: #FFF;
+  background: #fff
 }
 
 .stepsIcon_text {
@@ -250,200 +220,183 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: normal;
+  line-height: normal
 }
 
+.pipelineStepTabEdge,
 .pipelineStepTabText {
   height: 2vw;
   display: flex;
   justify-content: center;
-  align-items: center;
-  /* border: 1px solid red; */
+  align-items: center
 }
 
 .pipelineStepTabText span {
-  font-size: 0.8vw;
+  font-size: .8vw
 }
 
 .pipelineStepTabEdge {
   width: 8vw;
   height: 4vw;
-  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border-radius: 1vh;
   cursor: pointer;
   border-radius: 7.5px;
   border: 1.5px solid var(--Black2, #CCC);
-  background: #fff;
+  background: #fff
 }
 
-.pipelineStepTabIconEdge {
+.pipelineStepTabIconEdge,
+.pipelineStepTabTextEdge1,
+.pipelineStepTabTextEdge2 {
   height: 1.5vw;
   display: flex;
   justify-content: center;
-  align-items: center;
-  /* border: 1px solid green; */
+  align-items: center
 }
 
-.pipelineStepTabTextEdge1 {
-  height: 1.25vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* border: 1px solid green; */
+.pipelineStepTabTextEdge1,
+.pipelineStepTabTextEdge2 {
+  height: 1.25vw
 }
 
 .pipelineStepTabTextEdge2 {
-  height: 1.25vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis
 }
 
 .pipelineStepTabTextEdge2 span {
-  /* font-size: small; */
-  font-size: .6vw;
+  font-size: .6vw
 }
 
 .addSourceImage img {
   width: 3vw;
   height: 3vw;
   box-shadow: 1px 1px 2px 1px #bebebe, -1px -1px 2px #bebebe;
-  border-radius: 10px;
+  border-radius: 10px
+}
+
+.addSourceBtn,
+.addSourceBtnActive {
+  height: 2.8vw !important;
+  border: 0 !important
 }
 
 .addSourceBtn {
-  height: 2.8vw !important;
   color: #0c3246 !important;
-  font-weight: bold !important;
-  border: none !important;
+  font-weight: 700 !important
 }
 
 .addSourceBtnActive {
-  height: 2.8vw !important;
   background-color: #e74860 !important;
   color: #fff !important;
-  border: none !important;
-  border-radius: 10px;
+  border-radius: 10px
 }
 
 .sourceHeader {
-  padding: 0vw 1.5vw 0vw 1.5vw;
+  padding: 0 1.5vw
 }
 
-.notClickDiv,
-.clickDiv {
+.clickDiv,
+.notClickDiv {
   padding: 1.5vw;
   display: flex;
   align-items: center;
-  height: 100%;
+  height: 100%
 }
 
-.notClickDiv div,
-.clickDiv div {
+.clickDiv div,
+.notClickDiv div {
   border-radius: 10px;
   display: flex;
   align-items: center;
   height: 100%;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, .3)0 1px 2px 0, rgba(60, 64, 67, .15)0 2px 6px 2px
 }
 
-.clickDiv img {
+.clickDiv img,
+.notClickDiv img {
   border-radius: 10px;
-  cursor: pointer;
+  cursor: pointer
 }
 
 .notClickDiv img {
-  border-radius: 10px;
-  opacity: 0.5;
-  cursor: not-allowed;
+  opacity: .5;
+  cursor: not-allowed
 }
 
 .formHeight {
-  margin-bottom: 1.5vw;
+  margin-bottom: 1.5vw
 }
 
 .workspaceHeader h1 {
   color: #e74860;
   font-size: 2vw;
   line-height: 2vw;
-  font-weight: bold;
+  font-weight: 700
 }
 
+.backButton,
+.backButton:hover,
 .workspaceHeader .button {
   height: 2.5vw;
-  background: #e74860;
   border-radius: 10px;
-  color: #ffffff;
-  padding: 0vw 1vw 0vw 1vw;
+  color: #fff;
+  padding: 0 1vw;
   cursor: pointer;
   border: 1px solid #d6d6d6;
   float: right;
+  margin-bottom: 1vw
+}
 
-  margin-bottom: 1vw;
+.workspaceHeader .button {
+  background: #e74860
 }
 
 .backButton,
 .backButton:hover {
-  height: 2.5vw;
-  background: #0c3246;
-  border-radius: 10px;
-  color: #ffffff;
-  padding: 0vw 1vw 0vw 1vw;
-  cursor: pointer;
-  border: 1px solid #d6d6d6;
-  float: right;
-  margin-bottom: 1vw;
+  background: #0c3246
 }
 
 .submitBtn {
   float: right;
   height: 8%;
-  margin: 0px 0px 2% 0px;
-  padding: 1% 5% 1% 5%;
+  margin: 0 0 2%;
+  padding: 1% 5%;
   border-radius: 10px;
   margin-left: 1rem;
   background-color: #0c3246 !important;
-  border: 1px solid #0c3246 !important;
+  border: 1px solid #0c3246 !important
 }
 
 .inputSelect div {
-  height: 32px !important;
   width: 100% !important;
-  background: #ffffff !important;
+  background: #fff !important;
   border: 1px solid #d6d6d6 !important;
-  border-radius: 5px !important;
   resize: vertical !important;
   display: flex !important;
-  align-items: center !important;
-  font-size: 12px;
+  align-items: center !important
+}
+
+.input,
+.inputSelect div,
+.inputSelectMultiple div,
+.inputSelectTable div {
+  height: 32px !important;
+  border-radius: 5px !important;
+  font-size: 12px
 }
 
 .inputSelectMultiple div {
-  border-radius: 5px !important;
-  padding: 0.14vw;
-  font-size: 12px;
-  height: 32px !important;
+  padding: .14vw
 }
 
-
-.input {
-  height: 32px !important;
+.input,
+.inputSelectTable div {
   width: 100% !important;
-  background: #ffffff !important;
+  background: #fff !important;
   border: 1px solid #d6d6d6 !important;
-  border-radius: 5px !important;
-  resize: vertical !important;
-  font-size: 12px;
-
+  resize: vertical !important
 }
 
 .validateBtn {
@@ -457,18 +410,18 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0;
+  flex-shrink: 0
 }
 
 .antFormItem {
   font-size: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 20px
 }
 
+.expCancelBtn,
 .expSubmitBtn {
   border-radius: 1vh;
   border-radius: 100px;
-  background: var(--Primary, #E74860);
   color: #fff !important;
   display: inline-flex;
   height: 32px;
@@ -476,41 +429,35 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0;
+  flex-shrink: 0
+}
+
+.expSubmitBtn {
+  background: var(--Primary, #E74860)
 }
 
 .expCancelBtn {
-  border-radius: 1vh;
-  border-radius: 100px;
   background: var(--Secondary, #0C3246);
-  border: 1px solid (--Secondary, #0C3246);
-  color: #fff !important;
-  display: inline-flex;
-  height: 32px;
-  padding: 8px 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
+  border: 1px solid (--Secondary, #0c3246)
 }
 
 .expBtnGrp {
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  flex-direction: row;
+  flex-direction: row
 }
 
 .addBtn {
   border-radius: 100px;
-  border: 1px solid #0C3246 !important;
-  background: #FFF;
+  border: 1px solid #0c3246 !important;
+  background: #fff;
   display: flex;
   width: 56px;
   padding: 4px 8px;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 8px
 }
 
 .addBtn>span {
@@ -519,50 +466,40 @@
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 16px
 }
 
-.expSubmitBtn>span,
 .expCancel>span,
+.expSubmitBtn>span,
 .validateBtn>span {
   color: var(--White, #FFF);
   text-align: right;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: normal
 }
 
-.antFormItem label {
-  font-size: 12px !important;
+.antFormItem label,
+.antFormItemJoin label {
+  font-size: 12px !important
 }
 
 .textArea {
   width: 100%;
-  border: 1px solid rgba(231, 235, 237, 0.80) !important;
+  border: 1px solid rgba(231, 235, 237, .8) !important
 }
 
 .inputSelectTable div {
-
-  height: 32px !important;
   width: 238px !important;
-  background: #ffffff !important;
-  border: 1px solid #d6d6d6 !important;
-  border-radius: 5px !important;
-  resize: vertical !important;
   display: flex !important;
-  align-items: center !important;
-  font-size: 12px;
+  align-items: center !important
 }
 
 .antFormItemJoin {
   font-size: 12px;
   margin-bottom: 15px;
-  margin-top: 15px;
-}
-
-.antFormItemJoin label {
-  font-size: 12px !important;
+  margin-top: 15px
 }
 
 .tableHeaderTitle {
@@ -571,10 +508,32 @@
   font-weight: 700;
   line-height: 16px;
   font-size: 12px
-    /* 100% - Adjust as needed */
-
 }
 
 .radioStyle {
-  margin: 24px 0 16px 0;
+  margin: 24px 0 16px
+}
+
+.GroupByRow {
+  border: 1px solid #ececec;
+  padding: 4px 4px 4px 16px
+}
+
+.GroupByDltBtn,
+.GroupByDltBtn:hover {
+  border: 0;
+  color: #0c3246;
+  background-color: #fff;
+  box-shadow: none;
+  outline: 0
+}
+
+.GroupByDltBtn svg {
+  height: 20px;
+  width: 20px
+}
+
+.GroupBySbmtGrp {
+  margin-top: 2.5%;
+  margin-bottom: 1%;
 }

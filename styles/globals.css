@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Poppins:400,700,900");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root {
   --Secondary9: #0C3246;
@@ -10,7 +10,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Poppins", sans-serif !important;
+  font-family: 'Inter', sans-serif !important;
   background-color: #fff !important;
 }
 
@@ -201,7 +201,7 @@ body {
 }
 
 .defineTabs .ant-tabs-nav-list .ant-tabs-tab-active {
-  background-color:var(--Secondary9, #0C3246) !important;
+  background-color: var(--Secondary9, #0C3246) !important;
   color: #fff !important;
 }
 
@@ -257,7 +257,7 @@ body {
 }
 
 .ant-table-thead th {
-  color:var(--Secondary9, #0C3246) !important;
+  color: var(--Secondary9, #0C3246) !important;
   font-weight: bold !important;
 }
 
@@ -407,7 +407,7 @@ html {
 }
 
 .treeCss .demo123 {
-  color: var(--Primary, #E74860); 
+  color: var(--Primary, #E74860);
 }
 
 .treeCss .demo123:hover {
@@ -447,7 +447,7 @@ html {
 }
 
 .ant-radio-checked .ant-radio-inner:after {
-  background-color: var(--Primary, #E74860); 
+  background-color: var(--Primary, #E74860);
 }
 
 .ant-radio .ant-radio-inner {
@@ -455,7 +455,7 @@ html {
 }
 
 .ant-radio:hover .ant-radio-inner {
-  border-color: var(--Primary, #E74860); 
+  border-color: var(--Primary, #E74860);
 }
 
 .ant-spin-dot-item {
@@ -469,11 +469,11 @@ html {
 
 .drawer>.ant-drawer-content {
   background-color: gray !important;
-  border: 1px solid var(--Primary, #E74860); 
+  border: 1px solid var(--Primary, #E74860);
 }
 
 .ant-menu-vertical .ant-menu-item-only-child span>.tryNowBtn {
-  background-color: var(--Primary, #E74860); 
+  background-color: var(--Primary, #E74860);
 }
 
 .phoneGroupHeight {
@@ -678,11 +678,11 @@ html {
 }
 
 .ant-checkbox-checked::after {
-  border: 1px solid var(--Primary, #E74860); 
+  border: 1px solid var(--Primary, #E74860);
 }
 
 .ant-checkbox-indeterminate .ant-checkbox-inner::after {
-  background-color: var(--Primary, #E74860); 
+  background-color: var(--Primary, #E74860);
 }
 
 .ingestion-transfer .ant-transfer-list {
@@ -715,14 +715,46 @@ html {
   background-color: #ececec !important;
 }
 
-.ant-table-tbody .anticon{
+.ant-table-tbody .anticon {
   color: var(--Secondary9, #0C3246);
-  font-size : 1vw !important;
+  font-size: 1vw !important;
 }
 
-.ant-table-tbody a{
+.ant-table-tbody a {
   color: var(--Secondary9, #0C3246);
   text-decoration: underline !important;
-  color : #0c3246 !important
-  /* font-size : 1vw !important; */
+  color: #0c3246 !important
+    /* font-size : 1vw !important; */
+}
+
+.ant-table-pagination.ant-pagination li,
+.ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination-next .ant-pagination-item-link {
+  border-radius: 100% !important;
+}
+
+.ant-pagination-item-active {
+  color: #Fff;
+  background-color: var(--Primary);
+  border-color: var(--Primary);
+}
+
+.ant-pagination-item-active a {
+  font-weight: 400;
+  color: #fff;
+}
+
+.ant-pagination-item :hover,
+.ant-table-pagination.ant-pagination li :hover,
+.ant-pagination-item:hover {
+  border-radius: 100% !important;
+  color: #fff !important;
+  border-color: var(--Primary) !important;
+  background-color: #e74860bd;
+}
+
+.ant-pagination-item a:hover {
+  border-radius: 100% !important;
+  color: #fff !important;
+  background-color: transparent !important;
 }

@@ -34,11 +34,11 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
     setFieldsData(
       nodeMetaData?.data?.fields
         ? nodeMetaData?.data?.fields?.map((e) => {
-            return {
-              value: e?.name,
-              label: e?.name,
-            };
-          })
+          return {
+            value: e?.name,
+            label: e?.name,
+          };
+        })
         : []
     );
   };
@@ -196,8 +196,8 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
             <Col span={12}>
               {filterType == "SIMPLE" && (
                 <Button
+                  className={ingestionCss.GroupByDltBtn}
                   style={{ float: "right" }}
-                  type="primary"
                   icon={<PlusCircleOutlined />}
                   onClick={() => {
                     setFilterData([
@@ -295,11 +295,12 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
                     </Col>
                     <Col span={3}>
                       <Button
+                        className={ingestionCss.GroupByDltBtn}
                         disabled={filterData.length == 1}
                         style={{ float: "right" }}
-                        type="primary"
+                
                         icon={<DeleteOutlined />}
-                        danger
+                        
                         onClick={() => {
                           let dataArr = [];
                           filterData.forEach((data, j) => {
@@ -331,10 +332,7 @@ const FilterCondition = ({ nodeId, sourceData, ingestionCss }) => {
             )}
           </Col>
         )}
-        <br />
-        <br />
-        <br />
-        <Col span={22} style={{ height: "8%" }}>
+        <Col span={22} style={{ height: "8%" }} className={ingestionCss.GroupBySbmtGrp}>
           <div style={{ display: "flex", justifyContent: "end" }}>
             <Space>
               <Button
