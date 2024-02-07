@@ -89,6 +89,7 @@ const Build = ({ ingestionCss }) => {
     } else {
       setUpdateble(true);
     }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [selectedNode?.id, nodeData, edgeData]);
 
   return (
@@ -162,6 +163,15 @@ const Build = ({ ingestionCss }) => {
           </Col>
         </Row>
         <Divider />
+        {selectedNode?.data == "Joiner" && (
+          <Joiner
+            ingestionCss={ingestionCss}
+            nodeId={selectedNode?.id}
+            key={`joiner${selectedNode?.id}`}
+            edgeData={edgeData}
+            pipeline={query?.pipeline ? query?.pipeline : pipelineData}
+          />
+        )}
         {selectedNode?.data == "Source" && (
           <Source
             ingestionCss={ingestionCss}
@@ -199,18 +209,10 @@ const Build = ({ ingestionCss }) => {
             pipeline={query?.pipeline ? query?.pipeline : pipelineData}
           />
         )}
-        {}
-        {selectedNode?.data == "Joiner" && (
-          <Joiner
-            ingestionCss={ingestionCss}
-            nodeId={selectedNode?.id}
-            key={`joiner${selectedNode?.id}`}
-            edgeData={edgeData}
-            pipeline={query?.pipeline ? query?.pipeline : pipelineData}
-          />
-        )}
-        <div ref={messagesEndRef} />
+        
+        
       </div>
+      <div ref={messagesEndRef} ></div>
     </>
   );
 };

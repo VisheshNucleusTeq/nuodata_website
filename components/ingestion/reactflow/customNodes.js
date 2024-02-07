@@ -118,7 +118,7 @@ function CustomNodes({ data, isConnectable, type, selected }) {
             backgroundColor: "#FFF",
             height: ".6vw",
             width: ".6vw",
-            border: `1px solid ${data?.status == "valid" ? "green" : "#e74860"}`,
+             border: `1px solid ${data?.status == "valid" ? "green" : "#e74860"}`,
           }}
           type="source" // RIGHT
           position={Position.Right}
