@@ -1,11 +1,11 @@
 .mainLayout {
-  height: 100vh;
+  height: 100vh
 }
 
 .mainLayoutSider {
   height: 100%;
   background-color: #0c3246;
-  overflow-y: scroll;
+  overflow-y: scroll
 }
 
 .logoImage {
@@ -13,52 +13,83 @@
   justify-content: center;
   text-align: center;
   align-items: center;
-  padding: 10%;
-}
-
-.mainLayoutHeader {
-  background-color: #fff;
+  padding: 10%
 }
 
 .mainLayoutContent {
   background-color: #f3f3f3;
-  padding: 1% 2% 1% 2%;
+  padding: 1% 2%
 }
 
 .mainMenu {
   display: flex;
   align-items: center;
-  color: #fff;
+  color: #fff
 }
 
 .activeMenu {
   border-left: 4px solid #e74860 !important;
-  background-color: #081f2c;
+  background-color: #081f2c
 }
 
 .mainMenuCol:hover {
   color: #fff;
   cursor: pointer;
   background-color: #081f2c;
-  border-left: 4px solid #081f2c;
+  border-left: 4px solid #081f2c
 }
 
 .subMainMenu {
-  display: flex;
-  align-items: center;
-  color: #fff;
-  border-left: 1px solid #fff;
-  padding-left: 5%;
+  border-left: 1px solid #fff
 }
 
+.subMainMenu,
 .subMainMenuSelect {
   display: flex;
   align-items: center;
   color: #fff;
-  /* border-left: 1px solid #fff; */
-  padding-left: 5%;
+  padding-left: 5%
 }
 
 .mainMenuCol {
-  border-left: 4px solid #0c3246;
+  border-left: 4px solid #0c3246
+}
+
+.mainLayoutHeader {
+  padding: 0 15px !important;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  border-top: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
+  border-left: 1px solid #ececec;
+  background: #fff
+}
+
+.HeaderUserName h1 {
+  margin-top: 30px;
+  color: var(--Black8, #333);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  text-transform: capitalize
+}
+
+.headerItems ul li {
+  padding: 0 10px !important
+}
+
+.headerItems ul {
+  margin-top: 7px
+}
+
+.BellOutlined {
+  padding: 12px 0;
+  margin: 10px 0
+}
+
+.UserOutlined {
+  background: var(--Primary, #E74860)
 }

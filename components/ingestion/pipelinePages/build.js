@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
 import { useDispatch, useSelector } from "react-redux";
 
+import Aggregator from "../configView/aggregator/aggregator"
 import Expression from "../configView/expression/expression";
 import Filter from "../configView/filter/filter";
 import Source from "../configView/source/source";
@@ -115,8 +116,8 @@ const Build = ({ ingestionCss }) => {
             return (
               <Draggable
                 position={{ x: 0, y: 0 }}
-                onStart={(eData) => {}}
-                onDrag={(eData) => {}}
+                onStart={(eData) => { }}
+                onDrag={(eData) => { }}
                 onStop={(eData) => {
                   if (visible) {
                     createNode(e);
@@ -209,8 +210,14 @@ const Build = ({ ingestionCss }) => {
             pipeline={query?.pipeline ? query?.pipeline : pipelineData}
           />
         )}
-        
-        
+        {selectedNode?.data == "Aggregator" && (
+          <Aggregator
+            ingestionCss={ingestionCss}
+            nodeId={selectedNode?.id}
+            key={`expression${selectedNode?.id}`}
+            pipeline={query?.pipeline ? query?.pipeline : pipelineData}
+          />
+        )}
       </div>
       <div ref={messagesEndRef} ></div>
     </>
