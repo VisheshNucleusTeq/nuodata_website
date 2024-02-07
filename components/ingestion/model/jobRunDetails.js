@@ -202,7 +202,6 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                       <>
                         <a
                           target="_blank"
-                          rel="noopener noreferrer"
                           download
                           href={text}
                         >
@@ -219,7 +218,6 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                       <>
                         <a
                           target="_blank"
-                          rel="noopener noreferrer"
                           download
                           href={text}
                         >
@@ -236,7 +234,6 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                       <>
                         <a
                           target="_blank"
-                          rel="noopener noreferrer"
                           download
                           href={text}
                         >
