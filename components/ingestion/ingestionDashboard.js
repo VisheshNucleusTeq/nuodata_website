@@ -563,7 +563,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
                     }
                   </a>
                 </span>
-
                 {/* {
                   workspaceData.filter((e) => e.workspace_id === workspace)[0]
                     ?.workspace_name
