@@ -57,6 +57,7 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
       setData({
         ...modelData,
       });
+      console.log("modelData", data);
     }
   };
 
@@ -196,15 +197,26 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                     viewValue = <>{convertSeconds(text)}</>;
                     break;
                   case "stdout":
-                    viewValue = (
+                    console.log('stdout text:', text);
+                    viewValue = text ? (
+                     
                       <>
-                        <a target="_blank" download href={text}>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          download
+                          href={text}
+                        >
                           <Button>Download</Button>
                         </a>
                       </>
+                    ) : (
+                      "N/A" 
                     );
                     break;
                   case "stderr":
+                    console.log('stderr text:', text);
+
                     viewValue = (
                       <>
                         <a target="_blank" download href={text}>
@@ -214,6 +226,7 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
                     );
                     break;
                   case "spark_ui":
+                    console.log('spark_ui text:', text);
                     viewValue = (
                       <>
                         <a target="_blank" download href={text}>
