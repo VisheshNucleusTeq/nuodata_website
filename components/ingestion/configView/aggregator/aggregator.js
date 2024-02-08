@@ -77,7 +77,7 @@ function Aggregator({ ingestionCss, nodeId, pipeline }) {
                   nextButtonText="Save & Next"
                 />
               </Tabs.TabPane>
-              {/* <Tabs.TabPane tab="Incoming Fields" key="incoming_field_tab">
+              <Tabs.TabPane tab="Incoming Fields" key="incoming_field_tab">
                 <IncomingFields
                   ingestionCss={ingestionCss}
                   nodeId={nodeId}
@@ -86,7 +86,7 @@ function Aggregator({ ingestionCss, nodeId, pipeline }) {
                   setActiveKey={setActiveKey}
                   pipeline={pipeline}
                 />
-              </Tabs.TabPane> */}
+              </Tabs.TabPane>
               <Tabs.TabPane tab="Group By" key="group_by_tab">
                 <GroupBy
                   ingestionCss={ingestionCss}

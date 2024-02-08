@@ -125,20 +125,20 @@ const CreatePipeline = ({ ingestionCss }) => {
   };
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
+    // const delayDebounceFn = setTimeout(() => {
       getWorkSpaceData();
       setSelectedWorkSpace();
-    }, 500);
-    return () => clearTimeout(delayDebounceFn);
+    // }, 500);
+    // return () => clearTimeout(delayDebounceFn);
   }, [workspace, typeof window !== "undefined"]);
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
+    // const delayDebounceFn = setTimeout(() => {
       query?.pipeline || pipelineData
         ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
         : null;
-    }, 500);
-    return () => clearTimeout(delayDebounceFn);
+    // }, 500);
+    // return () => clearTimeout(delayDebounceFn);
   }, [workspace, query?.pipeline, pipelineData]);
 
   return (
@@ -492,7 +492,7 @@ const CreatePipeline = ({ ingestionCss }) => {
             {selectedTab === 0 && (
               <>
                 <Divider style={{ margin: "2vh 0vh 2vh 0vh" }}></Divider>
-                {workspaceData.length && workspace ? (
+                {workspaceData.length && workspace && pipelineDetails ? (
                   <Define
                     ingestionCss={ingestionCss}
                     workspaceData={workspaceData}
