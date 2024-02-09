@@ -102,7 +102,7 @@ const General = ({
           </Button>
         </Form.Item> */}
 
-        <div style={{ display: "flex", justifyContent: "end" }}>
+        <div className={ingestionCss.generalLastDiv}>
           <Space>
             <Button
               type="primary"

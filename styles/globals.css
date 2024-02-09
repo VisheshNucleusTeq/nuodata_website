@@ -734,27 +734,24 @@ html {
 }
 
 .ant-pagination-item-active {
-  color: #Fff;
-  background-color: var(--Primary);
-  border-color: var(--Primary);
+  border-color: var(--Primary) !important;
 }
 
 .ant-pagination-item-active a {
   font-weight: 400;
-  color: #fff;
+  color: var(--Secondary9);
 }
 
 .ant-pagination-item :hover,
 .ant-table-pagination.ant-pagination li :hover,
 .ant-pagination-item:hover {
   border-radius: 100% !important;
-  color: #fff !important;
+  color: var(--Secondary9) !important;
   border-color: var(--Primary) !important;
-  background-color: #e74860bd;
 }
 
 .ant-pagination-item a:hover {
   border-radius: 100% !important;
-  color: #fff !important;
+  color: var(--Secondary9) !important;
   background-color: transparent !important;
 }

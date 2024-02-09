@@ -14,7 +14,7 @@ const General = ({
   setActiveKey,
   name,
   nextTab,
-  nextButtonText
+  nextButtonText,
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -103,7 +103,9 @@ const General = ({
             Save
           </Button>
         </Form.Item> */}
-        <div style={{ display: "flex", justifyContent: "end" }}>
+        <div
+          className={ingestionCss.generalLastDiv}
+        >
           <Space>
             <Button
               type="primary"
