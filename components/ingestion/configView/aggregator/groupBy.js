@@ -139,6 +139,7 @@ function GroupBy({ ingestionCss, sourceData, nodeId }) {
                                         className={ingestionCss.inputSelect}
                                         placeholder="fieldName"
                                         optionFilterProp="children"
+                                        showSearch
                                         onChange={(fieldData) => {
                                             const newData = [...groupByFieldData];
                                             if (!newData.some(item => item.field === fieldData)) {

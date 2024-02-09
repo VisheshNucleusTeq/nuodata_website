@@ -75,7 +75,7 @@ const Expression = ({ ingestionCss, nodeId, pipeline }) => {
                   nextButtonText="Save & Create Expression"
                 />
               </Tabs.TabPane>
-              {/* <Tabs.TabPane tab="Incoming Fields" key="incoming_field_tab">
+              <Tabs.TabPane tab="Incoming Fields" key="incoming_field_tab">
                 <IncomingFields
                   ingestionCss={ingestionCss}
                   nodeId={nodeId}
@@ -84,7 +84,7 @@ const Expression = ({ ingestionCss, nodeId, pipeline }) => {
                   setActiveKey={setActiveKey}
                   name="Expression"
                 />
-              </Tabs.TabPane> */}
+              </Tabs.TabPane>
               <Tabs.TabPane tab="Expression" key="expression_tab">
                 <ExpressionTab
                   ingestionCss={ingestionCss}

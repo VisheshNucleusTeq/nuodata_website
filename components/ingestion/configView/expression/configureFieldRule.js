@@ -33,28 +33,6 @@ function ConfigureFieldExpression({
   const [inputArea, setInputArea] = useState("");
   const [expressionOptions, setExpressionOptions] = useState([]);
 
-  const functionsOptions = [
-    {
-      value: "sum",
-      label: "SUM",
-      parameters: ["val1", "val2"],
-    },
-    {
-      value: "avg",
-      label: "AVG",
-      parameters: ["val1", "val2"],
-    },
-  ].map((e) => ({
-    value: e.value || e,
-    label: e.label || e,
-    parameters: e.parameters || [],
-  }));
-  const fieldsOptions = ["Field1", "Field2", "Field3"].map((e) => {
-    return {
-      value: e,
-      label: e,
-    };
-  });
   const customCols = {
     labelCol: {
       xs: { span: 6 },
@@ -137,7 +115,7 @@ function ConfigureFieldExpression({
       const expData = types?.data?.elements.map((e) => {
         return {
           value: e?.key,
-          label: e?.key,
+          label: e?.value,
         };
       });
       setExpressionOptions(expData);
@@ -147,10 +125,9 @@ function ConfigureFieldExpression({
   useEffect(() => {
     getTypes();
 
-    if(fieldData?.expression){
-      setInputArea(fieldData?.expression)
+    if (fieldData?.expression) {
+      setInputArea(fieldData?.expression);
     }
-
   }, []);
 
   const getExpressionOptions = async () => {

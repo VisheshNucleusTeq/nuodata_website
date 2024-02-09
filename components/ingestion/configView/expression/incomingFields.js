@@ -16,62 +16,62 @@ const IncomingFields = ({ nodeId, pipeline }) => {
     transformation_properties: [],
   });
 
-  const [columns] = useState([
-    {
-      title: "Field Name",
-      dataIndex: "field_name",
-    },
-    {
-      title: "Type",
-      dataIndex: "type",
-    },
-    {
-      title: "Precision",
-      dataIndex: "precision",
-    },
-    {
-      title: "Scale",
-      dataIndex: "scale",
-    },
-    {
-      title: "Group",
-      dataIndex: "group",
-    },
-    {
-      title: "Origin",
-      dataIndex: "origin",
-    },
-  ]);
+  // const [columns] = useState([
+  //   {
+  //     title: "Field Name",
+  //     dataIndex: "field_name",
+  //   },
+  //   {
+  //     title: "Type",
+  //     dataIndex: "type",
+  //   },
+  //   {
+  //     title: "Precision",
+  //     dataIndex: "precision",
+  //   },
+  //   {
+  //     title: "Scale",
+  //     dataIndex: "scale",
+  //   },
+  //   {
+  //     title: "Group",
+  //     dataIndex: "group",
+  //   },
+  //   {
+  //     title: "Origin",
+  //     dataIndex: "origin",
+  //   },
+  // ]);
 
-  const [dataSource] = useState([
-    {
-      key: "1",
-      field_name: "orderValue",
-      type: "STRING",
-      precision: "256",
-      scale: "0",
-      group: "Group1",
-      origin: "stageCustomerOrders",
-    },
-    {
-      key: "2",
-      field_name: "orderValue",
-      type: "STRING",
-      precision: "256",
-      scale: "0",
-      group: "Group2",
-      origin: "stageCustomerOrders",
-    },
-    {
-      key: "3",
-      field_name: "orderValue",
-      type: "STRING",
-      precision: "256",
-      scale: "0",
-      group: "Group3",
-      origin: "stageCustomerOrders",
-    },
-  ]);
+  // const [dataSource] = useState([
+  //   {
+  //     key: "1",
+  //     field_name: "orderValue",
+  //     type: "STRING",
+  //     precision: "256",
+  //     scale: "0",
+  //     group: "Group1",
+  //     origin: "stageCustomerOrders",
+  //   },
+  //   {
+  //     key: "2",
+  //     field_name: "orderValue",
+  //     type: "STRING",
+  //     precision: "256",
+  //     scale: "0",
+  //     group: "Group2",
+  //     origin: "stageCustomerOrders",
+  //   },
+  //   {
+  //     key: "3",
+  //     field_name: "orderValue",
+  //     type: "STRING",
+  //     precision: "256",
+  //     scale: "0",
+  //     group: "Group3",
+  //     origin: "stageCustomerOrders",
+  //   },
+  // ]);
 
   const transferOptionLabels = [
     {
@@ -149,7 +149,7 @@ const IncomingFields = ({ nodeId, pipeline }) => {
   return (
     <>
       <Row>
-        <Col span={24}>
+        {/* <Col span={24}>
           <Transfer
             dataSource={transferOptionLabels}
             render={(item) => item.title}
@@ -167,16 +167,16 @@ const IncomingFields = ({ nodeId, pipeline }) => {
             operations={["Excluded Fields", "Included Fields"]}
             className={"ingestion-transfer"}
           />
-        </Col>
+        </Col> */}
 
         <Col span={24}>
-          <Radio.Group
+          {/* <Radio.Group
             className={ingestionCss.radioStyle}
             defaultValue={"included"}
           >
             <Radio value={"included"}>Included Fields</Radio>
             <Radio value={"excluded"}>Excluded Fields</Radio>
-          </Radio.Group>
+          </Radio.Group> */}
 
           <KeyTable
             key={Date.now()}
