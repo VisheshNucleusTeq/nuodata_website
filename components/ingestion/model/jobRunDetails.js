@@ -114,18 +114,6 @@ const JobRunDetails = ({ pipelineId, pipelineData, setPipelineData }) => {
         <span style={{display : "flex", alignItems : "center"}}>{icon}&nbsp;{status}</span>
       </Tag>
     );
-
-    // switch (status) {
-    //   case "SUCCESS":
-    //     return <Tag color="green">SUCCESS</Tag>;
-    //     break;
-    //   case "RUNNING":
-    //     return <Tag color="yellow">RUNNING</Tag>;
-    //     break;
-    //   default:
-    //     return <Tag color="">{status}</Tag>;
-    //     break;
-    // }
   };
 
   useEffect(() => {
