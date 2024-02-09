@@ -733,3 +733,13 @@ html {
 .ant-table-pagination.ant-pagination li {
   border-radius: 100% !important
 }
+
+.defineUpload {
+  border: none !important;
+}
+
+.defineUpload .ant-upload-btn {
+  border: 1px solid #D6D6D6 !important;
+  border-radius: 10px !important;
+  background-color: #FFF !important;
+}

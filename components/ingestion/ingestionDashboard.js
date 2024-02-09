@@ -260,12 +260,16 @@ const IngestionDashboard = ({ ingestionCss }) => {
                   <>
                     <span>
                       <b>Start Time:</b>{" "}
-                      {last_job_run?.start_time ? changeDateFormat(last_job_run?.start_time) : "NA"}
+                      {last_job_run?.start_time
+                        ? changeDateFormat(last_job_run?.start_time)
+                        : "NA"}
                     </span>
                     <br />
                     <span>
                       <b>End Time:</b>{" "}
-                      {last_job_run?.end_time ? changeDateFormat(last_job_run?.end_time) : "NA"}
+                      {last_job_run?.end_time
+                        ? changeDateFormat(last_job_run?.end_time)
+                        : "NA"}
                     </span>
                   </>
                 ) : null
@@ -455,7 +459,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
     dispatch(loderShowHideAction(true));
     const data = await fetch_retry_post(`${RUNPIPELINESTATUS}${id}/cancel`);
     if (data.success) {
-      getPiplineData()
+      getPiplineData();
     }
     dispatch(loderShowHideAction(false));
     console.log("Cancel Job Run id:", id);
@@ -549,7 +553,11 @@ const IngestionDashboard = ({ ingestionCss }) => {
                 style={{ display: "flex", alignItems: "center", height: "8vh" }}
                 className={ingestionCss.pipelineTitle}
               >
-                <span onClick={()=>{getPiplineData()}}>
+                <span
+                  onClick={() => {
+                    getPiplineData();
+                  }}
+                >
                   Workspace:&nbsp;
                   <a
                     onClick={() => {

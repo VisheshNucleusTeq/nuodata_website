@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
-import { Button, Row, Col, Form, Input, Select, message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import { useQueryClient } from "react-query";
+import { Button, Col, Form, Input, Row, Select, Upload } from "antd";
+const { Dragger } = Upload;
 
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useQueryClient } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+
+import { SetProjectDetailsAction, SetTabTypeAction } from "../../Redux/action";
 import {
-  fetch_retry_post,
   fetch_retry_get,
+  fetch_retry_post,
   fetch_retry_put,
 } from "../../network/api-manager";
-import { BUSINESSUNITLIST } from "../../network/default-data";
 import { DEFINE, GETPROJECT, UPDATEPROJECT } from "../../network/apiConstants";
-import { SetProjectDetailsAction, SetTabTypeAction } from "../../Redux/action";
-
+import { BUSINESSUNITLIST } from "../../network/default-data";
+import { FileAddOutlined } from "@ant-design/icons";
 const Define = ({ dataModernizationCss }) => {
   const queryClient = useQueryClient();
   const { query } = useRouter();
@@ -22,6 +24,17 @@ const Define = ({ dataModernizationCss }) => {
   const [isLoading, setLoading] = useState(false);
   const [sourceLang, setSourceLang] = useState([]);
   const [sourcePlatform, setSourcePlatform] = useState("");
+
+  const [drawerViewProp] = useState({
+    className: "defineUpload",
+
+    // style: { width: "100%", border: "none", border: "1px dashed #0c3246", borderRadius : "1px !important",},
+    name: "file",
+    multiple: true,
+    beforeUpload: (file) => {
+      console.log(file);
+    },
+  });
 
   const projectDetails = useSelector(
     (state) => state.projectDetails.projectDetails
@@ -50,6 +63,7 @@ const Define = ({ dataModernizationCss }) => {
       });
       setLoading(false);
       if (data.success) {
+        router.push(`/data-modernization/?id=${data?.data?.projectId}`); //&tab=Connect
         queryClient.refetchQueries({ queryKey: ["PROJECT_DATA"] });
         dispatch(SetProjectDetailsAction(data.data));
         dispatch(SetTabTypeAction("Connect"));
@@ -93,12 +107,22 @@ const Define = ({ dataModernizationCss }) => {
 
   return (
     <Row className={dataModernizationCss.defineForm}>
+      {/* <p
+        onClick={() => {
+          router.push(`/data-modernization/?id=97&tab=Connect`);
+        }}
+      >
+        sdfsdfsdfsdfffds
+      </p> */}
       <Col offset={3} span={18}>
         <Form
+          // title="Your Form Title"
+          name="basic"
           form={form}
           layout="horizontal"
+          // layout="vertical"
           autoComplete="on"
-          labelCol={{ span: 7 }}
+          labelCol={{ span: 6 }}
           wrapperCol={{ span: 18 }}
           onFinish={
             (query?.id ? query?.id : projectDetails?.projectId)
@@ -206,25 +230,6 @@ const Define = ({ dataModernizationCss }) => {
                 setSourcePlatform(e);
 
                 if (e == "HadoopHive") {
-                  // txt, sql,  ty
-                  // setSourceLang([
-                  //   {
-                  //     value: "txt",
-                  //     label: "txt",
-                  //   },
-                  //   {
-                  //     value: "sequence",
-                  //     label: "sequence",
-                  //   },
-                  //   {
-                  //     value: "orc",
-                  //     label: "orc",
-                  //   },
-                  //   {
-                  //     value: "parquet",
-                  //     label: "parquet",
-                  //   },
-                  // ]);
                   setSourceLang([
                     {
                       value: "txt",
@@ -238,7 +243,7 @@ const Define = ({ dataModernizationCss }) => {
                       value: "py",
                       label: ".py",
                     },
-                  ])
+                  ]);
                 } else {
                   setSourceLang([
                     {
@@ -274,56 +279,66 @@ const Define = ({ dataModernizationCss }) => {
               }
               options={[
                 {
-                  value: "informatica",
-                  label: "Informatica",
+                  value: "sap_sybase_sql",
+                  label: "SAP Sybase SQL",
+                },
+                {
+                  value: "hadoop_hortonworks",
+                  label: "Hadoop-Hortonworks",
+                },
+                {
+                  value: "hadoop_cloudera",
+                  label: "Hadoop-Cloudera",
+                },
+                {
+                  value: "teradata",
+                  label: "Teradata",
+                },
+                {
+                  value: "vertica",
+                  label: "Vertica",
+                },
+                {
+                  value: "oracle",
+                  label: "Oracle",
                 },
                 {
                   value: "netezza",
                   label: "Netezza",
                 },
                 {
-                  value: "HadoopHive",
-                  label: "Hadoop - Hive",
+                  value: "databricks_lakehouse",
+                  label: "Databricks-Lakehouse",
                 },
                 {
-                  value: "Teradata",
-                  label: "Teradata",
-                },
-                {
-                  value: "Vertica",
-                  label: "Vertica",
-                },
-                {
-                  value: "Oracle",
-                  label: "Oracle",
-                },
-                {
-                  value: "DatabricksLakehouse",
-                  label: "Databricks - Lakehouse",
-                },
-                {
-                  value: "GoogleCloudPlatform",
+                  value: "google_cloud_platform",
                   label: "Google Cloud Platform",
                 },
                 {
-                  value: "AWS",
+                  value: "aws",
                   label: "AWS",
                 },
                 {
-                  value: "Azure",
+                  value: "azure",
                   label: "Azure",
                 },
                 {
-                  value: "Snowflake",
+                  value: "snowflake",
                   label: "Snowflake",
                 },
                 {
                   value: "IBMWatsonx.data",
                   label: "IBM Watsonx.data",
                 },
+                {
+                  value: "informatica",
+                  label: "Informatica",
+                },
               ]}
             />
           </Form.Item>
+
+          {/* {sourcePlatform} */}
 
           <Form.Item
             label={"Source File Type"}
@@ -336,23 +351,40 @@ const Define = ({ dataModernizationCss }) => {
               },
             ]}
           >
-            <Select
-              className="inputSelect"
-              showSearch
-              placeholder="Select source language"
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
-              initialvalues={
-                projectDetails && projectDetails.sourceLang
-                  ? projectDetails.sourceLang
-                  : ""
-              }
-              options={sourceLang}
-            />
+            {["hadoop_hortonworks", "hadoop_cloudera"].includes(
+              sourcePlatform
+            ) ? (
+              <Dragger {...drawerViewProp}>
+                <Row>
+                  <Col span={24} style={{ marginTop: "0%" }}>
+                    {/* Select Cloudera Config & Log Files */}
+                    Drag and drop or&nbsp;
+                    <span style={{ color: "#e74860", fontWeight: "bold" }}>
+                      browse
+                    </span>
+                    &nbsp;cloudera config & log files
+                  </Col>
+                </Row>
+              </Dragger>
+            ) : (
+              <Select
+                className="inputSelect"
+                showSearch
+                placeholder="Select source language"
+                optionFilterProp="children"
+                filterOption={(input, option) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                initialvalues={
+                  projectDetails && projectDetails.sourceLang
+                    ? projectDetails.sourceLang
+                    : ""
+                }
+                options={sourceLang}
+              />
+            )}
           </Form.Item>
 
           <Form.Item
