@@ -27,7 +27,7 @@ import {
   CREATEPIPELINE,
 } from "../../../network/apiConstants";
 import { setPipelineAction, loderShowHideAction } from "../../../Redux/action";
-const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
+const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab, pipelineDetails }) => {
   const route = useRouter();
   const { query } = useRouter();
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
   const [form] = Form.useForm();
   const [environment, setEnvironment] = React.useState([]);
   const [runtimeEngine, setRuntimeEngine] = React.useState([]);
+
   const pipelineData = useSelector((state) => state?.pipeline?.pipeline);
 
   const savePipline = async (type) => {
@@ -144,13 +145,9 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
 
   const setOldPipeline = async (id) => {
     dispatch(setPipelineAction(id));
-
     const authData = JSON.parse(localStorage.getItem("authData"));
-
-    const pipelineDetails = await fetch_retry_get(`${CREATEPIPELINE}${id}`);
-
     const envDetails = await fetch_retry_get(
-      `${ENVDETAILS}${pipelineDetails?.data?.runtime_env_id}?org_id=${authData.orgId}&workspace_id=${workspace}`
+      `${ENVDETAILS}${pipelineDetails?.runtime_env_id}?org_id=${authData.orgId}&workspace_id=${workspace}`
     );
     setRuntimeEngine(envDetails?.data?.engine_type);
 
@@ -159,12 +156,12 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
     );
     setEnvironment(envList?.data);
     form.setFieldsValue({
-      name: pipelineDetails?.data?.pipeline_name,
-      pipeline_description: pipelineDetails?.data?.pipeline_description,
+      name: pipelineDetails?.pipeline_name,
+      pipeline_description: pipelineDetails?.pipeline_description,
       workspace: workspaceData.filter((e) => e.workspace_id === workspace)[0]
         ?.workspace_name,
-      environment: pipelineDetails?.data?.runtime_env_id,
-      runtime_engine: pipelineDetails?.data?.runtime_engine,
+      environment: pipelineDetails?.runtime_env_id,
+      runtime_engine: pipelineDetails?.runtime_engine,
     });
     dispatch(loderShowHideAction(false))
   };
@@ -177,7 +174,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab }) => {
         : updateFormvalue();
     }, 1000)
     return () => clearTimeout(delayDebounceFn)
-  }, [workspace, query?.pipeline, pipelineData]);
+  }, [workspace]);
 
   return (
     <>

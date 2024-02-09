@@ -194,7 +194,7 @@ const keyTable = ({
           />
         </Col>
         <Divider></Divider>
-        <Col span={24} className={ingestionCss.pipelineBtns}>
+        <Col span={24} className={`${ingestionCss.pipelineBtns} ${ingestionCss.GroupBySbmtGrp}`}>
           <div style={{ display: "flex", justifyContent: "end" }}>
             <Space>
               <Button

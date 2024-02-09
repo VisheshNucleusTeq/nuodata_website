@@ -260,12 +260,12 @@ const IngestionDashboard = ({ ingestionCss }) => {
                   <>
                     <span>
                       <b>Start Time:</b>{" "}
-                      {changeDateFormat(last_job_run?.start_time)}
+                      {last_job_run?.start_time ? changeDateFormat(last_job_run?.start_time) : "NA"}
                     </span>
                     <br />
                     <span>
                       <b>End Time:</b>{" "}
-                      {changeDateFormat(last_job_run?.end_time)}
+                      {last_job_run?.end_time ? changeDateFormat(last_job_run?.end_time) : "NA"}
                     </span>
                   </>
                 ) : null
@@ -452,12 +452,12 @@ const IngestionDashboard = ({ ingestionCss }) => {
     dispatch(loderShowHideAction(false));
   };
   const cancelPipeline = async (id) => {
+    dispatch(loderShowHideAction(true));
     const data = await fetch_retry_post(`${RUNPIPELINESTATUS}${id}/cancel`);
     if (data.success) {
-      console.log(data?.data);
-    } else {
-      console.log(data?.error);
+      getPiplineData()
     }
+    dispatch(loderShowHideAction(false));
     console.log("Cancel Job Run id:", id);
   };
   useEffect(() => {
@@ -549,7 +549,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
                 style={{ display: "flex", alignItems: "center", height: "8vh" }}
                 className={ingestionCss.pipelineTitle}
               >
-                <span>
+                <span onClick={()=>{getPiplineData()}}>
                   Workspace:&nbsp;
                   <a
                     onClick={() => {
@@ -563,7 +563,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
                     }
                   </a>
                 </span>
-
                 {/* {
                   workspaceData.filter((e) => e.workspace_id === workspace)[0]
                     ?.workspace_name

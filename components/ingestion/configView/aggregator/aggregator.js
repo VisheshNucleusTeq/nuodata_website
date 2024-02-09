@@ -1,12 +1,14 @@
 import { Col, Row, Tabs } from "antd";
 import React, { useEffect, useState } from "react";
-import { fetch_retry_get } from "../../../../network/api-manager";
-import { CREATENODE, NODEMETADATA } from "../../../../network/apiConstants";
 import DataTable from "../commonView/dataTable";
-import FilterCondition from "./filterCondition";
 import General from "../commonView/general";
-import KeyTable from "../commonView/keyTable";
-const Filter = ({ ingestionCss, nodeId, nodeData, edgeData, pipeline }) => {
+import IncomingFields from "./incomingFields";
+import Aggregate from "./aggregate";
+import GroupBy from "./groupBy";
+import { CREATENODE, NODEMETADATA } from "../../../../network/apiConstants";
+import { fetch_retry_get } from "../../../../network/api-manager";
+
+function Aggregator({ ingestionCss, nodeId, pipeline }) {
   const [activeKey, setActiveKey] = useState("general_tab");
   const [tableData, setTableData] = useState({});
   const [sourceNode, setSourceNode] = useState(null);
@@ -25,7 +27,7 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData, pipeline }) => {
         oldRecordSchema?.data?.sample_data.length) ||
       (oldRecordSchema?.data?.fields && oldRecordSchema?.data?.fields.length)
     ) {
-      setActiveKey("fields_tab");
+      // setActiveKey("fields_tab");
       setTableData(oldRecordSchema?.data);
     }
 
@@ -52,8 +54,8 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData, pipeline }) => {
   return (
     <Row>
       <Col span={24}>
-        <Tabs className="underline" defaultActiveKey="1" destroyInactiveTabPane>
-          <Tabs.TabPane tab="Properties" key="properties">
+        <Tabs className="underline" defaultActiveKey="1">
+          <Tabs.TabPane tab="Properties" key="1">
             <Tabs
               className="tabActive"
               tabPosition={"left"}
@@ -69,48 +71,55 @@ const Filter = ({ ingestionCss, nodeId, nodeData, edgeData, pipeline }) => {
                   sourceData={sourceData}
                   setSourceData={setSourceData}
                   setActiveKey={setActiveKey}
-                  name={"Filter"}
-                  nextTab="filter_tab"
-                  nextButtonText="Save & Create Filter"
+                  name="Aggregator"
+                  pipeline={pipeline}
+                  nextTab="group_by_tab"
+                  nextButtonText="Save & Next"
                 />
               </Tabs.TabPane>
-
-              <Tabs.TabPane tab="Filter" key="filter_tab">
-                <FilterCondition
+              <Tabs.TabPane tab="Incoming Fields" key="incoming_field_tab">
+                <IncomingFields
                   ingestionCss={ingestionCss}
-                  sourceData={sourceData}
-                  nodeId={nodeId}
-                />
-              </Tabs.TabPane>
-
-              <Tabs.TabPane
-                tab="Fields"
-                key="fields_tab"
-                disabled={!tableData?.fields}
-              >
-                <KeyTable
-                  key={Date.now()}
-                  ingestionCss={ingestionCss}
-                  metadata={tableData?.fields}
                   nodeId={nodeId}
                   sourceData={sourceData}
                   setSourceData={setSourceData}
+                  setActiveKey={setActiveKey}
+                  pipeline={pipeline}
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Group By" key="group_by_tab">
+                <GroupBy
+                  ingestionCss={ingestionCss}
+                  nodeId={nodeId}
+                  sourceData={sourceData}
+                  setSourceData={setSourceData}
+                  setActiveKey={setActiveKey}
+                  pipeline={pipeline}
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Aggregate" key="aggregate_tab">
+                <Aggregate
+                  ingestionCss={ingestionCss}
+                  nodeId={nodeId}
+                  sourceData={sourceData}
+                  setSourceData={setSourceData}
+                  setActiveKey={setActiveKey}
                   pipeline={pipeline}
                 />
               </Tabs.TabPane>
             </Tabs>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Preview" key="preview">
+          <Tabs.TabPane tab="Preview" key="2">
             <DataTable
-              nodeId={nodeId}
               ingestionCss={ingestionCss}
-              tableData={tableData?.sample_data}
+              tableData={tableData?.data}
+              nodeId={nodeId}
             />
           </Tabs.TabPane>
         </Tabs>
       </Col>
     </Row>
   );
-};
+}
 
-export default Filter;
+export default Aggregator;

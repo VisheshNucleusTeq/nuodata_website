@@ -177,6 +177,8 @@ const Joiner = ({ ingestionCss, nodeId, pipeline, edgeData }) => {
                   setSourceData={setSourceData}
                   setActiveKey={setActiveKey}
                   name="Joiner"
+                  nextTab="join_condition_tab"
+                  nextButtonText="Save & Create Join Condition"
                 />
               </Tabs.TabPane>
 
