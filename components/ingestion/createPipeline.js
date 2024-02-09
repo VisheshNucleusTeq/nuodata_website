@@ -492,7 +492,7 @@ const CreatePipeline = ({ ingestionCss }) => {
             {selectedTab === 0 && (
               <>
                 <Divider style={{ margin: "2vh 0vh 2vh 0vh" }}></Divider>
-                {workspaceData.length && workspace && pipelineDetails ? (
+                {workspaceData.length && workspace && pipelineDetails && pipelineDetails?.runtime_env_id ? (
                   <Define
                     ingestionCss={ingestionCss}
                     workspaceData={workspaceData}
