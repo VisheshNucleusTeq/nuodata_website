@@ -755,3 +755,17 @@ html {
   color: var(--Secondary9) !important;
   background-color: transparent !important;
 }
+
+.defineUpload{
+  /* border: 1px dashed #0c3246 !important;
+  border-radius: 10px !important;
+  background-color: #FFF !important; */
+  border: none !important;
+}
+
+.defineUpload .ant-upload-btn{
+  border: 1px solid #d6d6d6 !important;
+  border-radius: 10px !important;
+  background-color: #FFF !important;
+  /* border: none !important; */
+}

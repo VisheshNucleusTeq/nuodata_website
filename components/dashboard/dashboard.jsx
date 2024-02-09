@@ -5,18 +5,7 @@ import {
   SearchOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
-import {
-  Button,
-  Card,
-  Col,
-  Input,
-  Modal,
-  Row,
-  Space,
-  Table,
-  Tooltip,
-  message,
-} from "antd";
+import { Button, Col, Input, Modal, Row, Space, Table, Tooltip } from "antd";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -25,7 +14,6 @@ import { useDispatch } from "react-redux";
 import { SetTabTypeAction, loderShowHideAction } from "../../Redux/action";
 import { fetch_retry_get } from "../../network/api-manager";
 import { GETALLPROJECT, GETGITDATA } from "../../network/apiConstants";
-import dashboardCss from "../../styles/dashboard.module.css";
 
 const DashboardView = () => {
   const router = useRouter();
@@ -135,161 +123,161 @@ const DashboardView = () => {
         <p>Please configure github settings before proceeding.</p>
       </Modal>
 
-      <div className={dashboardCss.main}>
-        <h1>Data Modernization</h1>
-        <Row style={{ marginBottom: "24px" }}>
-          <Col span="12">
-            <Space direction="horizontal" size={"large"}>
-              <Input
-                onChange={(e) => {
-                  const delayDebounceFn = setTimeout(() => {
-                    setSearch(e.target.value);
-                  }, 1000);
-                  return () => clearTimeout(delayDebounceFn);
-                }}
-                className={dashboardCss.input}
-                placeholder="Search"
-                suffix={
-                  <SearchOutlined
-                    style={{ fontSize: "1.2vw", color: "#a9a9a9" }}
-                  />
-                }
-              />
-            </Space>
-          </Col>
-          <Col span="12" align={"right"}>
-            <Space direction="horizontal" size={"large"}>
-              {!modal2Open && (
-                <Button className={dashboardCss.button}>
-                  <span
-                    style={{ fontSize: "1.2vw" }}
-                    onClick={() => {
-                      dispatch(SetTabTypeAction("Define"));
-                      router.push(`/data-modernization`);
+      <Table
+        scroll={{ x: "max-content" }}
+        columns={[
+          {
+            title: "Business Unit",
+            dataIndex: "businessUnit",
+            key: "businessUnit",
+            sorter: (a, b) => a.businessUnit.localeCompare(b.businessUnit),
+          },
+          {
+            title: "Project",
+            dataIndex: "name",
+            key: "name",
+            sorter: (a, b) => a.name.localeCompare(b.name),
+          },
+          {
+            title: "Total Files",
+            dataIndex: "totalFiles",
+            key: "totalFiles",
+            sorter: (a, b) => a.totalFiles - b.totalFiles,
+            align: "center",
+          },
+          {
+            title: "Source Platform",
+            dataIndex: "sourcePlatform",
+            key: "sourcePlatform",
+            sorter: (a, b) => a.sourcePlatform.localeCompare(b.sourcePlatform),
+          },
+          {
+            title: "Target",
+            dataIndex: "targetPlatform",
+            key: "targetPlatform",
+            sorter: (a, b) => a.targetPlatform.localeCompare(b.targetPlatform),
+          },
+          {
+            title: "Conversion",
+            key: "conversion",
+            render: (_, record) => (
+              <span>{Number(record.conversion) ? record.conversion : 0}%</span>
+            ),
+            sorter: (a, b) =>
+              (Number(a.conversion) ? a.conversion : 0) -
+              (Number(b.conversion) ? b.conversion : 0),
+            align: "center",
+          },
+          {
+            title: "Created Date",
+            key: "creationDateTime",
+            render: (_, record) => (
+              <span>{changeDateFormat(record.creationDateTime)}</span>
+            ),
+            sorter: (a, b) =>
+              new Date(a.creationDateTime).getTime() -
+              new Date(b.creationDateTime).getTime(),
+          },
+          {
+            title: "Action",
+            key: "action",
+            render: (_, record) => (
+              <Space
+                size="middle"
+                key={(Math.random() + 1).toString(36).substring(7)}
+              >
+                <Tooltip
+                  placement="top"
+                  title={"Edit"}
+                  key={(Math.random() + 1).toString(36).substring(7)}
+                >
+                  <a
+                    href={`/data-modernization?id=${record.projectId}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      showUpdatePage(record.projectId);
                     }}
                   >
-                    <PlusOutlined /> New Project
-                  </span>
-                </Button>
-              )}
-            </Space>
-          </Col>
-        </Row>
-        <Card className="demoCard">
-          <Row style={{ marginBottom: "2%" }}>
-            <Col span={24}>
-              <Table
-                rowKey="projectId"
-                columns={[
-                  {
-                    title: "Business Unit",
-                    dataIndex: "businessUnit",
-                    key: "businessUnit",
-                    sorter: (a, b) =>
-                      a.businessUnit.localeCompare(b.businessUnit),
-                  },
-                  {
-                    title: "Project",
-                    dataIndex: "name",
-                    key: "name",
-                    sorter: (a, b) => a.name.localeCompare(b.name),
-                  },
-                  {
-                    title: "Total Files",
-                    dataIndex: "totalFiles",
-                    key: "totalFiles",
-                    sorter: (a, b) => a.totalFiles - b.totalFiles,
-                    align: "center",
-                  },
-                  {
-                    title: "Source Platform",
-                    dataIndex: "sourcePlatform",
-                    key: "sourcePlatform",
-                    sorter: (a, b) =>
-                      a.sourcePlatform.localeCompare(b.sourcePlatform),
-                  },
-                  {
-                    title: "Target",
-                    dataIndex: "targetPlatform",
-                    key: "targetPlatform",
-                    sorter: (a, b) =>
-                      a.targetPlatform.localeCompare(b.targetPlatform),
-                  },
-                  {
-                    title: "Conversion",
-                    key: "conversion",
-                    render: (_, record) => (
-                      <span>
-                        {Number(record.conversion) ? record.conversion : 0}%
-                      </span>
-                    ),
-                    sorter: (a, b) =>
-                      (Number(a.conversion) ? a.conversion : 0) -
-                      (Number(b.conversion) ? b.conversion : 0),
-                    align: "center",
-                  },
-                  {
-                    title: "Created Date",
-                    key: "creationDateTime",
-                    render: (_, record) => (
-                      <span>{changeDateFormat(record.creationDateTime)}</span>
-                    ),
-                    sorter: (a, b) =>
-                      new Date(a.creationDateTime).getTime() -
-                      new Date(b.creationDateTime).getTime(),
-                  },
-                  {
-                    title: "Action",
-                    key: "action",
-                    render: (_, record) => (
-                      <Space
-                        size="middle"
-                        key={(Math.random() + 1).toString(36).substring(7)}
+                    <EditOutlined />
+                  </a>
+                </Tooltip>
+                <Tooltip
+                  placement="top"
+                  title={"Details"}
+                  key={(Math.random() + 1).toString(36).substring(7)}
+                >
+                  <a
+                    href={`/data-modernization?id=${record.projectId}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      showUpdatePageAnalyze(
+                        record.projectId,
+                        record.totalFiles
+                      );
+                    }}
+                  >
+                    <EyeOutlined />
+                  </a>
+                </Tooltip>
+              </Space>
+            ),
+            align: "center",
+          },
+        ]}
+        dataSource={data}
+        bordered
+        title={() => {
+          return (
+            <>
+              <Row>
+                <Col span={14} style={{ display: "flex", alignItems: "center" }}>
+                  <h1>
+                    <b>Data Modernization</b>
+                  </h1>
+                </Col>
+                
+                <Col
+                  span={10}
+                  style={{ justifyContent: "end", display: "flex" }}
+                >
+                  <Space>
+                    <Input
+                      onChange={(e) => {
+                        const delayDebounceFn = setTimeout(() => {
+                          setSearch(e.target.value);
+                        }, 1000);
+                        return () => clearTimeout(delayDebounceFn);
+                      }}
+                      placeholder="Search"
+                      suffix={
+                        <SearchOutlined
+                          style={{ fontSize: "1.2vw", color: "#a9a9a9" }}
+                        />
+                      }
+                    />
+                    {!modal2Open && (
+                      <Button
+                        style={{
+                          background: "#e74860",
+                          color: "#fff",
+                          borderRadius: "25px",
+                          height: "100%",
+                        }}
+                        onClick={() => {
+                          dispatch(SetTabTypeAction("Define"));
+                          router.push(`/data-modernization`);
+                        }}
                       >
-                        <Tooltip
-                          placement="top"
-                          title={"Edit"}
-                          key={(Math.random() + 1).toString(36).substring(7)}
-                        >
-                          <a
-                            href={`/data-modernization?id=${record.projectId}`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              showUpdatePage(record.projectId);
-                            }}
-                          >
-                            <EditOutlined />
-                          </a>
-                        </Tooltip>
-                        <Tooltip
-                          placement="top"
-                          title={"Details"}
-                          key={(Math.random() + 1).toString(36).substring(7)}
-                        >
-                          <a
-                            href={`/data-modernization?id=${record.projectId}`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              showUpdatePageAnalyze(
-                                record.projectId,
-                                record.totalFiles
-                              );
-                            }}
-                          >
-                            <EyeOutlined />
-                          </a>
-                        </Tooltip>
-                      </Space>
-                    ),
-                    align: "center",
-                  },
-                ]}
-                dataSource={data}
-              />
-            </Col>
-          </Row>
-        </Card>
-      </div>
+                        <PlusOutlined /> New Project
+                      </Button>
+                    )}
+                  </Space>
+                </Col>
+              </Row>
+            </>
+          );
+        }}
+      />
     </>
   );
 };

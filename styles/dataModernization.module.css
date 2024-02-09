@@ -1,3 +1,51 @@
+.main {
+  border: 1px solid rgba(0, 0, 0, .1);
+  background-color: #fff
+}
+
+.projectName {
+  display: flex;
+  align-items: center;
+  height: 8vh;
+  color: #0c3246 !important
+}
+
+.projectName span {
+  margin-left: 1.5vh;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: normal
+}
+
+.projectName span a {
+  color: #e74860
+}
+
+.projectStepsRow {
+  padding: 16px;
+  background: #fbfbfb
+}
+
+.stepsIcon {
+  cursor: pointer;
+  display: inline-flex;
+  padding: 7px 12px;
+  gap: 8px;
+  border-radius: 5px;
+  /* border: 1px solid lightgray; */
+  /* border: 1px solid red; */
+  background: #fff;
+  justify-content: center;
+}
+
+.stepsIcon_text {
+  color: var(--Black8, #333);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal
+}
+
 .projectName {
   font-weight: bolder;
   font-size: 2vw;
@@ -35,7 +83,7 @@
 }
 
 .defineForm {
-  margin-top: 2%;
+  /* margin-top: 2%; */
   background-color: #fff;
   padding: 2%;
   border-radius: 10px;
@@ -442,3 +490,10 @@
   background-color: #0c3246;
   color: #fff;
 }
+
+.uploadView{
+  width: 30vw !important;
+  height: 20vh !important;
+  border: 1px solid red;
+}
+
