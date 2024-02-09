@@ -727,31 +727,9 @@ html {
     /* font-size : 1vw !important; */
 }
 
-.ant-table-pagination.ant-pagination li,
-.ant-pagination-prev .ant-pagination-item-link,
-.ant-pagination-next .ant-pagination-item-link {
-  border-radius: 100% !important;
-}
-
-.ant-pagination-item-active {
-  border-color: var(--Primary) !important;
-}
-
-.ant-pagination-item-active a {
-  font-weight: 400;
-  color: var(--Secondary9);
-}
-
 .ant-pagination-item :hover,
-.ant-table-pagination.ant-pagination li :hover,
-.ant-pagination-item:hover {
-  border-radius: 100% !important;
-  color: var(--Secondary9) !important;
-  border-color: var(--Primary) !important;
-}
-
-.ant-pagination-item a:hover {
-  border-radius: 100% !important;
-  color: var(--Secondary9) !important;
-  background-color: transparent !important;
+.ant-pagination-next .ant-pagination-item-link,
+.ant-pagination-prev .ant-pagination-item-link,
+.ant-table-pagination.ant-pagination li {
+  border-radius: 100% !important
 }
