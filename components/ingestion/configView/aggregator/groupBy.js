@@ -173,14 +173,14 @@ function GroupBy({ ingestionCss, sourceData, nodeId }) {
                     {tableData?.fields &&
                       tableData?.fields.length &&
                       tableData?.fields.map((e) => {
-                        const isOptionSelected = groupByFieldData.some(
+                        const isOptionExist = groupByFieldData.some(
                           (item) => item.field === e.name
                         );
                         return (
                           <Select.Option
                             key={e.name}
                             value={e.name}
-                            disabled={isOptionSelected}
+                            disabled={isOptionExist}
                           >
                             {e?.name}
                           </Select.Option>
