@@ -30,6 +30,7 @@ import { SetTabTypeAction } from "../../Redux/action";
 import dataModernizationCss from "../../styles/dataModernization.module.css";
 import { CheckCircleFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
+import ConnectNew from "./connect-new";
 
 export default function DataModernization() {
   const { query } = useRouter();
@@ -54,7 +55,6 @@ export default function DataModernization() {
       dispatch(SetTabTypeAction(query?.tab));
     }
   }, [query?.tab]);
-
   return (
     <>
       <div
@@ -138,9 +138,12 @@ export default function DataModernization() {
             {tabType === "Define" && (
               <Define dataModernizationCss={dataModernizationCss} />
             )}
-            {tabType === "Connect" && (
-              <Connect dataModernizationCss={dataModernizationCss} />
-            )}
+            {tabType === "Connect" &&
+              (/hadoop/i.test(projectDetails?.sourcePlatform) ? (
+                <ConnectNew dataModernizationCss={dataModernizationCss} />
+              ) : (
+                <Connect dataModernizationCss={dataModernizationCss} />
+              ))}
             {tabType === "Analyze" && (
               <Analyze dataModernizationCss={dataModernizationCss} />
             )}
