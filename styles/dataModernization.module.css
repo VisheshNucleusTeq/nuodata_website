@@ -62,7 +62,7 @@
   /* border: 1px solid rgb(196, 196, 196); */
   justify-content: center !important;
   border-radius: 10px !important;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10);
 }
 
 .defineStep {
@@ -87,7 +87,7 @@
   background-color: #fff;
   padding: 2%;
   border-radius: 10px;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10);
   background-color: #fff;
 }
 
@@ -122,7 +122,7 @@
 .cardViewGraphs {
   height: 100%;
   border-radius: 10px;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10);
   align-items: center;
   justify-content: center;
   display: flex;
@@ -134,7 +134,7 @@
 
 .cardView {
   border-radius: 10px;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10);
 }
 
 .cardView div div {
@@ -151,9 +151,11 @@
 .cardView div div:nth-child(2) {
   border-radius: 0px 10px 0px 0px;
 }
+
 .cardView div div:nth-last-child(1) {
   border-radius: 0px 0px 10px 0px;
 }
+
 .cardView div div:nth-last-child(2) {
   border-radius: 0px 0px 0px 10px;
 }
@@ -224,9 +226,11 @@
     letter-spacing: 0px;
     transition: transform 300ms linear;
   }
+
   50% {
     letter-spacing: 1px;
   }
+
   100% {
     letter-spacing: 0px;
     transition: transform 300ms linear;
@@ -321,7 +325,7 @@
 
 .designCard {
   border-radius: 20px;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0,0,0,.10);
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10);
 }
 
 .tableNameView {
@@ -437,6 +441,7 @@
   background-color: #548135;
   color: #fff;
 }
+
 /* validate */
 
 .wordCss {
@@ -478,22 +483,74 @@
   margin: 3px 3px 3px 3px !important;
   text-align: center;
   background-color: #fff;
-  font-size :larger;
-  font-weight :bold;
+  font-size: larger;
+  font-weight: bold;
   cursor: pointer;
   color: #0c3246;
   padding: 8px;
 
 }
 
-.designTabsStepSelected{
+.designTabsStepSelected {
   background-color: #0c3246;
   color: #fff;
 }
 
-.uploadView{
+.uploadView {
   width: 30vw !important;
   height: 20vh !important;
   border: 1px solid red;
 }
 
+.inputSelect div {
+  width: 100% !important;
+  background: #fff !important;
+  border: 1px solid #d6d6d6 !important;
+  resize: vertical !important;
+  display: flex !important;
+  align-items: center !important
+}
+
+.input,
+.inputSelect div,
+.inputSelectMultiple div,
+.inputSelectTable div {
+  height: 32px !important;
+  border-radius: 5px !important;
+  font-size: 12px
+}
+
+.uploadBtn {
+  min-width: 166px;
+  border: 1px solid #B7C2C8 !important;
+  border-style: dashed !important;
+  border-radius: 5px;
+  display: flex;
+  padding: 4px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px
+}
+
+.uploadBtn>span {
+  color: var(--Black8, #333333);
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px
+}
+
+.FileListItem {
+  width: 95%;
+  height: 32px;
+  background: #FEF6F7 !important;
+  border: 1px solid #d6d6d6 !important;
+  border-radius: 5px;
+  border-style: dashed !important;
+  resize: vertical !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 4px 8px;
+  gap: 2px;
+}
