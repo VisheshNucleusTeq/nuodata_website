@@ -205,7 +205,7 @@ const DataTable = ({ ingestionCss, nodeId }) => {
     );
     if (previewData?.data?.sample_data?.length) {
       const checkKey = Object.keys(previewData?.data?.sample_data[0]);
-      const tableColumn = [...checkKey, "data"].map((e) => {
+      const tableColumn = [...checkKey].map((e) => {
         return {
           title: e,
           dataIndex: e,

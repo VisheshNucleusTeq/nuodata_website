@@ -743,3 +743,7 @@ html {
   border-radius: 10px !important;
   background-color: #FFF !important;
 }
+
+.ant-table-title b {
+  color:  #e74860 !important;
+}

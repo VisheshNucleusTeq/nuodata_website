@@ -308,7 +308,7 @@ const ConnectionTable = ({
                     >
                       <Image
                         src={`/db_icon/${getFileName(type)}.png`}
-                        width={35}
+                        width={25}
                         style={{
                           borderRadius: "25px",
                           padding: "2px",
