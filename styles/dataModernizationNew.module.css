@@ -1,0 +1,471 @@
+.projectName {
+  font-weight: bolder;
+  font-size: 2vw;
+  color: #e74860;
+}
+
+.defineSteps {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.defineSteps .defineStepsRow {
+  padding: 1%;
+  /* border: 1px solid rgb(196, 196, 196); */
+  justify-content: center !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.defineStep {
+  border: 1px solid rgb(232, 232, 232);
+  border-radius: 10px;
+  margin: 3px 3px 3px 3px !important;
+  text-align: center;
+  background-color: #fff;
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+  color: #0c3246;
+}
+
+.defineStepSelect {
+  background-color: #0c3246;
+  color: #fff;
+}
+
+.defineForm {
+  margin-top: 2%;
+  background-color: #fff;
+  padding: 2%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.defineCard {
+  margin-top: 2%;
+  background-color: #fff;
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.defineCard .ant-card-head-title {
+  font-size: 1.3vw !important;
+  font-weight: 500 !important;
+  color: #333 !important;
+}
+
+.nextExitBtn {
+  justify-content: flex-end;
+  display: flex;
+}
+
+.nextBtn {
+  margin: 0px 0px 2% 0px;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  border-radius: 3vw;
+  background-color: #e74860 !important;
+  border: none;
+  font-weight: 400;
+  height: auto;
+}
+
+.exitBtn {
+  height: 8%;
+  margin: 0px 0px 2% 0px;
+  padding: 0.5rem 1rem;
+  border-radius: 3vw;
+  background-color: #fff !important;
+  border: 1px solid #0c3246 !important;
+  color: #0c3246 !important;
+}
+
+.inputFile {
+  width: 100vh;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.cardViewGraphs {
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.cardViewGraphCarousel {
+  width: 48vw !important;
+}
+
+.cardView {
+  border-radius: 10px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.cardView div div {
+  display: flex;
+  align-items: center;
+  border: #fff !important;
+  padding: 2.5vh !important;
+}
+
+.cardView div div:nth-child(1) {
+  border-radius: 10px 0px 0px 0px;
+}
+
+.cardView div div:nth-child(2) {
+  border-radius: 0px 10px 0px 0px;
+}
+.cardView div div:nth-last-child(1) {
+  border-radius: 0px 0px 10px 0px;
+}
+.cardView div div:nth-last-child(2) {
+  border-radius: 0px 0px 0px 10px;
+}
+
+.cardView div div:nth-child(odd) {
+  width: 60% !important;
+  color: #0c3246;
+  font-weight: bold !important;
+}
+
+.cardView div div:nth-child(even) {
+  width: 40% !important;
+  color: #e74860;
+  font-weight: bold !important;
+}
+
+.cardView div div:nth-child(even) span {
+  width: 40% !important;
+  color: #e74860;
+  font-weight: bold !important;
+}
+
+.cardViewGrid div div {
+  display: flex;
+  align-items: center;
+  border: #fff !important;
+  padding: 2.5vh !important;
+}
+
+.cardViewGrid div div:nth-child(odd) {
+  width: 60% !important;
+  color: #0c3246;
+  font-weight: bolder;
+}
+
+.cardViewGrid div div:nth-child(even) {
+  width: 40% !important;
+  color: #e74860;
+  font-weight: 600 !important;
+}
+
+.cardViewGrid div div:nth-child(even) span {
+  width: 40% !important;
+  color: #e74860;
+  font-weight: 900;
+}
+
+.cardViewGraph {
+  height: 40vh;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.cardView ul li {
+  padding: 20% 0% 0% 0% !important;
+}
+
+.transform h1 {
+  font-size: 3.2vw;
+  font-weight: bolder;
+  color: #0c3246;
+  animation-name: text;
+  animation-duration: 4s;
+}
+
+.browseBtnStyle {
+  border: 1px dashed #b7c2c8 !important;
+  background: #e7ebed !important;
+  color: #0c3246 !important;
+  padding: 0.5rem 1rem;
+  border-radius: 3vw;
+  font-weight: 400;
+  height: auto;
+}
+
+@keyframes text {
+  0% {
+    letter-spacing: 0px;
+    transition: transform 300ms linear;
+  }
+  50% {
+    letter-spacing: 1px;
+  }
+  100% {
+    letter-spacing: 0px;
+    transition: transform 300ms linear;
+  }
+}
+
+.transform h2 {
+  font-size: 1.8vw;
+  font-weight: bold;
+  color: #0c3246;
+}
+
+.transform h2 span {
+  color: #e74860;
+  font-size: 2vw !important;
+  padding: 0.5%;
+}
+
+.connectFileInput {
+  justify-content: flex-start;
+  display: flex;
+}
+
+.analyzeMain {
+  margin: 1% 0% 1% 0%;
+}
+
+.dataList {
+  margin: 2% 0% 2% 0%;
+}
+
+.transformation {
+  font-size: 1.5vw;
+  font-weight: bolder;
+  color: #e74860;
+  padding-left: 1%;
+}
+
+.downloadBtn {
+  justify-content: right;
+  display: flex;
+  align-items: center;
+  padding-right: 1%;
+}
+
+.downloadBtnSpace {
+  /* float: right; */
+  color: #0c3246;
+  font-weight: bold;
+}
+
+.downloadBtnSpace:hover {
+  color: #e74860;
+  font-weight: bolder;
+  scale: 1.1;
+}
+
+.analyzeMainDetails {
+  margin: 1% 0% 1% 0%;
+  background-color: #fff;
+}
+
+.analyzeMainDetails .ant-collapse-header-text {
+  color: #e74860 !important;
+}
+
+.designMain {
+  margin: 2% 0% 2% 0%;
+}
+
+.targetAttributeName {
+  background-color: #0c3246;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.targetAttributeName:hover {
+  background-color: #0c3246;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.downloadData {
+  text-align: end;
+}
+
+.downloadData button {
+  height: 5vh;
+  border-radius: 10px;
+}
+
+.designCard {
+  border-radius: 20px;
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.1%), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.tableNameView {
+  color: #0c3246;
+  align-items: center;
+  display: flex;
+  font-weight: bold;
+  margin-bottom: 1vh;
+}
+
+.detailsTitle {
+  margin: 2%;
+}
+
+.detailsTitle h3 {
+  color: #0c3246;
+  font-weight: bold;
+}
+
+.detailsTitle h3 span {
+  font-size: small;
+}
+
+.okbutton {
+  align-self: flex-end;
+  position: fixed;
+  bottom: 8%;
+  right: 9%;
+  z-index: 999;
+  border-radius: 50px;
+  background-color: #e74860;
+  color: #fff;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.downloadIcon {
+  cursor: pointer !important;
+  float: right;
+  font-size: 3vh;
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+  padding: 0px 10px 0px 10px;
+  border-radius: 10px;
+  color: #e74860;
+}
+
+.downloadIcon:hover {
+  -webkit-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+  color: #e74860;
+}
+
+.tabView {
+  transition-duration: 1000ms;
+  border: 1px solid gray;
+  text-align: center;
+  height: 5vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  font-size: larger;
+  font-weight: bold;
+  border-radius: 2px;
+  color: #0c3246;
+  /* background-color: #0c3246;
+    color: #fff; */
+}
+
+.tabViewActive {
+  transition-duration: 1000ms;
+  background-color: #0c3246;
+  color: #fff;
+}
+
+.tabViewPar {
+  justify-content: center;
+}
+
+/* validate */
+
+.validateTab {
+  /* margin: 2% 0% 2% 0%; */
+}
+
+.validateTab h1 {
+  color: #e74860;
+  font-weight: bold;
+  font-size: 2vw;
+}
+
+.expandableTableCss {
+  margin: 1%;
+  padding: 1%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.expandableTableCss h2 {
+  color: #0c3246;
+  font-weight: bold;
+}
+
+.tabViewActiveValidation {
+  background-color: #548135;
+  color: #fff;
+}
+/* validate */
+
+.wordCss {
+  word-wrap: break-word;
+}
+
+.addAttachment {
+  border-radius: 5px;
+  border: 1px dotted #0c3246;
+  color: #0c3246;
+}
+
+.addAttachment:hover {
+  border-radius: 5px;
+  border: 1px dotted #0c3246;
+  color: #0c3246 !important;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.validateFileName {
+  color: #0c3246;
+}
+
+.validateFileName:hover {
+  color: #e74860;
+}
+
+.designTabs {
+  margin: 3vh 0vh 3vh 0vh;
+  border-radius: 10px;
+  /* padding: .5%; */
+  /* box-shadow: rgba(12, 50, 70, 0.27) 0px 0px 0.25em, rgba(12, 50, 70, 0.05) 0px 0.25em 1em; */
+}
+
+.designTabsStep {
+  border: 1px solid #0c3246;
+  border-radius: 10px;
+  margin: 3px 3px 3px 3px !important;
+  text-align: center;
+  background-color: #fff;
+  font-size: larger;
+  font-weight: bold;
+  cursor: pointer;
+  color: #0c3246;
+  padding: 8px;
+}
+
+.designTabsStepSelected {
+  background-color: #0c3246;
+  color: #fff;
+}
