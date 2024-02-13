@@ -1,18 +1,17 @@
 import { DeleteOutlined } from "@ant-design/icons";
-import { Button, Col, Radio, Row, Select, message } from "antd";
+import { Button, Col, Row, Select, message } from "antd";
 import React, { useEffect, useState } from "react";
-import {
-  fetch_retry_get,
-  fetch_retry_put,
-} from "../../../../network/api-manager";
-import {
-  AGGREGATEFUNTYPES,
-  CREATENODE,
-  NODEMETADATA,
-  SORTFUNTYPES,
-} from "../../../../network/apiConstants";
 import { useDispatch } from "react-redux";
 import { loderShowHideAction } from "../../../../Redux/action";
+import {
+    fetch_retry_get,
+    fetch_retry_put,
+} from "../../../../network/api-manager";
+import {
+    CREATENODE,
+    NODEMETADATA,
+    SORTFUNTYPES
+} from "../../../../network/apiConstants";
 
 function SortCondition({ ingestionCss, sourceData, nodeId }) {
   const [tableData, setTableData] = useState({});
