@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loderShowHideAction } from "../../../../Redux/action";
 import {
-    fetch_retry_get,
-    fetch_retry_put,
+  fetch_retry_get,
+  fetch_retry_put,
 } from "../../../../network/api-manager";
 import {
-    CREATENODE,
-    NODEMETADATA,
-    SORTFUNTYPES
+  CREATENODE,
+  NODEMETADATA,
+  SORTFUNTYPES,
 } from "../../../../network/apiConstants";
 
 function SortCondition({ ingestionCss, sourceData, nodeId }) {
@@ -109,6 +109,7 @@ function SortCondition({ ingestionCss, sourceData, nodeId }) {
     if (!newConditions.some((item) => item.field === conditionData)) {
       newConditions.push({ field: conditionData });
       setSortConditions(newConditions);
+      setIsOptionSelected(false);
     }
   };
 
@@ -258,9 +259,7 @@ function SortCondition({ ingestionCss, sourceData, nodeId }) {
                           (_, ind) => ind !== index
                         );
                         if (sortConditions.length > 1) {
-                          setIsOptionSelected(
-                            sortConditions[index].field !== ""
-                          );
+                          setIsOptionSelected(true);
                         }
                         setSortConditions(newConditions);
                       }}
