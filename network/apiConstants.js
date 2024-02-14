@@ -94,6 +94,6 @@ export const ADDFIELDNAME = "ingestion/core/v1/graph/node/fields";
 export const UPDATEFIELDNAME = "ingestion/core/v1/graph/node/fields";
 export const EXPRESSIONFUNTYPES = "ingestion/core/v1/list/expression_function_types";
 export const AGGREGATEFUNTYPES = "ingestion/core/v1/list/aggregate_function_types";
-export const SORTFUNTYPES = "ingestion/core/v1/list/sort_function_types";
+export const SORTFUNTYPES = "ingestion/core/v1/list/sorting_order_direction";
 
 export const SPARKFUN = "ingestion/core/v1/function/spark/";
