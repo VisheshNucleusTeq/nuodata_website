@@ -38,7 +38,7 @@ function SortCondition({ ingestionCss, sourceData, nodeId }) {
     if (oldRecordSchema?.data?.transformation_type === "Sorter") {
       if (
         oldRecordSchema?.data?.transformation_properties[0]?.property_name ==
-        "sort_condition"
+        "order_by_condition"
       ) {
         const property_value =
           oldRecordSchema?.data?.transformation_properties[0]?.property_value ??
@@ -47,7 +47,9 @@ function SortCondition({ ingestionCss, sourceData, nodeId }) {
           const conditionsArray = property_value
             .split(",")
             .map((conditionString) => {
-              const [field, sortOrder] = conditionString.split(" ");
+              const arr = conditionString.split(" ");
+              const field = arr[0];
+              const sortOrder = arr.slice(1).join(" "); // Join elements starting from index 1 with a space
               return { field, sortOrder };
             });
           setSortConditions(conditionsArray);
@@ -69,7 +71,7 @@ function SortCondition({ ingestionCss, sourceData, nodeId }) {
     }
     let transformation_properties = [];
     transformation_properties.push({
-      property_name: "sort_condition",
+      property_name: "order_by_condition",
       property_value: property_value,
     });
     const result = await fetch_retry_put(`${CREATENODE}/${nodeId}`, {
@@ -91,7 +93,7 @@ function SortCondition({ ingestionCss, sourceData, nodeId }) {
     ) {
       const expData = options?.data?.elements.map((e) => {
         return {
-          value: e?.key,
+          value: e?.value,
           label: e?.value,
         };
       });
