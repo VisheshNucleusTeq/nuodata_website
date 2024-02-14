@@ -520,10 +520,12 @@
   font-size: 12px
 }
 
-.uploadBtn {
+.uploadBtn,
+.uploadBtn:hover {
   min-width: 166px;
   border: 1px solid #B7C2C8 !important;
   border-style: dashed !important;
+  background-color: #E7EBED;
   border-radius: 5px;
   display: flex;
   padding: 4px 8px;
