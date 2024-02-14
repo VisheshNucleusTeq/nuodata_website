@@ -21,6 +21,7 @@ import {
   fetch_retry_post,
 } from "../../../network/api-manager";
 import { CREATENODE, GETPIPELINEGRAPH } from "../../../network/apiConstants";
+import Sorter from "../configView/sorter/sorter";
 var timer;
 
 const Build = ({ ingestionCss }) => {
@@ -212,6 +213,14 @@ const Build = ({ ingestionCss }) => {
         )}
         {selectedNode?.data == "Aggregator" && (
           <Aggregator
+            ingestionCss={ingestionCss}
+            nodeId={selectedNode?.id}
+            key={`expression${selectedNode?.id}`}
+            pipeline={query?.pipeline ? query?.pipeline : pipelineData}
+          />
+        )}
+        {selectedNode?.data == "Sorter" && (
+          <Sorter
             ingestionCss={ingestionCss}
             nodeId={selectedNode?.id}
             key={`expression${selectedNode?.id}`}
