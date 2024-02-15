@@ -487,7 +487,6 @@ const CreatePipeline = ({ ingestionCss }) => {
               </Col>
             </Row>
           </Col>
-
           <Col span={24} className={ingestionCss.pipelineStepData}>
             {selectedTab === 0 && (
               <>
