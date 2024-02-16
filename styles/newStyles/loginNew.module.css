@@ -1,0 +1,223 @@
+.LogInLeft {
+  background: linear-gradient(314deg, #0c3246 0%, #45374c 100%), #0c3246;
+  height: 100%;
+  max-height: 100vh;
+}
+
+.logo {
+  width: 40%;
+  height: 10%;
+  margin-bottom: 7rem;
+}
+
+.leftImage {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.flexView {
+  display: flex;
+  overflow-y: scroll;
+  height: 100%;
+  max-height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleStyle {
+  text-align: center;
+  font-size: 24px;
+  color: #1a1a1a;
+  margin-bottom: 3.75rem;
+}
+
+.paraStyle {
+  margin-bottom: 3.75rem !important;
+  color: #333 !important;
+  text-align: center !important;
+  font-size: 16px !important;
+  line-height: 26px !important;
+}
+
+.loginForm {
+  width: 100%;
+  height: 100%;
+  padding: 1.8rem 4rem;
+  z-index: 2 !important;
+}
+
+.loginFormInput {
+  height: 64px;
+  width: 21.875rem;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: 1px solid #ced6da;
+  background-color: white !important;
+}
+
+.loginFormInput:hover,
+.loginFormInput:focus,
+.loginFormInput:active {
+  border: 1px solid #ced6da !important;
+}
+
+.loginFormInput::placeholder {
+  color: #3d5b6b !important;
+}
+
+.loginFormInput input::placeholder {
+  color: #3d5b6b !important;
+}
+
+.loginFormInput .ant-input:focus {
+  box-shadow: 0 0 0 2px white !important;
+  background-color: white !important;
+}
+
+.forgotPassword {
+  float: right;
+  color: #0c3246;
+  cursor: pointer;
+  margin-bottom: 2.5rem;
+}
+
+.loginBtn {
+  height: 64px;
+  width: 21.875rem;
+  border-radius: 5px;
+  background: #e74860;
+  border: none !important;
+}
+
+.loginBtn:hover {
+  height: 64px;
+  border-radius: 5px;
+  background: #ea5b70 !important;
+}
+
+.loginBtn:focus {
+  height: 64px;
+  border-radius: 5px;
+  background: #ea5b70 !important;
+}
+
+.googleLoginBtn {
+  height: 50px;
+  border-radius: 15px;
+}
+
+.signup {
+  margin-top: 20px;
+  text-align: center;
+  padding-bottom: 1.8rem;
+  color: #0c3246;
+}
+
+.cursorPointer {
+  cursor: pointer;
+  color: #0c3246;
+}
+
+.desktopView {
+  display: flex;
+}
+
+.mobileView {
+  display: none;
+}
+
+.pipelineDiv {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.rightImg {
+  width: 100%;
+  height: 80vh;
+  border: none;
+}
+
+.resetConfirmPassword {
+  margin-bottom: 8.5rem;
+}
+
+@media (max-width: 768px) {
+  .loginForm {
+    padding: 1.875rem 0.75rem;
+  }
+
+  .desktopView {
+    display: none;
+  }
+
+  .mobileView {
+    display: flex;
+    position: relative;
+  }
+
+  .rightImg {
+    width: 60%;
+    height: 50vh;
+  }
+
+  .resetConfirmPassword {
+    margin-bottom: 3rem;
+  }
+
+  .paraStyle {
+    margin-bottom: 2.9rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .loginFormInput {
+    height: 46px;
+    width: 300px;
+  }
+
+  .loginBtn {
+    height: 46px;
+  }
+
+  .loginForm {
+    padding: 1.8rem 0.75rem;
+  }
+
+  .rightImg {
+    width: 80%;
+    height: 50vh;
+  }
+
+  .titleStyle {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 1.875rem;
+  }
+
+  .logo {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .forgotPassword {
+    margin: 1.25rem 0;
+    cursor: pointer;
+  }
+
+  /* .pipelineDiv {
+    top: -110px;
+  } */
+}

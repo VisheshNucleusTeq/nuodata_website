@@ -32,7 +32,7 @@ export default function DataModernizationArchitectureNew({ HomeCss }) {
       <Col span={24} className={HomeCss.howNuoDataworksBtn}>
         <Link prefetch href="/how-it-works">
           <Button>
-            “Explore How NuoData works” <RiseOutlined />
+            Explore How NuoData works <RiseOutlined />
           </Button>
         </Link>
       </Col>

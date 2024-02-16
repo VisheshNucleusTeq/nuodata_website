@@ -23,6 +23,11 @@ export const ProtectRoute = ({ children }) => {
     "/events",
     "/test",
     "/new-pages",
+    "/new/sign-in",
+    "/new/sign-up",
+    "/new/reset-password",
+    "/new/forgot-password",
+    "/new",
   ];
   const user = useSelector((state) => state.userDetails.isLogged);
 
