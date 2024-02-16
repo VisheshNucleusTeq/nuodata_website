@@ -244,6 +244,20 @@ const Define = ({ dataModernizationCss }) => {
                       label: ".py",
                     },
                   ]);
+                } else if (e == "hadoop_hortonworks") {
+                  setSourceLang([
+                    {
+                      value: "hortonworks_oozy_log_files",
+                      label: "Hortonworks Oozy Log Files",
+                    },
+                  ]);
+                } else if (e == "hadoop_cloudera") {
+                  setSourceLang([
+                    {
+                      value: "cloudera_oozy_log_files",
+                      label: "Cloudera Oozy Log Files",
+                    },
+                  ]);
                 } else {
                   setSourceLang([
                     {
@@ -354,19 +368,36 @@ const Define = ({ dataModernizationCss }) => {
             {["hadoop_hortonworks", "hadoop_cloudera"].includes(
               sourcePlatform
             ) ? (
-              <Dragger {...drawerViewProp}>
-                <Row>
-                  <Col span={24} style={{ marginTop: "0%" }}>
-                    {/* Select Cloudera Config & Log Files */}
-                    Drag and drop or&nbsp;
-                    <span style={{ color: "#e74860", fontWeight: "bold" }}>
-                      browse
-                    </span>
-                    &nbsp;cloudera config & log files
-                  </Col>
-                </Row>
-              </Dragger>
+              <Select
+                className="inputSelect"
+                showSearch
+                placeholder="Select source language"
+                optionFilterProp="children"
+                filterOption={(input, option) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                initialvalues={
+                  projectDetails && projectDetails.sourceLang
+                    ? projectDetails.sourceLang
+                    : ""
+                }
+                options={sourceLang}
+              />
             ) : (
+              // <Dragger {...drawerViewProp}>
+              //   <Row>
+              //     <Col span={24} style={{ marginTop: "0%" }}>
+              //       {/* Select Cloudera Config & Log Files */}
+              //       Drag and drop or&nbsp;
+              //       <span style={{ color: "#e74860", fontWeight: "bold" }}>
+              //         browse
+              //       </span>
+              //       &nbsp;cloudera config & log files
+              //     </Col>
+              //   </Row>
+              // </Dragger>
               <Select
                 className="inputSelect"
                 showSearch

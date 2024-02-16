@@ -73,6 +73,7 @@ function GroupBy({ ingestionCss, sourceData, nodeId }) {
     if (!newData.some((item) => item.field === fieldData)) {
       newData.push({ field: fieldData });
       setGroupByFieldData(newData);
+      setIsOptionSelected(false)
     }
   };
 
@@ -196,7 +197,7 @@ function GroupBy({ ingestionCss, sourceData, nodeId }) {
                       const newData = groupByFieldData.filter(
                         (_, index) => index !== i
                       );
-                      setIsOptionSelected(groupByFieldData[i].field!=="");
+                      setIsOptionSelected(true);
                       setGroupByFieldData(newData);
                     }}
                   />

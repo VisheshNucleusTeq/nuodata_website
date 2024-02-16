@@ -27,7 +27,13 @@ import {
   CREATEPIPELINE,
 } from "../../../network/apiConstants";
 import { setPipelineAction, loderShowHideAction } from "../../../Redux/action";
-const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab, pipelineDetails }) => {
+const Define = ({
+  ingestionCss,
+  workspaceData,
+  workspace,
+  setSelectedTab,
+  pipelineDetails,
+}) => {
   const route = useRouter();
   const { query } = useRouter();
   const dispatch = useDispatch();
@@ -108,21 +114,17 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab, pipeli
     if (envList?.data.length === 0) {
       Modal.confirm({
         title: "warning!",
-        content:
-          "please add runtime environment",
+        content: "please add runtime environment",
         okText: "Add Runtime Environment",
         cancelText: "Cancel",
         onOk: async () => {
-          route.push(
-            "update-workspace?workspace=" + workspace
-          );
+          route.push("update-workspace?workspace=" + workspace);
         },
         onCancel: async () => {
-          route.back()
+          route.back();
         },
-      })
-    }
-    else {
+      });
+    } else {
       setEnvironment(envList?.data);
 
       const workspaceDetails = await fetch_retry_get(
@@ -136,11 +138,13 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab, pipeli
       );
       setRuntimeEngine(envDetails?.data?.engine_type);
       if (envDetails?.data?.engine_type?.length === 1) {
-        form.setFieldsValue({ "runtime_engine": envDetails?.data?.engine_type[0] });
+        form.setFieldsValue({
+          runtime_engine: envDetails?.data?.engine_type[0],
+        });
       }
       form.setFieldsValue({ ...defaultValue });
     }
-    dispatch(loderShowHideAction(false))
+    dispatch(loderShowHideAction(false));
   };
 
   const setOldPipeline = async (id) => {
@@ -163,18 +167,19 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab, pipeli
       environment: pipelineDetails?.runtime_env_id,
       runtime_engine: pipelineDetails?.runtime_engine,
     });
-    dispatch(loderShowHideAction(false))
+    dispatch(loderShowHideAction(false));
   };
 
   useEffect(() => {
-    dispatch(loderShowHideAction(true))
+    dispatch(loderShowHideAction(true));
     const delayDebounceFn = setTimeout(() => {
       query?.pipeline || pipelineData
-        ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
+        ? pipelineDetails?.runtime_env_id &&
+          setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
         : updateFormvalue();
-    }, 1000)
-    return () => clearTimeout(delayDebounceFn)
-  }, [workspace]);
+    }, 1000);
+    return () => clearTimeout(delayDebounceFn);
+  }, [workspace, pipelineDetails?.runtime_env_id]);
 
   return (
     <>
@@ -189,7 +194,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab, pipeli
               label={"Pipeline Name"}
               labelAlign={"left"}
               name={"name"}
-              tooltip="Accept only alphanumeric with underscore. Ex: Pipeline_v1"
+              tooltip="Pipeline name could be only alphanumeric value with an underscore. Ex: Pipeline_v1"
               rules={[
                 {
                   required: true,
@@ -254,7 +259,6 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab, pipeli
                 disabled
                 // style={{ color: "#e74860" }}
                 style={{ color: "#000" }}
-
               />
             </Form.Item>
 
@@ -306,7 +310,7 @@ const Define = ({ ingestionCss, workspaceData, workspace, setSelectedTab, pipeli
                   ]}
                 >
                   {/* {JSON.stringify(runtimeEngine)} */}
-                  <Radio.Group name="runtime_engine" >
+                  <Radio.Group name="runtime_engine">
                     {runtimeEngine?.map((e) => {
                       return <Radio value={e}>{e}</Radio>;
                     })}

@@ -22,6 +22,7 @@ import {
 } from "../../../network/api-manager";
 import { CREATENODE, GETPIPELINEGRAPH } from "../../../network/apiConstants";
 import Sorter from "../configView/sorter/sorter";
+import Union from "../configView/union/union";
 var timer;
 
 const Build = ({ ingestionCss }) => {
@@ -227,6 +228,14 @@ const Build = ({ ingestionCss }) => {
             pipeline={query?.pipeline ? query?.pipeline : pipelineData}
           />
         )}
+        {/* view is created for this {selectedNode?.data == "Union" && (
+          <Union
+            ingestionCss={ingestionCss}
+            nodeId={selectedNode?.id}
+            key={`expression${selectedNode?.id}`}
+            pipeline={query?.pipeline ? query?.pipeline : pipelineData}
+          />
+        )} */}
       </div>
       <div ref={messagesEndRef} ></div>
     </>
