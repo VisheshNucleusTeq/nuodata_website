@@ -2,7 +2,11 @@ import retry from "async-retry";
 import { showError } from "../components/helper/errorMsg";
 import { BaseURL as ApiInstance } from "./enviroment";
 
-export const fetch_retry_get = async (endpoint, payload = {}) => {
+export const fetch_retry_get = async (
+  endpoint,
+  payload = {},
+  showErrorStatus = true
+) => {
   try {
     return await retry(
       async () => {
@@ -21,12 +25,17 @@ export const fetch_retry_get = async (endpoint, payload = {}) => {
     );
   } catch (error) {
     error?.response?.status != 401 &&
+      showErrorStatus &&
       showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
 
-export const fetch_retry_post = async (endpoint, payload = {}) => {
+export const fetch_retry_post = async (
+  endpoint,
+  payload = {},
+  showErrorStatus = true
+) => {
   try {
     return await retry(
       async () => {
@@ -45,12 +54,17 @@ export const fetch_retry_post = async (endpoint, payload = {}) => {
     );
   } catch (error) {
     error?.response?.status != 401 &&
+      showErrorStatus &&
       showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
 
-export const fetch_retry_put = async (endpoint, payload = {}) => {
+export const fetch_retry_put = async (
+  endpoint,
+  payload = {},
+  showErrorStatus = true
+) => {
   try {
     return await retry(
       async () => {
@@ -69,12 +83,17 @@ export const fetch_retry_put = async (endpoint, payload = {}) => {
     );
   } catch (error) {
     error?.response?.status != 401 &&
+      showErrorStatus &&
       showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
 
-export const fetch_retry_delete = async (endpoint, payload = {}) => {
+export const fetch_retry_delete = async (
+  endpoint,
+  payload = {},
+  showErrorStatus = true
+) => {
   try {
     console.log("payload --- ", payload);
     return await retry(
@@ -94,12 +113,17 @@ export const fetch_retry_delete = async (endpoint, payload = {}) => {
     );
   } catch (error) {
     error?.response?.status != 401 &&
+      showErrorStatus &&
       showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
 
-export const fetch_retry_post_with_file = async (endpoint, payload = {}) => {
+export const fetch_retry_post_with_file = async (
+  endpoint,
+  payload = {},
+  showErrorStatus = true
+) => {
   try {
     const token = localStorage.getItem("authToken");
     return await retry(
@@ -124,12 +148,17 @@ export const fetch_retry_post_with_file = async (endpoint, payload = {}) => {
     );
   } catch (error) {
     error?.response?.status != 401 &&
+      showErrorStatus &&
       showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
 };
 
-export const fetch_retry_put_with_file = async (endpoint, payload = {}) => {
+export const fetch_retry_put_with_file = async (
+  endpoint,
+  payload = {},
+  showErrorStatus = true
+) => {
   try {
     const token = localStorage.getItem("authToken");
     return await retry(
@@ -154,6 +183,7 @@ export const fetch_retry_put_with_file = async (endpoint, payload = {}) => {
     );
   } catch (error) {
     error?.response?.status != 401 &&
+      showErrorStatus &&
       showError(error?.response?.data?.errorMessages);
     return { success: false, error: error?.response?.data?.errorMessages };
   }
