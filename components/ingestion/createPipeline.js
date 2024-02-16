@@ -4,6 +4,8 @@ import {
   CloseCircleOutlined,
   LeftOutlined,
   ReloadOutlined,
+  FileWordOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons";
 import {
   Badge,
@@ -559,6 +561,125 @@ const CreatePipeline = ({ ingestionCss }) => {
 
                   {/* <Badge count={"Valid"} showZero color='green' /> */}
                   {/* <Badge dot={true} color='green' /> */}
+
+                  <Space>
+                    <Button
+                      onClick={() => {
+                        setOpen(
+                          validation?.pipeline_status &&
+                            validation?.pipeline_status != "valid"
+                        );
+                      }}
+                      style={{
+                        color:
+                          validation?.pipeline_status &&
+                          validation?.pipeline_status != "valid"
+                            ? "red"
+                            : "green",
+                        // backgroundColor:
+                        //   validation?.pipeline_status &&
+                        //   validation?.pipeline_status != "valid"
+                        //     ? "red"
+                        //     : "green",
+                        borderColor:
+                          validation?.pipeline_status &&
+                          validation?.pipeline_status != "valid"
+                            ? "red"
+                            : "green",
+                        borderRadius: "25px",
+                        cursor:
+                          validation?.pipeline_status &&
+                          validation?.pipeline_status != "valid"
+                            ? "pointer"
+                            : "default",
+                      }}
+                      // disabled={
+                      //   !(
+                      //     validation?.pipeline_status &&
+                      //     validation?.pipeline_status != "valid"
+                      //   )
+                      // }
+                      // icon={(<ReloadOutlined
+                      //   style={{
+                      //     // color: "#FFF",
+                      //     borderRadius: "25px",
+                      //     fontSize: "1vw",
+                      //     cursor: "pointer",
+                      //   }}
+                      //   onClick={() => {
+                      //     getValidationData();
+                      //   }}
+                      //   spin={validateLoad}
+                      // />)}
+                    >
+                      <span>
+                        <span>
+                          <LeftOutlined />
+                        </span>
+                        &nbsp;
+                        <span>
+                          {`validation (${
+                            validation?.validations
+                              ? validation?.validations?.length
+                              : 0
+                          })`}{" "}
+                        </span>
+                        &nbsp; &nbsp;
+                        <span>
+                          {validation?.pipeline_status &&
+                          validation?.pipeline_status != "valid" ? (
+                            <CloseCircleOutlined
+                              style={{
+                                color: "#FFF",
+                                backgroundColor: "red",
+                                borderRadius: "25px",
+                              }}
+                            />
+                          ) : (
+                            <CheckCircleOutlined
+                              style={{
+                                color: "#FFF",
+                                backgroundColor: "green",
+                                borderRadius: "25px",
+                              }}
+                            />
+                          )}
+                        </span>
+                        &nbsp; &nbsp;
+                        <ReloadOutlined
+                          style={{
+                            // color: "#0c3246",
+                            borderRadius: "25px",
+                            fontSize: "1vw",
+                            cursor: "pointer",
+                            // border : "1px solid red"
+                            // boxShadow: "0 0 1px 1px rgba(0, 0, 0, 0.5)",
+                            // padding : "2px"
+                          }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            getValidationData();
+                          }}
+                          spin={validateLoad}
+                        />
+                      </span>
+                    </Button>
+                    {/* <Tooltip placement={"left"} title={"Reload Validation"}>
+                <ReloadOutlined
+                  style={{
+                    // color: "#FFF",
+                    borderRadius: "25px",
+                    fontSize: "1vw",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    getValidationData();
+                  }}
+                  spin={validateLoad}
+                />
+              </Tooltip> */}
+                  </Space>
 
                   <Tooltip
                     title={

@@ -109,7 +109,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
     setModalData({});
     const dataId = (id + "").split("_")[2];
     const data = await fetch_retry_get(
-      `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`
+      `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`, {}, false
     );
     if (data.success) {
       setModalData(data.data);
@@ -128,7 +128,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
       comment: null,
     });
     const data = await fetch_retry_get(
-      `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`
+      `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`, {}, false
     );
     if (data.success) {
       setModalData(data.data);
@@ -157,7 +157,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
     });
     setComment("");
     const data = await fetch_retry_get(
-      `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`
+      `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`, {}, false
     );
     if (data.success) {
       setModalData(data.data);
@@ -200,7 +200,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
       },
     });
     const data = await fetch_retry_get(
-      `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`
+      `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`, {}, false
     );
     if (data.success) {
       setModalData(data.data);
@@ -440,7 +440,7 @@ const ValidatePopup = ({ fileId, dataModernizationCss }) => {
                               data
                             );
                             const result = await fetch_retry_get(
-                              `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`
+                              `${VALIDATEFILEDETAILS}${fileId}/entity/${dataId}`, {}, false
                             );
                             if (result.success) {
                               setModalData(result.data);
