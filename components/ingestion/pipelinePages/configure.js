@@ -8,17 +8,31 @@ import {
   Typography,
   Space,
   Radio,
+  Badge,
+  Progress,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import cronstrue from "cronstrue";
 import timeZone from "../../helper/timeZone";
 import { SlackCircleFilled } from "@ant-design/icons";
+import Icon from "@ant-design/icons/lib/components/Icon";
 
 const Configure = ({ ingestionCss }) => {
   const [cronExpression, setCronExpression] = useState("");
+  const [isCronExpressionValid, setIsCronExpressionValid] = useState(
+    cronExpression != ""
+  );
   const [description, setDescription] = useState("");
-  const [selectedScheduleOption, setSelectedScheduleOption] = useState("");
+  const [selectedScheduleOption, setSelectedScheduleOption] = useState("Day");
   const scheduleOption = ["Day", "Custom", "Minute", "Hour", "Week"];
+  const [selectedOptionValue, setSelectedOptionValue] = useState({
+    Day: { hour: "0", minute: "0" },
+    Custom: "",
+    Minute: { minute: "0" },
+    Hour: { minute: "0" },
+    Week: { hour: "0", minute: "0", dayOfWeek: "0" },
+  });
+
   const [params, setParams] = useState({
     "spark.executor.cores": "4",
     "spark.executor.memory": "14G",
@@ -40,25 +54,98 @@ const Configure = ({ ingestionCss }) => {
     label: i.toString().padStart(2, "0"),
     value: i.toString().padStart(2, "0"),
   }));
-  const daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+  const daysOfWeekOptions = [
+    { label: "Sunday", value: 0 },
+    { label: "Monday", value: 1 },
+    { label: "Tuesday", value: 2 },
+    { label: "Wednesday", value: 3 },
+    { label: "Thursday", value: 4 },
+    { label: "Friday", value: 5 },
+    { label: "Saturday", value: 6 },
   ];
-  const handleInputChange = (event) => {
-    setCronExpression(event.target.value);
-  };
 
   const handleParse = () => {
     try {
       const description = cronstrue.toString(cronExpression);
+      setIsCronExpressionValid(true);
       setDescription(description);
     } catch (error) {
-      setDescription(`Error parsing cron expression: ${error.message}`);
+      if (cronExpression !== "") {
+        setDescription("Invalid expression");
+        setIsCronExpressionValid(false);
+      }
+    }
+  };
+  const handleHourChange = (value) => {
+    setSelectedOptionValue({
+      ...selectedOptionValue,
+      [selectedScheduleOption]: {
+        ...selectedOptionValue[selectedScheduleOption],
+        hour: value,
+      },
+    });
+
+    switch (selectedScheduleOption) {
+      case "Day":
+        setCronExpression(
+          `${selectedOptionValue[selectedScheduleOption]["minute"]} ${value} * * *`
+        );
+        break;
+      case "Week":
+        setCronExpression(
+          `${selectedOptionValue[selectedScheduleOption]["minute"]} ${value} * * ${selectedOptionValue[selectedScheduleOption]["dayOfWeek"]}`
+        );
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleMinuteChange = (value) => {
+    setSelectedOptionValue({
+      ...selectedOptionValue,
+      [selectedScheduleOption]: {
+        ...selectedOptionValue[selectedScheduleOption],
+        minute: value,
+      },
+    });
+
+    switch (selectedScheduleOption) {
+      case "Day":
+        setCronExpression(
+          `${value} ${selectedOptionValue[selectedScheduleOption]["hour"]} * * *`
+        );
+        break;
+      case "Hour":
+        setCronExpression(`${value} * * * *`);
+        break;
+      case "Minute":
+        setCronExpression(`*/${value} * * * *`);
+        break;
+      case "Week":
+        setCronExpression(
+          `${value} ${selectedOptionValue[selectedScheduleOption]["hour"]} * * ${selectedOptionValue[selectedScheduleOption]["dayOfWeek"]}`
+        );
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleDayChange = (e) => {
+    const value = e.target.value;
+    setSelectedOptionValue({
+      ...selectedOptionValue,
+      [selectedScheduleOption]: {
+        ...selectedOptionValue[selectedScheduleOption],
+        dayOfWeek: value,
+      },
+    });
+
+    if (selectedScheduleOption === "Week") {
+      setCronExpression(
+        `${selectedOptionValue[selectedScheduleOption]["minute"]} ${selectedOptionValue[selectedScheduleOption]["hour"]} * * ${value}`
+      );
     }
   };
 
@@ -74,7 +161,7 @@ const Configure = ({ ingestionCss }) => {
           >
             <Select
               className={ingestionCss.inputSelect}
-              onChange={handleInputChange}
+              onChange={handleHourChange}
               options={hoursOptions}
             />
           </Form.Item>
@@ -88,8 +175,9 @@ const Configure = ({ ingestionCss }) => {
           >
             <Select
               className={ingestionCss.inputSelect}
-              onChange={handleInputChange}
+              onChange={handleMinuteChange}
               options={minutesOptions}
+              value={selectedOptionValue[selectedScheduleOption]["Minute"]}
             />
           </Form.Item>
         </Col>
@@ -106,7 +194,7 @@ const Configure = ({ ingestionCss }) => {
           <Input
             placeholder="****?"
             className={ingestionCss.input}
-            onChange={handleInputChange}
+            onChange={(e) => setCronExpression(e.target.value)}
           />
         </Form.Item>
       </Col>
@@ -121,8 +209,9 @@ const Configure = ({ ingestionCss }) => {
         >
           <Select
             className={ingestionCss.inputSelect}
-            onChange={handleInputChange}
+            onChange={handleMinuteChange}
             options={minutesOptions}
+            value={selectedOptionValue[selectedScheduleOption]["Minute"]}
           />
         </Form.Item>
       </Col>
@@ -133,11 +222,12 @@ const Configure = ({ ingestionCss }) => {
           className={ingestionCss.antFormItem}
           label={"Minute"}
           labelAlign={"left"}
+          value={selectedOptionValue[selectedScheduleOption]["Minute"]}
           required
         >
           <Select
             className={ingestionCss.inputSelect}
-            onChange={handleInputChange}
+            onChange={handleMinuteChange}
             options={minutesOptions}
           />
         </Form.Item>
@@ -154,8 +244,9 @@ const Configure = ({ ingestionCss }) => {
           >
             <Select
               className={ingestionCss.inputSelect}
-              onChange={handleInputChange}
+              onChange={handleHourChange}
               options={hoursOptions}
+              value={selectedOptionValue[selectedScheduleOption]["Hour"]}
             />
           </Form.Item>
         </Col>
@@ -168,8 +259,9 @@ const Configure = ({ ingestionCss }) => {
           >
             <Select
               className={ingestionCss.inputSelect}
-              onChange={handleInputChange}
+              onChange={handleMinuteChange}
               options={minutesOptions}
+              value={selectedOptionValue[selectedScheduleOption]["Minute"]}
             />
           </Form.Item>
         </Col>
@@ -180,10 +272,13 @@ const Configure = ({ ingestionCss }) => {
             labelAlign={"left"}
             required
           >
-            <Radio.Group defaultValue="Sunday">
-              {daysOfWeek.map((day) => (
-                <Radio key={day} value={day}>
-                  {day}
+            <Radio.Group
+              value={selectedOptionValue[selectedScheduleOption]["dayOfWeek"]}
+              onChange={handleDayChange}
+            >
+              {daysOfWeekOptions.map((day) => (
+                <Radio key={day.value} value={day.value}>
+                  {day.label}
                 </Radio>
               ))}
             </Radio.Group>
@@ -213,7 +308,10 @@ const Configure = ({ ingestionCss }) => {
                     className={ingestionCss.inputSelect}
                     value={selectedScheduleOption}
                     placeholder={"select"}
-                    onChange={(option) => setSelectedScheduleOption(option)}
+                    onChange={(option) => {
+                      setCronExpression("");
+                      setSelectedScheduleOption(option);
+                    }}
                     options={scheduleOption.map((val) => {
                       return { label: val, value: val };
                     })}
@@ -221,6 +319,19 @@ const Configure = ({ ingestionCss }) => {
                 </Form.Item>
               </Col>
               {optionChild[selectedScheduleOption]}
+              <Col span={24}>
+                <Space size={8}>
+                  <Typography.Text className="right-panel-label">
+                    Scheduled to run
+                  </Typography.Text>
+                  <Typography.Text
+                    className="font-medium"
+                    data-test-id="cron-string"
+                  >
+                    {description}
+                  </Typography.Text>
+                </Space>
+              </Col>
             </Row>
           </Col>
           <Col span={24}>
