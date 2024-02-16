@@ -122,9 +122,9 @@ function SignInRight({ loginCss }) {
             Login
           </Button>
           <Divider plain></Divider>
-          <a href="/api/auth/login" style={{ color: "red" }}>
+          {/* <a href="/api/auth/login" style={{ color: "red" }}>
             SSO Login
-          </a>
+          </a> */}
           {/*<GoogleOAuthProvider clientId="995061213404-vbdmb63jpqa8ua22u5jhlc9t9f4r8h3m.apps.googleusercontent.com">
             <GoogleLogin
               onSuccess={(credentialResponse) => {

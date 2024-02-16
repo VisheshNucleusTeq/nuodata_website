@@ -6,6 +6,7 @@ import {
   ReloadOutlined,
 } from "@ant-design/icons";
 import {
+  Badge,
   Button,
   Col,
   Collapse,
@@ -30,6 +31,10 @@ const Build = dynamic(() => import("./pipelinePages/build"), {
 });
 
 const Define = dynamic(() => import("./pipelinePages/define"), {
+  loading: () => <Loading />,
+});
+
+const Configure = dynamic(() => import("./pipelinePages/configure"), {
   loading: () => <Loading />,
 });
 
@@ -94,7 +99,8 @@ const CreatePipeline = ({ ingestionCss }) => {
     dispatch(loderShowHideAction(true));
     const result = await fetch_retry_post(`${CONVERTPIPELINE}${id}`);
     if (result?.success) {
-      runPipeline(id);
+      dispatch(loderShowHideAction(false));
+      message.success(result?.data?.message);
     } else {
       dispatch(loderShowHideAction(false));
     }
@@ -124,21 +130,40 @@ const CreatePipeline = ({ ingestionCss }) => {
     }
   };
 
+  const validateAndSavePipeline = async () => {
+    const id = query?.pipeline ? query?.pipeline : pipelineData;
+    if (id) {
+      dispatch(loderShowHideAction(true));
+      setValidateLoad(true);
+      const validationData = await fetch_retry_get(
+        `${GETPIPELINEERROR}${id}/validate`
+      );
+      if (validationData.success) {
+        setValidateStatus(validationData?.data?.pipeline_status != "valid");
+        setValidation(validationData.data);
+        if (validationData?.data?.pipeline_status == "valid") {
+          convertPipeline(id);
+        } else {
+          dispatch(loderShowHideAction(false));
+          message.error("Please fix the validation before saving.");
+        }
+      } else {
+        dispatch(loderShowHideAction(false));
+      }
+      setValidateLoad(false);
+    }
+  };
+
   useEffect(() => {
-    // const delayDebounceFn = setTimeout(() => {
     getWorkSpaceData();
     setSelectedWorkSpace();
-    // }, 500);
-    // return () => clearTimeout(delayDebounceFn);
   }, [workspace, typeof window !== "undefined"]);
 
   useEffect(() => {
-    // const delayDebounceFn = setTimeout(() => {
     query?.pipeline || pipelineData
-      ? setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData)
+      ? (setOldPipeline(query?.pipeline ? query?.pipeline : pipelineData),
+        getValidationData())
       : null;
-    // }, 500);
-    // return () => clearTimeout(delayDebounceFn);
   }, [workspace, query?.pipeline, pipelineData]);
 
   return (
@@ -328,7 +353,7 @@ const CreatePipeline = ({ ingestionCss }) => {
             )}
           </Col>
 
-          <Col
+          {/* <Col
             span={12}
             style={{
               display: "flex",
@@ -402,12 +427,12 @@ const CreatePipeline = ({ ingestionCss }) => {
                 />
               </Tooltip>
             </Space>
-          </Col>
+          </Col> */}
 
           <Divider style={{ margin: "0vh 0vh 1vh 0vh" }}></Divider>
           <Col span={24} className={ingestionCss.pipelineStepsRow}>
             <Row className={ingestionCss.pipelineStepsRow__}>
-              <Col span={16}>
+              <Col span={14}>
                 <Row align={"space-between1"}>
                   {/* {["Define", "Build", "Test", "Configure", "Deploy"].map( */}
                   {["Define", "Build", "Configure", "Deploy"].map((data, i) => {
@@ -451,8 +476,112 @@ const CreatePipeline = ({ ingestionCss }) => {
                   })}
                 </Row>
               </Col>
-              <Col span={8} className={ingestionCss.pipelineBtns}>
+              <Col span={10} className={ingestionCss.pipelineBtns}>
                 <Space>
+                  {/* <span>
+                    {validation?.pipeline_status &&
+                    validation?.pipeline_status != "valid" ? (
+                      <Space>
+                        <Button
+                          onClick={() => {
+                            setOpen(
+                              validation?.pipeline_status &&
+                                validation?.pipeline_status != "valid"
+                            );
+                          }}
+                          disabled={
+                            !(
+                              validation?.pipeline_status &&
+                              validation?.pipeline_status != "valid"
+                            )
+                          }
+                        >
+                          <span>
+                            <span>
+                              <LeftOutlined />
+                            </span>
+                            &nbsp;
+                            <span>
+                              {`validation (${
+                                validation?.validations
+                                  ? validation?.validations?.length
+                                  : 0
+                              })`}{" "}
+                            </span>
+                            &nbsp; &nbsp;
+                            <span>
+                              {validation?.pipeline_status &&
+                              validation?.pipeline_status != "valid" ? (
+                                <CloseCircleOutlined
+                                  style={{
+                                    color: "#FFF",
+                                    backgroundColor: "red",
+                                    borderRadius: "25px",
+                                  }}
+                                />
+                              ) : (
+                                <CheckCircleOutlined
+                                  style={{
+                                    color: "#FFF",
+                                    backgroundColor: "green",
+                                    borderRadius: "25px",
+                                  }}
+                                />
+                              )}
+                            </span>
+                          </span>
+                        </Button>
+                        <Tooltip placement={"left"} title={"Reload Validation"}>
+                          <ReloadOutlined
+                            style={{
+                              // color: "#FFF",
+                              borderRadius: "25px",
+                              fontSize: "1vw",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              getValidationData();
+                            }}
+                            spin={validateLoad}
+                          />
+                        </Tooltip>
+                      </Space>
+                    ) : (
+                      <CheckCircleOutlined
+                        style={{
+                          color: "#FFF",
+                          backgroundColor: "green",
+                          borderRadius: "25px",
+                        }}
+                      />
+                    )}
+                  </span> */}
+
+                  {/* <Badge count={"Valid"} showZero color='green' /> */}
+                  {/* <Badge dot={true} color='green' /> */}
+
+                  <Tooltip
+                    title={
+                      validation?.pipeline_status == "valid"
+                        ? ""
+                        : "Please resolve the validation issue to continue."
+                    }
+                  >
+                    <>
+                      <Button
+                        disabled={validateStatus}
+                        className={ingestionCss.saveBtn}
+                        onClick={async () => {
+                          const id = query?.pipeline
+                            ? query?.pipeline
+                            : pipelineData;
+                          validateAndSavePipeline();
+                        }}
+                      >
+                        Save Pipeline
+                      </Button>
+                    </>
+                  </Tooltip>
                   <Tooltip
                     title={
                       validation?.pipeline_status == "valid"
@@ -506,6 +635,14 @@ const CreatePipeline = ({ ingestionCss }) => {
             {selectedTab === 1 && (
               <>
                 <Build
+                  ingestionCss={ingestionCss}
+                  setSelectedTab={setSelectedTab}
+                />
+              </>
+            )}
+            {selectedTab === 2 && (
+              <>
+                <Configure
                   ingestionCss={ingestionCss}
                   setSelectedTab={setSelectedTab}
                 />

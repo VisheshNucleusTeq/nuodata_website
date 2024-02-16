@@ -194,7 +194,7 @@ const Define = ({
               label={"Pipeline Name"}
               labelAlign={"left"}
               name={"name"}
-              tooltip="Accept only alphanumeric with underscore. Ex: Pipeline_v1"
+              tooltip="Pipeline name could be only alphanumeric value with an underscore. Ex: Pipeline_v1"
               rules={[
                 {
                   required: true,
