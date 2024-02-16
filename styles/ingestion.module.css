@@ -543,3 +543,77 @@
   display: flex;
   justify-content: end;
 }
+
+.AddEnvJSON {
+  /* border-radius: 100px;
+  display: inline-flex;
+  height: 32px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0; */
+  color: var(--Black5, #7F7F7F);
+  text-align: center;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  border: none;
+  /* 133.333% */
+  text-transform: capitalize;
+}
+
+.AddEnvJSON span {
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+
+.configureForm {
+  padding: 16px;
+}
+
+.rmBtn {
+  color: var(--Black5, #7F7F7F);
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  border: none;
+  text-transform: capitalize;
+}
+
+.cnfSubmitBtn,
+.cnfSubmitBtn:hover,
+.cnfSubmitBtn:active,
+.cnfSubmitBtn:visited,
+.cnfSubmitBtn:focus {
+  border-radius: 1vh;
+  border-radius: 100px;
+  color: #fff !important;
+  display: inline-flex;
+  height: 32px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  font-size: 12px;
+  background: var(--Primary, #E74860);
+  border-color: var(--Primary, #E74860);
+}
+
+.daysOfWeekBtn {
+  display: inline-flex;
+  height: 32px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+}
