@@ -10,6 +10,7 @@ import {
   Radio,
   Badge,
   Progress,
+  Switch,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import cronstrue from "cronstrue";
@@ -293,8 +294,38 @@ const Configure = ({ ingestionCss }) => {
 
   return (
     <>
+      <Row className={ingestionCss.configureFormHeadingRow}>
+        <Col>
+          <Typography.Text className={ingestionCss.configureFormHeading}>
+            Engine:<span style={{ color: "var(--Primary)" }}> {"Spark"}</span>
+          </Typography.Text>
+        </Col>
+      </Row>
       <Form layout="vertical" className={ingestionCss.configureForm}>
+        <Row style={{ marginBottom: "10px" }}>
+          <Col span={24}>
+            <Typography.Text
+              style={{ fontSize: "16px", fontWeight: 500 }}
+              className={ingestionCss.configureFormHeading}
+            >
+              Schedule Pipeline{" "}
+            </Typography.Text>
+          </Col>
+        </Row>
         <Row>
+          <Col span={24}>
+            <Form.Item
+              className={ingestionCss.antFormItem}
+              label={"Run on a schedule (Recommended)"}
+              labelAlign={"left"}
+            >
+              <Switch
+                style={{ width: "4vw", height: "1.75vw" }}
+                defaultChecked
+              ></Switch>
+            </Form.Item>
+          </Col>
+
           <Col span={24}>
             <Row gutter={16}>
               <Col span={8}>
@@ -319,16 +350,32 @@ const Configure = ({ ingestionCss }) => {
                 </Form.Item>
               </Col>
               {optionChild[selectedScheduleOption]}
-              <Col span={24}>
+              <Col span={24} style={{ marginBottom: "8px" }}>
                 <Space size={8}>
-                  <Typography.Text className="right-panel-label">
-                    Scheduled to run
-                  </Typography.Text>
-                  <Typography.Text
-                    className="font-medium"
-                    data-test-id="cron-string"
-                  >
-                    {description}
+                  <Typography.Text className={ingestionCss.cronDescription}>
+                    {isCronExpressionValid && cronExpression !== "" && (
+                      <>
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 18 18"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M5 9.17407L7.14645 11.4451C7.34171 11.6516 7.65829 11.6516 7.85355 11.4451L13 6M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z"
+                            stroke="#309133"
+                            stroke-linecap="round"
+                          />
+                        </svg>
+                        Scheduled to run
+                      </>
+                    )}
+                    <span
+                      style={{ color: isCronExpressionValid ? "" : "#FF0000" }}
+                    >
+                      {description}
+                    </span>
                   </Typography.Text>
                 </Space>
               </Col>
@@ -480,6 +527,14 @@ const Configure = ({ ingestionCss }) => {
             </Form.Item>
           </Col>
         </Row>
+        <div className={ingestionCss.generalLastDiv}>
+          <Space>
+            <Button className={ingestionCss.defineSave}>Save & exit</Button>
+            <Button className={ingestionCss.defineSaveAndBuild}>
+              Save & Deploy
+            </Button>
+          </Space>
+        </div>
       </Form>
     </>
   );

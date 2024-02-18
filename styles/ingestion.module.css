@@ -577,6 +577,12 @@
 
 .configureForm {
   padding: 16px;
+  font-weight: 500;
+}
+
+.configureForm .antFormItem label {
+  font-size: 14px !important;
+  font-weight: 500;
 }
 
 .rmBtn {
@@ -616,4 +622,27 @@
   padding: 8px 16px;
   justify-content: center;
   align-items: center;
+}
+
+.configureFormHeadingRow {
+  border: 1px solid #ECECEC;
+  height: 54px;
+  padding: 16px;
+}
+
+.configureFormHeading {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #333333;
+}
+.cronDescription {
+  height: 15px;
+  gap: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: lowercase;
 }

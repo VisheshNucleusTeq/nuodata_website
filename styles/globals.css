@@ -745,5 +745,9 @@ html {
 }
 
 .ant-table-title b {
-  color:  #e74860 !important;
+  color: #e74860 !important;
+}
+
+.ant-switch-checked {
+  background-color: var(--Primary) !important;
 }
