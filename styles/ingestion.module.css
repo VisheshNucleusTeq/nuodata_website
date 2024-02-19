@@ -646,3 +646,9 @@
   align-items: center;
   text-transform: lowercase;
 }
+.textInput {
+  height: 32px;
+  border-radius: 5px;
+  resize: none;
+  width: 100%;
+}
