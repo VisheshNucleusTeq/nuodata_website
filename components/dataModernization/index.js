@@ -62,14 +62,14 @@ export default function DataModernization() {
         style={{ borderRadius: "5px" }}
       >
         <Row>
-          <Col span={24} className={dataModernizationCss.projectName}>
-            <span>
-              Workspace:&nbsp;
-              <a>Demo</a>
-            </span>
-
-            {/* {JSON.stringify(query)} */}
-          </Col>
+          {projectDetails && projectDetails?.name && (
+            <Col span={24} className={dataModernizationCss.projectName}>
+              <span>
+                Name:&nbsp;
+                <a>{projectDetails?.name}</a>
+              </span>
+            </Col>
+          )}
           <Divider style={{ margin: "0vh 0vh 1vh 0vh" }}></Divider>
           <Col span={24} className={dataModernizationCss.projectStepsRow}>
             <Row align={"space-between"} style={{ width: "100%" }}>
