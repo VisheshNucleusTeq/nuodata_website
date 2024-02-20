@@ -36,7 +36,7 @@ jobs:
             aws-region: us-west-1
         
       - name: Generating Next JS Build
-        run: npm install && npm run build
+        run: rm -rf node_modules && rm -f package-lock.json && npm install && npm run build
 
       - name: Prod Deploying  build to S3 bucket
         if: ${{ github.ref == 'refs/heads/master' }}
