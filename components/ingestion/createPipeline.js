@@ -765,7 +765,10 @@ const CreatePipeline = ({ ingestionCss }) => {
               <>
                 <Configure
                   ingestionCss={ingestionCss}
+                  workspaceData={workspaceData}
+                  workspace={workspace}
                   setSelectedTab={setSelectedTab}
+                  pipelineDetails={pipelineDetails}
                 />
               </>
             )}

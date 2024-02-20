@@ -763,7 +763,6 @@ html {
   align-items: center;
 }
 
-.ant-carousel .slick-dots {
-  justify-content: left !important;
-  margin: 0;
+.ant-switch-checked {
+  background-color: var(--Primary) !important;
 }
