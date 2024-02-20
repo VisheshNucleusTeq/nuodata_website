@@ -1,65 +1,72 @@
-import { Col, Row, Button } from "antd";
-import { AnimationOnScroll } from "react-animation-on-scroll";
-import ReactFlowInfo from "./reactflowinfo";
-import Header from "../../common/newLayout/header";
+import { Carousel as CarouselComponent, Col, Row, Button } from "antd";
+import Header from "../header";
 
 export default function InfoNew({ HomeCss }) {
   return (
     <div className={HomeCss.mainDiv}>
       <Header />
-      <div className={HomeCss.pipelineDiv}>
-        <iframe
-          src="/all-graph/home/banner/home-pipeline.html"
-          style={{ width: "20vw", height: "20vw", border: "none" }}
-        />
-      </div>
-      <Row className={HomeCss.mainDivChild}>
-        <Col xs={0} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
-        <Col
-          xs={24}
-          sm={22}
-          md={18}
-          lg={16}
-          xl={10}
-          xxl={10}
-          className={HomeCss.homeInfoText}
-        >
-          <div>
-            <h1>ONE PLATFORM</h1>
-            <h2>
-              FOR ALL ENTERPRISE DATA
-              <span className={HomeCss.spanText}> MODERNIZATION</span> &
-              <span className={HomeCss.spanText}> MANAGEMENT</span> NEEDS.
-            </h2>
-            <Button className={HomeCss.tryNowBtn}>Try It Now</Button>
-          </div>
+      <Row className={HomeCss.mainDivChild} justify={"center"} align={"middle"}>
+        <Col xs={24} sm={22} md={22} lg={20} xl={20} xxl={20}>
+          <CarouselComponent
+            effect={"fade"}
+            dots={true}
+            autoplay={true}
+            draggable={true}
+            autoplaySpeed={3000}
+            className="home-carousel"
+          >
+            <Row>
+              <div className={HomeCss.pipelineDiv}>
+                <iframe
+                  src="/all-graph/home/banner/home-pipeline.html"
+                  style={{ width: "20vw", height: "20vw", border: "none" }}
+                />
+              </div>
+              <Col
+                xs={24}
+                sm={22}
+                md={18}
+                lg={16}
+                xl={14}
+                xxl={14}
+                className={HomeCss.homeInfoText}
+              >
+                <div>
+                  <h1>ONE PLATFORM</h1>
+                  <h2>
+                    FOR ALL ENTERPRISE DATA
+                    <span className={HomeCss.spanText}> MODERNIZATION</span> &
+                    <span className={HomeCss.spanText}> MANAGEMENT</span> NEEDS.
+                  </h2>
+                  <Button className={HomeCss.tryNowBtn}>Try It Now</Button>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col
+                xs={24}
+                sm={22}
+                md={18}
+                lg={16}
+                xl={11}
+                xxl={11}
+                className={HomeCss.homeInfoText}
+              >
+                <div>
+                  <h2>With a proven</h2>
+                  <h1>
+                    <span>7-step </span>approach
+                  </h1>
+                  <h2>
+                    NuoData is the only platform to migrate and modernize
+                    enterprise data from ANY source to ANY cloud platform.
+                  </h2>
+                  <Button className={HomeCss.tryNowBtn}>Try It Now</Button>
+                </div>
+              </Col>
+            </Row>
+          </CarouselComponent>
         </Col>
-
-
-
-        
-        {/* <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}></Col>
-        <Col
-          xs={10}
-          sm={10}
-          md={10}
-          lg={6}
-          xl={10}
-          xxl={10}
-        >
-          <div className={HomeCss.infoPipeline}>
-            <div>
-              <iframe
-                src="/all-graph/home/banner/home-pipeline.html"
-                style={{
-                  border: "none",
-                  width: "25vw",
-                  height: "25vw",
-                }}
-              />
-            </div>
-          </div>
-        </Col> */}
       </Row>
     </div>
   );

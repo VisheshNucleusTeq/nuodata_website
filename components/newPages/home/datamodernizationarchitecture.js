@@ -1,6 +1,5 @@
 import { Button, Col, Row, Image } from "antd";
-import Link from "next/link";
-import { RiseOutlined } from "@ant-design/icons";
+
 
 export default function DataModernizationArchitectureNew({ HomeCss }) {
   return (
@@ -29,13 +28,13 @@ export default function DataModernizationArchitectureNew({ HomeCss }) {
         />
       </Col>
 
-      <Col span={24} className={HomeCss.howNuoDataworksBtn}>
+      {/* <Col span={24} className={HomeCss.howNuoDataworksBtn}>
         <Link prefetch href="/how-it-works">
           <Button>
             Explore How NuoData works <RiseOutlined />
           </Button>
         </Link>
-      </Col>
+      </Col> */}
     </Row>
   );
 }
