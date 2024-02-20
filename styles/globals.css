@@ -762,3 +762,8 @@ html {
   justify-content: center;
   align-items: center;
 }
+
+.ant-carousel .slick-dots {
+  justify-content: left !important;
+  margin: 0;
+}

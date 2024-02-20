@@ -2,6 +2,8 @@ import React from "react";
 import { Col, Row, List, Image, Button } from "antd";
 import FooterCss from "../../styles/newStyles/homeNew.module.css";
 import Router from "next/router";
+import Link from "next/link";
+import { RiseOutlined } from "@ant-design/icons";
 import { RightCircleOutlined } from "@ant-design/icons";
 
 const Footer = () => {
@@ -58,82 +60,92 @@ const Footer = () => {
   ];
 
   return (
-    <Row style={{ backgroundColor: "#0c3246" }}>
-      <Col span={24}>
-        <Row
-          style={{ backgroundColor: "#0c3246", padding: "6vh 0" }}
-          justify={"center"}
+    <div>
+      <Row>
+        <Col span={24} className={FooterCss.howNuoDataworksBtn}>
+          <Link prefetch href="/how-it-works">
+            <Button>
+              Explore How NuoData works <RiseOutlined />
+            </Button>
+          </Link>
+        </Col>
+      </Row>
+      <Row style={{ backgroundColor: "#1A1A1A" }}>
+        <Col span={24} style={{ backgroundColor: "#1A1A1A", padding: "6vh 0" }}>
+          <Row justify={"center"}>
+            {footerData.map((column, index) => (
+              <Col
+                key={index}
+                xs={24}
+                sm={12}
+                md={8}
+                lg={6}
+                xl={6}
+                className={FooterCss.footerCol}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <div className={FooterCss.footerColChild}>
+                  <h1
+                    onClick={column.onClick}
+                    style={{
+                      cursor: column.onClick ? "pointer" : "default",
+                    }}
+                  >
+                    {column.title}
+                  </h1>
+                  <List>
+                    {column.items.map((item, itemIndex) =>
+                      typeof item === "string" ? (
+                        <p key={itemIndex} style={{ color: "#FFF" }}>
+                          {item}
+                        </p>
+                      ) : (
+                        <Button
+                          key={itemIndex}
+                          className={item.className}
+                          icon={
+                            item.logo ? (
+                              <Image
+                                src={item.logo}
+                                preview={false}
+                                style={{ paddingRight: "1em" }}
+                              />
+                            ) : (
+                              ""
+                            )
+                          }
+                        >
+                          {item.name}
+                          {item.icon}
+                        </Button>
+                      )
+                    )}
+                  </List>
+                </div>
+              </Col>
+            ))}
+          </Row>
+        </Col>
+        <Col span={24} style={{ background: "#1A1A1A" }} />
+        <Col
+          xs={24}
+          sm={24}
+          md={24}
+          lg={24}
+          xl={24}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "12px",
+            background: "#141414",
+          }}
         >
-          {footerData.map((column, index) => (
-            <Col
-              key={index}
-              xs={24}
-              sm={12}
-              md={8}
-              lg={6}
-              xl={6}
-              className={FooterCss.footerCol}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <div className={FooterCss.footerColChild}>
-                <h1
-                  onClick={column.onClick}
-                  style={{
-                    cursor: column.onClick ? "pointer" : "default",
-                  }}
-                >
-                  {column.title}
-                </h1>
-                <List>
-                  {column.items.map((item, itemIndex) =>
-                    typeof item === "string" ? (
-                      <p key={itemIndex} style={{ color: "#FFF" }}>
-                        {item}
-                      </p>
-                    ) : (
-                      <Button
-                        key={itemIndex}
-                        className={item.className}
-                        icon={
-                          item.logo ? (
-                            <Image
-                              src={item.logo}
-                              preview={false}
-                              style={{ paddingRight: "1em" }}
-                            />
-                          ) : (
-                            ""
-                          )
-                        }
-                      >
-                        {item.name}
-                        {item.icon}
-                      </Button>
-                    )
-                  )}
-                </List>
-              </div>
-            </Col>
-          ))}
-        </Row>
-      </Col>
-      <Col
-        span={24}
-        style={{ borderTop: "2px solid #3D5B6B", paddingTop: "12px" }}
-      />
-      <Col
-        xs={24}
-        sm={24}
-        md={24}
-        lg={24}
-        xl={24}
-        style={{ display: "flex", justifyContent: "center" }}
-      >
-        <p style={{ color: "#FFFFFF" }}>
-          © {new Date().getFullYear()} NuoData Inc. All Rights Reserved. 2023
-        </p>
-      </Col>
-    </Row>
+          <p style={{ color: "#FFFFFF" }}>
+            © {new Date().getFullYear()} NuoData Inc. All Rights Reserved. 2023
+          </p>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
