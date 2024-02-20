@@ -136,6 +136,7 @@
   height: 100%;
   background: linear-gradient(314deg, #0c3246 0%, #45374c 100%), #0c3246;
   position: relative;
+  padding-bottom: 5rem;
 }
 
 .ECpipelineDiv {
@@ -355,7 +356,7 @@
   }
 
   .tabPositionCss {
-    margin-top: 4vw;
+    margin: 4vw 0;
   }
 }
 @media (max-width: 576px) {
@@ -493,13 +494,13 @@
   font-weight: bold;
 }
 
-.firstViewLine{
+.firstViewLine {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.firstViewCurcle{
+.firstViewCurcle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -508,27 +509,27 @@
   margin-bottom: -5px !important;
 }
 
-.firstViewCurcle div{
+.firstViewCurcle div {
   height: 3vw;
   width: 3vw;
   z-index: 99;
 }
 
-.firstView{
+.firstView {
 }
 
-.firstViewText, .firstViewLine, .firstViewImage{
-/* border: 1px solid red; */
+.firstViewText,
+.firstViewLine,
+.firstViewImage {
+  /* border: 1px solid red; */
 }
 
-.firstViewImage{
+.firstViewImage {
   display: flex;
   justify-content: center;
 }
 
 /* modernizee */
-
-
 
 /*  */
 
@@ -554,6 +555,33 @@
   color: #0c3246;
 }
 
+.howNuoDataworksBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14vh 0;
+  background-image: url("/auth/explore-btn-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.howNuoDataworksBtn button {
+  color: #e74860 !important;
+  font-weight: 400;
+  font-size: 18px;
+  height: 8vh;
+  border-radius: 5px;
+  border: 1px solid #e74860 !important;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.howNuoDataworksBtn button:hover {
+  border: 2px solid #e74860 !important;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+
 .infoRowSystemViewSystem {
   display: block;
 }
@@ -561,6 +589,43 @@
 .infoRowSystemViewmobile {
   display: none;
 }
+
+/* Footer */
+.footerCol {
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  border: none;
+}
+
+.footerColChild {
+  text-align: start;
+}
+
+.footerColChild h1 {
+  font-size: 22px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.footerColChild button,
+.footerColChild button:hover,
+.footerColChild button:active,
+.footerColChild button:focus {
+  background-color: transparent;
+  border: transparent;
+  color: #fff !important;
+  padding: 0;
+  display: flex;
+  justify-content: left;
+  align-items: center !important;
+}
+
+.footerColChild p {
+  line-height: 90%;
+}
+
+/* Footer */
 
 @media (max-width: 576px) {
   .infoRowSystemViewSystem {

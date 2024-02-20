@@ -1,0 +1,220 @@
+.signUpLeft {
+  background: linear-gradient(314deg, #0c3246 0%, #45374c 100%), #0c3246;
+  height: 100%;
+  max-height: 100vh;
+}
+
+.logo {
+  width: 40%;
+  height: 10%;
+  margin-bottom: 7rem;
+}
+
+.leftImage {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+}
+
+.flexView {
+  display: flex;
+  overflow-y: scroll;
+  height: 100%;
+  max-height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleStyle {
+  text-align: center;
+  font-size: 24px;
+  color: #1a1a1a;
+  margin-bottom: 3.75rem;
+}
+
+.signUpForm {
+  width: 100%;
+  height: 100%;
+  padding: 1.8rem 4rem;
+}
+
+.contactUsForm {
+  width: 100%;
+  height: 100%;
+  padding: 1.8rem 4rem;
+}
+
+.contactUsForm h1 {
+  text-align: center;
+  font-size: 24px;
+  color: #1a1a1a;
+  margin-bottom: 3.75rem !important;
+}
+
+.signUpFormInput {
+  height: 64px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: 1px solid #ced6da;
+  background-color: white !important;
+}
+
+.signUpFormInput:hover,
+.signUpFormInput:focus,
+.signUpFormInput:active {
+  border: 1px solid #ced6da !important;
+}
+
+.signUpFormInput::placeholder {
+  color: #3d5b6b !important;
+}
+
+.inputSelectGroup div {
+  height: 64px !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  border: 1px solid #d6d6d6 !important;
+  border-radius: 5px 0px 0px 5px !important;
+  resize: vertical !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.inputSelectGroup::placeholder {
+  color: #3d5b6b !important;
+}
+
+.signUpBtn {
+  height: 64px;
+  width: 21.875rem !important;
+  border-radius: 5px;
+  background: #e74860;
+  border: none !important;
+  margin: 20px 0 30px 0 !important;
+}
+
+.signUpBtn:hover {
+  height: 64px;
+  border-radius: 5px;
+  background: #ea5b70 !important;
+}
+
+.signUpBtn:focus {
+  height: 64px;
+  border-radius: 5px;
+  background: #ea5b70 !important;
+}
+
+.signin {
+  text-align: center;
+  padding-bottom: 1.8rem;
+  color: #0c3246 !important;
+}
+
+.cursorPointer {
+  cursor: pointer;
+  color: #0c3246 !important;
+}
+
+.desktopView {
+  display: flex;
+}
+
+.mobileView {
+  display: none;
+}
+
+.pipelineDiv {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.rightImg {
+  width: 100%;
+  height: 80vh;
+  border: none;
+  margin-top: 10vh;
+}
+
+.formItem {
+  margin-bottom: 20px !important;
+}
+
+@media (max-width: 992px) {
+  .desktopView {
+    display: none;
+  }
+
+  .mobileView {
+    display: flex;
+  }
+
+  .contactUsForm {
+    padding: 1.875rem 0.75rem;
+  }
+
+  .signUpFormInput {
+    height: 46px;
+  }
+
+  .signUpBtn {
+    height: 46px;
+    margin-top: 10px 0 20px 0 !important;
+  }
+
+  .inputSelectGroup div {
+    height: 46px !important;
+  }
+
+  .signUpLeft {
+    height: 18.25;
+  }
+
+  .rightImg {
+    width: 60%;
+    height: 50vh;
+    margin: 2vh 0 -2vh 0;
+  }
+
+  .sourceRow {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .contactUsForm h1 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 1.875rem;
+  }
+
+  .rightImg {
+    width: 80%;
+    height: 50vh;
+  }
+
+  .logo {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sourceRow {
+    margin-top: 2.5rem;
+  }
+
+  .pipelineDiv {
+    top: -110px;
+  }
+}

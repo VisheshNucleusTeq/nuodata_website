@@ -1,16 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 :root {
-  --Secondary9: #0C3246;
-  --Secondary4: #9EADB5;
-  --Primary: #E74860;
+  --Secondary9: #0c3246;
+  --Secondary4: #9eadb5;
+  --Primary: #e74860;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Inter', sans-serif !important;
+  font-family: "Inter", sans-serif !important;
   background-color: #fff !important;
 }
 
@@ -21,7 +21,7 @@ body {
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: var(--Secondary9, #0C3246);
+  color: var(--Secondary9, #0c3246);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -121,12 +121,12 @@ body {
 }
 
 .ant-timeline-item-head {
-  background-color: var(--Primary, #E74860) !important;
-  border: 7px solid var(--Primary, #E74860) !important;
+  background-color: var(--Primary, #e74860) !important;
+  border: 7px solid var(--Primary, #e74860) !important;
 }
 
 .ant-timeline-item-tail {
-  background-color: var(--Primary, #E74860) !important;
+  background-color: var(--Primary, #e74860) !important;
   width: 4px !important;
 }
 
@@ -201,7 +201,7 @@ body {
 }
 
 .defineTabs .ant-tabs-nav-list .ant-tabs-tab-active {
-  background-color: var(--Secondary9, #0C3246) !important;
+  background-color: var(--Secondary9, #0c3246) !important;
   color: #fff !important;
 }
 
@@ -231,11 +231,11 @@ body {
   border-radius: 0px 10px 0px 0px !important;
 }
 
-.demo .ant-table-tbody>tr:last-child>td:first-child {
+.demo .ant-table-tbody > tr:last-child > td:first-child {
   border-radius: 0px 0px 0px 10px !important;
 }
 
-.demo .ant-table-tbody>tr:last-child>td:last-child {
+.demo .ant-table-tbody > tr:last-child > td:last-child {
   border-radius: 0px 0px 10px 0px !important;
 }
 
@@ -257,18 +257,18 @@ body {
 }
 
 .ant-table-thead th {
-  color: var(--Secondary9, #0C3246) !important;
+  color: var(--Secondary9, #0c3246) !important;
   font-weight: bold !important;
 }
 
 .ant-collapse-header-text {
-  color: var(--Primary, #E74860) !important;
+  color: var(--Primary, #e74860) !important;
   font-weight: bolder !important;
   font-size: large !important;
 }
 
 .ant-collapse-expand-icon {
-  color: var(--Primary, #E74860) !important;
+  color: var(--Primary, #e74860) !important;
   font-weight: bolder !important;
   font-size: large !important;
 }
@@ -316,7 +316,7 @@ body {
 }
 
 .ant-menu-submenu-popup li {
-  color: var(--Primary, #E74860) !important;
+  color: var(--Primary, #e74860) !important;
   font-weight: bold !important;
 }
 
@@ -376,7 +376,7 @@ html {
 }
 
 .search::placeholder {
-  color: var(--Secondary9, #0C3246) !important;
+  color: var(--Secondary9, #0c3246) !important;
   opacity: 1 !important;
 }
 
@@ -394,20 +394,20 @@ html {
 }
 
 .ant-tree-node-content-wrapper:hover {
-  background-color: var(--Primary, #E74860) !important;
+  background-color: var(--Primary, #e74860) !important;
 }
 
 .treeCss .ant-tree-node-content-wrapper:hover {
-  background-color: var(--Primary, #E74860) !important;
+  background-color: var(--Primary, #e74860) !important;
 }
 
 .treeCss .ant-tree-node-selected {
-  background-color: var(--Primary, #E74860) !important;
+  background-color: var(--Primary, #e74860) !important;
   border: 1px solid #fff;
 }
 
 .treeCss .demo123 {
-  color: var(--Primary, #E74860);
+  color: var(--Primary, #e74860);
 }
 
 .treeCss .demo123:hover {
@@ -415,13 +415,13 @@ html {
 }
 
 .demo123 .ant-tree-node-selected {
-  background-color: var(--Primary, #E74860) !important;
+  background-color: var(--Primary, #e74860) !important;
   border: 1px solid #fff !important;
   color: #fff !important;
 }
 
 .downloadBtn {
-  background-color: var(--Secondary9, #0C3246) !important;
+  background-color: var(--Secondary9, #0c3246) !important;
   padding: 0px 10px 0px 10px;
   border-radius: 5px;
   margin-left: 5px;
@@ -443,37 +443,37 @@ html {
 }
 
 .ant-radio-checked .ant-radio-inner {
-  border-color: var(--Primary, #E74860) !important;
+  border-color: var(--Primary, #e74860) !important;
 }
 
 .ant-radio-checked .ant-radio-inner:after {
-  background-color: var(--Primary, #E74860);
+  background-color: var(--Primary, #e74860);
 }
 
 .ant-radio .ant-radio-inner {
-  border-color: var(--Secondary9, #0C3246);
+  border-color: var(--Secondary9, #0c3246);
 }
 
 .ant-radio:hover .ant-radio-inner {
-  border-color: var(--Primary, #E74860);
+  border-color: var(--Primary, #e74860);
 }
 
 .ant-spin-dot-item {
-  background-color: var(--Secondary9, #0C3246);
+  background-color: var(--Secondary9, #0c3246);
 }
 
 .title {
-  border: 1px solid var(--Primary, #E74860) !important;
+  border: 1px solid var(--Primary, #e74860) !important;
   width: 50vh;
 }
 
-.drawer>.ant-drawer-content {
+.drawer > .ant-drawer-content {
   background-color: gray !important;
-  border: 1px solid var(--Primary, #E74860);
+  border: 1px solid var(--Primary, #e74860);
 }
 
-.ant-menu-vertical .ant-menu-item-only-child span>.tryNowBtn {
-  background-color: var(--Primary, #E74860);
+.ant-menu-vertical .ant-menu-item-only-child span > .tryNowBtn {
+  background-color: var(--Primary, #e74860);
 }
 
 .phoneGroupHeight {
@@ -574,16 +574,16 @@ html {
 }
 
 .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: var(--Primary, #E74860) !important;
-  border-color: var(--Primary, #E74860) !important;
+  background-color: var(--Primary, #e74860) !important;
+  border-color: var(--Primary, #e74860) !important;
 }
 
 .ant-checkbox .ant-checkbox-inner {
-  border-color: var(--Primary, #E74860) !important;
+  border-color: var(--Primary, #e74860) !important;
 }
 
 .underline .ant-tabs-tab.ant-tabs-tab-active {
-  border-bottom: 2px solid var(--Secondary9, #0C3246) !important;
+  border-bottom: 2px solid var(--Secondary9, #0c3246) !important;
   z-index: 2;
 }
 
@@ -592,7 +592,7 @@ html {
 }
 
 .tabActive .ant-tabs-tab.ant-tabs-tab-active div {
-  color: var(--Primary, #E74860) !important;
+  color: var(--Primary, #e74860) !important;
   z-index: 2;
 }
 
@@ -600,7 +600,7 @@ html {
   /* border-bottom: 2px solid var(--Primary, #E74860) !important;
   z-index: 2; */
   border-bottom: 2px solid transparent !important;
-  border-left: 2px solid var(--Primary, #E74860) !important;
+  border-left: 2px solid var(--Primary, #e74860) !important;
   z-index: 2;
 }
 
@@ -625,10 +625,10 @@ html {
 }
 
 .buttonHide button {
-  display: none
+  display: none;
 }
 
-.ant-btn>span {
+.ant-btn > span {
   text-transform: capitalize;
 }
 
@@ -650,7 +650,7 @@ html {
   display: flex;
 }
 
-.ant-transfer-operation .ant-btn>span {
+.ant-transfer-operation .ant-btn > span {
   text-align: center;
   justify-content: center;
   font-size: 12px;
@@ -663,26 +663,26 @@ html {
 .ant-transfer-operation .ant-btn:hover,
 .ant-transfer-operation .ant-btn:focus,
 .ant-transfer-operation .ant-btn:active {
-  background: var(--Secondary9, #0C3246) !important;
+  background: var(--Secondary9, #0c3246) !important;
   color: #fff !important;
-  border: 1px solid var(--Secondary9, #0C3246) !important;
+  border: 1px solid var(--Secondary9, #0c3246) !important;
 }
 
 .ant-transfer-operation .ant-btn[disabled],
 .ant-transfer-operation .ant-btn[disabled]:hover,
 .ant-transfer-operation .ant-btn[disabled]:focus,
 .ant-transfer-operation .ant-btn[disabled]:active {
-  border: 1px solid var(--Secondary9, #0C3246) !important;
-  color: var(--Secondary9, #0C3246) !important;
+  border: 1px solid var(--Secondary9, #0c3246) !important;
+  color: var(--Secondary9, #0c3246) !important;
   background: #fff !important;
 }
 
 .ant-checkbox-checked::after {
-  border: 1px solid var(--Primary, #E74860);
+  border: 1px solid var(--Primary, #e74860);
 }
 
 .ant-checkbox-indeterminate .ant-checkbox-inner::after {
-  background-color: var(--Primary, #E74860);
+  background-color: var(--Primary, #e74860);
 }
 
 .ingestion-transfer .ant-transfer-list {
@@ -694,10 +694,8 @@ html {
   border-radius: 5px;
 }
 
-
 .ingestion-transfer.ant-transfer {
   gap: 20px;
-
 }
 
 .ingestion-transfer .ant-input-affix-wrapper {
@@ -707,8 +705,8 @@ html {
   align-items: center;
   gap: 4px;
   border-radius: 5px;
-  border: 1px solid var(--Secondary2, #CED6DA);
-  background: #FFF;
+  border: 1px solid var(--Secondary2, #ced6da);
+  background: #fff;
 }
 
 .ant-transfer-list-content::-webkit-scrollbar-thumb {
@@ -716,22 +714,22 @@ html {
 }
 
 .ant-table-tbody .anticon {
-  color: var(--Secondary9, #0C3246);
+  color: var(--Secondary9, #0c3246);
   font-size: 1vw !important;
 }
 
 .ant-table-tbody a {
-  color: var(--Secondary9, #0C3246);
+  color: var(--Secondary9, #0c3246);
   text-decoration: underline !important;
-  color: #0c3246 !important
-    /* font-size : 1vw !important; */
+  color: #0c3246 !important;
+  /* font-size : 1vw !important; */
 }
 
 .ant-pagination-item :hover,
 .ant-pagination-next .ant-pagination-item-link,
 .ant-pagination-prev .ant-pagination-item-link,
 .ant-table-pagination.ant-pagination li {
-  border-radius: 100% !important
+  border-radius: 100% !important;
 }
 
 .defineUpload {
@@ -739,13 +737,30 @@ html {
 }
 
 .defineUpload .ant-upload-btn {
-  border: 1px solid #D6D6D6 !important;
+  border: 1px solid #d6d6d6 !important;
   border-radius: 10px !important;
-  background-color: #FFF !important;
+  background-color: #fff !important;
 }
 
 .ant-table-title b {
   color: #e74860 !important;
+}
+
+.bookDemo,
+.bookDemo:hover,
+.bookDemo:focus,
+.bookDemo:active {
+  margin-bottom: 1rem !important;
+  background-color: #e74860 !important;
+  border-radius: 5px !important;
+  height: auto !important;
+  padding: 10px !important;
+  color: #fff;
+  border-color: #e74860 !important;
+  transform: scale(1.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ant-switch-checked {
