@@ -718,7 +718,7 @@ const CreatePipeline = ({ ingestionCss }) => {
                           const id = query?.pipeline
                             ? query?.pipeline
                             : pipelineData;
-                          convertPipeline(id);
+                            runPipeline(id);
                         }}
                       >
                         Run pipeline
