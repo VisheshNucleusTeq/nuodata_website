@@ -4,7 +4,7 @@ import KeycloakProvider from "next-auth/providers/keycloak";
 export default NextAuth({
   providers: [
     KeycloakProvider({
-      clientId: "nuodate-auth",
+      clientId: "nuodata-auth",
       clientSecret: "ZSWUY1Yf4jJiYgZDIDx9TOnZ6zzJBE57",
       issuer: "https://api.dev.nuodata.io/identity/realms/nuodata",
     }),
