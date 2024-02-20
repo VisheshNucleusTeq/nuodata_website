@@ -107,13 +107,7 @@ const Define = ({ dataModernizationCss }) => {
 
   return (
     <Row className={dataModernizationCss.defineForm}>
-      {/* <p
-        onClick={() => {
-          router.push(`/data-modernization/?id=97&tab=Connect`);
-        }}
-      >
-        sdfsdfsdfsdfffds
-      </p> */}
+
       <Col offset={3} span={18}>
         <Form
           // title="Your Form Title"
