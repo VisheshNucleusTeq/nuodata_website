@@ -25,7 +25,6 @@ export const ProtectRoute = ({ children }) => {
     "/new-pages",
     "/new/sign-in",
     "/new/sign-up",
-    "/new/contact-us",
     "/new/reset-password",
     "/new/forgot-password",
     "/new",
