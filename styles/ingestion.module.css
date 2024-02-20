@@ -543,3 +543,112 @@
   display: flex;
   justify-content: end;
 }
+
+.AddEnvJSON {
+  /* border-radius: 100px;
+  display: inline-flex;
+  height: 32px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0; */
+  color: var(--Black5, #7F7F7F);
+  text-align: center;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  border: none;
+  /* 133.333% */
+  text-transform: capitalize;
+}
+
+.AddEnvJSON span {
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+
+.configureForm {
+  padding: 16px;
+  font-weight: 500;
+}
+
+.configureForm .antFormItem label {
+  font-size: 14px !important;
+  font-weight: 500;
+}
+
+.rmBtn {
+  color: var(--Black5, #7F7F7F);
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  border: none;
+  text-transform: capitalize;
+}
+
+.cnfSubmitBtn,
+.cnfSubmitBtn:hover,
+.cnfSubmitBtn:active,
+.cnfSubmitBtn:visited,
+.cnfSubmitBtn:focus {
+  border-radius: 1vh;
+  border-radius: 100px;
+  color: #fff !important;
+  display: inline-flex;
+  height: 32px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  font-size: 12px;
+  background: var(--Primary, #E74860);
+  border-color: var(--Primary, #E74860);
+}
+
+.daysOfWeekBtn {
+  display: inline-flex;
+  height: 32px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.configureFormHeadingRow {
+  border: 1px solid #ECECEC;
+  height: 54px;
+  padding: 16px;
+}
+
+.configureFormHeading {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #333333;
+}
+.cronDescription {
+  height: 15px;
+  gap: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: lowercase;
+}
+.textInput {
+  height: 32px;
+  border-radius: 5px;
+  resize: none;
+  width: 100%;
+}

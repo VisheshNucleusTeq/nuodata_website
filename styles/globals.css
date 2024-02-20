@@ -762,3 +762,7 @@ html {
   justify-content: center;
   align-items: center;
 }
+
+.ant-switch-checked {
+  background-color: var(--Primary) !important;
+}
