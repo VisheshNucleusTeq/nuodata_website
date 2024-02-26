@@ -1,0 +1,140 @@
+.mainDiv {
+  background-image: url("/Data Governance/bg.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+}
+
+.infoRow {
+  display: flex;
+  height: 80%;
+  align-items: center;
+  text-align: center;
+}
+
+.infoRow h1 {
+  color: #fff;
+  font-weight: 300;
+  font-size: 4vw;
+  margin-bottom: 0;
+}
+
+.infoRow h1 span {
+  color: #e74860;
+  font-weight: 500;
+}
+
+.infoRow p {
+  color: #fff;
+  font-size: 1.8vw;
+  font-weight: 500;
+}
+
+.infoRow p span {
+  font-weight: 500;
+  color: #e74860;
+}
+
+.fiveModMainDiv {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4vw;
+}
+
+.fiveModMainSpace {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+}
+
+.fiveModMainSpace h1 {
+  margin-bottom: 0 !important;
+  color: #0c3246;
+  font-weight: 700;
+  font-size: 2.2vw;
+  @media (max-width: 768px) {
+    font-size: 4vw;
+  }
+  @media (max-width: 480px) {
+    font-size: 6vw;
+  }
+}
+
+.fiveModRow {
+  width: 100%;
+}
+
+.fiveModCard {
+  border: 1px solid #ececec;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.fiveModSpace h1 {
+  margin-bottom: 0 !important;
+  color: #0c3246;
+  font-weight: 400;
+  font-size: 2.2vw;
+  @media (max-width: 768px) {
+    font-size: 4vw;
+  }
+  @media (max-width: 480px) {
+    font-size: 6vw;
+  }
+}
+
+.fiveModSpace {
+  color: #0c3246;
+  font-weight: 400;
+  font-size: 1.32vw;
+  @media (max-width: 768px) {
+    font-size: 2vw;
+  }
+  @media (max-width: 480px) {
+    font-size: 4vw;
+  }
+}
+
+@media (max-width: 1024px) {
+  .infoRow h1 {
+    font-size: 5vw;
+    text-align: center;
+  }
+
+  .infoRow p {
+    text-align: center;
+    font-size: 2vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .infoRow h1 {
+    font-size: 10vw;
+    text-align: center;
+  }
+
+  .infoRow p {
+    text-align: center;
+    font-size: 4vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .infoRow h1 {
+    font-size: 18vw;
+    text-align: center;
+  }
+
+  .infoRow p {
+    text-align: center;
+    font-size: 6vw;
+  }
+}

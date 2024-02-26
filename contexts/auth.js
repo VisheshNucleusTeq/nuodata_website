@@ -18,16 +18,12 @@ export const ProtectRoute = ({ children }) => {
     "/sign-up",
     "/contact-us",
     "/data-management",
-    "/sso",
-    "/sso-login",
+    "/data-governance",
     "/events",
     "/test",
-    "/new-pages",
-    "/new/sign-in",
-    "/new/sign-up",
-    "/new/reset-password",
-    "/new/forgot-password",
-    "/new",
+    "/sso/sso-login",
+    "/sso/sso-logout",
+    "/sso/login",
   ];
   const user = useSelector((state) => state.userDetails.isLogged);
 

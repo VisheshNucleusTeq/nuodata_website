@@ -15,7 +15,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  background-color: rgb(222, 222, 222);
+  background-color: rgb(222, 222, 222, 0.2);
   width: 0.3vw;
   height: 0.3vw;
 }
@@ -765,4 +765,19 @@ html {
 
 .ant-switch-checked {
   background-color: var(--Primary) !important;
+}
+
+.ant-carousel .slick-dots li.slick-active button {
+  background: #e74860 !important;
+}
+
+.ant-carousel .slick-dots li button:hover,
+.ant-carousel .slick-dots li button:focus {
+  background: #e74860 !important;
+}
+
+.ant-carousel .slick-dots-bottom {
+  margin: 0 8% 1rem 8%;
+  display: flex;
+  justify-content: left;
 }

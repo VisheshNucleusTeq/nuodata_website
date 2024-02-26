@@ -7,7 +7,7 @@ export const BaseURL = axios.create({
   baseURL: process.env.BASE_URL,
   timeout: 60 * 60 * 1000,
 });
-
+//adding a comment
 const updateBaseUrl = (config) => {
   if (process.env.IS_LOCAL && process.env.IS_LOCAL == "true") {
     if (config?.url.includes("core")) {
@@ -38,7 +38,9 @@ BaseURL.interceptors.request.use(
       "/sso-login/",
       "/events/",
       "/test/",
-      "/new-pages/",
+      "/sso/sso-login/",
+      "/sso/sso-logout/",
+      "/sso/login/",
     ];
 
     const expiryTime = localStorage.getItem("expiryTime");

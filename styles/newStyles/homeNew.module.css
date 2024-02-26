@@ -9,7 +9,7 @@
 }
 
 .mainDivChild {
-  height: 80vh;
+  height: 92vh;
 }
 
 .pipelineDiv {
@@ -57,13 +57,14 @@
 .tryNowBtn,
 .tryNowBtn:hover {
   background-color: transparent;
-  height: 6vh;
-  width: 8vw;
+  height: auto;
+  width: auto;
   color: #fff;
   border-color: #fff;
   border-radius: 0.5vw;
   font-size: 1vw;
   margin-top: 1rem;
+  padding: 0.8rem;
 }
 
 .infoPipeline {
@@ -72,6 +73,7 @@
   justify-content: flex-end;
   align-items: flex-end;
 }
+
 /* INFO */
 
 /* THINK BIG */
@@ -110,6 +112,68 @@
   margin-right: 20px;
   font-size: 2.5vw;
 }
+
+.SnapshotContainer {
+  padding: 0 10vw;
+  margin: 10px 0;
+}
+
+.SnapshotTextLeftCont,
+.SnapshotTextRightCont {
+  background: linear-gradient(320.41deg, #46384D 0.51%, #0C3246 104.1%);
+  padding: 1.7vw;
+  min-height: 15.5vw;
+}
+
+.SnapshotTextLeftCont {
+  border-radius: 1vw 0 0 1vw;
+  margin-right: -0.75rem;
+}
+
+.SnapshotTextRightCont {
+  border-radius: 0 1vw 1vw 0;
+  margin-left: -0.5rem;
+}
+
+.SnapshotImageRight,
+.SnapshotImageLeft {
+  height: 100%;
+  width: 100%;
+}
+
+.SnapshotImageRight {
+  margin-left: -0.5rem;
+}
+
+.SnapshotImageLeft {
+  margin-right: -0.5rem;
+}
+
+.snapShotTitle {
+  color: var(--Primary) !important;
+  font-size: 1.6vw !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+}
+
+.snapShotTitle img {
+  max-width: 1.9vw;
+  margin: auto 0;
+}
+
+.snapShotParagraph {
+  color: #ffffff;
+  /* font-size: 1.25vw; */
+  font-weight: 400;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 0 !important;
+}
+
+
 
 @media (max-width: 1150px) {
   .thinkBigChild h1 {
@@ -226,13 +290,13 @@
 }
 
 @media (max-width: 1200px) {
-  .mainDiv {
+  /* .mainDiv {
     height: 80vh;
   }
 
   .mainDivChild {
     height: 65vh;
-  }
+  } */
 
   .homeInfoText div h1 {
     font-size: 5vw;
@@ -246,14 +310,13 @@
   .tryNowBtn,
   .tryNowBtn:hover {
     background-color: transparent;
-    height: 7vh;
-    width: 12vw;
     font-size: 2vw;
   }
 
   .ECImage {
     height: 50vh;
   }
+
   .ECText {
     height: 50vh;
   }
@@ -262,16 +325,20 @@
     font-size: 6vw;
     line-height: 6vw;
   }
+
   .numberCss {
     font-size: 6vw;
   }
+
   .textCss {
     font-size: 2.5vw;
     line-height: 2.5vw;
   }
+
   .numberTabCss {
     font-size: 5vw;
   }
+
   .textTabCss {
     font-size: 2vw;
     line-height: 2vw;
@@ -282,14 +349,15 @@
     border-left: none;
   }
 }
+
 @media (max-width: 992px) {
-  .mainDiv {
+  /* .mainDiv {
     height: 70vh;
   }
 
   .mainDivChild {
     height: 55vh;
-  }
+  } */
 
   .homeInfoText div h1 {
     font-size: 5.5vw;
@@ -303,22 +371,22 @@
   .tryNowBtn,
   .tryNowBtn:hover {
     background-color: transparent;
-    height: 6vh;
-    width: 16vw;
-    font-size: 2.5vw;
   }
 
   .ECText {
     height: 30vh;
   }
+
   .ECText h1 {
     text-align: center;
     border-left: none;
   }
+
   .numberCss {
     justify-content: center;
     text-align: center;
   }
+
   .textCss {
     text-align: center;
     justify-content: center;
@@ -330,6 +398,7 @@
     border: 0;
   }
 }
+
 @media (max-width: 768px) {
   .homeInfoText div h1 {
     font-size: 6vw;
@@ -343,9 +412,6 @@
   .tryNowBtn,
   .tryNowBtn:hover {
     background-color: transparent;
-    height: 6vh;
-    width: 16vw;
-    font-size: 2.5vw;
   }
 
   .ECText h1 {
@@ -356,13 +422,16 @@
   .numberCss {
     font-size: 5vw;
   }
+
   .textCss {
     font-size: 4vw;
     line-height: 6vw;
   }
+
   .numberTabCss {
     font-size: 6vw;
   }
+
   .textTabCss {
     font-size: 3vw;
     line-height: 3vw;
@@ -371,15 +440,25 @@
   .tabPositionCss {
     margin: 4vw 0;
   }
+
+  .snapShotParagraph {
+    font-size: 1.1vw;
+  }
+
+  .SnapshotImageLeft,
+  .SnapshotImageRight {
+    margin: 0;
+  }
 }
+
 @media (max-width: 576px) {
-  .mainDiv {
+  /* .mainDiv {
     height: 50vh;
   }
 
   .mainDivChild {
     height: 35vh;
-  }
+  } */
 
   .homeInfoText div h1 {
     font-size: 8vw;
@@ -400,14 +479,13 @@
   .tryNowBtn,
   .tryNowBtn:hover {
     margin-top: 4vh;
-    height: 5vh;
-    width: 40vw;
-    font-size: 5vw;
+    font-size: 3vw;
   }
 
   .ECText {
     height: 30vh;
   }
+
   .ECText h1 {
     font-size: 10vw;
     line-height: 10vw;
@@ -416,8 +494,25 @@
   .numberCss {
     font-size: 8vw;
   }
+
   .textCss {
     font-size: 5vw;
+  }
+
+  .SnapshotTextRightCont,
+  .SnapshotTextLeftCont {
+    margin: auto;
+    max-width: 95%;
+    margin-top: -3%;
+    border-radius: 2px;
+  }
+
+  .snapShotTitle {
+    font-size: 2.66vw !important;
+  }
+
+  .snapShotParagraph {
+    font-size: 2.25vw !important;
   }
 }
 
@@ -440,10 +535,8 @@
 }
 
 .firstViewText h1 span {
-  background: var(
-    --purpal-pink-gradient,
-    linear-gradient(180deg, #6015e2 0%, #fb4794 100%)
-  );
+  background: var(--purpal-pink-gradient,
+      linear-gradient(180deg, #6015e2 0%, #fb4794 100%));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -451,10 +544,8 @@
 }
 
 .fifthViewText h1 span {
-  background: var(
-    --green-blue,
-    linear-gradient(180deg, #29d5a6 0%, #29b8ef 100%)
-  );
+  background: var(--green-blue,
+      linear-gradient(180deg, #29d5a6 0%, #29b8ef 100%));
 
   background-clip: text;
   -webkit-background-clip: text;
@@ -497,10 +588,8 @@
 }
 
 .fourthViewText h1 span:nth-child(1) {
-  background: var(
-    --purpal-pink-gradient,
-    linear-gradient(180deg, #6015e2 0%, #fb4794 100%)
-  );
+  background: var(--purpal-pink-gradient,
+      linear-gradient(180deg, #6015e2 0%, #fb4794 100%));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -528,8 +617,7 @@
   z-index: 99;
 }
 
-.firstView {
-}
+.firstView {}
 
 .firstViewText,
 .firstViewLine,
@@ -639,6 +727,132 @@
 }
 
 /* Footer */
+
+/* Innovation  */
+
+.innovationMainDiv {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  background-image: url("/data_innovation/data-innovation-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  @media (max-width: 768px) {
+    height: 100vh;
+  }
+
+  @media (max-width: 575px) {
+    height: 140vh;
+  }
+
+  @media (max-width: 425px) {
+    height: 100vh;
+  }
+}
+
+.innovationMainDiv h1 {
+  font-size: 4.3vw;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  line-height: 120%;
+  margin-bottom: 0;
+
+  @media (max-width: 768px) {
+    font-size: 5vw;
+  }
+
+  @media (max-width: 575px) {
+    font-size: 6vw;
+  }
+}
+
+.innovationSubDiv {
+  background: linear-gradient(-180deg,
+
+      rgba(69, 55, 76, 0.5) 30%,
+      rgba(12, 50, 70, 0.5) 100%);
+  width: 85vw;
+  border-radius: 10px;
+  border: 1px solid #e74860;
+  margin-bottom: 5rem;
+  padding: 0;
+
+  @media (max-width: 992px) {
+    margin-bottom: 0;
+  }
+}
+
+.innovationMainRow {
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.innovationSpace {
+  width: 100%;
+
+  @media (max-width: 992px) {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.innovationSpace h1 {
+  font-size: 1.8vw;
+  color: #e74860;
+  font-weight: 500;
+  text-align: left;
+
+  @media (max-width: 992px) {
+    text-align: center;
+    font-size: 2.6vw;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 4vw;
+  }
+
+  @media (max-width: 575px) {
+    font-size: 6vw;
+  }
+}
+
+.innovationSpace h2 {
+  font-size: 1.5vw;
+  color: #fff;
+  font-weight: 400;
+  text-align: left;
+
+  @media (max-width: 992px) {
+    text-align: center;
+    font-size: 2vw;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 3vw;
+  }
+
+  @media (max-width: 575px) {
+    font-size: 5vw;
+  }
+}
+
+.innovationCol {
+  border-right: 1px solid #e74860;
+
+  @media (max-width: 992px) {
+    border: none;
+  }
+}
+
+/* Innovation */
 
 @media (max-width: 576px) {
   .infoRowSystemViewSystem {

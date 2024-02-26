@@ -1,16 +1,15 @@
 .mainDiv {
-  background: url("/data_management/daga_manage.gif") no-repeat center center;
-  background-size: cover;
-}
-.mainDivBackground {
-  /* background: url("/data_management/daga_manage.gif") no-repeat center center; */
+  background: linear-gradient(-60deg, #0c3246 30%, #45374c 100%);
   width: 100vw;
   height: 100vh;
-  background-color: rgb(0, 0, 0, 0.7);
+}
+.mainDivBackground {
+  width: 100%;
+  height: 85%;
 }
 
 .detailsDiv {
-  height: 90%;
+  height: 100%;
   width: 100%;
 }
 
@@ -22,231 +21,181 @@
 
 .infoRow h1 {
   color: #fff;
-  font-weight: bold;
-  font-size: 5vw;
-  text-align: center;
+  font-weight: 300;
+  font-size: 4vw;
 }
 
 .infoRow h1 span {
   color: #e74860;
+  font-weight: 500;
 }
 
 .infoRow p {
   color: #fff;
-  text-align: center;
-  font-size: 5vh;
-  font-weight: bold;
+  font-size: 3vh;
+  font-weight: 300;
 }
 
 .infoRow p span {
+  font-weight: 500;
   color: #e74860;
 }
 
-.timelineLeft {
-  text-align: end;
-  padding-right: 2vw;
-}
-
-.timelineLeftDiv {
-  padding-right: 10%;
-}
-
-.timelineLeftImage {
-  width: 6vw;
-}
-
-.timelineLeft p {
-  color: #0c3246;
-  font-size: 2vw;
-  font-weight: bold;
-}
-
-.timelineRight {
-  border-left: 5px solid #e74860;
-}
-
-.timelineRow {
-  margin: 5vw;
-}
-
-.timelineRightChildRow {
-  margin-left: 10%;
-  margin-bottom: 5vw;
-}
-
-.timelineRightChildCol {
-  height: 5vw;
-  width: 100%;
-  margin: 0vw 0vw 1vh 1vh;
-  border-radius: 100px;
-  background-color: #0c3246;
-}
-
-.timelineRightChildColImage {
-  height: 4vw;
-  width: 4vw;
-  border-radius: 100px;
-  margin: 0.5vw;
-  background-color: #fff;
-  padding: 10%;
-}
-
-.timelineRightChildColText {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.timelineRightChildColText span {
-  color: #fff;
-  align-items: center;
-  display: flex;
-  line-height: 0%;
-  font-size: 1.5vw;
-}
-
-.showDotDiv {
+.arcCardMainDiv {
+  margin: 8vw 0;
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.showDot {
-  border: 1px solid #e74860;
-  background-color: #e74860;
-  height: 20px;
-  width: 20px;
-  transform: rotate(45deg);
-  margin-left: 0.5%;
+.arcCardSpace {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-@media (max-width: 1200px) {
-  .mainDivBackground {
-    height: 70vh;
-  }
-  .infoRow h1 {
-    font-size: 7vw;
-  }
-  .infoRow p {
-    font-size: 3vw;
+.arcDiv {
+  border-radius: 1.5vw;
+  padding: 3px;
+  width: 100%;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.arcRow {
+  border-radius: 1.5vw;
+  background-color: #fff;
+  width: 90vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.arcCol {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.arcGradientCard {
+  width: 100%;
+  padding: 2rem;
+  border-radius: 1.5vw;
+  background: linear-gradient(-60deg, #0c3246 30%, #45374c 100%);
+  @media (max-width: 992px) {
+    min-height: 0 !important;
   }
 
-  .timelineRightChildColText span {
-    font-size: 2vw;
+  @media (max-width: 768px) {
+    padding: 1rem;
   }
 }
-@media (max-width: 992px) {
-  .infoRow h1 {
-    font-size: 7vw;
-  }
 
-  .infoRow p {
-    font-size: 3vw;
+.arcGradientTitle {
+  color: #fff;
+  font-weight: 400;
+  font-size: 1.7vw;
+  @media (max-width: 992px) {
+    text-align: center;
   }
-
-  .timelineLeftImage {
-    width: 7vw;
-  }
-
-  .timelineLeft p {
-    color: #0c3246;
-    font-size: 2.5vw;
-    font-weight: bold;
-  }
-
-  .timelineRightChildColText span {
-    font-size: 2.5vw;
-  }
-}
-@media (max-width: 768px) {
-  .infoRow h1 {
-    font-size: 8vw;
-  }
-
-  .infoRow p {
+  @media (max-width: 768px) {
     font-size: 4vw;
   }
-
-  .timelineLeftImage {
-    width: 10vw;
-  }
-
-  .timelineLeft p {
-    color: #0c3246;
-    font-size: 3vw;
-    font-weight: bold;
-  }
-
-  .timelineRightChildCol {
-    height: 10vw;
-  }
-
-  .timelineRightChildColImage {
-    height: 8vw;
-    width: 8vw;
-    margin: 1vw;
-  }
-
-  .timelineRightChildColText span {
-    font-size: 3vw;
+  @media (max-width: 480px) {
+    font-size: 7vw;
   }
 }
-@media (max-width: 576px) {
+
+.arcGradientText {
+  color: #fff;
+  font-weight: 400;
+  font-size: 1.3vw;
+  text-align: left;
+  @media (max-width: 992px) {
+    text-align: center;
+  }
+  @media (max-width: 768px) {
+    font-size: 2vw;
+  }
+  @media (max-width: 575px) {
+    font-size: 4vw;
+  }
+}
+
+.arcContactBtn,
+.arcContactBtn:focus,
+.arcContactBtn:hover,
+.arcContactBtn:active {
+  background-color: transparent;
+  height: auto;
+  width: auto;
+  color: #fff;
+  border-color: #fff;
+  border-radius: 5px;
+  font-size: 0.9vw;
+  padding: 0.5rem 1rem;
+  @media (max-width: 992px) {
+    font-size: 1.4vw;
+  }
+  @media (max-width: 768px) {
+    font-size: 1.8vw;
+  }
+  @media (max-width: 575px) {
+    font-size: 3.5vw;
+  }
+}
+
+.arcTitle {
+  margin-bottom: 0 !important;
+  color: #0c3246;
+  font-weight: 700;
+  font-size: 2.2vw;
+  @media (max-width: 768px) {
+    font-size: 4vw;
+  }
+  @media (max-width: 575px) {
+    font-size: 6vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainDiv {
+    height: 110vh;
+  }
+
   .mainDivBackground {
-    height: 60vh;
+    height: 80%;
   }
+
   .infoRow h1 {
-    font-size: 10vw;
-  }
-
-  .infoRow p {
-    font-size: 5vw;
-  }
-
-  .timelineLeft {
+    font-size: 8vw;
     text-align: center;
   }
 
-  .timelineLeftImage {
-    width: 15vw;
+  .infoRow p {
+    text-align: center;
+    font-size: 4vw;
+  }
+}
+@media (max-width: 576px) {
+  .mainDiv {
+    height: 100vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .infoRow h1 {
+    font-size: 12vw;
+    text-align: center;
   }
 
-  .timelineLeft p {
-    color: #0c3246;
-    font-size: 5vw;
-    font-weight: bold;
-  }
-
-  .timelineRight {
-    border-left: none;
-  }
-
-  .timelineRightChildRow {
-    margin-left: 0%;
-    margin-bottom: 5vw;
-    padding-bottom: 10vw;
-    border-bottom: 1px solid #e74860;
-  }
-
-  .timelineRightChildCol {
-    height: 14vw;
-    margin: 0vw 0vw 1vh 0vh;
-  }
-
-  .timelineRightChildColImage {
-    height: 12vw;
-    width: 12vw;
-    border-radius: 100px;
-    margin: 1vw;
-    background-color: #fff;
-    padding: 10%;
-  }
-
-  .timelineLeftDiv {
-    padding-right: 0%;
-    margin-bottom: 5%;
-  }
-
-  .timelineRightChildColText span {
+  .infoRow p {
+    text-align: center;
     font-size: 5vw;
   }
 }

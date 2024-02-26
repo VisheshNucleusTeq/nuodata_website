@@ -4,6 +4,7 @@ export const GETROLES = "usermgmt/v1/admin/roles?userType=";
 export const GETORGANIZATION = "usermgmt/v1/admin/organizations";
 export const SIGNUP = "usermgmt/v1/admin/add/user";
 export const GETUSERLIST = "usermgmt/v1/admin/users/org/";
+export const GETUSERDETAILS = "usermgmt/v1/admin/users/";
 export const UPDATEUSER = "usermgmt/v1/admin/update/user/";
 
 export const ANALYZE = "process/v2/analyze";
@@ -45,6 +46,7 @@ export const DELETEVERIABLE = "process/v2/design/database/variable/";
 
 export const DEFINE = "core/v1/project";
 export const UPLOADFILE = "core/v1/upload";
+export const UPLOADHADOOPFILE = "core/v1/hadoop/upload"; 
 export const GETALLPROJECT = "core/v1/project/all/org/";
 export const GETPROJECT = "core/v1/project/";
 export const UPDATEPROJECT = "core/v1/project/";
@@ -64,7 +66,8 @@ export const UPDATEGITDATA = "gitupload/v1/config";
 export const GETGITDATA = "gitupload/v1/config/";
 
 export const INGESTIONTEMPLATES = "ingestion/core/v1/template/type/";
-export const INGESTIONTCONNECTIONLIST = "ingestion/core/v1/connection/fetch/all";
+export const INGESTIONTCONNECTIONLIST =
+  "ingestion/core/v1/connection/fetch/all";
 export const TESTCONNECTION = "ingestion/core/v1/connection/test";
 export const ADDCONNECTION = "ingestion/core/v1/connection/";
 export const GETCONNECTIONDETAILS = "ingestion/core/v1/connection/detail";
@@ -92,8 +95,15 @@ export const RUNPIPELINELOGS = "ingestion/core/v1/pipeline-run/logs/";
 export const PREVIEWDATA = "ingestion/core/v1/graph/node/";
 export const ADDFIELDNAME = "ingestion/core/v1/graph/node/fields";
 export const UPDATEFIELDNAME = "ingestion/core/v1/graph/node/fields";
-export const EXPRESSIONFUNTYPES = "ingestion/core/v1/list/expression_function_types";
-export const AGGREGATEFUNTYPES = "ingestion/core/v1/list/aggregate_function_types";
+export const EXPRESSIONFUNTYPES =
+  "ingestion/core/v1/list/expression_function_types";
+export const AGGREGATEFUNTYPES =
+  "ingestion/core/v1/list/aggregate_function_types";
 export const SORTFUNTYPES = "ingestion/core/v1/list/sorting_order_direction";
 
 export const SPARKFUN = "ingestion/core/v1/function/spark/";
+export const ANALYZEHIVEHDOOP="/parser/v1/hiveanalysis/"
+export const ANALYZEHADOOPFILE = "analyzer/v1/workflow/analyse/";
+
+export const PAUSEPIPELINE = "ingestion/core/v1/pipeline-run/pause/";
+export const DEPLOYPIPELINE = "ngestion/core/v1/pipeline-run/deploy/";
