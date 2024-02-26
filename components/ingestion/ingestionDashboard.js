@@ -3,6 +3,10 @@ import {
   DeleteOutlined,
   EditOutlined,
   PlusOutlined,
+  DeploymentUnitOutlined,
+  RollbackOutlined,
+  PlayCircleOutlined,
+  PauseCircleOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -17,9 +21,11 @@ import {
   Space,
   Table,
   Tooltip,
-  messages,
+  Image,
+  message,
 } from "antd";
 import React from "react";
+import cronstrue from "cronstrue";
 
 import { FilterOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
@@ -30,6 +36,7 @@ import {
   loderShowHideAction,
   setPipelineAction,
   setWorkspaceAction,
+  setPipelineDetailsAction,
 } from "../../Redux/action";
 import {
   fetch_retry_delete,
@@ -42,6 +49,8 @@ import {
   GETWORKSPACE,
   GETWORKSPACEENV,
   RUNPIPELINESTATUS,
+  PAUSEPIPELINE,
+  DEPLOYPIPELINE,
 } from "../../network/apiConstants";
 import { getFileName } from "../helper/getFileName";
 import JobRunDetails from "./model/jobRunDetails";
@@ -172,13 +181,32 @@ const IngestionDashboard = ({ ingestionCss }) => {
     },
     {
       title: "Schedule",
-      dataIndex: "schedule",
+      dataIndex: "user_schedule",
+      render: (data, record) => {
+        try {
+          return cronstrue.toString(data?.cron_expression);
+        } catch (error) {
+          return "NA";
+        }
+      },
     },
     {
       title: "Last Modified",
       dataIndex: "updated_date_time",
       render: (data) => {
         return changeDateFormat(data);
+      },
+    },
+
+    {
+      title: "Engine",
+      dataIndex: "runtime_engine",
+      render: (runtime_engine) => {
+        return runtime_engine == "Presto" ? (
+          <Image src={`/pipelines_icons/presto.png`} />
+        ) : (
+          <Image src={`/pipelines_icons/spark.png`} />
+        );
       },
     },
     {
@@ -198,6 +226,30 @@ const IngestionDashboard = ({ ingestionCss }) => {
             break;
           case "draft":
             color = "#f1c40f";
+            break;
+          default:
+            break;
+        }
+        return (
+          <Badge
+            count={text}
+            color={color}
+            style={{ minWidth: "5vw", textTransform: "capitalize" }}
+          />
+        );
+      },
+    },
+    {
+      title: "Deployment Status",
+      dataIndex: "deployment_status",
+      render: (text) => {
+        let color = "#FFF";
+        switch (text) {
+          case "deployed":
+            color = "#009069";
+            break;
+          case "draft":
+            color = "#6d8490";
             break;
           default:
             break;
@@ -309,32 +361,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
         );
       },
     },
-    // {
-    //   title: "Job Start Time",
-    //   dataIndex: "last_job_run",
-    //   render: (last_job_run) => {
-    //     return (
-    //       <p>
-    //         {last_job_run?.start_time
-    //           ? changeDateFormat(last_job_run?.start_time)
-    //           : "--"}
-    //       </p>
-    //     );
-    //   },
-    // },
-    // {
-    //   title: "Job End Time",
-    //   dataIndex: "last_job_run",
-    //   render: (last_job_run) => {
-    //     return (
-    //       <p>
-    //         {last_job_run?.start_time
-    //           ? changeDateFormat(last_job_run?.end_time)
-    //           : "--"}
-    //       </p>
-    //     );
-    //   },
-    // },
     {
       fixed: "right",
       title: "Action",
@@ -352,6 +378,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
             >
               <a
                 onClick={(e) => {
+                  dispatch(setPipelineDetailsAction(record));
                   e.preventDefault();
                   router.push(
                     "/ingestion/create-pipeline?pipeline=" + record?.pipeline_id
@@ -361,6 +388,57 @@ const IngestionDashboard = ({ ingestionCss }) => {
                 <EditOutlined />
               </a>
             </Tooltip>
+
+            <Tooltip
+              placement="top"
+              title={"Configure"}
+              key={(Math.random() + 1).toString(36).substring(7)}
+            >
+              <a
+                onClick={(e) => {
+                  dispatch(setPipelineDetailsAction(record));
+                  e.preventDefault();
+                  router.push(
+                    "/ingestion/create-pipeline?pipeline=" +
+                      record?.pipeline_id +
+                      "&view=configure"
+                  );
+                }}
+              >
+                <DeploymentUnitOutlined />
+              </a>
+            </Tooltip>
+            {record?.deployment_status == "deployed" && (
+              <Tooltip
+                placement="top"
+                title={"Stop Deploy"}
+                key={(Math.random() + 1).toString(36).substring(7)}
+              >
+                <a
+                  onClick={(e) => {
+                    stopDeploy(record?.pipeline_id);
+                  }}
+                >
+                  <PauseCircleOutlined />
+                </a>
+              </Tooltip>
+            )}
+
+            {record?.deployment_status != "deployed" && (
+              <Tooltip
+                placement="top"
+                title={"Re-deploy"}
+                key={(Math.random() + 1).toString(36).substring(7)}
+              >
+                <a
+                  onClick={(e) => {
+                    reStartDeploy(record?.pipeline_id);
+                  }}
+                >
+                  <PlayCircleOutlined />
+                </a>
+              </Tooltip>
+            )}
             <Tooltip
               placement="top"
               title={"Delete"}
@@ -408,7 +486,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
         setWorkspaceData(data.data);
       } else {
         setWorkspaceData([]);
-        console.log([data?.error]);
       }
     }
   };
@@ -434,7 +511,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
           setPipelineData(data.data);
         } else {
           setPipelineData([]);
-          console.log(data?.error);
         }
       }
     }
@@ -455,6 +531,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
     getPiplineData();
     dispatch(loderShowHideAction(false));
   };
+
   const cancelPipeline = async (id) => {
     dispatch(loderShowHideAction(true));
     const data = await fetch_retry_post(`${RUNPIPELINESTATUS}${id}/cancel`);
@@ -462,8 +539,26 @@ const IngestionDashboard = ({ ingestionCss }) => {
       getPiplineData();
     }
     dispatch(loderShowHideAction(false));
-    console.log("Cancel Job Run id:", id);
   };
+
+  const stopDeploy = async (id) => {
+    dispatch(loderShowHideAction(true));
+    const data = await fetch_retry_post(`${PAUSEPIPELINE}${id}`);
+    if (data.success) {
+      getPiplineData();
+    }
+    dispatch(loderShowHideAction(false));
+  };
+
+  const reStartDeploy = async (id) => {
+    dispatch(loderShowHideAction(true));
+    const data = await fetch_retry_post(`${DEPLOYPIPELINE}${id}`);
+    if (data.success) {
+      getPiplineData();
+    }
+    dispatch(loderShowHideAction(false));
+  };
+
   useEffect(() => {
     getUpdateAllData();
   }, [workspace, typeof window !== "undefined"]);
@@ -571,10 +666,6 @@ const IngestionDashboard = ({ ingestionCss }) => {
                     }
                   </a>
                 </span>
-                {/* {
-                  workspaceData.filter((e) => e.workspace_id === workspace)[0]
-                    ?.workspace_name
-                } */}
               </Col>
               <Col
                 span={5}
@@ -605,7 +696,7 @@ const IngestionDashboard = ({ ingestionCss }) => {
         dataSource={pipelineData.map((e) => {
           return {
             ...e,
-            schedule: "Every Day",
+            // schedule: "Every Day",
           };
         })}
         bordered

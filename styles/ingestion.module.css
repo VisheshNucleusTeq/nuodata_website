@@ -1,22 +1,22 @@
 .title {
   display: flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .iconImage {
   width: 3vw;
-  border-radius: 25px
+  border-radius: 25px;
 }
 
 .addNewWorkspace,
 .submitWorkspace {
   justify-content: flex-end;
-  display: flex
+  display: flex;
 }
 
 .addNewWorkspace {
-  margin-bottom: 2vh
+  margin-bottom: 2vh;
 }
 
 .addNewWorkspace button,
@@ -25,11 +25,11 @@
 .submitWorkspace button:hover {
   background-color: #e74860;
   border: #e74860;
-  color: #fff
+  color: #fff;
 }
 
 .submitWorkspace {
-  margin-top: 2vh
+  margin-top: 2vh;
 }
 
 .WorkspaceName {
@@ -39,15 +39,16 @@
   font-size: large;
   font-weight: 700;
   padding-left: 1vw;
-  box-shadow: rgba(0, 0, 0, .04)0 6px 24px 0, rgba(0, 0, 0, .04)0 0 0 1px
+  box-shadow: rgba(0, 0, 0, 0.04) 0 6px 24px 0, rgba(0, 0, 0, 0.04) 0 0 0 1px;
 }
 
 .defineForm {
   margin-top: 2%;
   padding: 2%;
   border-radius: 10px;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .05%), 0 4px 10px 0 rgba(0, 0, 0, .05%);
-  background-color: #fff
+  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.05%),
+    0 4px 10px 0 rgba(0, 0, 0, 0.05%);
+  background-color: #fff;
 }
 
 .addnewEnv,
@@ -55,35 +56,35 @@
 .nextBtn {
   height: 3vw;
   border-radius: 1vh;
-  border: 1px solid #e74860 !important
+  border: 1px solid #e74860 !important;
 }
 
 .addnewEnv {
   float: right;
   background-color: transparent !important;
-  color: #e74860 !important
+  color: #e74860 !important;
 }
 
 .exitBtn,
 .nextBtn {
-  background-color: #e74860 !important
+  background-color: #e74860 !important;
 }
 
 .exitBtn {
   background-color: #0c3246 !important;
-  border: 1px solid #0c3246 !important
+  border: 1px solid #0c3246 !important;
 }
 
 .main {
-  border: 1px solid rgba(0, 0, 0, .1);
-  background-color: #fff
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 .pipelineBtns {
   align-items: center;
   justify-content: flex-end;
   display: inline-flex;
-  gap: 12px
+  gap: 12px;
 }
 
 .draftBtn,
@@ -92,50 +93,50 @@
   border-radius: 100px;
   background-color: #0c3246 !important;
   border: 1px solid #0c3246 !important;
-  color: #fff !important
+  color: #fff !important;
 }
 
 .saveBtn,
 .saveBtn[disabled] {
   background-color: #e74860 !important;
-  border: 1px solid #e74860 !important
+  border: 1px solid #e74860 !important;
 }
 
 .saveBtn[disabled] {
-  opacity: .8
+  opacity: 0.8;
 }
 
 .draftBtn span,
 .saveBtn span {
-  color: var(--White, #FFF);
+  color: var(--White, #fff);
   text-align: right;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal
+  line-height: normal;
 }
 
 .pipelineTitle {
   display: flex;
   align-items: center;
   height: 8vh;
-  color: #0c3246 !important
+  color: #0c3246 !important;
 }
 
 .pipelineTitle span {
   margin-left: 1.5vh;
   font-size: 16px;
   font-weight: 500;
-  line-height: normal
+  line-height: normal;
 }
 
 .pipelineTitle span a {
-  color: #e74860
+  color: #e74860;
 }
 
 .pipelineSteps {
   padding-left: 1.5vh;
-  padding-right: 1.5vh
+  padding-right: 1.5vh;
 }
 
 .defineSave,
@@ -144,12 +145,12 @@
   border: 1px solid #e74860 !important;
   background-color: transparent !important;
   color: #e74860 !important;
-  height: 32px
+  height: 32px;
 }
 
 .defineSaveAndBuild {
   background-color: #e74860 !important;
-  color: #fff !important
+  color: #fff !important;
 }
 
 .defineSave span,
@@ -158,28 +159,28 @@
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal
+  line-height: normal;
 }
 
 .pipelineSteps {
   padding: 0 16px;
-  background: #fbfbfb
+  background: #fbfbfb;
 }
 
 .reactFlowPane {
   border: 1px solid #ececec;
   margin-top: 16px;
-  background: var(--Secondary, #0c324610)
+  background: var(--Secondary, #0c324610);
 }
 
 .pipelineStepsRow {
   padding: 16px;
-  background: #fbfbfb
+  background: #fbfbfb;
 }
 
 .pipeLineIconRow {
   width: 100%;
-  background: #fbfbfb
+  background: #fbfbfb;
 }
 
 .pipelineStepTab {
@@ -189,38 +190,43 @@
   border-radius: 1vh;
   cursor: pointer;
   border-radius: 5px;
-  border: 1px solid var(--border, #ECECEC);
-  background: #fff
+  border: 1px solid var(--border, #ececec);
+  background: #fff;
 }
 
 .pipelineStepTab,
 .pipelineStepTabIcon,
 .stepsIcon {
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .pipelineStepTabIcon {
   height: 2vw;
-  display: flex
+  display: flex;
 }
 
 .stepsIcon {
+  min-height: 38px;
+  min-width: 6.5vw;
   cursor: pointer;
   display: inline-flex;
   padding: 7px 12px;
   gap: 8px;
   border-radius: 5px;
-  border: 1px solid var(--border, #ECECEC);
-  background: #fff
+  border: 1px solid var(--border, #ececec);
+  background: #fff;
 }
-
+.stepsIcon svg{
+  height: 1.25vw;
+  width: 1.25vw;
+}
 .stepsIcon_text {
   color: var(--Black8, #333);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: normal
+  line-height: normal;
 }
 
 .pipelineStepTabEdge,
@@ -228,11 +234,11 @@
   height: 2vw;
   display: flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .pipelineStepTabText span {
-  font-size: .8vw
+  font-size: 0.8vw;
 }
 
 .pipelineStepTabEdge {
@@ -241,8 +247,8 @@
   border-radius: 1vh;
   cursor: pointer;
   border-radius: 7.5px;
-  border: 1.5px solid var(--Black2, #CCC);
-  background: #fff
+  border: 1.5px solid var(--Black2, #ccc);
+  background: #fff;
 }
 
 .pipelineStepTabIconEdge,
@@ -251,50 +257,50 @@
   height: 1.5vw;
   display: flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .pipelineStepTabTextEdge1,
 .pipelineStepTabTextEdge2 {
-  height: 1.25vw
+  height: 1.25vw;
 }
 
 .pipelineStepTabTextEdge2 {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis
+  text-overflow: ellipsis;
 }
 
 .pipelineStepTabTextEdge2 span {
-  font-size: .6vw
+  font-size: 0.6vw;
 }
 
 .addSourceImage img {
   width: 3vw;
   height: 3vw;
   box-shadow: 1px 1px 2px 1px #bebebe, -1px -1px 2px #bebebe;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
 .addSourceBtn,
 .addSourceBtnActive {
   height: 2.8vw !important;
-  border: 0 !important
+  border: 0 !important;
 }
 
 .addSourceBtn {
   color: #0c3246 !important;
-  font-weight: 700 !important
+  font-weight: 700 !important;
 }
 
 .addSourceBtnActive {
   background-color: #e74860 !important;
   color: #fff !important;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
 .sourceHeader {
-  padding: 0 1.5vw
+  padding: 0 1.5vw;
 }
 
 .clickDiv,
@@ -302,7 +308,7 @@
   padding: 1.5vw;
   display: flex;
   align-items: center;
-  height: 100%
+  height: 100%;
 }
 
 .clickDiv div,
@@ -311,29 +317,30 @@
   display: flex;
   align-items: center;
   height: 100%;
-  box-shadow: rgba(60, 64, 67, .3)0 1px 2px 0, rgba(60, 64, 67, .15)0 2px 6px 2px
+  box-shadow: rgba(60, 64, 67, 0.3) 0 1px 2px 0,
+    rgba(60, 64, 67, 0.15) 0 2px 6px 2px;
 }
 
 .clickDiv img,
 .notClickDiv img {
   border-radius: 10px;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .notClickDiv img {
-  opacity: .5;
-  cursor: not-allowed
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .formHeight {
-  margin-bottom: 1.5vw
+  margin-bottom: 1.5vw;
 }
 
 .workspaceHeader h1 {
   color: #e74860;
   font-size: 2vw;
   line-height: 2vw;
-  font-weight: 700
+  font-weight: 700;
 }
 
 .backButton,
@@ -346,16 +353,16 @@
   cursor: pointer;
   border: 1px solid #d6d6d6;
   float: right;
-  margin-bottom: 1vw
+  margin-bottom: 1vw;
 }
 
 .workspaceHeader .button {
-  background: #e74860
+  background: #e74860;
 }
 
 .backButton,
 .backButton:hover {
-  background: #0c3246
+  background: #0c3246;
 }
 
 .submitBtn {
@@ -366,7 +373,7 @@
   border-radius: 10px;
   margin-left: 1rem;
   background-color: #0c3246 !important;
-  border: 1px solid #0c3246 !important
+  border: 1px solid #0c3246 !important;
 }
 
 .inputSelect div {
@@ -375,7 +382,7 @@
   border: 1px solid #d6d6d6 !important;
   resize: vertical !important;
   display: flex !important;
-  align-items: center !important
+  align-items: center !important;
 }
 
 .input,
@@ -384,11 +391,11 @@
 .inputSelectTable div {
   height: 32px !important;
   border-radius: 5px !important;
-  font-size: 12px
+  font-size: 12px;
 }
 
 .inputSelectMultiple div {
-  padding: .14vw
+  padding: 0.14vw;
 }
 
 .input,
@@ -396,13 +403,13 @@
   width: 100% !important;
   background: #fff !important;
   border: 1px solid #d6d6d6 !important;
-  resize: vertical !important
+  resize: vertical !important;
 }
 
 .validateBtn {
   border-radius: 1vh;
-  background-color: var(--Green, #49BE4D) !important;
-  border: 1px solid var(--Green, #49BE4D) !important;
+  background-color: var(--Green, #49be4d) !important;
+  border: 1px solid var(--Green, #49be4d) !important;
   color: #fff !important;
   display: inline-flex;
   height: 32px;
@@ -410,12 +417,12 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0
+  flex-shrink: 0;
 }
 
 .antFormItem {
   font-size: 20px;
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
 
 .expCancelBtn,
@@ -429,23 +436,23 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0
+  flex-shrink: 0;
 }
 
 .expSubmitBtn {
-  background: var(--Primary, #E74860)
+  background: var(--Primary, #e74860);
 }
 
 .expCancelBtn {
-  background: var(--Secondary, #0C3246);
-  border: 1px solid (--Secondary, #0c3246)
+  background: var(--Secondary, #0c3246);
+  border: 1px solid (--Secondary, #0c3246);
 }
 
 .expBtnGrp {
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  flex-direction: row
+  flex-direction: row;
 }
 
 .addBtn {
@@ -457,49 +464,49 @@
   padding: 4px 8px;
   justify-content: center;
   align-items: center;
-  gap: 8px
+  gap: 8px;
 }
 
 .addBtn>span {
-  color: var(--Secondary, #0C3246);
+  color: var(--Secondary, #0c3246);
   text-align: center;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: 16px
+  line-height: 16px;
 }
 
 .expCancel>span,
 .expSubmitBtn>span,
 .validateBtn>span {
-  color: var(--White, #FFF);
+  color: var(--White, #fff);
   text-align: right;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal
+  line-height: normal;
 }
 
 .antFormItem label,
 .antFormItemJoin label {
-  font-size: 12px !important
+  font-size: 12px !important;
 }
 
 .textArea {
   width: 100%;
-  border: 1px solid rgba(231, 235, 237, .8) !important
+  border: 1px solid rgba(231, 235, 237, 0.8) !important;
 }
 
 .inputSelectTable div {
   width: 238px !important;
   display: flex !important;
-  align-items: center !important
+  align-items: center !important;
 }
 
 .antFormItemJoin {
   font-size: 12px;
   margin-bottom: 15px;
-  margin-top: 15px
+  margin-top: 15px;
 }
 
 .tableHeaderTitle {
@@ -507,16 +514,16 @@
   font-style: normal;
   font-weight: 700;
   line-height: 16px;
-  font-size: 12px
+  font-size: 12px;
 }
 
 .radioStyle {
-  margin: 24px 0 16px
+  margin: 24px 0 16px;
 }
 
 .GroupByRow {
   border: 1px solid #ececec;
-  padding: 4px 4px 4px 16px
+  padding: 4px 4px 4px 16px;
 }
 
 .GroupByDltBtn,
@@ -525,12 +532,12 @@
   color: #0c3246;
   background-color: #fff;
   box-shadow: none;
-  outline: 0
+  outline: 0;
 }
 
 .GroupByDltBtn svg {
   height: 20px;
-  width: 20px
+  width: 20px;
 }
 
 .GroupBySbmtGrp {
@@ -540,6 +547,7 @@
 
 .generalLastDiv {
   margin-bottom: 1%;
+  padding-right: 1vw;
   display: flex;
   justify-content: end;
 }
@@ -553,7 +561,7 @@
   align-items: center;
   gap: 8px;
   flex-shrink: 0; */
-  color: var(--Black5, #7F7F7F);
+  color: var(--Black5, #7f7f7f);
   text-align: center;
   font-family: Inter;
   font-size: 12px;
@@ -574,7 +582,6 @@
   text-transform: capitalize;
 }
 
-
 .configureForm {
   padding: 16px;
   font-weight: 500;
@@ -586,7 +593,7 @@
 }
 
 .rmBtn {
-  color: var(--Black5, #7F7F7F);
+  color: var(--Black5, #7f7f7f);
   text-align: center;
   font-size: 12px;
   font-style: normal;
@@ -612,8 +619,8 @@
   gap: 8px;
   flex-shrink: 0;
   font-size: 12px;
-  background: var(--Primary, #E74860);
-  border-color: var(--Primary, #E74860);
+  background: var(--Primary, #e74860);
+  border-color: var(--Primary, #e74860);
 }
 
 .daysOfWeekBtn {
@@ -625,6 +632,58 @@
 }
 
 .configureFormHeadingRow {
+  border: 1px solid #ececec;
+  height: 4vw;
+  display: flex;
+  align-items: center;
+  padding-left: 1vw;
+}
+
+.configureFormSecondHeadingRow {
+  border: 1px solid #ececec;
+  /* height: 4vw; */
+  /* display: flex; */
+  align-items: center;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  padding-top: 1.5vw;
+  padding-bottom: 1.5vw;
+}
+
+.configureFormHeading {
+  font-size: 1.2vw;
+  font-weight: bold;
+  text-align: left;
+}
+
+.textInput {
+  height: 2.5vw;
+  border-radius: 5px;
+  resize: none;
+  width: 100%;
+}
+
+.scheduleSelect,
+.scheduleSelect div {
+  height: 2.5vw !important;
+  width: 100% !important;
+  /* border: 1px solid #d6d6d6 !important; */
+  border-radius: 5px;
+  resize: vertical !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.cronDescription {
+  height: 15px;
+  gap: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: lowercase;
+}
+
+/* .configureFormHeadingRow {
   border: 1px solid #ECECEC;
   height: 54px;
   padding: 16px;
@@ -651,4 +710,4 @@
   border-radius: 5px;
   resize: none;
   width: 100%;
-}
+} */

@@ -10,6 +10,7 @@ import {
   OPENDETAILS,
   WORKSPACE,
   PIPELINE,
+  PIPELINEDETAILS,
   CHECKVALIDATION
 } from "./type";
 
@@ -93,6 +94,13 @@ export const setPipelineAction = (data) => (dispatch) => {
 export const setCheckValidationAction = (data) => (dispatch) => {
   dispatch({
     type: CHECKVALIDATION,
+    payload: data,
+  });
+};
+
+export const setPipelineDetailsAction = (data) => (dispatch) => {
+  dispatch({
+    type: PIPELINEDETAILS,
     payload: data,
   });
 };

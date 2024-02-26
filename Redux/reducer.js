@@ -11,6 +11,7 @@ import {
   OPENDETAILS,
   WORKSPACE,
   PIPELINE,
+  PIPELINEDETAILS,
   CHECKVALIDATION,
 } from "./type";
 import LocalData from "./LocalData";
@@ -180,6 +181,18 @@ export const checkValidationReducer = (state = initialData, action) => {
   }
 };
 
+export const pipelineDetailsReducer = (state = initialData, action) => {
+  switch (action.type) {
+    case PIPELINEDETAILS:
+      return {
+        ...state,
+        pipelineDetails: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   userDetails: userDetailReducer,
   projectDetails: projectDetailsReducer,
@@ -192,5 +205,6 @@ export default combineReducers({
   openDetails: openDetailsReducer,
   workspace: workspaceReducer,
   pipeline: pipelineReducer,
+  pipelineDetails: pipelineDetailsReducer,
   checkValidation: checkValidationReducer,
 });
