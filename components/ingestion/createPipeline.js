@@ -61,6 +61,10 @@ const CreatePipeline = ({ ingestionCss }) => {
     (state) => state?.checkValidation?.checkValidation
   );
 
+  const pipelineDetailsObj = useSelector(
+    (state) => state?.pipelineDetails?.pipelineDetails
+  );
+
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [workspaceData, setWorkspaceData] = React.useState([]);
   const [pipelineDetails, setPipelineDetails] = React.useState({});
@@ -95,6 +99,11 @@ const CreatePipeline = ({ ingestionCss }) => {
   const setOldPipeline = async (id) => {
     const pipelineDetails = await fetch_retry_get(`${CREATEPIPELINE}${id}`);
     setPipelineDetails(pipelineDetails?.data);
+    setTimeout(() => {
+      if (query?.view == "configure") {
+        setSelectedTab(2);
+      }
+    }, 500);
   };
 
   const convertPipeline = async (id) => {
@@ -437,45 +446,46 @@ const CreatePipeline = ({ ingestionCss }) => {
               <Col span={14}>
                 <Row align={"space-between1"}>
                   {/* {["Define", "Build", "Test", "Configure", "Deploy"].map( */}
-                  {["Define", "Build", "Configure", "Deploy"].map((data, i) => {
-                    return (
-                      <>
-                        <Col
-                          className={ingestionCss.stepsIcon}
-                          span={4}
-                          onClick={() => {
-                            setSelectedTab(i);
-                          }}
-                        >
-                          <Space className={ingestionCss.stepsIcon_text}>
-                            <CheckCircleFilled
-                              style={{
-                                fontSize: "1vw",
-                                color: i <= selectedTab ? "green" : "gray",
-                              }}
-                              twoToneColor="#fff"
-                            />
-                            {data}
-                          </Space>
-                        </Col>
-                        {[0, 1, 2].includes(i) ? (
+                  {["Define", "Build", "Configure & Deploy"].map(
+                    (data, i) => {
+                      return (
+                        <>
                           <Col
-                            span={1}
-                            style={{ display: "flex", alignItems: "center" }}
+                            className={ingestionCss.stepsIcon}
+                            onClick={() => {
+                              setSelectedTab(i);
+                            }}
                           >
-                            <div
-                              style={{
-                                border: `1px dashed ${
-                                  i <= selectedTab - 1 ? "green" : "gray"
-                                }`,
-                                width: "100%",
-                              }}
-                            ></div>
+                            <Space className={ingestionCss.stepsIcon_text}>
+                              <CheckCircleFilled
+                                style={{
+                                  fontSize: "1vw",
+                                  color: i <= selectedTab ? "green" : "gray",
+                                }}
+                                twoToneColor="#fff"
+                              />
+                              {data}
+                            </Space>
                           </Col>
-                        ) : null}
-                      </>
-                    );
-                  })}
+                          {[0, 1].includes(i) ? (
+                            <Col
+                              span={1}
+                              style={{ display: "flex", alignItems: "center" }}
+                            >
+                              <div
+                                style={{
+                                  border: `1px dashed ${
+                                    i <= selectedTab - 1 ? "green" : "gray"
+                                  }`,
+                                  width: "100%",
+                                }}
+                              ></div>
+                            </Col>
+                          ) : null}
+                        </>
+                      );
+                    }
+                  )}
                 </Row>
               </Col>
               <Col span={10} className={ingestionCss.pipelineBtns}>
@@ -718,7 +728,7 @@ const CreatePipeline = ({ ingestionCss }) => {
                           const id = query?.pipeline
                             ? query?.pipeline
                             : pipelineData;
-                            runPipeline(id);
+                          runPipeline(id);
                         }}
                       >
                         Run pipeline
@@ -764,6 +774,7 @@ const CreatePipeline = ({ ingestionCss }) => {
             {selectedTab === 2 && (
               <>
                 <Configure
+                  pipelineId={query?.pipeline ? query?.pipeline : pipelineData}
                   ingestionCss={ingestionCss}
                   workspaceData={workspaceData}
                   workspace={workspace}

@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Col, Row, Image } from "antd";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import Header from "../common/header";
 
@@ -8,9 +8,12 @@ export default function Info({ DataManagementCss }) {
       <div className={DataManagementCss.mainDivBackground}>
         <Header />
         <div className={DataManagementCss.detailsDiv}>
-          <Row className={DataManagementCss.infoRow}>
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
-            <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
+          <Row
+            className={DataManagementCss.infoRow}
+            justify={"center"}
+            align={"middle"}
+          >
+            <Col xs={20} sm={20} md={10} lg={10} xl={10} xxl={10}>
               <AnimationOnScroll
                 initiallyVisible={true}
                 animateIn="animate__bounceIn"
@@ -26,7 +29,12 @@ export default function Info({ DataManagementCss }) {
                 </p>
               </AnimationOnScroll>
             </Col>
-            <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
+            <Col xs={20} sm={20} md={10} lg={10} xl={10} xxl={10}>
+              <Image
+                src="/Data Management/Deliver Impact Faster.png"
+                preview={false}
+              />
+            </Col>
           </Row>
         </div>
       </div>

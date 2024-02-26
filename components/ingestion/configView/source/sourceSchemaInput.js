@@ -7,7 +7,8 @@ import {
   message,
   Row,
   Space,
-  Modal
+  Modal,
+  Select,
 } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -102,7 +103,11 @@ const SourceSchemaInput = ({
 
     try {
       const data = await form.validateFields();
-      if (updateble || (sourceIndex?.property_value == data?.table && connectionIndex?.property_value == connectionId)) {
+      if (
+        updateble ||
+        (sourceIndex?.property_value == data?.table &&
+          connectionIndex?.property_value == connectionId)
+      ) {
         await getTableDataAction(type);
       } else {
         Modal.confirm({
@@ -116,7 +121,7 @@ const SourceSchemaInput = ({
         });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -155,29 +160,92 @@ const SourceSchemaInput = ({
               getTableData(e);
             }}
           >
-            <Row>
-              <Col span={12}>
+            <Row justify={"space-between"}>
+              <Col span={11}>
                 <Form.Item
-                  label={"Source"}
+                  label={"Location"}
                   labelAlign={"left"}
-                  name={"table"}
+                  name={"source_object"}
                   rules={[
                     {
                       required: true,
-                      message: "Source is required.",
+                      message: "Location is required.",
                     },
                   ]}
                 >
                   <Input
                     key={"input-source-name"}
                     className={"input"}
-                    name={"table"}
-                    placeholder="Source Name"
+                    name={"source_object"}
+                    placeholder="Location"
                   />
                 </Form.Item>
               </Col>
-
-              <Col span={24}>
+              <Col span={11}>
+                <Form.Item
+                  label={"File Type"}
+                  labelAlign={"left"}
+                  name={"file_type"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "File Type is required.",
+                    },
+                  ]}
+                >
+                  <Select
+                    name={"file_type"}
+                    options={[
+                      { value: "csv", label: "csv" },
+                      { value: "csv.gz", label: "csv.gz" },
+                      { value: "parquet", label: "parquet" },
+                      { value: "parquet.gz", label: "parquet.gz" },
+                      { value: "gz.parquet", label: "gz.parquet" },
+                    ]}
+                    className="inputSelect"
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={11}>
+                <Form.Item
+                  label={"File Pattern"}
+                  labelAlign={"left"}
+                  name={"file_pattern"}
+                >
+                  <Input
+                    type="text"
+                    className="input"
+                    name={"file_pattern"}
+                    placeholder="cp"
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={11}>
+                <Form.Item
+                  label={"Display Rows"}
+                  labelAlign={"left"}
+                  name={"rows"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Display rows is required.",
+                    },
+                  ]}
+                >
+                  <Input
+                    type="number"
+                    className="input"
+                    name={"rows"}
+                    defaultValue={10}
+                    onChange={(num) => {
+                      if (num.target.value > 100) {
+                        form.setFieldValue("rows", 100);
+                      }
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={24} className={ingestionCss.generalLastDiv}>
                 <Button
                   shape="round"
                   htmlType="submit"

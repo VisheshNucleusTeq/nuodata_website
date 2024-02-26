@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import signUpCss from "../../styles/newStyles/signUpNew.module.css";
+import signUpCss from "../../styles/signUp.module.css";
 import ContactUsLeft from "./sign-up-left";
 import ContactUsRight from "./sign-up-right";
 

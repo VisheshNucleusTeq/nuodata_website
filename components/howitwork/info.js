@@ -1,6 +1,5 @@
 import { Col, Row, Image, Button } from "antd";
-import Header from "../newPages/header";
-// import Header from "../common/header";
+import Header from "../common/header";
 
 export default function Info({ HowItWorkCss }) {
   return (

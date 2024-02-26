@@ -3,7 +3,7 @@ import HowItWorkCss from "../../styles/HowItWork.module.css";
 import Info from "./info";
 import LeftTextComp from "./left-text-component";
 import RightTextComp from "./right-text-component";
-import Footer from "../newPages/footer";
+import Footer from "../common/footer";
 
 export default function HowItWork() {
   const leftTextData = [
@@ -113,7 +113,7 @@ export default function HowItWork() {
           })}
         </Col>
       </Row>
-      <Footer HowItWorkCss={HowItWorkCss} />
+      <Footer />
     </>
   );
 }

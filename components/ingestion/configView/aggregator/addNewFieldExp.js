@@ -72,8 +72,6 @@ function AddNewFieldExp({
         message.success(resultData?.data?.message);
         form.resetFields();
         setIsModalOpen(false);
-      } else {
-        console.log([resultData?.error]);
       }
       dispatch(loderShowHideAction(false));
     } catch (error) {

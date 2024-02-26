@@ -19,13 +19,21 @@ const JobList = () => {
   const [loader, setLoader] = useState(false);
 
   const changeDateFormat = (date) => {
-    const dt = new Date(date);
-    const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
-    return `${padL(dt.getMonth() + 1)}/${padL(
-      dt.getDate()
-    )}/${dt.getFullYear()} ${padL(dt.getHours())}:${padL(
-      dt.getMinutes()
-    )}:${padL(dt.getSeconds())}`;
+    try {
+      if (date) {
+        const dt = new Date(date);
+        const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
+        return `${padL(dt.getMonth() + 1)}/${padL(
+          dt.getDate()
+        )}/${dt.getFullYear()} ${padL(dt.getHours())}:${padL(
+          dt.getMinutes()
+        )}:${padL(dt.getSeconds())}`;
+      } else {
+        return "NA";
+      }
+    } catch (error) {
+      return "NA";
+    }
   };
 
   const getJobStatus = (status) => {
@@ -117,7 +125,7 @@ const JobList = () => {
             title: "End Time",
             key: "end_time",
             render: (_, record) => (
-              <span>{changeDateFormat(record.start_time)}</span>
+              <span>{changeDateFormat(record.end_time)}</span>
             ),
           },
           {

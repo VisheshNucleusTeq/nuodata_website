@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import SignInLeft from "./sign-in-left";
 import SignInRight from "./sign-in-right";
-import loginCss from "../../styles/newStyles/loginNew.module.css";
+import loginCss from "../../styles/login.module.css";
 
 export default function SignInNew() {
   return (
