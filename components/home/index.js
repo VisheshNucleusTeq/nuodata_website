@@ -1,10 +1,11 @@
 import HomeCss from "../../styles/Home.module.css";
-import Footer from "../common/footer";
-import DataModernizationArchitecture from "./datamodernizationarchitecture";
-import EnterpriseChallenge from "./enterprisechallenge";
 import Info from "./info";
-import ModernizeWithConfidence from "./modernizewithconfidence";
+import Footer from "../common/footer";
 import ThinkBig from "./thinkbig";
+import EnterpriseChallenge from "./enterprisechallenge";
+import ModernizeWithConfidence from "./modernizewithconfidence";
+import DataModernizationArchitecture from "./datamodernizationarchitecture";
+import SnapShot from "./snapShot";
 
 export default function Home() {
   return (
@@ -12,10 +13,12 @@ export default function Home() {
       <Info HomeCss={HomeCss} />
       <ThinkBig HomeCss={HomeCss} />
       <EnterpriseChallenge HomeCss={HomeCss} />
-      <div className={HomeCss.space} />
       <ModernizeWithConfidence HomeCss={HomeCss} />
       <DataModernizationArchitecture HomeCss={HomeCss} />
-      <Footer HomeCss={HomeCss} />
+      <SnapShot
+        HomeCss={HomeCss}
+      />
+      <Footer />
     </>
   );
 }

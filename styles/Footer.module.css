@@ -1,21 +1,33 @@
-
 .footerCol {
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    border: none;
-  }
-  
-  .footerColChild {
-    text-align: start;
-  }
-  
-  .footerColChild h1 {
-    color: #FFF;
-    font-weight: bold;
-  }
-  
-  .footerColChild p {
-    line-height: 90%;
-  }
-  
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  border: none;
+}
+
+.footerColChild {
+  text-align: start;
+}
+
+.footerColChild h1 {
+  font-size: 22px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.footerColChild button,
+.footerColChild button:hover,
+.footerColChild button:active,
+.footerColChild button:focus {
+  background-color: transparent;
+  border: transparent;
+  color: #fff !important;
+  padding: 0;
+  display: flex;
+  justify-content: left;
+  align-items: center !important;
+}
+
+.footerColChild p {
+  line-height: 90%;
+}
