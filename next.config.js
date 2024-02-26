@@ -1,5 +1,13 @@
 const nextConfig = {
   trailingSlash: true,
+  exportPathMap: function () {
+    return {
+      "/": { page: "/" },
+      "/sso/login": { page: "/sso/login" },
+      "/api/auth/login": { page: "/api/auth/login" },
+      // Add other routes here
+    };
+  },
   staticPageGenerationTimeout: 1200,
   reactStrictMode: true,
   env: {
