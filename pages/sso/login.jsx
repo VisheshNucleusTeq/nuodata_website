@@ -1,0 +1,61 @@
+import React, { useEffect } from "react";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { UserDetailsAction } from "../../Redux/action";
+const Sso = () => {
+  const { user, error, isLoading } = useUser();
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/auth/profile/");
+        const { accessToken, refreshToken, accessTokenExpiresAt } =
+          response?.data;
+        accessToken && localStorage.setItem("authToken", accessToken);
+        refreshToken && localStorage.setItem("refreshToken", refreshToken);
+        accessTokenExpiresAt &&
+          localStorage.setItem("expiryTime", accessTokenExpiresAt);
+
+        localStorage.setItem(
+          "authData",
+          JSON.stringify({
+            ...user,
+            ...{
+              userId: user?.sub ? user?.sub : "NA",
+              firstName: user?.given_name ? user?.given_name : "NA",
+              lastName: user?.family_name ? user?.family_name : "NA",
+              email: user?.email ? user?.email : "NA",
+              mobileNo: user?.mobileNo ? user?.mobileNo : "NA",
+              jobTitle: user?.jobTitle ? user?.jobTitle : "NA",
+              orgId: user?.orgId ? user?.orgId : "NA",
+              orgName: user?.orgName ? user?.orgName : "NA",
+              roleName: user?.roleName ? user?.roleName : "NA",
+            },
+          })
+        );
+        dispatch(UserDetailsAction(true));
+        const delayDebounceFn = setTimeout(() => {
+          router.push("/ingestion/workspace/");
+        }, 100);
+        return () => clearTimeout(delayDebounceFn);
+      } catch (error) {
+        localStorage.clear();
+        router.push("/api/auth/login");
+      }
+    };
+    const delayDebounceFn = setTimeout(() => {
+      !isLoading && fetchData();
+    }, 100);
+    return () => clearTimeout(delayDebounceFn);
+  }, [isLoading]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+  if (user) return <div>Welcome {user.name}</div>;
+};
+
+export default Sso;

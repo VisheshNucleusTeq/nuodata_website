@@ -1,11 +1,82 @@
 .mainLayout {
-  height: 100vh
+  height: 100vh;
+}
+
+.maxWidth {
+  width: 100%;
+}
+
+.menuTxtMargin {
+  margin-left: 12px;
+}
+
+.collapseStyle {
+  color: #fff;
+  float: right;
+}
+
+.collapseArrowCol {
+  display: flex;
+  align-items: center;
 }
 
 .mainLayoutSider {
+  display: flex;
   height: 100%;
+  width: 260px !important;
+  max-width: 260px !important;
+  flex: 0 0 260px !important;
   background-color: #0c3246;
-  overflow-y: scroll
+  padding: 12px 10px 24px 10px;
+}
+
+.collapsedSider {
+  height: 100%;
+  width: 0px !important;
+  max-width: 0px !important;
+  flex: 0 0 0px !important;
+  background-color: #0c3246;
+  display: none;
+}
+
+.mainLayoutSider .ant-layout-sider-trigger {
+  display: none !important;
+}
+
+.collapseMenuBtn {
+  height: 80px;
+  width: 100%;
+  color: #0c3246;
+  background: #fff;
+  border-radius: 0;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  position: absolute;
+  top: 0;
+
+  @media (max-width: 840px) {
+    margin-left: 1vw;
+  }
+}
+
+.logOutBtn {
+  background: #e74860;
+  border: 1px solid #e74860;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 12px 24px;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 24px;
+}
+
+.logOutBtn:hover,
+.logOutBtn:focus,
+.logOutBtn:active {
+  background: #c13e50 !important;
+  color: #fff !important;
+  border-color: #c13e50 !important;
 }
 
 .logoImage {
@@ -13,46 +84,83 @@
   justify-content: center;
   text-align: center;
   align-items: center;
-  padding: 10%
+  padding: 10%;
+}
+
+.mainLayoutHeader {
+  background-color: #fff;
 }
 
 .mainLayoutContent {
   background-color: #f3f3f3;
-  padding: 1% 2%
+  padding: 1% 5% 1% 5%;
 }
 
 .mainMenu {
   display: flex;
   align-items: center;
-  color: #fff
+  color: #fff;
 }
 
 .activeMenu {
-  border-left: 4px solid #e74860 !important;
-  background-color: #081f2c
+  background-color: #081f2c;
+}
+
+.mainMenuRow {
+  height: 70vh;
+  overflow-y: scroll;
+  width: 100%;
+  align-content: start;
+  margin-top: 10%;
+}
+
+.mainMenuDiv {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 2vh;
+}
+
+.mainMenuCol {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
 }
 
 .mainMenuCol:hover {
   color: #fff;
   cursor: pointer;
-  background-color: #081f2c;
-  border-left: 4px solid #081f2c
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.activeMenu {
+  color: #fff;
+  cursor: pointer;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .subMainMenu {
-  border-left: 1px solid #fff
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding-left: 30px;
 }
 
-.subMainMenu,
 .subMainMenuSelect {
   display: flex;
   align-items: center;
   color: #fff;
-  padding-left: 5%
+  padding-left: 30px;
 }
 
-.mainMenuCol {
-  border-left: 4px solid #0c3246
+.logoutBtn {
+  background: #e74860;
+  border: 1px solid #e74860;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .mainLayoutHeader {
@@ -64,7 +172,7 @@
   border-top: 1px solid #ececec;
   border-bottom: 1px solid #ececec;
   border-left: 1px solid #ececec;
-  background: #fff
+  background: #fff;
 }
 
 .HeaderUserName h1 {
@@ -74,22 +182,25 @@
   font-style: normal;
   font-weight: 500;
   line-height: 20px;
-  text-transform: capitalize
+  text-transform: capitalize;
+  @media (max-width: 991px) {
+    margin-left: 4vw;
+  }
 }
 
 .headerItems ul li {
-  padding: 0 10px !important
+  padding: 0 10px !important;
 }
 
 .headerItems ul {
-  margin-top: 7px
+  margin-top: 7px;
 }
 
 .BellOutlined {
   padding: 12px 0;
-  margin: 10px 0
+  margin: 10px 0;
 }
 
 .UserOutlined {
-  background: var(--Primary, #E74860)
+  background: var(--Primary, #e74860);
 }
