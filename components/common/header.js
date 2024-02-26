@@ -250,7 +250,7 @@ export default function Header() {
                     </Button>
                   ),
                   onClick: () => {
-                    router.push("/api/auth/login");
+                    router.push("/sso/login");
                   },
                   onMouseEnter: () => {
                     setOpen(false);

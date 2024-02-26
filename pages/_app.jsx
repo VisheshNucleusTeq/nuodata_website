@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps, session }) {
   const isLoaderShow = useSelector((state) => state.loderShowHide.isLoaderShow);
 
   return (
-    <SessionProvider session={session}>
+    // <SessionProvider session={session}>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps, session }) {
           <ReactQueryDevtools />
         </QueryClientProvider>
       </Provider>
-    </SessionProvider>
+    // </SessionProvider>
   );
 }
 
