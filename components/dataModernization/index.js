@@ -31,6 +31,7 @@ import dataModernizationCss from "../../styles/dataModernization.module.css";
 import { CheckCircleFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import ConnectNew from "./connect-new";
+import AnalyzeHadoop from "./analyzeHadoop";
 
 export default function DataModernization() {
   const { query } = useRouter();
@@ -144,9 +145,12 @@ export default function DataModernization() {
               ) : (
                 <Connect dataModernizationCss={dataModernizationCss} />
               ))}
-            {tabType === "Analyze" && (
-              <Analyze dataModernizationCss={dataModernizationCss} />
-            )}
+            {tabType === "Analyze" &&
+              (/hadoop/i.test(projectDetails?.sourcePlatform) ? (
+                <AnalyzeHadoop dataModernizationCss={dataModernizationCss} />
+              ) : (
+                <Analyze dataModernizationCss={dataModernizationCss} />
+              ))}
             {tabType === "Design" && (
               <Design dataModernizationCss={dataModernizationCss} />
             )}

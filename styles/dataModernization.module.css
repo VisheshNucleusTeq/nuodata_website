@@ -121,8 +121,8 @@
 
 .cardViewGraphs {
   height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10);
+  /* border-radius: 10px; */
+  /* box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10); */
   align-items: center;
   justify-content: center;
   display: flex;
@@ -133,8 +133,8 @@
 }
 
 .cardView {
-  border-radius: 10px;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10);
+  /* border-radius: 10px; */
+  /* box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10); */
 }
 
 .cardView div div {
@@ -144,7 +144,7 @@
   padding: 2.5vh !important;
 }
 
-.cardView div div:nth-child(1) {
+/* .cardView div div:nth-child(1) {
   border-radius: 10px 0px 0px 0px;
 }
 
@@ -158,24 +158,29 @@
 
 .cardView div div:nth-last-child(2) {
   border-radius: 0px 0px 0px 10px;
-}
+} */
 
 .cardView div div:nth-child(odd) {
   width: 60% !important;
   color: #0c3246;
-  font-weight: bold !important;
+  /* font-weight: bold !important; */
+  font-weight: 600;
 }
 
 .cardView div div:nth-child(even) {
   width: 40% !important;
   color: #e74860;
-  font-weight: bold !important;
+  /* font-weight: bold !important; */
+  font-weight: 600;
+
 }
 
 .cardView div div:nth-child(even) span {
   width: 40% !important;
   color: #e74860;
-  font-weight: bold !important;
+  /* font-weight: bold !important; */
+  font-weight: 600;
+
 }
 
 .cardViewGrid div div {
@@ -555,4 +560,49 @@
   align-items: center !important;
   padding: 4px 8px;
   gap: 2px;
+}
+
+
+.cancelBtn,
+.submitBtn {
+  border-radius: 100px;
+  display: flex;
+  min-width: 56px;
+  padding: 4px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px
+}
+
+.cancelBtn,.cancelBtn:hover {
+  border: 1px solid #0c3246 !important;
+  background: #fff
+}
+
+.cancelBtn>span,
+.submitBtn>span {
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px
+}
+
+.cancelBtn>span {
+  color: var(--Secondary, #0C3246)
+}
+
+.submitBtn,.submitBtn:hover {
+  border: 1px solid var(--Primary) !important;
+  background: var(--Primary)
+}
+
+.submitBtn>span {
+  color: #fff
+}
+
+.generalLastDiv {
+  margin-bottom: 1%;
+  display: flex;
+  justify-content: end;
 }

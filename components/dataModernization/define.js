@@ -227,15 +227,15 @@ const Define = ({ dataModernizationCss }) => {
                   setSourceLang([
                     {
                       value: "txt",
-                      label: ".txt",
+                      label: "txt",
                     },
                     {
                       value: "sql",
-                      label: ".sql",
+                      label: "sql",
                     },
                     {
                       value: "py",
-                      label: ".py",
+                      label: "py",
                     },
                   ]);
                 } else if (e == "hadoop_hortonworks") {
@@ -256,7 +256,7 @@ const Define = ({ dataModernizationCss }) => {
                   setSourceLang([
                     {
                       value: "XML",
-                      label: ".XML",
+                      label: "XML",
                     },
                   ]);
                 }

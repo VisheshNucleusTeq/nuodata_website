@@ -11,7 +11,8 @@ import {
   Modal,
   Row,
   Space,
-  Table
+  Table,
+  Typography,
 } from "antd";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -36,7 +37,7 @@ import BarChart from "./charts/barChart";
 import LineChart from "./charts/lineChart";
 import PieChart from "./charts/pieChart";
 
-const Analyze = ({ dataModernizationCss }) => {
+const AnalyzeHadoop = ({ dataModernizationCss }) => {
   const dispatch = useDispatch();
   const { query } = useRouter();
   const router = useRouter();
@@ -44,7 +45,7 @@ const Analyze = ({ dataModernizationCss }) => {
   const [data, setData] = useState([]);
   const [analyzeDetails, setAnalyzeDetails] = useState();
   const [analyzeDetailPageData, setAnalyzeDetailPageData] = useState();
-  
+
   const [complexityGraph, setComplexityGraph] = useState();
   const [analyze, setAnalyze] = useState(true);
   const [analyzeDetailsId, setAnalyzeDetailsId] = useState(0);
@@ -57,12 +58,70 @@ const Analyze = ({ dataModernizationCss }) => {
   );
 
   const getAnalyzeData = async () => {
-    const data = await fetch_retry_get(
-      `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
-    );
+    // const data = await fetch_retry_get(
+    //   `${ANALYZESUMMARY}${query.id ? query.id : projectDetails.projectId}`
+    // );
+    const data = {
+      success: true,
+      data: {
+        complexityData: {
+          totalFiles: 3,
+          workflows: 1,
+          workloads: 3,
+          hiveFiles: 3,
+          sql: 99,
+          conversion: "",
+          manualEffort: "20.0 Hours",
+          hoursSaved: "0.0 Hours",
+          automationEffort: "3.0 Hours",
+        },
+        complexityGraph: [
+          {
+            complexityType: "Very Complex",
+            count: 1,
+          },
+        ],
+        graphId: 30537,
+        hiveFileDetails: [
+          {
+            fileId: 771,
+            workFlow: "simple-Workflow",
+            job: "Create_External_Table",
+            fileName: "Copydata.hive",
+            type: "hive",
+            queryCount: 11,
+            complexity: "Low",
+            status: "analysis success",
+            createdDate: "2024-02-23T05:51:20.461241Z",
+          },
+          {
+            fileId: 772,
+            workFlow: "simple-Workflow",
+            job: "Create_orc_Table",
+            fileName: "Copydata.hive",
+            type: "hive",
+            queryCount: 11,
+            complexity: "Low",
+            status: "analysis success",
+            createdDate: "2024-02-23T05:51:25.046477Z",
+          },
+          {
+            fileId: 773,
+            workFlow: "simple-Workflow",
+            job: "Insert_into_Table",
+            fileName: "Copydata.hive",
+            type: "hive",
+            queryCount: 11,
+            complexity: "Low",
+            status: "analysis success",
+            createdDate: "2024-02-23T05:51:29.935869Z",
+          },
+        ],
+      },
+    };
     if (data.success) {
-      setData(data?.data?.fileDetails);
-      setAnalyzeDetails(data?.data);
+      setData(data?.data?.hiveFileDetails);
+      setAnalyzeDetails(data?.data?.complexityData);
       setComplexityGraph(data?.data?.complexityGraph);
     } else {
       dispatch(SetProjectTransformDetailsAction({}));
@@ -147,14 +206,14 @@ const Analyze = ({ dataModernizationCss }) => {
       </Modal>
 
       {analyze ? (
-        <Row>
+        <Row >
           <Col
-            xs={8}
-            sm={8}
-            md={8}
-            lg={8}
-            xl={8}
-            xxl={8}
+            xs={10}
+            sm={10}
+            md={10}
+            lg={10}
+            xl={10}
+            xxl={10}
             style={{ paddingRight: ".5%" }}
           >
             <Card className={dataModernizationCss.cardView}>
@@ -164,36 +223,44 @@ const Analyze = ({ dataModernizationCss }) => {
                   ? analyzeDetails.totalFiles
                   : "0"}
               </Card.Grid>
-              <Card.Grid>Transformations</Card.Grid>
+              <Card.Grid>Workflows</Card.Grid>
               <Card.Grid>
-                {analyzeDetails && analyzeDetails.transformations
-                  ? analyzeDetails.transformations
+                {analyzeDetails && analyzeDetails.workflows
+                  ? analyzeDetails.workflows
                   : "0"}
               </Card.Grid>
-              <Card.Grid>Mappings</Card.Grid>
+              <Card.Grid>Workloads</Card.Grid>
               <Card.Grid>
-                {analyzeDetails && analyzeDetails.mappings
-                  ? analyzeDetails.mappings
+                {analyzeDetails && analyzeDetails.workloads
+                  ? analyzeDetails.workloads
                   : "0"}
+              </Card.Grid>
+              <Card.Grid>Hive Files</Card.Grid>
+              <Card.Grid>
+                {analyzeDetails && analyzeDetails.hiveFiles
+                  ? analyzeDetails.hiveFiles
+                  : "0"}
+              </Card.Grid>
+
+              <Card.Grid>SQL</Card.Grid>
+              <Card.Grid>
+                {analyzeDetails && analyzeDetails.sql
+                  ? analyzeDetails.sql
+                  : "0"}
+              </Card.Grid>
+              <Card.Grid>Conversion</Card.Grid>
+              <Card.Grid>
+                {analyzeDetails && analyzeDetails.conversion
+                  ? analyzeDetails.conversion
+                  : ""}
               </Card.Grid>
               <Card.Grid>Manual Effort</Card.Grid>
               <Card.Grid>
                 <span>
-                  {analyzeDetails && analyzeDetails.manualEffortsEstimateHrs
-                    ? parseFloat(
-                        analyzeDetails.manualEffortsEstimateHrs
-                      ).toFixed(2)
+                  {analyzeDetails && analyzeDetails.manualEffort
+                    ? parseFloat(analyzeDetails.manualEffort).toFixed(2)
                     : "0"}{" "}
                   hours
-                </span>
-              </Card.Grid>
-
-              <Card.Grid>Workflows</Card.Grid>
-              <Card.Grid>
-                <span>
-                  {analyzeDetails && analyzeDetails.workflows
-                    ? analyzeDetails.workflows
-                    : "0"}
                 </span>
               </Card.Grid>
 
@@ -201,10 +268,7 @@ const Analyze = ({ dataModernizationCss }) => {
               <Card.Grid>
                 <span>
                   {analyzeDetails &&
-                    parseFloat(
-                      analyzeDetails.manualEffortsEstimateHrs -
-                        analyzeDetails.hoursSaved
-                    ).toFixed(2)}{" "}
+                    parseFloat(analyzeDetails.automationEffort).toFixed(2)}{" "}
                   hours
                 </span>
               </Card.Grid>
@@ -227,12 +291,12 @@ const Analyze = ({ dataModernizationCss }) => {
             </Card>
           </Col>
           <Col
-            xs={16}
-            sm={16}
-            md={16}
-            lg={16}
-            xl={16}
-            xxl={16}
+            xs={14}
+            sm={14}
+            md={14}
+            lg={14}
+            xl={14}
+            xxl={14}
             style={{ paddingLeft: ".5%" }}
           >
             <Card className={dataModernizationCss.cardViewGraphs}>
@@ -328,7 +392,28 @@ const Analyze = ({ dataModernizationCss }) => {
               </Carousel>
             </Card>
           </Col>
-
+          <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            <Row justify="space-between" style={{
+              marginTop:10,
+              padding:"16px",
+            border:"1px solid #ECECEC"
+            }}>
+              <Col>
+                <Typography.Text>Graph</Typography.Text>
+              </Col>
+              <Col>
+                <Space >
+                  <a
+                    onClick={() => {
+                     
+                    }}
+                  >
+                    <EyeOutlined /> View
+                  </a>
+                </Space>
+              </Col>
+            </Row>
+          </Col>
           <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
             <div className={dataModernizationCss.analyzeMain}>
               <Table
@@ -338,43 +423,52 @@ const Analyze = ({ dataModernizationCss }) => {
                 rowKey="fileId"
                 columns={[
                   {
+                    title: "Workflows",
+                    dataIndex: "workFlow",
+                    key: "workFlow",
+                    align: "center",
+                  },
+                  {
+                    title: "Jobs",
+                    dataIndex: "job",
+                    key: "job",
+                    align: "center",
+                  },
+                  {
                     title: "File",
                     dataIndex: "fileName",
                     key: "fileName",
                   },
                   {
-                    title: "Workflows",
-                    dataIndex: "workflows",
-                    key: "workflows",
+                    title: "Type",
+                    dataIndex: "type",
+                    key: "type",
                     align: "center",
                   },
                   {
-                    title: "Mappings",
-                    dataIndex: "mappings",
-                    key: "mappings",
+                    title: "Query Count",
+                    dataIndex: "queryCount",
+                    key: "queryCount",
                     align: "center",
                   },
                   {
-                    title: "Transformations",
-                    dataIndex: "transformations",
-                    key: "transformations",
+                    title: "Complexity",
+                    dataIndex: "complexity",
+                    key: "complexity",
                     align: "center",
                   },
                   {
                     title: "Status",
                     key: "fileStatus",
                     render: (_, record) => {
-                      return fileStatusBadge(
-                        record.fileStatus,
-                        record?.isUserAction
-                      );
+                      return fileStatusBadge(record.status);
                     },
                   },
                   {
                     title: "Created Date",
-                    key: "createDateTime",
+                    key: "createdDate",
                     render: (_, record) => {
-                      return changeDateFormat(record.createDateTime)
+                      return changeDateFormat(record.createdDate);
                     },
                   },
                   // createDateTime
@@ -410,7 +504,7 @@ const Analyze = ({ dataModernizationCss }) => {
                                   setAnalyze(false);
                                 }}
                               >
-                                <EyeOutlined /> View
+                                <EyeOutlined />
                               </a>
                             </Space>
                           );
@@ -425,7 +519,7 @@ const Analyze = ({ dataModernizationCss }) => {
                                   setAnalyze(false);
                                 }}
                               >
-                                <EyeOutlined /> View
+                                <EyeOutlined />
                               </a>
                             </Space>
                           );
@@ -439,41 +533,28 @@ const Analyze = ({ dataModernizationCss }) => {
               />
             </div>
             <div className={dataModernizationCss.nextExitBtn}>
-              <Button
-                type="primary"
-                danger
-                className={dataModernizationCss.nextBtn}
-                htmlType="submit"
-                onClick={() => {
-                  dispatch(SetTabTypeAction("Design"));
-                }}
-                style={{ marginRight: "2%" }}
-              >
-                Design Workflow <ArrowRightOutlined color="red" />
-              </Button>
-              {data.filter((e) => e.isUserAction === false).length ? (
-                <Button
-                  type="primary"
-                  danger
-                  className={dataModernizationCss.nextBtn}
-                  htmlType="submit"
-                  onClick={async () => {
-                    await updateTransformStatus();
-                  }}
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Row
+                  className={dataModernizationCss.generalLastDiv}
+                  style={{ marginTop: "10px" }}
                 >
-                  Transform <ArrowRightOutlined />
-                </Button>
-              ) : null}
-              <Button
-                type="primary"
-                danger
-                className={dataModernizationCss.exitBtn}
-                onClick={() => {
-                  router.push(`/dashboard`);
-                }}
-              >
-                Exit
-              </Button>
+                  <Col className={dataModernizationCss.generalLastDiv}>
+                    <Space>
+                      <Button
+                        className={dataModernizationCss.cancelBtn}
+                        onClick={() => {
+                          router.push(`/dashboard`);
+                        }}
+                      >
+                        exit
+                      </Button>
+                      <Button className={dataModernizationCss.submitBtn}>
+                        Transform
+                      </Button>
+                    </Space>
+                  </Col>
+                </Row>
+              </Col>
             </div>
           </Col>
         </Row>
@@ -495,4 +576,4 @@ const Analyze = ({ dataModernizationCss }) => {
   );
 };
 
-export default Analyze;
+export default AnalyzeHadoop;
