@@ -13,6 +13,7 @@ const Sso = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/auth/profile/");
+        console.log(response)
         const { accessToken, refreshToken, accessTokenExpiresAt } =
           response?.data;
         accessToken && localStorage.setItem("authToken", accessToken);
@@ -39,10 +40,12 @@ const Sso = () => {
         );
         dispatch(UserDetailsAction(true));
         const delayDebounceFn = setTimeout(() => {
+          alert(1)
           router.push("/ingestion/workspace/");
         }, 100);
         return () => clearTimeout(delayDebounceFn);
       } catch (error) {
+        alert(2)
         localStorage.clear();
         router.push("/api/auth/login");
       }
