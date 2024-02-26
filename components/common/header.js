@@ -246,11 +246,11 @@ export default function Header() {
                   key: "5",
                   label: (
                     <Button className={`${HeaderCss.tryNowBtn} ${"tryNowBtn"}`}>
-                      SSO Login
+                      SSO Login {process.env.AUTH0_CLIENT_ID}
                     </Button>
                   ),
                   onClick: () => {
-                    router.push("/sso/login");
+                    router.push("/api/auth/login");
                   },
                   onMouseEnter: () => {
                     setOpen(false);
