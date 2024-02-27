@@ -120,7 +120,6 @@ export default function EnterpriseChallengeNew({ HomeCss }) {
 
       <div className={HomeCss.tabPositionCss}>
         <Row align={"center"}>
-          <Col xs={2} sm={2} md={0} lg={0} xl={2} xxl={2} />
           {tabData.map((data, index) => {
             return (
               <Col
@@ -182,7 +181,6 @@ export default function EnterpriseChallengeNew({ HomeCss }) {
               </Col>
             );
           })}
-          <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} />
         </Row>
       </div>
     </div>
