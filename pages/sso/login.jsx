@@ -56,9 +56,11 @@ const Sso = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [isLoading]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <p style={{textAlign : "center"}}>Loading...</p>;
   if (error) return <div>{error.message}</div>;
-  if (user) return <div>Welcome {user.name}</div>;
+  if (user) return <p style={{textAlign : "center"}}>Loading...</p>;
+  // if (user) return <div>Welcome {user.name}</div>;
+
 };
 
 export default Sso;
