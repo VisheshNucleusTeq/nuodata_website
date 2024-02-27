@@ -1,21 +1,46 @@
+import { useEffect, useState } from "react";
 import { Carousel, Col, Row, Button, Image } from "antd";
 import Header from "../common/header";
 
 export default function Info({ HomeCss }) {
+  const [isDivShow, setIsDivShow] = useState(true);
+
+  const handleResize = async () => {
+    let box = document.querySelector(".box");
+    let width = box.offsetWidth;
+    if (width < 600) {
+      if (isDivShow) {
+        setIsDivShow(false);
+      }
+    } else {
+      if (!isDivShow) {
+        setIsDivShow(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize, true);
+    return () => {
+      window.removeEventListener("resize", handleResize, true);
+    };
+  }, []);
+
   return (
-    <div className={HomeCss.mainDiv}>
+    <div className={`${HomeCss.mainDiv} box`}>
       <Header />
       <div className={HomeCss.mainDivChild}>
         <Carousel
           effect={"fade"}
           dots={true}
-          autoplay={true}
+          // autoplay={true}
           draggable={true}
           autoplaySpeed={3000}
           className="home-carousel"
         >
           <div>
-            <Row justify={"center"} align={"middle"}  style={{width: "100%"}}>
+            <Row justify={"center"} align={"middle"} style={{ width: "100%" }}>
               <Col
                 xs={22}
                 sm={22}
@@ -64,7 +89,11 @@ export default function Info({ HomeCss }) {
               <div className={HomeCss.pipelineDiv}>
                 <iframe
                   src="/all-graph/home/banner/home-pipeline.html"
-                  style={{ width: "25vw", height: "25vw", border: "none" }}
+                  style={{
+                    width: isDivShow ? "25vw" : "60vw",
+                    height: isDivShow ? "25vw" : "60vw",
+                    border: "none",
+                  }}
                 />
               </div>
               <Col
@@ -140,7 +169,7 @@ export default function Info({ HomeCss }) {
             </Row>
           </div>
           <div>
-            <Row justify={"center"} align={"middle"}>
+            <Row justify={"center"} align={"middle"} style={{ width: "100%" }}>
               <Col
                 xs={22}
                 sm={22}
@@ -163,7 +192,25 @@ export default function Info({ HomeCss }) {
                   <Button className={HomeCss.tryNowBtn}>Read More</Button>
                 </div>
               </Col>
-              <Col xs={22} sm={22} md={10} lg={10} xl={10} xxl={10} />
+              <Col xs={0} sm={0} md={10} lg={10} xl={10} xxl={10}></Col>
+              <Col
+                xs={22}
+                sm={22}
+                md={0}
+                lg={0}
+                xl={0}
+                xxl={0}
+                align={"center"}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <Image
+                  className={HomeCss.homeMobImg}
+                  src="/carousel_imgs/banner_img4_mob.png"
+                  alt="banner"
+                  align={"center"}
+                  preview={false}
+                />
+              </Col>
               <div className={HomeCss.bannerDiv3}>
                 <Image
                   className={HomeCss.homeInfoImg}
@@ -176,7 +223,7 @@ export default function Info({ HomeCss }) {
             </Row>
           </div>
           <div>
-            <Row justify={"center"} align={"middle"} style={{width: "100%"}}>
+            <Row justify={"center"} align={"middle"} style={{ width: "100%" }}>
               <Col
                 xs={22}
                 sm={22}
