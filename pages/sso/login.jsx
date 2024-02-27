@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { UserDetailsAction } from "../../Redux/action";
+
 const Sso = () => {
   const { user, error, isLoading } = useUser();
   const router = useRouter();

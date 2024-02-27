@@ -1,4 +1,6 @@
 'use server'
+import { NextResponse } from "next/server";
+
 import {
   withApiAuthRequired,
   getSession,
@@ -7,5 +9,5 @@ import {
 
 export default withApiAuthRequired(async function myApiRoute(req, res) {
   const session = await getSession(req, res);
-  res.json(session);
+  NextResponse.json(session);
 });

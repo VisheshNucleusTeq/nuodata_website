@@ -1,5 +1,5 @@
 const nextConfig = {
-  trailingSlash: false,
+  trailingSlash: true,
   staticPageGenerationTimeout: 1200,
   reactStrictMode: true,
   env: {

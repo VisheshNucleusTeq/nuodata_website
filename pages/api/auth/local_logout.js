@@ -1,3 +1,4 @@
+'use server'
 export default (req, res) => {
   const cookies = Object.keys(req.cookies);
   res.setHeader(
