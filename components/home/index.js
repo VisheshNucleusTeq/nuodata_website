@@ -6,9 +6,6 @@ import EnterpriseChallenge from "./enterprisechallenge";
 import ModernizeWithConfidence from "./modernizewithconfidence";
 import DataModernizationArchitecture from "./datamodernizationarchitecture";
 import SnapShot from "./snapShot";
-import DataInnovation from "./datainnovation";
-import UnifiedData from "./unifiedData";
-import TrustedInnovation from "./trustedInnovation";
 
 export default function Home() {
   return (
@@ -17,11 +14,10 @@ export default function Home() {
       <ThinkBig HomeCss={HomeCss} />
       <EnterpriseChallenge HomeCss={HomeCss} />
       <ModernizeWithConfidence HomeCss={HomeCss} />
-      {/* <DataModernizationArchitecture HomeCss={HomeCss} /> */}
-      <UnifiedData HomeCss={HomeCss} />
-      <SnapShot HomeCss={HomeCss} />
-      <TrustedInnovation HomeCss={HomeCss} />
-      <DataInnovation HomeCss={HomeCss} />
+      <DataModernizationArchitecture HomeCss={HomeCss} />
+      <SnapShot
+        HomeCss={HomeCss}
+      />
       <Footer />
     </>
   );
