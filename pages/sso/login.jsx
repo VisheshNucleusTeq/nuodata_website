@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { UserDetailsAction } from "../../Redux/action";
-
 const Sso = () => {
   const { user, error, isLoading } = useUser();
   const router = useRouter();
@@ -13,7 +12,9 @@ const Sso = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/auth/profile");
+        // const response = await axios.get("/api/auth/profile");
+        const response = await fetch("/api/auth/profile");
+
         console.log(response)
         // const { accessToken, refreshToken, accessTokenExpiresAt } =
         //   response?.data;
