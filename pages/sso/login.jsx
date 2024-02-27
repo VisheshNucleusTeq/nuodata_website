@@ -12,10 +12,10 @@ const Sso = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await axios.get("/api/auth/profile");
-        const response = await fetch("/api/auth/profile");
+        const response = await axios.get("/api/sso");
+        // const response = await fetch("/api/auth/profile");
 
-        console.log(response)
+        console.log("response>",response)
         // const { accessToken, refreshToken, accessTokenExpiresAt } =
         //   response?.data;
         // accessToken && localStorage.setItem("authToken", accessToken);
