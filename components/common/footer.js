@@ -39,7 +39,7 @@ const Footer = () => {
         { name: "Google Cloud", logo: "/auth/footer-logos/Google Cloud.png" },
         { name: "Azure", logo: "/auth/footer-logos/Azure.png" },
         { name: "Databricks", logo: "/auth/footer-logos/Databricks.png" },
-        { name: "IBM", logo: "/auth/footer-logos/aws.png" },
+        { name: "IBM", logo: "/auth/footer-logos/IBM.png" },
         { name: "Snowflake", logo: "/auth/footer-logos/Snowflake.png" },
       ],
     },
@@ -103,6 +103,7 @@ const Footer = () => {
                         <Button
                           key={itemIndex}
                           className={item.className}
+                          onClick={column.onClick}
                           icon={
                             item.logo ? (
                               <Image
