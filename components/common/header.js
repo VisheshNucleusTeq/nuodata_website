@@ -154,7 +154,7 @@ export default function Header() {
       >
         <Row className={HeaderCss.infoRow}>
           <Col
-            offset={eventData.length > 0 ? 3 : 2}
+            offset={eventData.length > 0 ? 2 : 1}
             md={2}
             xs={8}
             sm={6}
@@ -242,20 +242,20 @@ export default function Header() {
                     setOpen(false);
                   },
                 },
-                // {
-                //   key: "5",
-                //   label: (
-                //     <Button className={`${HeaderCss.tryNowBtn} ${"tryNowBtn"}`}>
-                //       SSO Try It Now
-                //     </Button>
-                //   ),
-                //   onClick: () => {
-                //     router.push("/sso/login");
-                //   },
-                //   onMouseEnter: () => {
-                //     setOpen(false);
-                //   },
-                // },
+                {
+                  key: "5",
+                  label: (
+                    <Button className={`${HeaderCss.tryNowBtn} ${"tryNowBtn"}`}>
+                      SSO Login
+                    </Button>
+                  ),
+                  onClick: () => {
+                    router.push("/sso/login");
+                  },
+                  onMouseEnter: () => {
+                    setOpen(false);
+                  },
+                },
                 {
                   key: "6",
                   label: (
