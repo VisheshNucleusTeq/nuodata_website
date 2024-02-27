@@ -88,16 +88,16 @@ export default function ModernizeWithConfidenceNew({ HomeCss }) {
         xs={24}
         sm={24}
         md={24}
-        lg={11}
-        xl={11}
-        xxl={11}
+        lg={8}
+        xl={8}
+        xxl={8}
         className={HomeCss.firstViewImage}
       >
         <iframe
           src={`/all-graph/modernize/MWCImage${index}.html`}
           style={{
-            width: isDivShow ? "30vw" : "60vw",
-            height: isDivShow ? "30vw" : "60vw",
+            width: isDivShow ? "20vw" : "60vw",
+            height: isDivShow ? "20vw" : "60vw",
             border: "none",
           }}
         />
@@ -128,16 +128,20 @@ export default function ModernizeWithConfidenceNew({ HomeCss }) {
   }, []);
 
   return (
-    <div className="box" style={{ marginTop: "4vw", marginBottom: "4vw" }}>
-      <Row className={HomeCss.firstView}>
+    <div
+      id="benefitsID"
+      className="box"
+      style={{ marginTop: "4vw", marginBottom: "4vw" }}
+    >
+      <Row className={HomeCss.firstView} justify={"center"}>
         {!isDivShow ? createImage(1) : null}
         <Col
           xs={24}
           sm={24}
           md={24}
-          lg={11}
-          xl={11}
-          xxl={11}
+          lg={8}
+          xl={8}
+          xxl={8}
           className={HomeCss.firstViewText}
           style={
             !isDivShow ? { textAlign: "center", justifyContent: "center" } : {}
@@ -153,16 +157,16 @@ export default function ModernizeWithConfidenceNew({ HomeCss }) {
         {getCircle("#6015E2", "#29D5A6", "_1")}
       </Row>
 
-      <Row className={HomeCss.firstView}>
+      <Row className={HomeCss.firstView} justify={"center"}>
         {createImage(2)}
         {createPipeline(2)}
         <Col
           xs={24}
           sm={24}
           md={24}
-          lg={11}
-          xl={11}
-          xxl={11}
+          lg={8}
+          xl={8}
+          xxl={8}
           className={HomeCss.secondViewText}
           style={
             !isDivShow ? { textAlign: "center", justifyContent: "center" } : {}
@@ -176,15 +180,15 @@ export default function ModernizeWithConfidenceNew({ HomeCss }) {
         {getCircle("#29B8EF", "#FFF281", "_2")}
       </Row>
 
-      <Row className={HomeCss.firstView}>
+      <Row className={HomeCss.firstView} justify={"center"}>
         {!isDivShow ? createImage(3) : null}
         <Col
           xs={24}
           sm={24}
           md={24}
-          lg={11}
-          xl={11}
-          xxl={11}
+          lg={8}
+          xl={8}
+          xxl={8}
           className={HomeCss.thirdViewText}
           style={
             !isDivShow ? { textAlign: "center", justifyContent: "center" } : {}
@@ -199,16 +203,16 @@ export default function ModernizeWithConfidenceNew({ HomeCss }) {
         {getCircle("#FF8860", "#6015E2", "_3")}
       </Row>
 
-      <Row className={HomeCss.firstView}>
+      <Row className={HomeCss.firstView} justify={"center"}>
         {createImage(4)}
         {createPipeline(4)}
         <Col
           xs={24}
           sm={24}
           md={24}
-          lg={11}
-          xl={11}
-          xxl={11}
+          lg={8}
+          xl={8}
+          xxl={8}
           className={HomeCss.fourthViewText}
           style={
             !isDivShow ? { textAlign: "center", justifyContent: "center" } : {}
@@ -221,15 +225,15 @@ export default function ModernizeWithConfidenceNew({ HomeCss }) {
         {getCircle("#FB4794", "#29B8EC", "_4")}
       </Row>
 
-      <Row className={HomeCss.firstView}>
+      <Row className={HomeCss.firstView} justify={"center"}>
         {!isDivShow ? createImage(5) : null}
         <Col
           xs={24}
           sm={24}
           md={24}
-          lg={11}
-          xl={11}
-          xxl={11}
+          lg={8}
+          xl={8}
+          xxl={8}
           className={HomeCss.fifthViewText}
           style={
             !isDivShow ? { textAlign: "center", justifyContent: "center" } : {}
