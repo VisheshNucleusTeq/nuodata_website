@@ -43,16 +43,16 @@ BaseURL.interceptors.request.use(
       "/sso/login/",
     ];
 
-    const expiryTime = localStorage.getItem("expiryTime");
-    if (
-      expiryTime &&
-      expiryTime <= Date.now() &&
-      isRefreshing &&
-      !authPage.includes(window?.location?.pathname)
-    ) {
-      isRefreshing = false;
-      await refreshToken();
-    }
+    // const expiryTime = localStorage.getItem("expiryTime");
+    // if (
+    //   expiryTime &&
+    //   expiryTime <= Date.now() &&
+    //   isRefreshing &&
+    //   !authPage.includes(window?.location?.pathname)
+    // ) {
+    //   isRefreshing = false;
+    //   await refreshToken();
+    // }
     const token = localStorage.getItem("authToken");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
@@ -76,7 +76,7 @@ BaseURL.interceptors.response.use(
       LOGIN != originalRequest?.url
     ) {
       originalRequest._retry = true;
-      await refreshToken();
+      // await refreshToken();
       const token = localStorage.getItem("authToken");
       BaseURL.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       return BaseURL(originalRequest);
