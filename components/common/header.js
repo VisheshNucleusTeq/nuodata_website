@@ -242,20 +242,20 @@ export default function Header() {
                     setOpen(false);
                   },
                 },
-                {
-                  key: "5",
-                  label: (
-                    <Button className={`${HeaderCss.tryNowBtn} ${"tryNowBtn"}`}>
-                      SSO Login {process.env.AUTH0_CLIENT_ID}
-                    </Button>
-                  ),
-                  onClick: () => {
-                    router.push("/sso/login");
-                  },
-                  onMouseEnter: () => {
-                    setOpen(false);
-                  },
-                },
+                // {
+                //   key: "5",
+                //   label: (
+                //     <Button className={`${HeaderCss.tryNowBtn} ${"tryNowBtn"}`}>
+                //       SSO Try It Now
+                //     </Button>
+                //   ),
+                //   onClick: () => {
+                //     router.push("/sso/login");
+                //   },
+                //   onMouseEnter: () => {
+                //     setOpen(false);
+                //   },
+                // },
                 {
                   key: "6",
                   label: (
