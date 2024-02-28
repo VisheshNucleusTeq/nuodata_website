@@ -44,7 +44,7 @@ export default function Info({ HowItWorkCss }) {
             className={HowItWorkCss.infoImage}
           >
             <iframe
-              src="/all-graph/how it works/banner-gif/demo/data.html"
+              src="/all-graph/how_it_work/banner-gif/demo/data.html"
               style={{ width: "100%", height: "80vh", border: "none" }}
             />
             {/* <Image

@@ -8,7 +8,7 @@ export default function ArcCard({ mainImage, mainTitle, arcData }) {
         {mainImage && <Image src={mainImage} preview={false} />}
         <h1 className={DataManagementCss.arcTitle}>{mainTitle}</h1>
         <Image
-          src="/Data Management/yellow-horizontal-pipeline.png"
+          src="/data_governance/blue_horizontal_pipeline.svg"
           preview={false}
         />
 

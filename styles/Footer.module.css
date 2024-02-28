@@ -4,17 +4,14 @@
   padding: 20px;
   border: none;
 }
-
 .footerColChild {
   text-align: start;
 }
-
 .footerColChild h1 {
   font-size: 22px;
   color: #fff;
   font-weight: bold;
 }
-
 .footerColChild button,
 .footerColChild button:hover,
 .footerColChild button:active,
@@ -27,7 +24,33 @@
   justify-content: left;
   align-items: center !important;
 }
-
 .footerColChild p {
   line-height: 90%;
+}
+
+.howNuoDataworksBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14vh 0;
+  background-image: url("/auth/explore-btn-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.howNuoDataworksBtn button {
+  color: #e74860 !important;
+  font-weight: 400;
+  font-size: 18px;
+  height: 8vh;
+  border-radius: 5px;
+  border: 1px solid #e74860 !important;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.howNuoDataworksBtn button:hover {
+  border: 2px solid #e74860 !important;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }

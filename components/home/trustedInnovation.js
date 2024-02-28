@@ -2,18 +2,17 @@ import React from "react";
 import { Row, Col, Image } from "antd";
 export default function TrustedInnovation({ HomeCss }) {
   const imageSources = [
-    "/trusted/aws.png",
-    "/trusted/googlecloud.png",
-    "/trusted/azure.png",
-    "/trusted/databricks.png",
-    "/trusted/ibm.png",
-    "/trusted/snowflake.png",
-    "/trusted/salesforce.png",
-    // "/trusted/americanExpress.png",
+    "/home_trusted/aws.png",
+    "/home_trusted/googleCloud.png",
+    "/home_trusted/azure.png",
+    "/home_trusted/databricks.png",
+    "/home_trusted/ibm.png",
+    "/home_trusted/snowflake.png",
+    "/home_trusted/salesforce.png",
   ];
 
   return (
-    <div className={HomeCss.thinkBigMainDiv}>
+    <div className={HomeCss.trustedMainDiv}>
       <Row justify={"center"} align={"middle"}>
         <Col
           xs={22}

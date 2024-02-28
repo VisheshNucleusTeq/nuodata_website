@@ -35,12 +35,12 @@ const Footer = () => {
     {
       title: "Partners",
       items: [
-        { name: "AWS", logo: "/auth/footer-logos/AWS.png" },
-        { name: "Google Cloud", logo: "/auth/footer-logos/Google Cloud.png" },
-        { name: "Azure", logo: "/auth/footer-logos/Azure.png" },
-        { name: "Databricks", logo: "/auth/footer-logos/Databricks.png" },
-        { name: "IBM", logo: "/auth/footer-logos/IBM.png" },
-        { name: "Snowflake", logo: "/auth/footer-logos/Snowflake.png" },
+        { name: "AWS", logo: "/auth/footer-logos/aws.png" },
+        { name: "Google Cloud", logo: "/auth/footer-logos/googleCloud.png" },
+        { name: "Azure", logo: "/auth/footer-logos/azure.png" },
+        { name: "Databricks", logo: "/auth/footer-logos/databricks.png" },
+        { name: "IBM", logo: "/auth/footer-logos/ibm.png" },
+        { name: "Snowflake", logo: "/auth/footer-logos/snowflake.png" },
       ],
     },
     {
@@ -137,8 +137,9 @@ const Footer = () => {
           style={{
             display: "flex",
             justifyContent: "center",
-            paddingTop: "12px",
+            padding: "12px 12px 0 12px",
             background: "#141414",
+            textAlign: "center",
           }}
         >
           <p style={{ color: "#FFFFFF" }}>

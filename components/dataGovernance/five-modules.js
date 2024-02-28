@@ -3,31 +3,31 @@ import { Col, Row, Image, Space, Card } from "antd";
 export default function FiveModules({ DataGovernanceCss }) {
   const moduleData = [
     {
-      imageSrc: "/Data Governance/Explore.png",
+      imageSrc: "/data_governance/explore.png",
       title: "Explore",
       description:
         "Explore your data assets to gain a deeper understanding of it with our filters",
     },
     {
-      imageSrc: "/Data Governance/Quality.png",
+      imageSrc: "/data_governance/quality.png",
       title: "Quality",
       description:
         "See the numbers of test cases run to segregate the success and failure cases.",
     },
     {
-      imageSrc: "/Data Governance/Insights.png",
+      imageSrc: "/data_governance/insights.png",
       title: "Insights",
       description:
         "Centralized location to access and analyze key metrics and insights related to data assets and user activity",
     },
     {
-      imageSrc: "/Data Governance/Domains.png",
+      imageSrc: "/data_governance/domains.png",
       title: "Domains",
       description:
         "Have your own subdomains and regulate the level of access even within the organization",
     },
     {
-      imageSrc: "/Data Governance/Govern.png",
+      imageSrc: "/data_governance/govern.png",
       title: "Govern",
       description:
         "Handle sensitive information in accordance with regulatory compliances with our algorithms that intelligently mark Personally Identifiable Information (PII).",
@@ -42,7 +42,7 @@ export default function FiveModules({ DataGovernanceCss }) {
       >
         <h1>5 modules</h1>
         <Image
-          src="/Data Management/yellow-horizontal-pipeline.png"
+          src="/data_governance/yellow_horizontal_pipeline.svg"
           preview={false}
         />
         <Row
@@ -52,7 +52,12 @@ export default function FiveModules({ DataGovernanceCss }) {
           className={DataGovernanceCss.fiveModRow}
         >
           {moduleData.map((module, index) => (
-            <Col key={index} xs={24} sm={24} md={module.title === "Govern" ? 24 : 12}>
+            <Col
+              key={index}
+              xs={24}
+              sm={24}
+              md={module.title === "Govern" ? 24 : 12}
+            >
               <Card hoverable className={DataGovernanceCss.fiveModCard}>
                 <Space
                   direction="vertical"

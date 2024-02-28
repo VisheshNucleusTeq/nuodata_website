@@ -31,7 +31,7 @@ export default function Info({ DataManagementCss }) {
             </Col>
             <Col xs={20} sm={20} md={10} lg={10} xl={10} xxl={10}>
               <Image
-                src="/Data Management/Deliver Impact Faster.png"
+                src="/data_management/arc_card_icons/Deliver Impact Faster.png"
                 preview={false}
               />
             </Col>

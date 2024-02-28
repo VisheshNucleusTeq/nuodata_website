@@ -87,7 +87,7 @@
   background-color: #fff;
   padding: 2%;
   border-radius: 10px;
-  box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10);
+  /* box-shadow: 0 4px 10px 0 rgb(0, 0, 0, .10%), 0 4px 10px 0 rgba(0, 0, 0, .10); */
   background-color: #fff;
 }
 
@@ -165,6 +165,7 @@
   color: #0c3246;
   /* font-weight: bold !important; */
   font-weight: 600;
+  background-color: #F3F4F5;
 }
 
 .cardView div div:nth-child(even) {

@@ -8,6 +8,7 @@
 
 .menuDiv {
   height: 12vh;
+  border-bottom: 1px solid #e74860;
 }
 
 .infoRow {

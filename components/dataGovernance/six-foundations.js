@@ -4,30 +4,30 @@ export default function SixFoundations({ DataGovernanceCss }) {
     {
       mainTitle: "Built on the 6 foundations",
       arcData: [
-        {
-          imageSrc: "/Data Management/Data Discovery.svg",
-          title: "Data Discovery",
-        },
-        {
-          imageSrc: "/Data Management/Data Collaboration.svg",
-          title: "Data Collaboration",
-        },
-        {
-          imageSrc: "/Data Management/Data Quality.svg",
-          title: "Data Quality and Profiler",
-        },
-        {
-          imageSrc: "/Data Management/Data Lineage.svg",
-          title: "Data Lineage",
-        },
-        {
-          imageSrc: "/Data Management/Data Insights.svg",
-          title: "Data Insights",
-        },
-        {
-          imageSrc: "/Data Management/Data Governance.svg",
-          title: "Data Governance",
-        },
+        // {
+        //   imageSrc: "/data_governance/data_discovery.svg",
+        //   title: "Data Discovery",
+        // },
+        // {
+        //   imageSrc: "/data_governance/data_collaboration.svg",
+        //   title: "Data Collaboration",
+        // },
+        // {
+        //   imageSrc: "/data_governance/data_quality.svg",
+        //   title: "Data Quality and Profiler",
+        // },
+        // {
+        //   imageSrc: "/data_governance/data_lineage.svg",
+        //   title: "Data Lineage",
+        // },
+        // {
+        //   imageSrc: "/data_governance/data_insights.svg",
+        //   title: "Data Insights",
+        // },
+        // {
+        //   imageSrc: "/data_governance/data_governance.svg",
+        //   title: "Data Governance",
+        // },
       ],
     },
   ];

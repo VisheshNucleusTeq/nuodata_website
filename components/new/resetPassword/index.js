@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import ResetLeft from "./reset-left";
 import ResetRight from "./reset-right";
-import loginCss from "../../../styles/newStyles/loginNew.module.css";
+import loginCss from "../../../styles/login.module.css";
 
 export default function ResetPassword() {
   return (

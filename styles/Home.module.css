@@ -9,7 +9,7 @@
 }
 
 .mainDivChild {
-  background: url("/carousel_imgs/home-bg-1.png");
+  background: url("/home_carousel_imgs/home-bg-1.png");
   width: 100%;
   height: 88vh;
   background-size: cover;
@@ -22,7 +22,6 @@
   right: 0;
   display: flex;
   align-items: center;
-  width: 100%;
   z-index: -1;
 
   @media (max-width: 767px) {
@@ -36,6 +35,10 @@
   position: absolute;
   bottom: 0;
   right: 0;
+  @media (max-width: 600px) {
+    bottom: 35vw;
+    right: 35vw;
+  }
 }
 
 .homeInfoText {
@@ -80,7 +83,9 @@
 }
 
 .tryNowBtn,
-.tryNowBtn:hover {
+.tryNowBtn:hover,
+.tryNowBtn:focus,
+.tryNowBtn:active {
   background-color: transparent;
   height: auto;
   width: auto;
@@ -103,20 +108,49 @@
 /* THINK BIG */
 
 .thinkBigMainDiv {
-  margin: 2vw 0 2vw 0;
+  margin: 4vw 0;
 }
 
-.thinkBigChild h1:first-child,
-.thinkBigChild h1:last-child {
+.thinkBigChild h1 {
   color: #0c3246 !important;
   font-size: 3vw;
   font-weight: bolder;
-  margin-right: 10px;
   margin-bottom: 0 !important;
 }
 
-.thinkBigChild h1:last-child {
-  color: #e74860 !important;
+.thinkBigChild span {
+  color: #e74860;
+  margin: 0 0.8rem;
+}
+
+.ReadMoreCol {
+  display: flex;
+  justify-content: left;
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+.ReadMoreBtn,
+.ReadMoreBtn:hover,
+.ReadMoreBtn:focus,
+.ReadMoreBtn:active {
+  background-color: #e74860 !important;
+  border-radius: 5px !important;
+  height: auto !important;
+  padding: 12px 20px !important;
+  border-color: #e74860 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  font-weight: 300;
+}
+
+.ReadMoreBtn p {
+  color: #fff !important;
+  margin-bottom: 0;
+  font-size: 18px;
 }
 
 .thinkBigChild {
@@ -127,8 +161,8 @@
 
 .thinkBigChild h2 {
   color: #333 !important;
-  font-size: 2vw !important;
-  font-weight: bold;
+  font-size: 1.9vw !important;
+  font-weight: 500;
 }
 
 .thinkBigChildIcon {
@@ -143,9 +177,12 @@
 
 .SnapshotTextLeftCont,
 .SnapshotTextRightCont {
-  background: linear-gradient(320.41deg, #46384D 0.51%, #0C3246 104.1%);
+  background: linear-gradient(320.41deg, #46384d 0.51%, #0c3246 104.1%);
   padding: 1.7vw;
   min-height: 15.5vw;
+  @media (max-width: 1150px) {
+    padding: 20px;
+  }
 }
 
 .SnapshotTextLeftCont {
@@ -169,7 +206,9 @@
 }
 
 .SnapshotImageLeft {
-  margin-right: -0.5rem;
+  margin-right: -0.75rem;
+  display: flex;
+  justify-content: right;
 }
 
 .snapShotTitle {
@@ -189,13 +228,12 @@
 
 .snapShotParagraph {
   color: #ffffff;
-  /* font-size: 1.25vw; */
+  font-size: 1vw;
   font-weight: 400;
   letter-spacing: 0em;
   text-align: left;
   margin-bottom: 0 !important;
 }
-
 
 @media (max-width: 1150px) {
   .thinkBigChild h1 {
@@ -208,6 +246,18 @@
 
   .thinkBigMainDiv {
     margin: 2% 0% 2% 0%;
+  }
+
+  .snapShotTitle {
+    font-size: 2vw !important;
+  }
+
+  .snapShotTitle img {
+    max-width: 2vw;
+  }
+
+  .snapShotParagraph {
+    font-size: 1.6vw !important;
   }
 }
 
@@ -284,7 +334,7 @@
 .listTabs {
   border-top: 1px solid #fff;
   border-bottom: 1px solid #fff;
-  height: 18vh;
+  height: 20vh;
   display: flex;
   cursor: pointer;
 }
@@ -390,7 +440,7 @@
   }
 
   .ECText {
-    height: 30vh;
+    padding-left: 0;
   }
   .ECText h1 {
     text-align: center;
@@ -412,8 +462,30 @@
   }
 }
 @media (max-width: 767px) {
+  .mainDivChild {
+    background: linear-gradient(60deg, #45374c 10%, #0c3246 100%);
+  }
+  .snapShotTitle {
+    font-size: 3vw !important;
+  }
+
+  .snapShotTitle img {
+    max-width: 3vw;
+  }
+
+  .snapShotParagraph {
+    font-size: 2vw !important;
+  }
+
+  .thinkBigChild h1 {
+    text-align: center !important;
+  }
+
+  .thinkBigChild h2 {
+    text-align: center !important;
+  }
   .mainDiv {
-    height: 115vh;
+    height: 112vh;
   }
   .mainDivChild {
     height: 100vh;
@@ -433,6 +505,17 @@
 
   .homeInfoImg {
     width: 60%;
+  }
+
+  .homeMobImg {
+    display: none;
+    @media (max-width: 768px) {
+      display: flex;
+      width: 80%;
+    }
+    @media (max-width: 575px) {
+      width: 120%;
+    }
   }
 
   .homeInfoText div h1 {
@@ -474,14 +557,20 @@
   }
   .textTabCss {
     font-size: 3vw;
-    line-height: 3vw;
+    line-height: 150%;
   }
 
   .tabPositionCss {
     margin: 4vw 0;
   }
-  .snapShotParagraph {
-    font-size: 1.1vw;
+
+  .snapShotTitle {
+    font-size: 3vw !important;
+  }
+
+  .snapShotTitle img {
+    max-width: 6vw;
+    margin: auto 0;
   }
 
   .SnapshotImageLeft,
@@ -491,7 +580,7 @@
 }
 @media (max-width: 576px) {
   .mainDiv {
-    height: 135vh;
+    height: 132vh;
   }
   .mainDivChild {
     height: 120vh;
@@ -532,12 +621,12 @@
   .tryNowBtn,
   .tryNowBtn:hover {
     margin-top: 4vh;
-    font-size: 3vw;
+    font-size: 4vw;
   }
 
-  .ECText {
+  /* .ECText {
     height: 30vh;
-  }
+  } */
   .ECText h1 {
     font-size: 10vw;
     line-height: 10vw;
@@ -558,17 +647,17 @@
   }
 
   .snapShotTitle {
-    font-size: 2.66vw !important;
+    font-size: 5vw !important;
   }
 
   .snapShotParagraph {
-    font-size: 2.25vw !important;
+    font-size: 4vw !important;
   }
 }
 
 @media (max-width: 480px) {
   .mainDiv {
-    height: 135vh;
+    height: 132vh;
   }
   .mainDivChild {
     height: 120vh;
@@ -650,6 +739,10 @@
 .thirdViewText h1,
 .fifthViewText h1 {
   width: 70%;
+  text-align: right;
+  @media (max-width: 992px) {
+    text-align: center;
+  }
 }
 
 .firstViewText h1 span {
@@ -820,15 +913,21 @@
 
 .innovationMainDiv {
   width: 100%;
-  height: 90vh;
+  height: auto;
   display: flex;
+  position: relative;
+  padding: 20vh 0 30vh 0;
   justify-content: center;
   background-image: url("/data_innovation/data-innovation-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  margin-bottom: 6vw;
+  @media (max-width: 575px) {
+    padding: 20vh 0 20vh 0;
+  }
 
-  @media (max-width: 768px) {
+  /* @media (max-width: 768px) {
     height: 100vh;
   }
   @media (max-width: 575px) {
@@ -836,7 +935,7 @@
   }
   @media (max-width: 425px) {
     height: 100vh;
-  }
+  } */
 }
 
 .innovationMainDiv h1 {
@@ -854,6 +953,25 @@
   }
 }
 
+.innovationRobotDiv {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.innovationRobotImg {
+  height: 30vh;
+  /* width: auto;
+  object-fit: contain; */
+  @media (max-width: 575px) {
+    height: 20vh;
+    /* width: 100%;
+    object-fit: cover;
+    object-position: left; */
+  }
+}
+
 .innovationSubDiv {
   background: linear-gradient(
     -180deg,
@@ -861,14 +979,11 @@
     rgba(69, 55, 76, 0.5) 30%,
     rgba(12, 50, 70, 0.5) 100%
   );
-  width: 85vw;
+  width: 90vw;
+  height: auto;
   border-radius: 10px;
   border: 1px solid #e74860;
-  margin-bottom: 5rem;
   padding: 0;
-  @media (max-width: 992px) {
-    margin-bottom: 0;
-  }
 }
 
 .innovationMainRow {
@@ -880,7 +995,7 @@
   align-items: center;
 }
 
-.innovationSpace {
+.innovationCol {
   width: 100%;
   @media (max-width: 992px) {
     display: flex;
@@ -888,7 +1003,25 @@
   }
 }
 
-.innovationSpace h1 {
+.innovationCol h1 {
+  font-size: 1.8vw;
+  color: #e74860;
+  font-weight: 500;
+  text-align: left;
+  margin-bottom: 1rem;
+  @media (max-width: 992px) {
+    text-align: center;
+    font-size: 2.6vw;
+  }
+  @media (max-width: 768px) {
+    font-size: 4vw;
+  }
+  @media (max-width: 575px) {
+    font-size: 6vw;
+  }
+}
+
+.innovationAltCol h1 {
   font-size: 1.8vw;
   color: #e74860;
   font-weight: 500;
@@ -905,7 +1038,24 @@
   }
 }
 
-.innovationSpace h2 {
+.innovationCol h2 {
+  font-size: 1.6vw;
+  color: #fff;
+  font-weight: 400;
+  text-align: left;
+  @media (max-width: 992px) {
+    text-align: center;
+    font-size: 2vw;
+  }
+  @media (max-width: 768px) {
+    font-size: 3vw;
+  }
+  @media (max-width: 575px) {
+    font-size: 5vw;
+  }
+}
+
+.innovationAltCol h2 {
   font-size: 1.5vw;
   color: #fff;
   font-weight: 400;
@@ -923,6 +1073,8 @@
 }
 
 .innovationCol {
+  display: flex;
+  flex-direction: column;
   border-right: 1px solid #e74860;
   @media (max-width: 992px) {
     border: none;
@@ -931,6 +1083,21 @@
 
 /* Innovation */
 
+.trustedMainDiv {
+  margin: 4vw 0;
+  @media (max-width: 576px) {
+    margin: 16vw 0;
+  }
+}
+
+.trustedImg {
+  filter: grayscale(100%);
+}
+
+.trustedImg:hover {
+  filter: grayscale(0%);
+}
+
 @media (max-width: 576px) {
   .infoRowSystemViewSystem {
     display: none;
@@ -938,5 +1105,21 @@
 
   .infoRowSystemViewmobile {
     display: block;
+  }
+
+  .ECImage {
+    height: 30vh;
+  }
+
+  .ECText {
+    height: 45vh;
+  }
+
+  .textCss {
+    font-size: 6vw;
+  }
+
+  .textTabCss {
+    font-size: 5vw;
   }
 }

@@ -77,7 +77,7 @@ export default function Info({ HomeCss }) {
               >
                 <Image
                   className={HomeCss.homeInfoImg}
-                  src="/carousel_imgs/banner_img1.png"
+                  src="/home_carousel_imgs/banner_img1.png"
                   alt="banner"
                   preview={false}
                 />
@@ -160,7 +160,7 @@ export default function Info({ HomeCss }) {
               >
                 <Image
                   className={HomeCss.homeInfoImg}
-                  src="/carousel_imgs/banner_img3.png"
+                  src="/home_carousel_imgs/banner_img3.png"
                   alt="banner"
                   align={"center"}
                   preview={false}
@@ -193,28 +193,19 @@ export default function Info({ HomeCss }) {
                 </div>
               </Col>
               <Col xs={0} sm={0} md={10} lg={10} xl={10} xxl={10}></Col>
-              <Col
-                xs={22}
-                sm={22}
-                md={0}
-                lg={0}
-                xl={0}
-                xxl={0}
-                align={"center"}
-                style={{ display: "flex", justifyContent: "center" }}
-              >
+              <Col xs={22} sm={22} md={0} lg={0} xl={0} xxl={0}>
                 <Image
                   className={HomeCss.homeMobImg}
-                  src="/carousel_imgs/banner_img4_mob.png"
+                  src="/home_carousel_imgs/banner_img4Mob.png"
                   alt="banner"
-                  align={"center"}
+                  align={"right"}
                   preview={false}
                 />
               </Col>
               <div className={HomeCss.bannerDiv3}>
                 <Image
                   className={HomeCss.homeInfoImg}
-                  src="/carousel_imgs/banner_img4.png"
+                  src="/home_carousel_imgs/banner_img4.png"
                   alt="banner"
                   align={"right"}
                   preview={false}
@@ -252,7 +243,7 @@ export default function Info({ HomeCss }) {
                 className={HomeCss.homeInfoImgCol}
               >
                 <Image
-                  src="/carousel_imgs/banner_img5.png"
+                  src="/home_carousel_imgs/banner_img5.png"
                   alt="banner"
                   align={"center"}
                   preview={false}

@@ -1,6 +1,5 @@
 .menuDiv {
-  height: 14vh;
-  border-bottom: 1px solid #e74860;
+  height: 12vh;
 }
 
 .infoRow {
@@ -10,7 +9,7 @@
 }
 
 .menu {
-  height: 10vh;
+  height: 8vh;
   background-color: transparent;
   color: #fff;
   border-bottom: none;
@@ -32,7 +31,7 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  border-bottom: 0.5vh solid #e74860;
+  border-bottom: 0.5vh solid #e74860 !important;
   margin-top: 1.1vh !important;
 }
 

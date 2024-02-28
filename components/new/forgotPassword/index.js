@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import ForgotLeft from "./forgot-left";
 import ForgotRight from "./forgot-right";
-import loginCss from "../../../styles/newStyles/loginNew.module.css";
+import loginCss from "../../../styles/Footer.module.css";
 
 export default function ForgotPassword() {
   return (

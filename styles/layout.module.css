@@ -92,8 +92,10 @@
 }
 
 .mainLayoutContent {
-  background-color: #f3f3f3;
-  padding: 1% 5% 1% 5%;
+  /* background-color: #f3f3f3; */
+  /* padding: 1% 2.5% 1% 2.5%; */
+  background-color: #fff;
+  padding: 1% 1.5%;
 }
 
 .mainMenu {

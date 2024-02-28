@@ -1,5 +1,5 @@
 .mainDiv {
-  background-image: url("/Data Governance/bg.png");
+  background-image: url("/data_governance/bg.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -42,7 +42,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 4vw;
+  margin-top: 8vw;
 }
 
 .fiveModMainSpace {
@@ -70,12 +70,16 @@
 
 .fiveModRow {
   width: 100%;
+  margin-top: 1.5rem;
 }
 
 .fiveModCard {
   border: 1px solid #ececec;
   border-radius: 10px;
   width: 100%;
+}
+.fiveModCard:hover{
+  box-shadow: 0px 24px 36px 0px #60617029 !important;
 }
 
 .fiveModSpace h1 {
