@@ -13,6 +13,7 @@ const Sso = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("calling fetch data")
         const response = await axios.get("/api/sso");
         // const response = await fetch("/api/auth/profile");
 

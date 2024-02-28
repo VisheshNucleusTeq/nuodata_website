@@ -9,5 +9,6 @@ export async function GET(request) {
   console.log("in correct function call");
   const response = new NextResponse();
   const session = await getSession(request, response);
+  console.log("session -->", session)
   return NextResponse.json({ ...session });
 }
