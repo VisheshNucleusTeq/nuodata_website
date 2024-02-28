@@ -85,7 +85,7 @@ export default memo(({ data, isConnectable }) => {
         className={NormalNodeCss.nodePoint}
         isConnectable={isConnectable}
       />
-      <Popover
+     {data.queries && <Popover
         ref={ref}
         title={
           <Row justify={"space-between"}>
@@ -136,7 +136,7 @@ export default memo(({ data, isConnectable }) => {
             <strong>{data.label}</strong>
           </div>
         </div>
-      </Popover>
+      </Popover>}
       <Handle
         type="source"
         position="right"
